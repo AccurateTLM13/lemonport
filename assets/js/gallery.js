@@ -1,8 +1,10 @@
 (function () {
   const page = window.galleryPage || { category: "all", title: "All Work" };
   const allItems = Array.isArray(window.galleryItems) ? window.galleryItems : [];
+  const allCategories = Array.isArray(window.galleryCategories) ? window.galleryCategories : [];
   const gallery = document.querySelector("[data-gallery]");
-  const categoryLinks = Array.from(document.querySelectorAll("[data-category-link]"));
+  const categoryNav = document.querySelector(".category-nav");
+  let categoryLinks = Array.from(document.querySelectorAll("[data-category-link]"));
   const lightbox = document.querySelector("[data-lightbox]");
   const lightboxImage = document.querySelector("[data-lightbox-image]");
   const lightboxCaption = document.querySelector("[data-lightbox-caption]");
@@ -33,6 +35,19 @@
   }
 
   const shuffledItems = shuffled(allItems);
+
+  function categoryFromLocation() {
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get("category");
+
+    if (category && allCategories.some((item) => item.slug === category)) {
+      return category;
+    }
+
+    return page.category || "all";
+  }
+
+  activeCategory = categoryFromLocation();
 
   function escapeHtml(value) {
     return String(value)
@@ -137,6 +152,37 @@
       event.preventDefault();
       first.focus();
     }
+  }
+
+  function renderCategoryNav() {
+    if (!categoryNav || !allCategories.length) {
+      return;
+    }
+
+    categoryNav.textContent = "";
+
+    const label = document.createElement("span");
+    label.className = "nav-label";
+    label.textContent = "Categories";
+    categoryNav.append(label);
+
+    const allLink = document.createElement("a");
+    allLink.className = "category-link";
+    allLink.href = "/";
+    allLink.dataset.categoryLink = "all";
+    allLink.textContent = "All";
+    categoryNav.append(allLink);
+
+    allCategories.forEach((category) => {
+      const link = document.createElement("a");
+      link.className = "category-link";
+      link.href = category.path || `/?category=${encodeURIComponent(category.slug)}`;
+      link.dataset.categoryLink = category.slug;
+      link.textContent = category.label;
+      categoryNav.append(link);
+    });
+
+    categoryLinks = Array.from(document.querySelectorAll("[data-category-link]"));
   }
 
   function itemsFor(category) {
@@ -321,15 +367,18 @@
     }
   }
 
-  if (page.category === "all") {
+  function bindCategoryLinks() {
     categoryLinks.forEach((link) => {
       link.addEventListener("click", (event) => {
-        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+        if (page.category !== "all" || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
           return;
         }
 
         event.preventDefault();
-        render(link.dataset.categoryLink);
+        const category = link.dataset.categoryLink;
+        const nextUrl = category === "all" ? "/" : `/?category=${encodeURIComponent(category)}`;
+        history.replaceState(null, "", nextUrl);
+        render(category);
       });
     });
   }
@@ -395,6 +444,8 @@
     }
   });
 
+  renderCategoryNav();
+  bindCategoryLinks();
   render(activeCategory);
   openFromHash();
 }());

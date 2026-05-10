@@ -1,5 +1,155 @@
 window.galleryItems = [
   {
+    "id": "mwf-008",
+    "title": "The Tamagotchi Pendant Of Doom",
+    "category": "memetic-warfare",
+    "categoryLabel": "Memetic Warfare",
+    "description": "",
+    "alt": "The Tamagotchi Pendant Of Doom concept image from the Lemonteed Memetic Warfare archive",
+    "width": 1080,
+    "height": 1350,
+    "sizes": {
+      "small": "/images/memetic-warfare/the-tamagotchi-pendant-of-doom.webp",
+      "medium": "/images/memetic-warfare/the-tamagotchi-pendant-of-doom.webp",
+      "large": "/images/memetic-warfare/the-tamagotchi-pendant-of-doom.webp"
+    }
+  },
+  {
+    "id": "mwf-007",
+    "title": "The Discman Shield",
+    "category": "memetic-warfare",
+    "categoryLabel": "Memetic Warfare",
+    "description": "",
+    "alt": "The Discman Shield concept image from the Lemonteed Memetic Warfare archive",
+    "width": 1080,
+    "height": 1350,
+    "sizes": {
+      "small": "/images/memetic-warfare/the-discman-shield.webp",
+      "medium": "/images/memetic-warfare/the-discman-shield.webp",
+      "large": "/images/memetic-warfare/the-discman-shield.webp"
+    }
+  },
+  {
+    "id": "mwf-006",
+    "title": "Flail Of Forgotten Passwords",
+    "category": "memetic-warfare",
+    "categoryLabel": "Memetic Warfare",
+    "description": "",
+    "alt": "Flail Of Forgotten Passwords concept image from the Lemonteed Memetic Warfare archive",
+    "width": 1080,
+    "height": 1350,
+    "sizes": {
+      "small": "/images/memetic-warfare/flail-of-forgotten-passwords.webp",
+      "medium": "/images/memetic-warfare/flail-of-forgotten-passwords.webp",
+      "large": "/images/memetic-warfare/flail-of-forgotten-passwords.webp"
+    }
+  },
+  {
+    "id": "mwf-005",
+    "title": "The VHS Greatsword",
+    "category": "memetic-warfare",
+    "categoryLabel": "Memetic Warfare",
+    "description": "",
+    "alt": "The VHS Greatsword concept image from the Lemonteed Memetic Warfare archive",
+    "width": 1080,
+    "height": 1350,
+    "sizes": {
+      "small": "/images/memetic-warfare/the-vhs-greatsword.webp",
+      "medium": "/images/memetic-warfare/the-vhs-greatsword.webp",
+      "large": "/images/memetic-warfare/the-vhs-greatsword.webp"
+    }
+  },
+  {
+    "id": "mwf-004",
+    "title": "The Pager Knuckle Dusters",
+    "category": "memetic-warfare",
+    "categoryLabel": "Memetic Warfare",
+    "description": "",
+    "alt": "The Pager Knuckle Dusters concept image from the Lemonteed Memetic Warfare archive",
+    "width": 1080,
+    "height": 1350,
+    "sizes": {
+      "small": "/images/memetic-warfare/the-pager-knuckle-dusters.webp",
+      "medium": "/images/memetic-warfare/the-pager-knuckle-dusters.webp",
+      "large": "/images/memetic-warfare/the-pager-knuckle-dusters.webp"
+    }
+  },
+  {
+    "id": "mwf-003",
+    "title": "The Keyboard War Club",
+    "category": "memetic-warfare",
+    "categoryLabel": "Memetic Warfare",
+    "description": "",
+    "alt": "The Keyboard War Club concept image from the Lemonteed Memetic Warfare archive",
+    "width": 1080,
+    "height": 1350,
+    "sizes": {
+      "small": "/images/memetic-warfare/the-keyboard-war-club.webp",
+      "medium": "/images/memetic-warfare/the-keyboard-war-club.webp",
+      "large": "/images/memetic-warfare/the-keyboard-war-club.webp"
+    }
+  },
+  {
+    "id": "mwf-002",
+    "title": "The Blackberry Dagger",
+    "category": "memetic-warfare",
+    "categoryLabel": "Memetic Warfare",
+    "description": "",
+    "alt": "The Blackberry Dagger concept image from the Lemonteed Memetic Warfare archive",
+    "width": 1080,
+    "height": 1350,
+    "sizes": {
+      "small": "/images/memetic-warfare/the-blackberry-dagger.webp",
+      "medium": "/images/memetic-warfare/the-blackberry-dagger.webp",
+      "large": "/images/memetic-warfare/the-blackberry-dagger.webp"
+    }
+  },
+  {
+    "id": "mwf-001",
+    "title": "The AOL Disc Throwing Stars",
+    "category": "memetic-warfare",
+    "categoryLabel": "Memetic Warfare",
+    "description": "",
+    "alt": "The AOL Disc Throwing Stars concept image from the Lemonteed Memetic Warfare archive",
+    "width": 1080,
+    "height": 1350,
+    "sizes": {
+      "small": "/images/memetic-warfare/the-aol-disc-throwing-stars.webp",
+      "medium": "/images/memetic-warfare/the-aol-disc-throwing-stars.webp",
+      "large": "/images/memetic-warfare/the-aol-disc-throwing-stars.webp"
+    }
+  },
+  {
+    "id": "what-028",
+    "title": "Google Maps x Tinder",
+    "category": "what-if",
+    "categoryLabel": "What If",
+    "description": "What if Google Maps integrated with Tinder allowing you connect on the road?",
+    "alt": "Google Maps with two users and a accept or decline options on rerouting to a Buc-ee's mid drive.",
+    "width": 941,
+    "height": 1672,
+    "sizes": {
+      "small": "/images/what-if/google-maps-x-tinder.webp",
+      "medium": "/images/what-if/google-maps-x-tinder.webp",
+      "large": "/images/what-if/google-maps-x-tinder.webp"
+    }
+  },
+  {
+    "id": "what-027",
+    "title": "Netflix With Comments",
+    "category": "what-if",
+    "categoryLabel": "What If",
+    "description": "What if Netflix had comments?",
+    "alt": "Netflix TV application with a visible comment section on a TV show called Inheritance.",
+    "width": 1672,
+    "height": 941,
+    "sizes": {
+      "small": "/images/what-if/netflix-with-comments.webp",
+      "medium": "/images/what-if/netflix-with-comments.webp",
+      "large": "/images/what-if/netflix-with-comments.webp"
+    }
+  },
+  {
     "id": "vrg-001",
     "title": "Elon Musk Black Label",
     "category": "vrg-cards",
@@ -237,21 +387,6 @@ window.galleryItems = [
       "small": "/images/vrg-cards/piet.webp",
       "medium": "/images/vrg-cards/piet.webp",
       "large": "/images/vrg-cards/piet.webp"
-    }
-  },
-  {
-    "id": "vrg-017",
-    "title": "Rob",
-    "category": "vrg-cards",
-    "categoryLabel": "VRG Cards",
-    "description": "",
-    "alt": "Rob from the Lemonteed VRG Cards series",
-    "width": 927,
-    "height": 1402,
-    "sizes": {
-      "small": "/images/vrg-cards/rob.webp",
-      "medium": "/images/vrg-cards/rob.webp",
-      "large": "/images/vrg-cards/rob.webp"
     }
   },
   {

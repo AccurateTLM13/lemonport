@@ -1,5 +1,215 @@
 [
   {
+    "id": "mwf-008",
+    "title": "The Tamagotchi Pendant Of Doom",
+    "slug": "the-tamagotchi-pendant-of-doom",
+    "category": "memetic-warfare",
+    "categoryLabel": "Memetic Warfare",
+    "year": "",
+    "description": "",
+    "alt": "The Tamagotchi Pendant Of Doom concept image from the Lemonteed Memetic Warfare archive",
+    "width": 1080,
+    "height": 1350,
+    "sizes": {
+      "small": "/images/memetic-warfare/the-tamagotchi-pendant-of-doom.webp",
+      "medium": "/images/memetic-warfare/the-tamagotchi-pendant-of-doom.webp",
+      "large": "/images/memetic-warfare/the-tamagotchi-pendant-of-doom.webp"
+    },
+    "featured": false,
+    "visible": true,
+    "createdAt": "2026-05-10T20:29:14.171Z",
+    "updatedAt": "2026-05-10T20:29:14.171Z"
+  },
+  {
+    "id": "mwf-007",
+    "title": "The Discman Shield",
+    "slug": "the-discman-shield",
+    "category": "memetic-warfare",
+    "categoryLabel": "Memetic Warfare",
+    "year": "",
+    "description": "",
+    "alt": "The Discman Shield concept image from the Lemonteed Memetic Warfare archive",
+    "width": 1080,
+    "height": 1350,
+    "sizes": {
+      "small": "/images/memetic-warfare/the-discman-shield.webp",
+      "medium": "/images/memetic-warfare/the-discman-shield.webp",
+      "large": "/images/memetic-warfare/the-discman-shield.webp"
+    },
+    "featured": false,
+    "visible": true,
+    "createdAt": "2026-05-10T20:29:13.068Z",
+    "updatedAt": "2026-05-10T20:29:13.068Z"
+  },
+  {
+    "id": "mwf-006",
+    "title": "Flail Of Forgotten Passwords",
+    "slug": "flail-of-forgotten-passwords",
+    "category": "memetic-warfare",
+    "categoryLabel": "Memetic Warfare",
+    "year": "",
+    "description": "",
+    "alt": "Flail Of Forgotten Passwords concept image from the Lemonteed Memetic Warfare archive",
+    "width": 1080,
+    "height": 1350,
+    "sizes": {
+      "small": "/images/memetic-warfare/flail-of-forgotten-passwords.webp",
+      "medium": "/images/memetic-warfare/flail-of-forgotten-passwords.webp",
+      "large": "/images/memetic-warfare/flail-of-forgotten-passwords.webp"
+    },
+    "featured": false,
+    "visible": true,
+    "createdAt": "2026-05-10T20:29:11.752Z",
+    "updatedAt": "2026-05-10T20:29:11.752Z"
+  },
+  {
+    "id": "mwf-005",
+    "title": "The VHS Greatsword",
+    "slug": "the-vhs-greatsword",
+    "category": "memetic-warfare",
+    "categoryLabel": "Memetic Warfare",
+    "year": "",
+    "description": "",
+    "alt": "The VHS Greatsword concept image from the Lemonteed Memetic Warfare archive",
+    "width": 1080,
+    "height": 1350,
+    "sizes": {
+      "small": "/images/memetic-warfare/the-vhs-greatsword.webp",
+      "medium": "/images/memetic-warfare/the-vhs-greatsword.webp",
+      "large": "/images/memetic-warfare/the-vhs-greatsword.webp"
+    },
+    "featured": false,
+    "visible": true,
+    "createdAt": "2026-05-10T20:29:10.768Z",
+    "updatedAt": "2026-05-10T20:29:10.768Z"
+  },
+  {
+    "id": "mwf-004",
+    "title": "The Pager Knuckle Dusters",
+    "slug": "the-pager-knuckle-dusters",
+    "category": "memetic-warfare",
+    "categoryLabel": "Memetic Warfare",
+    "year": "",
+    "description": "",
+    "alt": "The Pager Knuckle Dusters concept image from the Lemonteed Memetic Warfare archive",
+    "width": 1080,
+    "height": 1350,
+    "sizes": {
+      "small": "/images/memetic-warfare/the-pager-knuckle-dusters.webp",
+      "medium": "/images/memetic-warfare/the-pager-knuckle-dusters.webp",
+      "large": "/images/memetic-warfare/the-pager-knuckle-dusters.webp"
+    },
+    "featured": false,
+    "visible": true,
+    "createdAt": "2026-05-10T20:29:09.601Z",
+    "updatedAt": "2026-05-10T20:29:09.601Z"
+  },
+  {
+    "id": "mwf-003",
+    "title": "The Keyboard War Club",
+    "slug": "the-keyboard-war-club",
+    "category": "memetic-warfare",
+    "categoryLabel": "Memetic Warfare",
+    "year": "",
+    "description": "",
+    "alt": "The Keyboard War Club concept image from the Lemonteed Memetic Warfare archive",
+    "width": 1080,
+    "height": 1350,
+    "sizes": {
+      "small": "/images/memetic-warfare/the-keyboard-war-club.webp",
+      "medium": "/images/memetic-warfare/the-keyboard-war-club.webp",
+      "large": "/images/memetic-warfare/the-keyboard-war-club.webp"
+    },
+    "featured": false,
+    "visible": true,
+    "createdAt": "2026-05-10T20:29:08.560Z",
+    "updatedAt": "2026-05-10T20:29:08.560Z"
+  },
+  {
+    "id": "mwf-002",
+    "title": "The Blackberry Dagger",
+    "slug": "the-blackberry-dagger",
+    "category": "memetic-warfare",
+    "categoryLabel": "Memetic Warfare",
+    "year": "",
+    "description": "",
+    "alt": "The Blackberry Dagger concept image from the Lemonteed Memetic Warfare archive",
+    "width": 1080,
+    "height": 1350,
+    "sizes": {
+      "small": "/images/memetic-warfare/the-blackberry-dagger.webp",
+      "medium": "/images/memetic-warfare/the-blackberry-dagger.webp",
+      "large": "/images/memetic-warfare/the-blackberry-dagger.webp"
+    },
+    "featured": false,
+    "visible": true,
+    "createdAt": "2026-05-10T20:29:07.589Z",
+    "updatedAt": "2026-05-10T20:29:07.589Z"
+  },
+  {
+    "id": "mwf-001",
+    "title": "The AOL Disc Throwing Stars",
+    "slug": "the-aol-disc-throwing-stars",
+    "category": "memetic-warfare",
+    "categoryLabel": "Memetic Warfare",
+    "year": "",
+    "description": "",
+    "alt": "The AOL Disc Throwing Stars concept image from the Lemonteed Memetic Warfare archive",
+    "width": 1080,
+    "height": 1350,
+    "sizes": {
+      "small": "/images/memetic-warfare/the-aol-disc-throwing-stars.webp",
+      "medium": "/images/memetic-warfare/the-aol-disc-throwing-stars.webp",
+      "large": "/images/memetic-warfare/the-aol-disc-throwing-stars.webp"
+    },
+    "featured": false,
+    "visible": true,
+    "createdAt": "2026-05-10T20:29:06.612Z",
+    "updatedAt": "2026-05-10T20:29:06.612Z"
+  },
+  {
+    "id": "what-028",
+    "title": "Google Maps x Tinder",
+    "slug": "google-maps-x-tinder",
+    "category": "what-if",
+    "categoryLabel": "What If",
+    "year": "",
+    "description": "What if Google Maps integrated with Tinder allowing you connect on the road?",
+    "alt": "Google Maps with two users and a accept or decline options on rerouting to a Buc-ee's mid drive.",
+    "width": 941,
+    "height": 1672,
+    "sizes": {
+      "small": "/images/what-if/google-maps-x-tinder.webp",
+      "medium": "/images/what-if/google-maps-x-tinder.webp",
+      "large": "/images/what-if/google-maps-x-tinder.webp"
+    },
+    "featured": false,
+    "visible": true,
+    "createdAt": "2026-05-10T20:11:50.976Z",
+    "updatedAt": "2026-05-10T20:11:50.976Z"
+  },
+  {
+    "id": "what-027",
+    "title": "Netflix With Comments",
+    "slug": "netflix-with-comments",
+    "category": "what-if",
+    "categoryLabel": "What If",
+    "year": "",
+    "description": "What if Netflix had comments?",
+    "alt": "Netflix TV application with a visible comment section on a TV show called Inheritance.",
+    "width": 1672,
+    "height": 941,
+    "sizes": {
+      "small": "/images/what-if/netflix-with-comments.webp",
+      "medium": "/images/what-if/netflix-with-comments.webp",
+      "large": "/images/what-if/netflix-with-comments.webp"
+    },
+    "featured": false,
+    "visible": true,
+    "createdAt": "2026-05-10T20:08:12.693Z",
+    "updatedAt": "2026-05-10T20:08:12.693Z"
+  },
+  {
     "id": "vrg-001",
     "title": "Elon Musk Black Label",
     "category": "vrg-cards",
@@ -352,9 +562,9 @@
     "year": "",
     "description": "",
     "featured": false,
-    "visible": true,
+    "visible": false,
     "createdAt": "",
-    "updatedAt": ""
+    "updatedAt": "2026-05-10T20:05:18.241Z"
   },
   {
     "id": "vrg-018",

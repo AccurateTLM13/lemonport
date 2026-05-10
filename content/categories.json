@@ -1,0 +1,31 @@
+[
+  {
+    "slug": "vrg-cards",
+    "label": "VRG Cards",
+    "prefix": "vrg",
+    "path": "/vrg-cards/",
+    "visible": true
+  },
+  {
+    "slug": "what-if",
+    "label": "What If",
+    "prefix": "what",
+    "path": "/what-if/",
+    "visible": true
+  },
+  {
+    "slug": "misc-gens",
+    "label": "Misc Gens",
+    "prefix": "misc",
+    "path": "/misc-gens/",
+    "visible": true
+  },
+  {
+    "slug": "memetic-warfare",
+    "label": "Memetic Warfare",
+    "prefix": "mwf",
+    "path": "",
+    "visible": true,
+    "createdAt": "2026-05-10T20:26:16.799Z"
+  }
+]

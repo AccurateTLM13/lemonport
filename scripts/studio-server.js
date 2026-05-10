@@ -6,15 +6,10 @@ const { build } = require("./build-gallery");
 
 const root = path.resolve(__dirname, "..");
 const contentFile = path.join(root, "content", "projects.json");
+const categoriesFile = path.join(root, "content", "categories.json");
 const studioDir = path.join(root, "studio");
 const port = Number(process.env.PORT || 5173);
 const maxBodyBytes = 80 * 1024 * 1024;
-
-const categories = {
-  "vrg-cards": { label: "VRG Cards", prefix: "vrg" },
-  "what-if": { label: "What If", prefix: "what" },
-  "misc-gens": { label: "Misc Gens", prefix: "misc" }
-};
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
@@ -72,6 +67,20 @@ function loadProjects() {
   return JSON.parse(fs.readFileSync(contentFile, "utf8"));
 }
 
+function loadCategories() {
+  if (!fs.existsSync(categoriesFile)) {
+    return [];
+  }
+
+  return JSON.parse(fs.readFileSync(categoriesFile, "utf8"));
+}
+
+function saveCategories(categories) {
+  fs.mkdirSync(path.dirname(categoriesFile), { recursive: true });
+  fs.writeFileSync(categoriesFile, `${JSON.stringify(categories, null, 2)}\n`);
+  build();
+}
+
 function saveProjects(projects) {
   fs.mkdirSync(path.dirname(contentFile), { recursive: true });
   fs.writeFileSync(contentFile, `${JSON.stringify(projects, null, 2)}\n`);
@@ -101,7 +110,7 @@ function uniqueSlug(projects, baseSlug) {
 }
 
 function nextId(projects, category) {
-  const meta = categories[category];
+  const meta = loadCategories().find((item) => item.slug === category);
   const max = projects.reduce((highest, project) => {
     if (project.category !== category) {
       return highest;
@@ -115,7 +124,7 @@ function nextId(projects, category) {
 }
 
 function assertCategory(category) {
-  if (!categories[category]) {
+  if (!loadCategories().some((item) => item.slug === category && item.visible !== false)) {
     throw new Error("Choose a valid category.");
   }
 }
@@ -197,6 +206,7 @@ function removeImageSet(project) {
 async function createProject(request, response) {
   const body = await readJsonBody(request);
   const projects = loadProjects();
+  const categoryMeta = loadCategories().find((item) => item.slug === body.category);
   const category = body.category;
   assertCategory(category);
 
@@ -232,7 +242,7 @@ async function createProject(request, response) {
     title,
     slug,
     category,
-    categoryLabel: categories[category].label,
+    categoryLabel: categoryMeta.label,
     year: String(body.year || "").trim(),
     description: String(body.description || "").trim(),
     alt,
@@ -252,6 +262,36 @@ async function createProject(request, response) {
   projects.unshift(project);
   saveProjects(projects);
   sendJson(response, 201, { project });
+}
+
+async function createCategory(request, response) {
+  const body = await readJsonBody(request);
+  const categories = loadCategories();
+  const label = String(body.label || "").trim();
+  const slug = slugify(body.slug || label);
+  const prefix = slugify(body.prefix || slug).replace(/-/g, "").slice(0, 8) || "cat";
+
+  if (!label) {
+    throw new Error("Category name is required.");
+  }
+
+  if (categories.some((category) => category.slug === slug)) {
+    throw new Error("That category already exists.");
+  }
+
+  const category = {
+    slug,
+    label,
+    prefix,
+    path: "",
+    visible: true,
+    createdAt: new Date().toISOString()
+  };
+
+  categories.push(category);
+  saveCategories(categories);
+  fs.mkdirSync(path.join(root, "images", slug), { recursive: true });
+  sendJson(response, 201, { category });
 }
 
 async function updateProject(request, response, id) {
@@ -300,7 +340,7 @@ function deleteProject(response, id) {
 
 function serveFile(request, response) {
   const url = new URL(request.url, `http://${request.headers.host}`);
-  const pathname = url.pathname === "/studio/" ? "/studio/index.html" : decodeURIComponent(url.pathname);
+  const pathname = url.pathname === "/" ? "/index.html" : url.pathname === "/studio/" ? "/studio/index.html" : decodeURIComponent(url.pathname);
   const base = pathname.startsWith("/studio/") ? studioDir : root;
   const relative = pathname.startsWith("/studio/") ? pathname.replace(/^\/studio\//, "") : pathname.replace(/^\//, "");
   const filePath = path.resolve(base, relative);
@@ -319,7 +359,17 @@ async function route(request, response) {
     const url = new URL(request.url, `http://${request.headers.host}`);
 
     if (request.method === "GET" && url.pathname === "/api/projects") {
-      sendJson(response, 200, { projects: loadProjects(), categories });
+      sendJson(response, 200, { projects: loadProjects(), categories: loadCategories() });
+      return;
+    }
+
+    if (request.method === "GET" && url.pathname === "/api/categories") {
+      sendJson(response, 200, { categories: loadCategories() });
+      return;
+    }
+
+    if (request.method === "POST" && url.pathname === "/api/categories") {
+      await createCategory(request, response);
       return;
     }
 

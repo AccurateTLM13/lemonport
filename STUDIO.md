@@ -23,13 +23,17 @@ http://localhost:5173/
 
 ## What It Does
 
-- Uploads PNG, JPG, or WebP images.
+- Uploads one or many PNG, JPG, or WebP images.
+- Suggests project titles from filenames before upload.
+- Creates one editable queue row per selected image.
+- Adds new series/categories from the Studio UI.
 - Converts uploads into WebP.
 - Generates `-640`, `-1024`, and `-1600` responsive variants.
 - Writes project records to `content/projects.json`.
 - Rebuilds `assets/js/gallery-data.js`.
 - Lets you hide/show projects without deleting files.
 - Lets you delete a project and its generated image set.
+- Writes category records to `content/categories.json`.
 
 ## Requirements
 

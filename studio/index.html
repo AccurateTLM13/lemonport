@@ -13,34 +13,37 @@
         <p class="eyebrow">Local static CMS</p>
         <h1>Lemonteed Studio</h1>
       </div>
-      <a href="/" target="_blank" rel="noreferrer">View site</a>
+      <a href="/index.html" target="_blank" rel="noreferrer">View site</a>
     </header>
 
     <main class="studio-shell">
       <section class="upload-panel" aria-labelledby="upload-title">
         <div class="panel-heading">
-          <h2 id="upload-title">Add Project</h2>
-          <p>Upload a concept, write the archive text, and rebuild the static gallery.</p>
+          <h2 id="upload-title">Add Projects</h2>
+          <p>Upload one image or a batch. Studio suggests titles from filenames, then builds each entry into the static gallery.</p>
         </div>
 
-        <form class="project-form" data-project-form>
+        <form class="category-form" data-category-form>
           <label>
-            <span>Image</span>
-            <input name="image" type="file" accept="image/png,image/jpeg,image/webp" required>
+            <span>New series</span>
+            <input name="label" type="text" autocomplete="off" placeholder="Unhinged Interfaces">
           </label>
-
           <label>
-            <span>Title</span>
-            <input name="title" type="text" autocomplete="off" required>
+            <span>ID prefix</span>
+            <input name="prefix" type="text" autocomplete="off" placeholder="ui">
+          </label>
+          <button type="submit">Add Series</button>
+        </form>
+
+        <form class="project-form" data-project-form>
+          <label class="span-2">
+            <span>Images</span>
+            <input name="images" type="file" accept="image/png,image/jpeg,image/webp" multiple required data-file-input>
           </label>
 
           <label>
             <span>Category</span>
-            <select name="category" required>
-              <option value="what-if">What If</option>
-              <option value="vrg-cards">VRG Cards</option>
-              <option value="misc-gens">Misc Gens</option>
-            </select>
+            <select name="category" required data-category-select></select>
           </label>
 
           <label>
@@ -49,13 +52,8 @@
           </label>
 
           <label class="span-2">
-            <span>Description</span>
-            <textarea name="description" rows="3" placeholder="One line about what this thing is pretending to be."></textarea>
-          </label>
-
-          <label class="span-2">
-            <span>Alt text</span>
-            <textarea name="alt" rows="3" required placeholder="Describe the image for someone who cannot see it."></textarea>
+            <span>Shared description</span>
+            <textarea name="description" rows="3" placeholder="Optional. Applied to every selected image in this upload."></textarea>
           </label>
 
           <label class="checkbox-row">
@@ -63,7 +61,9 @@
             <span>Visible in gallery</span>
           </label>
 
-          <button class="submit-button" type="submit">Upload + Build</button>
+          <div class="pending-list" data-pending-list aria-live="polite"></div>
+
+          <button class="submit-button" type="submit">Upload Batch + Build</button>
         </form>
 
         <p class="status" data-status role="status"></p>

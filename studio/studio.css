@@ -119,11 +119,30 @@ button:disabled {
   gap: 14px;
 }
 
+.category-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 92px 112px;
+  margin-bottom: 22px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+  gap: 12px;
+}
+
+.category-form label {
+  display: grid;
+  gap: 6px;
+}
+
+.category-form button {
+  align-self: end;
+}
+
 .project-form label {
   display: grid;
   gap: 6px;
 }
 
+.category-form label span,
 .project-form label span {
   color: var(--muted);
   font-size: 11px;
@@ -131,6 +150,7 @@ button:disabled {
   text-transform: uppercase;
 }
 
+.category-form input,
 .project-form input,
 .project-form select,
 .project-form textarea {
@@ -148,6 +168,11 @@ button:disabled {
   padding: 8px 10px;
 }
 
+.category-form input {
+  min-height: 42px;
+  padding: 8px 10px;
+}
+
 .project-form textarea {
   resize: vertical;
   padding: 10px;
@@ -156,6 +181,7 @@ button:disabled {
 
 .span-2,
 .checkbox-row,
+.pending-list,
 .submit-button,
 .status {
   grid-column: 1 / -1;
@@ -173,6 +199,7 @@ button:disabled {
 }
 
 .submit-button,
+.category-form button,
 .toolbar button,
 .project-actions button {
   min-height: 36px;
@@ -195,6 +222,50 @@ button:disabled {
   color: var(--muted);
   font-size: 12px;
   line-height: 1.4;
+}
+
+.pending-list {
+  display: grid;
+  gap: 12px;
+}
+
+.pending-empty {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.pending-item {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  gap: 12px;
+}
+
+.pending-item img {
+  display: block;
+  width: 76px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  background: #e2e0d8;
+}
+
+.pending-fields {
+  display: grid;
+  gap: 10px;
+}
+
+.pending-fields label {
+  gap: 5px;
+}
+
+.pending-name {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.3;
+  word-break: break-word;
 }
 
 .toolbar {
@@ -296,6 +367,10 @@ button:disabled {
   }
 
   .project-form {
+    grid-template-columns: 1fr;
+  }
+
+  .category-form {
     grid-template-columns: 1fr;
   }
 }
