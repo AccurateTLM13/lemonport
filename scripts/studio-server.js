@@ -10,6 +10,7 @@ const categoriesFile = path.join(root, "content", "categories.json");
 const studioDir = path.join(root, "studio");
 const port = Number(process.env.PORT || 5173);
 const maxBodyBytes = 80 * 1024 * 1024;
+const galleryWidths = [320, 480, 640, 768, 900, 1024, 1600];
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
@@ -154,31 +155,38 @@ function imageDimensions(filePath) {
 
 function makeWebpSet(sourcePath, imageDir, slug) {
   const original = path.join(imageDir, `${slug}.webp`);
-  const targets = [
-    { width: 640, file: path.join(imageDir, `${slug}-640.webp`) },
-    { width: 1024, file: path.join(imageDir, `${slug}-1024.webp`) },
-    { width: 1600, file: path.join(imageDir, `${slug}-1600.webp`) }
-  ];
 
-  execFileSync("magick", [sourcePath, "-auto-orient", "-quality", "84", "-define", "webp:method=6", original]);
+  execFileSync("magick", [sourcePath, "-auto-orient", "-strip", "-quality", "84", "-define", "webp:method=6", original]);
+  const dimensions = imageDimensions(original);
+  const variants = [];
 
-  targets.forEach((target) => {
+  galleryWidths.forEach((width) => {
+    if (width >= dimensions.width) {
+      return;
+    }
+
+    const file = path.join(imageDir, `${slug}-${width}.webp`);
     execFileSync("magick", [
       sourcePath,
       "-auto-orient",
       "-resize",
-      `${target.width}x>`,
+      `${width}x>`,
+      "-strip",
       "-quality",
       "82",
       "-define",
       "webp:method=6",
-      target.file
+      file
     ]);
+    variants.push({ width, url: publicImagePath(path.basename(imageDir), `${slug}-${width}.webp`) });
   });
+
+  variants.push({ width: dimensions.width, url: publicImagePath(path.basename(imageDir), `${slug}.webp`) });
 
   return {
     original,
-    dimensions: imageDimensions(original)
+    dimensions,
+    variants
   };
 }
 
@@ -195,7 +203,7 @@ function removeImageSet(project) {
   const ext = path.extname(absolute);
   const base = path.basename(absolute, ext);
 
-  [absolute, path.join(imageDir, `${base}-640${ext}`), path.join(imageDir, `${base}-1024${ext}`), path.join(imageDir, `${base}-1600${ext}`)]
+  [absolute, ...galleryWidths.map((width) => path.join(imageDir, `${base}-${width}${ext}`))]
     .forEach((file) => {
       if (file.startsWith(root) && fs.existsSync(file)) {
         fs.unlinkSync(file);
@@ -253,6 +261,7 @@ async function createProject(request, response) {
       medium: imageUrl,
       large: imageUrl
     },
+    variants: image.variants,
     featured: Boolean(body.featured),
     visible: body.visible !== false,
     createdAt: now,

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://lemonteed.example/</loc>
+    <loc>https://lemonteed.com/</loc>
   </url>
   <url>
-    <loc>https://lemonteed.example/vrg-cards/</loc>
+    <loc>https://lemonteed.com/vrg-cards/</loc>
   </url>
   <url>
-    <loc>https://lemonteed.example/what-if/</loc>
+    <loc>https://lemonteed.com/what-if/</loc>
   </url>
   <url>
-    <loc>https://lemonteed.example/misc-gens/</loc>
+    <loc>https://lemonteed.com/misc-gens/</loc>
   </url>
 </urlset>

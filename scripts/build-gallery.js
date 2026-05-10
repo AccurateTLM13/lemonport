@@ -33,7 +33,8 @@ function publicProject(project) {
     alt: project.alt,
     width: project.width,
     height: project.height,
-    sizes: project.sizes
+    sizes: project.sizes,
+    variants: Array.isArray(project.variants) ? project.variants : []
   };
 }
 

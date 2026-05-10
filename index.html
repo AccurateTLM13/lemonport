@@ -5,35 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Lemonteed Portfolio</title>
     <meta name="description" content="A minimal visual portfolio by Lemonteed, featuring VRG Cards, What If, and Misc Gens.">
-    <link rel="canonical" href="https://lemonteed.example/">
+    <link rel="canonical" href="https://lemonteed.com/">
     <meta property="og:title" content="Lemonteed Portfolio">
     <meta property="og:description" content="A minimal visual portfolio by Lemonteed.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://lemonteed.example/">
-    <meta property="og:image" content="https://lemonteed.example/images/og/lemonteed-og-home-final.webp">
-    <meta property="og:image:secure_url" content="https://lemonteed.example/images/og/lemonteed-og-home-final.webp">
+    <meta property="og:url" content="https://lemonteed.com/">
+    <meta property="og:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+    <meta property="og:image:secure_url" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
     <meta property="og:image:type" content="image/webp">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Lemonteed Portfolio">
     <meta name="twitter:description" content="A minimal visual portfolio by Lemonteed.">
-    <meta name="twitter:image" content="https://lemonteed.example/images/og/lemonteed-og-home-final.webp">
+    <meta name="twitter:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
     <link rel="icon" href="/images/favicons/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
     <link rel="manifest" href="/site.webmanifest">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css?v=2">
     <script>
       window.galleryPage = {
         category: "all",
         title: "All Work"
       };
     </script>
-    <script src="/assets/js/gallery-data.js" defer></script>
-    <script src="/assets/js/gallery-categories.js" defer></script>
-    <script src="/assets/js/gallery.js" defer></script>
+    <script src="/assets/js/gallery-data.js?v=2" defer></script>
+    <script src="/assets/js/gallery-categories.js?v=2" defer></script>
+    <script src="/assets/js/gallery.js?v=2" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#gallery">Skip to gallery</a>
@@ -41,7 +41,7 @@
       <aside class="sidebar" aria-label="Site navigation">
         <div class="sidebar__top">
           <a class="brand" href="/" aria-label="Lemonteed home">
-            <img class="brand__logo" src="/images/lemonteedlogo.webp" width="456" height="96" alt="Lemonteed">
+            <img class="brand__logo" src="/images/lemonteedlogo-250.webp" srcset="/images/lemonteedlogo-250.webp 250w, /images/lemonteedlogo-456.webp 456w" sizes="160px" width="456" height="96" alt="Lemonteed">
           </a>
           <button class="info-link" type="button" data-info-open>+ INFO</button>
         </div>
@@ -55,7 +55,17 @@
       </aside>
 
       <main class="content" id="gallery">
-        <section class="gallery" data-gallery aria-label="Lemonteed portfolio gallery"></section>
+        <section class="gallery" data-gallery aria-label="Lemonteed portfolio gallery">
+          <figure class="gallery__item">
+            <button class="gallery__button" type="button" data-index="0" aria-label="Open The Tamagotchi Pendant Of Doom">
+              <span class="gallery__frame">
+                <img class="gallery__image" src="/images/memetic-warfare/the-tamagotchi-pendant-of-doom-768.webp" srcset="/images/memetic-warfare/the-tamagotchi-pendant-of-doom-320.webp 320w, /images/memetic-warfare/the-tamagotchi-pendant-of-doom-480.webp 480w, /images/memetic-warfare/the-tamagotchi-pendant-of-doom-640.webp 640w, /images/memetic-warfare/the-tamagotchi-pendant-of-doom-768.webp 768w, /images/memetic-warfare/the-tamagotchi-pendant-of-doom-900.webp 900w, /images/memetic-warfare/the-tamagotchi-pendant-of-doom-1024.webp 1024w, /images/memetic-warfare/the-tamagotchi-pendant-of-doom.webp 1080w" sizes="(max-width: 700px) 100vw, (max-width: 1050px) 45vw, (max-width: 1500px) 30vw, 22vw" width="1080" height="1350" alt="The Tamagotchi Pendant Of Doom concept image from the Lemonteed Memetic Warfare archive" decoding="async" fetchpriority="high" loading="eager">
+                <span class="gallery__caption">The Tamagotchi Pendant Of Doom / Memetic Warfare</span>
+              </span>
+            </button>
+            <figcaption class="visually-hidden">The Tamagotchi Pendant Of Doom / Memetic Warfare</figcaption>
+          </figure>
+        </section>
       </main>
     </div>
 

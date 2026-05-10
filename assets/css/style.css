@@ -201,7 +201,6 @@ button {
   width: 100%;
   height: auto;
   background: #e2e0d8;
-  transition: opacity 180ms ease;
 }
 
 .gallery__caption {

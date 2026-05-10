@@ -23,18 +23,18 @@
   let lastFocusedElement = null;
   let lastInfoFocusedElement = null;
 
-  function shuffled(items) {
-    const shuffledItems = items.slice();
+  function shuffled(items, keepFirst) {
+    const shuffledItems = keepFirst ? items.slice(1) : items.slice();
 
     for (let index = shuffledItems.length - 1; index > 0; index -= 1) {
       const swapIndex = Math.floor(Math.random() * (index + 1));
       [shuffledItems[index], shuffledItems[swapIndex]] = [shuffledItems[swapIndex], shuffledItems[index]];
     }
 
-    return shuffledItems;
+    return keepFirst && items.length ? [items[0], ...shuffledItems] : shuffledItems;
   }
 
-  const shuffledItems = shuffled(allItems);
+  const shuffledItems = shuffled(allItems, true);
 
   function categoryFromLocation() {
     const params = new URLSearchParams(window.location.search);
@@ -89,9 +89,20 @@
   }
 
   function imageCandidates(item) {
+    if (Array.isArray(item.variants) && item.variants.length) {
+      return item.variants
+        .filter((variant) => variant && variant.url && variant.width)
+        .map((variant) => ({
+          targetWidth: Number(variant.width),
+          descriptorWidth: Number(variant.width),
+          url: variant.url
+        }))
+        .sort((a, b) => a.descriptorWidth - b.descriptorWidth);
+    }
+
     const source = item.sizes.large || item.sizes.medium || item.sizes.small;
     const intrinsicWidth = item.width || 1600;
-    const widths = [640, 1024, 1600];
+    const widths = [320, 480, 640, 768, 900, 1024, 1600];
     const seen = new Set();
 
     return widths.reduce((candidates, targetWidth) => {
@@ -113,13 +124,16 @@
   function sourcesFor(item) {
     const candidates = imageCandidates(item);
     const fallback = item.sizes.large || item.sizes.medium || item.sizes.small;
-    const medium = candidates.find((candidate) => candidate.targetWidth >= 1024) || candidates[candidates.length - 1];
+    const preferred = candidates.find((candidate) => candidate.descriptorWidth === 768)
+      || candidates.find((candidate) => candidate.descriptorWidth === 900)
+      || candidates.find((candidate) => candidate.descriptorWidth >= 640)
+      || candidates[candidates.length - 1];
     const large = candidates[candidates.length - 1];
 
     return {
       candidates,
       fallback,
-      medium: medium ? medium.url : fallback,
+      medium: preferred ? preferred.url : fallback,
       large: large ? large.url : fallback
     };
   }
@@ -190,7 +204,7 @@
       return shuffledItems;
     }
 
-    return shuffledItems.filter((item) => item.category === category);
+    return shuffled(allItems.filter((item) => item.category === category), true);
   }
 
   function setActiveControls(category) {
@@ -244,11 +258,9 @@
 
       if (index === 0) {
         img.fetchPriority = "high";
-      }
-
-      if (index < 6) {
         img.loading = "eager";
       } else {
+        img.fetchPriority = "auto";
         img.loading = "lazy";
       }
 
