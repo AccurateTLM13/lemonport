@@ -26,7 +26,7 @@ jobs:
 
       - name: Deploy static files
         run: |
-          rsync -avz --delete \
+          rsync -avz \
             --exclude ".git/" \
             --exclude ".github/" \
             --exclude ".gitignore" \
