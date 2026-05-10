@@ -5,8 +5,8 @@
   --hairline: #dedcd5;
   --panel: #ffffff;
   --focus: #1a5fd0;
-  --sidebar: 220px;
-  --gap: 14px;
+  --sidebar: clamp(180px, 16vw, 260px);
+  --gap: 16px;
 }
 
 * {
@@ -73,15 +73,15 @@ button {
   z-index: 10;
   display: flex;
   width: var(--sidebar);
-  padding: 18px 18px 24px;
+  padding: 24px 20px;
   background: var(--bg);
   flex-direction: column;
-  justify-content: space-between;
+  gap: 76px;
 }
 
 .sidebar__top {
   display: grid;
-  gap: 54px;
+  gap: 44px;
 }
 
 .brand {
@@ -96,7 +96,11 @@ button {
 
 .info-link {
   width: max-content;
+  padding: 0;
+  border: 0;
   color: #595751;
+  background: transparent;
+  cursor: pointer;
   font-family: "Courier New", Courier, monospace;
   font-size: 12px;
   font-weight: 700;
@@ -105,7 +109,6 @@ button {
 .category-nav {
   display: grid;
   gap: 12px;
-  margin-bottom: 44vh;
 }
 
 .nav-label {
@@ -149,7 +152,7 @@ button {
 }
 
 .content {
-  width: calc(100% - var(--sidebar));
+  width: auto;
   margin-left: var(--sidebar);
   padding: 18px 18px 56px 0;
 }
@@ -173,12 +176,13 @@ button {
   border: 0;
   color: inherit;
   background: transparent;
-  cursor: zoom-in;
+  cursor: pointer;
   text-align: left;
 }
 
 .gallery__frame {
   position: relative;
+  display: block;
   overflow: hidden;
   min-height: 180px;
   background: #e2e0d8;
@@ -187,7 +191,7 @@ button {
 .gallery__frame::after {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 58%, rgb(0 0 0 / 0.42));
+  background: rgb(255 255 255 / 0.08);
   opacity: 0;
   transition: opacity 160ms ease;
   content: "";
@@ -197,23 +201,28 @@ button {
   width: 100%;
   height: auto;
   background: #e2e0d8;
-  transition: transform 240ms ease;
+  transition: opacity 180ms ease;
 }
 
 .gallery__caption {
   position: absolute;
-  right: 12px;
+  right: auto;
   bottom: 10px;
-  left: 12px;
+  left: 10px;
   z-index: 1;
-  color: white;
+  max-width: calc(100% - 20px);
+  padding: 4px 6px;
+  color: var(--ink);
+  background: rgb(255 255 255 / 0.84);
   font-family: "Courier New", Courier, monospace;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0;
+  line-height: 1.2;
   opacity: 0;
+  transform: translateY(4px);
   text-transform: uppercase;
-  transition: opacity 160ms ease;
+  transition: opacity 180ms ease, transform 180ms ease;
 }
 
 .visually-hidden {
@@ -230,7 +239,7 @@ button {
 
 .gallery__button:hover .gallery__image,
 .gallery__button:focus-visible .gallery__image {
-  transform: scale(1.015);
+  opacity: 0.86;
 }
 
 .gallery__button:hover .gallery__frame::after,
@@ -238,25 +247,91 @@ button {
 .gallery__button:hover .gallery__caption,
 .gallery__button:focus-visible .gallery__caption {
   opacity: 1;
+  transform: translateY(0);
+}
+
+.info-drawer[hidden] {
+  display: none;
+}
+
+.info-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+}
+
+.info-drawer__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgb(247 247 244 / 0.62);
 }
 
 .info-panel {
+  position: fixed;
+  top: 24px;
+  left: calc(var(--sidebar) + 18px);
+  z-index: 1;
+  overflow: auto;
   max-width: 520px;
-  margin: 72px 0 0;
-  padding: 0 0 0 2px;
+  max-height: calc(100vh - 48px);
+  padding: 18px 18px 20px;
+  border: 1px solid var(--hairline);
+  color: var(--ink);
+  background: rgb(255 255 255 / 0.94);
+  box-shadow: 0 18px 60px rgb(0 0 0 / 0.08);
+  font-family: "Courier New", Courier, monospace;
 }
 
 .info-panel h1 {
-  margin: 0 0 12px;
-  font-size: 22px;
-  font-weight: 500;
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 700;
   letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.info-panel__kicker {
+  margin: 0 0 18px;
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .info-panel p {
-  margin: 0;
+  margin: 0 0 12px;
   color: #5c5a54;
-  font-size: 15px;
+  font-size: 13px;
+}
+
+.info-panel p:last-of-type {
+  margin-bottom: 0;
+}
+
+.info-panel__note {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--hairline);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.info-panel__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--hairline);
+  color: var(--ink);
+  background: transparent;
+  cursor: pointer;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  line-height: 1;
 }
 
 .lightbox[hidden] {
@@ -347,9 +422,23 @@ button {
   }
 }
 
-@media (max-width: 760px) {
+@media (min-width: 701px) and (max-width: 900px) {
+  .sidebar {
+    gap: 58px;
+  }
+
+  .brand {
+    width: 150px;
+  }
+
+  .category-link {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 700px) {
   :root {
-    --gap: 10px;
+    --gap: 22px;
   }
 
   .site-shell {
@@ -359,10 +448,12 @@ button {
   .sidebar {
     position: sticky;
     top: 0;
+    display: block;
     width: 100%;
     min-height: 0;
-    padding: 14px 14px 10px;
-    border-bottom: 1px solid var(--hairline);
+    padding: 18px 14px 0;
+    border-bottom: 0;
+    gap: 0;
   }
 
   .sidebar__top {
@@ -380,9 +471,10 @@ button {
   .category-nav {
     display: flex;
     overflow-x: auto;
-    margin: 14px -14px 0;
-    padding: 0 14px 2px;
-    gap: 16px;
+    margin: 18px -14px 0;
+    padding: 0 14px 12px;
+    border-bottom: 1px solid rgb(0 0 0 / 0.12);
+    gap: 14px;
     scrollbar-width: none;
   }
 
@@ -397,22 +489,60 @@ button {
   .category-link {
     flex: 0 0 auto;
     padding-left: 10px;
-    font-size: 13px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
     white-space: nowrap;
   }
 
   .content {
     width: 100%;
     margin-left: 0;
-    padding: 10px 10px 42px;
+    padding: 14px 8px 40px;
   }
 
   .gallery {
+    display: block;
     column-count: 1;
   }
 
+  .gallery__item {
+    margin-bottom: var(--gap);
+  }
+
+  .gallery__frame {
+    overflow: visible;
+    min-height: 0;
+    background: transparent;
+  }
+
+  .gallery__frame::after {
+    display: none;
+  }
+
+  .gallery__button:hover .gallery__image,
+  .gallery__button:focus-visible .gallery__image {
+    opacity: 1;
+  }
+
+  .gallery__caption {
+    position: static;
+    display: block;
+    max-width: none;
+    padding: 8px 10px 0;
+    color: var(--ink);
+    background: transparent;
+    font-size: 11px;
+    line-height: 1.35;
+    letter-spacing: 0.04em;
+    opacity: 1;
+    transform: none;
+  }
+
   .info-panel {
-    margin-top: 44px;
+    top: 82px;
+    right: 14px;
+    left: 14px;
+    max-width: none;
   }
 
   .lightbox__dialog {
@@ -439,12 +569,6 @@ button {
 
   .lightbox__button--next {
     grid-area: next;
-  }
-}
-
-@media (min-width: 560px) and (max-width: 760px) {
-  .gallery {
-    column-count: 2;
   }
 }
 

@@ -42,7 +42,7 @@
           <a class="brand" href="/" aria-label="Lemonteed home">
             <img class="brand__logo" src="/images/lemonteedlogo.webp" width="456" height="96" alt="Lemonteed">
           </a>
-          <a class="info-link" href="/#info">+ INFO</a>
+          <button class="info-link" type="button" data-info-open>+ INFO</button>
         </div>
         <nav class="category-nav" aria-label="Portfolio categories">
           <span class="nav-label">Categories</span>
@@ -56,10 +56,22 @@
         <section class="gallery" data-gallery aria-label="VRG Cards gallery"></section>
       </main>
     </div>
+    <div class="info-drawer" data-info hidden>
+      <div class="info-drawer__backdrop" data-info-close></div>
+      <section class="info-panel" role="dialog" aria-modal="true" aria-labelledby="info-title" tabindex="-1" data-info-panel>
+        <button class="info-panel__close" type="button" data-info-close aria-label="Close info panel">X</button>
+        <h1 id="info-title">Lemonteed</h1>
+        <p class="info-panel__kicker">TLM13 / JP</p>
+        <p>I take wacky ideas seriously enough to see what they might look like if somebody actually made them.</p>
+        <p>This archive is a wall of concepts, fake products, strange interfaces, generated cards, and visual what-ifs. Some of it is parody, some of it is design exercise, some of it is just me chasing a funny thought until it becomes a finished image.</p>
+        <p>The point is possibility: alternate brands, impossible tools, cursed dashboards, creator cards, and little worlds that feel like they should not exist, but somehow do.</p>
+        <p class="info-panel__note">Mostly for me. Probably you will like it.</p>
+      </section>
+    </div>
     <div class="lightbox" data-lightbox hidden>
       <div class="lightbox__backdrop" data-lightbox-close></div>
       <div class="lightbox__dialog" role="dialog" aria-modal="true" aria-label="Image preview">
-        <button class="lightbox__button lightbox__button--close" type="button" data-lightbox-close aria-label="Close preview">Close</button>
+        <button class="lightbox__button lightbox__button--close" type="button" data-lightbox-close aria-label="Close preview">X</button>
         <button class="lightbox__button lightbox__button--prev" type="button" data-lightbox-prev aria-label="Previous image">Prev</button>
         <figure class="lightbox__figure">
           <img data-lightbox-image alt="">

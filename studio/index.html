@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lemonteed Studio</title>
+    <link rel="stylesheet" href="/studio/studio.css">
+    <script src="/studio/studio.js" defer></script>
+  </head>
+  <body>
+    <header class="studio-header">
+      <div>
+        <p class="eyebrow">Local static CMS</p>
+        <h1>Lemonteed Studio</h1>
+      </div>
+      <a href="/" target="_blank" rel="noreferrer">View site</a>
+    </header>
+
+    <main class="studio-shell">
+      <section class="upload-panel" aria-labelledby="upload-title">
+        <div class="panel-heading">
+          <h2 id="upload-title">Add Project</h2>
+          <p>Upload a concept, write the archive text, and rebuild the static gallery.</p>
+        </div>
+
+        <form class="project-form" data-project-form>
+          <label>
+            <span>Image</span>
+            <input name="image" type="file" accept="image/png,image/jpeg,image/webp" required>
+          </label>
+
+          <label>
+            <span>Title</span>
+            <input name="title" type="text" autocomplete="off" required>
+          </label>
+
+          <label>
+            <span>Category</span>
+            <select name="category" required>
+              <option value="what-if">What If</option>
+              <option value="vrg-cards">VRG Cards</option>
+              <option value="misc-gens">Misc Gens</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Year</span>
+            <input name="year" type="text" inputmode="numeric" placeholder="2026">
+          </label>
+
+          <label class="span-2">
+            <span>Description</span>
+            <textarea name="description" rows="3" placeholder="One line about what this thing is pretending to be."></textarea>
+          </label>
+
+          <label class="span-2">
+            <span>Alt text</span>
+            <textarea name="alt" rows="3" required placeholder="Describe the image for someone who cannot see it."></textarea>
+          </label>
+
+          <label class="checkbox-row">
+            <input name="visible" type="checkbox" checked>
+            <span>Visible in gallery</span>
+          </label>
+
+          <button class="submit-button" type="submit">Upload + Build</button>
+        </form>
+
+        <p class="status" data-status role="status"></p>
+      </section>
+
+      <section class="projects-panel" aria-labelledby="projects-title">
+        <div class="panel-heading">
+          <h2 id="projects-title">Archive</h2>
+          <p><span data-count>0</span> projects. Hide keeps files. Delete removes the record and image set.</p>
+        </div>
+
+        <div class="toolbar">
+          <button type="button" data-filter="all" class="is-active">All</button>
+          <button type="button" data-filter="visible">Visible</button>
+          <button type="button" data-filter="hidden">Hidden</button>
+        </div>
+
+        <div class="project-list" data-project-list></div>
+      </section>
+    </main>
+  </body>
+</html>

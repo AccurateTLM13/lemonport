@@ -9,11 +9,17 @@
   const lightboxCloseButtons = Array.from(document.querySelectorAll("[data-lightbox-close]"));
   const lightboxPrev = document.querySelector("[data-lightbox-prev]");
   const lightboxNext = document.querySelector("[data-lightbox-next]");
+  const lightboxDialog = document.querySelector(".lightbox__dialog");
+  const infoOpen = document.querySelector("[data-info-open]");
+  const infoDrawer = document.querySelector("[data-info]");
+  const infoPanel = document.querySelector("[data-info-panel]");
+  const infoCloseButtons = Array.from(document.querySelectorAll("[data-info-close]"));
 
   let activeCategory = page.category || "all";
   let activeItems = [];
   let activeIndex = 0;
   let lastFocusedElement = null;
+  let lastInfoFocusedElement = null;
 
   function shuffled(items) {
     const shuffledItems = items.slice();
@@ -57,12 +63,80 @@
     return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
   }
 
+  function variantFor(url, width) {
+    const extensionIndex = url.lastIndexOf(".webp");
+
+    if (extensionIndex < 0) {
+      return url;
+    }
+
+    return `${url.slice(0, extensionIndex)}-${width}${url.slice(extensionIndex)}`;
+  }
+
+  function imageCandidates(item) {
+    const source = item.sizes.large || item.sizes.medium || item.sizes.small;
+    const intrinsicWidth = item.width || 1600;
+    const widths = [640, 1024, 1600];
+    const seen = new Set();
+
+    return widths.reduce((candidates, targetWidth) => {
+      const descriptorWidth = Math.min(targetWidth, intrinsicWidth);
+
+      if (!seen.has(descriptorWidth)) {
+        seen.add(descriptorWidth);
+        candidates.push({
+          targetWidth,
+          descriptorWidth,
+          url: variantFor(source, targetWidth)
+        });
+      }
+
+      return candidates;
+    }, []);
+  }
+
+  function sourcesFor(item) {
+    const candidates = imageCandidates(item);
+    const fallback = item.sizes.large || item.sizes.medium || item.sizes.small;
+    const medium = candidates.find((candidate) => candidate.targetWidth >= 1024) || candidates[candidates.length - 1];
+    const large = candidates[candidates.length - 1];
+
+    return {
+      candidates,
+      fallback,
+      medium: medium ? medium.url : fallback,
+      large: large ? large.url : fallback
+    };
+  }
+
   function srcsetFor(item) {
-    return [
-      `${item.sizes.small} 480w`,
-      `${item.sizes.medium} 960w`,
-      `${item.sizes.large} 1600w`
-    ].join(", ");
+    return imageCandidates(item)
+      .map((candidate) => `${candidate.url} ${candidate.descriptorWidth}w`)
+      .join(", ");
+  }
+
+  function trapFocus(event, container) {
+    if (event.key !== "Tab" || !container) {
+      return;
+    }
+
+    const focusable = Array.from(container.querySelectorAll("a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])"))
+      .filter((element) => element.offsetParent !== null || element === document.activeElement);
+
+    if (!focusable.length) {
+      return;
+    }
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
   }
 
   function itemsFor(category) {
@@ -112,24 +186,33 @@
       frame.className = "gallery__frame";
 
       const img = document.createElement("img");
+      const sources = sourcesFor(item);
       img.className = "gallery__image";
-      img.src = item.sizes.medium;
+      img.src = sources.medium;
       img.srcset = srcsetFor(item);
-      img.sizes = "(max-width: 760px) 100vw, calc((100vw - 260px) / 3)";
+      img.sizes = "(max-width: 700px) 100vw, (max-width: 1050px) 45vw, (max-width: 1500px) 30vw, 22vw";
       img.alt = item.alt;
       img.width = item.width;
       img.height = item.height;
       img.decoding = "async";
 
-      if (index < 3) {
+      if (index === 0) {
         img.fetchPriority = "high";
+      }
+
+      if (index < 6) {
+        img.loading = "eager";
       } else {
         img.loading = "lazy";
       }
 
       img.addEventListener("error", () => {
         img.removeAttribute("srcset");
-        img.src = placeholderSvg(item);
+        img.src = sources.fallback || placeholderSvg(item);
+
+        img.addEventListener("error", () => {
+          img.src = placeholderSvg(item);
+        }, { once: true });
       }, { once: true });
 
       const caption = document.createElement("span");
@@ -150,8 +233,9 @@
   }
 
   function setLightboxImage(item) {
+    const sources = sourcesFor(item);
     lightboxImage.removeAttribute("srcset");
-    lightboxImage.src = item.sizes.large;
+    lightboxImage.src = sources.large;
     lightboxImage.alt = item.alt;
     lightboxImage.width = item.width;
     lightboxImage.height = item.height;
@@ -159,7 +243,7 @@
 
     lightboxImage.onerror = () => {
       lightboxImage.onerror = null;
-      lightboxImage.src = placeholderSvg(item);
+      lightboxImage.src = sources.fallback || placeholderSvg(item);
     };
   }
 
@@ -188,6 +272,28 @@
 
     if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
       lastFocusedElement.focus();
+    }
+  }
+
+  function openInfoPanel() {
+    if (!infoDrawer || !infoPanel) {
+      return;
+    }
+
+    lastInfoFocusedElement = document.activeElement;
+    infoDrawer.hidden = false;
+    infoPanel.focus();
+  }
+
+  function closeInfoPanel() {
+    if (!infoDrawer || infoDrawer.hidden) {
+      return;
+    }
+
+    infoDrawer.hidden = true;
+
+    if (lastInfoFocusedElement && typeof lastInfoFocusedElement.focus === "function") {
+      lastInfoFocusedElement.focus();
     }
   }
 
@@ -244,6 +350,14 @@
     button.addEventListener("click", closeLightbox);
   });
 
+  if (infoOpen) {
+    infoOpen.addEventListener("click", openInfoPanel);
+  }
+
+  infoCloseButtons.forEach((button) => {
+    button.addEventListener("click", closeInfoPanel);
+  });
+
   if (lightboxPrev) {
     lightboxPrev.addEventListener("click", () => moveLightbox(-1));
   }
@@ -253,20 +367,31 @@
   }
 
   document.addEventListener("keydown", (event) => {
-    if (!lightbox || lightbox.hidden) {
+    if (lightbox && !lightbox.hidden) {
+      trapFocus(event, lightboxDialog);
+
+      if (event.key === "Escape") {
+        closeLightbox();
+      }
+
+      if (event.key === "ArrowLeft") {
+        moveLightbox(-1);
+      }
+
+      if (event.key === "ArrowRight") {
+        moveLightbox(1);
+      }
+
       return;
     }
 
-    if (event.key === "Escape") {
+    if (infoDrawer && !infoDrawer.hidden && event.key === "Escape") {
       closeLightbox();
+      closeInfoPanel();
     }
 
-    if (event.key === "ArrowLeft") {
-      moveLightbox(-1);
-    }
-
-    if (event.key === "ArrowRight") {
-      moveLightbox(1);
+    if (infoDrawer && !infoDrawer.hidden) {
+      trapFocus(event, infoPanel);
     }
   });
 
