@@ -1,0 +1,36 @@
+name: Deploy to Bluehost
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Add SSH key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.BLUEHOST_SSH_PRIVATE_KEY }}
+
+      - name: Trust Bluehost host
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p "${{ secrets.BLUEHOST_PORT }}" "${{ secrets.BLUEHOST_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Deploy static files
+        run: |
+          rsync -avz --delete \
+            --exclude ".git/" \
+            --exclude ".github/" \
+            --exclude ".gitignore" \
+            --exclude ".DS_Store" \
+            --exclude "Thumbs.db" \
+            -e "ssh -p ${{ secrets.BLUEHOST_PORT }}" \
+            ./ "${{ secrets.BLUEHOST_USER }}@${{ secrets.BLUEHOST_HOST }}:${{ secrets.BLUEHOST_PATH }}"
