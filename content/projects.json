@@ -6,7 +6,7 @@
     "category": "memetic-warfare",
     "categoryLabel": "Memetic Warfare",
     "year": "",
-    "description": "",
+    "description": "A grimy pink virtual pet encased in rope, beads, and ritual bindings. Worn around the neck like a cursed charm, it grows stronger the longer you neglect it.",
     "alt": "The Tamagotchi Pendant Of Doom concept image from the Lemonteed Memetic Warfare archive",
     "width": 1080,
     "height": 1350,
@@ -18,7 +18,7 @@
     "featured": true,
     "visible": true,
     "createdAt": "2026-05-10T20:29:14.171Z",
-    "updatedAt": "2026-05-11T01:28:58.747Z",
+    "updatedAt": "2026-05-11T13:28:21.932Z",
     "variants": [
       {
         "width": 320,
@@ -48,6 +48,26 @@
         "width": 1080,
         "url": "/images/memetic-warfare/the-tamagotchi-pendant-of-doom.webp"
       }
+    ],
+    "series": "",
+    "image": "/images/memetic-warfare/the-tamagotchi-pendant-of-doom.webp",
+    "thumbnail": "/images/memetic-warfare/the-tamagotchi-pendant-of-doom-768.webp",
+    "origin": "",
+    "dateCreated": "2026-05-08",
+    "dangerLevel": "Cursed",
+    "tags": [
+      "image-generation"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [
+      "mwf-001",
+      "mwf-002",
+      "mwf-003",
+      "mwf-004",
+      "mwf-005",
+      "mwf-006"
     ]
   },
   {
@@ -57,7 +77,7 @@
     "category": "memetic-warfare",
     "categoryLabel": "Memetic Warfare",
     "year": "",
-    "description": "",
+    "description": "A silver portable CD player reinforced with shattered compact discs around the rim. Lightweight, reflective, and fragile in the most dramatic way possible — one solid hit and it skips forever.",
     "alt": "The Discman Shield concept image from the Lemonteed Memetic Warfare archive",
     "width": 1080,
     "height": 1350,
@@ -69,7 +89,7 @@
     "featured": false,
     "visible": true,
     "createdAt": "2026-05-10T20:29:13.068Z",
-    "updatedAt": "2026-05-11T01:29:15.245Z",
+    "updatedAt": "2026-05-11T13:27:25.161Z",
     "variants": [
       {
         "width": 320,
@@ -99,6 +119,26 @@
         "width": 1080,
         "url": "/images/memetic-warfare/the-discman-shield.webp"
       }
+    ],
+    "series": "",
+    "image": "/images/memetic-warfare/the-discman-shield.webp",
+    "thumbnail": "/images/memetic-warfare/the-discman-shield-768.webp",
+    "origin": "",
+    "dateCreated": "2026-05-08",
+    "dangerLevel": "Cursed",
+    "tags": [
+      "image-generation"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [
+      "mwf-001",
+      "mwf-002",
+      "mwf-003",
+      "mwf-004",
+      "mwf-005",
+      "mwf-006"
     ]
   },
   {
@@ -108,7 +148,7 @@
     "category": "memetic-warfare",
     "categoryLabel": "Memetic Warfare",
     "year": "",
-    "description": "",
+    "description": "A crude wooden handle wrapped in fraying twine, chained to a cluster of obsolete USB drives, dongles, and charging bricks. Each swing carries the spiritual weight of every login you swore you wrote down somewhere.",
     "alt": "Flail Of Forgotten Passwords concept image from the Lemonteed Memetic Warfare archive",
     "width": 1080,
     "height": 1350,
@@ -120,7 +160,7 @@
     "featured": false,
     "visible": true,
     "createdAt": "2026-05-10T20:29:11.752Z",
-    "updatedAt": "2026-05-11T01:29:29.773Z",
+    "updatedAt": "2026-05-11T13:27:01.942Z",
     "variants": [
       {
         "width": 320,
@@ -150,6 +190,26 @@
         "width": 1080,
         "url": "/images/memetic-warfare/flail-of-forgotten-passwords.webp"
       }
+    ],
+    "series": "",
+    "image": "/images/memetic-warfare/flail-of-forgotten-passwords.webp",
+    "thumbnail": "/images/memetic-warfare/flail-of-forgotten-passwords-768.webp",
+    "origin": "",
+    "dateCreated": "2026-05-08",
+    "dangerLevel": "Cursed",
+    "tags": [
+      "image-generation"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [
+      "mwf-001",
+      "mwf-002",
+      "mwf-003",
+      "mwf-004",
+      "mwf-005",
+      "mwf-008"
     ]
   },
   {
@@ -159,7 +219,7 @@
     "category": "memetic-warfare",
     "categoryLabel": "Memetic Warfare",
     "year": "",
-    "description": "",
+    "description": "A massive fantasy blade built from stacked VHS tapes, duct tape, and dangling magnetic ribbon. Heavy, impractical, and emotionally devastating to anyone who remembers rewinding before returning.",
     "alt": "The VHS Greatsword concept image from the Lemonteed Memetic Warfare archive",
     "width": 1080,
     "height": 1350,
@@ -171,7 +231,7 @@
     "featured": false,
     "visible": true,
     "createdAt": "2026-05-10T20:29:10.768Z",
-    "updatedAt": "2026-05-10T20:29:10.768Z",
+    "updatedAt": "2026-05-11T13:26:39.306Z",
     "variants": [
       {
         "width": 320,
@@ -201,6 +261,26 @@
         "width": 1080,
         "url": "/images/memetic-warfare/the-vhs-greatsword.webp"
       }
+    ],
+    "series": "",
+    "image": "/images/memetic-warfare/the-vhs-greatsword.webp",
+    "thumbnail": "/images/memetic-warfare/the-vhs-greatsword-768.webp",
+    "origin": "",
+    "dateCreated": "2026-05-08",
+    "dangerLevel": "Cursed",
+    "tags": [
+      "image-generation"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [
+      "mwf-001",
+      "mwf-002",
+      "mwf-003",
+      "mwf-004",
+      "mwf-007",
+      "mwf-008"
     ]
   },
   {
@@ -210,7 +290,7 @@
     "category": "memetic-warfare",
     "categoryLabel": "Memetic Warfare",
     "year": "",
-    "description": "",
+    "description": "A set of brass-knuckle-style fist weapons reinforced with old pagers across the knuckle bar. Before impact, they vibrate one last time — a tiny alert from violence itself.",
     "alt": "The Pager Knuckle Dusters concept image from the Lemonteed Memetic Warfare archive",
     "width": 1080,
     "height": 1350,
@@ -222,7 +302,7 @@
     "featured": false,
     "visible": true,
     "createdAt": "2026-05-10T20:29:09.601Z",
-    "updatedAt": "2026-05-10T20:29:09.601Z",
+    "updatedAt": "2026-05-11T13:26:14.841Z",
     "variants": [
       {
         "width": 320,
@@ -252,6 +332,26 @@
         "width": 1080,
         "url": "/images/memetic-warfare/the-pager-knuckle-dusters.webp"
       }
+    ],
+    "series": "",
+    "image": "/images/memetic-warfare/the-pager-knuckle-dusters.webp",
+    "thumbnail": "/images/memetic-warfare/the-pager-knuckle-dusters-768.webp",
+    "origin": "",
+    "dateCreated": "",
+    "dangerLevel": "Cursed",
+    "tags": [
+      "image-generation"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [
+      "mwf-001",
+      "mwf-002",
+      "mwf-003",
+      "mwf-007",
+      "mwf-005",
+      "mwf-006"
     ]
   },
   {
@@ -261,7 +361,7 @@
     "category": "memetic-warfare",
     "categoryLabel": "Memetic Warfare",
     "year": "",
-    "description": "",
+    "description": "A battered beige keyboard strapped to a wooden handle with rusted bands, rope, and nails. The missing keys suggest years of battle, but CTRL, ALT, and DEL remain untouched like sacred runes of emergency reset.",
     "alt": "The Keyboard War Club concept image from the Lemonteed Memetic Warfare archive",
     "width": 1080,
     "height": 1350,
@@ -273,7 +373,7 @@
     "featured": false,
     "visible": true,
     "createdAt": "2026-05-10T20:29:08.560Z",
-    "updatedAt": "2026-05-10T20:29:08.560Z",
+    "updatedAt": "2026-05-11T13:25:50.205Z",
     "variants": [
       {
         "width": 320,
@@ -303,6 +403,26 @@
         "width": 1080,
         "url": "/images/memetic-warfare/the-keyboard-war-club.webp"
       }
+    ],
+    "series": "",
+    "image": "/images/memetic-warfare/the-keyboard-war-club.webp",
+    "thumbnail": "/images/memetic-warfare/the-keyboard-war-club-768.webp",
+    "origin": "",
+    "dateCreated": "2026-05-08",
+    "dangerLevel": "Cursed",
+    "tags": [
+      "image-generation"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [
+      "mwf-001",
+      "mwf-002",
+      "mwf-007",
+      "mwf-004",
+      "mwf-005",
+      "mwf-006"
     ]
   },
   {
@@ -312,7 +432,7 @@
     "category": "memetic-warfare",
     "categoryLabel": "Memetic Warfare",
     "year": "",
-    "description": "",
+    "description": "A corporate assassin’s relic: a BlackBerry handset forms the grip, with its tiny keyboard still intact and a sharp metal blade extending from the base. Built for silent calendar invites and hostile takeovers.",
     "alt": "The Blackberry Dagger concept image from the Lemonteed Memetic Warfare archive",
     "width": 1080,
     "height": 1350,
@@ -324,7 +444,7 @@
     "featured": false,
     "visible": true,
     "createdAt": "2026-05-10T20:29:07.589Z",
-    "updatedAt": "2026-05-10T20:29:07.589Z",
+    "updatedAt": "2026-05-11T13:25:27.942Z",
     "variants": [
       {
         "width": 320,
@@ -354,6 +474,26 @@
         "width": 1080,
         "url": "/images/memetic-warfare/the-blackberry-dagger.webp"
       }
+    ],
+    "series": "",
+    "image": "/images/memetic-warfare/the-blackberry-dagger.webp",
+    "thumbnail": "/images/memetic-warfare/the-blackberry-dagger-768.webp",
+    "origin": "",
+    "dateCreated": "2026-05-08",
+    "dangerLevel": "Cursed",
+    "tags": [
+      "image-generation"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [
+      "mwf-001",
+      "mwf-008",
+      "mwf-003",
+      "mwf-004",
+      "mwf-005",
+      "mwf-006"
     ]
   },
   {
@@ -363,7 +503,7 @@
     "category": "memetic-warfare",
     "categoryLabel": "Memetic Warfare",
     "year": "",
-    "description": "",
+    "description": "Sharpened trial CDs cut into iridescent shuriken, still flashing promises of hundreds of free internet hours. Cheap, plentiful, and deadly to both enemies and childhood nostalgia.",
     "alt": "The AOL Disc Throwing Stars concept image from the Lemonteed Memetic Warfare archive",
     "width": 1080,
     "height": 1350,
@@ -375,7 +515,7 @@
     "featured": false,
     "visible": true,
     "createdAt": "2026-05-10T20:29:06.612Z",
-    "updatedAt": "2026-05-10T20:29:06.612Z",
+    "updatedAt": "2026-05-11T13:25:08.282Z",
     "variants": [
       {
         "width": 320,
@@ -405,6 +545,26 @@
         "width": 1080,
         "url": "/images/memetic-warfare/the-aol-disc-throwing-stars.webp"
       }
+    ],
+    "series": "",
+    "image": "/images/memetic-warfare/the-aol-disc-throwing-stars.webp",
+    "thumbnail": "/images/memetic-warfare/the-aol-disc-throwing-stars-768.webp",
+    "origin": "",
+    "dateCreated": "2026-05-08",
+    "dangerLevel": "Cursed",
+    "tags": [
+      "image-generation"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [
+      "mwf-007",
+      "mwf-002",
+      "mwf-003",
+      "mwf-004",
+      "mwf-005",
+      "mwf-006"
     ]
   },
   {

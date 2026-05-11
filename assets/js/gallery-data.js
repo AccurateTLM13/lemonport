@@ -9,13 +9,24 @@ const galleryItems = [
     "image": "/images/memetic-warfare/the-tamagotchi-pendant-of-doom.webp",
     "thumbnail": "/images/memetic-warfare/the-tamagotchi-pendant-of-doom-768.webp",
     "alt": "The Tamagotchi Pendant Of Doom concept image from the Lemonteed Memetic Warfare archive",
-    "description": "Experimental visual artifact from the Lemonteed archive.",
+    "description": "A grimy pink virtual pet encased in rope, beads, and ritual bindings. Worn around the neck like a cursed charm, it grows stronger the longer you neglect it.",
     "origin": "",
-    "dateCreated": "2026-05-10",
-    "tags": [],
-    "dangerLevel": "",
-    "toolsUsed": [],
-    "related": [],
+    "dateCreated": "2026-05-08",
+    "tags": [
+      "image-generation"
+    ],
+    "dangerLevel": "Cursed",
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [
+      "mwf-001",
+      "mwf-002",
+      "mwf-003",
+      "mwf-004",
+      "mwf-005",
+      "mwf-006"
+    ],
     "featured": true,
     "width": 1080,
     "height": 1350,
@@ -65,13 +76,24 @@ const galleryItems = [
     "image": "/images/memetic-warfare/the-discman-shield.webp",
     "thumbnail": "/images/memetic-warfare/the-discman-shield-768.webp",
     "alt": "The Discman Shield concept image from the Lemonteed Memetic Warfare archive",
-    "description": "Experimental visual artifact from the Lemonteed archive.",
+    "description": "A silver portable CD player reinforced with shattered compact discs around the rim. Lightweight, reflective, and fragile in the most dramatic way possible — one solid hit and it skips forever.",
     "origin": "",
-    "dateCreated": "2026-05-10",
-    "tags": [],
-    "dangerLevel": "",
-    "toolsUsed": [],
-    "related": [],
+    "dateCreated": "2026-05-08",
+    "tags": [
+      "image-generation"
+    ],
+    "dangerLevel": "Cursed",
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [
+      "mwf-001",
+      "mwf-002",
+      "mwf-003",
+      "mwf-004",
+      "mwf-005",
+      "mwf-006"
+    ],
     "featured": false,
     "width": 1080,
     "height": 1350,
@@ -121,13 +143,24 @@ const galleryItems = [
     "image": "/images/memetic-warfare/flail-of-forgotten-passwords.webp",
     "thumbnail": "/images/memetic-warfare/flail-of-forgotten-passwords-768.webp",
     "alt": "Flail Of Forgotten Passwords concept image from the Lemonteed Memetic Warfare archive",
-    "description": "Experimental visual artifact from the Lemonteed archive.",
+    "description": "A crude wooden handle wrapped in fraying twine, chained to a cluster of obsolete USB drives, dongles, and charging bricks. Each swing carries the spiritual weight of every login you swore you wrote down somewhere.",
     "origin": "",
-    "dateCreated": "2026-05-10",
-    "tags": [],
-    "dangerLevel": "",
-    "toolsUsed": [],
-    "related": [],
+    "dateCreated": "2026-05-08",
+    "tags": [
+      "image-generation"
+    ],
+    "dangerLevel": "Cursed",
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [
+      "mwf-001",
+      "mwf-002",
+      "mwf-003",
+      "mwf-004",
+      "mwf-005",
+      "mwf-008"
+    ],
     "featured": false,
     "width": 1080,
     "height": 1350,
@@ -177,13 +210,24 @@ const galleryItems = [
     "image": "/images/memetic-warfare/the-vhs-greatsword.webp",
     "thumbnail": "/images/memetic-warfare/the-vhs-greatsword-768.webp",
     "alt": "The VHS Greatsword concept image from the Lemonteed Memetic Warfare archive",
-    "description": "Experimental visual artifact from the Lemonteed archive.",
+    "description": "A massive fantasy blade built from stacked VHS tapes, duct tape, and dangling magnetic ribbon. Heavy, impractical, and emotionally devastating to anyone who remembers rewinding before returning.",
     "origin": "",
-    "dateCreated": "2026-05-10",
-    "tags": [],
-    "dangerLevel": "",
-    "toolsUsed": [],
-    "related": [],
+    "dateCreated": "2026-05-08",
+    "tags": [
+      "image-generation"
+    ],
+    "dangerLevel": "Cursed",
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [
+      "mwf-001",
+      "mwf-002",
+      "mwf-003",
+      "mwf-004",
+      "mwf-007",
+      "mwf-008"
+    ],
     "featured": false,
     "width": 1080,
     "height": 1350,
@@ -233,13 +277,24 @@ const galleryItems = [
     "image": "/images/memetic-warfare/the-pager-knuckle-dusters.webp",
     "thumbnail": "/images/memetic-warfare/the-pager-knuckle-dusters-768.webp",
     "alt": "The Pager Knuckle Dusters concept image from the Lemonteed Memetic Warfare archive",
-    "description": "Experimental visual artifact from the Lemonteed archive.",
+    "description": "A set of brass-knuckle-style fist weapons reinforced with old pagers across the knuckle bar. Before impact, they vibrate one last time — a tiny alert from violence itself.",
     "origin": "",
     "dateCreated": "2026-05-10",
-    "tags": [],
-    "dangerLevel": "",
-    "toolsUsed": [],
-    "related": [],
+    "tags": [
+      "image-generation"
+    ],
+    "dangerLevel": "Cursed",
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [
+      "mwf-001",
+      "mwf-002",
+      "mwf-003",
+      "mwf-007",
+      "mwf-005",
+      "mwf-006"
+    ],
     "featured": false,
     "width": 1080,
     "height": 1350,
@@ -289,13 +344,24 @@ const galleryItems = [
     "image": "/images/memetic-warfare/the-keyboard-war-club.webp",
     "thumbnail": "/images/memetic-warfare/the-keyboard-war-club-768.webp",
     "alt": "The Keyboard War Club concept image from the Lemonteed Memetic Warfare archive",
-    "description": "Experimental visual artifact from the Lemonteed archive.",
+    "description": "A battered beige keyboard strapped to a wooden handle with rusted bands, rope, and nails. The missing keys suggest years of battle, but CTRL, ALT, and DEL remain untouched like sacred runes of emergency reset.",
     "origin": "",
-    "dateCreated": "2026-05-10",
-    "tags": [],
-    "dangerLevel": "",
-    "toolsUsed": [],
-    "related": [],
+    "dateCreated": "2026-05-08",
+    "tags": [
+      "image-generation"
+    ],
+    "dangerLevel": "Cursed",
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [
+      "mwf-001",
+      "mwf-002",
+      "mwf-007",
+      "mwf-004",
+      "mwf-005",
+      "mwf-006"
+    ],
     "featured": false,
     "width": 1080,
     "height": 1350,
@@ -345,13 +411,24 @@ const galleryItems = [
     "image": "/images/memetic-warfare/the-blackberry-dagger.webp",
     "thumbnail": "/images/memetic-warfare/the-blackberry-dagger-768.webp",
     "alt": "The Blackberry Dagger concept image from the Lemonteed Memetic Warfare archive",
-    "description": "Experimental visual artifact from the Lemonteed archive.",
+    "description": "A corporate assassin’s relic: a BlackBerry handset forms the grip, with its tiny keyboard still intact and a sharp metal blade extending from the base. Built for silent calendar invites and hostile takeovers.",
     "origin": "",
-    "dateCreated": "2026-05-10",
-    "tags": [],
-    "dangerLevel": "",
-    "toolsUsed": [],
-    "related": [],
+    "dateCreated": "2026-05-08",
+    "tags": [
+      "image-generation"
+    ],
+    "dangerLevel": "Cursed",
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [
+      "mwf-001",
+      "mwf-008",
+      "mwf-003",
+      "mwf-004",
+      "mwf-005",
+      "mwf-006"
+    ],
     "featured": false,
     "width": 1080,
     "height": 1350,
@@ -401,13 +478,24 @@ const galleryItems = [
     "image": "/images/memetic-warfare/the-aol-disc-throwing-stars.webp",
     "thumbnail": "/images/memetic-warfare/the-aol-disc-throwing-stars-768.webp",
     "alt": "The AOL Disc Throwing Stars concept image from the Lemonteed Memetic Warfare archive",
-    "description": "Experimental visual artifact from the Lemonteed archive.",
+    "description": "Sharpened trial CDs cut into iridescent shuriken, still flashing promises of hundreds of free internet hours. Cheap, plentiful, and deadly to both enemies and childhood nostalgia.",
     "origin": "",
-    "dateCreated": "2026-05-10",
-    "tags": [],
-    "dangerLevel": "",
-    "toolsUsed": [],
-    "related": [],
+    "dateCreated": "2026-05-08",
+    "tags": [
+      "image-generation"
+    ],
+    "dangerLevel": "Cursed",
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [
+      "mwf-007",
+      "mwf-002",
+      "mwf-003",
+      "mwf-004",
+      "mwf-005",
+      "mwf-006"
+    ],
     "featured": false,
     "width": 1080,
     "height": 1350,

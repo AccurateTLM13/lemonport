@@ -1,5 +1,9 @@
 (function () {
-  const page = window.galleryPage || { category: "all", title: "All Work" };
+  const pageElement = document.querySelector("[data-gallery-page]");
+  const page = window.galleryPage || {
+    category: pageElement ? pageElement.dataset.galleryCategory : "all",
+    title: pageElement ? pageElement.dataset.galleryTitle : "All Work"
+  };
   const allItems = Array.isArray(window.galleryItems) ? window.galleryItems : [];
   const allCategories = Array.isArray(window.galleryCategories) ? window.galleryCategories : [];
   const gallery = document.querySelector("[data-gallery]");

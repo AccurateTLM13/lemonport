@@ -24,16 +24,10 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
     <link rel="manifest" href="/site.webmanifest">
-    <link rel="stylesheet" href="/assets/css/style.css?v=2">
-    <script>
-      window.galleryPage = {
-        category: "what-if",
-        title: "What If"
-      };
-    </script>
-    <script src="/assets/js/gallery-data.js?v=2" defer></script>
-    <script src="/assets/js/gallery-categories.js?v=2" defer></script>
-    <script src="/assets/js/gallery.js?v=2" defer></script>
+    <link rel="stylesheet" href="/assets/css/style.css?v=3">
+    <script src="/assets/js/gallery-data.js?v=3" defer></script>
+    <script src="/assets/js/gallery-categories.js?v=3" defer></script>
+    <script src="/assets/js/gallery.js?v=3" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#gallery">Skip to gallery</a>
@@ -44,7 +38,7 @@
             <img class="brand__logo" src="/images/lemonteedlogo-250.webp" srcset="/images/lemonteedlogo-250.webp 250w, /images/lemonteedlogo-456.webp 456w" sizes="160px" width="456" height="96" alt="Lemonteed">
           </a>
           <button class="info-link" type="button" data-info-open>+ INFO</button>
-          <button class="random-artifact" type="button" data-random-artifact>SHOW ME SOMETHING STUPID</button>
+          <button class="random-artifact" type="button" data-random-artifact>Show Me Something Lemonteed</button>
         </div>
         <nav class="category-nav" aria-label="Portfolio categories">
           <span class="nav-label">Categories</span>
@@ -55,7 +49,7 @@
         </nav>
       </aside>
       <main class="content" id="gallery">
-        <section class="gallery" data-gallery aria-label="What If gallery">
+        <section class="gallery" data-gallery data-gallery-page data-gallery-category="what-if" data-gallery-title="What If" aria-label="What If gallery">
         </section>
       </main>
     </div>
