@@ -536,6 +536,274 @@ const galleryItems = [
     ]
   },
   {
+    "id": "mwf-009",
+    "title": "The Wand of Low Battery",
+    "category": "Memetic Warfare",
+    "categorySlug": "memetic-warfare",
+    "categoryLabel": "Memetic Warfare",
+    "series": "",
+    "image": "/images/memetic-warfare/the-wand-of-low-battery.webp",
+    "thumbnail": "/images/memetic-warfare/the-wand-of-low-battery-768.webp",
+    "alt": "The Wand of Low Battery concept image from the Lemonteed Memetic Warfare archive",
+    "description": "A cracked smartphone lashed to a carved wooden wand, screen permanently stuck at 1%. Used by techno-mages to cast panic spells, dim blue light, and summon the ancient phrase: \"Does anyone have a charger?\"",
+    "origin": "",
+    "dateCreated": "2026-05-11",
+    "tags": [
+      "image-generation"
+    ],
+    "dangerLevel": "Cursed",
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [
+      "mwf-010",
+      "mwf-011",
+      "mwf-012",
+      "mwf-008",
+      "mwf-006",
+      "mwf-003"
+    ],
+    "featured": false,
+    "width": 1080,
+    "height": 1350,
+    "sizes": {
+      "small": "/images/memetic-warfare/the-wand-of-low-battery.webp",
+      "medium": "/images/memetic-warfare/the-wand-of-low-battery.webp",
+      "large": "/images/memetic-warfare/the-wand-of-low-battery.webp"
+    },
+    "variants": [
+      {
+        "width": 320,
+        "url": "/images/memetic-warfare/the-wand-of-low-battery-320.webp"
+      },
+      {
+        "width": 480,
+        "url": "/images/memetic-warfare/the-wand-of-low-battery-480.webp"
+      },
+      {
+        "width": 640,
+        "url": "/images/memetic-warfare/the-wand-of-low-battery-640.webp"
+      },
+      {
+        "width": 768,
+        "url": "/images/memetic-warfare/the-wand-of-low-battery-768.webp"
+      },
+      {
+        "width": 900,
+        "url": "/images/memetic-warfare/the-wand-of-low-battery-900.webp"
+      },
+      {
+        "width": 1024,
+        "url": "/images/memetic-warfare/the-wand-of-low-battery-1024.webp"
+      },
+      {
+        "width": 1080,
+        "url": "/images/memetic-warfare/the-wand-of-low-battery.webp"
+      }
+    ]
+  },
+  {
+    "id": "mwf-010",
+    "title": "The Bluetooth Longbow",
+    "category": "Memetic Warfare",
+    "categorySlug": "memetic-warfare",
+    "categoryLabel": "Memetic Warfare",
+    "series": "",
+    "image": "/images/memetic-warfare/the-bluetooth-longbow.webp",
+    "thumbnail": "/images/memetic-warfare/the-bluetooth-longbow-768.webp",
+    "alt": "The Bluetooth Longbow concept image from the Lemonteed Memetic Warfare archive",
+    "description": "A wooden archer's bow reinforced with old Bluetooth headsets, dangling earbuds, and frayed charging cables as string wraps. Its arrows never fly exactly where expected, but they do pair with nearby enemies without permission.",
+    "origin": "",
+    "dateCreated": "2026-05-11",
+    "tags": [
+      "image-generation"
+    ],
+    "dangerLevel": "Cursed",
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [
+      "mwf-009",
+      "mwf-011",
+      "mwf-012",
+      "mwf-007",
+      "mwf-001",
+      "mwf-005"
+    ],
+    "featured": false,
+    "width": 1080,
+    "height": 1350,
+    "sizes": {
+      "small": "/images/memetic-warfare/the-bluetooth-longbow.webp",
+      "medium": "/images/memetic-warfare/the-bluetooth-longbow.webp",
+      "large": "/images/memetic-warfare/the-bluetooth-longbow.webp"
+    },
+    "variants": [
+      {
+        "width": 320,
+        "url": "/images/memetic-warfare/the-bluetooth-longbow-320.webp"
+      },
+      {
+        "width": 480,
+        "url": "/images/memetic-warfare/the-bluetooth-longbow-480.webp"
+      },
+      {
+        "width": 640,
+        "url": "/images/memetic-warfare/the-bluetooth-longbow-640.webp"
+      },
+      {
+        "width": 768,
+        "url": "/images/memetic-warfare/the-bluetooth-longbow-768.webp"
+      },
+      {
+        "width": 900,
+        "url": "/images/memetic-warfare/the-bluetooth-longbow-900.webp"
+      },
+      {
+        "width": 1024,
+        "url": "/images/memetic-warfare/the-bluetooth-longbow-1024.webp"
+      },
+      {
+        "width": 1080,
+        "url": "/images/memetic-warfare/the-bluetooth-longbow.webp"
+      }
+    ]
+  },
+  {
+    "id": "mwf-011",
+    "title": "The Spellbook of Corrupted Files",
+    "category": "Memetic Warfare",
+    "categorySlug": "memetic-warfare",
+    "categoryLabel": "Memetic Warfare",
+    "series": "",
+    "image": "/images/memetic-warfare/the-spellbook-of-corrupted-files.webp",
+    "thumbnail": "/images/memetic-warfare/the-spellbook-of-corrupted-files-768.webp",
+    "alt": "The Spellbook of Corrupted Files concept image from the Lemonteed Memetic Warfare archive",
+    "description": "A chunky external hard drive bound inside a leather spellbook cover, cables hanging out like forbidden bookmarks. Mages open it to cast lost documents, glitched memories, and one devastating spell called \"Final_Final_REAL_v7.\"",
+    "origin": "",
+    "dateCreated": "2026-05-11",
+    "tags": [
+      "image-generation"
+    ],
+    "dangerLevel": "Cursed",
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [
+      "mwf-009",
+      "mwf-010",
+      "mwf-012",
+      "mwf-006",
+      "mwf-003",
+      "mwf-008"
+    ],
+    "featured": false,
+    "width": 1080,
+    "height": 1350,
+    "sizes": {
+      "small": "/images/memetic-warfare/the-spellbook-of-corrupted-files.webp",
+      "medium": "/images/memetic-warfare/the-spellbook-of-corrupted-files.webp",
+      "large": "/images/memetic-warfare/the-spellbook-of-corrupted-files.webp"
+    },
+    "variants": [
+      {
+        "width": 320,
+        "url": "/images/memetic-warfare/the-spellbook-of-corrupted-files-320.webp"
+      },
+      {
+        "width": 480,
+        "url": "/images/memetic-warfare/the-spellbook-of-corrupted-files-480.webp"
+      },
+      {
+        "width": 640,
+        "url": "/images/memetic-warfare/the-spellbook-of-corrupted-files-640.webp"
+      },
+      {
+        "width": 768,
+        "url": "/images/memetic-warfare/the-spellbook-of-corrupted-files-768.webp"
+      },
+      {
+        "width": 900,
+        "url": "/images/memetic-warfare/the-spellbook-of-corrupted-files-900.webp"
+      },
+      {
+        "width": 1024,
+        "url": "/images/memetic-warfare/the-spellbook-of-corrupted-files-1024.webp"
+      },
+      {
+        "width": 1080,
+        "url": "/images/memetic-warfare/the-spellbook-of-corrupted-files.webp"
+      }
+    ]
+  },
+  {
+    "id": "mwf-012",
+    "title": "The Webcam Crossbow",
+    "category": "Memetic Warfare",
+    "categorySlug": "memetic-warfare",
+    "categoryLabel": "Memetic Warfare",
+    "series": "",
+    "image": "/images/memetic-warfare/the-webcam-crossbow.webp",
+    "thumbnail": "/images/memetic-warfare/the-webcam-crossbow-768.webp",
+    "alt": "The Webcam Crossbow concept image from the Lemonteed Memetic Warfare archive",
+    "description": "A compact crossbow built from webcam mounts, laptop hinges, and old conference-call cameras. Archers use it for surveillance shots, cursed zoom-ins, and precision attacks that somehow always happen while muted.",
+    "origin": "",
+    "dateCreated": "2026-05-11",
+    "tags": [
+      "image-generation"
+    ],
+    "dangerLevel": "Cursed",
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [
+      "mwf-009",
+      "mwf-010",
+      "mwf-011",
+      "mwf-002",
+      "mwf-004",
+      "mwf-007"
+    ],
+    "featured": false,
+    "width": 1080,
+    "height": 1350,
+    "sizes": {
+      "small": "/images/memetic-warfare/the-webcam-crossbow.webp",
+      "medium": "/images/memetic-warfare/the-webcam-crossbow.webp",
+      "large": "/images/memetic-warfare/the-webcam-crossbow.webp"
+    },
+    "variants": [
+      {
+        "width": 320,
+        "url": "/images/memetic-warfare/the-webcam-crossbow-320.webp"
+      },
+      {
+        "width": 480,
+        "url": "/images/memetic-warfare/the-webcam-crossbow-480.webp"
+      },
+      {
+        "width": 640,
+        "url": "/images/memetic-warfare/the-webcam-crossbow-640.webp"
+      },
+      {
+        "width": 768,
+        "url": "/images/memetic-warfare/the-webcam-crossbow-768.webp"
+      },
+      {
+        "width": 900,
+        "url": "/images/memetic-warfare/the-webcam-crossbow-900.webp"
+      },
+      {
+        "width": 1024,
+        "url": "/images/memetic-warfare/the-webcam-crossbow-1024.webp"
+      },
+      {
+        "width": 1080,
+        "url": "/images/memetic-warfare/the-webcam-crossbow.webp"
+      }
+    ]
+  },
+  {
     "id": "what-028",
     "title": "Google Maps x Tinder",
     "category": "What If",

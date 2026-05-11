@@ -17,6 +17,6 @@ window.galleryCategories = [
   {
     "slug": "memetic-warfare",
     "label": "Memetic Warfare",
-    "path": "/?category=memetic-warfare"
+    "path": "/memetic-warfare/"
   }
 ];
