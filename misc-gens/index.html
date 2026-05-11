@@ -44,6 +44,7 @@
             <img class="brand__logo" src="/images/lemonteedlogo-250.webp" srcset="/images/lemonteedlogo-250.webp 250w, /images/lemonteedlogo-456.webp 456w" sizes="160px" width="456" height="96" alt="Lemonteed">
           </a>
           <button class="info-link" type="button" data-info-open>+ INFO</button>
+          <button class="random-artifact" type="button" data-random-artifact>SHOW ME SOMETHING STUPID</button>
         </div>
         <nav class="category-nav" aria-label="Portfolio categories">
           <span class="nav-label">Categories</span>
@@ -55,15 +56,6 @@
       </aside>
       <main class="content" id="gallery">
         <section class="gallery" data-gallery aria-label="Misc Gens gallery">
-          <figure class="gallery__item">
-            <button class="gallery__button" type="button" data-index="0" aria-label="Open Anthropic Mow">
-              <span class="gallery__frame">
-                <img class="gallery__image" src="/images/misc-gens/anthropic-mow-768.webp" srcset="/images/misc-gens/anthropic-mow-320.webp 320w, /images/misc-gens/anthropic-mow-480.webp 480w, /images/misc-gens/anthropic-mow-640.webp 640w, /images/misc-gens/anthropic-mow-768.webp 768w, /images/misc-gens/anthropic-mow-900.webp 900w, /images/misc-gens/anthropic-mow-1024.webp 1024w, /images/misc-gens/anthropic-mow.webp 1448w" sizes="(max-width: 700px) 100vw, (max-width: 1050px) 45vw, (max-width: 1500px) 30vw, 22vw" width="1448" height="1086" alt="Anthropic Mow from the Lemonteed Misc Gens series" decoding="async" fetchpriority="high" loading="eager">
-                <span class="gallery__caption">Anthropic Mow / Misc Gens</span>
-              </span>
-            </button>
-            <figcaption class="visually-hidden">Anthropic Mow / Misc Gens</figcaption>
-          </figure>
         </section>
       </main>
     </div>
@@ -81,13 +73,16 @@
     </div>
     <div class="lightbox" data-lightbox hidden>
       <div class="lightbox__backdrop" data-lightbox-close></div>
-      <div class="lightbox__dialog" role="dialog" aria-modal="true" aria-label="Image preview">
+      <div class="lightbox__dialog" role="dialog" aria-modal="true" aria-labelledby="lightbox-title">
         <button class="lightbox__button lightbox__button--close" type="button" data-lightbox-close aria-label="Close preview">X</button>
         <button class="lightbox__button lightbox__button--prev" type="button" data-lightbox-prev aria-label="Previous image">Prev</button>
-        <figure class="lightbox__figure">
-          <img data-lightbox-image alt="">
-          <figcaption data-lightbox-caption></figcaption>
-        </figure>
+        <div class="lightbox__stage">
+          <figure class="lightbox__figure">
+            <img data-lightbox-image alt="">
+            <figcaption data-lightbox-caption></figcaption>
+          </figure>
+          <aside class="artifact-panel" data-artifact-details aria-label="Artifact record"></aside>
+        </div>
         <button class="lightbox__button lightbox__button--next" type="button" data-lightbox-next aria-label="Next image">Next</button>
       </div>
     </div>

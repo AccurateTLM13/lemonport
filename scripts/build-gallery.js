@@ -24,13 +24,31 @@ function readCategories() {
 }
 
 function publicProject(project) {
+  const categorySlug = project.category || "";
+  const categoryLabel = project.categoryLabel || categorySlug;
+  const image = project.image || (project.sizes && (project.sizes.large || project.sizes.medium || project.sizes.small)) || "";
+  const thumbnail = project.thumbnail || (Array.isArray(project.variants)
+    && ((project.variants.find((variant) => Number(variant.width) === 768) || project.variants[0] || {}).url))
+    || image;
+
   return {
     id: project.id,
     title: project.title,
-    category: project.category,
-    categoryLabel: project.categoryLabel,
-    description: project.description || "",
+    category: categoryLabel,
+    categorySlug,
+    categoryLabel,
+    series: project.series || "",
+    image,
+    thumbnail,
     alt: project.alt,
+    description: project.description || "Experimental visual artifact from the Lemonteed archive.",
+    origin: project.origin || "",
+    dateCreated: project.dateCreated || (project.createdAt ? project.createdAt.slice(0, 10) : ""),
+    tags: Array.isArray(project.tags) ? project.tags : [],
+    dangerLevel: project.dangerLevel || "",
+    toolsUsed: Array.isArray(project.toolsUsed) ? project.toolsUsed : [],
+    related: Array.isArray(project.related) ? project.related : [],
+    featured: project.featured === true,
     width: project.width,
     height: project.height,
     sizes: project.sizes,
@@ -50,7 +68,7 @@ function build() {
       path: category.path || `/?category=${category.slug}`
     }));
 
-  const output = `window.galleryItems = ${JSON.stringify(projects, null, 2)};\n`;
+  const output = `const galleryItems = ${JSON.stringify(projects, null, 2)};\n\nwindow.galleryItems = galleryItems;\n\nfunction normalizeGalleryValue(value) {\n  return String(value || \"\").trim().toLowerCase();\n}\n\nfunction galleryCategoryMatches(item, category) {\n  const requested = normalizeGalleryValue(category);\n\n  if (!requested || requested === \"all\") {\n    return true;\n  }\n\n  return normalizeGalleryValue(item.categorySlug) === requested\n    || normalizeGalleryValue(item.category) === requested\n    || normalizeGalleryValue(item.categoryLabel) === requested;\n}\n\nfunction getItemById(id) {\n  return galleryItems.find((item) => item.id === id) || null;\n}\n\nfunction getItemsByCategory(category) {\n  return galleryItems.filter((item) => galleryCategoryMatches(item, category));\n}\n\nfunction getItemsByTag(tag) {\n  const requested = normalizeGalleryValue(tag);\n  return galleryItems.filter((item) => Array.isArray(item.tags) && item.tags.some((itemTag) => normalizeGalleryValue(itemTag) === requested));\n}\n\nfunction getFeaturedItems() {\n  return galleryItems.filter((item) => item.featured === true);\n}\n\nfunction getRelatedItems(id) {\n  const item = getItemById(id);\n\n  if (!item || !Array.isArray(item.related)) {\n    return [];\n  }\n\n  return item.related.map(getItemById).filter(Boolean);\n}\n\nwindow.getItemById = getItemById;\nwindow.getItemsByCategory = getItemsByCategory;\nwindow.getItemsByTag = getItemsByTag;\nwindow.getFeaturedItems = getFeaturedItems;\nwindow.getRelatedItems = getRelatedItems;\nwindow.galleryHelpers = {\n  getItemById,\n  getItemsByCategory,\n  getItemsByTag,\n  getFeaturedItems,\n  getRelatedItems\n};\n`;
   const categoriesOutput = `window.galleryCategories = ${JSON.stringify(categories, null, 2)};\n`;
   fs.writeFileSync(outputFile, output);
   fs.writeFileSync(categoriesOutputFile, categoriesOutput);

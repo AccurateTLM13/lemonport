@@ -333,7 +333,7 @@ button:disabled {
 
 .project-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
 }
 
@@ -344,6 +344,71 @@ button:disabled {
 
 .project-card.is-hidden {
   opacity: 0.56;
+}
+
+.project-editor {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  gap: 12px;
+}
+
+.project-editor label {
+  display: grid;
+  gap: 6px;
+}
+
+.project-editor label span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.project-editor input,
+.project-editor select,
+.project-editor textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  color: var(--ink);
+  background: var(--panel);
+  font-size: 13px;
+}
+
+.project-editor input,
+.project-editor select {
+  min-height: 38px;
+  padding: 8px 10px;
+}
+
+.project-editor textarea {
+  resize: vertical;
+  padding: 10px;
+  line-height: 1.4;
+}
+
+.project-editor .checkbox-row {
+  align-self: end;
+  min-height: 38px;
+}
+
+.editor-actions {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.editor-actions button {
+  min-height: 36px;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  background: transparent;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 @media (max-width: 860px) {
@@ -366,7 +431,8 @@ button:disabled {
     padding: 18px 14px;
   }
 
-  .project-form {
+  .project-form,
+  .project-editor {
     grid-template-columns: 1fr;
   }
 

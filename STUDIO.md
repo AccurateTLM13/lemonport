@@ -32,6 +32,7 @@ http://localhost:5173/
 - Writes project records to `content/projects.json`.
 - Rebuilds `assets/js/gallery-data.js`.
 - Lets you hide/show projects without deleting files.
+- Lets you edit gallery metadata for existing projects, including title, category, series, alt text, description, origin, date, tags, danger level, tools used, related IDs, featured state, and image/thumbnail paths.
 - Lets you delete a project and its generated image set.
 - Writes category records to `content/categories.json`.
 

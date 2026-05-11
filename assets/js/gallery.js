@@ -8,6 +8,8 @@
   const lightbox = document.querySelector("[data-lightbox]");
   const lightboxImage = document.querySelector("[data-lightbox-image]");
   const lightboxCaption = document.querySelector("[data-lightbox-caption]");
+  const artifactDetails = document.querySelector("[data-artifact-details]");
+  const randomButtons = Array.from(document.querySelectorAll("[data-random-artifact]"));
   const lightboxCloseButtons = Array.from(document.querySelectorAll("[data-lightbox-close]"));
   const lightboxPrev = document.querySelector("[data-lightbox-prev]");
   const lightboxNext = document.querySelector("[data-lightbox-next]");
@@ -62,7 +64,7 @@
     const height = item.height || 1500;
     const tone = item.tone || "#d8d6cf";
     const text = escapeHtml(item.title);
-    const label = escapeHtml(item.categoryLabel);
+    const label = escapeHtml(item.categoryLabel || item.category);
     const svg = `
       <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
         <rect width="100%" height="100%" fill="${tone}"/>
@@ -100,7 +102,8 @@
         .sort((a, b) => a.descriptorWidth - b.descriptorWidth);
     }
 
-    const source = item.sizes.large || item.sizes.medium || item.sizes.small;
+    const sizes = item.sizes || {};
+    const source = item.image || item.thumbnail || sizes.large || sizes.medium || sizes.small;
     const intrinsicWidth = item.width || 1600;
     const widths = [320, 480, 640, 768, 900, 1024, 1600];
     const seen = new Set();
@@ -123,7 +126,8 @@
 
   function sourcesFor(item) {
     const candidates = imageCandidates(item);
-    const fallback = item.sizes.large || item.sizes.medium || item.sizes.small;
+    const sizes = item.sizes || {};
+    const fallback = item.image || item.thumbnail || sizes.large || sizes.medium || sizes.small;
     const preferred = candidates.find((candidate) => candidate.descriptorWidth === 768)
       || candidates.find((candidate) => candidate.descriptorWidth === 900)
       || candidates.find((candidate) => candidate.descriptorWidth >= 640)
@@ -168,6 +172,162 @@
     }
   }
 
+  function getItemById(id) {
+    if (typeof window.getItemById === "function") {
+      return window.getItemById(id);
+    }
+
+    return allItems.find((item) => item.id === id) || null;
+  }
+
+  function getCurrentItem() {
+    return activeItems[activeIndex] || null;
+  }
+
+  function getRelatedItems(id) {
+    if (typeof window.getRelatedItems === "function") {
+      return window.getRelatedItems(id);
+    }
+
+    const item = getItemById(id);
+
+    if (!item || !Array.isArray(item.related)) {
+      return [];
+    }
+
+    return item.related.map(getItemById).filter(Boolean);
+  }
+
+  function formatDate(dateString) {
+    if (!dateString) {
+      return "";
+    }
+
+    const date = new Date(`${dateString}T00:00:00`);
+
+    if (Number.isNaN(date.getTime())) {
+      return dateString;
+    }
+
+    return date.toLocaleDateString("en", {
+      year: "numeric",
+      month: "short",
+      day: "numeric"
+    });
+  }
+
+  function formatTags(tags) {
+    return Array.isArray(tags) ? tags.filter(Boolean).join(", ") : "";
+  }
+
+  function formatTools(tools) {
+    return Array.isArray(tools) ? tools.filter(Boolean).join(", ") : "";
+  }
+
+  function hasRecordValue(value) {
+    return Array.isArray(value) ? value.length > 0 : Boolean(String(value || "").trim());
+  }
+
+  function appendRecordField(container, label, value) {
+    if (!hasRecordValue(value)) {
+      return;
+    }
+
+    const field = document.createElement("div");
+    field.className = "artifact-record__field";
+
+    const labelElement = document.createElement("dt");
+    labelElement.textContent = label;
+
+    const valueElement = document.createElement("dd");
+    valueElement.textContent = value;
+
+    field.append(labelElement, valueElement);
+    container.append(field);
+  }
+
+  function relatedThumbnail(item) {
+    const variants = Array.isArray(item.variants) ? item.variants : [];
+    const preferred = variants.find((variant) => Number(variant.width) === 320) || variants[0];
+    const sizes = item.sizes || {};
+    return item.thumbnail || (preferred && preferred.url) || sizes.small || item.image || "";
+  }
+
+  function renderRelatedItems(container, item) {
+    const relatedItems = getRelatedItems(item.id);
+
+    if (!relatedItems.length) {
+      return;
+    }
+
+    const section = document.createElement("section");
+    section.className = "artifact-related";
+
+    const heading = document.createElement("h3");
+    heading.textContent = "Related Artifacts";
+    section.append(heading);
+
+    const list = document.createElement("div");
+    list.className = "artifact-related__list";
+
+    relatedItems.forEach((relatedItem) => {
+      const button = document.createElement("button");
+      button.className = "artifact-related__button";
+      button.type = "button";
+      button.dataset.relatedId = relatedItem.id;
+
+      const thumbnail = relatedThumbnail(relatedItem);
+
+      if (thumbnail) {
+        const img = document.createElement("img");
+        img.src = thumbnail;
+        img.alt = "";
+        img.loading = "lazy";
+        img.decoding = "async";
+        button.append(img);
+      }
+
+      const title = document.createElement("span");
+      title.textContent = relatedItem.title;
+      button.append(title);
+      list.append(button);
+    });
+
+    section.append(list);
+    container.append(section);
+  }
+
+  function renderArtifactDetails(item) {
+    if (!artifactDetails || !item) {
+      return;
+    }
+
+    artifactDetails.textContent = "";
+
+    const eyebrow = document.createElement("p");
+    eyebrow.className = "artifact-record__eyebrow";
+    eyebrow.textContent = "Artifact Record";
+
+    const title = document.createElement("h2");
+    title.id = "lightbox-title";
+    title.textContent = item.title;
+
+    const record = document.createElement("dl");
+    record.className = "artifact-record";
+
+    appendRecordField(record, "Category", item.categoryLabel || item.category);
+    appendRecordField(record, "Series", item.series);
+    appendRecordField(record, "Date Created", formatDate(item.dateCreated));
+    appendRecordField(record, "Description", item.description);
+    appendRecordField(record, "Origin", item.origin);
+    appendRecordField(record, "Danger Level", item.dangerLevel);
+    appendRecordField(record, "Tags", formatTags(item.tags));
+    appendRecordField(record, "Tools Used", formatTools(item.toolsUsed));
+
+    artifactDetails.append(eyebrow, title, record);
+    renderRelatedItems(artifactDetails, item);
+  }
+
   function renderCategoryNav() {
     if (!categoryNav || !allCategories.length) {
       return;
@@ -204,7 +364,7 @@
       return shuffledItems;
     }
 
-    return shuffled(allItems.filter((item) => item.category === category), true);
+    return shuffled(allItems.filter((item) => item.categorySlug === category || item.category === category), true);
   }
 
   function setActiveControls(category) {
@@ -235,11 +395,19 @@
     activeItems.forEach((item, index) => {
       const figure = document.createElement("figure");
       figure.className = "gallery__item";
+      figure.dataset.id = item.id;
+      figure.dataset.category = item.categorySlug || item.category || "";
+      figure.dataset.series = item.series || "";
+      figure.dataset.tags = Array.isArray(item.tags) ? item.tags.join(" ") : "";
 
       const button = document.createElement("button");
       button.className = "gallery__button";
       button.type = "button";
       button.dataset.index = String(index);
+      button.dataset.id = item.id;
+      button.dataset.category = item.categorySlug || item.category || "";
+      button.dataset.series = item.series || "";
+      button.dataset.tags = Array.isArray(item.tags) ? item.tags.join(" ") : "";
       button.setAttribute("aria-label", `Open ${item.title}`);
 
       const frame = document.createElement("span");
@@ -275,11 +443,11 @@
 
       const caption = document.createElement("span");
       caption.className = "gallery__caption";
-      caption.textContent = `${item.title} / ${item.categoryLabel}`;
+      caption.textContent = `${item.title} / ${item.categoryLabel || item.category}`;
 
       const screenReaderCaption = document.createElement("figcaption");
       screenReaderCaption.className = "visually-hidden";
-      screenReaderCaption.textContent = `${item.title} / ${item.categoryLabel}`;
+      screenReaderCaption.textContent = `${item.title} / ${item.categoryLabel || item.category}`;
 
       frame.append(img, caption);
       button.append(frame);
@@ -297,7 +465,7 @@
     lightboxImage.alt = item.alt;
     lightboxImage.width = item.width;
     lightboxImage.height = item.height;
-    lightboxCaption.textContent = `${item.title} / ${item.categoryLabel}`;
+    lightboxCaption.textContent = `${item.title} / ${item.categoryLabel || item.category}`;
 
     lightboxImage.onerror = () => {
       lightboxImage.onerror = null;
@@ -305,18 +473,68 @@
     };
   }
 
+  function setLightboxItem(item) {
+    setLightboxImage(item);
+    renderArtifactDetails(item);
+  }
+
+  function hashItemId() {
+    const hash = window.location.hash.slice(1);
+
+    if (!hash) {
+      return "";
+    }
+
+    if (hash.startsWith("artifact=")) {
+      return decodeURIComponent(hash.replace(/^artifact=/, ""));
+    }
+
+    return decodeURIComponent(hash);
+  }
+
+  function setHashForItem(item) {
+    history.replaceState(null, "", `#${encodeURIComponent(item.id)}`);
+  }
+
+  function indexInActiveItems(id) {
+    return activeItems.findIndex((item) => item.id === id);
+  }
+
+  function openItem(item) {
+    if (!lightbox || !item) {
+      return;
+    }
+
+    const visibleIndex = indexInActiveItems(item.id);
+
+    if (visibleIndex >= 0) {
+      activeIndex = visibleIndex;
+    } else {
+      activeItems = shuffledItems;
+      activeIndex = indexInActiveItems(item.id);
+    }
+
+    if (activeIndex < 0) {
+      return;
+    }
+
+    if (lightbox.hidden) {
+      lastFocusedElement = document.activeElement;
+    }
+
+    setLightboxItem(activeItems[activeIndex]);
+    lightbox.hidden = false;
+    document.body.style.overflow = "hidden";
+    lightbox.querySelector(".lightbox__button--close").focus();
+    setHashForItem(activeItems[activeIndex]);
+  }
+
   function openLightbox(index) {
     if (!lightbox || !activeItems[index]) {
       return;
     }
 
-    activeIndex = index;
-    lastFocusedElement = document.activeElement;
-    setLightboxImage(activeItems[activeIndex]);
-    lightbox.hidden = false;
-    document.body.style.overflow = "hidden";
-    lightbox.querySelector(".lightbox__button--close").focus();
-    history.replaceState(null, "", `#${activeItems[activeIndex].id}`);
+    openItem(activeItems[index]);
   }
 
   function closeLightbox() {
@@ -361,22 +579,44 @@
     }
 
     activeIndex = (activeIndex + step + activeItems.length) % activeItems.length;
-    setLightboxImage(activeItems[activeIndex]);
-    history.replaceState(null, "", `#${activeItems[activeIndex].id}`);
+    setLightboxItem(activeItems[activeIndex]);
+    setHashForItem(activeItems[activeIndex]);
   }
 
   function openFromHash() {
-    const id = window.location.hash.slice(1);
+    const id = hashItemId();
 
     if (!id) {
       return;
     }
 
-    const index = activeItems.findIndex((item) => item.id === id);
+    const item = getItemById(id);
 
-    if (index >= 0) {
-      openLightbox(index);
+    if (item) {
+      openItem(item);
     }
+  }
+
+  function isTypingTarget(target) {
+    return Boolean(target && target.closest("input, textarea, select, [contenteditable='true']"));
+  }
+
+  function openRandomArtifact() {
+    const pool = activeItems.length ? activeItems : allItems;
+
+    if (!pool.length) {
+      return;
+    }
+
+    const current = getCurrentItem();
+    let candidates = pool;
+
+    if (current && pool.length > 1) {
+      candidates = pool.filter((item) => item.id !== current.id);
+    }
+
+    const item = candidates[Math.floor(Math.random() * candidates.length)];
+    openItem(item);
   }
 
   function bindCategoryLinks() {
@@ -411,6 +651,22 @@
     button.addEventListener("click", closeLightbox);
   });
 
+  randomButtons.forEach((button) => {
+    button.addEventListener("click", openRandomArtifact);
+  });
+
+  if (artifactDetails) {
+    artifactDetails.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-related-id]");
+
+      if (!button) {
+        return;
+      }
+
+      openItem(getItemById(button.dataset.relatedId));
+    });
+  }
+
   if (infoOpen) {
     infoOpen.addEventListener("click", openInfoPanel);
   }
@@ -428,6 +684,12 @@
   }
 
   document.addEventListener("keydown", (event) => {
+    if ((event.key === "r" || event.key === "R") && !event.metaKey && !event.ctrlKey && !event.altKey && !isTypingTarget(event.target)) {
+      event.preventDefault();
+      openRandomArtifact();
+      return;
+    }
+
     if (lightbox && !lightbox.hidden) {
       trapFocus(event, lightboxDialog);
 

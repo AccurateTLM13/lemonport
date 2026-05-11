@@ -8,11 +8,13 @@
   const fileInput = document.querySelector("[data-file-input]");
   const pendingList = document.querySelector("[data-pending-list]");
   const filterButtons = Array.from(document.querySelectorAll("[data-filter]"));
+  const dangerLevels = ["", "Low", "Medium", "High", "Cursed", "Forbidden"];
 
   let projects = [];
   let categories = [];
   let activeFilter = "all";
   let pendingItems = [];
+  let activeEditorId = "";
 
   function setStatus(message) {
     status.textContent = message || "";
@@ -57,6 +59,50 @@
   function categoryLabel(category) {
     const match = categories.find((item) => item.slug === category);
     return match ? match.label : "Lemonteed";
+  }
+
+  function sourceImage(project) {
+    const sizes = project.sizes || {};
+    return project.image || sizes.large || sizes.medium || sizes.small || "";
+  }
+
+  function sourceThumbnail(project) {
+    if (project.thumbnail) {
+      return project.thumbnail;
+    }
+
+    const variants = Array.isArray(project.variants) ? project.variants : [];
+    const preferred = variants.find((variant) => Number(variant.width) === 768) || variants[0];
+    return preferred ? preferred.url : sourceImage(project);
+  }
+
+  function csvValue(value) {
+    return Array.isArray(value) ? value.join(", ") : "";
+  }
+
+  function renderCategorySelect(project) {
+    return `
+      <select name="category" required>
+        ${categories
+          .filter((category) => category.visible !== false)
+          .map((category) => `
+            <option value="${escapeHtml(category.slug)}"${category.slug === project.category ? " selected" : ""}>${escapeHtml(category.label)}</option>
+          `)
+          .join("")}
+      </select>
+    `;
+  }
+
+  function renderDangerSelect(project) {
+    return `
+      <select name="dangerLevel">
+        ${dangerLevels
+          .map((level) => `
+            <option value="${escapeHtml(level)}"${level === (project.dangerLevel || "") ? " selected" : ""}>${escapeHtml(level || "Unset")}</option>
+          `)
+          .join("")}
+      </select>
+    `;
   }
 
   function suggestedAlt(title, category) {
@@ -143,10 +189,11 @@
     list.textContent = "";
 
     filteredProjects().forEach((project) => {
+      const isEditing = project.id === activeEditorId;
       const card = document.createElement("article");
       card.className = `project-card${project.visible === false ? " is-hidden" : ""}`;
       card.innerHTML = `
-        <img src="${escapeHtml(project.sizes.small)}" alt="">
+        <img src="${escapeHtml(sourceThumbnail(project))}" alt="">
         <div>
           <h3>${escapeHtml(project.title)}</h3>
           <div class="project-meta">
@@ -158,9 +205,74 @@
         </div>
         ${project.description ? `<p class="project-description">${escapeHtml(project.description)}</p>` : ""}
         <div class="project-actions">
+          <button type="button" data-edit="${escapeHtml(project.id)}">${isEditing ? "Close Edit" : "Edit Metadata"}</button>
           <button type="button" data-toggle="${escapeHtml(project.id)}">${project.visible === false ? "Show" : "Hide"}</button>
           <button class="delete-button" type="button" data-delete="${escapeHtml(project.id)}">Delete</button>
         </div>
+        ${isEditing ? `
+          <form class="project-editor" data-edit-form="${escapeHtml(project.id)}">
+            <label>
+              <span>Title</span>
+              <input name="title" type="text" value="${escapeHtml(project.title)}" required>
+            </label>
+            <label>
+              <span>Category</span>
+              ${renderCategorySelect(project)}
+            </label>
+            <label>
+              <span>Series</span>
+              <input name="series" type="text" value="${escapeHtml(project.series)}">
+            </label>
+            <label>
+              <span>Date created</span>
+              <input name="dateCreated" type="date" value="${escapeHtml(project.dateCreated || "")}">
+            </label>
+            <label>
+              <span>Danger level</span>
+              ${renderDangerSelect(project)}
+            </label>
+            <label class="checkbox-row">
+              <input name="featured" type="checkbox"${project.featured ? " checked" : ""}>
+              <span>Featured</span>
+            </label>
+            <label class="span-2">
+              <span>Description</span>
+              <textarea name="description" rows="3">${escapeHtml(project.description)}</textarea>
+            </label>
+            <label class="span-2">
+              <span>Origin</span>
+              <textarea name="origin" rows="3">${escapeHtml(project.origin)}</textarea>
+            </label>
+            <label class="span-2">
+              <span>Alt text</span>
+              <textarea name="alt" rows="3" required>${escapeHtml(project.alt)}</textarea>
+            </label>
+            <label>
+              <span>Tags</span>
+              <input name="tags" type="text" value="${escapeHtml(csvValue(project.tags))}" placeholder="tag-one, tag-two">
+            </label>
+            <label>
+              <span>Tools used</span>
+              <input name="toolsUsed" type="text" value="${escapeHtml(csvValue(project.toolsUsed))}" placeholder="ChatGPT, Photoshop">
+            </label>
+            <label>
+              <span>Related IDs</span>
+              <input name="related" type="text" value="${escapeHtml(csvValue(project.related))}" placeholder="other-item-id, another-item-id">
+            </label>
+            <label>
+              <span>Image path</span>
+              <input name="image" type="text" value="${escapeHtml(sourceImage(project))}">
+            </label>
+            <label class="span-2">
+              <span>Thumbnail path</span>
+              <input name="thumbnail" type="text" value="${escapeHtml(sourceThumbnail(project))}">
+            </label>
+            <div class="editor-actions">
+              <button type="submit">Save Metadata</button>
+              <button type="button" data-cancel-edit="${escapeHtml(project.id)}">Cancel</button>
+            </div>
+          </form>
+        ` : ""}
       `;
       list.append(card);
     });
@@ -283,8 +395,22 @@
   }
 
   async function handleListClick(event) {
+    const edit = event.target.closest("[data-edit]");
+    const cancelEdit = event.target.closest("[data-cancel-edit]");
     const toggle = event.target.closest("[data-toggle]");
     const remove = event.target.closest("[data-delete]");
+
+    if (edit) {
+      activeEditorId = activeEditorId === edit.dataset.edit ? "" : edit.dataset.edit;
+      render();
+      return;
+    }
+
+    if (cancelEdit) {
+      activeEditorId = "";
+      render();
+      return;
+    }
 
     if (toggle) {
       const project = projects.find((item) => item.id === toggle.dataset.toggle);
@@ -317,6 +443,56 @@
     }
   }
 
+  function parseCsv(value) {
+    return String(value || "")
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+
+  async function handleListSubmit(event) {
+    const editForm = event.target.closest("[data-edit-form]");
+
+    if (!editForm) {
+      return;
+    }
+
+    event.preventDefault();
+    const project = projects.find((item) => item.id === editForm.dataset.editForm);
+
+    if (!project) {
+      return;
+    }
+
+    const formData = new FormData(editForm);
+    setStatus(`Saving ${project.title}...`);
+
+    await api(`/api/projects/${project.id}`, {
+      method: "PATCH",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        title: formData.get("title"),
+        category: formData.get("category"),
+        series: formData.get("series"),
+        image: formData.get("image"),
+        thumbnail: formData.get("thumbnail"),
+        alt: formData.get("alt"),
+        description: formData.get("description"),
+        origin: formData.get("origin"),
+        dateCreated: formData.get("dateCreated"),
+        tags: parseCsv(formData.get("tags")),
+        dangerLevel: formData.get("dangerLevel"),
+        toolsUsed: parseCsv(formData.get("toolsUsed")),
+        related: parseCsv(formData.get("related")),
+        featured: formData.get("featured") === "on"
+      })
+    });
+
+    activeEditorId = "";
+    await loadProjects();
+    setStatus("Metadata saved and gallery rebuilt.");
+  }
+
   filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
       activeFilter = button.dataset.filter;
@@ -340,6 +516,9 @@
   form.addEventListener("submit", submitProject);
   list.addEventListener("click", (event) => {
     handleListClick(event).catch((error) => setStatus(error.message));
+  });
+  list.addEventListener("submit", (event) => {
+    handleListSubmit(event).catch((error) => setStatus(error.message));
   });
 
   renderPending();

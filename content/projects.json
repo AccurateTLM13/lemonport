@@ -15,10 +15,10 @@
       "medium": "/images/memetic-warfare/the-tamagotchi-pendant-of-doom.webp",
       "large": "/images/memetic-warfare/the-tamagotchi-pendant-of-doom.webp"
     },
-    "featured": false,
+    "featured": true,
     "visible": true,
     "createdAt": "2026-05-10T20:29:14.171Z",
-    "updatedAt": "2026-05-10T20:29:14.171Z",
+    "updatedAt": "2026-05-11T01:28:58.747Z",
     "variants": [
       {
         "width": 320,
@@ -69,7 +69,7 @@
     "featured": false,
     "visible": true,
     "createdAt": "2026-05-10T20:29:13.068Z",
-    "updatedAt": "2026-05-10T20:29:13.068Z",
+    "updatedAt": "2026-05-11T01:29:15.245Z",
     "variants": [
       {
         "width": 320,
@@ -120,7 +120,7 @@
     "featured": false,
     "visible": true,
     "createdAt": "2026-05-10T20:29:11.752Z",
-    "updatedAt": "2026-05-10T20:29:11.752Z",
+    "updatedAt": "2026-05-11T01:29:29.773Z",
     "variants": [
       {
         "width": 320,

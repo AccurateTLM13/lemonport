@@ -130,6 +130,27 @@ function assertCategory(category) {
   }
 }
 
+function categoryMetaFor(category) {
+  const meta = loadCategories().find((item) => item.slug === category && item.visible !== false);
+
+  if (!meta) {
+    throw new Error("Choose a valid category.");
+  }
+
+  return meta;
+}
+
+function arrayField(value) {
+  if (Array.isArray(value)) {
+    return value.map((item) => String(item || "").trim()).filter(Boolean);
+  }
+
+  return String(value || "")
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
 function decodeDataUrl(dataUrl) {
   const match = String(dataUrl || "").match(/^data:([^;]+);base64,(.+)$/);
 
@@ -245,14 +266,24 @@ async function createProject(request, response) {
   fs.unlinkSync(tempFile);
 
   const imageUrl = publicImagePath(category, `${slug}.webp`);
+  const thumbnail = image.variants.find((variant) => Number(variant.width) === 768) || image.variants[0];
   const project = {
     id: nextId(projects, category),
     title,
     slug,
     category,
     categoryLabel: categoryMeta.label,
+    series: String(body.series || "").trim(),
     year: String(body.year || "").trim(),
     description: String(body.description || "").trim(),
+    origin: String(body.origin || "").trim(),
+    dateCreated: String(body.dateCreated || "").trim(),
+    tags: arrayField(body.tags),
+    dangerLevel: String(body.dangerLevel || "").trim(),
+    toolsUsed: arrayField(body.toolsUsed),
+    related: arrayField(body.related),
+    image: imageUrl,
+    thumbnail: thumbnail ? thumbnail.url : imageUrl,
     alt,
     width: image.dimensions.width,
     height: image.dimensions.height,
@@ -313,9 +344,33 @@ async function updateProject(request, response, id) {
     return;
   }
 
-  ["title", "year", "description", "alt"].forEach((field) => {
+  if (Object.prototype.hasOwnProperty.call(body, "category")) {
+    const category = String(body.category || "").trim();
+    const categoryMeta = categoryMetaFor(category);
+    project.category = category;
+    project.categoryLabel = categoryMeta.label;
+  }
+
+  [
+    "title",
+    "series",
+    "image",
+    "thumbnail",
+    "alt",
+    "description",
+    "origin",
+    "dateCreated",
+    "dangerLevel",
+    "year"
+  ].forEach((field) => {
     if (Object.prototype.hasOwnProperty.call(body, field)) {
       project[field] = String(body[field] || "").trim();
+    }
+  });
+
+  ["tags", "toolsUsed", "related"].forEach((field) => {
+    if (Object.prototype.hasOwnProperty.call(body, field)) {
+      project[field] = arrayField(body[field]);
     }
   });
 
