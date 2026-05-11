@@ -11,6 +11,7 @@ const studioDir = path.join(root, "studio");
 const port = Number(process.env.PORT || 5173);
 const maxBodyBytes = 80 * 1024 * 1024;
 const galleryWidths = [320, 480, 640, 768, 900, 1024, 1600];
+const statuses = ["Draft", "Ready", "Published"];
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
@@ -149,6 +150,32 @@ function arrayField(value) {
     .split(",")
     .map((item) => item.trim())
     .filter(Boolean);
+}
+
+function imageValue(project) {
+  return project.image || (project.sizes && (project.sizes.large || project.sizes.medium || project.sizes.small)) || "";
+}
+
+function thumbnailValue(project) {
+  return project.thumbnail || (Array.isArray(project.variants) && project.variants.length ? project.variants[0].url : "") || "";
+}
+
+function hasRequiredImages(project) {
+  return Boolean(imageValue(project) && thumbnailValue(project));
+}
+
+function normalizeStatus(status, project) {
+  const requested = statuses.includes(status) ? status : "";
+
+  if (!requested) {
+    return hasRequiredImages(project) ? "Published" : "Draft";
+  }
+
+  if ((requested === "Ready" || requested === "Published") && !hasRequiredImages(project)) {
+    throw new Error("Image required before this entry can be published.");
+  }
+
+  return requested;
 }
 
 function decodeDataUrl(dataUrl) {
@@ -294,6 +321,7 @@ async function createProject(request, response) {
     },
     variants: image.variants,
     featured: Boolean(body.featured),
+    status: "Published",
     visible: body.visible !== false,
     createdAt: now,
     updatedAt: now
@@ -382,9 +410,111 @@ async function updateProject(request, response, id) {
     project.featured = Boolean(body.featured);
   }
 
+  if (Object.prototype.hasOwnProperty.call(body, "status")) {
+    project.status = normalizeStatus(String(body.status || "").trim(), project);
+  } else if (project.status) {
+    project.status = normalizeStatus(project.status, project);
+  }
+
   project.updatedAt = new Date().toISOString();
   saveProjects(projects);
   sendJson(response, 200, { project });
+}
+
+function entriesFromImportPayload(payload) {
+  const entries = Array.isArray(payload) ? payload : Array.isArray(payload.entries) ? payload.entries : Array.isArray(payload.projects) ? payload.projects : null;
+
+  if (!entries) {
+    throw new Error("Unsupported structure. Import a JSON array, or an object with entries/projects.");
+  }
+
+  return entries;
+}
+
+function normalizeImportedEntry(entry, categories) {
+  if (!entry || typeof entry !== "object") {
+    throw new Error("Each imported entry must be an object.");
+  }
+
+  const id = String(entry.id || "").trim();
+  const title = String(entry.title || "").trim();
+  const category = String(entry.category || entry.categorySlug || "").trim();
+  const categoryMeta = categories.find((item) => item.slug === category);
+
+  if (!id || !title || !category) {
+    throw new Error("Imported entries require id, title, and category.");
+  }
+
+  if (!categoryMeta) {
+    throw new Error(`Unknown category for ${id}: ${category}. Add the series first.`);
+  }
+
+  const normalized = {
+    ...entry,
+    id,
+    title,
+    slug: String(entry.slug || slugify(title)).trim(),
+    category,
+    categoryLabel: categoryMeta.label,
+    series: String(entry.series || "").trim(),
+    year: String(entry.year || "").trim(),
+    description: String(entry.description || "").trim(),
+    origin: String(entry.origin || "").trim(),
+    dateCreated: String(entry.dateCreated || "").trim(),
+    tags: arrayField(entry.tags),
+    dangerLevel: String(entry.dangerLevel || "").trim(),
+    toolsUsed: arrayField(entry.toolsUsed),
+    related: arrayField(entry.related),
+    image: String(entry.image || "").trim(),
+    thumbnail: String(entry.thumbnail || "").trim(),
+    alt: String(entry.alt || `${title} from the Lemonteed archive`).trim(),
+    sizes: entry.sizes && typeof entry.sizes === "object" ? entry.sizes : {},
+    variants: Array.isArray(entry.variants) ? entry.variants : [],
+    featured: entry.featured === true,
+    visible: entry.visible !== false,
+    createdAt: String(entry.createdAt || "").trim(),
+    updatedAt: new Date().toISOString()
+  };
+
+  normalized.status = normalizeStatus(String(entry.status || "").trim(), normalized);
+  return normalized;
+}
+
+async function importProjects(request, response) {
+  const body = await readJsonBody(request);
+  const mode = body.mode === "replace" ? "replace" : "merge";
+  const categories = loadCategories();
+  const importedEntries = entriesFromImportPayload(body.data || body);
+  const seen = new Set();
+  const normalized = importedEntries.map((entry) => {
+    const normalizedEntry = normalizeImportedEntry(entry, categories);
+
+    if (seen.has(normalizedEntry.id)) {
+      throw new Error(`Duplicate imported id: ${normalizedEntry.id}`);
+    }
+
+    seen.add(normalizedEntry.id);
+    return normalizedEntry;
+  });
+
+  if (mode === "replace") {
+    saveProjects(normalized);
+    sendJson(response, 200, { imported: normalized.length, mode });
+    return;
+  }
+
+  const projects = loadProjects();
+  const byId = new Map(projects.map((project) => [project.id, project]));
+
+  normalized.forEach((entry) => {
+    byId.set(entry.id, {
+      ...(byId.get(entry.id) || {}),
+      ...entry
+    });
+  });
+
+  saveProjects(Array.from(byId.values()));
+  sendJson(response, 200, { imported: normalized.length, mode });
 }
 
 function deleteProject(response, id) {
@@ -439,6 +569,11 @@ async function route(request, response) {
 
     if (request.method === "POST" && url.pathname === "/api/projects") {
       await createProject(request, response);
+      return;
+    }
+
+    if (request.method === "POST" && url.pathname === "/api/import") {
+      await importProjects(request, response);
       return;
     }
 

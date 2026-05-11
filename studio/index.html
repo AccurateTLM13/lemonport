@@ -75,14 +75,36 @@
           <p><span data-count>0</span> projects. Hide keeps files. Delete removes the record and image set.</p>
         </div>
 
-        <div class="toolbar">
-          <button type="button" data-filter="all" class="is-active">All</button>
-          <button type="button" data-filter="visible">Visible</button>
-          <button type="button" data-filter="hidden">Hidden</button>
+        <div class="studio-tools">
+          <div class="toolbar" aria-label="Entry filters">
+            <button type="button" data-filter="all" class="is-active">All</button>
+            <button type="button" data-filter="visible">Visible</button>
+            <button type="button" data-filter="hidden">Hidden</button>
+          </div>
+
+          <div class="toolbar" aria-label="Entry views">
+            <button type="button" data-view="cards" class="is-active">Card View</button>
+            <button type="button" data-view="list">List View</button>
+          </div>
+
+          <div class="import-export-tools">
+            <button type="button" data-export>Export Data</button>
+            <select data-import-mode aria-label="Import mode">
+              <option value="merge">Merge import</option>
+              <option value="replace">Replace all</option>
+            </select>
+            <input type="file" accept="application/json,.json" data-import-file aria-label="Import JSON data">
+            <button type="button" data-import>Import Data</button>
+          </div>
         </div>
 
         <div class="project-list" data-project-list></div>
       </section>
     </main>
+
+    <div class="edit-layer" data-edit-layer hidden>
+      <div class="edit-scrim" aria-hidden="true"></div>
+      <aside class="edit-drawer" data-edit-drawer role="dialog" aria-modal="true" aria-labelledby="edit-title"></aside>
+    </div>
   </body>
 </html>

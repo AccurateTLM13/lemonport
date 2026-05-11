@@ -56,9 +56,23 @@ function publicProject(project) {
   };
 }
 
+function hasPublishableImage(project) {
+  const image = project.image || (project.sizes && (project.sizes.large || project.sizes.medium || project.sizes.small));
+  const thumbnail = project.thumbnail || (Array.isArray(project.variants) && project.variants.length);
+  return Boolean(image && thumbnail);
+}
+
+function effectiveStatus(project) {
+  if (project.status) {
+    return project.status;
+  }
+
+  return hasPublishableImage(project) ? "Published" : "Draft";
+}
+
 function build() {
   const projects = readProjects()
-    .filter((project) => project.visible !== false)
+    .filter((project) => project.visible !== false && effectiveStatus(project) === "Published")
     .map(publicProject);
   const categories = readCategories()
     .filter((category) => category.visible !== false)

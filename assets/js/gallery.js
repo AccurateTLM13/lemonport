@@ -368,7 +368,7 @@
       return shuffledItems;
     }
 
-    return shuffled(allItems.filter((item) => item.categorySlug === category || item.category === category), true);
+    return shuffled(allItems.filter((item) => item.categorySlug === category || item.category === category || item.categoryLabel === category), true);
   }
 
   function setActiveControls(category) {
