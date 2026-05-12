@@ -1,0 +1,79 @@
+# Agent Rules
+
+This repository is a static public site plus a local Studio tool. Treat `LEMONTEED_ENGINE.md` as the architecture source before making broad changes.
+
+## Do
+
+- Preserve the static public-site architecture.
+- Prefer existing plain HTML, CSS, and JavaScript patterns.
+- Use `content/projects.json` and `content/categories.json` as content source of truth.
+- Rebuild generated gallery data with `node scripts/build-gallery.js` after content JSON changes that affect the public gallery.
+- Keep Studio local/private unless the owner explicitly approves a public admin architecture.
+- Validate JSON before and after manual data edits.
+- Preserve stable artifact `id` values.
+- Treat category `slug` values as references used by project records, filtering, paths, and image folders.
+- Keep Memetic Warfare game data consistent with referenced gallery artifact IDs.
+- Check for existing user changes before editing files.
+
+## Do Not
+
+- Do not manually edit `assets/js/gallery-data.js` or `assets/js/gallery-categories.js` as source data.
+- Do not replace the public site with a frontend framework.
+- Do not introduce a public server requirement for the deployed site.
+- Do not add a database for public content unless the owner approves an architecture change.
+- Do not rename project IDs casually.
+- Do not rename slugs without considering public URLs, hashes, image paths, and related references.
+- Do not delete image files unless the corresponding project metadata change is intentional.
+- Do not deploy or expose `scripts/studio-server.js` as a public CMS.
+- Do not treat `memetic-warfare/index.html` as a normal gallery-only page.
+
+## Generated File Policy
+
+Generated files should be regenerated, not hand-maintained.
+
+Current generated public data files:
+
+- `assets/js/gallery-data.js`
+- `assets/js/gallery-categories.js`
+
+Current generated media files:
+
+- responsive `*.webp` variants under `images/**`
+- resized logo files such as `images/lemonteedlogo-250.webp` and `images/lemonteedlogo-456.webp`
+
+## Content Change Checklist
+
+Before finishing a content or Studio-related change:
+
+- Confirm `content/projects.json` is valid JSON.
+- Confirm `content/categories.json` is valid JSON.
+- Confirm category references use real category slugs.
+- Confirm related item references point to existing project IDs.
+- Confirm published projects have image and thumbnail data.
+- Run the relevant build or explain why it was not run.
+
+## Local Commands
+
+Start Studio:
+
+```powershell
+node scripts\studio-server.js
+```
+
+Rebuild gallery data:
+
+```powershell
+node scripts\build-gallery.js
+```
+
+Regenerate image variants:
+
+```powershell
+node scripts\generate-image-variants.js
+```
+
+Dry-run image variant generation:
+
+```powershell
+node scripts\generate-image-variants.js --dry-run
+```
