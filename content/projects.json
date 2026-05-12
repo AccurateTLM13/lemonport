@@ -5,7 +5,7 @@
     "slug": "the-tamagotchi-pendant-of-doom",
     "category": "memetic-warfare",
     "categoryLabel": "Memetic Warfare",
-    "year": "",
+    "year": "2026",
     "description": "A grimy pink virtual pet encased in rope, beads, and ritual bindings. Worn around the neck like a cursed charm, it grows stronger the longer you neglect it.",
     "alt": "The Tamagotchi Pendant Of Doom concept image from the Lemonteed Memetic Warfare archive",
     "width": 1080,
@@ -18,7 +18,7 @@
     "featured": true,
     "visible": true,
     "createdAt": "2026-05-10T20:29:14.171Z",
-    "updatedAt": "2026-05-11T13:28:21.932Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -49,14 +49,18 @@
         "url": "/images/memetic-warfare/the-tamagotchi-pendant-of-doom.webp"
       }
     ],
-    "series": "",
+    "series": "Ancient Tech Weapons",
     "image": "/images/memetic-warfare/the-tamagotchi-pendant-of-doom.webp",
     "thumbnail": "/images/memetic-warfare/the-tamagotchi-pendant-of-doom-768.webp",
-    "origin": "",
+    "origin": "Created in ChatGPT as part of the Ancient Tech Weapons / Memetic Warfare visual series.",
     "dateCreated": "2026-05-08",
     "dangerLevel": "Cursed",
     "tags": [
-      "image-generation"
+      "image-generation",
+      "ancient-tech-weapons",
+      "nostalgia",
+      "cursed-object",
+      "concept-art"
     ],
     "toolsUsed": [
       "ChatGPT Images 2.0"
@@ -68,7 +72,8 @@
       "mwf-004",
       "mwf-005",
       "mwf-006"
-    ]
+    ],
+    "status": "Published"
   },
   {
     "id": "mwf-007",
@@ -76,7 +81,7 @@
     "slug": "the-discman-shield",
     "category": "memetic-warfare",
     "categoryLabel": "Memetic Warfare",
-    "year": "",
+    "year": "2026",
     "description": "A silver portable CD player reinforced with shattered compact discs around the rim. Lightweight, reflective, and fragile in the most dramatic way possible — one solid hit and it skips forever.",
     "alt": "The Discman Shield concept image from the Lemonteed Memetic Warfare archive",
     "width": 1080,
@@ -89,7 +94,7 @@
     "featured": false,
     "visible": true,
     "createdAt": "2026-05-10T20:29:13.068Z",
-    "updatedAt": "2026-05-11T13:27:25.161Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -120,14 +125,18 @@
         "url": "/images/memetic-warfare/the-discman-shield.webp"
       }
     ],
-    "series": "",
+    "series": "Ancient Tech Weapons",
     "image": "/images/memetic-warfare/the-discman-shield.webp",
     "thumbnail": "/images/memetic-warfare/the-discman-shield-768.webp",
-    "origin": "",
+    "origin": "Created in ChatGPT as part of the Ancient Tech Weapons / Memetic Warfare visual series.",
     "dateCreated": "2026-05-08",
     "dangerLevel": "Cursed",
     "tags": [
-      "image-generation"
+      "image-generation",
+      "ancient-tech-weapons",
+      "nostalgia",
+      "cursed-object",
+      "concept-art"
     ],
     "toolsUsed": [
       "ChatGPT Images 2.0"
@@ -139,7 +148,8 @@
       "mwf-004",
       "mwf-005",
       "mwf-006"
-    ]
+    ],
+    "status": "Published"
   },
   {
     "id": "mwf-006",
@@ -147,7 +157,7 @@
     "slug": "flail-of-forgotten-passwords",
     "category": "memetic-warfare",
     "categoryLabel": "Memetic Warfare",
-    "year": "",
+    "year": "2026",
     "description": "A crude wooden handle wrapped in fraying twine, chained to a cluster of obsolete USB drives, dongles, and charging bricks. Each swing carries the spiritual weight of every login you swore you wrote down somewhere.",
     "alt": "Flail Of Forgotten Passwords concept image from the Lemonteed Memetic Warfare archive",
     "width": 1080,
@@ -160,7 +170,7 @@
     "featured": false,
     "visible": true,
     "createdAt": "2026-05-10T20:29:11.752Z",
-    "updatedAt": "2026-05-11T13:27:01.942Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -191,14 +201,18 @@
         "url": "/images/memetic-warfare/flail-of-forgotten-passwords.webp"
       }
     ],
-    "series": "",
+    "series": "Ancient Tech Weapons",
     "image": "/images/memetic-warfare/flail-of-forgotten-passwords.webp",
     "thumbnail": "/images/memetic-warfare/flail-of-forgotten-passwords-768.webp",
-    "origin": "",
+    "origin": "Created in ChatGPT as part of the Ancient Tech Weapons / Memetic Warfare visual series.",
     "dateCreated": "2026-05-08",
     "dangerLevel": "Cursed",
     "tags": [
-      "image-generation"
+      "image-generation",
+      "ancient-tech-weapons",
+      "nostalgia",
+      "cursed-object",
+      "concept-art"
     ],
     "toolsUsed": [
       "ChatGPT Images 2.0"
@@ -210,7 +224,8 @@
       "mwf-004",
       "mwf-005",
       "mwf-008"
-    ]
+    ],
+    "status": "Published"
   },
   {
     "id": "mwf-005",
@@ -218,7 +233,7 @@
     "slug": "the-vhs-greatsword",
     "category": "memetic-warfare",
     "categoryLabel": "Memetic Warfare",
-    "year": "",
+    "year": "2026",
     "description": "A massive fantasy blade built from stacked VHS tapes, duct tape, and dangling magnetic ribbon. Heavy, impractical, and emotionally devastating to anyone who remembers rewinding before returning.",
     "alt": "The VHS Greatsword concept image from the Lemonteed Memetic Warfare archive",
     "width": 1080,
@@ -231,7 +246,7 @@
     "featured": false,
     "visible": true,
     "createdAt": "2026-05-10T20:29:10.768Z",
-    "updatedAt": "2026-05-11T13:26:39.306Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -262,14 +277,18 @@
         "url": "/images/memetic-warfare/the-vhs-greatsword.webp"
       }
     ],
-    "series": "",
+    "series": "Ancient Tech Weapons",
     "image": "/images/memetic-warfare/the-vhs-greatsword.webp",
     "thumbnail": "/images/memetic-warfare/the-vhs-greatsword-768.webp",
-    "origin": "",
+    "origin": "Created in ChatGPT as part of the Ancient Tech Weapons / Memetic Warfare visual series.",
     "dateCreated": "2026-05-08",
     "dangerLevel": "Cursed",
     "tags": [
-      "image-generation"
+      "image-generation",
+      "ancient-tech-weapons",
+      "nostalgia",
+      "cursed-object",
+      "concept-art"
     ],
     "toolsUsed": [
       "ChatGPT Images 2.0"
@@ -281,7 +300,8 @@
       "mwf-004",
       "mwf-007",
       "mwf-008"
-    ]
+    ],
+    "status": "Published"
   },
   {
     "id": "mwf-004",
@@ -289,7 +309,7 @@
     "slug": "the-pager-knuckle-dusters",
     "category": "memetic-warfare",
     "categoryLabel": "Memetic Warfare",
-    "year": "",
+    "year": "2026",
     "description": "A set of brass-knuckle-style fist weapons reinforced with old pagers across the knuckle bar. Before impact, they vibrate one last time — a tiny alert from violence itself.",
     "alt": "The Pager Knuckle Dusters concept image from the Lemonteed Memetic Warfare archive",
     "width": 1080,
@@ -302,7 +322,7 @@
     "featured": false,
     "visible": true,
     "createdAt": "2026-05-10T20:29:09.601Z",
-    "updatedAt": "2026-05-11T13:26:14.841Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -333,14 +353,18 @@
         "url": "/images/memetic-warfare/the-pager-knuckle-dusters.webp"
       }
     ],
-    "series": "",
+    "series": "Ancient Tech Weapons",
     "image": "/images/memetic-warfare/the-pager-knuckle-dusters.webp",
     "thumbnail": "/images/memetic-warfare/the-pager-knuckle-dusters-768.webp",
-    "origin": "",
-    "dateCreated": "",
+    "origin": "Created in ChatGPT as part of the Ancient Tech Weapons / Memetic Warfare visual series.",
+    "dateCreated": "2026-05-08",
     "dangerLevel": "Cursed",
     "tags": [
-      "image-generation"
+      "image-generation",
+      "ancient-tech-weapons",
+      "nostalgia",
+      "cursed-object",
+      "concept-art"
     ],
     "toolsUsed": [
       "ChatGPT Images 2.0"
@@ -352,7 +376,8 @@
       "mwf-007",
       "mwf-005",
       "mwf-006"
-    ]
+    ],
+    "status": "Published"
   },
   {
     "id": "mwf-003",
@@ -360,7 +385,7 @@
     "slug": "the-keyboard-war-club",
     "category": "memetic-warfare",
     "categoryLabel": "Memetic Warfare",
-    "year": "",
+    "year": "2026",
     "description": "A battered beige keyboard strapped to a wooden handle with rusted bands, rope, and nails. The missing keys suggest years of battle, but CTRL, ALT, and DEL remain untouched like sacred runes of emergency reset.",
     "alt": "The Keyboard War Club concept image from the Lemonteed Memetic Warfare archive",
     "width": 1080,
@@ -373,7 +398,7 @@
     "featured": false,
     "visible": true,
     "createdAt": "2026-05-10T20:29:08.560Z",
-    "updatedAt": "2026-05-11T13:25:50.205Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -404,14 +429,18 @@
         "url": "/images/memetic-warfare/the-keyboard-war-club.webp"
       }
     ],
-    "series": "",
+    "series": "Ancient Tech Weapons",
     "image": "/images/memetic-warfare/the-keyboard-war-club.webp",
     "thumbnail": "/images/memetic-warfare/the-keyboard-war-club-768.webp",
-    "origin": "",
+    "origin": "Created in ChatGPT as part of the Ancient Tech Weapons / Memetic Warfare visual series.",
     "dateCreated": "2026-05-08",
     "dangerLevel": "Cursed",
     "tags": [
-      "image-generation"
+      "image-generation",
+      "ancient-tech-weapons",
+      "nostalgia",
+      "cursed-object",
+      "concept-art"
     ],
     "toolsUsed": [
       "ChatGPT Images 2.0"
@@ -423,7 +452,8 @@
       "mwf-004",
       "mwf-005",
       "mwf-006"
-    ]
+    ],
+    "status": "Published"
   },
   {
     "id": "mwf-002",
@@ -431,7 +461,7 @@
     "slug": "the-blackberry-dagger",
     "category": "memetic-warfare",
     "categoryLabel": "Memetic Warfare",
-    "year": "",
+    "year": "2026",
     "description": "A corporate assassin’s relic: a BlackBerry handset forms the grip, with its tiny keyboard still intact and a sharp metal blade extending from the base. Built for silent calendar invites and hostile takeovers.",
     "alt": "The Blackberry Dagger concept image from the Lemonteed Memetic Warfare archive",
     "width": 1080,
@@ -444,7 +474,7 @@
     "featured": false,
     "visible": true,
     "createdAt": "2026-05-10T20:29:07.589Z",
-    "updatedAt": "2026-05-11T13:25:27.942Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -475,14 +505,18 @@
         "url": "/images/memetic-warfare/the-blackberry-dagger.webp"
       }
     ],
-    "series": "",
+    "series": "Ancient Tech Weapons",
     "image": "/images/memetic-warfare/the-blackberry-dagger.webp",
     "thumbnail": "/images/memetic-warfare/the-blackberry-dagger-768.webp",
-    "origin": "",
+    "origin": "Created in ChatGPT as part of the Ancient Tech Weapons / Memetic Warfare visual series.",
     "dateCreated": "2026-05-08",
     "dangerLevel": "Cursed",
     "tags": [
-      "image-generation"
+      "image-generation",
+      "ancient-tech-weapons",
+      "nostalgia",
+      "cursed-object",
+      "concept-art"
     ],
     "toolsUsed": [
       "ChatGPT Images 2.0"
@@ -494,7 +528,8 @@
       "mwf-004",
       "mwf-005",
       "mwf-006"
-    ]
+    ],
+    "status": "Published"
   },
   {
     "id": "mwf-001",
@@ -502,7 +537,7 @@
     "slug": "the-aol-disc-throwing-stars",
     "category": "memetic-warfare",
     "categoryLabel": "Memetic Warfare",
-    "year": "",
+    "year": "2026",
     "description": "Sharpened trial CDs cut into iridescent shuriken, still flashing promises of hundreds of free internet hours. Cheap, plentiful, and deadly to both enemies and childhood nostalgia.",
     "alt": "The AOL Disc Throwing Stars concept image from the Lemonteed Memetic Warfare archive",
     "width": 1080,
@@ -515,7 +550,7 @@
     "featured": false,
     "visible": true,
     "createdAt": "2026-05-10T20:29:06.612Z",
-    "updatedAt": "2026-05-11T13:25:08.282Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -546,14 +581,18 @@
         "url": "/images/memetic-warfare/the-aol-disc-throwing-stars.webp"
       }
     ],
-    "series": "",
+    "series": "Ancient Tech Weapons",
     "image": "/images/memetic-warfare/the-aol-disc-throwing-stars.webp",
     "thumbnail": "/images/memetic-warfare/the-aol-disc-throwing-stars-768.webp",
-    "origin": "",
+    "origin": "Created in ChatGPT as part of the Ancient Tech Weapons / Memetic Warfare visual series.",
     "dateCreated": "2026-05-08",
     "dangerLevel": "Cursed",
     "tags": [
-      "image-generation"
+      "image-generation",
+      "ancient-tech-weapons",
+      "nostalgia",
+      "cursed-object",
+      "concept-art"
     ],
     "toolsUsed": [
       "ChatGPT Images 2.0"
@@ -565,7 +604,8 @@
       "mwf-004",
       "mwf-005",
       "mwf-006"
-    ]
+    ],
+    "status": "Published"
   },
   {
     "id": "mwf-009",
@@ -573,7 +613,7 @@
     "slug": "the-wand-of-low-battery",
     "category": "memetic-warfare",
     "categoryLabel": "Memetic Warfare",
-    "year": "",
+    "year": "2026",
     "description": "A cracked smartphone lashed to a carved wooden wand, screen permanently stuck at 1%. Used by techno-mages to cast panic spells, dim blue light, and summon the ancient phrase: \"Does anyone have a charger?\"",
     "alt": "The Wand of Low Battery concept image from the Lemonteed Memetic Warfare archive",
     "width": 1080,
@@ -586,7 +626,7 @@
     "featured": false,
     "visible": true,
     "createdAt": "2026-05-11T18:55:07.605Z",
-    "updatedAt": "2026-05-11T18:55:07.605Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -617,14 +657,18 @@
         "url": "/images/memetic-warfare/the-wand-of-low-battery.webp"
       }
     ],
-    "series": "",
+    "series": "Ancient Tech Weapons",
     "image": "/images/memetic-warfare/the-wand-of-low-battery.webp",
     "thumbnail": "/images/memetic-warfare/the-wand-of-low-battery-768.webp",
-    "origin": "",
+    "origin": "Created in ChatGPT as part of the Ancient Tech Weapons / Memetic Warfare visual series.",
     "dateCreated": "2026-05-11",
     "dangerLevel": "Cursed",
     "tags": [
-      "image-generation"
+      "image-generation",
+      "ancient-tech-weapons",
+      "nostalgia",
+      "cursed-object",
+      "concept-art"
     ],
     "toolsUsed": [
       "ChatGPT Images 2.0"
@@ -636,7 +680,8 @@
       "mwf-008",
       "mwf-006",
       "mwf-003"
-    ]
+    ],
+    "status": "Published"
   },
   {
     "id": "mwf-010",
@@ -644,7 +689,7 @@
     "slug": "the-bluetooth-longbow",
     "category": "memetic-warfare",
     "categoryLabel": "Memetic Warfare",
-    "year": "",
+    "year": "2026",
     "description": "A wooden archer's bow reinforced with old Bluetooth headsets, dangling earbuds, and frayed charging cables as string wraps. Its arrows never fly exactly where expected, but they do pair with nearby enemies without permission.",
     "alt": "The Bluetooth Longbow concept image from the Lemonteed Memetic Warfare archive",
     "width": 1080,
@@ -657,7 +702,7 @@
     "featured": false,
     "visible": true,
     "createdAt": "2026-05-11T18:55:07.605Z",
-    "updatedAt": "2026-05-11T18:55:07.605Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -688,14 +733,18 @@
         "url": "/images/memetic-warfare/the-bluetooth-longbow.webp"
       }
     ],
-    "series": "",
+    "series": "Ancient Tech Weapons",
     "image": "/images/memetic-warfare/the-bluetooth-longbow.webp",
     "thumbnail": "/images/memetic-warfare/the-bluetooth-longbow-768.webp",
-    "origin": "",
+    "origin": "Created in ChatGPT as part of the Ancient Tech Weapons / Memetic Warfare visual series.",
     "dateCreated": "2026-05-11",
     "dangerLevel": "Cursed",
     "tags": [
-      "image-generation"
+      "image-generation",
+      "ancient-tech-weapons",
+      "nostalgia",
+      "cursed-object",
+      "concept-art"
     ],
     "toolsUsed": [
       "ChatGPT Images 2.0"
@@ -707,7 +756,8 @@
       "mwf-007",
       "mwf-001",
       "mwf-005"
-    ]
+    ],
+    "status": "Published"
   },
   {
     "id": "mwf-011",
@@ -715,7 +765,7 @@
     "slug": "the-spellbook-of-corrupted-files",
     "category": "memetic-warfare",
     "categoryLabel": "Memetic Warfare",
-    "year": "",
+    "year": "2026",
     "description": "A chunky external hard drive bound inside a leather spellbook cover, cables hanging out like forbidden bookmarks. Mages open it to cast lost documents, glitched memories, and one devastating spell called \"Final_Final_REAL_v7.\"",
     "alt": "The Spellbook of Corrupted Files concept image from the Lemonteed Memetic Warfare archive",
     "width": 1080,
@@ -728,7 +778,7 @@
     "featured": false,
     "visible": true,
     "createdAt": "2026-05-11T18:55:07.605Z",
-    "updatedAt": "2026-05-11T18:56:30.956Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -759,14 +809,18 @@
         "url": "/images/memetic-warfare/the-spellbook-of-corrupted-files.webp"
       }
     ],
-    "series": "",
+    "series": "Ancient Tech Weapons",
     "image": "/images/memetic-warfare/the-spellbook-of-corrupted-files.webp",
     "thumbnail": "/images/memetic-warfare/the-spellbook-of-corrupted-files-768.webp",
-    "origin": "",
+    "origin": "Created in ChatGPT as part of the Ancient Tech Weapons / Memetic Warfare visual series.",
     "dateCreated": "2026-05-11",
     "dangerLevel": "Cursed",
     "tags": [
-      "image-generation"
+      "image-generation",
+      "ancient-tech-weapons",
+      "nostalgia",
+      "cursed-object",
+      "concept-art"
     ],
     "toolsUsed": [
       "ChatGPT Images 2.0"
@@ -778,7 +832,8 @@
       "mwf-006",
       "mwf-003",
       "mwf-008"
-    ]
+    ],
+    "status": "Published"
   },
   {
     "id": "mwf-012",
@@ -786,7 +841,7 @@
     "slug": "the-webcam-crossbow",
     "category": "memetic-warfare",
     "categoryLabel": "Memetic Warfare",
-    "year": "",
+    "year": "2026",
     "description": "A compact crossbow built from webcam mounts, laptop hinges, and old conference-call cameras. Archers use it for surveillance shots, cursed zoom-ins, and precision attacks that somehow always happen while muted.",
     "alt": "The Webcam Crossbow concept image from the Lemonteed Memetic Warfare archive",
     "width": 1080,
@@ -799,7 +854,7 @@
     "featured": false,
     "visible": true,
     "createdAt": "2026-05-11T18:55:07.605Z",
-    "updatedAt": "2026-05-11T18:55:07.605Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -830,14 +885,18 @@
         "url": "/images/memetic-warfare/the-webcam-crossbow.webp"
       }
     ],
-    "series": "",
+    "series": "Ancient Tech Weapons",
     "image": "/images/memetic-warfare/the-webcam-crossbow.webp",
     "thumbnail": "/images/memetic-warfare/the-webcam-crossbow-768.webp",
-    "origin": "",
+    "origin": "Created in ChatGPT as part of the Ancient Tech Weapons / Memetic Warfare visual series.",
     "dateCreated": "2026-05-11",
     "dangerLevel": "Cursed",
     "tags": [
-      "image-generation"
+      "image-generation",
+      "ancient-tech-weapons",
+      "nostalgia",
+      "cursed-object",
+      "concept-art"
     ],
     "toolsUsed": [
       "ChatGPT Images 2.0"
@@ -849,7 +908,8 @@
       "mwf-002",
       "mwf-004",
       "mwf-007"
-    ]
+    ],
+    "status": "Published"
   },
   {
     "id": "what-028",
@@ -857,7 +917,7 @@
     "slug": "google-maps-x-tinder",
     "category": "what-if",
     "categoryLabel": "What If",
-    "year": "",
+    "year": "2026",
     "description": "What if Google Maps integrated with Tinder allowing you connect on the road?",
     "alt": "Google Maps with two users and a accept or decline options on rerouting to a Buc-ee's mid drive.",
     "width": 941,
@@ -870,7 +930,7 @@
     "featured": false,
     "visible": true,
     "createdAt": "2026-05-10T20:11:50.976Z",
-    "updatedAt": "2026-05-10T20:11:50.976Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -896,7 +956,30 @@
         "width": 941,
         "url": "/images/what-if/google-maps-x-tinder.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire",
+      "social-app"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/google-maps-x-tinder.webp",
+    "thumbnail": "/images/what-if/google-maps-x-tinder-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-025",
+      "what-026",
+      "what-027"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-027",
@@ -904,7 +987,7 @@
     "slug": "netflix-with-comments",
     "category": "what-if",
     "categoryLabel": "What If",
-    "year": "",
+    "year": "2026",
     "description": "What if Netflix had comments?",
     "alt": "Netflix TV application with a visible comment section on a TV show called Inheritance.",
     "width": 1672,
@@ -917,7 +1000,7 @@
     "featured": false,
     "visible": true,
     "createdAt": "2026-05-10T20:08:12.693Z",
-    "updatedAt": "2026-05-10T20:08:12.693Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -951,7 +1034,31 @@
         "width": 1672,
         "url": "/images/what-if/netflix-with-comments.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire",
+      "streaming-ui"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/netflix-with-comments.webp",
+    "thumbnail": "/images/what-if/netflix-with-comments-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-024",
+      "what-025",
+      "what-026",
+      "what-028"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "vrg-001",
@@ -967,12 +1074,12 @@
       "large": "/images/vrg-cards/elon-blacklabel.webp"
     },
     "slug": "vrg-001",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A premium Black Label founder-style card for Elon Musk, using dark metallic framing, cinematic portrait treatment, and collectible-grade tech founder energy.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-02T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -1002,7 +1109,32 @@
         "width": 1054,
         "url": "/images/vrg-cards/elon-blacklabel.webp"
       }
-    ]
+    ],
+    "series": "VRG Cards",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "creator-card",
+      "premium-mockup",
+      "black-label",
+      "premium-card"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/vrg-cards/elon-blacklabel.webp",
+    "thumbnail": "/images/vrg-cards/elon-blacklabel-768.webp",
+    "dateCreated": "2026-05-02",
+    "related": [
+      "vrg-002",
+      "vrg-004",
+      "vrg-005",
+      "vrg-006"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "vrg-002",
@@ -1018,12 +1150,12 @@
       "large": "/images/vrg-cards/dudufolio-blacklabel.webp"
     },
     "slug": "vrg-002",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A Black Label VRG card for Dudufolio, built with premium creator-card styling, dark framing, and polished internet-native collector energy.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-02T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -1049,7 +1181,32 @@
         "width": 1024,
         "url": "/images/vrg-cards/dudufolio-blacklabel.webp"
       }
-    ]
+    ],
+    "series": "VRG Cards",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "creator-card",
+      "premium-mockup",
+      "black-label",
+      "premium-card"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/vrg-cards/dudufolio-blacklabel.webp",
+    "thumbnail": "/images/vrg-cards/dudufolio-blacklabel-768.webp",
+    "dateCreated": "2026-05-02",
+    "related": [
+      "vrg-001",
+      "vrg-004",
+      "vrg-005",
+      "vrg-006"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "vrg-003",
@@ -1065,12 +1222,12 @@
       "large": "/images/vrg-cards/0x45.webp"
     },
     "slug": "vrg-003",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A VRG creator card for 0x45, designed like a high-end digital collectible with social identity, rarity, and internet lore baked into the frame.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-02T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -1096,7 +1253,32 @@
         "width": 927,
         "url": "/images/vrg-cards/0x45.webp"
       }
-    ]
+    ],
+    "series": "VRG Cards",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "creator-card",
+      "premium-mockup"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/vrg-cards/0x45.webp",
+    "thumbnail": "/images/vrg-cards/0x45-768.webp",
+    "dateCreated": "2026-05-02",
+    "related": [
+      "vrg-007",
+      "vrg-008",
+      "vrg-009",
+      "vrg-010",
+      "vrg-011",
+      "vrg-012"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "vrg-004",
@@ -1112,12 +1294,12 @@
       "large": "/images/vrg-cards/jason-blacklabel.webp"
     },
     "slug": "vrg-004",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A premium Black Label card for Jason Levin, styled as a founder/creator collectible with sharp contrast, dark luxury framing, and social-era card culture.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-02T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -1147,7 +1329,32 @@
         "width": 1055,
         "url": "/images/vrg-cards/jason-blacklabel.webp"
       }
-    ]
+    ],
+    "series": "VRG Cards",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "creator-card",
+      "premium-mockup",
+      "black-label",
+      "premium-card"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/vrg-cards/jason-blacklabel.webp",
+    "thumbnail": "/images/vrg-cards/jason-blacklabel-768.webp",
+    "dateCreated": "2026-05-02",
+    "related": [
+      "vrg-001",
+      "vrg-002",
+      "vrg-005",
+      "vrg-006"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "vrg-005",
@@ -1163,12 +1370,12 @@
       "large": "/images/vrg-cards/iampiet-blacklabel.webp"
     },
     "slug": "vrg-005",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A Black Label VRG card for Piet, using the darker premium treatment from the creator-card series with refined collector presentation.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-02T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -1198,7 +1405,32 @@
         "width": 1055,
         "url": "/images/vrg-cards/iampiet-blacklabel.webp"
       }
-    ]
+    ],
+    "series": "VRG Cards",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "creator-card",
+      "premium-mockup",
+      "black-label",
+      "premium-card"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/vrg-cards/iampiet-blacklabel.webp",
+    "thumbnail": "/images/vrg-cards/iampiet-blacklabel-768.webp",
+    "dateCreated": "2026-05-02",
+    "related": [
+      "vrg-001",
+      "vrg-002",
+      "vrg-004",
+      "vrg-006"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "vrg-006",
@@ -1214,12 +1446,12 @@
       "large": "/images/vrg-cards/jovvvian-blacklabel.webp"
     },
     "slug": "vrg-006",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A Black Label VRG card for Jovvvian, positioned as a polished internet creator collectible with dramatic framing and premium card-shop energy.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-02T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -1249,7 +1481,32 @@
         "width": 1054,
         "url": "/images/vrg-cards/jovvvian-blacklabel.webp"
       }
-    ]
+    ],
+    "series": "VRG Cards",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "creator-card",
+      "premium-mockup",
+      "black-label",
+      "premium-card"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/vrg-cards/jovvvian-blacklabel.webp",
+    "thumbnail": "/images/vrg-cards/jovvvian-blacklabel-768.webp",
+    "dateCreated": "2026-05-02",
+    "related": [
+      "vrg-001",
+      "vrg-002",
+      "vrg-004",
+      "vrg-005"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "vrg-007",
@@ -1265,12 +1522,12 @@
       "large": "/images/vrg-cards/alex.webp"
     },
     "slug": "vrg-007",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A VRG creator card for Alex, part of the internet-native card experiment turning online personalities into collectible-grade visual artifacts.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-02T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -1296,7 +1553,32 @@
         "width": 927,
         "url": "/images/vrg-cards/alex.webp"
       }
-    ]
+    ],
+    "series": "VRG Cards",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "creator-card",
+      "premium-mockup"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/vrg-cards/alex.webp",
+    "thumbnail": "/images/vrg-cards/alex-768.webp",
+    "dateCreated": "2026-05-02",
+    "related": [
+      "vrg-003",
+      "vrg-008",
+      "vrg-009",
+      "vrg-010",
+      "vrg-011",
+      "vrg-012"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "vrg-008",
@@ -1312,12 +1594,12 @@
       "large": "/images/vrg-cards/primeagen.webp"
     },
     "slug": "vrg-008",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A VRG card for The Primeagen, presented with creator-culture swagger, developer-world energy, and collectible sports-card composition.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-02T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -1351,7 +1633,32 @@
         "width": 1631,
         "url": "/images/vrg-cards/primeagen.webp"
       }
-    ]
+    ],
+    "series": "VRG Cards",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "creator-card",
+      "premium-mockup"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/vrg-cards/primeagen.webp",
+    "thumbnail": "/images/vrg-cards/primeagen-768.webp",
+    "dateCreated": "2026-05-02",
+    "related": [
+      "vrg-003",
+      "vrg-007",
+      "vrg-009",
+      "vrg-010",
+      "vrg-011",
+      "vrg-012"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "vrg-009",
@@ -1367,12 +1674,12 @@
       "large": "/images/vrg-cards/bone.webp"
     },
     "slug": "vrg-009",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A VRG creator card for Bone, styled as part of the social-card lineup where handles, personas, and internet lore become collectible objects.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-02T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -1398,7 +1705,32 @@
         "width": 927,
         "url": "/images/vrg-cards/bone.webp"
       }
-    ]
+    ],
+    "series": "VRG Cards",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "creator-card",
+      "premium-mockup"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/vrg-cards/bone.webp",
+    "thumbnail": "/images/vrg-cards/bone-768.webp",
+    "dateCreated": "2026-05-02",
+    "related": [
+      "vrg-003",
+      "vrg-007",
+      "vrg-008",
+      "vrg-010",
+      "vrg-011",
+      "vrg-012"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "vrg-010",
@@ -1414,12 +1746,12 @@
       "large": "/images/vrg-cards/bruv.webp"
     },
     "slug": "vrg-010",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A VRG creator card for Bruv, built around meme-adjacent creator identity and premium collectible card presentation.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-02T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -1445,7 +1777,32 @@
         "width": 927,
         "url": "/images/vrg-cards/bruv.webp"
       }
-    ]
+    ],
+    "series": "VRG Cards",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "creator-card",
+      "premium-mockup"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/vrg-cards/bruv.webp",
+    "thumbnail": "/images/vrg-cards/bruv-768.webp",
+    "dateCreated": "2026-05-02",
+    "related": [
+      "vrg-003",
+      "vrg-007",
+      "vrg-008",
+      "vrg-009",
+      "vrg-011",
+      "vrg-012"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "vrg-011",
@@ -1461,12 +1818,12 @@
       "large": "/images/vrg-cards/dudu.webp"
     },
     "slug": "vrg-011",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A VRG creator card for Dudu, continuing the internet-card system with bold personality framing and digital collector aesthetics.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-02T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -1492,7 +1849,32 @@
         "width": 927,
         "url": "/images/vrg-cards/dudu.webp"
       }
-    ]
+    ],
+    "series": "VRG Cards",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "creator-card",
+      "premium-mockup"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/vrg-cards/dudu.webp",
+    "thumbnail": "/images/vrg-cards/dudu-768.webp",
+    "dateCreated": "2026-05-02",
+    "related": [
+      "vrg-003",
+      "vrg-007",
+      "vrg-008",
+      "vrg-009",
+      "vrg-010",
+      "vrg-012"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "vrg-012",
@@ -1508,12 +1890,12 @@
       "large": "/images/vrg-cards/elon-multi-card.webp"
     },
     "slug": "vrg-012",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A multi-card Elon Musk VRG composition exploring variations of the founder-card format, arranged like a premium collector reveal.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-02T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -1543,7 +1925,32 @@
         "width": 1536,
         "url": "/images/vrg-cards/elon-multi-card.webp"
       }
-    ]
+    ],
+    "series": "VRG Cards",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "creator-card",
+      "premium-mockup"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/vrg-cards/elon-multi-card.webp",
+    "thumbnail": "/images/vrg-cards/elon-multi-card-768.webp",
+    "dateCreated": "2026-05-02",
+    "related": [
+      "vrg-003",
+      "vrg-007",
+      "vrg-008",
+      "vrg-009",
+      "vrg-010",
+      "vrg-011"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "vrg-013",
@@ -1559,12 +1966,12 @@
       "large": "/images/vrg-cards/eli.webp"
     },
     "slug": "vrg-013",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A VRG creator card for Eli, part of the broader experiment in turning internet personalities into polished fictional trading cards.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-02T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -1590,7 +1997,32 @@
         "width": 927,
         "url": "/images/vrg-cards/eli.webp"
       }
-    ]
+    ],
+    "series": "VRG Cards",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "creator-card",
+      "premium-mockup"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/vrg-cards/eli.webp",
+    "thumbnail": "/images/vrg-cards/eli-768.webp",
+    "dateCreated": "2026-05-02",
+    "related": [
+      "vrg-003",
+      "vrg-007",
+      "vrg-008",
+      "vrg-009",
+      "vrg-010",
+      "vrg-011"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "vrg-014",
@@ -1606,12 +2038,12 @@
       "large": "/images/vrg-cards/jean.webp"
     },
     "slug": "vrg-014",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A VRG creator card for Jean, using the series format to package social identity as a collectible visual artifact.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-02T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -1637,7 +2069,32 @@
         "width": 927,
         "url": "/images/vrg-cards/jean.webp"
       }
-    ]
+    ],
+    "series": "VRG Cards",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "creator-card",
+      "premium-mockup"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/vrg-cards/jean.webp",
+    "thumbnail": "/images/vrg-cards/jean-768.webp",
+    "dateCreated": "2026-05-02",
+    "related": [
+      "vrg-003",
+      "vrg-007",
+      "vrg-008",
+      "vrg-009",
+      "vrg-010",
+      "vrg-011"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "vrg-015",
@@ -1653,12 +2110,12 @@
       "large": "/images/vrg-cards/jwon.webp"
     },
     "slug": "vrg-015",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A VRG creator card for Jwon, designed as an internet-native collectible with clean card structure and persona-forward presentation.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-02T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -1684,7 +2141,32 @@
         "width": 927,
         "url": "/images/vrg-cards/jwon.webp"
       }
-    ]
+    ],
+    "series": "VRG Cards",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "creator-card",
+      "premium-mockup"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/vrg-cards/jwon.webp",
+    "thumbnail": "/images/vrg-cards/jwon-768.webp",
+    "dateCreated": "2026-05-02",
+    "related": [
+      "vrg-003",
+      "vrg-007",
+      "vrg-008",
+      "vrg-009",
+      "vrg-010",
+      "vrg-011"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "vrg-016",
@@ -1700,12 +2182,12 @@
       "large": "/images/vrg-cards/piet.webp"
     },
     "slug": "vrg-016",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A standard VRG creator card for Piet, separate from the Black Label variant and focused on the core collectible card format.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-02T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.823Z",
     "variants": [
       {
         "width": 320,
@@ -1731,7 +2213,32 @@
         "width": 927,
         "url": "/images/vrg-cards/piet.webp"
       }
-    ]
+    ],
+    "series": "VRG Cards",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "creator-card",
+      "premium-mockup"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/vrg-cards/piet.webp",
+    "thumbnail": "/images/vrg-cards/piet-768.webp",
+    "dateCreated": "2026-05-02",
+    "related": [
+      "vrg-003",
+      "vrg-007",
+      "vrg-008",
+      "vrg-009",
+      "vrg-010",
+      "vrg-011"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "vrg-017",
@@ -1747,12 +2254,38 @@
       "large": "/images/vrg-cards/rob.webp"
     },
     "slug": "vrg-017",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A VRG creator card draft for Rob, currently kept hidden while the broader card set continues to evolve.",
     "featured": false,
     "visible": false,
-    "createdAt": "",
-    "updatedAt": "2026-05-10T20:05:18.241Z"
+    "createdAt": "2026-05-02T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
+    "series": "VRG Cards",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "creator-card",
+      "premium-mockup"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Draft",
+    "image": "/images/vrg-cards/rob.webp",
+    "thumbnail": "/images/vrg-cards/rob.webp",
+    "dateCreated": "2026-05-02",
+    "related": [
+      "vrg-003",
+      "vrg-007",
+      "vrg-008",
+      "vrg-009",
+      "vrg-010",
+      "vrg-011"
+    ],
+    "dangerLevel": "",
+    "variants": []
   },
   {
     "id": "vrg-018",
@@ -1768,12 +2301,12 @@
       "large": "/images/vrg-cards/taoki.webp"
     },
     "slug": "vrg-018",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A VRG creator card for Taoki, framed as part of the fictional Vibe Rating & Grading collectible universe.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-02T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -1799,7 +2332,32 @@
         "width": 927,
         "url": "/images/vrg-cards/taoki.webp"
       }
-    ]
+    ],
+    "series": "VRG Cards",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "creator-card",
+      "premium-mockup"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/vrg-cards/taoki.webp",
+    "thumbnail": "/images/vrg-cards/taoki-768.webp",
+    "dateCreated": "2026-05-02",
+    "related": [
+      "vrg-003",
+      "vrg-007",
+      "vrg-008",
+      "vrg-009",
+      "vrg-010",
+      "vrg-011"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "vrg-019",
@@ -1815,12 +2373,12 @@
       "large": "/images/vrg-cards/theo.webp"
     },
     "slug": "vrg-019",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A VRG creator card for Theo, connecting dev-culture personality, product-world context, and premium collectible design language.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-02T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -1846,7 +2404,32 @@
         "width": 927,
         "url": "/images/vrg-cards/theo.webp"
       }
-    ]
+    ],
+    "series": "VRG Cards",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "creator-card",
+      "premium-mockup"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/vrg-cards/theo.webp",
+    "thumbnail": "/images/vrg-cards/theo-768.webp",
+    "dateCreated": "2026-05-02",
+    "related": [
+      "vrg-003",
+      "vrg-007",
+      "vrg-008",
+      "vrg-009",
+      "vrg-010",
+      "vrg-011"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "vrg-020",
@@ -1862,12 +2445,12 @@
       "large": "/images/vrg-cards/yacine.webp"
     },
     "slug": "vrg-020",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A VRG creator card for Yacine, built around internet founder/creator mythology and the polished VRG card treatment.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-02T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -1893,7 +2476,32 @@
         "width": 927,
         "url": "/images/vrg-cards/yacine.webp"
       }
-    ]
+    ],
+    "series": "VRG Cards",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "creator-card",
+      "premium-mockup"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/vrg-cards/yacine.webp",
+    "thumbnail": "/images/vrg-cards/yacine-768.webp",
+    "dateCreated": "2026-05-02",
+    "related": [
+      "vrg-003",
+      "vrg-007",
+      "vrg-008",
+      "vrg-009",
+      "vrg-010",
+      "vrg-011"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-001",
@@ -1909,12 +2517,12 @@
       "large": "/images/what-if/AWS-by-Fisher-Price.webp"
     },
     "slug": "what-001",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A Fisher-Price-style AWS dashboard that turns cloud infrastructure into chunky toy blocks, bright service cards, and playful enterprise chaos.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -1948,7 +2556,31 @@
         "width": 1672,
         "url": "/images/what-if/AWS-by-Fisher-Price.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire",
+      "fisher-price-aesthetic",
+      "toy-interface"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/AWS-by-Fisher-Price.webp",
+    "thumbnail": "/images/what-if/AWS-by-Fisher-Price-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-002",
+      "what-003",
+      "what-004"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-002",
@@ -1964,12 +2596,12 @@
       "large": "/images/what-if/Bank%20of%20Monopoly.webp"
     },
     "slug": "what-002",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A banking interface imagined through Monopoly logic, where accounts, property, rent, and fake-rich board game energy collide in one financial fever dream.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -1999,7 +2631,30 @@
         "width": 1448,
         "url": "/images/what-if/Bank%20of%20Monopoly.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/Bank%20of%20Monopoly.webp",
+    "thumbnail": "/images/what-if/Bank%20of%20Monopoly-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-001",
+      "what-003",
+      "what-004",
+      "what-005"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-003",
@@ -2015,12 +2670,12 @@
       "large": "/images/what-if/Bloom-Price.webp"
     },
     "slug": "what-003",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "Bloomberg Terminal rebuilt with Fisher-Price energy: serious market data forced through oversized buttons, toy-like charts, and cheerful financial panic.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -2054,7 +2709,31 @@
         "width": 1672,
         "url": "/images/what-if/Bloom-Price.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/Bloom-Price.webp",
+    "thumbnail": "/images/what-if/Bloom-Price-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-001",
+      "what-002",
+      "what-004",
+      "what-005",
+      "what-006"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-004",
@@ -2070,12 +2749,12 @@
       "large": "/images/what-if/CopilotX.webp"
     },
     "slug": "what-004",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A reimagined coding assistant interface that pushes Copilot into a sharper, more theatrical product universe built around AI-powered dev flow.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -2109,7 +2788,32 @@
         "width": 1672,
         "url": "/images/what-if/CopilotX.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/CopilotX.webp",
+    "thumbnail": "/images/what-if/CopilotX-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-001",
+      "what-002",
+      "what-003",
+      "what-005",
+      "what-006",
+      "what-007"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-005",
@@ -2125,12 +2829,12 @@
       "large": "/images/what-if/DockerbyFisherPrice.webp"
     },
     "slug": "what-005",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "Docker redesigned as a Fisher-Price toy system, turning containers, images, and deploy buttons into bright blocks for cloud toddlers with root access.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -2160,7 +2864,34 @@
         "width": 1122,
         "url": "/images/what-if/DockerbyFisherPrice.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire",
+      "fisher-price-aesthetic",
+      "toy-interface"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/DockerbyFisherPrice.webp",
+    "thumbnail": "/images/what-if/DockerbyFisherPrice-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-002",
+      "what-003",
+      "what-004",
+      "what-006",
+      "what-007",
+      "what-008"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-006",
@@ -2176,12 +2907,12 @@
       "large": "/images/what-if/Dollar%20Gucci.webp"
     },
     "slug": "what-006",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A luxury retail swap where bargain-store logic crashes into Gucci aesthetics, creating discount-bin opulence with designer-level attitude.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -2215,7 +2946,32 @@
         "width": 1672,
         "url": "/images/what-if/Dollar%20Gucci.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/Dollar%20Gucci.webp",
+    "thumbnail": "/images/what-if/Dollar%20Gucci-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-003",
+      "what-004",
+      "what-005",
+      "what-007",
+      "what-008",
+      "what-009"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-007",
@@ -2231,12 +2987,12 @@
       "large": "/images/what-if/DownMarket.webp"
     },
     "slug": "what-007",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "Downtime detection visualized like a stock market ticker, turning outages, incidents, and service health into Wall Street-flavored operational drama.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -2266,7 +3022,32 @@
         "width": 1254,
         "url": "/images/what-if/DownMarket.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/DownMarket.webp",
+    "thumbnail": "/images/what-if/DownMarket-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-004",
+      "what-005",
+      "what-006",
+      "what-008",
+      "what-009",
+      "what-010"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-008",
@@ -2282,12 +3063,12 @@
       "large": "/images/what-if/eDash.webp"
     },
     "slug": "what-008",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "An eBay-style dashboard concept sharpened into a cleaner product experience, mixing marketplace energy with a more deliberate interface rhythm.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -2321,7 +3102,32 @@
         "width": 1672,
         "url": "/images/what-if/eDash.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/eDash.webp",
+    "thumbnail": "/images/what-if/eDash-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-005",
+      "what-006",
+      "what-007",
+      "what-009",
+      "what-010",
+      "what-011"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-009",
@@ -2337,12 +3143,12 @@
       "large": "/images/what-if/Fisher%20Fitbit.webp"
     },
     "slug": "what-009",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "Fitbit translated through Fisher-Price aesthetics, turning health tracking into bright toy-like modules, chunky stats, and playful wellness data.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -2372,7 +3178,34 @@
         "width": 1536,
         "url": "/images/what-if/Fisher%20Fitbit.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire",
+      "fisher-price-aesthetic",
+      "toy-interface"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/Fisher%20Fitbit.webp",
+    "thumbnail": "/images/what-if/Fisher%20Fitbit-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-006",
+      "what-007",
+      "what-008",
+      "what-010",
+      "what-011",
+      "what-012"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-010",
@@ -2388,12 +3221,12 @@
       "large": "/images/what-if/Fisher%20Price%20Analytics.webp"
     },
     "slug": "what-010",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "Google Analytics reimagined as a Fisher-Price learning toy, where traffic, conversions, and dashboards become colorful plastic metrics for grown-up toddlers.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -2427,7 +3260,35 @@
         "width": 1672,
         "url": "/images/what-if/Fisher%20Price%20Analytics.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire",
+      "fisher-price-aesthetic",
+      "toy-interface",
+      "analytics-dashboard"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/Fisher%20Price%20Analytics.webp",
+    "thumbnail": "/images/what-if/Fisher%20Price%20Analytics-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-007",
+      "what-008",
+      "what-009",
+      "what-011",
+      "what-012",
+      "what-013"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-011",
@@ -2443,12 +3304,12 @@
       "large": "/images/what-if/GithubxFisherPrice.webp"
     },
     "slug": "what-011",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "GitHub rebuilt with Fisher-Price styling, transforming repositories, commits, and pull requests into chunky toy panels for developers in goblin mode.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -2478,7 +3339,34 @@
         "width": 1122,
         "url": "/images/what-if/GithubxFisherPrice.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire",
+      "fisher-price-aesthetic",
+      "toy-interface"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/GithubxFisherPrice.webp",
+    "thumbnail": "/images/what-if/GithubxFisherPrice-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-008",
+      "what-009",
+      "what-010",
+      "what-012",
+      "what-013",
+      "what-014"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-012",
@@ -2494,12 +3382,12 @@
       "large": "/images/what-if/Google%20Health.webp"
     },
     "slug": "what-012",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "Apple Health imagined through a Google product lens: cleaner cards, brighter data surfaces, and a more search-driven approach to personal health metrics.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -2533,7 +3421,32 @@
         "width": 1672,
         "url": "/images/what-if/Google%20Health.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/Google%20Health.webp",
+    "thumbnail": "/images/what-if/Google%20Health-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-009",
+      "what-010",
+      "what-011",
+      "what-013",
+      "what-014",
+      "what-015"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-013",
@@ -2549,12 +3462,12 @@
       "large": "/images/what-if/GooglexNintendo.webp"
     },
     "slug": "what-013",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "Google Analytics rebuilt as a Nintendo-inspired game world, where website traffic becomes levels, events become power-ups, and reporting turns into play.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -2584,7 +3497,32 @@
         "width": 1122,
         "url": "/images/what-if/GooglexNintendo.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/GooglexNintendo.webp",
+    "thumbnail": "/images/what-if/GooglexNintendo-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-010",
+      "what-011",
+      "what-012",
+      "what-014",
+      "what-015",
+      "what-016"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-014",
@@ -2600,12 +3538,12 @@
       "large": "/images/what-if/Magic%20DMV.webp"
     },
     "slug": "what-014",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "The DMV redesigned as a Disney-owned experience, turning paperwork, lines, and bureaucratic dread into a suspiciously magical digital queue.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -2639,7 +3577,32 @@
         "width": 1672,
         "url": "/images/what-if/Magic%20DMV.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/Magic%20DMV.webp",
+    "thumbnail": "/images/what-if/Magic%20DMV-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-011",
+      "what-012",
+      "what-013",
+      "what-015",
+      "what-016",
+      "what-017"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-015",
@@ -2655,12 +3618,12 @@
       "large": "/images/what-if/Meme%20Creative%20Suite.webp"
     },
     "slug": "what-015",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A meme-first creative suite concept where design tools, templates, and internet-native chaos are packaged like serious software for unserious people.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -2694,7 +3657,32 @@
         "width": 1672,
         "url": "/images/what-if/Meme%20Creative%20Suite.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/Meme%20Creative%20Suite.webp",
+    "thumbnail": "/images/what-if/Meme%20Creative%20Suite-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-012",
+      "what-013",
+      "what-014",
+      "what-016",
+      "what-017",
+      "what-018"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-016",
@@ -2710,12 +3698,12 @@
       "large": "/images/what-if/MetaBusinessSuiteUsuabe.webp"
     },
     "slug": "what-016",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "Meta Business Suite redesigned to actually feel usable, with clearer content performance, simpler controls, and less dashboard punishment.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -2749,7 +3737,32 @@
         "width": 1672,
         "url": "/images/what-if/MetaBusinessSuiteUsuabe.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/MetaBusinessSuiteUsuabe.webp",
+    "thumbnail": "/images/what-if/MetaBusinessSuiteUsuabe-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-013",
+      "what-014",
+      "what-015",
+      "what-017",
+      "what-018",
+      "what-019"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-017",
@@ -2765,12 +3778,12 @@
       "large": "/images/what-if/My%20First%20Defense%20Rocket.webp"
     },
     "slug": "what-017",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A defense-tech rocket concept filtered through Fisher-Price toy language, turning military hardware into a disturbingly cheerful beginner set.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -2800,7 +3813,32 @@
         "width": 1448,
         "url": "/images/what-if/My%20First%20Defense%20Rocket.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/My%20First%20Defense%20Rocket.webp",
+    "thumbnail": "/images/what-if/My%20First%20Defense%20Rocket-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-014",
+      "what-015",
+      "what-016",
+      "what-018",
+      "what-019",
+      "what-020"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-018",
@@ -2816,12 +3854,12 @@
       "large": "/images/what-if/MyspaceBusinessSuite.webp"
     },
     "slug": "what-018",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "Meta Business Suite rebuilt with MySpace nostalgia, centered around Top 8-style social ranking, profile energy, and early-internet business chaos.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -2855,7 +3893,32 @@
         "width": 1672,
         "url": "/images/what-if/MyspaceBusinessSuite.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/MyspaceBusinessSuite.webp",
+    "thumbnail": "/images/what-if/MyspaceBusinessSuite-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-015",
+      "what-016",
+      "what-017",
+      "what-019",
+      "what-020",
+      "what-021"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-019",
@@ -2871,12 +3934,12 @@
       "large": "/images/what-if/RedditIn.webp"
     },
     "slug": "what-019",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "LinkedIn reimagined with Reddit mechanics, turning professional networking into upvotes, threads, karma, and dangerously honest workplace discourse.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -2906,7 +3969,32 @@
         "width": 1448,
         "url": "/images/what-if/RedditIn.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/RedditIn.webp",
+    "thumbnail": "/images/what-if/RedditIn-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-016",
+      "what-017",
+      "what-018",
+      "what-020",
+      "what-021",
+      "what-022"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-020",
@@ -2922,12 +4010,12 @@
       "large": "/images/what-if/Super%20Google%20Analytics.webp"
     },
     "slug": "what-020",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "Google Analytics redesigned as a Super Mario-style game world, translating traffic paths, goals, and performance into a playable analytics map.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -2961,7 +4049,33 @@
         "width": 1672,
         "url": "/images/what-if/Super%20Google%20Analytics.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire",
+      "analytics-dashboard"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/Super%20Google%20Analytics.webp",
+    "thumbnail": "/images/what-if/Super%20Google%20Analytics-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-017",
+      "what-018",
+      "what-019",
+      "what-021",
+      "what-022",
+      "what-023"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-021",
@@ -2977,12 +4091,12 @@
       "large": "/images/what-if/TACO.webp"
     },
     "slug": "what-021",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A Taco Bell-flavored interface concept where ordering, loyalty, and brand chaos get pushed into a loud, snackable product experience.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -3016,7 +4130,32 @@
         "width": 1672,
         "url": "/images/what-if/TACO.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/TACO.webp",
+    "thumbnail": "/images/what-if/TACO-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-018",
+      "what-019",
+      "what-020",
+      "what-022",
+      "what-023",
+      "what-024"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-022",
@@ -3032,12 +4171,12 @@
       "large": "/images/what-if/TinderIN.webp"
     },
     "slug": "what-022",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "LinkedIn redesigned with Tinder mechanics, turning professional networking into profile swipes, career chemistry, and deeply cursed connection energy.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -3071,7 +4210,33 @@
         "width": 1672,
         "url": "/images/what-if/TinderIN.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire",
+      "social-app"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/TinderIN.webp",
+    "thumbnail": "/images/what-if/TinderIN-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-019",
+      "what-020",
+      "what-021",
+      "what-023",
+      "what-024",
+      "what-025"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-023",
@@ -3087,12 +4252,12 @@
       "large": "/images/what-if/ToysRUsxPalantir.webp"
     },
     "slug": "what-023",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A Palantir-style dashboard redesigned with Toys R Us aesthetics, where surveillance-grade data meets toy aisle colors and corporate absurdity.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -3126,7 +4291,32 @@
         "width": 1672,
         "url": "/images/what-if/ToysRUsxPalantir.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/ToysRUsxPalantir.webp",
+    "thumbnail": "/images/what-if/ToysRUsxPalantir-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-020",
+      "what-021",
+      "what-022",
+      "what-024",
+      "what-025",
+      "what-026"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-024",
@@ -3142,12 +4332,12 @@
       "large": "/images/what-if/TurboxLego.webp"
     },
     "slug": "what-024",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "TurboTax imagined as a LEGO/FarmVille-style tax game, turning deductions, refunds, and audit anxiety into a bright buildable interface.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -3177,7 +4367,32 @@
         "width": 1448,
         "url": "/images/what-if/TurboxLego.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/TurboxLego.webp",
+    "thumbnail": "/images/what-if/TurboxLego-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-021",
+      "what-022",
+      "what-023",
+      "what-025",
+      "what-026",
+      "what-027"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-025",
@@ -3193,12 +4408,12 @@
       "large": "/images/what-if/WikiFlex.webp"
     },
     "slug": "what-025",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A Wikipedia-style knowledge product crossed with flex culture, where information architecture gets dressed up like status signaling.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -3232,7 +4447,32 @@
         "width": 1672,
         "url": "/images/what-if/WikiFlex.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/WikiFlex.webp",
+    "thumbnail": "/images/what-if/WikiFlex-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-022",
+      "what-023",
+      "what-024",
+      "what-026",
+      "what-027",
+      "what-028"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "what-026",
@@ -3248,12 +4488,12 @@
       "large": "/images/what-if/Xbox-Fisher-Price.webp"
     },
     "slug": "what-026",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "Xbox redesigned with Fisher-Price energy, replacing sleek console seriousness with bright plastic controls, chunky UI, and toy-box gaming logic.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-04T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -3287,7 +4527,33 @@
         "width": 1672,
         "url": "/images/what-if/Xbox-Fisher-Price.webp"
       }
-    ]
+    ],
+    "series": "Brand Swap / What If Interfaces",
+    "origin": "Created in ChatGPT as part of the Lemonteed What If visual experiments.",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire",
+      "fisher-price-aesthetic",
+      "toy-interface"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/what-if/Xbox-Fisher-Price.webp",
+    "thumbnail": "/images/what-if/Xbox-Fisher-Price-768.webp",
+    "dateCreated": "2026-05-04",
+    "related": [
+      "what-023",
+      "what-024",
+      "what-025",
+      "what-027",
+      "what-028"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "misc-001",
@@ -3303,12 +4569,12 @@
       "large": "/images/misc-gens/anthropic-mow.webp"
     },
     "slug": "misc-001",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A surreal Anthropic lawn-care riff that turns AI branding into a mower-themed product gag with clean visual satire.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-08T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -3338,7 +4604,31 @@
         "width": 1448,
         "url": "/images/misc-gens/anthropic-mow.webp"
       }
-    ]
+    ],
+    "series": "Miscellaneous Visual Experiments",
+    "origin": "Created in ChatGPT as part of Lemonteed visual exploration and portfolio experiments.",
+    "tags": [
+      "image-generation",
+      "visual-experiment",
+      "concept-art",
+      "portfolio-piece"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/misc-gens/anthropic-mow.webp",
+    "thumbnail": "/images/misc-gens/anthropic-mow-768.webp",
+    "dateCreated": "2026-05-08",
+    "related": [
+      "misc-002",
+      "misc-003",
+      "misc-004",
+      "misc-005",
+      "misc-006",
+      "misc-007"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "misc-002",
@@ -3354,12 +4644,12 @@
       "large": "/images/misc-gens/dj-cows-open-dojo-ferarri-mockup.webp"
     },
     "slug": "misc-002",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "An OpenDojo Ferrari wrap mockup featuring DJ Cows, blending startup-brand absurdity, motorsport styling, and internet mascot energy.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-08T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -3389,7 +4679,31 @@
         "width": 1448,
         "url": "/images/misc-gens/dj-cows-open-dojo-ferarri-mockup.webp"
       }
-    ]
+    ],
+    "series": "Miscellaneous Visual Experiments",
+    "origin": "Created in ChatGPT as part of Lemonteed visual exploration and portfolio experiments.",
+    "tags": [
+      "image-generation",
+      "visual-experiment",
+      "concept-art",
+      "portfolio-piece"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/misc-gens/dj-cows-open-dojo-ferarri-mockup.webp",
+    "thumbnail": "/images/misc-gens/dj-cows-open-dojo-ferarri-mockup-768.webp",
+    "dateCreated": "2026-05-08",
+    "related": [
+      "misc-001",
+      "misc-003",
+      "misc-004",
+      "misc-005",
+      "misc-006",
+      "misc-007"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "misc-003",
@@ -3405,12 +4719,12 @@
       "large": "/images/misc-gens/dyer-poster.webp"
     },
     "slug": "misc-003",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A Dyer, Tennessee poster concept using local identity as the foundation for a bold, collectible regional print treatment.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-08T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -3436,7 +4750,30 @@
         "width": 1024,
         "url": "/images/misc-gens/dyer-poster.webp"
       }
-    ]
+    ],
+    "series": "Miscellaneous Visual Experiments",
+    "origin": "Created in ChatGPT as part of Lemonteed visual exploration and portfolio experiments.",
+    "tags": [
+      "image-generation",
+      "visual-experiment",
+      "concept-art",
+      "portfolio-piece",
+      "poster-design",
+      "local-identity"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/misc-gens/dyer-poster.webp",
+    "thumbnail": "/images/misc-gens/dyer-poster-768.webp",
+    "dateCreated": "2026-05-08",
+    "related": [
+      "misc-006",
+      "misc-014",
+      "misc-015"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "misc-004",
@@ -3452,12 +4789,12 @@
       "large": "/images/misc-gens/Linnect%20Solutions%20Branding%20Page.webp"
     },
     "slug": "misc-004",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A Linnect Solutions branding page exploring logo presentation, identity structure, and polished brand-system layout.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-08T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -3487,7 +4824,33 @@
         "width": 1448,
         "url": "/images/misc-gens/Linnect%20Solutions%20Branding%20Page.webp"
       }
-    ]
+    ],
+    "series": "Miscellaneous Visual Experiments",
+    "origin": "Created in ChatGPT as part of Lemonteed visual exploration and portfolio experiments.",
+    "tags": [
+      "image-generation",
+      "visual-experiment",
+      "concept-art",
+      "portfolio-piece",
+      "brand-identity",
+      "brand-system"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/misc-gens/Linnect%20Solutions%20Branding%20Page.webp",
+    "thumbnail": "/images/misc-gens/Linnect%20Solutions%20Branding%20Page-768.webp",
+    "dateCreated": "2026-05-08",
+    "related": [
+      "misc-001",
+      "misc-002",
+      "misc-003",
+      "misc-005",
+      "misc-006",
+      "misc-007"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "misc-005",
@@ -3503,12 +4866,12 @@
       "large": "/images/misc-gens/Local%20Lobby%20Legends.webp"
     },
     "slug": "misc-005",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A nostalgic neighborhood-gaming scene where kids move like a real-life squad and floating clan tags turn the block into a multiplayer lobby.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-08T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -3538,7 +4901,31 @@
         "width": 1122,
         "url": "/images/misc-gens/Local%20Lobby%20Legends.webp"
       }
-    ]
+    ],
+    "series": "Miscellaneous Visual Experiments",
+    "origin": "Created in ChatGPT as part of Lemonteed visual exploration and portfolio experiments.",
+    "tags": [
+      "image-generation",
+      "visual-experiment",
+      "concept-art",
+      "portfolio-piece"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/misc-gens/Local%20Lobby%20Legends.webp",
+    "thumbnail": "/images/misc-gens/Local%20Lobby%20Legends-768.webp",
+    "dateCreated": "2026-05-08",
+    "related": [
+      "misc-001",
+      "misc-002",
+      "misc-003",
+      "misc-004",
+      "misc-006",
+      "misc-007"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "misc-006",
@@ -3554,12 +4941,12 @@
       "large": "/images/misc-gens/nashville-poster.webp"
     },
     "slug": "misc-006",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A Nashville poster concept built around regional place identity, collectible print language, and bold local visual storytelling.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-08T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -3589,7 +4976,30 @@
         "width": 1055,
         "url": "/images/misc-gens/nashville-poster.webp"
       }
-    ]
+    ],
+    "series": "Miscellaneous Visual Experiments",
+    "origin": "Created in ChatGPT as part of Lemonteed visual exploration and portfolio experiments.",
+    "tags": [
+      "image-generation",
+      "visual-experiment",
+      "concept-art",
+      "portfolio-piece",
+      "poster-design",
+      "local-identity"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/misc-gens/nashville-poster.webp",
+    "thumbnail": "/images/misc-gens/nashville-poster-768.webp",
+    "dateCreated": "2026-05-08",
+    "related": [
+      "misc-003",
+      "misc-014",
+      "misc-015"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "misc-007",
@@ -3605,12 +5015,12 @@
       "large": "/images/misc-gens/one%20foot%20in%20one.webp"
     },
     "slug": "misc-007",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A split-world childhood image: one foot in the physical woods, one foot in the loading-screen world of early online gaming.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-08T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -3640,7 +5050,31 @@
         "width": 1122,
         "url": "/images/misc-gens/one%20foot%20in%20one.webp"
       }
-    ]
+    ],
+    "series": "Miscellaneous Visual Experiments",
+    "origin": "Created in ChatGPT as part of Lemonteed visual exploration and portfolio experiments.",
+    "tags": [
+      "image-generation",
+      "visual-experiment",
+      "concept-art",
+      "portfolio-piece"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/misc-gens/one%20foot%20in%20one.webp",
+    "thumbnail": "/images/misc-gens/one%20foot%20in%20one-768.webp",
+    "dateCreated": "2026-05-08",
+    "related": [
+      "misc-001",
+      "misc-002",
+      "misc-003",
+      "misc-004",
+      "misc-005",
+      "misc-006"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "misc-008",
@@ -3656,12 +5090,12 @@
       "large": "/images/misc-gens/panoptic-branding%20page-1.webp"
     },
     "slug": "misc-008",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "Page one of the Panoptic branding exploration, presenting the identity direction as a high-polish concept system.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-08T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -3691,7 +5125,32 @@
         "width": 1055,
         "url": "/images/misc-gens/panoptic-branding%20page-1.webp"
       }
-    ]
+    ],
+    "series": "Miscellaneous Visual Experiments",
+    "origin": "Created in ChatGPT as part of Lemonteed visual exploration and portfolio experiments.",
+    "tags": [
+      "image-generation",
+      "visual-experiment",
+      "concept-art",
+      "portfolio-piece",
+      "brand-identity",
+      "brand-system"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/misc-gens/panoptic-branding%20page-1.webp",
+    "thumbnail": "/images/misc-gens/panoptic-branding%20page-1-768.webp",
+    "dateCreated": "2026-05-08",
+    "related": [
+      "misc-009",
+      "misc-010",
+      "misc-011",
+      "misc-012",
+      "misc-013"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "misc-009",
@@ -3707,12 +5166,12 @@
       "large": "/images/misc-gens/panoptic-branding%20page-2.webp"
     },
     "slug": "misc-009",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "Page two of the Panoptic branding exploration, expanding the visual language through structured brand presentation.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-08T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -3742,7 +5201,32 @@
         "width": 1055,
         "url": "/images/misc-gens/panoptic-branding%20page-2.webp"
       }
-    ]
+    ],
+    "series": "Miscellaneous Visual Experiments",
+    "origin": "Created in ChatGPT as part of Lemonteed visual exploration and portfolio experiments.",
+    "tags": [
+      "image-generation",
+      "visual-experiment",
+      "concept-art",
+      "portfolio-piece",
+      "brand-identity",
+      "brand-system"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/misc-gens/panoptic-branding%20page-2.webp",
+    "thumbnail": "/images/misc-gens/panoptic-branding%20page-2-768.webp",
+    "dateCreated": "2026-05-08",
+    "related": [
+      "misc-008",
+      "misc-010",
+      "misc-011",
+      "misc-012",
+      "misc-013"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "misc-010",
@@ -3758,12 +5242,12 @@
       "large": "/images/misc-gens/panoptic-branding%20page-3.webp"
     },
     "slug": "misc-010",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "Page three of the Panoptic branding exploration, continuing the identity system with premium editorial layout energy.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-08T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -3793,7 +5277,32 @@
         "width": 1055,
         "url": "/images/misc-gens/panoptic-branding%20page-3.webp"
       }
-    ]
+    ],
+    "series": "Miscellaneous Visual Experiments",
+    "origin": "Created in ChatGPT as part of Lemonteed visual exploration and portfolio experiments.",
+    "tags": [
+      "image-generation",
+      "visual-experiment",
+      "concept-art",
+      "portfolio-piece",
+      "brand-identity",
+      "brand-system"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/misc-gens/panoptic-branding%20page-3.webp",
+    "thumbnail": "/images/misc-gens/panoptic-branding%20page-3-768.webp",
+    "dateCreated": "2026-05-08",
+    "related": [
+      "misc-008",
+      "misc-009",
+      "misc-011",
+      "misc-012",
+      "misc-013"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "misc-011",
@@ -3809,12 +5318,12 @@
       "large": "/images/misc-gens/panoptic-branding%20page-4.webp"
     },
     "slug": "misc-011",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "Page four of the Panoptic branding exploration, showing additional brand applications and design-system attitude.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-08T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -3844,7 +5353,32 @@
         "width": 1055,
         "url": "/images/misc-gens/panoptic-branding%20page-4.webp"
       }
-    ]
+    ],
+    "series": "Miscellaneous Visual Experiments",
+    "origin": "Created in ChatGPT as part of Lemonteed visual exploration and portfolio experiments.",
+    "tags": [
+      "image-generation",
+      "visual-experiment",
+      "concept-art",
+      "portfolio-piece",
+      "brand-identity",
+      "brand-system"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/misc-gens/panoptic-branding%20page-4.webp",
+    "thumbnail": "/images/misc-gens/panoptic-branding%20page-4-768.webp",
+    "dateCreated": "2026-05-08",
+    "related": [
+      "misc-008",
+      "misc-009",
+      "misc-010",
+      "misc-012",
+      "misc-013"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "misc-012",
@@ -3860,12 +5394,12 @@
       "large": "/images/misc-gens/panoptic-branding%20page-5.webp"
     },
     "slug": "misc-012",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "Page five of the Panoptic branding exploration, extending the concept into a more complete identity presentation.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-08T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -3895,7 +5429,32 @@
         "width": 1055,
         "url": "/images/misc-gens/panoptic-branding%20page-5.webp"
       }
-    ]
+    ],
+    "series": "Miscellaneous Visual Experiments",
+    "origin": "Created in ChatGPT as part of Lemonteed visual exploration and portfolio experiments.",
+    "tags": [
+      "image-generation",
+      "visual-experiment",
+      "concept-art",
+      "portfolio-piece",
+      "brand-identity",
+      "brand-system"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/misc-gens/panoptic-branding%20page-5.webp",
+    "thumbnail": "/images/misc-gens/panoptic-branding%20page-5-768.webp",
+    "dateCreated": "2026-05-08",
+    "related": [
+      "misc-008",
+      "misc-009",
+      "misc-010",
+      "misc-011",
+      "misc-013"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "misc-013",
@@ -3911,12 +5470,12 @@
       "large": "/images/misc-gens/panoptic-branding%20page-6.webp"
     },
     "slug": "misc-013",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "Page six of the Panoptic branding exploration, closing out the brand-system sequence with polished visual consistency.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-08T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -3946,7 +5505,32 @@
         "width": 1055,
         "url": "/images/misc-gens/panoptic-branding%20page-6.webp"
       }
-    ]
+    ],
+    "series": "Miscellaneous Visual Experiments",
+    "origin": "Created in ChatGPT as part of Lemonteed visual exploration and portfolio experiments.",
+    "tags": [
+      "image-generation",
+      "visual-experiment",
+      "concept-art",
+      "portfolio-piece",
+      "brand-identity",
+      "brand-system"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/misc-gens/panoptic-branding%20page-6.webp",
+    "thumbnail": "/images/misc-gens/panoptic-branding%20page-6-768.webp",
+    "dateCreated": "2026-05-08",
+    "related": [
+      "misc-008",
+      "misc-009",
+      "misc-010",
+      "misc-011",
+      "misc-012"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "misc-014",
@@ -3962,12 +5546,12 @@
       "large": "/images/misc-gens/trenton-poster.webp"
     },
     "slug": "misc-014",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A Trenton, Tennessee poster concept built as a local-pride visual artifact with bold regional identity.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-08T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -3997,7 +5581,30 @@
         "width": 1122,
         "url": "/images/misc-gens/trenton-poster.webp"
       }
-    ]
+    ],
+    "series": "Miscellaneous Visual Experiments",
+    "origin": "Created in ChatGPT as part of Lemonteed visual exploration and portfolio experiments.",
+    "tags": [
+      "image-generation",
+      "visual-experiment",
+      "concept-art",
+      "portfolio-piece",
+      "poster-design",
+      "local-identity"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/misc-gens/trenton-poster.webp",
+    "thumbnail": "/images/misc-gens/trenton-poster-768.webp",
+    "dateCreated": "2026-05-08",
+    "related": [
+      "misc-003",
+      "misc-006",
+      "misc-015"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "misc-015",
@@ -4013,12 +5620,12 @@
       "large": "/images/misc-gens/unioncity-poster.webp"
     },
     "slug": "misc-015",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "A Union City poster concept turning a familiar local place into a more collectible, design-forward print piece.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-08T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -4044,7 +5651,30 @@
         "width": 1024,
         "url": "/images/misc-gens/unioncity-poster.webp"
       }
-    ]
+    ],
+    "series": "Miscellaneous Visual Experiments",
+    "origin": "Created in ChatGPT as part of Lemonteed visual exploration and portfolio experiments.",
+    "tags": [
+      "image-generation",
+      "visual-experiment",
+      "concept-art",
+      "portfolio-piece",
+      "poster-design",
+      "local-identity"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/misc-gens/unioncity-poster.webp",
+    "thumbnail": "/images/misc-gens/unioncity-poster-768.webp",
+    "dateCreated": "2026-05-08",
+    "related": [
+      "misc-003",
+      "misc-006",
+      "misc-014"
+    ],
+    "dangerLevel": ""
   },
   {
     "id": "misc-016",
@@ -4060,12 +5690,12 @@
       "large": "/images/misc-gens/windows-98-chatgpt.webp"
     },
     "slug": "misc-016",
-    "year": "",
-    "description": "",
+    "year": "2026",
+    "description": "ChatGPT reimagined through a Windows 98 interface, blending modern AI with beige-box nostalgia, clunky chrome, and retro desktop charm.",
     "featured": false,
     "visible": true,
-    "createdAt": "",
-    "updatedAt": "",
+    "createdAt": "2026-05-08T12:00:00.000Z",
+    "updatedAt": "2026-05-12T15:31:21.824Z",
     "variants": [
       {
         "width": 320,
@@ -4095,6 +5725,30 @@
         "width": 1448,
         "url": "/images/misc-gens/windows-98-chatgpt.webp"
       }
-    ]
+    ],
+    "series": "Miscellaneous Visual Experiments",
+    "origin": "Created in ChatGPT as part of Lemonteed visual exploration and portfolio experiments.",
+    "tags": [
+      "image-generation",
+      "visual-experiment",
+      "concept-art",
+      "portfolio-piece"
+    ],
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "status": "Published",
+    "image": "/images/misc-gens/windows-98-chatgpt.webp",
+    "thumbnail": "/images/misc-gens/windows-98-chatgpt-768.webp",
+    "dateCreated": "2026-05-08",
+    "related": [
+      "misc-001",
+      "misc-002",
+      "misc-003",
+      "misc-004",
+      "misc-005",
+      "misc-006"
+    ],
+    "dangerLevel": ""
   }
 ]
