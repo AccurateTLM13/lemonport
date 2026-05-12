@@ -534,7 +534,12 @@ function deleteProject(response, id) {
 
 function serveFile(request, response) {
   const url = new URL(request.url, `http://${request.headers.host}`);
-  const pathname = url.pathname === "/" ? "/index.html" : url.pathname === "/studio/" ? "/studio/index.html" : decodeURIComponent(url.pathname);
+  const decodedPathname = decodeURIComponent(url.pathname);
+  const pathname = decodedPathname === "/"
+    ? "/index.html"
+    : decodedPathname.endsWith("/")
+      ? `${decodedPathname}index.html`
+      : decodedPathname;
   const base = pathname.startsWith("/studio/") ? studioDir : root;
   const relative = pathname.startsWith("/studio/") ? pathname.replace(/^\/studio\//, "") : pathname.replace(/^\//, "");
   const filePath = path.resolve(base, relative);
