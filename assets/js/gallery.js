@@ -630,8 +630,15 @@
           return;
         }
 
-        event.preventDefault();
+        const href = link.getAttribute("href") || "";
         const category = link.dataset.categoryLink;
+        const shouldStayOnGallery = href === "/" || href.startsWith("/?category=");
+
+        if (!shouldStayOnGallery) {
+          return;
+        }
+
+        event.preventDefault();
         const nextUrl = category === "all" ? "/" : `/?category=${encodeURIComponent(category)}`;
         history.replaceState(null, "", nextUrl);
         render(category);
