@@ -767,6 +767,125 @@ button {
   }
 }
 
+/* --- Global Coming Soon Popup --- */
+.coming-soon-popup[hidden] {
+  display: none;
+}
+
+.coming-soon-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 140;
+  display: grid;
+  padding: 18px;
+  background: rgb(17 16 14 / 0.18);
+  place-items: center;
+}
+
+.coming-soon-popup__card {
+  position: relative;
+  display: grid;
+  overflow: hidden;
+  width: min(760px, 100%);
+  min-height: 370px;
+  border: 2px solid #11100e;
+  color: #11100e;
+  background: #f8f4ea;
+  box-shadow: 0 20px 50px rgb(0 0 0 / 0.18);
+  grid-template-columns: minmax(190px, 270px) minmax(0, 1fr);
+  align-items: end;
+}
+
+.coming-soon-popup__image {
+  width: 100%;
+  height: 100%;
+  max-height: 370px;
+  object-fit: contain;
+  object-position: bottom center;
+  align-self: end;
+}
+
+.coming-soon-popup__body {
+  position: relative;
+  min-width: 0;
+  padding: 50px 46px 42px 36px;
+  align-self: stretch;
+}
+
+.coming-soon-popup__close {
+  position: absolute;
+  top: 16px;
+  right: 14px;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  color: #11100e;
+  background: #ffd43c;
+  cursor: pointer;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+}
+
+.coming-soon-popup__logo {
+  display: block;
+  width: min(250px, 100%);
+  height: auto;
+  margin: 0 0 20px;
+}
+
+.coming-soon-popup h2 {
+  margin: 0 0 30px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.coming-soon-popup__copy {
+  max-width: 440px;
+  margin: 0;
+  font-family: "Courier New", Courier, monospace;
+  font-size: clamp(18px, 2.7vw, 24px);
+  line-height: 1.36;
+}
+
+.coming-soon-popup__copy a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 700px) {
+  .coming-soon-popup {
+    padding: 12px;
+  }
+
+  .coming-soon-popup__card {
+    min-height: 0;
+    grid-template-columns: 1fr;
+  }
+
+  .coming-soon-popup__image {
+    max-height: 240px;
+    object-position: bottom left;
+  }
+
+  .coming-soon-popup__body {
+    padding: 18px 18px 24px;
+  }
+
+  .coming-soon-popup__logo {
+    margin-bottom: 14px;
+  }
+
+  .coming-soon-popup h2 {
+    margin-bottom: 18px;
+  }
+}
+
 
 /* --- Junk Drawer Sidebar Module --- */
 .junk-drawer-module {
@@ -820,6 +939,67 @@ button {
 
 .junk-drawer-module:hover .junk-drawer-module__label {
   color: var(--ink);
+}
+
+.junk-drawer-module.is-active .junk-drawer-module__label {
+  color: var(--ink);
+}
+
+.junk-drawer-header {
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.junk-drawer-header h1 {
+  margin: 0 0 12px;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.junk-drawer-header p {
+  max-width: 600px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 18px;
+}
+
+.tools-grid {
+  display: grid;
+  margin-top: 32px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.tool-card {
+  display: block;
+  padding: 24px;
+  border: 1px solid var(--hairline);
+  color: inherit;
+  background: var(--panel);
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tool-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgb(0 0 0 / 0.06);
+}
+
+.tool-card h2 {
+  margin: 0 0 8px;
+  color: var(--ink);
+  font-family: "Courier New", Courier, monospace;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.tool-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.4;
 }
 
 @media (max-width: 700px) {

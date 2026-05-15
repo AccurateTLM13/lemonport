@@ -4,7 +4,7 @@ window.liveExperimentData = {
     "kicker": "Live Experiment / Cloud Flip",
     "headline": "The $100\nCloud Flip",
     "subheadline": "Can fake cloud money become real profit?",
-    "intro": "I’m building a tiny service in public and tracking every cost, every sale, every awkward little failure, and whether this turns into money or just a very documented faceplant.",
+    "intro": "The public experiment starts in June 2026. Right now I am setting up the page, the tracking, and the first tiny service before the clock starts.",
     "actions": [
       {
         "label": "Read The Build Log",
@@ -18,8 +18,8 @@ window.liveExperimentData = {
       }
     ],
     "metadata": [
-      "Started: May 2026",
-      "30 Day Challenge",
+      "Starts: Jun 2026",
+      "Setup Phase",
       "Goal: $100+ Profit"
     ]
   },
@@ -34,7 +34,7 @@ window.liveExperimentData = {
       },
       {
         "label": "Credits Used",
-        "value": "$12.47",
+        "value": "$0.00",
         "tone": ""
       },
       {
@@ -44,17 +44,17 @@ window.liveExperimentData = {
       },
       {
         "label": "Revenue",
-        "value": "$57.00",
+        "value": "$0.00",
         "tone": ""
       },
       {
         "label": "Profit",
-        "value": "$57.00",
+        "value": "$0.00",
         "tone": ""
       },
       {
         "label": "Status",
-        "value": "Still Cooking",
+        "value": "Setup Phase",
         "tone": "status"
       }
     ],
@@ -71,7 +71,7 @@ window.liveExperimentData = {
   "buildLog": {
     "title": "Build Log",
     "label": "Latest",
-    "entriesLabel": "3 Entries",
+    "entriesLabel": "Setup Notes",
     "button": {
       "label": "View Full Build Log ->",
       "href": "#build-log"
@@ -79,22 +79,22 @@ window.liveExperimentData = {
     "entries": [
       {
         "number": "001",
-        "title": "Planning Out the Challenge",
-        "copy": "Why $100 in cloud credits and a wild idea.",
+        "title": "Setting The Board",
+        "copy": "Getting the public tracker ready before the June start.",
         "date": "May 12",
         "datetime": "2026-05-12"
       },
       {
         "number": "002",
-        "title": "Picking The Bet",
-        "copy": "Choosing a simple service people will pay for.",
+        "title": "Picking The First Bet",
+        "copy": "Choosing the first tiny service to test.",
         "date": "May 13",
         "datetime": "2026-05-13"
       },
       {
         "number": "003",
-        "title": "Building This Page",
-        "copy": "Build the experiment page to track progress.",
+        "title": "Wiring The Updates",
+        "copy": "Making the page ready for live notes and results.",
         "date": "May 14",
         "datetime": "2026-05-14"
       }
@@ -145,10 +145,10 @@ window.liveExperimentData = {
   "statusStrip": [
     "Location: The Internet",
     "Mission: Turn Experiments Into Insight (And Maybe Money)",
-    "Status: Still Cooking"
+    "Status: Setup Phase"
   ],
   "assets": {
     "mascot": "/images/lemonteed%20mascot.webp"
   },
-  "updatedAt": "2026-05-15T02:59:29.436Z"
+  "updatedAt": "2026-05-15T13:31:03.341Z"
 };

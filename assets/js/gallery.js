@@ -362,7 +362,7 @@
 
     const liveExperimentLink = document.createElement("a");
     liveExperimentLink.className = "category-link";
-    liveExperimentLink.href = "/memetic-warfare/live-experiment/";
+    liveExperimentLink.href = "/live-experiment/";
     liveExperimentLink.textContent = "Live Experiment";
     categoryNav.append(liveExperimentLink);
 

@@ -59,6 +59,10 @@ const drawerCSS = `
   color: var(--ink);
 }
 
+.junk-drawer-module.is-active .junk-drawer-module__label {
+  color: var(--ink);
+}
+
 @media (max-width: 700px) {
   .junk-drawer-module {
     margin-top: 0;
@@ -134,7 +138,7 @@ files.forEach(file => {
         <a href="/junk-drawer/" class="junk-drawer-module is-active" aria-label="Open Junk Drawer">
           <div class="junk-drawer-module__face">
             <div class="junk-drawer-module__handle"></div>
-            <span class="junk-drawer-module__label" style="color: var(--ink);">Junk Drawer</span>
+            <span class="junk-drawer-module__label">Junk Drawer</span>
           </div>
         </a>`;
     content = content.replace(targetActive, drawerHTMLActive.trim());

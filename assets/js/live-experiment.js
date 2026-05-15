@@ -176,17 +176,12 @@
 
   function renderCurrentBet() {
     const currentBet = data.currentBet || {};
-    const panel = document.querySelector(".current-bet-panel");
     const button = document.querySelector(".current-bet-panel .panel-button");
 
     text("#current-bet-title", currentBet.eyebrow);
     text(".current-bet-layout h3", currentBet.title);
     text(".current-bet-layout p", currentBet.copy);
     linkButton(button, currentBet.button);
-
-    if (panel && currentBet.art) {
-      panel.style.setProperty("--current-bet-art", `url("${currentBet.art}")`);
-    }
   }
 
   function renderGetInvolved() {
