@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mutation Desk — Lemonteed Studio</title>
+    <link rel="stylesheet" href="/studio/studio.css">
+    <style>
+      .mutation-desk-header {
+        padding: 24px 28px 20px;
+        border-bottom: 1px solid var(--hairline, #dedcd5);
+      }
+      .mutation-desk-header h1 {
+        margin: 0 0 6px;
+        font-size: 18px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      .mutation-desk-header p {
+        margin: 0;
+        font-size: 12px;
+        color: var(--muted, #85837d);
+      }
+      .mutation-desk-body {
+        padding: 28px;
+        display: grid;
+        gap: 20px;
+        max-width: 860px;
+      }
+      .mutation-status-card {
+        padding: 20px;
+        border: 1px solid var(--hairline, #dedcd5);
+        background: #fff;
+        display: grid;
+        gap: 10px;
+      }
+      .mutation-status-card h2 {
+        margin: 0;
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      .mutation-status-card pre {
+        margin: 0;
+        font-size: 11px;
+        line-height: 1.55;
+        white-space: pre-wrap;
+        word-break: break-all;
+        color: #44423e;
+      }
+      .mutation-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .mutation-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border: 1px solid #c9c6bc;
+        background: #f4f2ea;
+        color: #292928;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background 140ms ease;
+      }
+      .mutation-btn:hover { background: #e7e5dc; }
+      .mutation-btn--primary {
+        border-color: #292928;
+        background: #292928;
+        color: #f4f2ea;
+      }
+      .mutation-btn--primary:hover { background: #44423e; }
+      .mutation-todo {
+        padding: 20px;
+        border: 1px dashed #c9c6bc;
+        background: #fafaf7;
+        font-size: 12px;
+        color: #85837d;
+        line-height: 1.6;
+      }
+      .mutation-todo strong { color: #292928; }
+      .mutation-todo ul { margin: 8px 0 0 16px; }
+      #mutation-output {
+        font-size: 12px;
+        color: #44423e;
+        line-height: 1.55;
+        min-height: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="studio-shell">
+      <!-- Studio top nav placeholder - links back to main studio -->
+      <header class="studio-header" style="display:flex;align-items:center;gap:16px;padding:0 20px;min-height:48px;border-bottom:1px solid #dedcd5;background:#f7f7f4;">
+        <a href="/studio/" style="font-family:'Courier New',Courier,monospace;font-size:12px;font-weight:700;color:#292928;text-decoration:none;text-transform:uppercase;">← Studio</a>
+        <span style="font-family:'Courier New',Courier,monospace;font-size:12px;font-weight:700;text-transform:uppercase;color:#85837d;">/ Mutation Desk</span>
+      </header>
+
+      <div class="mutation-desk-header">
+        <h1>Mutation Desk</h1>
+        <p>Operator Log: Off-Clock Protocol — phase management and promotion controls.</p>
+      </div>
+
+      <div class="mutation-desk-body">
+
+        <!-- Current Status -->
+        <div class="mutation-status-card">
+          <h2>Current Manifest</h2>
+          <pre id="manifest-display">Loading...</pre>
+        </div>
+
+        <!-- Schedule -->
+        <div class="mutation-status-card">
+          <h2>Mutation Schedule</h2>
+          <pre id="schedule-display">Loading...</pre>
+        </div>
+
+        <!-- Actions -->
+        <div class="mutation-actions">
+          <button class="mutation-btn mutation-btn--primary" id="btn-promote" type="button">Run Promotion</button>
+          <button class="mutation-btn" id="btn-refresh" type="button">Refresh Schedule</button>
+          <a class="mutation-btn" href="/operator-log/" target="_blank" rel="noopener">Preview Page ↗</a>
+        </div>
+
+        <div id="mutation-output"></div>
+
+        <!-- TODO callout -->
+        <div class="mutation-todo">
+          <strong>TODO: Full Mutation Desk UI</strong>
+          <ul>
+            <li>Create / edit / delete mutation phases</li>
+            <li>Generate random fragment filenames</li>
+            <li>Edit publishAt, phaseLabel, title, status</li>
+            <li>Edit content blocks (text, quote, evidence) with live preview</li>
+            <li>Mark phases Draft / Ready / Published</li>
+            <li>Preview current public page output</li>
+            <li>Clean old public fragments</li>
+            <li>View promotion history log</li>
+          </ul>
+          <p style="margin-top:10px;">For now: edit <code>content/operator-log/schedule.json</code> and fragments directly, then use <strong>Run Promotion</strong> above or <code>node scripts/promote-operator-mutation.js</code> in the terminal.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <script>
+      const output = document.getElementById("mutation-output");
+      const manifestEl = document.getElementById("manifest-display");
+      const scheduleEl = document.getElementById("schedule-display");
+
+      async function loadSchedule() {
+        try {
+          const res = await fetch("/api/mutation/schedule");
+          const data = await res.json();
+          manifestEl.textContent = data.manifest
+            ? JSON.stringify(data.manifest, null, 2)
+            : "No manifest found. Run a promotion first.";
+          scheduleEl.textContent = Array.isArray(data.schedule)
+            ? data.schedule.map((p) =>
+                `Phase ${p.phase} [${p.status}] "${p.phaseLabel || p.title}" — publishAt: ${p.publishAt}\n  Fragment: ${p.fragment}`
+              ).join("\n\n")
+            : JSON.stringify(data.schedule, null, 2);
+        } catch (err) {
+          manifestEl.textContent = "Error loading schedule: " + err.message;
+        }
+      }
+
+      document.getElementById("btn-refresh").addEventListener("click", () => {
+        output.textContent = "";
+        loadSchedule();
+      });
+
+      document.getElementById("btn-promote").addEventListener("click", async () => {
+        output.textContent = "Running promotion...";
+        try {
+          const res = await fetch("/api/mutation/promote", { method: "POST" });
+          const data = await res.json();
+          if (data.promoted) {
+            output.textContent = `✓ Promoted: Phase ${data.manifest.activePhase} — ${data.manifest.phaseLabel} (${data.manifest.activeFragment})`;
+          } else {
+            output.textContent = `No eligible phase: ${data.message || "Check schedule publishAt dates and statuses."}`;
+          }
+          loadSchedule();
+        } catch (err) {
+          output.textContent = "Promotion error: " + err.message;
+        }
+      });
+
+      loadSchedule();
+    </script>
+  </body>
+</html>

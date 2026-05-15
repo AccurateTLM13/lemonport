@@ -1,5 +1,75 @@
 [
   {
+    "id": "what-029",
+    "title": "Tinfoil Palantir Bucket Hat",
+    "slug": "tinfoil-palantir-bucket-hat",
+    "category": "misc-gens",
+    "categoryLabel": "Misc Gens",
+    "series": "",
+    "year": "2026",
+    "description": "Premium 100% USA Grade Aluminum Tinfoil infused Bucket Hat from Palantir. Perfect for that Palantir conspiracy theorist loved one. Arrives just in time for Christmas 2028.",
+    "origin": "",
+    "dateCreated": "2026-05-07",
+    "tags": [
+      "Image Generation"
+    ],
+    "dangerLevel": "High",
+    "toolsUsed": [
+      "GPT Images 2.0"
+    ],
+    "related": [],
+    "image": "/images/what-if/tinfoil-palantir-bucket-hat.webp",
+    "thumbnail": "/images/what-if/tinfoil-palantir-bucket-hat-768.webp",
+    "alt": "Tinfoil Palantir Bucket Hat concept image from the Lemonteed What If archive",
+    "width": 1077,
+    "height": 1460,
+    "sizes": {
+      "small": "/images/what-if/tinfoil-palantir-bucket-hat.webp",
+      "medium": "/images/what-if/tinfoil-palantir-bucket-hat.webp",
+      "large": "/images/what-if/tinfoil-palantir-bucket-hat.webp"
+    },
+    "variants": [
+      {
+        "width": 320,
+        "url": "/images/what-if/tinfoil-palantir-bucket-hat-320.webp"
+      },
+      {
+        "width": 480,
+        "url": "/images/what-if/tinfoil-palantir-bucket-hat-480.webp"
+      },
+      {
+        "width": 640,
+        "url": "/images/what-if/tinfoil-palantir-bucket-hat-640.webp"
+      },
+      {
+        "width": 768,
+        "url": "/images/what-if/tinfoil-palantir-bucket-hat-768.webp"
+      },
+      {
+        "width": 900,
+        "url": "/images/what-if/tinfoil-palantir-bucket-hat-900.webp"
+      },
+      {
+        "width": 1024,
+        "url": "/images/what-if/tinfoil-palantir-bucket-hat-1024.webp"
+      },
+      {
+        "width": 1077,
+        "url": "/images/what-if/tinfoil-palantir-bucket-hat.webp"
+      }
+    ],
+    "featured": false,
+    "status": "Published",
+    "visible": true,
+    "createdAt": "2026-05-15T03:01:46.384Z",
+    "updatedAt": "2026-05-15T03:06:48.474Z",
+    "curation": {
+      "homepage": true,
+      "featuredRank": 0,
+      "randomWeight": 1
+    }
+  },
+  {
     "id": "mwf-008",
     "title": "The Tamagotchi Pendant Of Doom",
     "slug": "the-tamagotchi-pendant-of-doom",

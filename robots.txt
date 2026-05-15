@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /operator-log/
 
 Sitemap: https://lemonteed.com/sitemap.xml

@@ -1,0 +1,153 @@
+{
+  "hero": {
+    "kicker": "Live Experiment / Cloud Flip",
+    "headline": "The $100\nCloud Flip",
+    "subheadline": "Can fake cloud money become real profit?",
+    "intro": "I’m building a tiny service in public and tracking every cost, every sale, every awkward little failure, and whether this turns into money or just a very documented faceplant.",
+    "actions": [
+      {
+        "label": "Read The Build Log",
+        "href": "#build-log",
+        "icon": "[=]"
+      },
+      {
+        "label": "See The Current Bet",
+        "href": "#current-bet",
+        "icon": "[+]"
+      }
+    ],
+    "metadata": [
+      "Started: May 2026",
+      "30 Day Challenge",
+      "Goal: $100+ Profit"
+    ]
+  },
+  "ledger": {
+    "title": "Experiment Ledger",
+    "report": "Field Report 001",
+    "rows": [
+      {
+        "label": "AWS Credits Started",
+        "value": "$100.00",
+        "tone": ""
+      },
+      {
+        "label": "Credits Used",
+        "value": "$12.47",
+        "tone": ""
+      },
+      {
+        "label": "Real Cash Spent",
+        "value": "$0.00",
+        "tone": ""
+      },
+      {
+        "label": "Revenue",
+        "value": "$57.00",
+        "tone": ""
+      },
+      {
+        "label": "Profit",
+        "value": "$57.00",
+        "tone": ""
+      },
+      {
+        "label": "Status",
+        "value": "Still Cooking",
+        "tone": "status"
+      }
+    ],
+    "footerLeft": [
+      "Document Everything",
+      "Trust Nothing"
+    ],
+    "footerBrand": "Lemonteed",
+    "footerRight": [
+      "Public Experiment",
+      "Not Financial Advice"
+    ]
+  },
+  "buildLog": {
+    "title": "Build Log",
+    "label": "Latest",
+    "entriesLabel": "3 Entries",
+    "button": {
+      "label": "View Full Build Log ->",
+      "href": "#build-log"
+    },
+    "entries": [
+      {
+        "number": "001",
+        "title": "Planning Out the Challenge",
+        "copy": "Why $100 in cloud credits and a wild idea.",
+        "date": "May 12",
+        "datetime": "2026-05-12"
+      },
+      {
+        "number": "002",
+        "title": "Picking The Bet",
+        "copy": "Choosing a simple service people will pay for.",
+        "date": "May 13",
+        "datetime": "2026-05-13"
+      },
+      {
+        "number": "003",
+        "title": "Building This Page",
+        "copy": "Build the experiment page to track progress.",
+        "date": "May 14",
+        "datetime": "2026-05-14"
+      }
+    ]
+  },
+  "currentBet": {
+    "eyebrow": "Current Bet",
+    "title": "Website Roast",
+    "copy": "A paid website audit for local businesses. I roast the site, then give a clear plan to fix what actually matters.",
+    "button": {
+      "label": "View The Website Roast ->",
+      "href": "/website-roast/"
+    },
+    "art": "/images/cloud-flip-computer-fire-ink.webp"
+  },
+  "getInvolved": {
+    "title": "Get Involved",
+    "meta": "You > Cloud",
+    "note": "All experiments are public by default.",
+    "button": {
+      "label": "Join The Experiment ->",
+      "href": "#get-involved"
+    },
+    "items": [
+      {
+        "icon": "clipboard",
+        "title": "Submit Your Site As A Test",
+        "copy": "Volunteer your website for a roast.",
+        "href": "/website-roast/",
+        "label": "Submit your site as a test"
+      },
+      {
+        "icon": "vote",
+        "title": "Vote On The Next Move",
+        "copy": "Help pick future experiments.",
+        "href": "#get-involved",
+        "label": "Vote on the next move"
+      },
+      {
+        "icon": "eye",
+        "title": "Follow Updates",
+        "copy": "Watch the chaos unfold in real time.",
+        "href": "#build-log",
+        "label": "Follow updates"
+      }
+    ]
+  },
+  "statusStrip": [
+    "Location: The Internet",
+    "Mission: Turn Experiments Into Insight (And Maybe Money)",
+    "Status: Still Cooking"
+  ],
+  "assets": {
+    "mascot": "/images/lemonteed%20mascot.webp"
+  },
+  "updatedAt": "2026-05-15T02:59:29.436Z"
+}

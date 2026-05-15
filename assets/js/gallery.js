@@ -360,6 +360,12 @@
       categoryNav.append(link);
     });
 
+    const liveExperimentLink = document.createElement("a");
+    liveExperimentLink.className = "category-link";
+    liveExperimentLink.href = "/memetic-warfare/live-experiment/";
+    liveExperimentLink.textContent = "Live Experiment";
+    categoryNav.append(liveExperimentLink);
+
     categoryLinks = Array.from(document.querySelectorAll("[data-category-link]"));
   }
 
@@ -619,7 +625,22 @@
       candidates = pool.filter((item) => item.id !== current.id);
     }
 
-    const item = candidates[Math.floor(Math.random() * candidates.length)];
+    const weighted = candidates.map((item) => ({
+      item,
+      weight: Math.max(0, Number(item.curation && item.curation.randomWeight ? item.curation.randomWeight : 1))
+    }));
+    const totalWeight = weighted.reduce((total, entry) => total + entry.weight, 0);
+    let item = candidates[Math.floor(Math.random() * candidates.length)];
+
+    if (totalWeight > 0) {
+      let cursor = Math.random() * totalWeight;
+      const selected = weighted.find((entry) => {
+        cursor -= entry.weight;
+        return cursor <= 0;
+      });
+      item = selected ? selected.item : item;
+    }
+
     openItem(item);
   }
 

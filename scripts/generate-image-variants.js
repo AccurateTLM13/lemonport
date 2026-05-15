@@ -2,9 +2,12 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { execFileSync } = require("node:child_process");
 const { build } = require("./build-gallery");
+const { backupFile } = require("./file-backup");
+const { assertValidContent } = require("./content-validation");
 
 const root = path.resolve(__dirname, "..");
 const contentFile = path.join(root, "content", "projects.json");
+const categoriesFile = path.join(root, "content", "categories.json");
 const galleryWidths = [320, 480, 640, 768, 900, 1024, 1600];
 const galleryRoots = new Set(["vrg-cards", "what-if", "misc-gens", "memetic-warfare"]);
 const force = process.argv.includes("--force");
@@ -55,7 +58,9 @@ function variantUrl(category, sourcePath, width) {
   return publicImagePath(category, `${base}-${width}${ext}`);
 }
 
-function variantsForProject(project) {
+function variantsForProject(project, options = {}) {
+  const shouldForce = Object.prototype.hasOwnProperty.call(options, "force") ? options.force : force;
+  const shouldDryRun = Object.prototype.hasOwnProperty.call(options, "dryRun") ? options.dryRun : dryRun;
   const sourceUrl = project.sizes && (project.sizes.large || project.sizes.medium || project.sizes.small);
   const sourcePath = absoluteFromPublicUrl(sourceUrl);
 
@@ -82,15 +87,15 @@ function variantsForProject(project) {
 
     const targetPath = variantPath(sourcePath, width);
 
-    if (force || !fs.existsSync(targetPath)) {
+    if (shouldForce || !fs.existsSync(targetPath)) {
       generated.push(path.relative(root, targetPath));
 
-      if (!dryRun) {
+      if (!shouldDryRun) {
         makeVariant(sourcePath, targetPath, width);
       }
     }
 
-    if (!dryRun || fs.existsSync(targetPath)) {
+    if (!shouldDryRun || fs.existsSync(targetPath)) {
       candidates.push({ width, url: variantUrl(category, sourcePath, width) });
     }
   });
@@ -144,6 +149,9 @@ function run() {
   generated.push(...generateLogo());
 
   if (!dryRun) {
+    const categories = JSON.parse(fs.readFileSync(categoriesFile, "utf8"));
+    assertValidContent(projects, categories);
+    backupFile(contentFile);
     fs.writeFileSync(contentFile, `${JSON.stringify(projects, null, 2)}\n`);
     build();
   }
@@ -164,4 +172,4 @@ if (require.main === module) {
   run();
 }
 
-module.exports = { galleryWidths, publicImagePath, imageDimensions, makeVariant, variantsForProject };
+module.exports = { galleryWidths, publicImagePath, absoluteFromPublicUrl, imageDimensions, makeVariant, variantsForProject };

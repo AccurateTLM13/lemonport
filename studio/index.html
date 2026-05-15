@@ -5,19 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Lemonteed Studio</title>
     <link rel="stylesheet" href="/studio/studio.css">
+    <script src="/assets/js/memetic-game-data.js"></script>
     <script src="/studio/studio.js" defer></script>
   </head>
   <body>
-    <header class="studio-header">
-      <div>
-        <p class="eyebrow">Local static CMS</p>
-        <h1>Lemonteed Studio</h1>
-      </div>
-      <a href="/index.html" target="_blank" rel="noreferrer">View site</a>
-    </header>
+    <div class="studio-app">
+      <aside class="studio-rail" aria-label="Studio navigation">
+        <div class="studio-brand">
+          <span>Lemonteed</span>
+          <strong>Studio</strong>
+        </div>
+        <nav class="studio-nav">
+          <button type="button" class="is-active" data-workspace-nav="dashboard">Dashboard</button>
+          <button type="button" data-workspace-nav="library">Library</button>
+          <button type="button" data-workspace-nav="metadata">Metadata</button>
+          <button type="button" data-workspace-nav="uploads">Uploads</button>
+          <button type="button" data-workspace-nav="bulk">Bulk Tools</button>
+          <button type="button" data-workspace-nav="health">Media Health</button>
+          <button type="button" data-workspace-nav="relations">Relations</button>
+          <button type="button" data-workspace-nav="game">Memetic Game</button>
+          <button type="button" data-workspace-nav="live">Live Experiment</button>
+          <button type="button" data-workspace-nav="report">Build Report</button>
+        </nav>
+        <a class="view-site-link" href="/index.html" target="_blank" rel="noreferrer">View Site</a>
+      </aside>
 
-    <main class="studio-shell">
-      <section class="upload-panel" aria-labelledby="upload-title">
+      <div class="studio-main">
+        <header class="studio-header">
+          <div>
+            <p class="eyebrow" data-workspace-eyebrow>Local static CMS</p>
+            <h1 data-workspace-title>Lemonteed Studio</h1>
+          </div>
+          <p class="status" data-status role="status"></p>
+        </header>
+
+        <main class="studio-shell">
+          <section class="workspace-panel is-active" data-workspace="dashboard" aria-labelledby="dashboard-title">
+            <div class="panel-heading">
+              <h2 id="dashboard-title">Dashboard</h2>
+              <p>Fast triage for the local archive. Open Library to browse, Uploads to add work, or Bulk Tools for mass changes.</p>
+            </div>
+
+            <div class="dashboard-grid" data-dashboard></div>
+          </section>
+
+          <section class="workspace-panel upload-panel" data-workspace="uploads" aria-labelledby="upload-title">
         <div class="panel-heading">
           <h2 id="upload-title">Add Projects</h2>
           <p>Upload one image or a batch. Studio suggests titles from filenames, then builds each entry into the static gallery.</p>
@@ -65,14 +97,12 @@
 
           <button class="submit-button" type="submit">Upload Batch + Build</button>
         </form>
-
-        <p class="status" data-status role="status"></p>
       </section>
 
-      <section class="projects-panel" aria-labelledby="projects-title">
+      <section class="workspace-panel projects-panel" data-workspace="library" aria-labelledby="projects-title">
         <div class="panel-heading">
-          <h2 id="projects-title">Archive</h2>
-          <p><span data-count>0</span> projects. Hide keeps files. Delete removes the record and image set.</p>
+          <h2 id="projects-title">Library</h2>
+          <p><span data-count>0</span> projects. Browse visually, switch to List for fast scanning, and open the drawer for editing.</p>
         </div>
 
         <div class="studio-tools">
@@ -82,25 +112,252 @@
             <button type="button" data-filter="hidden">Hidden</button>
           </div>
 
+          <div class="archive-filters" aria-label="Archive search filters">
+            <input type="search" placeholder="Search title, ID, tags, description" data-search>
+            <select data-status-filter aria-label="Filter by status">
+              <option value="all">All statuses</option>
+              <option value="Draft">Draft</option>
+              <option value="Ready">Ready</option>
+              <option value="Published">Published</option>
+              <option value="Hidden">Hidden</option>
+              <option value="Archived">Archived</option>
+              <option value="Deleted">Deleted</option>
+              <option value="missing-media">Missing media</option>
+              <option value="missing-metadata">Missing metadata</option>
+              <option value="featured">Featured</option>
+              <option value="not-featured">Not featured</option>
+            </select>
+            <select data-category-filter aria-label="Filter by category">
+              <option value="all">All categories</option>
+            </select>
+            <select data-group-filter aria-label="Group list by">
+              <option value="category">Group by category</option>
+              <option value="status">Group by status</option>
+              <option value="featured">Group by featured</option>
+              <option value="metadata">Group by metadata</option>
+            </select>
+          </div>
+
+          <div class="curation-panel">
+            <section>
+              <h3>Tags</h3>
+              <div class="curation-list" data-tag-manager></div>
+            </section>
+            <section>
+              <h3>Series</h3>
+              <div class="curation-list" data-series-manager></div>
+            </section>
+          </div>
+
           <div class="toolbar" aria-label="Entry views">
-            <button type="button" data-view="cards" class="is-active">Card View</button>
-            <button type="button" data-view="list">List View</button>
+            <button type="button" data-view="cards" class="is-active">Cards</button>
+            <button type="button" data-view="list">List</button>
+          </div>
+        </div>
+
+        <div class="project-list" data-project-list></div>
+      </section>
+
+      <section class="workspace-panel metadata-panel" data-workspace="metadata" aria-labelledby="metadata-title">
+        <div class="panel-heading">
+          <h2 id="metadata-title">Metadata</h2>
+          <p>Spreadsheet-style editing queue grouped by archive state, category, featured state, or missing field.</p>
+        </div>
+
+        <div class="studio-tools metadata-tools">
+          <div class="archive-filters" aria-label="Metadata search filters">
+            <input type="search" placeholder="Search title, ID, series, tags, description" data-metadata-search>
+            <select data-metadata-status-filter aria-label="Filter metadata by status">
+              <option value="all">All statuses</option>
+              <option value="Draft">Draft</option>
+              <option value="Ready">Ready</option>
+              <option value="Published">Published</option>
+              <option value="Hidden">Hidden</option>
+              <option value="Archived">Archived</option>
+              <option value="Deleted">Deleted</option>
+              <option value="missing-media">Missing media</option>
+              <option value="missing-metadata">Missing metadata</option>
+              <option value="featured">Featured</option>
+              <option value="not-featured">Not featured</option>
+            </select>
+            <select data-metadata-category-filter aria-label="Filter metadata by category">
+              <option value="all">All categories</option>
+            </select>
+            <select data-metadata-group-filter aria-label="Group metadata list by">
+              <option value="missing">Group by missing field</option>
+              <option value="category">Group by category</option>
+              <option value="status">Group by status</option>
+              <option value="series">Group by series</option>
+              <option value="featured">Group by featured</option>
+            </select>
+            <select data-metadata-sort aria-label="Sort metadata list by">
+              <option value="updated">Sort by updated</option>
+              <option value="title">Sort by title</option>
+              <option value="created">Sort by created</option>
+              <option value="status">Sort by status</option>
+            </select>
+          </div>
+
+          <div class="missing-filter-bar" aria-label="Missing metadata filters">
+            <button type="button" class="is-active" data-missing-filter="all">All</button>
+            <button type="button" data-missing-filter="alt">Missing Alt</button>
+            <button type="button" data-missing-filter="description">Missing Description</button>
+            <button type="button" data-missing-filter="date">Missing Date</button>
+            <button type="button" data-missing-filter="tags">Missing Tags</button>
+            <button type="button" data-missing-filter="media">Missing Media</button>
+          </div>
+        </div>
+
+        <div class="metadata-list" data-metadata-list></div>
+      </section>
+
+      <section class="workspace-panel" data-workspace="bulk" aria-labelledby="bulk-title">
+        <div class="panel-heading">
+          <h2 id="bulk-title">Bulk Tools</h2>
+          <p>Select artifacts in Library, then apply mass metadata changes or export just that selection here.</p>
+        </div>
+
+        <form class="bulk-tools" data-bulk-form>
+          <span data-selected-count>0 selected</span>
+          <select name="status" aria-label="Bulk status">
+            <option value="">Keep status</option>
+            <option value="Draft">Draft</option>
+            <option value="Ready">Ready</option>
+            <option value="Published">Published</option>
+            <option value="Hidden">Hidden</option>
+            <option value="Archived">Archived</option>
+            <option value="Deleted">Deleted</option>
+          </select>
+          <select name="category" data-bulk-category aria-label="Bulk category">
+            <option value="">Keep category</option>
+          </select>
+          <select name="visible" aria-label="Bulk visibility">
+            <option value="">Keep visibility</option>
+            <option value="true">Visible</option>
+            <option value="false">Hidden</option>
+          </select>
+          <select name="featured" aria-label="Bulk featured state">
+            <option value="">Keep featured</option>
+            <option value="true">Featured</option>
+            <option value="false">Not featured</option>
+          </select>
+          <input name="tagsAdd" type="text" placeholder="Add tags">
+          <input name="toolsUsedAdd" type="text" placeholder="Add tools">
+          <input name="series" type="text" placeholder="Set series">
+          <input name="relatedAdd" type="text" placeholder="Add related IDs">
+          <input name="relatedRemove" type="text" placeholder="Remove related IDs">
+          <button type="submit">Apply Bulk Edit</button>
+          <button type="button" data-regenerate-selected>Regenerate Variants</button>
+          <button type="button" data-export-selected>Export Selected</button>
+          <button type="button" data-clear-selection>Clear</button>
+        </form>
+
+          <div class="bulk-status-workflow" aria-label="Quick status workflow">
+            <span>Quick status</span>
+            <button type="button" data-bulk-status-quick="Draft">Draft</button>
+            <button type="button" data-bulk-status-quick="Ready">Ready</button>
+            <button type="button" data-bulk-status-quick="Published">Published</button>
+            <button type="button" data-bulk-status-quick="Hidden">Hidden</button>
           </div>
 
           <div class="import-export-tools">
+            <button type="button" data-validate>Validate Archive</button>
             <button type="button" data-export>Export Data</button>
+            <button type="button" data-export-csv>Export CSV</button>
             <select data-import-mode aria-label="Import mode">
               <option value="merge">Merge import</option>
               <option value="replace">Replace all</option>
             </select>
             <input type="file" accept="application/json,.json" data-import-file aria-label="Import JSON data">
             <button type="button" data-import>Import Data</button>
+            <input type="file" accept="text/csv,.csv" data-import-csv-file aria-label="Import CSV data">
+            <button type="button" data-import-csv>Import CSV</button>
           </div>
+      </section>
+
+      <section class="workspace-panel" data-workspace="health" aria-labelledby="health-title">
+        <div class="panel-heading">
+          <h2 id="health-title">Media Health</h2>
+          <p>Find missing images, unused image files, and media cleanup work without crowding Library.</p>
         </div>
 
-        <div class="project-list" data-project-list></div>
+        <div class="import-export-tools">
+          <button type="button" data-media-health>Run Media Health</button>
+        </div>
+
+        <div class="health-dashboard" data-health-dashboard></div>
       </section>
+
+      <section class="workspace-panel" data-workspace="relations" aria-labelledby="relations-title">
+        <div class="panel-heading">
+          <h2 id="relations-title">Relations</h2>
+          <p>Review related-item coverage and apply suggested relationships by shared category, series, and tags.</p>
+        </div>
+
+        <div class="relations-board" data-relations-board></div>
+      </section>
+
+      <section class="workspace-panel" data-workspace="game" aria-labelledby="game-title">
+        <div class="panel-heading">
+          <h2 id="game-title">Memetic Warfare Manager</h2>
+          <p>Audit game weapon records against gallery artifacts and jump into the artifact editor when metadata needs work.</p>
+        </div>
+
+        <div class="game-manager" data-game-manager></div>
+      </section>
+
+      <section class="workspace-panel" data-workspace="live" aria-labelledby="live-title">
+        <div class="panel-heading">
+          <h2 id="live-title">Live Experiment</h2>
+          <p>Edit the public Cloud Flip dossier. Saving writes content/live-experiment.json and rebuilds the generated browser data.</p>
+        </div>
+
+        <form class="live-editor" data-live-editor-form>
+          <div class="live-editor-grid">
+            <div class="live-editor-fields" data-live-editor-fields></div>
+            <aside class="live-editor-side">
+              <section class="live-preview" aria-label="Live experiment preview">
+                <div class="live-preview__head">
+                  <span>Preview</span>
+                  <a href="/memetic-warfare/live-experiment/" target="_blank" rel="noreferrer">Open Page</a>
+                </div>
+                <div class="live-preview__canvas" data-live-preview></div>
+              </section>
+
+              <details class="live-json-panel">
+                <summary>Advanced JSON</summary>
+                <label>
+                  <span>Experiment JSON</span>
+                  <textarea name="liveExperiment" rows="18" spellcheck="false" data-live-editor-json></textarea>
+                </label>
+              </details>
+            </aside>
+          </div>
+          <div class="live-editor-actions">
+            <button type="submit">Save + Build</button>
+            <button type="button" data-live-editor-reload>Reload</button>
+            <button type="button" data-live-editor-sync>Sync JSON From Fields</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="workspace-panel" data-workspace="report" aria-labelledby="report-title">
+        <div class="panel-heading">
+          <h2 id="report-title">Build Report</h2>
+          <p>Run validation and summarize the archive state before publishing.</p>
+        </div>
+
+        <div class="import-export-tools">
+          <button type="button" data-build-report>Run Build Report</button>
+        </div>
+
+        <div class="build-report" data-build-report-panel></div>
+      </section>
+
+      <div class="validation-panel" data-validation-panel hidden></div>
     </main>
+      </div>
+    </div>
 
     <div class="edit-layer" data-edit-layer hidden>
       <div class="edit-scrim" aria-hidden="true"></div>

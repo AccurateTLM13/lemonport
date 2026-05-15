@@ -1,3 +1,4 @@
 .studio-uploads/
 .codex-screens/
 *.tmp
+.studio-backups/

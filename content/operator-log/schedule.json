@@ -1,0 +1,32 @@
+[
+  {
+    "phase": 1,
+    "title": "Locked File",
+    "phaseLabel": "File Fragment 001",
+    "publishAt": "2026-05-01T09:00:00-05:00",
+    "fragment": "a8f31kq9.json",
+    "status": "Ready",
+    "nextMutationHint": "Archive instability detected.",
+    "requiresUnlock": false
+  },
+  {
+    "phase": 2,
+    "title": "First Leak",
+    "phaseLabel": "File Fragment 002",
+    "publishAt": "2026-07-01T09:00:00-05:00",
+    "fragment": "z91mqp02.json",
+    "status": "Ready",
+    "nextMutationHint": "Another file may surface soon.",
+    "requiresUnlock": true
+  },
+  {
+    "phase": 3,
+    "title": "The Full Record",
+    "phaseLabel": "File Fragment 003",
+    "publishAt": "2026-10-01T09:00:00-05:00",
+    "fragment": "k0xv72la.json",
+    "status": "Draft",
+    "nextMutationHint": null,
+    "requiresUnlock": true
+  }
+]

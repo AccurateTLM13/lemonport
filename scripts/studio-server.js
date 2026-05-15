@@ -1,8 +1,19 @@
 const fs = require("node:fs");
 const http = require("node:http");
 const path = require("node:path");
+// TODO: Mutation Desk — import full promotion logic when the Mutation Desk UI is built.
+// For now, the promotion script (scripts/promote-operator-mutation.js) handles CLI promotion.
+const MUTATION_SCHEDULE_FILE = path.resolve(__dirname, "..", "content", "operator-log", "schedule.json");
+const MUTATION_PUBLIC_DATA_DIR = path.resolve(__dirname, "..", "operator-log", "data");
+const MUTATION_FRAGMENTS_DIR = path.resolve(__dirname, "..", "content", "operator-log", "fragments");
+const MUTATION_MANIFEST_FILE = path.resolve(__dirname, "..", "operator-log", "manifest.json");
 const { execFileSync } = require("node:child_process");
 const { build } = require("./build-gallery");
+const { backupFile } = require("./file-backup");
+const { assertValidContent, validateContent } = require("./content-validation");
+const { mediaHealth } = require("./media-health");
+const { variantsForProject, absoluteFromPublicUrl } = require("./generate-image-variants");
+const { contentFile: liveExperimentFile, validateLiveExperiment, buildLiveExperiment } = require("./build-live-experiment");
 
 const root = path.resolve(__dirname, "..");
 const contentFile = path.join(root, "content", "projects.json");
@@ -11,7 +22,7 @@ const studioDir = path.join(root, "studio");
 const port = Number(process.env.PORT || 5173);
 const maxBodyBytes = 80 * 1024 * 1024;
 const galleryWidths = [320, 480, 640, 768, 900, 1024, 1600];
-const statuses = ["Draft", "Ready", "Published"];
+const statuses = ["Draft", "Ready", "Published", "Hidden", "Archived", "Deleted"];
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
@@ -28,6 +39,15 @@ const mimeTypes = {
 function sendJson(response, status, data) {
   response.writeHead(status, { "content-type": "application/json; charset=utf-8" });
   response.end(JSON.stringify(data));
+}
+
+function sendError(response, error) {
+  const validation = error.validation || null;
+  sendJson(response, 400, {
+    error: error.message,
+    errors: validation ? validation.errors : undefined,
+    warnings: validation ? validation.warnings : undefined
+  });
 }
 
 function sendText(response, status, text) {
@@ -77,13 +97,43 @@ function loadCategories() {
   return JSON.parse(fs.readFileSync(categoriesFile, "utf8"));
 }
 
+function loadLiveExperiment() {
+  if (!fs.existsSync(liveExperimentFile)) {
+    return {};
+  }
+
+  return JSON.parse(fs.readFileSync(liveExperimentFile, "utf8"));
+}
+
+function saveLiveExperiment(data) {
+  const result = validateLiveExperiment(data);
+
+  if (result.errors.length) {
+    const error = new Error("Live experiment validation failed.");
+    error.validation = result;
+    throw error;
+  }
+
+  backupFile(liveExperimentFile);
+  fs.mkdirSync(path.dirname(liveExperimentFile), { recursive: true });
+  fs.writeFileSync(liveExperimentFile, `${JSON.stringify({
+    ...data,
+    updatedAt: new Date().toISOString()
+  }, null, 2)}\n`);
+  buildLiveExperiment();
+}
+
 function saveCategories(categories) {
+  assertValidContent(loadProjects(), categories);
+  backupFile(categoriesFile);
   fs.mkdirSync(path.dirname(categoriesFile), { recursive: true });
   fs.writeFileSync(categoriesFile, `${JSON.stringify(categories, null, 2)}\n`);
   build();
 }
 
 function saveProjects(projects) {
+  assertValidContent(projects, loadCategories());
+  backupFile(contentFile);
   fs.mkdirSync(path.dirname(contentFile), { recursive: true });
   fs.writeFileSync(contentFile, `${JSON.stringify(projects, null, 2)}\n`);
   build();
@@ -152,6 +202,47 @@ function arrayField(value) {
     .filter(Boolean);
 }
 
+function mergeArrayField(current, additions) {
+  const values = arrayField(current);
+  const seen = new Set(values.map((item) => item.toLowerCase()));
+
+  arrayField(additions).forEach((item) => {
+    const key = item.toLowerCase();
+
+    if (!seen.has(key)) {
+      values.push(item);
+      seen.add(key);
+    }
+  });
+
+  return values;
+}
+
+function removeArrayField(current, removals) {
+  const removed = new Set(arrayField(removals).map((item) => item.toLowerCase()));
+  return arrayField(current).filter((item) => !removed.has(item.toLowerCase()));
+}
+
+function normalizeCuration(value) {
+  const source = value && typeof value === "object" ? value : {};
+  const randomWeight = Number(source.randomWeight || 1);
+  const featuredRank = Number(source.featuredRank || 0);
+
+  if (!Number.isFinite(randomWeight) || randomWeight < 0) {
+    throw new Error("Random weight must be a non-negative number.");
+  }
+
+  if (!Number.isFinite(featuredRank) || featuredRank < 0) {
+    throw new Error("Featured rank must be a non-negative number.");
+  }
+
+  return {
+    homepage: source.homepage === true,
+    featuredRank,
+    randomWeight
+  };
+}
+
 function imageValue(project) {
   return project.image || (project.sizes && (project.sizes.large || project.sizes.medium || project.sizes.small)) || "";
 }
@@ -165,9 +256,14 @@ function hasRequiredImages(project) {
 }
 
 function normalizeStatus(status, project) {
-  const requested = statuses.includes(status) ? status : "";
+  const value = String(status || "").trim();
+  const requested = statuses.includes(value) ? value : "";
 
-  if (!requested) {
+  if (value && !requested) {
+    throw new Error(`Invalid status "${value}". Expected ${statuses.join(", ")}.`);
+  }
+
+  if (!value) {
     return hasRequiredImages(project) ? "Published" : "Draft";
   }
 
@@ -379,6 +475,16 @@ async function updateProject(request, response, id) {
     project.categoryLabel = categoryMeta.label;
   }
 
+  if (Object.prototype.hasOwnProperty.call(body, "slug")) {
+    const slug = slugify(body.slug || project.title);
+
+    if (projects.some((item) => item.id !== id && item.slug === slug)) {
+      throw new Error(`Slug already exists: ${slug}`);
+    }
+
+    project.slug = slug;
+  }
+
   [
     "title",
     "series",
@@ -410,6 +516,10 @@ async function updateProject(request, response, id) {
     project.featured = Boolean(body.featured);
   }
 
+  if (Object.prototype.hasOwnProperty.call(body, "curation")) {
+    project.curation = normalizeCuration(body.curation);
+  }
+
   if (Object.prototype.hasOwnProperty.call(body, "status")) {
     project.status = normalizeStatus(String(body.status || "").trim(), project);
   } else if (project.status) {
@@ -419,6 +529,343 @@ async function updateProject(request, response, id) {
   project.updatedAt = new Date().toISOString();
   saveProjects(projects);
   sendJson(response, 200, { project });
+}
+
+function imageSetFiles(project) {
+  const source = project.sizes && (project.sizes.large || project.sizes.medium || project.sizes.small);
+
+  if (!source || !source.startsWith("/images/")) {
+    return [];
+  }
+
+  const decoded = decodeURIComponent(source.replace(/^\//, ""));
+  const absolute = path.resolve(root, decoded);
+  const imageDir = path.dirname(absolute);
+  const ext = path.extname(absolute);
+  const base = path.basename(absolute, ext);
+
+  return [absolute, ...galleryWidths.map((width) => path.join(imageDir, `${base}-${width}${ext}`))]
+    .filter((file) => file.startsWith(root) && fs.existsSync(file));
+}
+
+function backupImageSet(project) {
+  imageSetFiles(project).forEach((file) => backupFile(file));
+}
+
+function syncProjectThumbnail(project) {
+  const thumbnail = Array.isArray(project.variants)
+    ? project.variants.find((variant) => Number(variant.width) === 768) || project.variants[0]
+    : null;
+
+  if (thumbnail && thumbnail.url) {
+    project.thumbnail = thumbnail.url;
+  }
+}
+
+function regenerateProjectVariants(project, options = {}) {
+  const result = variantsForProject(project, options);
+  project.variants = result.variants;
+  syncProjectThumbnail(project);
+  project.updatedAt = new Date().toISOString();
+  return result;
+}
+
+function cleanupStaleImageSet(project) {
+  const keep = new Set([
+    imageValue(project),
+    thumbnailValue(project),
+    ...(Array.isArray(project.variants) ? project.variants.map((variant) => variant.url) : [])
+  ].filter(Boolean).map((url) => absoluteFromPublicUrl(url)).filter(Boolean));
+
+  imageSetFiles(project).forEach((file) => {
+    if (!keep.has(file)) {
+      backupFile(file);
+      fs.unlinkSync(file);
+    }
+  });
+}
+
+function mediaFileInfo(label, url) {
+  const filePath = absoluteFromPublicUrl(url);
+
+  if (!filePath) {
+    return { label, url, exists: false };
+  }
+
+  if (!fs.existsSync(filePath)) {
+    return { label, url, exists: false, path: path.relative(root, filePath) };
+  }
+
+  let dimensions = null;
+
+  try {
+    dimensions = imageDimensions(filePath);
+  } catch (error) {
+    dimensions = null;
+  }
+
+  return {
+    label,
+    url,
+    exists: true,
+    path: path.relative(root, filePath).replace(/\\/g, "/"),
+    bytes: fs.statSync(filePath).size,
+    width: dimensions ? dimensions.width : null,
+    height: dimensions ? dimensions.height : null
+  };
+}
+
+function projectMediaInfo(project) {
+  const files = [];
+  const seen = new Set();
+
+  function add(label, url) {
+    if (!url || seen.has(`${label}:${url}`)) {
+      return;
+    }
+
+    seen.add(`${label}:${url}`);
+    files.push(mediaFileInfo(label, url));
+  }
+
+  add("image", imageValue(project));
+  add("thumbnail", thumbnailValue(project));
+
+  if (Array.isArray(project.variants)) {
+    project.variants.forEach((variant) => add(`variant ${variant.width}`, variant.url));
+  }
+
+  return {
+    id: project.id,
+    title: project.title,
+    width: project.width || null,
+    height: project.height || null,
+    files
+  };
+}
+
+async function bulkUpdateProjects(request, response) {
+  const body = await readJsonBody(request);
+  const ids = Array.isArray(body.ids) ? body.ids.map((id) => String(id || "").trim()).filter(Boolean) : [];
+  const changes = body.changes && typeof body.changes === "object" ? body.changes : {};
+
+  if (!ids.length) {
+    throw new Error("Select at least one project.");
+  }
+
+  const projects = loadProjects();
+  const selected = new Set(ids);
+  const missing = ids.filter((id) => !projects.some((project) => project.id === id));
+
+  if (missing.length) {
+    throw new Error(`Unknown project IDs: ${missing.join(", ")}`);
+  }
+
+  const knownIds = new Set(projects.map((project) => project.id));
+  const relatedAdd = arrayField(changes.relatedAdd);
+  const relatedRemove = arrayField(changes.relatedRemove);
+  const missingRelated = relatedAdd.filter((id) => !knownIds.has(id));
+
+  if (missingRelated.length) {
+    throw new Error(`Unknown related project IDs: ${missingRelated.join(", ")}`);
+  }
+
+  let categoryMeta = null;
+
+  if (Object.prototype.hasOwnProperty.call(changes, "category") && changes.category) {
+    categoryMeta = categoryMetaFor(String(changes.category || "").trim());
+  }
+
+  let updated = 0;
+
+  projects.forEach((project) => {
+    if (!selected.has(project.id)) {
+      return;
+    }
+
+    if (categoryMeta) {
+      project.category = categoryMeta.slug;
+      project.categoryLabel = categoryMeta.label;
+    }
+
+    if (Object.prototype.hasOwnProperty.call(changes, "status") && changes.status) {
+      project.status = normalizeStatus(String(changes.status || "").trim(), project);
+    }
+
+    if (Object.prototype.hasOwnProperty.call(changes, "visible")) {
+      project.visible = Boolean(changes.visible);
+    }
+
+    if (Object.prototype.hasOwnProperty.call(changes, "featured")) {
+      project.featured = Boolean(changes.featured);
+    }
+
+    if (Object.prototype.hasOwnProperty.call(changes, "curation")) {
+      project.curation = {
+        ...normalizeCuration(project.curation),
+        ...normalizeCuration({
+          ...project.curation,
+          ...changes.curation
+        })
+      };
+    }
+
+    if (Object.prototype.hasOwnProperty.call(changes, "tagsAdd")) {
+      project.tags = mergeArrayField(project.tags, changes.tagsAdd);
+    }
+
+    if (Object.prototype.hasOwnProperty.call(changes, "toolsUsedAdd")) {
+      project.toolsUsed = mergeArrayField(project.toolsUsed, changes.toolsUsedAdd);
+    }
+
+    if (Object.prototype.hasOwnProperty.call(changes, "relatedAdd")) {
+      project.related = mergeArrayField(project.related, relatedAdd.filter((relatedId) => relatedId !== project.id));
+    }
+
+    if (Object.prototype.hasOwnProperty.call(changes, "relatedRemove")) {
+      project.related = removeArrayField(project.related, relatedRemove);
+    }
+
+    if (Object.prototype.hasOwnProperty.call(changes, "series")) {
+      project.series = String(changes.series || "").trim();
+    }
+
+    project.updatedAt = new Date().toISOString();
+    updated += 1;
+  });
+
+  saveProjects(projects);
+  sendJson(response, 200, { updated });
+}
+
+async function regenerateVariants(request, response, id) {
+  const projects = loadProjects();
+  const project = projects.find((item) => item.id === id);
+
+  if (!project) {
+    sendJson(response, 404, { error: "Project not found." });
+    return;
+  }
+
+  backupImageSet(project);
+  const result = regenerateProjectVariants(project, { force: true });
+  saveProjects(projects);
+  sendJson(response, 200, { id, generated: result.generated, variantCount: project.variants.length });
+}
+
+async function bulkRegenerateVariants(request, response) {
+  const body = await readJsonBody(request);
+  const ids = Array.isArray(body.ids) ? body.ids.map((id) => String(id || "").trim()).filter(Boolean) : [];
+
+  if (!ids.length) {
+    throw new Error("Select at least one project.");
+  }
+
+  const projects = loadProjects();
+  const selected = new Set(ids);
+  const missing = ids.filter((id) => !projects.some((project) => project.id === id));
+
+  if (missing.length) {
+    throw new Error(`Unknown project IDs: ${missing.join(", ")}`);
+  }
+
+  const generated = [];
+  let updated = 0;
+
+  projects.forEach((project) => {
+    if (!selected.has(project.id)) {
+      return;
+    }
+
+    backupImageSet(project);
+    const result = regenerateProjectVariants(project, { force: true });
+    generated.push(...result.generated);
+    updated += 1;
+  });
+
+  saveProjects(projects);
+  sendJson(response, 200, { updated, generated });
+}
+
+async function replaceProjectImage(request, response, id) {
+  const body = await readJsonBody(request);
+  const projects = loadProjects();
+  const project = projects.find((item) => item.id === id);
+
+  if (!project) {
+    sendJson(response, 404, { error: "Project not found." });
+    return;
+  }
+
+  const { buffer } = decodeDataUrl(body.imageData);
+  const category = project.category;
+  const slug = project.slug || slugify(project.title);
+  const imageDir = path.join(root, "images", category);
+  const uploadDir = path.join(root, ".studio-uploads");
+  const tempFile = path.join(uploadDir, `${slug}-replacement`);
+
+  fs.mkdirSync(imageDir, { recursive: true });
+  fs.mkdirSync(uploadDir, { recursive: true });
+  fs.writeFileSync(tempFile, buffer);
+
+  try {
+    backupImageSet(project);
+    const image = makeWebpSet(tempFile, imageDir, slug);
+    const imageUrl = publicImagePath(category, `${slug}.webp`);
+    project.image = imageUrl;
+    project.thumbnail = (image.variants.find((variant) => Number(variant.width) === 768) || image.variants[0] || {}).url || imageUrl;
+    project.width = image.dimensions.width;
+    project.height = image.dimensions.height;
+    project.sizes = {
+      small: imageUrl,
+      medium: imageUrl,
+      large: imageUrl
+    };
+    project.variants = image.variants;
+    project.updatedAt = new Date().toISOString();
+    cleanupStaleImageSet(project);
+    saveProjects(projects);
+    sendJson(response, 200, { project });
+  } finally {
+    if (fs.existsSync(tempFile)) {
+      fs.unlinkSync(tempFile);
+    }
+  }
+}
+
+async function cleanupUnusedMedia(request, response) {
+  const body = await readJsonBody(request);
+  const requested = Array.isArray(body.files) ? body.files.map((file) => String(file || "").trim()).filter(Boolean) : [];
+
+  if (!requested.length) {
+    throw new Error("Choose at least one unused file to delete.");
+  }
+
+  const projects = loadProjects();
+  const categories = loadCategories();
+  const health = mediaHealth(projects, categories);
+  const unused = new Set(health.unusedGalleryImages);
+  const deleted = [];
+
+  requested.forEach((file) => {
+    const normalized = file.replace(/\\/g, "/");
+
+    if (!unused.has(normalized)) {
+      throw new Error(`Refusing to delete a file that is not currently unused: ${file}`);
+    }
+
+    const absolute = path.resolve(root, normalized);
+
+    if (!absolute.startsWith(root) || !fs.existsSync(absolute)) {
+      return;
+    }
+
+    backupFile(absolute);
+    fs.unlinkSync(absolute);
+    deleted.push(normalized);
+  });
+
+  sendJson(response, 200, { deleted });
 }
 
 function entriesFromImportPayload(payload) {
@@ -527,8 +974,13 @@ function deleteProject(response, id) {
   }
 
   const [project] = projects.splice(index, 1);
-  removeImageSet(project);
+  projects.forEach((item) => {
+    if (Array.isArray(item.related)) {
+      item.related = item.related.filter((relatedId) => relatedId !== id);
+    }
+  });
   saveProjects(projects);
+  removeImageSet(project);
   sendJson(response, 200, { deleted: id });
 }
 
@@ -567,6 +1019,26 @@ async function route(request, response) {
       return;
     }
 
+    if (request.method === "GET" && url.pathname === "/api/live-experiment") {
+      sendJson(response, 200, { liveExperiment: loadLiveExperiment() });
+      return;
+    }
+
+    if (request.method === "GET" && url.pathname === "/api/validation") {
+      const result = validateContent(loadProjects(), loadCategories());
+      sendJson(response, 200, {
+        ok: result.errors.length === 0,
+        errors: result.errors,
+        warnings: result.warnings
+      });
+      return;
+    }
+
+    if (request.method === "GET" && url.pathname === "/api/media-health") {
+      sendJson(response, 200, mediaHealth(loadProjects(), loadCategories()));
+      return;
+    }
+
     if (request.method === "POST" && url.pathname === "/api/categories") {
       await createCategory(request, response);
       return;
@@ -577,12 +1049,62 @@ async function route(request, response) {
       return;
     }
 
+    if (request.method === "PATCH" && url.pathname === "/api/live-experiment") {
+      const body = await readJsonBody(request);
+      saveLiveExperiment(body.liveExperiment || body);
+      sendJson(response, 200, { liveExperiment: loadLiveExperiment() });
+      return;
+    }
+
     if (request.method === "POST" && url.pathname === "/api/import") {
       await importProjects(request, response);
       return;
     }
 
+    if (request.method === "POST" && url.pathname === "/api/projects/bulk") {
+      await bulkUpdateProjects(request, response);
+      return;
+    }
+
+    if (request.method === "POST" && url.pathname === "/api/projects/bulk/regenerate-variants") {
+      await bulkRegenerateVariants(request, response);
+      return;
+    }
+
+    if (request.method === "POST" && url.pathname === "/api/media-cleanup") {
+      await cleanupUnusedMedia(request, response);
+      return;
+    }
+
     const projectMatch = url.pathname.match(/^\/api\/projects\/([^/]+)$/);
+
+    const regenerateMatch = url.pathname.match(/^\/api\/projects\/([^/]+)\/regenerate-variants$/);
+
+    if (regenerateMatch && request.method === "POST") {
+      await regenerateVariants(request, response, regenerateMatch[1]);
+      return;
+    }
+
+    const replaceImageMatch = url.pathname.match(/^\/api\/projects\/([^/]+)\/replace-image$/);
+
+    if (replaceImageMatch && request.method === "POST") {
+      await replaceProjectImage(request, response, replaceImageMatch[1]);
+      return;
+    }
+
+    const mediaInfoMatch = url.pathname.match(/^\/api\/projects\/([^/]+)\/media-info$/);
+
+    if (mediaInfoMatch && request.method === "GET") {
+      const project = loadProjects().find((item) => item.id === mediaInfoMatch[1]);
+
+      if (!project) {
+        sendJson(response, 404, { error: "Project not found." });
+        return;
+      }
+
+      sendJson(response, 200, projectMediaInfo(project));
+      return;
+    }
 
     if (projectMatch && request.method === "PATCH") {
       await updateProject(request, response, projectMatch[1]);
@@ -594,9 +1116,67 @@ async function route(request, response) {
       return;
     }
 
+    // ── Mutation Desk API ────────────────────────────────────────────────────
+    // TODO: Mutation Desk — add phase CREATE, UPDATE, DELETE routes here.
+    // TODO: Mutation Desk — add fragment editor endpoints here.
+    // TODO: Mutation Desk — add preview-current-phase endpoint here.
+
+    if (request.method === "GET" && url.pathname === "/api/mutation/schedule") {
+      if (!fs.existsSync(MUTATION_SCHEDULE_FILE)) {
+        sendJson(response, 404, { error: "schedule.json not found. Run the promotion script first." });
+        return;
+      }
+      const schedule = JSON.parse(fs.readFileSync(MUTATION_SCHEDULE_FILE, "utf8"));
+      const manifest = fs.existsSync(MUTATION_MANIFEST_FILE)
+        ? JSON.parse(fs.readFileSync(MUTATION_MANIFEST_FILE, "utf8"))
+        : null;
+      sendJson(response, 200, { schedule, manifest });
+      return;
+    }
+
+    if (request.method === "POST" && url.pathname === "/api/mutation/promote") {
+      if (!fs.existsSync(MUTATION_SCHEDULE_FILE)) {
+        sendJson(response, 400, { error: "schedule.json not found. Create phases first." });
+        return;
+      }
+      const schedule = JSON.parse(fs.readFileSync(MUTATION_SCHEDULE_FILE, "utf8"));
+      const now = new Date();
+      const eligible = schedule.filter((p) => {
+        const isEligibleStatus = p.status === "Ready" || p.status === "Published";
+        const publishTime = new Date(p.publishAt);
+        return isEligibleStatus && !Number.isNaN(publishTime.getTime()) && publishTime <= now;
+      });
+      if (!eligible.length) {
+        sendJson(response, 200, { promoted: false, message: "No eligible phase found." });
+        return;
+      }
+      const active = eligible.reduce((best, p) => (p.phase > best.phase ? p : best));
+      const sourceFragment = path.join(MUTATION_FRAGMENTS_DIR, active.fragment);
+      if (!fs.existsSync(sourceFragment)) {
+        sendJson(response, 400, { error: `Fragment not found: ${active.fragment}` });
+        return;
+      }
+      fs.mkdirSync(MUTATION_PUBLIC_DATA_DIR, { recursive: true });
+      fs.readdirSync(MUTATION_PUBLIC_DATA_DIR)
+        .filter((f) => f.endsWith(".json"))
+        .forEach((f) => fs.unlinkSync(path.join(MUTATION_PUBLIC_DATA_DIR, f)));
+      fs.copyFileSync(sourceFragment, path.join(MUTATION_PUBLIC_DATA_DIR, active.fragment));
+      const manifest = {
+        activePhase: active.phase,
+        activeFragment: active.fragment,
+        phaseLabel: active.phaseLabel || `File Fragment ${String(active.phase).padStart(3, "0")}`,
+        publishedAt: new Date(active.publishAt).toISOString(),
+        nextMutationHint: active.nextMutationHint || null,
+        requiresUnlock: active.requiresUnlock === true
+      };
+      fs.writeFileSync(MUTATION_MANIFEST_FILE, `${JSON.stringify(manifest, null, 2)}\n`);
+      sendJson(response, 200, { promoted: true, manifest });
+      return;
+    }
+
     serveFile(request, response);
   } catch (error) {
-    sendJson(response, 400, { error: error.message });
+    sendError(response, error);
   }
 }
 

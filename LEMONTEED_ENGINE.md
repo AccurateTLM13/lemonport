@@ -15,6 +15,7 @@ Static public pages include:
 - `what-if/index.html`
 - `misc-gens/index.html`
 - `memetic-warfare/index.html`
+- `operator-log/index.html` (hidden; noindex; not in sitemap)
 
 Shared public assets include:
 
@@ -47,6 +48,8 @@ Responsive image variants under `images/**` are also generated assets. Keep them
 ## Build Pipeline
 
 `scripts/build-gallery.js` reads `content/projects.json` and `content/categories.json`, filters public data, and writes browser globals used by the public gallery.
+
+`scripts/promote-operator-mutation.js` reads `content/operator-log/schedule.json`, selects the newest eligible phase, clears `operator-log/data/`, copies the active fragment, and writes `operator-log/manifest.json`. Run this whenever a new mutation phase should go live.
 
 The gallery build currently publishes projects where:
 

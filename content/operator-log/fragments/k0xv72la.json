@@ -1,0 +1,62 @@
+{
+  "headline": "OPERATOR LOG",
+  "subhead": "Full record. Handle accordingly.",
+  "statusLine": "ACCESS LEVEL: CLEARED",
+  "bodyClass": "phase-full",
+  "lockedCopy": "This record requires elevated clearance. You know what to do.",
+  "unlockCopy": "Full record unlocked. You found it.",
+  "blocks": [
+    {
+      "type": "text",
+      "kicker": "FULL RECORD",
+      "title": "Both Sides of the Clock",
+      "body": "Years of operating inside a manufacturing business. Years of building the Lemonteed archive at night. The two things are not separate. One funds the curiosity. The other sharpens the craft."
+    },
+    {
+      "type": "text",
+      "kicker": "FIELD NOTE 004",
+      "title": "What The Day Job Taught The Lab",
+      "body": "Real businesses need things that work. Fast. On a budget. Without three rounds of redesign. That pressure made the static-first architecture feel obvious, not limiting. Why run a server when a file will do it?"
+    },
+    {
+      "type": "text",
+      "kicker": "FIELD NOTE 005",
+      "title": "What The Lab Taught The Day Job",
+      "body": "Strange ideas are how good ideas survive long enough to become useful ones. The Lemonteed archive is not a portfolio. It is a place to think without a client in the room."
+    },
+    {
+      "type": "quote",
+      "body": "I take wacky ideas seriously enough to see what they might look like if somebody actually made them."
+    },
+    {
+      "type": "evidence",
+      "title": "Evidence Locker — Full Record",
+      "items": [
+        {
+          "title": "Manufacturing Brand Systems",
+          "description": "Public-facing pages, dealer messaging, product presentation, and practical marketing systems built for a real industrial business.",
+          "image": null,
+          "alt": "Manufacturing brand and web work"
+        },
+        {
+          "title": "Internal Tooling",
+          "description": "Dashboards and internal tools that operators actually use. Designed for clarity, not aesthetics.",
+          "image": null,
+          "alt": "Internal business tooling"
+        },
+        {
+          "title": "The Lemonteed Archive",
+          "description": "The night-shift output. Cards, generators, experiments, and visual what-ifs that exist because they should.",
+          "image": null,
+          "alt": "Lemonteed archive artifacts"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "kicker": "FINAL NOTE",
+      "title": "The Protocol",
+      "body": "This page exists because two things are true at the same time: practical work matters, and strange work matters. The operator believes both. This file is the proof."
+    }
+  ]
+}

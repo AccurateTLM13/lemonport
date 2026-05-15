@@ -9,6 +9,11 @@ Generated browser data lives in:
 
 - `assets/js/gallery-data.js`
 - `assets/js/gallery-categories.js`
+- `assets/js/live-experiment-data.js`
+
+Page-specific source data lives in:
+
+- `content/live-experiment.json`
 
 ## Projects
 
@@ -40,8 +45,9 @@ Common project fields:
 | `sizes` | object | Legacy/main image URL grouping. |
 | `variants` | object[] | Responsive image candidates. |
 | `featured` | boolean | Whether the item is featured. |
+| `curation` | object | Optional curation controls for homepage placement, featured ordering, and random weighting. |
 | `visible` | boolean | Whether the item can be emitted to public gallery data. |
-| `status` | string | Studio workflow state. Current values are `Draft`, `Ready`, and `Published`. |
+| `status` | string | Studio workflow state. Current values are `Draft`, `Ready`, `Published`, `Hidden`, `Archived`, and `Deleted`. |
 | `createdAt` | string | ISO creation timestamp. |
 | `updatedAt` | string | ISO update timestamp. |
 
@@ -52,12 +58,17 @@ The current Studio server accepts:
 - `Draft`
 - `Ready`
 - `Published`
+- `Hidden`
+- `Archived`
+- `Deleted`
 
 `Ready` and `Published` require image and thumbnail data.
 
 `scripts/build-gallery.js` currently emits only visible projects whose effective status is `Published`.
 
-Future roadmap discussions may introduce `hidden`, `archived`, or `deleted` states, but those are not the current implemented Studio statuses.
+Studio normalizes edited slugs and rejects duplicate slugs. Slug changes require confirmation in the local UI.
+
+`Hidden`, `Archived`, and `Deleted` records remain in `content/projects.json` but are not emitted to the public gallery unless explicitly moved back to `Published` and made visible.
 
 ## Image Fields
 
@@ -86,6 +97,26 @@ The preferred image shape is:
 ```
 
 Variant records should be sorted from smallest width to largest width when possible.
+
+Validation checks published entries for missing image files, missing thumbnail files, invalid variant records, missing variant files, duplicate variant widths, and expected responsive widths.
+
+Studio media management can regenerate variants, replace the source image while preserving the artifact ID and slug, report file sizes/dimensions, and clean up reviewed unused gallery files after backing them up.
+
+## Curation Fields
+
+Optional project curation metadata:
+
+```json
+{
+  "curation": {
+    "homepage": true,
+    "featuredRank": 10,
+    "randomWeight": 2
+  }
+}
+```
+
+`homepage` marks an item for local homepage collection controls. `featuredRank` is a non-negative sort hint. `randomWeight` is a non-negative number used by public random artifact navigation; `0` removes an item from weighted random selection while keeping it visible in the gallery.
 
 ## Categories
 
@@ -157,3 +188,19 @@ If Memetic Warfare metadata is later moved into `content/projects.json`, keep it
   }
 }
 ```
+
+## Live Experiment Data
+
+`content/live-experiment.json` is the canonical source for the `$100 Cloud Flip` page. It is edited in Studio from the `Live Experiment` workspace.
+
+Run this to rebuild the public browser data after direct JSON edits:
+
+```powershell
+node scripts\build-live-experiment.js
+```
+
+The generated file is:
+
+- `assets/js/live-experiment-data.js`
+
+Do not edit the generated file directly.

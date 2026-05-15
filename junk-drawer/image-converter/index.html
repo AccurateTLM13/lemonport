@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Free Image Converter | Lemonteed</title>
+    <meta name="description"
+        content="Batch convert HEIC, PNG, JPEG, AVIF, SVG, and WebP entirely locally in your browser. Free image converter tool by Lemonteed.">
+    <link rel="canonical" href="https://lemonteed.com/junk-drawer/image-converter/">
+    <meta property="og:title" content="Your Free Image Converter | Lemonteed">
+    <meta property="og:description"
+        content="Batch convert HEIC, PNG, JPEG, AVIF, SVG, and WebP locally. Your images never touch a server.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lemonteed.com/junk-drawer/image-converter/">
+    <meta property="og:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Your Free Image Converter | Lemonteed">
+    <meta name="twitter:description" content="Batch convert HEIC, PNG, JPEG, AVIF, SVG, and WebP locally.">
+    <link rel="icon" href="/images/favicons/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/heic2any/0.0.4/heic2any.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+
+        .spinner {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-left-color: #fff;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .drag-active {
+            border-color: #2563eb;
+            background-color: #eff6ff;
+            transform: scale(1.01);
+        }
+
+        #status-area::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        #status-area::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-4 sm:p-8">
+
+    <div id="drop-zone-global"
+        class="bg-white rounded-2xl shadow-xl w-full max-w-[1440px] h-[85vh] flex flex-col md:flex-row overflow-hidden border border-gray-100">
+
+        <div class="hidden md:block w-1/3 bg-slate-900 relative">
+            <img src="/images/junk/sunrise-watching.webp"
+                class="absolute inset-0 w-full h-full object-cover opacity-60">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent p-8 flex flex-col justify-end">
+                <h2 class="text-white text-2xl font-bold">Privacy First</h2>
+                <p class="text-slate-300 text-sm mt-2">All processing happens locally in your browser. Your images never
+                    touch a server.</p>
+            </div>
+        </div>
+
+        <div class="flex-grow flex flex-col p-6 md:p-10">
+            <header class="mb-6">
+                <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Your Free Image Converter</h1>
+                <p class="text-slate-500 mt-1">Batch convert HEIC, PNG, JPEG, AVIF, SVG, and WebP.</p>
+            </header>
+
+            <div id="drop-area"
+                class="relative group border-2 border-dashed border-slate-200 rounded-xl p-8 text-center transition-all cursor-pointer hover:border-blue-400 hover:bg-slate-50">
+                <input type="file" id="file-input" multiple accept="image/*,.heic,.heif"
+                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                <div class="pointer-events-none">
+                    <div
+                        class="mx-auto h-12 w-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                    </div>
+                    <p class="text-slate-700 font-semibold">Drop images here or click to browse</p>
+                    <p class="text-slate-400 text-xs mt-1">Supports multi-file selection</p>
+                </div>
+            </div>
+
+            <div id="status-area" class="mt-6 flex-grow overflow-y-auto space-y-2 mb-6">
+                <div id="status-placeholder" class="h-full flex flex-col items-center justify-center text-slate-300">
+                    <svg class="w-12 h-12 mb-2 opacity-20" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" />
+                    </svg>
+                    <p>No files selected</p>
+                </div>
+            </div>
+
+            <footer class="pt-6 border-t border-slate-100 bg-white">
+                <div class="flex flex-wrap items-end gap-4">
+                    <div class="flex-1 min-w-[140px]">
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Convert
+                            to</label>
+                        <select id="format-select"
+                            class="w-full bg-slate-50 border border-slate-200 text-slate-700 py-2.5 px-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+                            <option value="png">PNG (Lossless)</option>
+                            <option value="jpeg">JPEG (Standard)</option>
+                            <option value="webp">WebP (Efficient)</option>
+                            <option value="avif">AVIF (Ultra High Comp)</option>
+                        </select>
+                    </div>
+
+                    <div id="quality-container" class="flex-1 min-w-[140px] hidden">
+                        <label
+                            class="flex justify-between text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
+                            Quality <span id="quality-val" class="text-blue-600">90%</span>
+                        </label>
+                        <input type="range" id="quality-slider" min="10" max="100" value="90"
+                            class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
+                    </div>
+
+                    <div class="flex gap-2 w-full sm:w-auto">
+                        <button id="clear-btn"
+                            class="px-6 py-2.5 text-slate-500 font-bold hover:bg-slate-100 rounded-lg transition-all">Clear</button>
+                        <button id="convert-btn"
+                            class="flex-grow sm:flex-none px-8 py-2.5 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 shadow-lg shadow-blue-200 flex items-center justify-center gap-3 disabled:opacity-50 transition-all">
+                            <span id="btn-text">Convert & Download</span>
+                            <div id="btn-spinner" class="spinner hidden"></div>
+                        </button>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <canvas id="canvas" class="hidden"></canvas>
+
+    <script>
+        const dropArea = document.getElementById('drop-area');
+        const fileInput = document.getElementById('file-input');
+        const statusArea = document.getElementById('status-area');
+        const placeholder = document.getElementById('status-placeholder');
+        const formatSelect = document.getElementById('format-select');
+        const qualitySlider = document.getElementById('quality-slider');
+        const qualityVal = document.getElementById('quality-val');
+        const convertBtn = document.getElementById('convert-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        let filesMap = new Map();
+
+        // --- Logic ---
+
+        formatSelect.onchange = () => {
+            const needsQuality = ['jpeg', 'webp', 'avif'].includes(formatSelect.value);
+            document.getElementById('quality-container').classList.toggle('hidden', !needsQuality);
+        };
+
+        qualitySlider.oninput = (e) => qualityVal.innerText = `${e.target.value}%`;
+
+        fileInput.onchange = (e) => handleFiles(e.target.files);
+
+        ['dragenter', 'dragover'].forEach(e => {
+            dropArea.addEventListener(e, () => dropArea.classList.add('drag-active'));
+        });
+        ['dragleave', 'drop'].forEach(e => {
+            dropArea.addEventListener(e, () => dropArea.classList.remove('drag-active'));
+        });
+
+        async function handleFiles(files) {
+            if (files.length > 0) placeholder.classList.add('hidden');
+            for (const file of files) {
+                const id = `${file.name}-${file.lastModified}`;
+                if (filesMap.has(id)) continue;
+
+                filesMap.set(id, file);
+                addFileUI(file, id);
+            }
+        }
+
+        async function addFileUI(file, id) {
+            const row = document.createElement('div');
+            row.className = 'flex items-center gap-4 p-3 bg-white border border-slate-100 rounded-xl shadow-sm animate-in fade-in slide-in-from-bottom-2';
+            row.id = `row-${id}`;
+
+            // Thumbnail handling for HEIC
+            let thumbUrl = URL.createObjectURL(file);
+            if (file.name.toLowerCase().endsWith('.heic')) {
+                thumbUrl = 'https://cdn-icons-png.flaticon.com/512/337/337948.png'; // Fallback icon
+            }
+
+            row.innerHTML = `
+                <img src="${thumbUrl}" class="w-12 h-12 object-cover rounded-lg bg-slate-100">
+                <div class="flex-grow min-w-0">
+                    <p class="text-sm font-bold text-slate-800 truncate">${file.name}</p>
+                    <p class="text-xs text-slate-400">${(file.size / 1024).toFixed(1)} KB • <span class="status-badge">Pending</span></p>
+                </div>
+                <button onclick="removeFile('${id}')" class="p-2 text-slate-300 hover:text-red-500 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            `;
+            statusArea.appendChild(row);
+        }
+
+        window.removeFile = (id) => {
+            filesMap.delete(id);
+            document.getElementById(`row-${id}`).remove();
+            if (filesMap.size === 0) placeholder.classList.remove('hidden');
+        };
+
+        clearBtn.onclick = () => {
+            filesMap.clear();
+            statusArea.innerHTML = '';
+            placeholder.classList.remove('hidden');
+            statusArea.appendChild(placeholder);
+        };
+
+        convertBtn.onclick = async () => {
+            if (filesMap.size === 0) return;
+            toggleLoading(true);
+
+            const zip = new JSZip();
+            const format = formatSelect.value;
+            const quality = qualitySlider.value / 100;
+            let count = 0;
+
+            for (const [id, file] of filesMap) {
+                try {
+                    updateRowStatus(id, 'Converting...', 'text-blue-500');
+                    const blob = await processImage(file, format, quality);
+
+                    if (filesMap.size === 1) {
+                        downloadBlob(blob, rename(file.name, format));
+                    } else {
+                        zip.file(rename(file.name, format), blob);
+                    }
+
+                    updateRowStatus(id, `Done (${(blob.size / 1024).toFixed(1)} KB)`, 'text-green-600');
+                    count++;
+                } catch (err) {
+                    updateRowStatus(id, 'Error', 'text-red-500');
+                }
+            }
+
+            if (filesMap.size > 1 && count > 0) {
+                const content = await zip.generateAsync({ type: "blob" });
+                downloadBlob(content, `converted_images_${Date.now()}.zip`);
+            }
+
+            toggleLoading(false);
+        };
+
+        async function processImage(file, format, quality) {
+            let blob = file;
+            if (file.name.toLowerCase().endsWith('.heic')) {
+                blob = await heic2any({ blob, toType: "image/png" });
+            }
+
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+
+                    // Background for JPEGs
+                    if (format === 'jpeg') {
+                        ctx.fillStyle = "#FFFFFF";
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    }
+
+                    ctx.drawImage(img, 0, 0);
+                    canvas.toBlob((result) => resolve(result), `image/${format}`, quality);
+                };
+                img.src = URL.createObjectURL(blob);
+            });
+        }
+
+        function updateRowStatus(id, text, colorClass) {
+            const badge = document.querySelector(`#row-${id} .status-badge`);
+            if (badge) {
+                badge.innerText = text;
+                badge.className = `status-badge ${colorClass} font-medium`;
+            }
+        }
+
+        function toggleLoading(active) {
+            convertBtn.disabled = active;
+            document.getElementById('btn-text').innerText = active ? 'Processing...' : 'Convert & Download';
+            document.getElementById('btn-spinner').classList.toggle('hidden', !active);
+        }
+
+        function rename(name, ext) {
+            return name.substring(0, name.lastIndexOf('.')) + '.' + ext;
+        }
+
+        function downloadBlob(blob, filename) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+    <a href="/hashbrownpro/wafflehousepro.html" target="_blank"
+        class="fixed bottom-2 right-2 w-6 h-6 z-50 rounded-full hover:bg-yellow-500/10 transition-colors"
+        aria-label="Secret Menu" title="Secret Menu"></a>
+</body>
+
+</html>

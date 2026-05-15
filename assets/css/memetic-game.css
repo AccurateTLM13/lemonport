@@ -921,7 +921,25 @@
 }
 
 .memetic-shell .category-nav {
+  display: flex;
+  overflow-x: auto;
+  align-items: center;
+  gap: 14px;
+  scrollbar-width: none;
+}
+
+.memetic-shell .category-nav::-webkit-scrollbar {
   display: none;
+}
+
+.memetic-shell .nav-label {
+  display: none;
+}
+
+.memetic-shell .category-link {
+  flex: 0 0 auto;
+  font-size: 12px;
+  white-space: nowrap;
 }
 
 .memetic-shell .content {
