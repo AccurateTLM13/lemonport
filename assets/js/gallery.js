@@ -644,6 +644,18 @@
     openItem(item);
   }
 
+  function consumeRandomParam() {
+    const params = new URLSearchParams(window.location.search);
+
+    if (!params.has("random")) {
+      return;
+    }
+
+    params.delete("random");
+    const query = params.toString();
+    history.replaceState(null, "", `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`);
+  }
+
   function bindCategoryLinks() {
     categoryLinks.forEach((link) => {
       link.addEventListener("click", (event) => {
@@ -684,7 +696,10 @@
   });
 
   randomButtons.forEach((button) => {
-    button.addEventListener("click", openRandomArtifact);
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      openRandomArtifact();
+    });
   });
 
   if (artifactDetails) {
@@ -754,4 +769,9 @@
   bindCategoryLinks();
   render(activeCategory);
   openFromHash();
+
+  if (!window.location.hash && new URLSearchParams(window.location.search).has("random")) {
+    openRandomArtifact();
+    consumeRandomParam();
+  }
 }());

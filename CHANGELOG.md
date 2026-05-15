@@ -4,6 +4,23 @@ Major architecture, content, tooling, and experience changes should be recorded 
 
 This file is also the working source for a future public development-history page. Keep entries factual, dated, and written as a timeline of what changed.
 
+## 2026-05-15
+
+### Responsive System And Mobile Chrome
+
+- Added `RESPONSIVE_SYSTEM.md` with breakpoint, layout, component, media, and verification rules.
+- Added shared responsive tokens and layout primitives in `assets/css/style.css`.
+- Reworked the shared mobile archive header into compact chrome with a logo/menu row, full-width random artifact trigger, active-category control, and mobile navigation sheet.
+- Added `assets/js/mobile-header.js` to generate the mobile menu/category sheet from existing sidebar markup.
+- Updated the random artifact trigger copy and styling to `SUMMON RANDOM ARTIFACT`, with `/?random=1` support for opening a random artifact after navigating back to the archive.
+- Matched the random artifact trigger width to the Junk Drawer sidebar module.
+- Moved the Image Converter page into the shared archive sidebar shell while keeping its converter workspace local to the tool.
+
+### Live Experiment Scope Fix
+
+- Moved Live Experiment coming-soon interception from the document body to the page content container so sidebar, category navigation, and global chrome links remain normal navigation.
+- Documented the project convention that page-specific behavior requests apply to main page content by default, while header, sidebar, navigation, mobile chrome, and footer are global chrome unless explicitly mentioned.
+
 ## 2026-05-12
 
 ### Engine Stabilization

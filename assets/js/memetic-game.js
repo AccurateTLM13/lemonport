@@ -821,87 +821,110 @@
     const living = livingEnemies();
     const boss = living.find((enemy) => enemy.tier === "boss");
     const threatLabel = boss ? `${boss.name} active` : living.length ? `${living.length} hostiles active` : "Wave compiling";
+    const hudMarkup = `
+      <div class="hud-cell hud-cell--wave">
+        <span>Wave</span>
+        <strong>${runState.waveNumber}</strong>
+      </div>
+      <div class="hud-cell health-meter">
+        <span>Health</span>
+        <strong>${Math.ceil(runState.player.health)} / ${runState.player.maxHealth}</strong>
+        <div class="health-meter__track"><span style="width: ${healthPercent()}%"></span></div>
+      </div>
+      <div class="hud-cell">
+        <span>Score</span>
+        <strong class="${clean ? "" : "corrupted-label"}">${runState.currentScore.toLocaleString()}</strong>
+      </div>
+      <div class="hud-cell">
+        <span>Status</span>
+        <strong class="${clean ? "status-clean" : "status-cursed"}">${clean ? "CLEAN RUN" : "CURSED RUN"}</strong>
+      </div>
+      <div class="hud-cell hud-cell--event">
+        <span>Threat</span>
+        <strong>${escapeHtml(threatLabel)}</strong>
+        <small>${latestEvent ? escapeHtml(latestEvent.message) : "Dungeon booting..."}</small>
+      </div>
+    `;
+    const playerMarkup = `
+      <div class="panel-head">
+        <div>
+          <p class="battle-label">Player Rig</p>
+          <h2>Equipped Relics</h2>
+        </div>
+        <span>${runState.selectedWeapons.length} Online</span>
+      </div>
+      <div class="rig-health">
+        <span>Core Integrity</span>
+        <strong>${Math.ceil(healthPercent())}%</strong>
+        <div class="health-meter__track"><span style="width: ${healthPercent()}%"></span></div>
+      </div>
+      <div class="player-side">
+        <div class="runtime-weapons">
+          ${runState.selectedWeapons.map(renderRuntimeWeapon).join("")}
+        </div>
+      </div>
+      <div class="passive-summary">
+        <span>Loadout Summary</span>
+        <strong>${escapeHtml(loadoutSummary())}</strong>
+      </div>
+      <button class="memetic-button rig-end-button" type="button" data-forfeit-run>End Run</button>
+    `;
+    const arenaMarkup = `
+      <div class="arena-head">
+        <div>
+          <p class="battle-label">Combat Arena</p>
+          <h2>${runState.isWaveTransitioning ? "Wave Cleared" : `Wave ${runState.waveNumber}`}</h2>
+        </div>
+        <span>${escapeHtml(threatLabel)}</span>
+      </div>
+      <div class="enemy-side">
+        <div class="enemy-list">
+          ${living.map(renderEnemy).join("") || `<div class="enemy-card is-empty">Compiling next wave...</div>`}
+        </div>
+      </div>
+      <div class="arena-event-strip">
+        ${runState.battleLog.slice(0, 3).map(renderArenaCallout).join("")}
+      </div>
+      ${clean ? "" : `<div class="cursed-stamp">CURSED RUN</div>`}
+    `;
+    const feedMarkup = `
+      <div class="battle-log__head">
+        <h2>Battle Feed</h2>
+        <span>${runState.battleLog.length} Events</span>
+      </div>
+      <div class="battle-log__list">
+        ${runState.battleLog.slice(0, 18).map(renderLogEvent).join("")}
+      </div>
+    `;
+
     app.className = `memetic-app is-running${clean ? "" : " is-cursed"}`;
+
+    const existingHud = app.querySelector(".run-hud");
+    const existingRig = app.querySelector(".player-rig-panel");
+    const existingArena = app.querySelector(".combat-arena");
+    const existingFeed = app.querySelector(".battle-feed");
+
+    if (existingHud && existingRig && existingArena && existingFeed) {
+      existingHud.innerHTML = hudMarkup;
+      existingRig.innerHTML = playerMarkup;
+      existingArena.innerHTML = arenaMarkup;
+      existingFeed.innerHTML = feedMarkup;
+
+      const existingIndicator = app.querySelector(".goblin-indicator");
+      if (!clean && !existingIndicator) {
+        app.insertAdjacentHTML("beforeend", renderGoblinIndicator());
+      } else if (clean && existingIndicator) {
+        existingIndicator.remove();
+      }
+      return;
+    }
+
     app.innerHTML = `
-      <header class="run-hud">
-        <div class="hud-cell hud-cell--wave">
-          <span>Wave</span>
-          <strong>${runState.waveNumber}</strong>
-        </div>
-        <div class="hud-cell health-meter">
-          <span>Health</span>
-          <strong>${Math.ceil(runState.player.health)} / ${runState.player.maxHealth}</strong>
-          <div class="health-meter__track"><span style="width: ${healthPercent()}%"></span></div>
-        </div>
-        <div class="hud-cell">
-          <span>Score</span>
-          <strong class="${clean ? "" : "corrupted-label"}">${runState.currentScore.toLocaleString()}</strong>
-        </div>
-        <div class="hud-cell">
-          <span>Status</span>
-          <strong class="${clean ? "status-clean" : "status-cursed"}">${clean ? "CLEAN RUN" : "CURSED RUN"}</strong>
-        </div>
-        <div class="hud-cell hud-cell--event">
-          <span>Threat</span>
-          <strong>${escapeHtml(threatLabel)}</strong>
-          <small>${latestEvent ? escapeHtml(latestEvent.message) : "Dungeon booting..."}</small>
-        </div>
-      </header>
-
+      <header class="run-hud">${hudMarkup}</header>
       <div class="run-layout">
-        <aside class="player-rig-panel" aria-label="Player rig">
-          <div class="panel-head">
-            <div>
-              <p class="battle-label">Player Rig</p>
-              <h2>Equipped Relics</h2>
-            </div>
-            <span>${runState.selectedWeapons.length} Online</span>
-          </div>
-          <div class="rig-health">
-            <span>Core Integrity</span>
-            <strong>${Math.ceil(healthPercent())}%</strong>
-            <div class="health-meter__track"><span style="width: ${healthPercent()}%"></span></div>
-          </div>
-          <div class="player-side">
-            <div class="runtime-weapons">
-              ${runState.selectedWeapons.map(renderRuntimeWeapon).join("")}
-            </div>
-          </div>
-          <div class="passive-summary">
-            <span>Loadout Summary</span>
-            <strong>${escapeHtml(loadoutSummary())}</strong>
-          </div>
-          <button class="memetic-button rig-end-button" type="button" data-forfeit-run>End Run</button>
-        </aside>
-
-        <section class="battlefield combat-arena" aria-label="Combat arena">
-          <div class="arena-head">
-            <div>
-              <p class="battle-label">Combat Arena</p>
-              <h2>${runState.isWaveTransitioning ? "Wave Cleared" : `Wave ${runState.waveNumber}`}</h2>
-            </div>
-            <span>${escapeHtml(threatLabel)}</span>
-          </div>
-          <div class="enemy-side">
-            <div class="enemy-list">
-              ${living.map(renderEnemy).join("") || `<div class="enemy-card is-empty">Compiling next wave...</div>`}
-            </div>
-          </div>
-          <div class="arena-event-strip">
-            ${runState.battleLog.slice(0, 3).map(renderArenaCallout).join("")}
-          </div>
-          ${clean ? "" : `<div class="cursed-stamp">CURSED RUN</div>`}
-        </section>
-
-        <aside class="battle-log battle-feed" aria-label="Battle feed">
-          <div class="battle-log__head">
-            <h2>Battle Feed</h2>
-            <span>${runState.battleLog.length} Events</span>
-          </div>
-          <div class="battle-log__list">
-            ${runState.battleLog.slice(0, 18).map(renderLogEvent).join("")}
-          </div>
-        </aside>
+        <aside class="player-rig-panel" aria-label="Player rig">${playerMarkup}</aside>
+        <section class="battlefield combat-arena" aria-label="Combat arena">${arenaMarkup}</section>
+        <aside class="battle-log battle-feed" aria-label="Battle feed">${feedMarkup}</aside>
       </div>
       ${clean ? "" : renderGoblinIndicator()}
     `;

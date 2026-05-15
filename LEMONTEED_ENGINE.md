@@ -15,6 +15,9 @@ Static public pages include:
 - `what-if/index.html`
 - `misc-gens/index.html`
 - `memetic-warfare/index.html`
+- `junk-drawer/index.html`
+- `junk-drawer/image-converter/index.html`
+- `live-experiment/index.html`
 - `operator-log/index.html` (hidden; noindex; not in sitemap)
 
 Shared public assets include:
@@ -60,6 +63,12 @@ The gallery build currently publishes projects where:
 If a project has no `status`, `scripts/build-gallery.js` treats it as `Published` only when it has publishable image data. Otherwise it is treated as `Draft`.
 
 `assets/js/gallery.js` renders the browser gallery UI. It handles category filtering, randomized ordering, responsive image candidates, lightbox navigation, artifact details, related items, info drawer behavior, URL query category selection, and random artifact navigation.
+
+`assets/js/mobile-header.js` adapts the shared archive chrome on mobile. It creates the compact hamburger/category drawer pattern from the existing sidebar markup, so global navigation changes should account for both desktop sidebar behavior and generated mobile controls.
+
+`assets/js/coming-soon.js` can intercept links and buttons either directly with `data-coming-soon` or by scope with `data-coming-soon-scope`. Scoped use should be applied to page-owned content containers such as `main` or `article`, not the document body, unless the requested behavior is explicitly meant to include global chrome.
+
+Junk Drawer tools should keep their tool-specific logic local, but should use the shared `site-shell`, `sidebar`, `category-nav`, and mobile header script when the page is part of the public archive experience.
 
 ## Lemonteed Studio
 
@@ -130,3 +139,7 @@ The public site should remain HTML, CSS, and JavaScript only.
 Do not introduce React, Vue, Svelte, Astro, Next.js, Eleventy, PHP, WordPress, a database-backed public CMS, or server-rendered public pages unless the project owner explicitly approves an architecture change.
 
 The goal is to push static web experiences while keeping the public output simple, fast, portable, and easy to deploy.
+
+## Interaction Scope Rule
+
+When a request names a specific page and a behavior on that page, assume it refers to the page's main content area. Header, sidebar, navigation, mobile header/drawer, and footer behavior are shared chrome. Change shared chrome only when the request explicitly calls out those areas or asks for a site-wide/global behavior.

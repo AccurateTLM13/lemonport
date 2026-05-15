@@ -27,14 +27,15 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
     <link rel="manifest" href="/site.webmanifest">
-    <link rel="stylesheet" href="/assets/css/style.css?v=7">
-    <link rel="stylesheet" href="/assets/css/live-experiment.css?v=2">
+    <link rel="stylesheet" href="/assets/css/style.css?v=8">
+    <link rel="stylesheet" href="/assets/css/live-experiment.css?v=3">
     <script src="/assets/js/live-experiment-data.js?v=2" defer></script>
     <script src="/assets/js/live-experiment.js?v=2" defer></script>
+    <script src="/assets/js/mobile-header.js?v=1" defer></script>
     <script src="/assets/js/coming-soon.js?v=1" defer></script>
   </head>
 
-<body class="live-experiment-page" data-coming-soon-scope>
+<body class="live-experiment-page">
   <a class="skip-link" href="#live-experiment">Skip to experiment</a>
   <div class="site-shell live-shell">
     <aside class="sidebar live-sidebar" aria-label="Site navigation">
@@ -45,8 +46,7 @@
             height="96" alt="Lemonteed">
         </a>
         <a class="info-link live-sidebar__link" href="/memetic-warfare/">+ MEMETIC WARFARE</a>
-        <a class="random-artifact live-sidebar__button" href="/?category=memetic-warfare">Show Me Something
-          Lemonteed</a>
+        <a class="random-artifact live-sidebar__button" href="/?random=1">SUMMON RANDOM ARTIFACT</a>
       </div>
       <nav class="category-nav" aria-label="Portfolio categories">
         <span class="nav-label">Categories</span>
@@ -70,7 +70,7 @@
       </div>
     </aside>
 
-    <main class="content live-content" id="live-experiment">
+    <main class="content live-content" id="live-experiment" data-coming-soon-scope>
       <article class="experiment-canvas" aria-labelledby="experiment-title">
         <header class="experiment-hero">
           <div class="hero-copy">

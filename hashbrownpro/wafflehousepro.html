@@ -47,7 +47,7 @@
       background:
         radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, .94) 24%, rgba(246, 246, 244, .76) 58%, rgba(255, 255, 255, 1) 100%),
         linear-gradient(180deg, #ffffff 0%, #f7f7f5 62%, #ffffff 100%);
-      overflow-x: hidden;
+      overflow-x: clip;
     }
 
     a {
@@ -60,7 +60,7 @@
       min-height: 100vh;
       margin: 0 auto;
       position: relative;
-      overflow: hidden;
+      overflow-x: clip;
     }
 
     /* Top Nav */
@@ -463,7 +463,7 @@
       }
 
       .hero-stage {
-        width: 112vw;
+        width: min(100%, 920px);
         margin-top: 28px;
       }
 
@@ -519,7 +519,7 @@
       }
 
       .hero-stage {
-        width: 136vw;
+        width: min(100%, 620px);
       }
 
       .image-placeholder::before {
@@ -571,14 +571,15 @@
         </div>
 
         <div class="hero-stage" aria-label="Hashbrown Pro hero plate">
-          <img class="hero-image" src="images/hashbrownpro/hashbrown-pro-hero.webp"
+          <img class="hero-image" src="/images/hashbrownpro/hashbrown-pro-hero.webp"
+            width="1900" height="1001" decoding="async" fetchpriority="high"
             alt="Hashbrown Pro with waffle on a plate" />
         </div>
 
         <div class="feature-bar" aria-label="Hashbrown Pro features">
           <article class="feature">
             <div class="feature-icon" aria-hidden="true">
-              <img class="feature-img" src="images/hashbrownpro/scattered-icon.webp" alt="" />
+              <img class="feature-img" src="/images/hashbrownpro/scattered-icon.webp" width="150" height="150" loading="lazy" decoding="async" alt="" />
             </div>
             <div>
               <strong>Scattered</strong>
@@ -588,7 +589,7 @@
 
           <article class="feature">
             <div class="feature-icon" aria-hidden="true">
-              <img class="feature-img" src="images/hashbrownpro/smothered-icon.webp" alt="" />
+              <img class="feature-img" src="/images/hashbrownpro/smothered-icon.webp" width="150" height="150" loading="lazy" decoding="async" alt="" />
             </div>
             <div>
               <strong>Smothered</strong>
@@ -598,7 +599,7 @@
 
           <article class="feature">
             <div class="feature-icon" aria-hidden="true">
-              <img class="feature-img" src="images/hashbrownpro/covered-icon.webp" alt="" />
+              <img class="feature-img" src="/images/hashbrownpro/covered-icon.webp" width="150" height="150" loading="lazy" decoding="async" alt="" />
             </div>
             <div>
               <strong>Covered</strong>

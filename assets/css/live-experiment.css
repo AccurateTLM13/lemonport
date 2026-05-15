@@ -6,6 +6,7 @@
   --rule-live: #bdb5a5;
   --rule-soft: #d8d0bf;
   --lemon-live: #f2c746;
+  --touch-target: 44px;
   color: var(--ink-live);
   background:
     radial-gradient(circle at 20% 15%, rgb(255 255 255 / 0.72), transparent 28rem),
@@ -26,7 +27,7 @@
 }
 
 .live-sidebar__button {
-  display: block;
+  display: inline-flex;
 }
 
 .live-sidebar__note {
@@ -73,7 +74,7 @@
 
 .experiment-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(360px, 0.78fr);
+  grid-template-columns: minmax(0, 1.45fr) minmax(min(100%, 320px), 0.78fr);
   align-items: start;
   gap: clamp(24px, 5vw, 86px);
 }
@@ -102,7 +103,7 @@
   margin: 0;
   font-size: clamp(68px, 9.4vw, 100px);
   font-weight: 700;
-  letter-spacing: -5px;
+  letter-spacing: -0.04em;
   line-height: 0.9;
   text-transform: uppercase;
 }
@@ -405,7 +406,7 @@
 .panel-button {
   width: 100%;
   margin-top: 0;
-  min-height: 36px;
+  min-height: var(--touch-target);
   padding: 8px 12px;
   align-self: end;
 }
@@ -696,11 +697,11 @@
   }
 
   .experiment-intro {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .hero-copy h1 {
-    letter-spacing: -2px;
+    letter-spacing: -0.025em;
   }
 
   .current-bet-layout {
@@ -757,4 +758,40 @@
     margin-inline: -12px;
   }
 
+}
+
+@media (max-width: 700px) {
+  .live-sidebar {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-nav);
+    padding: 10px 12px 0;
+  }
+
+  .live-sidebar .sidebar__top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--touch-target);
+    align-items: center;
+    justify-content: stretch;
+    gap: 8px;
+  }
+
+  .live-sidebar .brand {
+    width: 138px;
+    max-width: 58vw;
+  }
+
+  .live-sidebar .category-nav,
+  .live-sidebar .junk-drawer-module {
+    display: none;
+  }
+
+  .live-sidebar.is-mobile-compact {
+    padding: 6px 10px;
+  }
+
+  .live-sidebar.is-mobile-compact .brand {
+    width: 112px;
+    max-width: 34vw;
+  }
 }

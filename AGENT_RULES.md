@@ -6,6 +6,7 @@ This repository is a static public site plus a local Studio tool. Treat `LEMONTE
 
 - Preserve the static public-site architecture.
 - Prefer existing plain HTML, CSS, and JavaScript patterns.
+- Put public tool pages inside the shared site shell/sidebar when practical so navigation, mobile chrome, and archive context stay consistent.
 - Use `content/projects.json` and `content/categories.json` as content source of truth.
 - Rebuild generated gallery data with `node scripts/build-gallery.js` after content JSON changes that affect the public gallery.
 - Keep Studio local/private unless the owner explicitly approves a public admin architecture.
@@ -15,6 +16,7 @@ This repository is a static public site plus a local Studio tool. Treat `LEMONTE
 - Use the canonical Studio statuses: `Draft`, `Ready`, `Published`, `Hidden`, `Archived`, and `Deleted`.
 - Keep Memetic Warfare game data consistent with referenced gallery artifact IDs.
 - Check for existing user changes before editing files.
+- Treat page-specific behavior requests as applying to that page's main content by default. Header, sidebar, navigation, mobile chrome, drawers, and footer are shared/global chrome and should only be changed when the user explicitly asks for a global or navigation-level change.
 
 ## Do Not
 
@@ -27,6 +29,7 @@ This repository is a static public site plus a local Studio tool. Treat `LEMONTE
 - Do not delete image files unless the corresponding project metadata change is intentional.
 - Do not deploy or expose `scripts/studio-server.js` as a public CMS.
 - Do not treat `memetic-warfare/index.html` as a normal gallery-only page.
+- Do not attach page-specific click interception or coming-soon behavior to `<body>` when the intent is page content only. Scope it to `main`, `article`, or a page-owned content container.
 
 ## Generated File Policy
 

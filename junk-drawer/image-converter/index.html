@@ -22,16 +22,390 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
     <link rel="manifest" href="/site.webmanifest">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css?v=8">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/heic2any/0.0.4/heic2any.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="/assets/js/mobile-header.js?v=1" defer></script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
+        :root {
+            --tool-bg: #f7f7f4;
+            --tool-panel: #ffffff;
+            --tool-ink: #1f2937;
+            --tool-muted: #64748b;
+            --tool-line: #d9d7cf;
+            --tool-soft: #f1f5f9;
+            --tool-blue: #2563eb;
+            --tool-blue-dark: #1d4ed8;
+            --tool-danger: #dc2626;
+            --tool-success: #16a34a;
+            --tool-touch: 44px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .image-converter-page {
+            color: var(--tool-ink);
+            background: var(--tool-bg);
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        .converter-content {
+            display: grid;
+            min-height: 100vh;
+            padding: clamp(18px, 3vw, 32px) clamp(12px, 3vw, 32px) 48px 0;
+            align-items: center;
+        }
+
+        .converter-shell {
+            display: grid;
+            width: min(1180px, 100%);
+            max-height: min(900px, calc(100dvh - clamp(24px, 6vw, 64px)));
+            min-height: min(720px, calc(100dvh - clamp(24px, 6vw, 64px)));
+            overflow: hidden;
+            border: 1px solid var(--tool-line);
+            border-radius: 6px;
+            background: var(--tool-panel);
+            box-shadow: 0 20px 50px rgb(0 0 0 / 0.12);
+            grid-template-columns: minmax(260px, 0.42fr) minmax(0, 1fr);
+        }
+
+        .converter-media {
+            position: relative;
+            overflow: hidden;
+            background: #111827;
+        }
+
+        .converter-media__image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.62;
+        }
+
+        .converter-media__caption {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            padding: 32px;
+            align-content: end;
+            background: linear-gradient(to top, rgb(15 23 42 / 0.92), transparent 62%);
+            color: #fff;
+        }
+
+        .converter-media__caption h2 {
+            margin: 0;
+            font-size: 24px;
+            line-height: 1.1;
+        }
+
+        .converter-media__caption p {
+            margin: 8px 0 0;
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .converter-workspace {
+            display: grid;
+            min-width: 0;
+            min-height: 0;
+            padding: clamp(20px, 3vw, 40px);
+            grid-template-rows: auto auto minmax(0, 1fr) auto;
+        }
+
+        .converter-header {
+            margin-bottom: 24px;
+        }
+
+        .converter-header h1 {
+            margin: 0;
+            color: #0f172a;
+            font-size: clamp(28px, 4vw, 40px);
+            line-height: 1;
+        }
+
+        .converter-header p {
+            margin: 8px 0 0;
+            color: var(--tool-muted);
+        }
+
+        .upload-zone {
+            position: relative;
+            padding: clamp(22px, 4vw, 32px);
+            border: 2px dashed #cbd5e1;
+            border-radius: 6px;
+            background: #fff;
+            cursor: pointer;
+            text-align: center;
+            transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+        }
+
+        .upload-zone:hover,
+        .drag-active {
+            border-color: var(--tool-blue);
+            background: #eff6ff;
+        }
+
+        .drag-active {
+            transform: scale(1.01);
+        }
+
+        .upload-zone__input {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-zone__content {
+            pointer-events: none;
+        }
+
+        .upload-zone__icon {
+            display: grid;
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 12px;
+            border-radius: 50%;
+            color: var(--tool-blue);
+            background: #eff6ff;
+            place-items: center;
+        }
+
+        .upload-zone__icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .upload-zone p {
+            margin: 0;
+        }
+
+        .upload-zone p:first-of-type {
+            color: #334155;
+            font-weight: 700;
+        }
+
+        .upload-zone p:last-of-type {
+            margin-top: 4px;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        .status-area {
+            display: grid;
+            min-height: 0;
+            margin: 24px 0;
+            overflow-y: auto;
+            align-content: start;
+            gap: 8px;
+        }
+
+        .status-placeholder {
+            display: grid;
+            height: 100%;
+            min-height: 180px;
+            color: #cbd5e1;
+            place-items: center;
+            text-align: center;
+        }
+
+        .status-placeholder svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 8px;
+            opacity: 0.24;
+        }
+
+        .converter-footer {
+            padding-top: 24px;
+            border-top: 1px solid #e2e8f0;
+            background: #fff;
+        }
+
+        .converter-controls {
+            display: flex;
+            align-items: end;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .converter-control {
+            min-width: min(180px, 100%);
+            flex: 1 1 180px;
+        }
+
+        .converter-control label,
+        .converter-quality-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            color: var(--tool-muted);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        select,
+        input[type="range"] {
+            width: 100%;
+        }
+
+        select {
+            min-height: var(--tool-touch);
+            padding: 8px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            color: #334155;
+            background: #f8fafc;
+        }
+
+        .converter-actions {
+            display: flex;
+            width: auto;
+            gap: 8px;
+        }
+
+        .converter-button {
+            display: inline-flex;
+            min-height: var(--tool-touch);
+            padding: 0 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .converter-button--secondary {
+            color: var(--tool-muted);
+            background: transparent;
+        }
+
+        .converter-button--secondary:hover {
+            background: var(--tool-soft);
+        }
+
+        .converter-button--primary {
+            color: #fff;
+            background: var(--tool-blue);
+            box-shadow: 0 12px 24px rgb(37 99 235 / 0.18);
+        }
+
+        .converter-button--primary:hover {
+            background: var(--tool-blue-dark);
+        }
+
+        .converter-button:disabled {
+            opacity: 0.5;
+            cursor: wait;
+        }
+
+        .file-row {
+            display: grid;
+            min-width: 0;
+            min-height: 68px;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            background: #fff;
+            box-shadow: 0 4px 14px rgb(15 23 42 / 0.04);
+            grid-template-columns: 48px minmax(0, 1fr) 44px;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .file-row__thumb {
+            width: 48px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 4px;
+            background: #f1f5f9;
+        }
+
+        .file-row__name {
+            overflow: hidden;
+            margin: 0;
+            color: #1e293b;
+            font-size: 14px;
+            font-weight: 700;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .file-row__meta {
+            margin: 4px 0 0;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        .file-row__remove {
+            display: grid;
+            width: var(--tool-touch);
+            height: var(--tool-touch);
+            padding: 0;
+            border: 0;
+            color: #94a3b8;
+            background: transparent;
+            place-items: center;
+        }
+
+        .file-row__remove:hover {
+            color: var(--tool-danger);
+        }
+
+        .file-row__remove svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .status-badge {
+            font-weight: 700;
+        }
+
+        .text-blue-500 {
+            color: var(--tool-blue);
+        }
+
+        .text-blue-600 {
+            color: var(--tool-blue);
+        }
+
+        .text-green-600 {
+            color: var(--tool-success);
+        }
+
+        .text-red-500 {
+            color: var(--tool-danger);
+        }
+
+        .text-xs {
+            margin: 4px 0 0;
+            font-size: 12px;
+        }
+
+        .text-slate-400 {
+            color: #94a3b8;
+        }
+
+        .hidden {
+            display: none !important;
         }
 
         .spinner {
@@ -49,12 +423,6 @@
             }
         }
 
-        .drag-active {
-            border-color: #2563eb;
-            background-color: #eff6ff;
-            transform: scale(1.01);
-        }
-
         #status-area::-webkit-scrollbar {
             width: 5px;
         }
@@ -63,63 +431,143 @@
             background: #e2e8f0;
             border-radius: 10px;
         }
+
+        .secret-menu-link {
+            position: fixed;
+            right: 8px;
+            bottom: 8px;
+            z-index: 50;
+            width: 44px;
+            height: 44px;
+            border-radius: 999px;
+        }
+
+        .secret-menu-link:hover {
+            background: rgb(234 179 8 / 0.1);
+        }
+
+        @media (max-width: 1023px) {
+            .converter-content {
+                min-height: auto;
+                padding: 14px 8px 40px;
+                align-items: stretch;
+            }
+
+            .converter-shell {
+                max-height: none;
+                min-height: calc(100dvh - clamp(24px, 6vw, 64px));
+                grid-template-columns: 1fr;
+            }
+
+            .converter-media {
+                display: none;
+            }
+        }
+
+        @media (max-width: 620px) {
+            .converter-shell {
+                min-height: 100dvh;
+                border: 0;
+                border-radius: 0;
+            }
+
+            .converter-workspace {
+                padding: 18px 14px;
+            }
+
+            .converter-controls,
+            .converter-actions {
+                display: grid;
+                width: 100%;
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 
-<body class="min-h-screen flex items-center justify-center p-4 sm:p-8">
+<body class="image-converter-page">
 
-    <div id="drop-zone-global"
-        class="bg-white rounded-2xl shadow-xl w-full max-w-[1440px] h-[85vh] flex flex-col md:flex-row overflow-hidden border border-gray-100">
+    <a class="skip-link" href="#image-converter-content">Skip to converter</a>
+    <div class="site-shell">
+        <aside class="sidebar" aria-label="Site navigation">
+            <div class="sidebar__top">
+                <a class="brand" href="/" aria-label="Lemonteed home">
+                    <img class="brand__logo" src="/images/lemonteedlogo-250.webp" srcset="/images/lemonteedlogo-250.webp 250w, /images/lemonteedlogo-456.webp 456w" sizes="160px" width="456" height="96" alt="Lemonteed">
+                </a>
+                <a class="info-link" href="/junk-drawer/">+ JUNK DRAWER</a>
+                <a class="random-artifact" href="/?random=1">SUMMON RANDOM ARTIFACT</a>
+            </div>
+            <nav class="category-nav" aria-label="Portfolio categories">
+                <span class="nav-label">Categories</span>
+                <a class="category-link" href="/" data-category-link="all">All</a>
+                <a class="category-link" href="/vrg-cards/" data-category-link="vrg-cards">VRG Cards</a>
+                <a class="category-link" href="/what-if/" data-category-link="what-if">What If</a>
+                <a class="category-link" href="/misc-gens/" data-category-link="misc-gens">Misc Gens</a>
+                <a class="category-link" href="/memetic-warfare/">Memetic Warfare</a>
+                <a class="category-link" href="/live-experiment/">Live Experiment</a>
+            </nav>
+            <a href="/junk-drawer/" class="junk-drawer-module is-active" aria-label="Open Junk Drawer">
+                <div class="junk-drawer-module__face">
+                    <div class="junk-drawer-module__handle"></div>
+                    <span class="junk-drawer-module__label">Junk Drawer</span>
+                </div>
+            </a>
+        </aside>
 
-        <div class="hidden md:block w-1/3 bg-slate-900 relative">
+        <main class="content converter-content" id="image-converter-content">
+            <div id="drop-zone-global"
+                class="converter-shell">
+
+        <div class="converter-media">
             <img src="/images/junk/sunrise-watching.webp"
-                class="absolute inset-0 w-full h-full object-cover opacity-60">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent p-8 flex flex-col justify-end">
-                <h2 class="text-white text-2xl font-bold">Privacy First</h2>
-                <p class="text-slate-300 text-sm mt-2">All processing happens locally in your browser. Your images never
+                class="converter-media__image" width="848" height="1424" loading="lazy" decoding="async" alt="">
+            <div class="converter-media__caption">
+                <h2>Privacy First</h2>
+                <p>All processing happens locally in your browser. Your images never
                     touch a server.</p>
             </div>
         </div>
 
-        <div class="flex-grow flex flex-col p-6 md:p-10">
-            <header class="mb-6">
-                <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Your Free Image Converter</h1>
-                <p class="text-slate-500 mt-1">Batch convert HEIC, PNG, JPEG, AVIF, SVG, and WebP.</p>
+        <div class="converter-workspace">
+            <header class="converter-header">
+                <h1>Your Free Image Converter</h1>
+                <p>Batch convert HEIC, PNG, JPEG, AVIF, SVG, and WebP.</p>
             </header>
 
             <div id="drop-area"
-                class="relative group border-2 border-dashed border-slate-200 rounded-xl p-8 text-center transition-all cursor-pointer hover:border-blue-400 hover:bg-slate-50">
+                class="upload-zone">
                 <input type="file" id="file-input" multiple accept="image/*,.heic,.heif"
-                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
-                <div class="pointer-events-none">
-                    <div
-                        class="mx-auto h-12 w-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    class="upload-zone__input">
+                <div class="upload-zone__content">
+                    <div class="upload-zone__icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                         </svg>
                     </div>
-                    <p class="text-slate-700 font-semibold">Drop images here or click to browse</p>
-                    <p class="text-slate-400 text-xs mt-1">Supports multi-file selection</p>
+                    <p>Drop images here or click to browse</p>
+                    <p>Supports multi-file selection</p>
                 </div>
             </div>
 
-            <div id="status-area" class="mt-6 flex-grow overflow-y-auto space-y-2 mb-6">
-                <div id="status-placeholder" class="h-full flex flex-col items-center justify-center text-slate-300">
-                    <svg class="w-12 h-12 mb-2 opacity-20" fill="currentColor" viewBox="0 0 20 20">
+            <div id="status-area" class="status-area">
+                <div id="status-placeholder" class="status-placeholder">
+                    <div>
+                    <svg fill="currentColor" viewBox="0 0 20 20">
                         <path
                             d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" />
                     </svg>
                     <p>No files selected</p>
+                    </div>
                 </div>
             </div>
 
-            <footer class="pt-6 border-t border-slate-100 bg-white">
-                <div class="flex flex-wrap items-end gap-4">
-                    <div class="flex-1 min-w-[140px]">
-                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Convert
+            <footer class="converter-footer">
+                <div class="converter-controls">
+                    <div class="converter-control">
+                        <label>Convert
                             to</label>
                         <select id="format-select"
-                            class="w-full bg-slate-50 border border-slate-200 text-slate-700 py-2.5 px-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+                            >
                             <option value="png">PNG (Lossless)</option>
                             <option value="jpeg">JPEG (Standard)</option>
                             <option value="webp">WebP (Efficient)</option>
@@ -127,20 +575,20 @@
                         </select>
                     </div>
 
-                    <div id="quality-container" class="flex-1 min-w-[140px] hidden">
+                    <div id="quality-container" class="converter-control hidden">
                         <label
-                            class="flex justify-between text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
+                            class="converter-quality-label">
                             Quality <span id="quality-val" class="text-blue-600">90%</span>
                         </label>
                         <input type="range" id="quality-slider" min="10" max="100" value="90"
-                            class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
+                            >
                     </div>
 
-                    <div class="flex gap-2 w-full sm:w-auto">
+                    <div class="converter-actions">
                         <button id="clear-btn"
-                            class="px-6 py-2.5 text-slate-500 font-bold hover:bg-slate-100 rounded-lg transition-all">Clear</button>
+                            class="converter-button converter-button--secondary">Clear</button>
                         <button id="convert-btn"
-                            class="flex-grow sm:flex-none px-8 py-2.5 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 shadow-lg shadow-blue-200 flex items-center justify-center gap-3 disabled:opacity-50 transition-all">
+                            class="converter-button converter-button--primary">
                             <span id="btn-text">Convert & Download</span>
                             <div id="btn-spinner" class="spinner hidden"></div>
                         </button>
@@ -148,6 +596,8 @@
                 </div>
             </footer>
         </div>
+            </div>
+        </main>
     </div>
 
     <canvas id="canvas" class="hidden"></canvas>
@@ -198,7 +648,7 @@
 
         async function addFileUI(file, id) {
             const row = document.createElement('div');
-            row.className = 'flex items-center gap-4 p-3 bg-white border border-slate-100 rounded-xl shadow-sm animate-in fade-in slide-in-from-bottom-2';
+            row.className = 'file-row';
             row.id = `row-${id}`;
 
             // Thumbnail handling for HEIC
@@ -208,13 +658,13 @@
             }
 
             row.innerHTML = `
-                <img src="${thumbUrl}" class="w-12 h-12 object-cover rounded-lg bg-slate-100">
-                <div class="flex-grow min-w-0">
-                    <p class="text-sm font-bold text-slate-800 truncate">${file.name}</p>
+                <img src="${thumbUrl}" class="file-row__thumb" width="48" height="48" alt="">
+                <div>
+                    <p class="file-row__name">${file.name}</p>
                     <p class="text-xs text-slate-400">${(file.size / 1024).toFixed(1)} KB • <span class="status-badge">Pending</span></p>
                 </div>
-                <button onclick="removeFile('${id}')" class="p-2 text-slate-300 hover:text-red-500 transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                <button onclick="removeFile('${id}')" class="file-row__remove" aria-label="Remove ${file.name}">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             `;
             statusArea.appendChild(row);
@@ -321,7 +771,7 @@
         }
     </script>
     <a href="/hashbrownpro/wafflehousepro.html" target="_blank"
-        class="fixed bottom-2 right-2 w-6 h-6 z-50 rounded-full hover:bg-yellow-500/10 transition-colors"
+        class="secret-menu-link"
         aria-label="Secret Menu" title="Secret Menu"></a>
 </body>
 
