@@ -1,5 +1,88 @@
 [
   {
+    "id": "what-030",
+    "title": "Hashbrown Pro from Waffle House",
+    "slug": "hashbrown-pro-from-waffle-house",
+    "category": "what-if",
+    "categoryLabel": "What If",
+    "series": "",
+    "year": "",
+    "description": "What if Waffle House's Website was designed by Apple",
+    "origin": "",
+    "dateCreated": "2026-05-07",
+    "tags": [
+      "image-generation",
+      "brand-swap",
+      "what-if",
+      "interface-design",
+      "visual-satire"
+    ],
+    "dangerLevel": "Medium",
+    "toolsUsed": [
+      "GPT Images 2.0"
+    ],
+    "related": [
+      "what-001",
+      "what-002",
+      "what-006",
+      "what-004"
+    ],
+    "image": "/images/what-if/hashbrown-pro-from-waffle-house.webp",
+    "thumbnail": "/images/what-if/hashbrown-pro-from-waffle-house-768.webp",
+    "alt": "Hashbrown Pro concept image from the Lemonteed What If archive",
+    "width": 1672,
+    "height": 941,
+    "sizes": {
+      "small": "/images/what-if/hashbrown-pro-from-waffle-house.webp",
+      "medium": "/images/what-if/hashbrown-pro-from-waffle-house.webp",
+      "large": "/images/what-if/hashbrown-pro-from-waffle-house.webp"
+    },
+    "variants": [
+      {
+        "width": 320,
+        "url": "/images/what-if/hashbrown-pro-from-waffle-house-320.webp"
+      },
+      {
+        "width": 480,
+        "url": "/images/what-if/hashbrown-pro-from-waffle-house-480.webp"
+      },
+      {
+        "width": 640,
+        "url": "/images/what-if/hashbrown-pro-from-waffle-house-640.webp"
+      },
+      {
+        "width": 768,
+        "url": "/images/what-if/hashbrown-pro-from-waffle-house-768.webp"
+      },
+      {
+        "width": 900,
+        "url": "/images/what-if/hashbrown-pro-from-waffle-house-900.webp"
+      },
+      {
+        "width": 1024,
+        "url": "/images/what-if/hashbrown-pro-from-waffle-house-1024.webp"
+      },
+      {
+        "width": 1600,
+        "url": "/images/what-if/hashbrown-pro-from-waffle-house-1600.webp"
+      },
+      {
+        "width": 1672,
+        "url": "/images/what-if/hashbrown-pro-from-waffle-house.webp"
+      }
+    ],
+    "featured": true,
+    "status": "Published",
+    "visible": true,
+    "createdAt": "2026-05-16T19:00:43.841Z",
+    "updatedAt": "2026-05-16T19:03:20.885Z",
+    "curation": {
+      "homepage": true,
+      "featuredRank": 4,
+      "randomWeight": 1
+    }
+  },
+  {
     "id": "what-029",
     "title": "Tinfoil Palantir Bucket Hat",
     "slug": "tinfoil-palantir-bucket-hat",
@@ -62,7 +145,7 @@
     "status": "Published",
     "visible": true,
     "createdAt": "2026-05-15T03:01:46.384Z",
-    "updatedAt": "2026-05-15T03:06:48.474Z",
+    "updatedAt": "2026-05-16T19:03:13.549Z",
     "curation": {
       "homepage": true,
       "featuredRank": 0,
@@ -88,7 +171,7 @@
     "featured": true,
     "visible": true,
     "createdAt": "2026-05-10T20:29:14.171Z",
-    "updatedAt": "2026-05-12T15:31:21.823Z",
+    "updatedAt": "2026-05-16T19:03:53.205Z",
     "variants": [
       {
         "width": 320,
@@ -143,7 +226,12 @@
       "mwf-005",
       "mwf-006"
     ],
-    "status": "Published"
+    "status": "Published",
+    "curation": {
+      "homepage": false,
+      "featuredRank": 0,
+      "randomWeight": 1
+    }
   },
   {
     "id": "mwf-007",
@@ -465,10 +553,10 @@
       "medium": "/images/memetic-warfare/the-keyboard-war-club.webp",
       "large": "/images/memetic-warfare/the-keyboard-war-club.webp"
     },
-    "featured": false,
+    "featured": true,
     "visible": true,
     "createdAt": "2026-05-10T20:29:08.560Z",
-    "updatedAt": "2026-05-12T15:31:21.823Z",
+    "updatedAt": "2026-05-16T19:03:59.404Z",
     "variants": [
       {
         "width": 320,
@@ -523,7 +611,12 @@
       "mwf-005",
       "mwf-006"
     ],
-    "status": "Published"
+    "status": "Published",
+    "curation": {
+      "homepage": true,
+      "featuredRank": 0,
+      "randomWeight": 1
+    }
   },
   {
     "id": "mwf-002",
@@ -1222,10 +1315,10 @@
     "slug": "vrg-002",
     "year": "2026",
     "description": "A Black Label VRG card for Dudufolio, built with premium creator-card styling, dark framing, and polished internet-native collector energy.",
-    "featured": false,
+    "featured": true,
     "visible": true,
     "createdAt": "2026-05-02T12:00:00.000Z",
-    "updatedAt": "2026-05-12T15:31:21.823Z",
+    "updatedAt": "2026-05-16T19:04:05.636Z",
     "variants": [
       {
         "width": 320,
@@ -1276,7 +1369,12 @@
       "vrg-005",
       "vrg-006"
     ],
-    "dangerLevel": ""
+    "dangerLevel": "",
+    "curation": {
+      "homepage": true,
+      "featuredRank": 0,
+      "randomWeight": 1
+    }
   },
   {
     "id": "vrg-003",
@@ -2254,10 +2352,10 @@
     "slug": "vrg-016",
     "year": "2026",
     "description": "A standard VRG creator card for Piet, separate from the Black Label variant and focused on the core collectible card format.",
-    "featured": false,
+    "featured": true,
     "visible": true,
     "createdAt": "2026-05-02T12:00:00.000Z",
-    "updatedAt": "2026-05-12T15:31:21.823Z",
+    "updatedAt": "2026-05-16T19:04:15.131Z",
     "variants": [
       {
         "width": 320,
@@ -2308,7 +2406,12 @@
       "vrg-010",
       "vrg-011"
     ],
-    "dangerLevel": ""
+    "dangerLevel": "",
+    "curation": {
+      "homepage": true,
+      "featuredRank": 0,
+      "randomWeight": 1
+    }
   },
   {
     "id": "vrg-017",
@@ -3850,10 +3953,10 @@
     "slug": "what-017",
     "year": "2026",
     "description": "A defense-tech rocket concept filtered through Fisher-Price toy language, turning military hardware into a disturbingly cheerful beginner set.",
-    "featured": false,
+    "featured": true,
     "visible": true,
     "createdAt": "2026-05-04T12:00:00.000Z",
-    "updatedAt": "2026-05-12T15:31:21.824Z",
+    "updatedAt": "2026-05-16T19:03:30.180Z",
     "variants": [
       {
         "width": 320,
@@ -3908,7 +4011,12 @@
       "what-019",
       "what-020"
     ],
-    "dangerLevel": ""
+    "dangerLevel": "",
+    "curation": {
+      "homepage": true,
+      "featuredRank": 0,
+      "randomWeight": 1
+    }
   },
   {
     "id": "what-018",
@@ -4324,10 +4432,10 @@
     "slug": "what-023",
     "year": "2026",
     "description": "A Palantir-style dashboard redesigned with Toys R Us aesthetics, where surveillance-grade data meets toy aisle colors and corporate absurdity.",
-    "featured": false,
+    "featured": true,
     "visible": true,
     "createdAt": "2026-05-04T12:00:00.000Z",
-    "updatedAt": "2026-05-12T15:31:21.824Z",
+    "updatedAt": "2026-05-16T19:03:36.380Z",
     "variants": [
       {
         "width": 320,
@@ -4386,7 +4494,12 @@
       "what-025",
       "what-026"
     ],
-    "dangerLevel": ""
+    "dangerLevel": "",
+    "curation": {
+      "homepage": true,
+      "featuredRank": 0,
+      "randomWeight": 1
+    }
   },
   {
     "id": "what-024",
@@ -5087,10 +5200,10 @@
     "slug": "misc-007",
     "year": "2026",
     "description": "A split-world childhood image: one foot in the physical woods, one foot in the loading-screen world of early online gaming.",
-    "featured": false,
+    "featured": true,
     "visible": true,
     "createdAt": "2026-05-08T12:00:00.000Z",
-    "updatedAt": "2026-05-12T15:31:21.824Z",
+    "updatedAt": "2026-05-16T19:03:48.884Z",
     "variants": [
       {
         "width": 320,
@@ -5144,7 +5257,12 @@
       "misc-005",
       "misc-006"
     ],
-    "dangerLevel": ""
+    "dangerLevel": "",
+    "curation": {
+      "homepage": true,
+      "featuredRank": 0,
+      "randomWeight": 1
+    }
   },
   {
     "id": "misc-008",

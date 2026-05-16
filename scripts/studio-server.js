@@ -173,7 +173,15 @@ function nextId(projects, category) {
     return match ? Math.max(highest, Number(match[1])) : highest;
   }, 0);
 
-  return `${meta.prefix}-${String(max + 1).padStart(3, "0")}`;
+  let nextNum = max + 1;
+  let next = `${meta.prefix}-${String(nextNum).padStart(3, "0")}`;
+  
+  while (projects.some((p) => p.id === next)) {
+    nextNum += 1;
+    next = `${meta.prefix}-${String(nextNum).padStart(3, "0")}`;
+  }
+  
+  return next;
 }
 
 function assertCategory(category) {
