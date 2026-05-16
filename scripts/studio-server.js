@@ -42,6 +42,7 @@ function sendJson(response, status, data) {
 }
 
 function sendError(response, error) {
+  console.error("SERVER ERROR:", error);
   const validation = error.validation || null;
   sendJson(response, 400, {
     error: error.message,
