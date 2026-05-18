@@ -161,6 +161,11 @@
   let filteredIndexes = tracks.map((track, index) => index);
   let isSeeking = false;
   let embeddedTrackId = "";
+  let soundCloudApiPromise = null;
+  let soundCloudWidget = null;
+  let soundCloudDuration = 0;
+  let soundCloudPosition = 0;
+  let soundCloudPlaying = false;
 
   function formatTime(value) {
     if (!Number.isFinite(value) || value < 0) {
@@ -206,11 +211,11 @@
     return Boolean(track && !canPlayHere(track) && isSoundCloudTrack(track) && track.sourceUrl);
   }
 
-  function soundCloudEmbedUrl(track) {
+  function soundCloudEmbedUrl(track, autoPlay) {
     const params = new URLSearchParams({
       url: track.sourceUrl,
       color: "#f6c84f",
-      auto_play: "true",
+      auto_play: autoPlay ? "true" : "false",
       hide_related: "true",
       show_comments: "false",
       show_user: "true",
@@ -221,12 +226,65 @@
     return `https://w.soundcloud.com/player/?${params.toString()}`;
   }
 
+  function loadSoundCloudApi() {
+    if (window.SC && window.SC.Widget) {
+      return Promise.resolve(window.SC);
+    }
+
+    if (soundCloudApiPromise) {
+      return soundCloudApiPromise;
+    }
+
+    soundCloudApiPromise = new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = "https://w.soundcloud.com/player/api.js";
+      script.async = true;
+      script.onload = () => {
+        if (window.SC && window.SC.Widget) {
+          resolve(window.SC);
+        } else {
+          reject(new Error("SoundCloud widget API did not initialize."));
+        }
+      };
+      script.onerror = () => reject(new Error("SoundCloud widget API failed to load."));
+      document.head.append(script);
+    });
+
+    return soundCloudApiPromise;
+  }
+
+  function updateSoundCloudProgress(position, total) {
+    if (progress && total > 0 && !isSeeking) {
+      progress.value = String(Math.round((position / total) * 1000));
+    }
+
+    if (currentTime) {
+      currentTime.textContent = formatTime(position / 1000);
+    }
+
+    if (duration && total > 0) {
+      duration.textContent = formatTime(total / 1000);
+    }
+  }
+
   function stopEmbeddedPlayback() {
+    if (soundCloudWidget) {
+      try {
+        soundCloudWidget.pause();
+      } catch (error) {
+        // The iframe may already be gone.
+      }
+    }
+
     if (embedHost) {
       embedHost.hidden = true;
       embedHost.textContent = "";
     }
 
+    soundCloudWidget = null;
+    soundCloudDuration = 0;
+    soundCloudPosition = 0;
+    soundCloudPlaying = false;
     embeddedTrackId = "";
     document.body.classList.remove("is-playing");
   }
@@ -236,16 +294,25 @@
       return false;
     }
 
+    if (embeddedTrackId === track.id && soundCloudWidget) {
+      soundCloudWidget.play();
+      return true;
+    }
+
     audio.pause();
     audio.removeAttribute("src");
     delete audio.dataset.trackId;
     audio.load();
 
+    soundCloudWidget = null;
+    soundCloudDuration = 0;
+    soundCloudPosition = 0;
+    soundCloudPlaying = false;
     embedHost.hidden = false;
     embedHost.innerHTML = `
       <iframe
         title="${escapeHtml(track.title)} on SoundCloud"
-        src="${soundCloudEmbedUrl(track)}"
+        src="${soundCloudEmbedUrl(track, true)}"
         allow="autoplay"
         loading="lazy"></iframe>
     `;
@@ -253,11 +320,99 @@
     document.body.classList.add("is-playing");
 
     if (playButton) {
-      playButton.textContent = "Stop";
-      playButton.setAttribute("aria-label", "Stop embedded SoundCloud playback");
+      playButton.textContent = "Loading";
+      playButton.setAttribute("aria-label", "Loading SoundCloud playback");
     }
 
-    setStatus(`Playing ${track.title} inside Lemonteed FM via SoundCloud embed.`);
+    if (progress) {
+      progress.disabled = false;
+      progress.value = "0";
+    }
+
+    if (currentTime) {
+      currentTime.textContent = "0:00";
+    }
+
+    setStatus(`Loading ${track.title} from SoundCloud inside Lemonteed FM.`);
+
+    const iframe = embedHost.querySelector("iframe");
+    loadSoundCloudApi()
+      .then((SC) => {
+        if (!iframe || embeddedTrackId !== track.id) {
+          return;
+        }
+
+        const widget = SC.Widget(iframe);
+        soundCloudWidget = widget;
+
+        widget.bind(SC.Widget.Events.READY, () => {
+          if (embeddedTrackId !== track.id) {
+            return;
+          }
+
+          widget.setVolume(Math.round(Number(volume ? volume.value : 0.8) * 100));
+          widget.getDuration((value) => {
+            soundCloudDuration = Number(value) || 0;
+            updateSoundCloudProgress(soundCloudPosition, soundCloudDuration);
+          });
+          widget.play();
+        });
+
+        widget.bind(SC.Widget.Events.PLAY, () => {
+          soundCloudPlaying = true;
+          document.body.classList.add("is-playing");
+          if (playButton) {
+            playButton.textContent = "Pause";
+            playButton.setAttribute("aria-label", "Pause SoundCloud playback");
+          }
+          setStatus(`Now playing from SoundCloud: ${track.title}.`);
+        });
+
+        widget.bind(SC.Widget.Events.PAUSE, () => {
+          soundCloudPlaying = false;
+          document.body.classList.remove("is-playing");
+          if (embeddedTrackId === track.id && playButton) {
+            playButton.textContent = "Play";
+            playButton.setAttribute("aria-label", "Play selected track");
+          }
+        });
+
+        widget.bind(SC.Widget.Events.FINISH, () => {
+          soundCloudPlaying = false;
+          moveTrack(1, true);
+        });
+
+        widget.bind(SC.Widget.Events.PLAY_PROGRESS, (event) => {
+          soundCloudPosition = Number(event.currentPosition) || 0;
+          if (!soundCloudDuration) {
+            widget.getDuration((value) => {
+              soundCloudDuration = Number(value) || 0;
+              updateSoundCloudProgress(soundCloudPosition, soundCloudDuration);
+            });
+          } else {
+            updateSoundCloudProgress(soundCloudPosition, soundCloudDuration);
+          }
+        });
+      })
+      .catch(() => {
+        if (embeddedTrackId !== track.id || !embedHost) {
+          return;
+        }
+
+        embedHost.innerHTML = `
+          <iframe
+            title="${escapeHtml(track.title)} on SoundCloud"
+            src="${soundCloudEmbedUrl(track, true)}"
+            allow="autoplay"
+            loading="lazy"></iframe>
+        `;
+        if (playButton) {
+          playButton.textContent = "Stop";
+          playButton.setAttribute("aria-label", "Stop SoundCloud playback");
+        }
+        setStatus("SoundCloud controls were unavailable, so the embedded player is handling playback.");
+      });
+
     return true;
   }
 
@@ -365,13 +520,13 @@
     }
 
     if (progress) {
-      progress.disabled = !canPlayHere(track);
+      progress.disabled = !(canPlayHere(track) || canEmbedHere(track));
     }
 
     if (playButton) {
       const embedded = embeddedTrackId === track.id;
-      playButton.textContent = embedded ? "Stop" : (canPlayHere(track) || canEmbedHere(track) ? "Play" : "Source");
-      playButton.setAttribute("aria-label", embedded ? "Stop embedded SoundCloud playback" : (canPlayHere(track) || canEmbedHere(track) ? "Play selected track" : "Open selected track source"));
+      playButton.textContent = embedded && soundCloudPlaying ? "Pause" : (canPlayHere(track) || canEmbedHere(track) ? "Play" : "Source");
+      playButton.setAttribute("aria-label", embedded && soundCloudPlaying ? "Pause SoundCloud playback" : (canPlayHere(track) || canEmbedHere(track) ? "Play selected track" : "Open selected track source"));
     }
 
     renderFeaturedTrack(track);
@@ -429,13 +584,18 @@
     const source = playbackUrl(track);
 
     if (!canPlayHere(track)) {
-      if (embeddedTrackId === track.id) {
+      if (embeddedTrackId === track.id && soundCloudWidget) {
+        if (soundCloudPlaying) {
+          soundCloudWidget.pause();
+        } else {
+          soundCloudWidget.play();
+        }
+      } else if (embeddedTrackId === track.id) {
         stopEmbeddedPlayback();
         if (playButton) {
           playButton.textContent = "Play";
           playButton.setAttribute("aria-label", "Play selected track");
         }
-        setStatus("Stopped embedded SoundCloud playback.");
       } else if (canEmbedHere(track)) {
         playEmbeddedTrack(track);
       } else if (track.sourceUrl) {
@@ -466,6 +626,20 @@
   }
 
   function pauseCurrent() {
+    if (embeddedTrackId === currentTrack().id) {
+      if (soundCloudWidget) {
+        soundCloudWidget.pause();
+      } else {
+        stopEmbeddedPlayback();
+      }
+      if (playButton) {
+        playButton.textContent = "Play";
+        playButton.setAttribute("aria-label", "Play selected track");
+      }
+      setStatus("Paused SoundCloud playback.");
+      return;
+    }
+
     audio.pause();
     stopEmbeddedPlayback();
     if (playButton) {
@@ -644,13 +818,8 @@
 
   if (playButton) {
     playButton.addEventListener("click", () => {
-      if (embeddedTrackId === currentTrack().id) {
-        stopEmbeddedPlayback();
-        if (playButton) {
-          playButton.textContent = "Play";
-          playButton.setAttribute("aria-label", "Play selected track");
-        }
-        setStatus("Stopped embedded SoundCloud playback.");
+      if (canEmbedHere(currentTrack())) {
+        playCurrent();
         return;
       }
 
@@ -669,7 +838,10 @@
   if (progress) {
     progress.addEventListener("input", () => {
       isSeeking = true;
-      const total = audio.duration;
+      const track = currentTrack();
+      const total = canEmbedHere(track) && embeddedTrackId === track.id
+        ? soundCloudDuration / 1000
+        : audio.duration;
 
       if (Number.isFinite(total) && total > 0) {
         const nextTime = (Number(progress.value) / 1000) * total;
@@ -680,14 +852,25 @@
     });
 
     progress.addEventListener("change", () => {
-      const total = audio.duration;
+      const track = currentTrack();
+      const isEmbedded = canEmbedHere(track) && embeddedTrackId === track.id;
+      const total = isEmbedded ? soundCloudDuration / 1000 : audio.duration;
 
       if (Number.isFinite(total) && total > 0) {
-        audio.currentTime = (Number(progress.value) / 1000) * total;
+        const nextTime = (Number(progress.value) / 1000) * total;
+        if (isEmbedded && soundCloudWidget) {
+          soundCloudWidget.seekTo(nextTime * 1000);
+        } else {
+          audio.currentTime = nextTime;
+        }
       }
 
       isSeeking = false;
-      updateProgress();
+      if (isEmbedded) {
+        updateSoundCloudProgress(soundCloudPosition, soundCloudDuration);
+      } else {
+        updateProgress();
+      }
     });
   }
 
@@ -695,6 +878,9 @@
     audio.volume = Number(volume.value);
     volume.addEventListener("input", () => {
       audio.volume = Number(volume.value);
+      if (soundCloudWidget) {
+        soundCloudWidget.setVolume(Math.round(Number(volume.value) * 100));
+      }
     });
   }
 
