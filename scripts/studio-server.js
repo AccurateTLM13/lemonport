@@ -37,7 +37,18 @@ const mimeTypes = {
   ".ico": "image/x-icon",
   ".mp3": "audio/mpeg",
   ".ogg": "audio/ogg",
-  ".oga": "audio/ogg"
+  ".oga": "audio/ogg",
+  ".wav": "audio/wav",
+  ".webm": "audio/webm"
+};
+
+const audioMimeExtensions = {
+  "audio/mpeg": ".mp3",
+  "audio/mp3": ".mp3",
+  "audio/ogg": ".ogg",
+  "audio/wav": ".wav",
+  "audio/x-wav": ".wav",
+  "audio/webm": ".webm"
 };
 
 function sendJson(response, status, data) {
@@ -311,7 +322,7 @@ function decodeDataUrl(dataUrl) {
   const match = String(dataUrl || "").match(/^data:([^;]+);base64,(.+)$/);
 
   if (!match) {
-    throw new Error("Upload a valid image file.");
+    throw new Error("Upload a valid file.");
   }
 
   return {
@@ -322,6 +333,10 @@ function decodeDataUrl(dataUrl) {
 
 function publicImagePath(category, filename) {
   return `/images/${category}/${encodeURIComponent(filename).replace(/%2F/g, "/")}`;
+}
+
+function publicFmAudioPath(filename) {
+  return `/lemonteed-fm/audio/${encodeURIComponent(filename).replace(/%2F/g, "/")}`;
 }
 
 function imageDimensions(filePath) {
@@ -660,6 +675,18 @@ function uniqueImageSlug(imageDir, baseSlug) {
   return slug;
 }
 
+function uniqueAudioFilename(audioDir, baseSlug, extension) {
+  let filename = `${baseSlug}${extension}`;
+  let suffix = 2;
+
+  while (fs.existsSync(path.join(audioDir, filename))) {
+    filename = `${baseSlug}-${suffix}${extension}`;
+    suffix += 1;
+  }
+
+  return filename;
+}
+
 async function uploadLemonteedFmArt(request, response) {
   const body = await readJsonBody(request);
   const { buffer } = decodeDataUrl(body.imageData);
@@ -689,6 +716,34 @@ async function uploadLemonteedFmArt(request, response) {
       artworkLarge,
       width: image.dimensions.width,
       height: image.dimensions.height
+    }
+  });
+}
+
+async function uploadLemonteedFmAudio(request, response) {
+  const body = await readJsonBody(request);
+  const { mime, buffer } = decodeDataUrl(body.audioData);
+  const extension = audioMimeExtensions[mime];
+
+  if (!extension) {
+    throw new Error("Upload an MP3, OGG, WAV, or WebM audio file.");
+  }
+
+  const audioDir = path.join(root, "lemonteed-fm", "audio");
+  const kind = slugify(body.kind || "audio");
+  const baseSlug = slugify(`${body.title || "fm-track"}-${kind}`);
+  const filename = uniqueAudioFilename(audioDir, baseSlug, extension);
+
+  fs.mkdirSync(audioDir, { recursive: true });
+  fs.writeFileSync(path.join(audioDir, filename), buffer);
+
+  sendJson(response, 201, {
+    audio: {
+      url: `audio/${filename}`,
+      publicUrl: publicFmAudioPath(filename),
+      filename,
+      mime,
+      bytes: buffer.length
     }
   });
 }
@@ -1148,6 +1203,11 @@ async function route(request, response) {
 
     if (request.method === "POST" && url.pathname === "/api/lemonteed-fm/art") {
       await uploadLemonteedFmArt(request, response);
+      return;
+    }
+
+    if (request.method === "POST" && url.pathname === "/api/lemonteed-fm/audio") {
+      await uploadLemonteedFmAudio(request, response);
       return;
     }
 

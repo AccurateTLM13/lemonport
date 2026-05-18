@@ -348,7 +348,7 @@
       <section class="workspace-panel" data-workspace="fm" aria-labelledby="fm-title">
         <div class="panel-heading">
           <h2 id="fm-title">Lemonteed FM</h2>
-          <p>Add songs, SoundCloud links, source/license details, and song art for the static Lemonteed FM playlist.</p>
+          <p>Add songs, SoundCloud links, source/license details, playable audio, and song art for the static Lemonteed FM playlist.</p>
         </div>
 
         <form class="live-editor fm-editor" data-fm-editor-form>
@@ -398,6 +398,14 @@
                     <span>Full audio path</span>
                     <input name="fullAudio" type="text" placeholder="Optional local full audio path">
                   </label>
+                  <label>
+                    <span>Preview audio file</span>
+                    <input name="previewAudioFile" type="file" accept="audio/mpeg,audio/mp3,audio/ogg,audio/wav,audio/webm">
+                  </label>
+                  <label>
+                    <span>Full audio file</span>
+                    <input name="fullAudioFile" type="file" accept="audio/mpeg,audio/mp3,audio/ogg,audio/wav,audio/webm">
+                  </label>
                   <label class="span-2">
                     <span>Attribution</span>
                     <textarea name="attribution" rows="3" placeholder="Song by Artist. Used with permission / licensed under..."></textarea>
@@ -410,6 +418,7 @@
                     <span>Song art</span>
                     <input name="artwork" type="file" accept="image/png,image/jpeg,image/webp">
                   </label>
+                  <p class="span-2 form-note">SoundCloud links are source links. To play inside Lemonteed FM, upload a preview or full audio file, or enter a local audio path.</p>
                   <label class="checkbox-row">
                     <input name="canHost" type="checkbox">
                     <span>Can host/play local audio</span>

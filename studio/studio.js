@@ -1186,6 +1186,8 @@
     fmEditorForm.elements.tags.value = csvValue(track.tags);
     fmEditorForm.elements.previewAudio.value = track.previewAudio || "";
     fmEditorForm.elements.fullAudio.value = track.fullAudio || "";
+    fmEditorForm.elements.previewAudioFile.value = "";
+    fmEditorForm.elements.fullAudioFile.value = "";
     fmEditorForm.elements.attribution.value = track.attribution || "";
     fmEditorForm.elements.usage.value = track.usage || "Verify the original source before using in your own project.";
     fmEditorForm.elements.canHost.checked = track.canHost === true;
@@ -1261,6 +1263,24 @@
     return result.artwork || null;
   }
 
+  async function uploadFmAudio(file, title, kind) {
+    if (!file) {
+      return null;
+    }
+
+    const audioData = await readFileAsDataUrl(file);
+    const result = await api("/api/lemonteed-fm/audio", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        title,
+        kind,
+        audioData
+      })
+    });
+    return result.audio || null;
+  }
+
   async function saveFmTrack(event) {
     event.preventDefault();
 
@@ -1280,7 +1300,15 @@
 
       setStatus("Saving Lemonteed FM track...");
       const artwork = await uploadFmArtwork(fmEditorForm.elements.artwork.files[0], title);
+      const previewUpload = await uploadFmAudio(fmEditorForm.elements.previewAudioFile.files[0], title, "preview");
+      const fullUpload = await uploadFmAudio(fmEditorForm.elements.fullAudioFile.files[0], title, "full");
       const existing = fmData.tracks.find((track) => track.id === activeFmTrackId) || {};
+      const previewAudio = previewUpload
+        ? previewUpload.url
+        : String(formData.get("previewAudio") || "").trim();
+      const fullAudio = fullUpload
+        ? fullUpload.url
+        : String(formData.get("fullAudio") || "").trim();
       const nextTrack = {
         ...existing,
         id: existing.id || String(title).trim().toLowerCase().replace(/&/g, " and ").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, ""),
@@ -1292,11 +1320,11 @@
         duration: String(formData.get("duration") || "").trim(),
         vibe: parseCsv(formData.get("vibe")),
         tags: parseCsv(formData.get("tags")),
-        previewAudio: String(formData.get("previewAudio") || "").trim(),
-        fullAudio: String(formData.get("fullAudio") || "").trim(),
+        previewAudio,
+        fullAudio,
         attribution: String(formData.get("attribution") || "").trim(),
         usage: String(formData.get("usage") || "Verify the original source before using in your own project.").trim(),
-        canHost: formData.get("canHost") === "on",
+        canHost: formData.get("canHost") === "on" || Boolean(previewAudio || fullAudio),
         canDownload: existing.canDownload === true
       };
 

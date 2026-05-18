@@ -1,7 +1,7 @@
 window.LEMONTEED_FM_TRACKS = [
   {
     "id": "lemonteed-fm-93-7-internet-s-least-funded-booth",
-    "title": "Lemonteed FM 93.7 - Internet's Least Funded Booth",
+    "title": "Internet's Least Funded Booth",
     "artist": "Lemonteed FM",
     "vibe": [
       "intro",

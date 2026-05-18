@@ -149,6 +149,7 @@
   const openSource = document.querySelector("[data-open-source]");
   const copyAttribution = document.querySelector("[data-copy-attribution]");
   const playerStatus = document.querySelector("[data-player-status]");
+  const embedHost = document.querySelector("[data-embed-host]");
   const startListening = document.querySelector("[data-start-listening]");
   const openRequestButtons = Array.from(document.querySelectorAll("[data-open-request]"));
   const closeRequestButton = document.querySelector("[data-close-request]");
@@ -159,6 +160,7 @@
   let currentIndex = 0;
   let filteredIndexes = tracks.map((track, index) => index);
   let isSeeking = false;
+  let embeddedTrackId = "";
 
   function formatTime(value) {
     if (!Number.isFinite(value) || value < 0) {
@@ -176,12 +178,87 @@
     }
   }
 
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;");
+  }
+
   function currentTrack() {
     return tracks[currentIndex];
   }
 
   function playbackUrl(track) {
     return track.previewAudio || track.fullAudio || "";
+  }
+
+  function canPlayHere(track) {
+    return Boolean(track && track.canHost && playbackUrl(track));
+  }
+
+  function isSoundCloudTrack(track) {
+    return Boolean(track && /soundcloud\.com/i.test(`${track.sourceUrl || ""} ${track.sourceName || ""}`));
+  }
+
+  function canEmbedHere(track) {
+    return Boolean(track && !canPlayHere(track) && isSoundCloudTrack(track) && track.sourceUrl);
+  }
+
+  function soundCloudEmbedUrl(track) {
+    const params = new URLSearchParams({
+      url: track.sourceUrl,
+      color: "#f6c84f",
+      auto_play: "true",
+      hide_related: "true",
+      show_comments: "false",
+      show_user: "true",
+      show_reposts: "false",
+      show_teaser: "false",
+      visual: "false"
+    });
+    return `https://w.soundcloud.com/player/?${params.toString()}`;
+  }
+
+  function stopEmbeddedPlayback() {
+    if (embedHost) {
+      embedHost.hidden = true;
+      embedHost.textContent = "";
+    }
+
+    embeddedTrackId = "";
+    document.body.classList.remove("is-playing");
+  }
+
+  function playEmbeddedTrack(track) {
+    if (!embedHost || !canEmbedHere(track)) {
+      return false;
+    }
+
+    audio.pause();
+    audio.removeAttribute("src");
+    delete audio.dataset.trackId;
+    audio.load();
+
+    embedHost.hidden = false;
+    embedHost.innerHTML = `
+      <iframe
+        title="${escapeHtml(track.title)} on SoundCloud"
+        src="${soundCloudEmbedUrl(track)}"
+        allow="autoplay"
+        loading="lazy"></iframe>
+    `;
+    embeddedTrackId = track.id;
+    document.body.classList.add("is-playing");
+
+    if (playButton) {
+      playButton.textContent = "Stop";
+      playButton.setAttribute("aria-label", "Stop embedded SoundCloud playback");
+    }
+
+    setStatus(`Playing ${track.title} inside Lemonteed FM via SoundCloud embed.`);
+    return true;
   }
 
   function renderTracks() {
@@ -200,23 +277,24 @@
       card.classList.toggle("is-active", trackIndex === currentIndex);
       card.setAttribute("aria-label", `${track.title} by ${track.artist}`);
 
-      const tags = (track.vibe || track.tags).slice(0, 3).map((tag) => `<span>${tag}</span>`).join("");
+      const tags = (track.vibe || track.tags).slice(0, 3).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
+      const playLabel = canPlayHere(track) || canEmbedHere(track) ? "Play" : "Source";
       card.innerHTML = `
         <div class="fm-track-main">
           <span class="fm-track-number">${trackIndex + 1}</span>
-          <img src="${track.artworkSmall || track.artwork}" width="68" height="68" loading="lazy" alt="">
+          <img src="${escapeHtml(track.artworkSmall || track.artwork)}" width="68" height="68" loading="lazy" alt="">
           <div>
-            <strong class="fm-track-title">${track.title}</strong>
-            <span class="fm-track-artist">${track.artist}</span>
-            <span class="fm-track-meta">${track.duration} - ${track.sourceName}</span>
+            <strong class="fm-track-title">${escapeHtml(track.title)}</strong>
+            <span class="fm-track-artist">${escapeHtml(track.artist)} / ${escapeHtml(track.sourceName || "Source")}</span>
+            <span class="fm-track-meta">${escapeHtml(track.duration || "0:00")} - ${canPlayHere(track) ? "Hosted audio" : canEmbedHere(track) ? "Embedded stream" : "Source-only"}</span>
           </div>
         </div>
         <div class="fm-tags">${tags}</div>
-        <strong class="fm-license-badge">${track.license}</strong>
+        <strong class="fm-license-badge">${escapeHtml(track.license || "License needed")}</strong>
         <div class="fm-track-actions">
-          <button type="button" data-card-play="${trackIndex}">${track.canHost ? "Play" : "Source"}</button>
+          <button type="button" data-card-play="${trackIndex}">${playLabel}</button>
           <button type="button" data-card-copy="${trackIndex}">Copy Credit</button>
-          <a href="${track.sourceUrl}" target="_blank" rel="noopener">Source</a>
+          <a href="${escapeHtml(track.sourceUrl)}" target="_blank" rel="noopener">Source</a>
         </div>
       `;
       trackList.append(card);
@@ -235,23 +313,23 @@
       return;
     }
 
-    const tags = (track.vibe || track.tags).map((tag) => `<span>${tag}</span>`).join("");
+    const tags = (track.vibe || track.tags).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
     featuredTrack.innerHTML = `
-      <img src="${track.artworkLarge || track.artwork}" width="210" height="210" loading="lazy" alt="">
+      <img src="${escapeHtml(track.artworkLarge || track.artwork)}" width="210" height="210" loading="lazy" alt="">
       <div class="fm-featured-track__copy">
-        <p class="fm-kicker">Recently Lemoned</p>
-        <h3>${track.title}</h3>
-        <p>${track.artist}</p>
+        <p class="fm-kicker">Now in rotation</p>
+        <h3>${escapeHtml(track.title)}</h3>
+        <p>${escapeHtml(track.artist)}</p>
         <div class="fm-featured-meta">
-          <span>${track.license}</span>
-          <span>${track.sourceName}</span>
-          <span>${track.duration}</span>
+          <span>${escapeHtml(track.license || "License needed")}</span>
+          <span>${escapeHtml(track.sourceName || "Source")}</span>
+          <span>${escapeHtml(track.duration || "0:00")}</span>
         </div>
         <div class="fm-tags">${tags}</div>
         <div class="fm-featured-actions">
-          <button class="fm-button fm-button--primary" type="button" data-featured-play>Play Featured</button>
+          <button class="fm-button fm-button--primary" type="button" data-featured-play>${canPlayHere(track) || canEmbedHere(track) ? "Play Featured" : "Open Source"}</button>
           <button class="fm-button" type="button" data-featured-copy>Copy Attribution</button>
-          <a class="fm-button" href="${track.sourceUrl}" target="_blank" rel="noopener">Open Source</a>
+          <a class="fm-button" href="${escapeHtml(track.sourceUrl)}" target="_blank" rel="noopener">Open Source</a>
         </div>
       </div>
     `;
@@ -286,6 +364,16 @@
       progress.value = "0";
     }
 
+    if (progress) {
+      progress.disabled = !canPlayHere(track);
+    }
+
+    if (playButton) {
+      const embedded = embeddedTrackId === track.id;
+      playButton.textContent = embedded ? "Stop" : (canPlayHere(track) || canEmbedHere(track) ? "Play" : "Source");
+      playButton.setAttribute("aria-label", embedded ? "Stop embedded SoundCloud playback" : (canPlayHere(track) || canEmbedHere(track) ? "Play selected track" : "Open selected track source"));
+    }
+
     renderFeaturedTrack(track);
     renderTracks();
   }
@@ -298,17 +386,31 @@
     const track = tracks[index];
     const changed = currentIndex !== index;
     currentIndex = index;
+
+    if (changed) {
+      stopEmbeddedPlayback();
+    }
+
     updatePlayer(track);
 
-    if (!track.canHost || !playbackUrl(track)) {
+    if (!canPlayHere(track)) {
       audio.pause();
       audio.removeAttribute("src");
       delete audio.dataset.trackId;
       audio.load();
       if (playButton) {
-        playButton.textContent = "Play";
+        playButton.textContent = canEmbedHere(track) ? "Play" : "Source";
       }
-      setStatus("This track is source-only. Open the source link to listen.");
+      if (shouldPlay && canEmbedHere(track)) {
+        playEmbeddedTrack(track);
+      } else if (shouldPlay && track.sourceUrl) {
+        window.open(track.sourceUrl, "_blank", "noopener");
+        setStatus("Opened the source link. Add a local audio upload in Studio to play it here.");
+      } else if (canEmbedHere(track)) {
+        setStatus("This SoundCloud track can play inside Lemonteed FM. Press Play.");
+      } else {
+        setStatus("This track is source-only. Add a local audio upload in Studio to play it here.");
+      }
       return;
     }
 
@@ -326,8 +428,22 @@
 
     const source = playbackUrl(track);
 
-    if (!track.canHost || !source) {
-      setStatus("This track cannot be hosted here. Open the source link instead.");
+    if (!canPlayHere(track)) {
+      if (embeddedTrackId === track.id) {
+        stopEmbeddedPlayback();
+        if (playButton) {
+          playButton.textContent = "Play";
+          playButton.setAttribute("aria-label", "Play selected track");
+        }
+        setStatus("Stopped embedded SoundCloud playback.");
+      } else if (canEmbedHere(track)) {
+        playEmbeddedTrack(track);
+      } else if (track.sourceUrl) {
+        window.open(track.sourceUrl, "_blank", "noopener");
+        setStatus("Opened the source link. Add a local audio upload in Studio to play it here.");
+      } else {
+        setStatus("This track needs a local audio file before it can play here.");
+      }
       return;
     }
 
@@ -351,6 +467,7 @@
 
   function pauseCurrent() {
     audio.pause();
+    stopEmbeddedPlayback();
     if (playButton) {
       playButton.textContent = "Play";
     }
@@ -360,7 +477,7 @@
   function playableIndexes() {
     return tracks
       .map((track, index) => ({ track, index }))
-      .filter((item) => item.track.canHost && playbackUrl(item.track))
+      .filter((item) => canPlayHere(item.track) || canEmbedHere(item.track))
       .map((item) => item.index);
   }
 
@@ -527,16 +644,26 @@
 
   if (playButton) {
     playButton.addEventListener("click", () => {
+      if (embeddedTrackId === currentTrack().id) {
+        stopEmbeddedPlayback();
+        if (playButton) {
+          playButton.textContent = "Play";
+          playButton.setAttribute("aria-label", "Play selected track");
+        }
+        setStatus("Stopped embedded SoundCloud playback.");
+        return;
+      }
+
       audio.paused ? playCurrent() : pauseCurrent();
     });
   }
 
   if (prevButton) {
-    prevButton.addEventListener("click", () => moveTrack(-1, !audio.paused));
+    prevButton.addEventListener("click", () => moveTrack(-1, !audio.paused || Boolean(embeddedTrackId)));
   }
 
   if (nextButton) {
-    nextButton.addEventListener("click", () => moveTrack(1, !audio.paused));
+    nextButton.addEventListener("click", () => moveTrack(1, !audio.paused || Boolean(embeddedTrackId)));
   }
 
   if (progress) {
@@ -655,6 +782,10 @@
   });
 
   audio.addEventListener("pause", () => {
+    if (embeddedTrackId) {
+      return;
+    }
+
     document.body.classList.remove("is-playing");
     if (playButton) {
       playButton.textContent = "Play";
