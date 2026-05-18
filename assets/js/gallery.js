@@ -410,15 +410,19 @@
       figure.dataset.series = item.series || "";
       figure.dataset.tags = Array.isArray(item.tags) ? item.tags.join(" ") : "";
 
-      const button = document.createElement("button");
-      button.className = "gallery__button";
-      button.type = "button";
-      button.dataset.index = String(index);
-      button.dataset.id = item.id;
-      button.dataset.category = item.categorySlug || item.category || "";
-      button.dataset.series = item.series || "";
-      button.dataset.tags = Array.isArray(item.tags) ? item.tags.join(" ") : "";
-      button.setAttribute("aria-label", `Open ${item.title}`);
+      const control = item.href ? document.createElement("a") : document.createElement("button");
+      control.className = "gallery__button";
+      if (item.href) {
+        control.href = item.href;
+      } else {
+        control.type = "button";
+      }
+      control.dataset.index = String(index);
+      control.dataset.id = item.id;
+      control.dataset.category = item.categorySlug || item.category || "";
+      control.dataset.series = item.series || "";
+      control.dataset.tags = Array.isArray(item.tags) ? item.tags.join(" ") : "";
+      control.setAttribute("aria-label", item.href ? `Open ${item.title} page` : `Open ${item.title}`);
 
       const frame = document.createElement("span");
       frame.className = "gallery__frame";
@@ -460,8 +464,8 @@
       screenReaderCaption.textContent = `${item.title} / ${item.categoryLabel || item.category}`;
 
       frame.append(img, caption);
-      button.append(frame);
-      figure.append(button, screenReaderCaption);
+      control.append(frame);
+      figure.append(control, screenReaderCaption);
       fragment.append(figure);
     });
 
@@ -684,6 +688,10 @@
       const button = event.target.closest(".gallery__button");
 
       if (!button) {
+        return;
+      }
+
+      if (button.tagName === "A") {
         return;
       }
 

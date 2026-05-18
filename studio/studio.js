@@ -40,6 +40,13 @@
   const liveEditorReload = document.querySelector("[data-live-editor-reload]");
   const liveEditorSync = document.querySelector("[data-live-editor-sync]");
   const livePreview = document.querySelector("[data-live-preview]");
+  const fmEditorForm = document.querySelector("[data-fm-editor-form]");
+  const fmEditorJson = document.querySelector("[data-fm-editor-json]");
+  const fmTrackManager = document.querySelector("[data-fm-track-manager]");
+  const fmReloadButton = document.querySelector("[data-fm-reload]");
+  const fmResetButton = document.querySelector("[data-fm-reset]");
+  const fmSaveJsonButton = document.querySelector("[data-fm-save-json]");
+  const fmFormTitle = document.querySelector("[data-fm-form-title]");
   const buildReportPanel = document.querySelector("[data-build-report-panel]");
   const tagManager = document.querySelector("[data-tag-manager]");
   const seriesManager = document.querySelector("[data-series-manager]");
@@ -68,6 +75,7 @@
     relations: ["Relations", "Connection map"],
     game: ["Memetic Game", "Weapon audit"],
     live: ["Live Experiment", "Cloud Flip dossier"],
+    fm: ["Lemonteed FM", "Playlist manager"],
     report: ["Build Report", "Publish readiness"]
   };
 
@@ -91,6 +99,8 @@
   let selectedIds = new Set();
   let lastMediaHealth = null;
   let liveExperiment = null;
+  let fmData = { tracks: [] };
+  let activeFmTrackId = "";
 
   function setStatus(message, details) {
     status.textContent = message || "";
@@ -1117,6 +1127,212 @@
 
     renderLiveEditor();
     renderLivePreview();
+  }
+
+  async function loadLemonteedFm() {
+    if (!fmEditorForm && !fmEditorJson && !fmTrackManager) {
+      return;
+    }
+
+    const data = await api("/api/lemonteed-fm");
+    setLemonteedFm(data.lemonteedFm || { tracks: [] });
+  }
+
+  function setLemonteedFm(data) {
+    fmData = data && typeof data === "object" ? data : { tracks: [] };
+    fmData.tracks = Array.isArray(fmData.tracks) ? fmData.tracks : [];
+
+    if (fmEditorJson) {
+      fmEditorJson.value = JSON.stringify(fmData, null, 2);
+    }
+
+    renderFmTrackManager();
+  }
+
+  function resetFmForm() {
+    if (!fmEditorForm) {
+      return;
+    }
+
+    activeFmTrackId = "";
+    fmEditorForm.reset();
+    fmEditorForm.elements.sourceName.value = "SoundCloud";
+    fmEditorForm.elements.usage.value = "Verify the original source before using in your own project.";
+    fmEditorForm.elements.canHost.checked = false;
+    if (fmFormTitle) {
+      fmFormTitle.textContent = "Add Track";
+    }
+  }
+
+  function editFmTrack(id) {
+    if (!fmEditorForm) {
+      return;
+    }
+
+    const track = fmData.tracks.find((item) => item.id === id);
+    if (!track) {
+      return;
+    }
+
+    activeFmTrackId = track.id;
+    fmEditorForm.elements.id.value = track.id || "";
+    fmEditorForm.elements.title.value = track.title || "";
+    fmEditorForm.elements.artist.value = track.artist || "";
+    fmEditorForm.elements.sourceUrl.value = track.sourceUrl || "";
+    fmEditorForm.elements.sourceName.value = track.sourceName || "SoundCloud";
+    fmEditorForm.elements.license.value = track.license || "";
+    fmEditorForm.elements.duration.value = track.duration || "";
+    fmEditorForm.elements.vibe.value = csvValue(track.vibe);
+    fmEditorForm.elements.tags.value = csvValue(track.tags);
+    fmEditorForm.elements.previewAudio.value = track.previewAudio || "";
+    fmEditorForm.elements.fullAudio.value = track.fullAudio || "";
+    fmEditorForm.elements.attribution.value = track.attribution || "";
+    fmEditorForm.elements.usage.value = track.usage || "Verify the original source before using in your own project.";
+    fmEditorForm.elements.canHost.checked = track.canHost === true;
+    fmEditorForm.elements.artwork.value = "";
+
+    if (fmFormTitle) {
+      fmFormTitle.textContent = `Edit Track: ${track.title}`;
+    }
+
+    setWorkspace("fm");
+  }
+
+  function renderFmTrackManager() {
+    if (!fmTrackManager) {
+      return;
+    }
+
+    if (!fmData.tracks.length) {
+      fmTrackManager.innerHTML = "<p>No Lemonteed FM tracks yet.</p>";
+      return;
+    }
+
+    fmTrackManager.innerHTML = fmData.tracks.map((track) => `
+      <article class="fm-manager-row">
+        <img src="${escapeHtml(track.artworkSmall || track.artworkLarge || "/images/lemonteed-fm/disco-lemon.webp")}" alt="">
+        <div>
+          <strong>${escapeHtml(track.title)}</strong>
+          <span>${escapeHtml(track.artist)} - ${escapeHtml(track.sourceName || "Source")}</span>
+          <small>${escapeHtml(track.license || "License needed")}</small>
+        </div>
+        <div class="fm-manager-row__actions">
+          <button type="button" data-fm-edit="${escapeHtml(track.id)}">Edit</button>
+          <button type="button" data-fm-duplicate="${escapeHtml(track.id)}">Duplicate</button>
+          <button type="button" data-fm-delete="${escapeHtml(track.id)}">Delete</button>
+        </div>
+      </article>
+    `).join("");
+  }
+
+  function parseFmJson() {
+    try {
+      return JSON.parse(fmEditorJson.value || "{\"tracks\":[]}");
+    } catch (error) {
+      setStatus(`Lemonteed FM JSON is invalid: ${error.message}`);
+      return null;
+    }
+  }
+
+  async function saveLemonteedFmData(data, message) {
+    const result = await api("/api/lemonteed-fm", {
+      method: "PATCH",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ lemonteedFm: data })
+    });
+    setLemonteedFm(result.lemonteedFm || data);
+    setStatus(message || "Lemonteed FM saved and rebuilt.");
+  }
+
+  async function uploadFmArtwork(file, title) {
+    if (!file) {
+      return null;
+    }
+
+    const imageData = await readFileAsDataUrl(file);
+    const result = await api("/api/lemonteed-fm/art", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        title,
+        imageData
+      })
+    });
+    return result.artwork || null;
+  }
+
+  async function saveFmTrack(event) {
+    event.preventDefault();
+
+    if (!fmEditorForm) {
+      return;
+    }
+
+    try {
+      const formData = new FormData(fmEditorForm);
+      const title = String(formData.get("title") || "").trim();
+      const artist = String(formData.get("artist") || "").trim();
+
+      if (!title || !artist) {
+        setStatus("Track title and artist are required.");
+        return;
+      }
+
+      setStatus("Saving Lemonteed FM track...");
+      const artwork = await uploadFmArtwork(fmEditorForm.elements.artwork.files[0], title);
+      const existing = fmData.tracks.find((track) => track.id === activeFmTrackId) || {};
+      const nextTrack = {
+        ...existing,
+        id: existing.id || String(title).trim().toLowerCase().replace(/&/g, " and ").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, ""),
+        title,
+        artist,
+        sourceUrl: String(formData.get("sourceUrl") || "").trim(),
+        sourceName: String(formData.get("sourceName") || "SoundCloud").trim(),
+        license: String(formData.get("license") || "").trim(),
+        duration: String(formData.get("duration") || "").trim(),
+        vibe: parseCsv(formData.get("vibe")),
+        tags: parseCsv(formData.get("tags")),
+        previewAudio: String(formData.get("previewAudio") || "").trim(),
+        fullAudio: String(formData.get("fullAudio") || "").trim(),
+        attribution: String(formData.get("attribution") || "").trim(),
+        usage: String(formData.get("usage") || "Verify the original source before using in your own project.").trim(),
+        canHost: formData.get("canHost") === "on",
+        canDownload: existing.canDownload === true
+      };
+
+      if (artwork) {
+        nextTrack.artworkSmall = artwork.artworkSmall;
+        nextTrack.artworkLarge = artwork.artworkLarge;
+      } else {
+        nextTrack.artworkSmall = nextTrack.artworkSmall || "/images/lemonteed-fm/disco-lemon.webp";
+        nextTrack.artworkLarge = nextTrack.artworkLarge || "/images/lemonteed-fm/lemonteed-fm.webp";
+      }
+
+      const nextTracks = fmData.tracks.filter((track) => track.id !== activeFmTrackId && track.id !== nextTrack.id);
+      nextTracks.push(nextTrack);
+      await saveLemonteedFmData({ ...fmData, tracks: nextTracks }, "Lemonteed FM track saved and rebuilt.");
+      editFmTrack(nextTrack.id);
+    } catch (error) {
+      showError(error);
+    }
+  }
+
+  async function saveFmJson() {
+    if (!fmEditorJson) {
+      return;
+    }
+
+    const parsed = parseFmJson();
+    if (!parsed) {
+      return;
+    }
+
+    try {
+      setStatus("Saving Lemonteed FM JSON...");
+      await saveLemonteedFmData(parsed, "Lemonteed FM JSON saved and rebuilt.");
+    } catch (error) {
+      showError(error);
+    }
   }
 
   function fieldName(path) {
@@ -2767,6 +2983,74 @@
       }
     });
   }
+  if (fmEditorForm) {
+    fmEditorForm.addEventListener("submit", saveFmTrack);
+  }
+  if (fmResetButton) {
+    fmResetButton.addEventListener("click", () => {
+      resetFmForm();
+      setStatus("Ready for a new Lemonteed FM track.");
+    });
+  }
+  if (fmReloadButton) {
+    fmReloadButton.addEventListener("click", () => {
+      loadLemonteedFm()
+        .then(() => setStatus("Lemonteed FM reloaded."))
+        .catch(showError);
+    });
+  }
+  if (fmSaveJsonButton) {
+    fmSaveJsonButton.addEventListener("click", saveFmJson);
+  }
+  if (fmEditorJson) {
+    fmEditorJson.addEventListener("change", () => {
+      const parsed = parseFmJson();
+      if (parsed) {
+        setLemonteedFm(parsed);
+        setStatus("Lemonteed FM fields synced from JSON.");
+      }
+    });
+  }
+  if (fmTrackManager) {
+    fmTrackManager.addEventListener("click", (event) => {
+      const edit = event.target.closest("[data-fm-edit]");
+      const duplicate = event.target.closest("[data-fm-duplicate]");
+      const remove = event.target.closest("[data-fm-delete]");
+
+      if (edit) {
+        editFmTrack(edit.dataset.fmEdit);
+        return;
+      }
+
+      if (duplicate) {
+        const track = fmData.tracks.find((item) => item.id === duplicate.dataset.fmDuplicate);
+        if (!track) {
+          return;
+        }
+
+        editFmTrack(track.id);
+        activeFmTrackId = "";
+        fmEditorForm.elements.id.value = "";
+        fmEditorForm.elements.title.value = `${track.title} Copy`;
+        if (fmFormTitle) {
+          fmFormTitle.textContent = `Duplicate Track: ${track.title}`;
+        }
+        return;
+      }
+
+      if (remove) {
+        const track = fmData.tracks.find((item) => item.id === remove.dataset.fmDelete);
+        if (!track || !window.confirm(`Delete "${track.title}" from Lemonteed FM?`)) {
+          return;
+        }
+
+        saveLemonteedFmData({
+          ...fmData,
+          tracks: fmData.tracks.filter((item) => item.id !== track.id)
+        }, "Lemonteed FM track deleted and rebuilt.").catch(showError);
+      }
+    });
+  }
   bulkForm.addEventListener("submit", applyBulkEdit);
   regenerateSelectedButton.addEventListener("click", regenerateSelectedProjects);
   exportSelectedButton.addEventListener("click", exportSelectedData);
@@ -2791,4 +3075,5 @@
   renderPending();
   loadProjects().catch(showError);
   loadLiveExperiment().catch(showError);
+  loadLemonteedFm().catch(showError);
 }());

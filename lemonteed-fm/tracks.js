@@ -1,0 +1,157 @@
+window.LEMONTEED_FM_TRACKS = [
+  {
+    "id": "lemonteed-fm-93-7-internet-s-least-funded-booth",
+    "title": "Lemonteed FM 93.7 - Internet's Least Funded Booth",
+    "artist": "Lemonteed FM",
+    "vibe": [
+      "intro",
+      "station dj"
+    ],
+    "tags": [
+      "lemonteedfm"
+    ],
+    "duration": "1:12",
+    "artworkSmall": "/images/lemonteed-fm/lemonteed-fm-93-7-internet-s-least-funded-booth-480.webp",
+    "artworkLarge": "/images/lemonteed-fm/lemonteed-fm-93-7-internet-s-least-funded-booth.webp",
+    "previewAudio": "",
+    "fullAudio": "",
+    "sourceName": "SoundCloud",
+    "sourceUrl": "https://soundcloud.com/lemonteedfm/the_lemon_is_strong",
+    "license": "All Rights Served",
+    "attribution": "",
+    "usage": "Verify the original source before using in your own project.",
+    "canHost": false,
+    "canDownload": false
+  },
+  {
+    "id": "impressions-before-coffee",
+    "title": "Impressions Before Coffee",
+    "artist": "Lemonteed FM",
+    "vibe": [
+      "lofi"
+    ],
+    "tags": [],
+    "duration": "2:34",
+    "artworkSmall": "/images/lemonteed-fm/impressions-before-coffee-480.webp",
+    "artworkLarge": "/images/lemonteed-fm/impressions-before-coffee.webp",
+    "previewAudio": "",
+    "fullAudio": "",
+    "sourceName": "SoundCloud",
+    "sourceUrl": "https://soundcloud.com/lemonteedfm/impressions-before-coffee",
+    "license": "All Rights Served",
+    "attribution": "",
+    "usage": "Verify the original source before using in your own project.",
+    "canHost": false,
+    "canDownload": false
+  },
+  {
+    "id": "dance-for-legal-s-sake",
+    "title": "Dance For Legal's Sake",
+    "artist": "Lemonteed FM",
+    "vibe": [
+      "corporate dance-pop",
+      "corporate satire"
+    ],
+    "tags": [],
+    "duration": "1:27",
+    "artworkSmall": "/images/lemonteed-fm/dance-for-legal-s-sake-480.webp",
+    "artworkLarge": "/images/lemonteed-fm/dance-for-legal-s-sake.webp",
+    "previewAudio": "",
+    "fullAudio": "",
+    "sourceName": "SoundCloud",
+    "sourceUrl": "https://soundcloud.com/lemonteedfm/dance-for-legals-sake",
+    "license": "All Rights Served",
+    "attribution": "",
+    "usage": "Verify the original source before using in your own project.",
+    "canHost": false,
+    "canDownload": false
+  },
+  {
+    "id": "monopoly-is-the-condition-of-every-business",
+    "title": "Monopoly Is The Condition Of Every Business",
+    "artist": "Lemonteed FM",
+    "vibe": [
+      "90s Monopoly Rap",
+      "Peter Thiel"
+    ],
+    "tags": [],
+    "duration": "2:33",
+    "artworkSmall": "/images/lemonteed-fm/monopoly-is-the-condition-of-every-business-480.webp",
+    "artworkLarge": "/images/lemonteed-fm/monopoly-is-the-condition-of-every-business.webp",
+    "previewAudio": "",
+    "fullAudio": "",
+    "sourceName": "SoundCloud",
+    "sourceUrl": "https://soundcloud.com/lemonteedfm/monopoly-business",
+    "license": "All Rights Served",
+    "attribution": "",
+    "usage": "Verify the original source before using in your own project.",
+    "canHost": false,
+    "canDownload": false
+  },
+  {
+    "id": "turn-the-lemon-dial",
+    "title": "Turn the Lemon Dial",
+    "artist": "Lemonteed FM",
+    "vibe": [
+      "synthwave",
+      "midnight radio"
+    ],
+    "tags": [],
+    "duration": "1:40",
+    "artworkSmall": "/images/lemonteed-fm/turn-the-lemon-dial-480.webp",
+    "artworkLarge": "/images/lemonteed-fm/turn-the-lemon-dial.webp",
+    "previewAudio": "",
+    "fullAudio": "",
+    "sourceName": "SoundCloud",
+    "sourceUrl": "https://soundcloud.com/lemonteedfm/turn-the-lemon-dial",
+    "license": "All Rights Served",
+    "attribution": "",
+    "usage": "Verify the original source before using in your own project.",
+    "canHost": false,
+    "canDownload": false
+  },
+  {
+    "id": "trust-me-bro",
+    "title": "Trust Me Bro",
+    "artist": "Lemonteed FM",
+    "vibe": [
+      "punky garage rock",
+      "chaotic internet anthem"
+    ],
+    "tags": [],
+    "duration": "2:32",
+    "artworkSmall": "/images/lemonteed-fm/trust-me-bro-2-480.webp",
+    "artworkLarge": "/images/lemonteed-fm/trust-me-bro-2.webp",
+    "previewAudio": "",
+    "fullAudio": "",
+    "sourceName": "SoundCloud",
+    "sourceUrl": "https://soundcloud.com/lemonteedfm/trust_me_bro",
+    "license": "All Rights Served",
+    "attribution": "",
+    "usage": "Verify the original source before using in your own project.",
+    "canHost": false,
+    "canDownload": false
+  },
+  {
+    "id": "track-seven",
+    "title": "Track Seven",
+    "artist": "Lemonteed FM",
+    "vibe": [
+      "sad indie pop",
+      "lo-fi bedroom music"
+    ],
+    "tags": [],
+    "duration": "2:41",
+    "artworkSmall": "/images/lemonteed-fm/track-seven-480.webp",
+    "artworkLarge": "/images/lemonteed-fm/track-seven.webp",
+    "previewAudio": "",
+    "fullAudio": "",
+    "sourceName": "SoundCloud",
+    "sourceUrl": "https://soundcloud.com/lemonteedfm/track-seven",
+    "license": "All Rights Served",
+    "attribution": "",
+    "usage": "Verify the original source before using in your own project.",
+    "canHost": false,
+    "canDownload": false
+  }
+];

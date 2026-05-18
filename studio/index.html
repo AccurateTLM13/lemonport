@@ -28,6 +28,7 @@
           <button type="button" data-workspace-nav="relations">Relations</button>
           <button type="button" data-workspace-nav="game">Memetic Game</button>
           <button type="button" data-workspace-nav="live">Live Experiment</button>
+          <button type="button" data-workspace-nav="fm">Lemonteed FM</button>
           <button type="button" data-workspace-nav="report">Build Report</button>
         </nav>
         <a class="view-site-link" href="/index.html" target="_blank" rel="noreferrer">View Site</a>
@@ -340,6 +341,107 @@
             <button type="submit">Save + Build</button>
             <button type="button" data-live-editor-reload>Reload</button>
             <button type="button" data-live-editor-sync>Sync JSON From Fields</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="workspace-panel" data-workspace="fm" aria-labelledby="fm-title">
+        <div class="panel-heading">
+          <h2 id="fm-title">Lemonteed FM</h2>
+          <p>Add songs, SoundCloud links, source/license details, and song art for the static Lemonteed FM playlist.</p>
+        </div>
+
+        <form class="live-editor fm-editor" data-fm-editor-form>
+          <div class="live-editor-grid">
+            <div class="live-editor-fields">
+              <section class="fm-track-form">
+                <h3 data-fm-form-title>Add Track</h3>
+                <input name="id" type="hidden">
+                <div class="form-grid">
+                  <label>
+                    <span>Title</span>
+                    <input name="title" type="text" autocomplete="off" required>
+                  </label>
+                  <label>
+                    <span>Artist</span>
+                    <input name="artist" type="text" autocomplete="off" required>
+                  </label>
+                  <label>
+                    <span>SoundCloud / source link</span>
+                    <input name="sourceUrl" type="url" inputmode="url" placeholder="https://soundcloud.com/...">
+                  </label>
+                  <label>
+                    <span>Source name</span>
+                    <input name="sourceName" type="text" value="SoundCloud">
+                  </label>
+                  <label>
+                    <span>License</span>
+                    <input name="license" type="text" placeholder="Permission required / CC BY 4.0">
+                  </label>
+                  <label>
+                    <span>Duration</span>
+                    <input name="duration" type="text" placeholder="3:12">
+                  </label>
+                  <label>
+                    <span>Vibe tags</span>
+                    <input name="vibe" type="text" placeholder="indie, lemon-lit, demo">
+                  </label>
+                  <label>
+                    <span>Search tags</span>
+                    <input name="tags" type="text" placeholder="soundcloud, submitted">
+                  </label>
+                  <label>
+                    <span>Preview audio path</span>
+                    <input name="previewAudio" type="text" placeholder="Optional local preview path">
+                  </label>
+                  <label>
+                    <span>Full audio path</span>
+                    <input name="fullAudio" type="text" placeholder="Optional local full audio path">
+                  </label>
+                  <label class="span-2">
+                    <span>Attribution</span>
+                    <textarea name="attribution" rows="3" placeholder="Song by Artist. Used with permission / licensed under..."></textarea>
+                  </label>
+                  <label class="span-2">
+                    <span>Usage note</span>
+                    <textarea name="usage" rows="2">Verify the original source before using in your own project.</textarea>
+                  </label>
+                  <label class="span-2">
+                    <span>Song art</span>
+                    <input name="artwork" type="file" accept="image/png,image/jpeg,image/webp">
+                  </label>
+                  <label class="checkbox-row">
+                    <input name="canHost" type="checkbox">
+                    <span>Can host/play local audio</span>
+                  </label>
+                </div>
+                <div class="live-editor-actions">
+                  <button type="submit">Save Track + Build</button>
+                  <button type="button" data-fm-reset>New Track</button>
+                  <a href="/lemonteed-fm/" target="_blank" rel="noreferrer">Open Page</a>
+                </div>
+              </section>
+            </div>
+            <aside class="live-editor-side">
+              <section class="live-preview" aria-label="Lemonteed FM track list">
+                <div class="live-preview__head">
+                  <span>Playlist</span>
+                  <button type="button" data-fm-reload>Reload</button>
+                </div>
+                <div class="fm-track-manager" data-fm-track-manager></div>
+              </section>
+
+              <details class="live-json-panel">
+                <summary>Advanced JSON</summary>
+                <label>
+                  <span>FM JSON</span>
+                  <textarea name="fmJson" rows="18" spellcheck="false" data-fm-editor-json></textarea>
+                </label>
+                <div class="live-editor-actions">
+                  <button type="button" data-fm-save-json>Save JSON + Build</button>
+                </div>
+              </details>
+            </aside>
           </div>
         </form>
       </section>

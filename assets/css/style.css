@@ -323,6 +323,7 @@ button {
   background: transparent;
   cursor: pointer;
   text-align: left;
+  text-decoration: none;
 }
 
 .gallery__frame {
@@ -1442,3 +1443,99 @@ button {
     display: none;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   Gallery Transitions
+   Two focused effects: click feedback on the grid, and a smooth
+   entrance animation when the lightbox opens or navigates.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── 1. Gallery click feedback ──────────────────────────────── */
+/*    The whole grid dims; the clicked card stays bright.        */
+
+.gallery--flash .gallery__item {
+  transition: opacity 80ms ease, filter 80ms ease;
+}
+
+.gallery--flash .gallery__item:not(.gallery__item--flash-target) {
+  opacity: 0.18;
+  filter: blur(0.5px);
+}
+
+.gallery__item--flash-target .gallery__frame {
+  /* brief brightness flare on the selected card */
+  filter: brightness(1.12);
+  transition: filter 80ms ease;
+}
+
+/* ── 2. Lightbox entrance — first open ──────────────────────── */
+/*    Image rises and scales in; artifact panel slides from right */
+
+.lb-img--entering {
+  animation: lmtd-img-in 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.lb-panel--entering {
+  animation: lmtd-panel-in 380ms 130ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes lmtd-img-in {
+  from {
+    opacity: 0;
+    transform: scale(0.93) translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes lmtd-panel-in {
+  from {
+    opacity: 0;
+    transform: translateX(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ── 3. Lightbox navigation — prev / next ───────────────────── */
+/*    Lighter cross-fade + micro-shift instead of the full scale  */
+
+.lb-img--navigating {
+  animation: lmtd-img-nav 260ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.lb-panel--navigating {
+  animation: lmtd-panel-nav 220ms 60ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes lmtd-img-nav {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes lmtd-panel-nav {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Reduced motion: skip all of the above ──────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .lb-img--entering,
+  .lb-panel--entering,
+  .lb-img--navigating,
+  .lb-panel--navigating {
+    animation: none;
+  }
+}
+
+

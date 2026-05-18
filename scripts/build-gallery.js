@@ -33,7 +33,7 @@ function publicProject(project) {
     && ((project.variants.find((variant) => Number(variant.width) === 768) || project.variants[0] || {}).url))
     || image;
 
-  return {
+  const publicData = {
     id: project.id,
     title: project.title,
     category: categoryLabel,
@@ -65,6 +65,12 @@ function publicProject(project) {
     sizes: project.sizes,
     variants: Array.isArray(project.variants) ? project.variants : []
   };
+
+  if (project.href) {
+    publicData.href = project.href;
+  }
+
+  return publicData;
 }
 
 function hasPublishableImage(project) {

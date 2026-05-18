@@ -76,7 +76,8 @@ const galleryItems = [
         "width": 1672,
         "url": "/images/what-if/hashbrown-pro-from-waffle-house.webp"
       }
-    ]
+    ],
+    "href": "/hashbrownpro/wafflehousepro.html"
   },
   {
     "id": "what-029",

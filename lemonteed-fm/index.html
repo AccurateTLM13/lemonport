@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCB0LW648K"></script>
+  <script src="/assets/js/analytics.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lemonteed FM | Free-to-use Music Discovery</title>
+  <meta name="description"
+    content="Lemonteed FM is a tiny static music discovery player for free-to-use tracks, clear licenses, and questionable taste.">
+  <link rel="canonical" href="https://lemonteed.com/lemonteed-fm/">
+  <meta property="og:title" content="Lemonteed FM">
+  <meta property="og:description" content="Free-to-use tracks, questionable taste, and one extremely shiny lemon.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lemonteed.com/lemonteed-fm/">
+  <meta property="og:image" content="https://lemonteed.com/images/lemonteed-fm/lemonteed-fm.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Lemonteed FM">
+  <meta name="twitter:description" content="Free-to-use tracks, questionable taste, and one extremely shiny lemon.">
+  <meta name="twitter:image" content="https://lemonteed.com/images/lemonteed-fm/lemonteed-fm.webp">
+  <link rel="icon" href="/images/favicons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="lemonteed-fm.css">
+  <script src="tracks.js" defer></script>
+  <script src="lemonteed-fm.js" defer></script>
+</head>
+
+<body class="lemonteed-fm-page">
+  <a class="skip-link" href="#crate">Skip to tracks</a>
+
+  <div class="fm-shell">
+    <aside class="fm-sidebar" aria-label="Lemonteed FM navigation">
+        <a class="fm-brand" href="/" aria-label="Lemonteed home">
+          <span class="fm-brand__mark">
+            <img src="/images/lemonteed-fm/disco-lemon.webp" width="96" height="96" alt="">
+          </span>
+          <span>
+            <strong>Lemonteed FM</strong>
+            <small>LFM 93.7 / static signal</small>
+        </span>
+      </a>
+
+      <nav class="fm-nav" aria-label="Station sections">
+        <a class="is-active" href="#home" aria-current="page">Home</a>
+        <a href="#crate">Browse</a>
+        <a href="#crate">Crate</a>
+        <a href="#requests">Requests</a>
+        <a href="#licenses">Licenses</a>
+        <a href="#about">About</a>
+      </nav>
+
+      <div class="fm-sidebar__status" aria-label="Station status">
+        <span class="fm-pill">ON AIR</span>
+        <dl class="fm-signal">
+          <div>
+            <dt>Signal</dt>
+            <dd>Lemon-lit</dd>
+          </div>
+          <div>
+            <dt>License desk</dt>
+            <dd>Awake</dd>
+          </div>
+          <div>
+            <dt>Algorithm</dt>
+            <dd>Ignored</dd>
+          </div>
+        </dl>
+      </div>
+    </aside>
+
+    <main class="fm-main" id="home">
+      <header class="fm-hero">
+        <div class="fm-signal-wave" aria-hidden="true">
+          <svg viewBox="0 0 1200 420" preserveAspectRatio="none" focusable="false">
+            <path d="M0 228 C90 138 158 138 238 228 S390 318 480 228 638 138 728 228 888 318 978 228 1120 142 1200 210" />
+            <path d="M0 276 C110 210 185 206 260 276 S405 342 520 276 704 210 802 276 1008 342 1200 252" />
+            <path d="M0 178 C130 104 218 108 318 178 S514 250 628 178 828 102 934 178 1100 244 1200 194" />
+          </svg>
+        </div>
+        <div class="fm-hero__copy">
+          <p class="fm-kicker">Minimally compliant disco desk</p>
+          <div class="fm-hero__badges" aria-label="Station badges">
+            <span>LFM 93.7</span>
+            <span>Static signal</span>
+            <span>License-aware audio nonsense</span>
+          </div>
+          <h1>Lemonteed FM</h1>
+          <p class="fm-subtitle">Free-to-use tracks, questionable taste, and one extremely shiny lemon.</p>
+          <p class="fm-body">A tiny web player for free-to-use tracks, weird internet music, and songs the algorithm forgot.</p>
+          <p class="fm-broadcast-line">Broadcasting from the internet's least funded booth.</p>
+          <div class="fm-actions" aria-label="Primary actions">
+            <button class="fm-button fm-button--primary" type="button" data-start-listening>Start Listening</button>
+            <button class="fm-button" type="button" data-open-request>Request a Track</button>
+          </div>
+        </div>
+
+        <aside class="fm-broadcast-card" aria-label="Now broadcasting">
+          <div class="fm-broadcast-card__top">
+            <span>Now broadcasting</span>
+            <strong>LFM 93.7</strong>
+          </div>
+          <figure class="fm-mascot" aria-label="Lemonteed FM mascot">
+            <img src="/images/lemonteed-fm/lemonteed-fm.webp" width="900" height="900"
+              alt="A glossy Lemonteed mascot acting as the Lemonteed FM station host.">
+          </figure>
+          <div class="fm-eq" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <p>Default cover art. Surprisingly serious sunglasses.</p>
+        </aside>
+      </header>
+
+      <section class="fm-section fm-browser" id="crate" aria-labelledby="browse-title">
+        <div class="fm-section__head">
+          <div>
+            <p class="fm-kicker"><span data-track-count>0 tracks</span> / license-aware crate</p>
+            <h2 id="browse-title">The Lemon Crate</h2>
+          </div>
+          <label class="fm-search">
+            <span>Search tracks</span>
+            <input type="search" data-search placeholder="Title, artist, tag, source, license">
+          </label>
+        </div>
+
+        <div class="fm-status-line" data-filter-status aria-live="polite"></div>
+        <div class="fm-featured-track" data-featured-track aria-label="Featured track"></div>
+        <div class="fm-crate-heading">
+          <div>
+            <span>#</span>
+            <span>Track</span>
+          </div>
+          <span>Vibe</span>
+          <span>License</span>
+          <span>Actions</span>
+        </div>
+        <div class="fm-track-list" data-track-list aria-label="Lemonteed FM tracks"></div>
+      </section>
+
+      <section class="fm-section fm-request-section" id="requests" aria-labelledby="requests-title">
+        <div class="fm-section__head">
+          <div>
+            <p class="fm-kicker">Requests Desk</p>
+            <h2 id="requests-title">Send something into the booth</h2>
+          </div>
+          <p class="fm-section__note">Bonus points if the license is clear. Minus points if the only source is "trust me
+            bro."</p>
+        </div>
+
+        <button class="fm-button fm-button--primary" type="button" data-open-request>Open Request Panel</button>
+
+        <div class="fm-request-card" data-request-panel hidden>
+          <button class="fm-request-close" type="button" data-close-request aria-label="Close request panel">Close</button>
+          <aside class="fm-request-card__stamp" aria-hidden="true">
+            <span>REQUEST</span>
+            <strong>REC</strong>
+          </aside>
+          <form class="fm-request-form" data-request-form>
+            <label>
+              <span>Request type</span>
+              <select name="requestType">
+                <option value="Song">Song</option>
+                <option value="Artist">Artist</option>
+                <option value="Submit your own music">Submit your own music</option>
+                <option value="Report license issue">Report license issue</option>
+              </select>
+            </label>
+            <label>
+              <span>Artist name</span>
+              <input name="artistName" type="text" autocomplete="off">
+            </label>
+            <label>
+              <span>Song title</span>
+              <input name="songTitle" type="text" autocomplete="off">
+            </label>
+            <label>
+              <span>Link</span>
+              <input name="link" type="url" inputmode="url" placeholder="https://">
+            </label>
+            <label class="fm-wide">
+              <span>License/source notes</span>
+              <textarea name="licenseNotes" rows="4"></textarea>
+            </label>
+            <label class="fm-wide">
+              <span>Why should it be added?</span>
+              <textarea name="why" rows="4"></textarea>
+            </label>
+            <label>
+              <span>Optional email</span>
+              <input name="email" type="email" autocomplete="email">
+            </label>
+            <div class="fm-form-actions">
+              <button class="fm-button fm-button--primary" type="submit">Generate Mail Draft</button>
+              <p data-request-status aria-live="polite">This static form opens your mail app with the request details.
+              </p>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="fm-section fm-license-section" id="licenses" aria-labelledby="licenses-title">
+        <p class="fm-kicker">Licenses</p>
+        <h2 id="licenses-title">Clear rights, or it does not enter the booth</h2>
+        <div class="fm-license-grid">
+          <p>Every track on Lemonteed FM needs verified usage rights before it gets listed. A track being free to hear does not automatically mean it is free to reuse.</p>
+          <p>Attribution, license links, and source terms may matter. Open the source page before using a track in your own project.</p>
+        </div>
+        <p class="fm-license-punch">Free-use does not mean free-for-all.</p>
+        <p class="fm-disclaimer">Lemonteed FM shows license info where available, but users should verify the original
+          source before using a track in their own project.</p>
+      </section>
+
+      <section class="fm-section fm-about" id="about" aria-labelledby="about-title">
+        <p class="fm-kicker">About</p>
+        <h2 id="about-title">A tiny player, not a music empire</h2>
+        <p>Lemonteed FM is a static discovery page for tracks with visible license information. It is built for quick
+          listening, copying attribution, and remembering that "free" is not a legal strategy.</p>
+      </section>
+    </main>
+  </div>
+
+  <section class="fm-player" aria-label="Music player">
+    <audio data-audio preload="none"></audio>
+
+    <div class="fm-player__track">
+      <img data-player-art src="/images/lemonteed-fm/lemonteed-fm.webp" width="72" height="72" alt="">
+      <div>
+        <strong data-player-title>Choose a track</strong>
+        <span data-player-artist>Lemonteed FM</span>
+        <small data-player-license>License appears here</small>
+      </div>
+    </div>
+
+    <div class="fm-player__controls">
+      <div class="fm-player__buttons">
+        <button type="button" data-prev aria-label="Previous track">Prev</button>
+        <button class="fm-play-button" type="button" data-play aria-label="Play selected track">Play</button>
+        <button type="button" data-next aria-label="Next track">Next</button>
+      </div>
+      <div class="fm-progress-row">
+        <span data-current-time>0:00</span>
+        <input data-progress type="range" min="0" max="1000" value="0" aria-label="Track progress">
+        <span data-duration>0:00</span>
+      </div>
+      <p class="fm-player__message" data-player-status aria-live="polite">Ready. The lemon is checking the cables.</p>
+    </div>
+
+    <div class="fm-player__utility">
+      <label class="fm-volume">
+        <span>Volume</span>
+        <input data-volume type="range" min="0" max="1" step="0.01" value="0.8">
+      </label>
+      <div class="fm-player__links">
+        <button type="button" data-open-source>Open Source</button>
+        <button type="button" data-copy-attribution>Copy Attribution</button>
+      </div>
+    </div>
+  </section>
+</body>
+
+</html>

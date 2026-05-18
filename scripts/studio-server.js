@@ -14,6 +14,7 @@ const { assertValidContent, validateContent } = require("./content-validation");
 const { mediaHealth } = require("./media-health");
 const { variantsForProject, absoluteFromPublicUrl } = require("./generate-image-variants");
 const { contentFile: liveExperimentFile, validateLiveExperiment, buildLiveExperiment } = require("./build-live-experiment");
+const { contentFile: lemonteedFmFile, validateLemonteedFm, buildLemonteedFm } = require("./build-lemonteed-fm");
 
 const root = path.resolve(__dirname, "..");
 const contentFile = path.join(root, "content", "projects.json");
@@ -33,7 +34,10 @@ const mimeTypes = {
   ".png": "image/png",
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
-  ".ico": "image/x-icon"
+  ".ico": "image/x-icon",
+  ".mp3": "audio/mpeg",
+  ".ogg": "audio/ogg",
+  ".oga": "audio/ogg"
 };
 
 function sendJson(response, status, data) {
@@ -104,6 +108,26 @@ function loadLiveExperiment() {
   }
 
   return JSON.parse(fs.readFileSync(liveExperimentFile, "utf8"));
+}
+
+function loadLemonteedFm() {
+  if (!fs.existsSync(lemonteedFmFile)) {
+    return { tracks: [] };
+  }
+
+  return JSON.parse(fs.readFileSync(lemonteedFmFile, "utf8"));
+}
+
+function saveLemonteedFm(data) {
+  const normalized = validateLemonteedFm(data);
+  backupFile(lemonteedFmFile);
+  fs.mkdirSync(path.dirname(lemonteedFmFile), { recursive: true });
+  fs.writeFileSync(lemonteedFmFile, `${JSON.stringify({
+    ...normalized,
+    updatedAt: new Date().toISOString()
+  }, null, 2)}\n`);
+  buildLemonteedFm();
+  return loadLemonteedFm();
 }
 
 function saveLiveExperiment(data) {
@@ -624,6 +648,51 @@ function mediaFileInfo(label, url) {
   };
 }
 
+function uniqueImageSlug(imageDir, baseSlug) {
+  let slug = baseSlug;
+  let suffix = 2;
+
+  while (fs.existsSync(path.join(imageDir, `${slug}.webp`))) {
+    slug = `${baseSlug}-${suffix}`;
+    suffix += 1;
+  }
+
+  return slug;
+}
+
+async function uploadLemonteedFmArt(request, response) {
+  const body = await readJsonBody(request);
+  const { buffer } = decodeDataUrl(body.imageData);
+  const imageDir = path.join(root, "images", "lemonteed-fm");
+  const uploadDir = path.join(root, ".studio-uploads");
+  const baseSlug = slugify(body.slug || body.title || "fm-track-art");
+  const slug = uniqueImageSlug(imageDir, baseSlug);
+  const tempFile = path.join(uploadDir, `${slug}-fm-art-upload`);
+
+  fs.mkdirSync(imageDir, { recursive: true });
+  fs.mkdirSync(uploadDir, { recursive: true });
+  fs.writeFileSync(tempFile, buffer);
+
+  const image = makeWebpSet(tempFile, imageDir, slug);
+  fs.unlinkSync(tempFile);
+
+  const artworkLarge = publicImagePath("lemonteed-fm", `${slug}.webp`);
+  const artworkSmall = (
+    image.variants.find((variant) => Number(variant.width) === 480) ||
+    image.variants.find((variant) => Number(variant.width) === 320) ||
+    image.variants[0]
+  );
+
+  sendJson(response, 201, {
+    artwork: {
+      artworkSmall: artworkSmall ? artworkSmall.url : artworkLarge,
+      artworkLarge,
+      width: image.dimensions.width,
+      height: image.dimensions.height
+    }
+  });
+}
+
 function projectMediaInfo(project) {
   const files = [];
   const seen = new Set();
@@ -1033,6 +1102,11 @@ async function route(request, response) {
       return;
     }
 
+    if (request.method === "GET" && url.pathname === "/api/lemonteed-fm") {
+      sendJson(response, 200, { lemonteedFm: loadLemonteedFm() });
+      return;
+    }
+
     if (request.method === "GET" && url.pathname === "/api/validation") {
       const result = validateContent(loadProjects(), loadCategories());
       sendJson(response, 200, {
@@ -1062,6 +1136,18 @@ async function route(request, response) {
       const body = await readJsonBody(request);
       saveLiveExperiment(body.liveExperiment || body);
       sendJson(response, 200, { liveExperiment: loadLiveExperiment() });
+      return;
+    }
+
+    if (request.method === "PATCH" && url.pathname === "/api/lemonteed-fm") {
+      const body = await readJsonBody(request);
+      const lemonteedFm = saveLemonteedFm(body.lemonteedFm || body);
+      sendJson(response, 200, { lemonteedFm });
+      return;
+    }
+
+    if (request.method === "POST" && url.pathname === "/api/lemonteed-fm/art") {
+      await uploadLemonteedFmArt(request, response);
       return;
     }
 
