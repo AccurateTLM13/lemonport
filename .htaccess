@@ -3,6 +3,11 @@
   ExpiresByType image/webp "access plus 1 year"
   ExpiresByType image/png "access plus 1 year"
   ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType audio/mpeg "access plus 1 year"
+  ExpiresByType audio/ogg "access plus 1 year"
+  ExpiresByType audio/wav "access plus 1 year"
+  ExpiresByType audio/webm "access plus 1 year"
+  ExpiresByType audio/mp4 "access plus 1 year"
   ExpiresByType text/css "access plus 1 year"
   ExpiresByType application/javascript "access plus 1 year"
 </IfModule>
@@ -10,7 +15,7 @@
 Redirect 301 /memetic-warfare/live-experiment/ /live-experiment/
 
 <IfModule mod_headers.c>
-  <FilesMatch "\.(webp|png|ico|css|js)$">
+  <FilesMatch "\.(webp|png|ico|css|js|mp3|ogg|oga|wav|webm|m4a)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
 
