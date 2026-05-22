@@ -1,16 +1,16 @@
 <!doctype html>
 <html lang="en">
   <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCB0LW648K"></script>
-  <script src="/assets/js/analytics.js" defer></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCB0LW648K"></script>
+    <script src="/assets/js/analytics.js" defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lemonteed Portfolio</title>
-    <meta name="description" content="A minimal visual portfolio by Lemonteed, featuring VRG Cards, What If, and Misc Gens.">
+    <title>Lemonteed | The Atlas</title>
+    <meta name="description" content="A static web universe of tools, games, songs, artifacts, and experimental internet objects. Pick a zone and discover Lemonteed.">
     <link rel="canonical" href="https://lemonteed.com/">
-    <meta property="og:title" content="Lemonteed Portfolio">
-    <meta property="og:description" content="A minimal visual portfolio by Lemonteed.">
+    <meta property="og:title" content="Lemonteed | The Atlas">
+    <meta property="og:description" content="A static web universe of tools, games, songs, artifacts, and experimental internet objects.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://lemonteed.com/">
     <meta property="og:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
@@ -19,86 +19,104 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Lemonteed Portfolio">
-    <meta name="twitter:description" content="A minimal visual portfolio by Lemonteed.">
+    <meta name="twitter:title" content="Lemonteed | The Atlas">
+    <meta name="twitter:description" content="A static web universe of tools, games, songs, artifacts, and experimental internet objects.">
     <meta name="twitter:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+    <link rel="preload" as="image" href="/images/home/lemon-island.webp">
     <link rel="icon" href="/images/favicons/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
     <link rel="manifest" href="/site.webmanifest">
-    <link rel="stylesheet" href="/assets/css/style.css?v=8">
-    <script src="/assets/js/gallery-data.js?v=5" defer></script>
-    <script src="/assets/js/gallery-categories.js?v=5" defer></script>
-    <script src="/assets/js/gallery.js?v=6" defer></script>
-    <script src="/assets/js/portal-lightbox.js?v=1" defer></script>
-    <script src="/assets/js/mobile-header.js?v=1" defer></script>
-    <script src="/assets/js/coming-soon.js?v=1" defer></script>
+    <link rel="stylesheet" href="/assets/css/style.css?v=9">
+    <link rel="stylesheet" href="/assets/css/world-map.css?v=2">
+    <script src="/assets/js/world-map.js?v=2" defer></script>
     <script src="/assets/js/operator-entry.js" defer></script>
   </head>
-  <body>
-    <a class="skip-link" href="#gallery">Skip to gallery</a>
-    <div class="site-shell">
-      <aside class="sidebar" aria-label="Site navigation">
-        <div class="sidebar__top">
-          <a class="brand" href="/" aria-label="Lemonteed home">
-            <img class="brand__logo" src="/images/lemonteedlogo-250.webp" srcset="/images/lemonteedlogo-250.webp 250w, /images/lemonteedlogo-456.webp 456w" sizes="160px" width="456" height="96" alt="Lemonteed">
+  <body class="atlas-body">
+    <a class="skip-link" href="#zones">Skip to zones</a>
+
+    <main class="lemon-world">
+      <section class="map-viewport" aria-label="Lemonteed world map">
+        <div class="map-stage">
+          <div class="scene-bg" aria-hidden="true"></div>
+
+          <a class="brand-logo-link" href="/" aria-label="Lemonteed home">
+            <img class="brand-logo" src="/images/lemonteedlogo-250.webp" srcset="/images/lemonteedlogo-250.webp 250w, /images/lemonteedlogo-456.webp 456w" sizes="clamp(150px, 18vw, 320px)" width="456" height="96" alt="Lemonteed">
           </a>
-          <button class="info-link" type="button" data-info-open>+ INFO</button>
-          <button class="random-artifact" type="button" data-random-artifact>SUMMON RANDOM ARTIFACT</button>
-        </div>
-        <nav class="category-nav" aria-label="Portfolio categories">
-          <span class="nav-label">Categories</span>
-          <a class="category-link is-active" href="/" data-category-link="all">All</a>
-          <a class="category-link" href="/vrg-cards/" data-category-link="vrg-cards">VRG Cards</a>
-          <a class="category-link" href="/what-if/" data-category-link="what-if">What If</a>
-          <a class="category-link" href="/misc-gens/" data-category-link="misc-gens">Misc Gens</a>
-          <a class="category-link" href="/memetic-warfare/">Memetic Warfare</a>
-          <a class="category-link" href="/live-experiment/">Live Experiment</a>
-          <a class="category-link" href="/lemonteed-fm/">Lemonteed FM</a>
-        </nav>
-        <a href="/junk-drawer/" class="junk-drawer-module" aria-label="Open Junk Drawer">
-          <div class="junk-drawer-module__face">
-            <div class="junk-drawer-module__handle"></div>
-            <span class="junk-drawer-module__label">Junk Drawer</span>
+
+          <div class="intro-copy">
+            <p>PICK A ZONE &amp; DISCOVER</p>
           </div>
-        </a>
-        <a class="op-status-badge" href="/operator-log/" aria-label="Operator log — off-clock archive">STATUS: OFF CLOCK</a>
-      </aside>
 
-      <main class="content" id="gallery">
-        <section class="gallery" data-gallery data-gallery-page data-gallery-category="all" data-gallery-title="All Work" aria-label="Lemonteed portfolio gallery">
-        </section>
-      </main>
-    </div>
+          <div class="island-stage">
+            <picture>
+              <source srcset="/images/home/lemon-island.avif" type="image/avif">
+              <source srcset="/images/home/lemon-island.webp" type="image/webp">
+              <img class="island-map" src="/images/home/lemon-island.webp" alt="">
+            </picture>
 
-    <div class="info-drawer" data-info hidden>
-      <div class="info-drawer__backdrop" data-info-close></div>
-      <section class="info-panel" role="dialog" aria-modal="true" aria-labelledby="info-title" tabindex="-1" data-info-panel>
-        <button class="info-panel__close" type="button" data-info-close aria-label="Close info panel">X</button>
-        <h1 id="info-title">Lemonteed</h1>
-        <p class="info-panel__kicker">TLM13 / JP</p>
-        <p>I take wacky ideas seriously enough to see what they might look like if somebody actually made them.</p>
-        <p>This archive is a wall of concepts, fake products, strange interfaces, generated cards, and visual what-ifs. Some of it is parody, some of it is design exercise, some of it is just me chasing a funny thought until it becomes a finished image.</p>
-        <p>The point is possibility: alternate brands, impossible tools, cursed dashboards, creator cards, and little worlds that feel like they should not exist, but somehow do.</p>
-        <p class="info-panel__note">Mostly for me. Probably you will like it.</p>
-      </section>
-    </div>
+            <nav class="zone-layer" id="zones" aria-label="Lemonteed zones">
+              <a class="zone zone-what-if" data-zone="what-if" href="/what-if/" style="--x: 25%; --y: 34%;">
+                <img src="/images/home/icons/what-if-woods.webp" alt="">
+                <strong>WHAT IF WOODS</strong>
+                <span>Alternate brands and cursed interfaces</span>
+              </a>
 
-    <div class="lightbox" data-lightbox hidden>
-      <div class="lightbox__backdrop" data-lightbox-close></div>
-      <div class="lightbox__dialog" role="dialog" aria-modal="true" aria-labelledby="lightbox-title">
-        <button class="lightbox__button lightbox__button--close" type="button" data-lightbox-close aria-label="Close preview">X</button>
-        <button class="lightbox__button lightbox__button--prev" type="button" data-lightbox-prev aria-label="Previous image">Prev</button>
-        <div class="lightbox__stage">
-          <figure class="lightbox__figure">
-            <img data-lightbox-image alt="">
-            <figcaption data-lightbox-caption></figcaption>
-          </figure>
-          <aside class="artifact-panel" data-artifact-details aria-label="Artifact record"></aside>
+              <a class="zone zone-memetic" data-zone="memetic" href="/memetic-warfare/" style="--x: 51%; --y: 22%;">
+                <img src="/images/home/icons/memetic-arena.webp" alt="">
+                <strong>MEMETIC ARENA</strong>
+                <span>Combat, strategy, and internet weaponry</span>
+              </a>
+
+              <a class="zone zone-archive" data-zone="archive" href="/archive/" style="--x: 70%; --y: 31%;">
+                <img src="/images/home/icons/archive-cavern.webp" alt="">
+                <strong>ARCHIVE CAVERN</strong>
+                <span>The complete visual record</span>
+              </a>
+
+              <a class="zone zone-junk-drawer" data-zone="junk-drawer" href="/junk-drawer/" style="--x: 20%; --y: 72%;">
+                <img src="/images/home/icons/junk-drawer.webp" alt="">
+                <strong>JUNK DRAWER DISTRICT</strong>
+                <span>Tools, converters, and digital oddities</span>
+              </a>
+
+              <a class="zone zone-vrg" data-zone="vrg" href="/vrg-cards/" style="--x: 36.5%; --y: 86%;">
+                <img src="/images/home/icons/vrg-vault.webp" alt="">
+                <strong>VRG VAULT</strong>
+                <span>A collection of visual trading cards</span>
+              </a>
+
+              <a class="zone zone-fm" data-zone="fm" href="/lemonteed-fm/" style="--x: 60%; --y: 50%;">
+                <img src="/images/home/icons/fm-tower.webp" alt="">
+                <strong>FM TOWER</strong>
+                <span>Songs, playlists, and audio nonsense</span>
+              </a>
+
+              <a class="zone zone-studio" data-zone="studio" href="/operator-log/" style="--x: 75%; --y: 52%;">
+                <img src="/images/home/icons/studio-lab.webp" alt="">
+                <strong>STUDIO LAB</strong>
+                <span>The operator's desk. Where things are built</span>
+              </a>
+
+              <button class="zone zone-coming-soon" data-zone="coming-soon" type="button" style="--x: 65%; --y: 78%;">
+                <img src="/images/home/icons/coming-soon-crater.webp" alt="">
+                <strong>COMING SOON CRATER</strong>
+                <span>A smoking impact site. Something is unearthing</span>
+              </button>
+            </nav>
+          </div>
+
+          <img class="prop prop-tablet" src="/images/home/props/aws-fisher-tablet.webp" alt="">
+          <img class="prop prop-knife" src="/images/home/props/blackberryknife.webp" alt="">
+          <img class="prop prop-tamagotchi" src="/images/home/props/tamagotchi-necklace.webp" alt="">
+          <img class="prop prop-cards" src="/images/home/props/vrg-cards.webp" alt="">
+          <img class="prop prop-lemon" src="/images/home/lemon-mascot.webp" alt="">
         </div>
-        <button class="lightbox__button lightbox__button--next" type="button" data-lightbox-next aria-label="Next image">Next</button>
-      </div>
-    </div>
+      </section>
+
+      <div class="zone-dock" id="zone-dock" aria-label="Zone shortcuts"></div>
+      <section class="zone-drawer" id="zone-drawer" aria-live="polite" hidden></section>
+    </main>
   </body>
 </html>

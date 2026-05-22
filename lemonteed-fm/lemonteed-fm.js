@@ -156,6 +156,17 @@
   const requestPanel = document.querySelector("[data-request-panel]");
   const requestForm = document.querySelector("[data-request-form]");
   const requestStatus = document.querySelector("[data-request-status]");
+  const modeCopyEls = Array.from(document.querySelectorAll("[data-mode-copy]"));
+  const modeAriaLabelEls = Array.from(document.querySelectorAll("[data-mode-aria-label]"));
+  const modeArt = document.querySelector("[data-mode-art]");
+  const pietToggle = document.querySelector("[data-piet-toggle]");
+  const pietToggleLabel = document.querySelector("[data-piet-toggle-label]");
+  const pietScheduleButton = document.querySelector("[data-piet-schedule-button]");
+  const pietQuote = document.querySelector("[data-piet-quote]");
+  const pietListenerCount = document.querySelector("[data-piet-listeners]");
+  const pietSignalStatus = document.querySelector("[data-piet-signal-status]");
+  const pietSignal = document.querySelector("[data-piet-signal]");
+  const pietClockEls = Array.from(document.querySelectorAll("[data-piet-clock]"));
 
   let currentIndex = 0;
   let filteredIndexes = tracks.map((track, index) => index);
@@ -166,6 +177,269 @@
   let soundCloudDuration = 0;
   let soundCloudPosition = 0;
   let soundCloudPlaying = false;
+
+  /* ======================================================
+     Piet Late Night Mode - Temporary Prototype
+     TODO: Replace temporary toggle with final local-time activation.
+  ====================================================== */
+
+  const PIET_MODE_STORAGE_KEY = "lemonteedFmPietMode";
+  const PIET_MODE_DEFAULT_ON = false;
+  const pietQuotes = [
+    "You are not behind. You are buffering.",
+    "The algorithm is just a vending machine for your worst instincts.",
+    "Being awake at 2:17 AM is not a schedule. It is a side quest.",
+    "Every group chat has one unpaid executive producer.",
+    "Nobody reads the terms. That's where they keep the goblins.",
+    "If the signal sounds bad, that means it's authentic.",
+    "A playlist is just a diary with plausible deniability.",
+    "You cannot optimize your way out of needing a nap.",
+    "The booth fan says we are cleared for one more bad idea.",
+    "Questionable? Yes. Incorrect? Rarely."
+  ];
+  const pietSignalStatuses = [
+    "Signal drift detected.",
+    "Piet is checking the booth fan.",
+    "Static break incoming.",
+    "Transmission quality: questionable.",
+    "Current vibe recalibrated.",
+    "The hill is receiving."
+  ];
+  const pietTagRotation = [
+    ["lofi", "late night", "internet radio"],
+    ["morning regret", "official radio", "airwaves"],
+    ["corporate dance", "peter thinks", "late night"],
+    ["sad indie pop", "lo-fi before music", "internet radio"]
+  ];
+  let pietQuoteIndex = 0;
+  let pietSignalIndex = 0;
+  let isPietModeActive = PIET_MODE_DEFAULT_ON;
+  let pietIntervalsStarted = false;
+
+  function readStoredPietMode() {
+    try {
+      const storedValue = window.localStorage.getItem(PIET_MODE_STORAGE_KEY);
+
+      if (storedValue === "on") {
+        return true;
+      }
+
+      if (storedValue === "off") {
+        return false;
+      }
+    } catch (error) {
+      // localStorage can be unavailable in restricted browser contexts.
+    }
+
+    return PIET_MODE_DEFAULT_ON;
+  }
+
+  function storePietMode(isEnabled) {
+    try {
+      window.localStorage.setItem(PIET_MODE_STORAGE_KEY, isEnabled ? "on" : "off");
+    } catch (error) {
+      // The toggle still works for the current page view without persistence.
+    }
+  }
+
+  function getIsPietHours() {
+    // TODO: Integration phase:
+    // Replace the temporary toggle state with local browser time activation.
+    // Piet Mode should activate from 11 PM to 5 AM based on visitor browser time.
+    return isPietModeActive;
+  }
+
+  function updatePietClock() {
+    if (!getIsPietHours() || !pietClockEls.length) {
+      return;
+    }
+
+    const time = new Intl.DateTimeFormat([], {
+      hour: "numeric",
+      minute: "2-digit"
+    }).format(new Date());
+
+    pietClockEls.forEach((element) => {
+      element.textContent = time;
+    });
+  }
+
+  function rotatePietQuote() {
+    if (!getIsPietHours() || !pietQuote || !pietQuotes.length) {
+      return;
+    }
+
+    pietQuote.classList.add("is-fading");
+    window.setTimeout(() => {
+      pietQuoteIndex = (pietQuoteIndex + 1) % pietQuotes.length;
+      pietQuote.textContent = `"${pietQuotes[pietQuoteIndex]}"`;
+      pietQuote.classList.remove("is-fading");
+    }, 320);
+  }
+
+  function updateFakeListenerCount() {
+    if (!getIsPietHours() || !pietListenerCount) {
+      return;
+    }
+
+    // Flavor-only fake listener count. Not real analytics.
+    const baseListeners = 1337;
+    const variance = Math.floor(Math.sin(Date.now() / 45000) * 8);
+    pietListenerCount.textContent = (baseListeners + variance).toLocaleString("en-US");
+  }
+
+  function rotateSignalStatus() {
+    if (!getIsPietHours() || !pietSignalStatuses.length) {
+      return;
+    }
+
+    pietSignalIndex = (pietSignalIndex + 1) % pietSignalStatuses.length;
+    const status = pietSignalStatuses[pietSignalIndex];
+
+    if (pietSignalStatus) {
+      pietSignalStatus.textContent = status;
+    }
+
+    if (pietSignal) {
+      pietSignal.textContent = status.replace(/\.$/, "");
+    }
+  }
+
+  function scrollToPietSchedule() {
+    if (!getIsPietHours()) {
+      setPietMode(true, true);
+    }
+
+    document.querySelector("#piet-schedule")?.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      block: "start"
+    });
+  }
+
+  function pietTagsForTrack(track, index) {
+    if (!getIsPietHours()) {
+      return track.vibe || track.tags || [];
+    }
+
+    const title = String(track.title || "").toLowerCase();
+
+    if (title.includes("coffee")) {
+      return ["lofi", "morning regret", "peter thinks"];
+    }
+
+    if (title.includes("dance")) {
+      return ["corporate dance", "official radio", "late night"];
+    }
+
+    if (title.includes("monopoly")) {
+      return ["peter thinks", "internet radio", "airwaves"];
+    }
+
+    if (title.includes("trust")) {
+      return ["late night", "questionable", "official radio"];
+    }
+
+    if (title.includes("seven")) {
+      return ["sad indie pop", "lo-fi before music", "morning regret"];
+    }
+
+    if (title.includes("dial")) {
+      return ["airwaves", "late night", "internet radio"];
+    }
+
+    return pietTagRotation[index % pietTagRotation.length];
+  }
+
+  function applyModeContent() {
+    const mode = getIsPietHours() ? "piet" : "default";
+
+    modeCopyEls.forEach((element) => {
+      const nextValue = element.dataset[mode];
+
+      if (typeof nextValue === "string") {
+        element.textContent = nextValue;
+      }
+    });
+
+    modeAriaLabelEls.forEach((element) => {
+      const nextValue = element.dataset[mode];
+
+      if (typeof nextValue === "string") {
+        element.setAttribute("aria-label", nextValue);
+      }
+    });
+
+    if (modeArt) {
+      const nextSrc = modeArt.dataset[`${mode}Src`];
+      const nextAlt = modeArt.dataset[`${mode}Alt`];
+
+      if (nextSrc) {
+        modeArt.src = nextSrc;
+      }
+
+      if (typeof nextAlt === "string") {
+        modeArt.alt = nextAlt;
+      }
+    }
+
+    if (pietToggle) {
+      pietToggle.setAttribute("aria-pressed", getIsPietHours() ? "true" : "false");
+    }
+
+    if (pietToggleLabel) {
+      pietToggleLabel.textContent = getIsPietHours() ? "On" : "Off";
+    }
+  }
+
+  function startPietIntervals() {
+    if (pietIntervalsStarted) {
+      return;
+    }
+
+    pietIntervalsStarted = true;
+    window.setInterval(updatePietClock, 30000);
+    window.setInterval(updateFakeListenerCount, 5000);
+    window.setInterval(rotatePietQuote, 45000);
+    window.setInterval(rotateSignalStatus, 60000);
+  }
+
+  function setPietMode(isEnabled, shouldPersist) {
+    isPietModeActive = Boolean(isEnabled);
+    document.body.classList.toggle("piet-mode", isPietModeActive);
+    applyModeContent();
+
+    if (shouldPersist) {
+      storePietMode(isPietModeActive);
+    }
+
+    if (isPietModeActive) {
+      // TODO: Integration phase:
+      // Current segment should be calculated from the visitor's local time.
+      // Segment times are local to the visitor, not a fixed server timezone.
+      updatePietClock();
+      updateFakeListenerCount();
+      startPietIntervals();
+    }
+
+    if (tracks[currentIndex]) {
+      updatePlayer(currentTrack());
+      applyFilter();
+    }
+  }
+
+  function initPietMode() {
+    setPietMode(readStoredPietMode(), false);
+
+    if (pietToggle) {
+      pietToggle.addEventListener("click", () => {
+        setPietMode(!getIsPietHours(), true);
+      });
+    }
+
+    if (pietScheduleButton) {
+      pietScheduleButton.addEventListener("click", scrollToPietSchedule);
+    }
+  }
 
   function formatTime(value) {
     if (!Number.isFinite(value) || value < 0) {
@@ -432,7 +706,7 @@
       card.classList.toggle("is-active", trackIndex === currentIndex);
       card.setAttribute("aria-label", `${track.title} by ${track.artist}`);
 
-      const tags = (track.vibe || track.tags).slice(0, 3).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
+      const tags = pietTagsForTrack(track, trackIndex).slice(0, 3).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
       const playLabel = canPlayHere(track) || canEmbedHere(track) ? "Play" : "Source";
       card.innerHTML = `
         <div class="fm-track-main">
@@ -448,6 +722,7 @@
         <strong class="fm-license-badge">${escapeHtml(track.license || "License needed")}</strong>
         <div class="fm-track-actions">
           <button type="button" data-card-play="${trackIndex}">${playLabel}</button>
+          <button type="button" data-card-share="${trackIndex}">Share</button>
           <button type="button" data-card-copy="${trackIndex}">Copy Credit</button>
           <a href="${escapeHtml(track.sourceUrl)}" target="_blank" rel="noopener">Source</a>
         </div>
@@ -458,7 +733,9 @@
     if (filterStatus) {
       const count = filteredIndexes.length;
       filterStatus.textContent = count === tracks.length
-        ? `${tracks.length} verified tracks loaded. The recommendation engine is a lemon with a clipboard.`
+        ? getIsPietHours()
+          ? `${tracks.length} tracks in tonight's lo-fi rotation. Carefully uncurated. Not a mistake.`
+          : `${tracks.length} verified tracks loaded. The recommendation engine is a lemon with a clipboard.`
         : `${count} track${count === 1 ? "" : "s"} match your search.`;
     }
   }
@@ -468,13 +745,17 @@
       return;
     }
 
-    const tags = (track.vibe || track.tags).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
+    const tags = pietTagsForTrack(track, currentIndex).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
+    const featuredLabel = getIsPietHours() ? "NOW PLAYING" : "Now in rotation";
+    const featuredSource = getIsPietHours()
+      ? `${track.artist} / ${track.sourceName || "SoundCloud"}`
+      : track.artist;
     featuredTrack.innerHTML = `
       <img src="${escapeHtml(track.artworkLarge || track.artwork)}" width="210" height="210" loading="lazy" alt="">
       <div class="fm-featured-track__copy">
-        <p class="fm-kicker">Now in rotation</p>
+        <p class="fm-kicker">${featuredLabel}</p>
         <h3>${escapeHtml(track.title)}</h3>
-        <p>${escapeHtml(track.artist)}</p>
+        <p>${escapeHtml(featuredSource)}</p>
         <div class="fm-featured-meta">
           <span>${escapeHtml(track.license || "License needed")}</span>
           <span>${escapeHtml(track.sourceName || "Source")}</span>
@@ -483,6 +764,7 @@
         <div class="fm-tags">${tags}</div>
         <div class="fm-featured-actions">
           <button class="fm-button fm-button--primary" type="button" data-featured-play>${canPlayHere(track) || canEmbedHere(track) ? "Play Featured" : "Open Source"}</button>
+          <button class="fm-button" type="button" data-featured-share>Share Track</button>
           <button class="fm-button" type="button" data-featured-copy>Copy Attribution</button>
           <a class="fm-button" href="${escapeHtml(track.sourceUrl)}" target="_blank" rel="noopener">Open Source</a>
         </div>
@@ -504,11 +786,15 @@
     }
 
     if (playerArtist) {
-      playerArtist.textContent = track.artist;
+      playerArtist.textContent = getIsPietHours()
+        ? `${track.artist} / ${track.sourceName || "SoundCloud"}`
+        : track.artist;
     }
 
     if (playerLicense) {
-      playerLicense.textContent = track.license;
+      playerLicense.textContent = getIsPietHours()
+        ? "lofi / late night / internet radio"
+        : track.license;
     }
 
     if (duration) {
@@ -708,8 +994,9 @@
           track.sourceName,
           track.license,
           track.attribution,
+          ...pietTagsForTrack(track, index),
           ...(track.vibe || []),
-          ...track.tags
+          ...(track.tags || [])
         ].join(" ").toLowerCase();
 
         return haystack.includes(query);
@@ -744,6 +1031,28 @@
     });
   }
 
+  function trackShareUrl(track) {
+    const url = new URL(window.location.href);
+    url.hash = `track-${track.id}`;
+    return url.toString();
+  }
+
+  function shareTrack(track) {
+    const payload = {
+      title: `${track.title} - Lemonteed FM`,
+      text: `Lemonteed FM signal check: "${track.title}" by ${track.artist}.`,
+      url: trackShareUrl(track)
+    };
+
+    if (navigator.share) {
+      return navigator.share(payload)
+        .then(() => setStatus(`Shared ${track.title}. The signal escaped.`));
+    }
+
+    return copyText(`${payload.text}\n${payload.url}`)
+      .then(() => setStatus(`Share link copied for ${track.title}.`));
+  }
+
   function buildMailto(form) {
     const data = new FormData(form);
     const lines = [
@@ -766,12 +1075,18 @@
     return `mailto:?subject=${encodeURIComponent("Lemonteed FM Request")}&body=${encodeURIComponent(lines.join("\n"))}`;
   }
 
+  initPietMode();
+
   if (trackCount) {
     trackCount.textContent = `${tracks.length} tracks`;
   }
 
   renderTracks();
-  selectTrack(0, false);
+  const initialTrackId = window.location.hash.replace(/^#track-/, "");
+  const initialTrackIndex = initialTrackId
+    ? tracks.findIndex((track) => track.id === initialTrackId)
+    : -1;
+  selectTrack(initialTrackIndex >= 0 ? initialTrackIndex : 0, false);
 
   if (trackList) {
     trackList.addEventListener("click", (event) => {
@@ -780,6 +1095,16 @@
 
       if (play) {
         selectTrack(Number(play.dataset.cardPlay), true);
+        return;
+      }
+
+      const share = event.target.closest("[data-card-share]");
+      if (share) {
+        const track = tracks[Number(share.dataset.cardShare)];
+        if (track) {
+          shareTrack(track)
+            .catch(() => setStatus("Share failed. The booth door got stuck."));
+        }
         return;
       }
 
@@ -936,6 +1261,12 @@
     featuredTrack.addEventListener("click", (event) => {
       if (event.target.closest("[data-featured-play]")) {
         selectTrack(currentIndex, true);
+        return;
+      }
+
+      if (event.target.closest("[data-featured-share]")) {
+        shareTrack(currentTrack())
+          .catch(() => setStatus("Share failed. The booth door got stuck."));
         return;
       }
 

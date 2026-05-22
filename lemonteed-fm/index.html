@@ -47,6 +47,7 @@
 
       <nav class="fm-nav" aria-label="Station sections">
         <a class="is-active" href="#home" aria-current="page">Home</a>
+        <a class="piet-only" href="#piet-schedule">Schedule</a>
         <a href="#crate">Browse</a>
         <a href="#crate">Crate</a>
         <a href="#requests">Requests</a>
@@ -56,18 +57,26 @@
 
       <div class="fm-sidebar__status" aria-label="Station status">
         <span class="fm-pill">ON AIR</span>
+        <button class="fm-mode-toggle" type="button" data-piet-toggle aria-pressed="false">
+          <span>Late Night Mode</span>
+          <strong data-piet-toggle-label>Off</strong>
+        </button>
         <dl class="fm-signal">
           <div>
-            <dt>Signal</dt>
-            <dd>Lemon-lit</dd>
+            <dt data-mode-copy data-default="Signal" data-piet="Your Time">Signal</dt>
+            <dd data-mode-copy data-default="Lemon-lit" data-piet="11:37 PM" data-piet-clock>Lemon-lit</dd>
           </div>
           <div>
-            <dt>License desk</dt>
-            <dd>Awake</dd>
+            <dt data-mode-copy data-default="License desk" data-piet="Listeners Online">License desk</dt>
+            <dd data-mode-copy data-default="Awake" data-piet="1,337" data-piet-listeners>Awake</dd>
           </div>
           <div>
-            <dt>Algorithm</dt>
-            <dd>Ignored</dd>
+            <dt data-mode-copy data-default="Algorithm" data-piet="Requests">Algorithm</dt>
+            <dd data-mode-copy data-default="Ignored" data-piet="Open">Ignored</dd>
+          </div>
+          <div>
+            <dt class="piet-only">Signal</dt>
+            <dd class="piet-only" data-piet-signal>Mostly Fine</dd>
           </div>
         </dl>
       </div>
@@ -83,29 +92,41 @@
           </svg>
         </div>
         <div class="fm-hero__copy">
-          <p class="fm-kicker">Minimally compliant disco desk</p>
-          <div class="fm-hero__badges" aria-label="Station badges">
+          <div class="fm-piet-status-row piet-only" aria-label="Late night broadcast status">
+            <span>11 PM - 5 AM</span>
+            <span>Your local time</span>
+            <span class="fm-on-air-pill">ON AIR</span>
+          </div>
+          <p class="fm-kicker fm-default-only">Minimally compliant disco desk</p>
+          <div class="fm-hero__badges fm-default-only" aria-label="Station badges">
             <span>LFM 93.7</span>
             <span>Static signal</span>
             <span>License-aware audio nonsense</span>
           </div>
-          <h1>Lemonteed FM</h1>
-          <p class="fm-subtitle">Free-to-use tracks, questionable taste, and one extremely shiny lemon.</p>
-          <p class="fm-body">A tiny web player for free-to-use tracks, weird internet music, and songs the algorithm forgot.</p>
-          <p class="fm-broadcast-line">Broadcasting from the internet's least funded booth.</p>
+          <h1 data-mode-copy data-default="Lemonteed FM" data-piet="PIET WAS RIGHT RADIO">Lemonteed FM</h1>
+          <p class="fm-subtitle" data-mode-copy data-default="Free-to-use tracks, questionable taste, and one extremely shiny lemon." data-piet="Piet's Late Night Lo-Fi Show">Free-to-use tracks, questionable taste, and one extremely shiny lemon.</p>
+          <p class="fm-body" data-mode-copy data-default="A tiny web player for free-to-use tracks, weird internet music, and songs the algorithm forgot." data-piet="The overnight desk is open. Lo-fi loops, static wisdom, and suspiciously accurate takes until sunrise.">A tiny web player for free-to-use tracks, weird internet music, and songs the algorithm forgot.</p>
+          <p class="fm-broadcast-line" data-mode-copy data-default="Broadcasting from the internet's least funded booth." data-piet="Broadcasting from somewhere between sleep and spite.">Broadcasting from the internet's least funded booth.</p>
           <div class="fm-actions" aria-label="Primary actions">
-            <button class="fm-button fm-button--primary" type="button" data-start-listening>Start Listening</button>
-            <button class="fm-button" type="button" data-open-request>Request a Track</button>
+            <button class="fm-button fm-button--primary" type="button" data-start-listening data-mode-copy data-default="Start Listening" data-piet="Tune Into Piet">Start Listening</button>
+            <button class="fm-button fm-default-only" type="button" data-open-request>Request a Track</button>
+            <button class="fm-button piet-only" type="button" data-piet-schedule-button>Show Schedule</button>
           </div>
         </div>
 
         <aside class="fm-broadcast-card" aria-label="Now broadcasting">
           <div class="fm-broadcast-card__top">
-            <span>Now broadcasting</span>
-            <strong>LFM 93.7</strong>
+            <span data-mode-copy data-default="Now broadcasting" data-piet="Piet's booth">Now broadcasting</span>
+            <strong data-mode-copy data-default="LFM 93.7" data-piet="11:37 PM" data-piet-clock>LFM 93.7</strong>
           </div>
-          <figure class="fm-mascot" aria-label="Lemonteed FM mascot">
-            <img src="/images/lemonteed-fm/lemonteed-fm.webp" width="900" height="900"
+          <figure class="fm-mascot fm-piet-art" aria-label="Lemonteed FM mascot"
+            data-mode-aria-label data-default="Lemonteed FM mascot" data-piet="Piet hosting the late-night Lemonteed FM booth">
+            <!-- TODO: Replace temporary Piet artwork with final optimized WebP/transparent hero asset. -->
+            <img data-mode-art src="/images/lemonteed-fm/lemonteed-fm.webp" width="900" height="900"
+              data-default-src="/images/lemonteed-fm/lemonteed-fm.webp"
+              data-piet-src="/images/vrg-cards/piet.webp"
+              data-default-alt="A glossy Lemonteed mascot acting as the Lemonteed FM station host."
+              data-piet-alt="Piet wearing a red hat and sunglasses on a trading-card style broadcast image."
               alt="A glossy Lemonteed mascot acting as the Lemonteed FM station host.">
           </figure>
           <div class="fm-eq" aria-hidden="true">
@@ -117,15 +138,96 @@
             <span></span>
             <span></span>
           </div>
-          <p>Default cover art. Surprisingly serious sunglasses.</p>
+          <p data-mode-copy data-default="Default cover art. Surprisingly serious sunglasses." data-piet="Signal drift detected." data-piet-signal-status>Default cover art. Surprisingly serious sunglasses.</p>
         </aside>
       </header>
+
+      <section class="fm-section piet-broadcast" id="piet-schedule" aria-labelledby="piet-schedule-title">
+        <div class="fm-section__head">
+          <div>
+            <p class="fm-kicker">Tonight's Lo-Fi Rotation</p>
+            <h2 id="piet-schedule-title">Piet's Overnight Board</h2>
+          </div>
+          <p class="fm-section__note">Carefully uncurated. Not a mistake.</p>
+        </div>
+
+        <div class="piet-broadcast-grid">
+          <article class="piet-live-card" aria-label="Current late-night segment">
+            <span class="fm-on-air-pill">LIVE NOW</span>
+            <h3>Piet's Certified Correct Takes</h3>
+            <p><span data-piet-segment-time>1:37 AM</span> · YOUR LOCAL TIME</p>
+            <p>Next: Songs for People Still Awake</p>
+          </article>
+
+          <article class="piet-ticker" aria-live="polite">
+            <span>PIET JUST SAID:</span>
+            <p data-piet-quote>"You are not behind. You are buffering."</p>
+          </article>
+
+          <article class="broadcast-log">
+            <!-- TODO: Later, generate broadcast log items based on local time and current segment. -->
+            <h3>Broadcast Log</h3>
+            <ol>
+              <li><time>11:00 PM</time> Piet entered the booth.</li>
+              <li><time>11:42 PM</time> First questionable take approved.</li>
+              <li><time>12:18 AM</time> Static break survived.</li>
+              <li><time>1:37 AM</time> Current segment: Certified Correct Takes.</li>
+            </ol>
+          </article>
+        </div>
+
+        <div class="piet-schedule-list" aria-label="Late-night segment schedule">
+          <article class="piet-schedule-item">
+            <time>11:00 PM - 12:00 AM</time>
+            <h3>The Sign-On</h3>
+            <p>Piet opens the booth. The signal is weak but emotionally available.</p>
+          </article>
+          <article class="piet-schedule-item">
+            <time>12:00 AM - 1:30 AM</time>
+            <h3>Static Breaks</h3>
+            <p>Short interruptions of noise, thought, and questionable advice.</p>
+          </article>
+          <article class="piet-schedule-item is-active">
+            <time>1:30 AM - 3:00 AM</time>
+            <h3>Piet's Certified Correct Takes</h3>
+            <p>Hot takes no one asked for but everyone somehow needed.</p>
+          </article>
+          <article class="piet-schedule-item">
+            <time>3:00 AM - 4:30 AM</time>
+            <h3>Songs for People Still Awake</h3>
+            <p>For insomniacs, overthinkers, and people working tomorrow.</p>
+          </article>
+          <article class="piet-schedule-item">
+            <time>4:30 AM - 5:00 AM</time>
+            <h3>Sunrise Shutdown</h3>
+            <p>The booth cools down. The takes remain legally unresolved.</p>
+          </article>
+        </div>
+
+        <div class="piet-segment-cards" aria-label="Featured late-night segments">
+          <article>
+            <h3>Static Breaks</h3>
+            <p>Short interruptions of noise, thought, and questionable advice.</p>
+            <button class="fm-button" type="button">Listen In</button>
+          </article>
+          <article>
+            <h3>Piet's Certified Correct Takes</h3>
+            <p>Hot takes no one asked about but everyone somehow needed.</p>
+            <button class="fm-button" type="button">See The Takes</button>
+          </article>
+          <article>
+            <h3>Songs For People Still Awake</h3>
+            <p>For insomniacs, overthinkers, and people who work tomorrow.</p>
+            <button class="fm-button" type="button">Get Cozy</button>
+          </article>
+        </div>
+      </section>
 
       <section class="fm-section fm-browser" id="crate" aria-labelledby="browse-title">
         <div class="fm-section__head">
           <div>
-            <p class="fm-kicker"><span data-track-count>0 tracks</span> / license-aware crate</p>
-            <h2 id="browse-title">The Lemon Crate</h2>
+            <p class="fm-kicker"><span data-track-count>0 tracks</span> <span data-mode-copy data-default="/ license-aware crate" data-piet="/ overnight crate">/ license-aware crate</span></p>
+            <h2 id="browse-title" data-mode-copy data-default="The Lemon Crate" data-piet="Tonight's Lo-Fi Rotation">The Lemon Crate</h2>
           </div>
           <label class="fm-search">
             <span>Search tracks</span>
@@ -151,10 +253,9 @@
         <div class="fm-section__head">
           <div>
             <p class="fm-kicker">Requests Desk</p>
-            <h2 id="requests-title">Send something into the booth</h2>
+            <h2 id="requests-title" data-mode-copy data-default="Send something into the booth" data-piet="Send Something Into The Booth">Send something into the booth</h2>
           </div>
-          <p class="fm-section__note">Bonus points if the license is clear. Minus points if the only source is "trust me
-            bro."</p>
+          <p class="fm-section__note" data-mode-copy data-default="Bonus points if the license is clear. Minus points if the only source is &quot;trust me bro.&quot;" data-piet="Drop a track. Piet might play it. Or roast it. Either way, you win.">Bonus points if the license is clear. Minus points if the only source is "trust me bro."</p>
         </div>
 
         <button class="fm-button fm-button--primary" type="button" data-open-request>Open Request Panel</button>
@@ -210,9 +311,9 @@
 
       <section class="fm-section fm-license-section" id="licenses" aria-labelledby="licenses-title">
         <p class="fm-kicker">Licenses</p>
-        <h2 id="licenses-title">Clear rights, or it does not enter the booth</h2>
+        <h2 id="licenses-title" data-mode-copy data-default="Clear rights, or it does not enter the booth" data-piet="Clear Rights, Or It Does Not Enter The Booth">Clear rights, or it does not enter the booth</h2>
         <div class="fm-license-grid">
-          <p>Every track on Lemonteed FM needs verified usage rights before it gets listed. A track being free to hear does not automatically mean it is free to reuse.</p>
+          <p data-mode-copy data-default="Every track on Lemonteed FM needs verified usage rights before it gets listed. A track being free to hear does not automatically mean it is free to reuse." data-piet="Every track on Lemonteed FM needs verified usage rights before it gets aired. A track being free to hear does not automatically mean it is free to use in your own project.">Every track on Lemonteed FM needs verified usage rights before it gets listed. A track being free to hear does not automatically mean it is free to reuse.</p>
           <p>Attribution, license links, and source terms may matter. Open the source page before using a track in your own project.</p>
         </div>
         <p class="fm-license-punch">Free-use does not mean free-for-all.</p>
@@ -222,7 +323,7 @@
 
       <section class="fm-section fm-about" id="about" aria-labelledby="about-title">
         <p class="fm-kicker">About</p>
-        <h2 id="about-title">A tiny player, not a music empire</h2>
+        <h2 id="about-title" data-mode-copy data-default="A tiny player, not a music empire" data-piet="A Tiny Player, Not A Music Empire">A tiny player, not a music empire</h2>
         <p>Lemonteed FM is a static discovery page for tracks with visible license information. It is built for quick
           listening, copying attribution, and remembering that "free" is not a legal strategy.</p>
       </section>
@@ -235,6 +336,7 @@
     <div class="fm-player__track">
       <img data-player-art src="/images/lemonteed-fm/lemonteed-fm.webp" width="72" height="72" alt="">
       <div>
+        <em class="fm-player__broadcast piet-only">ON AIR: Piet's Late Night Lo-Fi Show</em>
         <strong data-player-title>Choose a track</strong>
         <span data-player-artist>Lemonteed FM</span>
         <small data-player-license>License appears here</small>

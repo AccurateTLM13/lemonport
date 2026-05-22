@@ -1,0 +1,544 @@
+/* Lemonteed Atlas homepage */
+
+.atlas-body {
+  margin: 0;
+  min-height: 100svh;
+  overflow: hidden;
+  background: #050605;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.atlas-body .skip-link {
+  z-index: 1000;
+}
+
+.lemon-world {
+  position: relative;
+  width: 100vw;
+  height: 100svh;
+  overflow: hidden;
+  background: #050605;
+}
+
+.map-viewport {
+  position: relative;
+  width: 100vw;
+  height: 100svh;
+  overflow: hidden;
+  background: #050605;
+}
+
+.map-stage {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.scene-bg,
+.island-stage,
+.zone-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.scene-bg {
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 53% 53%, rgba(244, 223, 53, 0.08) 0 12%, transparent 42%),
+    radial-gradient(circle at 50% 55%, transparent 0 48%, rgba(0, 0, 0, 0.42) 78%, rgba(0, 0, 0, 0.74) 100%),
+    linear-gradient(135deg, #202322 0%, #121515 47%, #090b0b 100%);
+}
+
+.scene-bg::before,
+.scene-bg::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+}
+
+.scene-bg::before {
+  opacity: 0.24;
+  background:
+    linear-gradient(35deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(115deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 24px 24px, 31px 31px;
+  mix-blend-mode: screen;
+}
+
+.scene-bg::after {
+  background:
+    radial-gradient(circle at 23% 76%, rgba(0, 0, 0, 0.3), transparent 20%),
+    radial-gradient(circle at 78% 17%, rgba(0, 0, 0, 0.26), transparent 24%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.36), transparent 22%, transparent 78%, rgba(0, 0, 0, 0.34));
+}
+
+.island-stage {
+  left: 55%;
+  top: 55%;
+  right: auto;
+  bottom: auto;
+  z-index: 2;
+  width: min(clamp(960px, 76vw, 1506px), calc(84svh * 1506 / 814));
+  aspect-ratio: 1506 / 814;
+  transform: translate(-50%, -50%);
+  filter:
+    drop-shadow(0 22px 36px rgba(0, 0, 0, 0.46))
+    drop-shadow(0 4px 10px rgba(0, 0, 0, 0.34));
+}
+
+.island-map {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+.brand-logo-link,
+.intro-copy,
+.zone-layer,
+.prop {
+  z-index: 2;
+}
+
+.brand-logo-link {
+  position: absolute;
+  left: 2.5vw;
+  top: 13%;
+  display: block;
+  width: clamp(150px, 17vw, 320px);
+  filter:
+    drop-shadow(0 3px 2px rgba(0, 0, 0, 0.85))
+    drop-shadow(0 0 12px rgba(244, 223, 53, 0.25));
+}
+
+.brand-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.intro-copy {
+  position: absolute;
+  left: 2.7vw;
+  top: 21%;
+  max-width: 340px;
+  pointer-events: none;
+}
+
+.intro-copy p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.92);
+  font-family: "Courier New", Courier, monospace;
+  font-size: clamp(1rem, 2.1vw, 2.7rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.9);
+}
+
+.zone-layer {
+  z-index: 4;
+}
+
+.zone {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: clamp(112px, 9.5vw, 190px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #f4df35;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+  filter: drop-shadow(0 0 8px rgba(244, 223, 53, 0.28));
+  transition:
+    transform 180ms ease,
+    filter 180ms ease,
+    opacity 180ms ease;
+}
+
+.zone img {
+  display: block;
+  width: clamp(54px, 5vw, 108px);
+  height: auto;
+  margin: 0 auto 0.28rem;
+  user-select: none;
+  pointer-events: none;
+}
+
+.zone strong,
+.zone span {
+  display: block;
+  text-shadow:
+    0 2px 3px rgba(0, 0, 0, 0.95),
+    0 0 12px rgba(244, 223, 53, 0.28);
+}
+
+.zone strong {
+  color: #f4df35;
+  font-family: "Courier New", Courier, monospace;
+  font-size: clamp(0.76rem, 1.08vw, 1.55rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: 0.12em;
+}
+
+.zone span {
+  max-width: 150px;
+  margin: 0.18rem auto 0;
+  color: rgba(255, 245, 137, 0.82);
+  font-size: clamp(0.46rem, 0.58vw, 0.8rem);
+  line-height: 1.25;
+  opacity: 0;
+  transform: translateY(-2px);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.zone:hover,
+.zone:focus-visible,
+.zone.is-active {
+  transform: translate(-50%, -50%) scale(1.08);
+  filter:
+    drop-shadow(0 0 10px rgba(244, 223, 53, 0.72))
+    drop-shadow(0 0 28px rgba(244, 223, 53, 0.32));
+  outline: none;
+}
+
+.zone:hover span,
+.zone:focus-visible span,
+.zone.is-active span {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.zone:focus-visible strong {
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+}
+
+.zone-layer.has-active .zone:not(.is-active) {
+  opacity: 0.42;
+  filter: grayscale(80%) opacity(0.65);
+}
+
+.zone-coming-soon {
+  font: inherit;
+}
+
+.prop {
+  position: absolute;
+  z-index: 3;
+  display: block;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.46));
+  transition: transform 260ms ease-out;
+  will-change: transform;
+}
+
+.prop-tablet {
+  left: 3.5%;
+  top: 34.2%;
+  width: clamp(190px, 21vw, 380px);
+  transform: rotate(7deg);
+  z-index: 0;
+}
+
+.prop-knife {
+  left: 38%;
+  top: 0%;
+  width: clamp(220px, 35vw, 530px);
+  transform: rotate(1deg);
+  z-index: 0;
+}
+
+.prop-tamagotchi {
+  right: 3.6%;
+  top: 2.5%;
+  width: clamp(76px, 8vw, 170px);
+  transform: rotate(10deg);
+}
+
+.prop-cards {
+  right: 0.2%;
+  bottom: -0.3%;
+  width: clamp(210px, 18.5vw, 430px);
+  transform: rotate(6deg);
+}
+
+.prop-lemon {
+  left: 1.1vw;
+  bottom: 1.1%;
+  width: clamp(110px, 10vw, 230px);
+  transform: rotate(-5deg);
+}
+
+.zone-dock {
+  display: none;
+}
+
+.zone-drawer {
+  position: fixed;
+  left: 50%;
+  bottom: 1rem;
+  z-index: 20;
+  width: min(420px, calc(100vw - 2rem));
+  padding: 1rem;
+  border: 1px solid rgba(244, 223, 53, 0.42);
+  border-radius: 6px;
+  background: rgba(7, 8, 7, 0.94);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.58);
+  transform: translateX(-50%);
+  backdrop-filter: blur(16px);
+}
+
+.zone-drawer[hidden] {
+  display: none;
+}
+
+.zone-drawer__close {
+  position: absolute;
+  right: 0.7rem;
+  top: 0.62rem;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.zone-drawer__label,
+.zone-drawer__cta,
+.zone-drawer__disabled {
+  font-family: "Courier New", Courier, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.zone-drawer__label {
+  display: block;
+  margin: 0 2rem 0.35rem 0;
+  color: #f4df35;
+  font-size: 0.68rem;
+}
+
+.zone-drawer__title {
+  margin: 0 2rem 0.38rem 0;
+  color: #fff;
+  font-size: 1.1rem;
+  line-height: 1.1;
+  letter-spacing: 0.05em;
+}
+
+.zone-drawer__desc {
+  margin: 0 0 0.85rem;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.zone-drawer__cta,
+.zone-drawer__disabled {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.95rem;
+  border-radius: 4px;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.zone-drawer__cta {
+  background: #f4df35;
+  color: #050605;
+  text-decoration: none;
+}
+
+.zone-drawer__disabled {
+  border: 1px solid rgba(244, 223, 53, 0.35);
+  color: #f4df35;
+}
+
+@media (max-width: 760px) {
+  .atlas-body {
+    overflow: hidden;
+  }
+
+  .lemon-world {
+    height: 100svh;
+  }
+
+  .map-viewport {
+    height: calc(100svh - 112px);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .map-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .map-stage {
+    position: relative;
+    left: auto;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    width: 220vw;
+    min-width: 980px;
+    height: 100%;
+  }
+
+  .island-stage {
+    left: 52%;
+    top: 55%;
+    width: min(86%, calc(66svh * 1506 / 814));
+    min-width: 760px;
+    transform: translate(-50%, -50%);
+  }
+
+  .brand-logo-link {
+    position: fixed;
+    left: 1rem;
+    top: 1.35rem;
+    z-index: 10;
+    width: 156px;
+  }
+
+  .intro-copy {
+    position: fixed;
+    left: 1.1rem;
+    top: 5.2rem;
+    z-index: 10;
+    max-width: 250px;
+  }
+
+  .intro-copy p {
+    font-size: 1.05rem;
+    letter-spacing: 0.1em;
+  }
+
+  .zone {
+    width: 128px;
+  }
+
+  .zone img {
+    width: 62px;
+  }
+
+  .zone strong {
+    font-size: 0.78rem;
+  }
+
+  .zone span {
+    display: none;
+  }
+
+  .zone-layer.has-active .zone:not(.is-active) {
+    opacity: 0.55;
+  }
+
+  .prop-tablet,
+  .prop-knife,
+  .prop-tamagotchi,
+  .prop-cards {
+    display: none;
+  }
+
+  .prop-lemon {
+    left: 1.1rem;
+    bottom: 1.4rem;
+    width: 92px;
+  }
+
+  .zone-dock {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 12;
+    display: flex;
+    gap: 0.65rem;
+    min-height: 112px;
+    padding: 0.85rem 1rem 1rem;
+    overflow-x: auto;
+    background: linear-gradient(180deg, rgba(5, 6, 5, 0.72), rgba(5, 6, 5, 0.98) 28%);
+    border-top: 1px solid rgba(244, 223, 53, 0.22);
+    scrollbar-width: none;
+  }
+
+  .zone-dock::-webkit-scrollbar {
+    display: none;
+  }
+
+  .dock-card {
+    flex: 0 0 134px;
+    min-height: 74px;
+    padding: 0.78rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.035);
+    color: #fff;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .dock-card.is-active {
+    border-color: rgba(244, 223, 53, 0.78);
+    background: rgba(244, 223, 53, 0.08);
+  }
+
+  .dock-card strong,
+  .dock-card span {
+    display: block;
+  }
+
+  .dock-card strong {
+    color: #fff;
+    font-size: 0.74rem;
+    line-height: 1.15;
+    letter-spacing: 0.08em;
+  }
+
+  .dock-card span {
+    margin-top: 0.32rem;
+    color: #f4df35;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .zone-drawer {
+    bottom: 124px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zone,
+  .zone span,
+  .prop {
+    transition: none;
+  }
+}

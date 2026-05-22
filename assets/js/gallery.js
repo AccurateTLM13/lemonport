@@ -1,4 +1,5 @@
 (function () {
+  const ARCHIVE_PATH = "/archive/";
   const pageElement = document.querySelector("[data-gallery-page]");
   const page = window.galleryPage || {
     category: pageElement ? pageElement.dataset.galleryCategory : "all",
@@ -329,6 +330,19 @@
     appendRecordField(record, "Tools Used", formatTools(item.toolsUsed));
 
     artifactDetails.append(eyebrow, title, record);
+
+    const vaultCards = Array.isArray(window.vrgVaultCards) ? window.vrgVaultCards : [];
+    const hasVaultEntry = vaultCards.some((card) => card.id === item.id);
+
+    if (hasVaultEntry && item.categorySlug === "vrg-cards") {
+      const vaultLink = document.createElement("button");
+      vaultLink.type = "button";
+      vaultLink.className = "artifact-record__vault-link";
+      vaultLink.dataset.openVrgVault = item.id;
+      vaultLink.textContent = "Open in Vault";
+      artifactDetails.append(vaultLink);
+    }
+
     renderRelatedItems(artifactDetails, item);
   }
 
@@ -346,7 +360,7 @@
 
     const allLink = document.createElement("a");
     allLink.className = "category-link";
-    allLink.href = "/";
+    allLink.href = ARCHIVE_PATH;
     allLink.dataset.categoryLink = "all";
     allLink.textContent = "All";
     categoryNav.append(allLink);
@@ -354,7 +368,7 @@
     allCategories.forEach((category) => {
       const link = document.createElement("a");
       link.className = "category-link";
-      link.href = category.path || `/?category=${encodeURIComponent(category.slug)}`;
+      link.href = category.path || `${ARCHIVE_PATH}?category=${encodeURIComponent(category.slug)}`;
       link.dataset.categoryLink = category.slug;
       link.textContent = category.label;
       categoryNav.append(link);
@@ -669,14 +683,14 @@
 
         const href = link.getAttribute("href") || "";
         const category = link.dataset.categoryLink;
-        const shouldStayOnGallery = href === "/" || href.startsWith("/?category=");
+        const shouldStayOnGallery = href === ARCHIVE_PATH || href.startsWith(`${ARCHIVE_PATH}?category=`);
 
         if (!shouldStayOnGallery) {
           return;
         }
 
         event.preventDefault();
-        const nextUrl = category === "all" ? "/" : `/?category=${encodeURIComponent(category)}`;
+        const nextUrl = category === "all" ? ARCHIVE_PATH : `${ARCHIVE_PATH}?category=${encodeURIComponent(category)}`;
         history.replaceState(null, "", nextUrl);
         render(category);
       });
