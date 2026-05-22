@@ -28,27 +28,33 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="/assets/css/style.css?v=8">
-    <script src="/assets/js/gallery-data.js?v=5" defer></script>
-    <script src="/assets/js/gallery-categories.js?v=5" defer></script>
+    <link rel="stylesheet" href="/assets/css/vrg-vault.css?v=11">
+    <script src="/assets/js/gallery-data.js?v=6" defer></script>
+    <script src="/assets/js/gallery-categories.js?v=6" defer></script>
+    <script src="/assets/js/vrg-vault-data.js?v=2" defer></script>
     <script src="/assets/js/gallery.js?v=6" defer></script>
+    <script src="/assets/js/vrg-vault.js?v=3" defer></script>
+    <script src="/assets/js/vrg-view-mode.js?v=2" defer></script>
     <script src="/assets/js/portal-lightbox.js?v=1" defer></script>
     <script src="/assets/js/mobile-header.js?v=1" defer></script>
     <script src="/assets/js/coming-soon.js?v=1" defer></script>
   </head>
-  <body>
+  <body class="is-vrg-vault-mode">
     <a class="skip-link" href="#gallery">Skip to gallery</a>
     <div class="site-shell">
-      <aside class="sidebar" aria-label="Site navigation">
-        <div class="sidebar__top">
+      <aside class="sidebar vault-rail" aria-label="Site navigation">
+        <p class="vault-rail__group-label vault-rail__group-label--system">System</p>
+        <div class="sidebar__top vault-rail__system">
           <a class="brand" href="/" aria-label="Lemonteed home">
             <img class="brand__logo" src="/images/lemonteedlogo-250.webp" srcset="/images/lemonteedlogo-250.webp 250w, /images/lemonteedlogo-456.webp 456w" sizes="160px" width="456" height="96" alt="Lemonteed">
           </a>
-          <button class="info-link" type="button" data-info-open>+ INFO</button>
-          <button class="random-artifact" type="button" data-random-artifact>SUMMON RANDOM ARTIFACT</button>
+          <button class="info-link" type="button" data-info-open>+ Info</button>
+          <button class="random-artifact" type="button" data-random-artifact>Random Artifact</button>
         </div>
-        <nav class="category-nav" aria-label="Portfolio categories">
-          <span class="nav-label">Categories</span>
-          <a class="category-link" href="/" data-category-link="all">All</a>
+        <nav class="category-nav vault-rail__index" aria-label="Portfolio categories">
+          <span class="nav-label nav-label--default">Categories</span>
+          <span class="nav-label nav-label--vault">Collection Index</span>
+          <a class="category-link" href="/archive/" data-category-link="all">All</a>
           <a class="category-link is-active" href="/vrg-cards/" data-category-link="vrg-cards">VRG Cards</a>
           <a class="category-link" href="/what-if/" data-category-link="what-if">What If</a>
           <a class="category-link" href="/misc-gens/" data-category-link="misc-gens">Misc Gens</a>
@@ -56,7 +62,8 @@
           <a class="category-link" href="/live-experiment/">Live Experiment</a>
           <a class="category-link" href="/lemonteed-fm/">Lemonteed FM</a>
         </nav>
-        <a href="/junk-drawer/" class="junk-drawer-module" aria-label="Open Junk Drawer">
+        <p class="vault-rail__group-label vault-rail__group-label--utility">Utility Bay</p>
+        <a href="/junk-drawer/" class="junk-drawer-module vault-rail__utility" aria-label="Open Junk Drawer">
           <div class="junk-drawer-module__face">
             <div class="junk-drawer-module__handle"></div>
             <span class="junk-drawer-module__label">Junk Drawer</span>
@@ -64,8 +71,162 @@
         </a>
       </aside>
       <main class="content" id="gallery">
-        <section class="gallery" data-gallery data-gallery-page data-gallery-category="vrg-cards" data-gallery-title="VRG Cards" aria-label="VRG Cards gallery">
-        </section>
+        <div class="vrg-page-header">
+          <h1 class="vrg-page-title">VRG Cards</h1>
+          <div class="vrg-view-toggle" role="tablist" aria-label="VRG viewing mode">
+            <button type="button" role="tab" data-vrg-view="grid" aria-selected="false" tabindex="-1">Grid</button>
+            <button type="button" role="tab" data-vrg-view="vault" class="is-active" aria-selected="true">Vault</button>
+          </div>
+        </div>
+
+        <div data-gallery-view="grid" hidden>
+          <section class="gallery" data-gallery data-gallery-page data-gallery-category="vrg-cards" data-gallery-title="VRG Cards" aria-label="VRG Cards gallery">
+          </section>
+        </div>
+
+        <div class="vrg-vault-view" data-gallery-view="vault">
+          <div class="vrg-vault vault-shell" aria-label="VRG Vault classified archive">
+            <section class="vrg-intro" id="vrgIntro" aria-hidden="true">
+              <div class="vrg-intro__card">
+                <div class="vrg-intro__logo">VRG</div>
+                <div class="vrg-intro__scanbar"></div>
+                <div class="vrg-intro__subtitle">Vibe Rating &amp; Grading</div>
+              </div>
+            </section>
+
+            <div class="vault-chamber">
+              <div class="vault-chamber__frame" aria-hidden="true"></div>
+              <div class="vault-chamber__grid" aria-hidden="true"></div>
+
+              <header class="vrg-hero vault-terminal">
+                <p class="vrg-hero__eyebrow">Classified Archive / Access Layer 02</p>
+                <div class="vrg-hero__row">
+                  <h2 class="vrg-hero__title">VRG Vault</h2>
+                  <div class="vrg-hero__copy">
+                    <p class="vrg-hero__descriptor">Founder + Creator Archive</p>
+                    <p class="vrg-hero__intro">A cinematic archive of fictional graded creator cards, founder artifacts, meme relics, and internet-culture collectibles.</p>
+                  </div>
+                </div>
+                <div class="vrg-hero__console">
+                  <div class="vrg-hero__console-panel">
+                    <dl class="vrg-hero__stats" id="vrgCollectionMeta">
+                      <div class="vrg-hero__stat"><dt>Slabs</dt><dd data-vrg-stat="slabs">15</dd></div>
+                      <div class="vrg-hero__stat"><dt>Founders</dt><dd data-vrg-stat="founders">2</dd></div>
+                      <div class="vrg-hero__stat"><dt>Creators</dt><dd data-vrg-stat="creators">13</dd></div>
+                    </dl>
+                    <div class="vrg-hero__status" aria-label="Vault system status">
+                      <span class="vrg-hero__status-item"><span class="vrg-hero__status-key">Inspection Mode</span><span class="vrg-hero__status-val" data-vrg-system="inspection">Standby</span></span>
+                      <span class="vrg-hero__status-item"><span class="vrg-hero__status-key">Archive State</span><span class="vrg-hero__status-val">Sealed</span></span>
+                      <span class="vrg-hero__status-item"><span class="vrg-hero__status-key">Retrieval Access</span><span class="vrg-hero__status-val">Enabled</span></span>
+                    </div>
+                  </div>
+                  <div class="vrg-hero__chips" role="group" aria-label="Vault collections">
+                    <button type="button" class="vrg-chip" data-vrg-scroll="founders">Founder Series</button>
+                    <button type="button" class="vrg-chip" data-vrg-scroll="creators">Creator Series</button>
+                    <button type="button" class="vrg-chip vrg-chip--ghost" data-vrg-scroll="creators">Meme Moments</button>
+                  </div>
+                </div>
+              </header>
+
+              <section class="vrg-stage vault-chamber__stage" id="vrgStage">
+                <article class="vrg-case vault-case vault-case--founder" data-vrg-series="founders" id="vrgCaseFounders" aria-labelledby="vrgFounderHeading">
+                  <aside class="vrg-case__record vault-case__record" aria-label="Founder Series case file">
+                    <p class="vrg-case__label vault-case__file">Case File 01</p>
+                    <h3 class="vrg-case__name" id="vrgFounderHeading">Founder Series</h3>
+                    <dl class="vrg-case__facts">
+                      <div class="vrg-case__fact"><dt>Archive Class</dt><dd>Founder Series</dd></div>
+                      <div class="vrg-case__fact"><dt>Artifact Count</dt><dd id="vrgFounderCount">2 Artifacts</dd></div>
+                      <div class="vrg-case__fact"><dt>Preservation Type</dt><dd>Legacy-grade founder artifacts</dd></div>
+                      <div class="vrg-case__fact"><dt>Access Status</dt><dd>Sealed Storage</dd></div>
+                    </dl>
+                    <p class="vrg-case__tone">Black label · gunmetal · ivory · premium vault recovery</p>
+                  </aside>
+                  <div class="vrg-case__stage vault-case__stage">
+                    <div class="vrg-case__toolbar">
+                      <p class="vrg-case__position" id="vrgFounderPosition" aria-live="polite">Retrieval 01 / 02</p>
+                      <div class="vrg-case__controls">
+                        <button class="vrg-btn vrg-btn--stack" id="vrgFounderPrev" type="button" aria-label="Previous founder artifact">&lsaquo;</button>
+                        <button class="vrg-btn vrg-btn--stack" id="vrgFounderNext" type="button" aria-label="Next founder artifact">&rsaquo;</button>
+                      </div>
+                    </div>
+                    <div class="artifact-stage vault-case__artifact-stage">
+                      <div class="artifact-stage__halo" aria-hidden="true"></div>
+                      <div class="artifact-stage__platform" aria-hidden="true"></div>
+                      <div class="artifact-stage__peripheral" aria-hidden="true"></div>
+                      <div class="vrg-pile vault-case__retrieval-lane" id="vrgFounderPile" aria-label="Founder series retrieval lane">
+                        <div class="vrg-pile__spotlight" aria-hidden="true"></div>
+                        <div class="vrg-pile__vignette" aria-hidden="true"></div>
+                        <div class="vrg-pile__hint" aria-hidden="true"><span>Intake Bay</span><span>Sealed Storage</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="vrg-case vault-case vault-case--creator" data-vrg-series="creators" id="vrgCaseCreators" aria-labelledby="vrgCreatorHeading">
+                  <aside class="vrg-case__record vault-case__record" aria-label="Creator Series case file">
+                    <p class="vrg-case__label vault-case__file">Case File 02</p>
+                    <h3 class="vrg-case__name" id="vrgCreatorHeading">Creator Series</h3>
+                    <dl class="vrg-case__facts">
+                      <div class="vrg-case__fact"><dt>Archive Class</dt><dd>Creator Series</dd></div>
+                      <div class="vrg-case__fact"><dt>Artifact Count</dt><dd id="vrgCreatorCount">13 Artifacts</dd></div>
+                      <div class="vrg-case__fact"><dt>Preservation Type</dt><dd>Internet-native creator slabs</dd></div>
+                      <div class="vrg-case__fact"><dt>Access Status</dt><dd>Intake Bay</dd></div>
+                    </dl>
+                    <p class="vrg-case__tone">White slab · chrome · magenta · culture-heavy grading</p>
+                  </aside>
+                  <div class="vrg-case__stage vault-case__stage">
+                    <div class="vrg-case__toolbar">
+                      <p class="vrg-case__position" id="vrgCreatorPosition" aria-live="polite">Retrieval 01 / 13</p>
+                      <div class="vrg-case__controls">
+                        <button class="vrg-btn vrg-btn--stack" id="vrgCreatorPrev" type="button" aria-label="Previous creator artifact">&lsaquo;</button>
+                        <button class="vrg-btn vrg-btn--stack" id="vrgCreatorNext" type="button" aria-label="Next creator artifact">&rsaquo;</button>
+                      </div>
+                    </div>
+                    <div class="artifact-stage vault-case__artifact-stage">
+                      <div class="artifact-stage__halo" aria-hidden="true"></div>
+                      <div class="artifact-stage__platform" aria-hidden="true"></div>
+                      <div class="artifact-stage__peripheral" aria-hidden="true"></div>
+                      <div class="vrg-pile vault-case__retrieval-lane" id="vrgCreatorPile" aria-label="Creator series retrieval lane">
+                        <div class="vrg-pile__spotlight" aria-hidden="true"></div>
+                        <div class="vrg-pile__vignette" aria-hidden="true"></div>
+                        <div class="vrg-pile__hint" aria-hidden="true"><span>Intake Bay</span><span>Sealed Storage</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </section>
+            </div>
+
+            <section class="vrg-focus vault-inspection" id="vrgFocusLayer" aria-hidden="true">
+              <div class="vault-inspection__backdrop" data-vrg-inspection-close aria-hidden="true"></div>
+              <div class="vrg-focus__composition vault-inspection__panel" role="dialog" aria-modal="true" aria-labelledby="vrgFocusTitle">
+                <div class="vrg-focus__card-space vault-inspection__image-wrap">
+                  <div class="vrg-focus__card vault-inspection__card" id="vrgFocusCard"></div>
+                  <div class="vrg-focus__scan artifact-scanline" aria-hidden="true"></div>
+                </div>
+                <aside class="vrg-meta vault-inspection__meta" id="vrgMetadata">
+                  <p class="vrg-meta__kicker vault-inspection__eyebrow">Inspection Mode Active</p>
+                  <h2 class="vrg-meta__title" id="vrgFocusTitle">Card Title</h2>
+                  <p class="vrg-meta__subline" id="vrgFocusSubline">Creator Series / 1/1 / VRG 10</p>
+                  <div class="vrg-meta__rarity-row">
+                    <span class="vrg-meta__pill vrg-meta__pill--gold" id="vrgRarityPill">Legendary</span>
+                    <span class="vrg-meta__pill" id="vrgGradePill">Mint Vibe</span>
+                    <span class="vrg-meta__pill vrg-meta__pill--status" id="vrgStatusPill">Sealed</span>
+                  </div>
+                  <div class="vrg-meta__grid" id="vrgMetaGrid"></div>
+                  <div class="vrg-meta__cert">
+                    <div class="vrg-meta__barcode" aria-hidden="true"></div>
+                    <div class="vrg-meta__cert-text"><span id="vrgCertCode">CERT 00000</span><span id="vrgSeedCode">SEED 13</span></div>
+                  </div>
+                </aside>
+              </div>
+            </section>
+
+            <button class="vrg-btn vrg-btn--close vault-inspection__close" id="vrgCloseButton" type="button" aria-label="Close inspection mode">&times;</button>
+            <button class="vrg-btn vrg-btn--nav vrg-btn--nav-prev" id="vrgPrevButton" type="button" aria-label="Previous artifact">&lsaquo;</button>
+            <button class="vrg-btn vrg-btn--nav vrg-btn--nav-next" id="vrgNextButton" type="button" aria-label="Next artifact">&rsaquo;</button>
+          </div>
+        </div>
       </main>
     </div>
     <div class="info-drawer" data-info hidden>
