@@ -1,5 +1,6 @@
 const fs = require("node:fs");
 const path = require("node:path");
+const { resolvePathWithinRoot } = require("./security-utils");
 
 const root = path.resolve(__dirname, "..");
 const projectsFile = path.join(root, "content", "projects.json");
@@ -10,8 +11,8 @@ function publicUrlToPath(url) {
     return null;
   }
 
-  const filePath = path.resolve(root, decodeURIComponent(url.replace(/^\//, "")));
-  return filePath.startsWith(root) ? filePath : null;
+  const filePath = resolvePathWithinRoot(root, decodeURIComponent(url.replace(/^\//, "")));
+  return filePath;
 }
 
 function addImageReference(references, url) {

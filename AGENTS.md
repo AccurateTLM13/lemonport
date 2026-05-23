@@ -21,6 +21,8 @@ node scripts/studio-server.js
 - Public site: `http://localhost:5173/`
 - Studio CMS: `http://localhost:5173/studio/`
 - The port can be overridden with the `PORT` environment variable.
+- By default the server binds to `127.0.0.1` only. Set `STUDIO_ALLOW_REMOTE=1` to listen on all interfaces, which requires `STUDIO_WRITE_TOKEN` for mutating `/api/*` requests.
+- Optional hardening: set `STUDIO_WRITE_TOKEN` locally and send `Authorization: Bearer <token>` from Studio write requests.
 
 ### Key scripts (all run from repo root)
 

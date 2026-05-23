@@ -1,17 +1,22 @@
 const fs = require("node:fs");
 const path = require("node:path");
+const { assertSafePublicUrl, assertSafeRelativeAssetPath, hasText } = require("./security-utils");
 
 const root = path.resolve(__dirname, "..");
 const contentFile = path.join(root, "content", "live-experiment.json");
 const outputFile = path.join(root, "assets", "js", "live-experiment-data.js");
 
-function hasText(value) {
-  return typeof value === "string" && value.trim().length > 0;
-}
-
 function assertArray(value, label) {
   if (!Array.isArray(value)) {
     throw new Error(`${label} must be an array.`);
+  }
+}
+
+function validateLinkField(value, label, errors, options = {}) {
+  try {
+    assertSafePublicUrl(value, label, options);
+  } catch (error) {
+    errors.push(error.message);
   }
 }
 
@@ -37,6 +42,10 @@ function validateLiveExperiment(data) {
     } catch (error) {
       errors.push(error.message);
     }
+
+    (data.hero.actions || []).forEach((action, index) => {
+      validateLinkField(action && action.href, `hero.actions[${index}].href`, errors, { allowEmpty: true });
+    });
   }
 
   if (!data.ledger || typeof data.ledger !== "object") {
@@ -62,12 +71,18 @@ function validateLiveExperiment(data) {
     } catch (error) {
       errors.push(error.message);
     }
+
+    if (data.buildLog.button && data.buildLog.button.href) {
+      validateLinkField(data.buildLog.button.href, "buildLog.button.href", errors, { allowEmpty: true });
+    }
   }
 
   if (!data.currentBet || typeof data.currentBet !== "object") {
     errors.push("currentBet is required.");
   } else if (!hasText(data.currentBet.title)) {
     errors.push("currentBet.title is required.");
+  } else if (data.currentBet.button && data.currentBet.button.href) {
+    validateLinkField(data.currentBet.button.href, "currentBet.button.href", errors, { allowEmpty: true });
   }
 
   if (!data.getInvolved || typeof data.getInvolved !== "object") {
@@ -75,6 +90,22 @@ function validateLiveExperiment(data) {
   } else {
     try {
       assertArray(data.getInvolved.items, "getInvolved.items");
+    } catch (error) {
+      errors.push(error.message);
+    }
+
+    if (data.getInvolved.button && data.getInvolved.button.href) {
+      validateLinkField(data.getInvolved.button.href, "getInvolved.button.href", errors, { allowEmpty: true });
+    }
+
+    (data.getInvolved.items || []).forEach((item, index) => {
+      validateLinkField(item && item.href, `getInvolved.items[${index}].href`, errors, { allowEmpty: true });
+    });
+  }
+
+  if (data.assets && data.assets.mascot) {
+    try {
+      assertSafeRelativeAssetPath(data.assets.mascot, "assets.mascot");
     } catch (error) {
       errors.push(error.message);
     }

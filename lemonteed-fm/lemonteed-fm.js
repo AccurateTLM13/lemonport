@@ -465,6 +465,30 @@
       .replaceAll('"', "&quot;");
   }
 
+  function safeHref(value) {
+    const href = String(value || "").trim();
+
+    if (!href || href === "#") {
+      return "#";
+    }
+
+    if (href.startsWith("/") && !href.startsWith("//") && !href.includes("\\")) {
+      return href;
+    }
+
+    try {
+      const parsed = new URL(href, window.location.origin);
+
+      if (parsed.protocol === "http:" || parsed.protocol === "https:") {
+        return parsed.href;
+      }
+    } catch (error) {
+      return "#";
+    }
+
+    return "#";
+  }
+
   function currentTrack() {
     return tracks[currentIndex];
   }
@@ -486,8 +510,14 @@
   }
 
   function soundCloudEmbedUrl(track, autoPlay) {
+    const sourceUrl = safeHref(track.sourceUrl);
+
+    if (!/^https:\/\/(www\.)?soundcloud\.com\//i.test(sourceUrl)) {
+      return null;
+    }
+
     const params = new URLSearchParams({
-      url: track.sourceUrl,
+      url: sourceUrl,
       color: "#f6c84f",
       auto_play: autoPlay ? "true" : "false",
       hide_related: "true",
@@ -724,7 +754,7 @@
           <button type="button" data-card-play="${trackIndex}">${playLabel}</button>
           <button type="button" data-card-share="${trackIndex}">Share</button>
           <button type="button" data-card-copy="${trackIndex}">Copy Credit</button>
-          <a href="${escapeHtml(track.sourceUrl)}" target="_blank" rel="noopener">Source</a>
+          <a href="${escapeHtml(safeHref(track.sourceUrl))}" target="_blank" rel="noopener">Source</a>
         </div>
       `;
       trackList.append(card);
@@ -766,7 +796,7 @@
           <button class="fm-button fm-button--primary" type="button" data-featured-play>${canPlayHere(track) || canEmbedHere(track) ? "Play Featured" : "Open Source"}</button>
           <button class="fm-button" type="button" data-featured-share>Share Track</button>
           <button class="fm-button" type="button" data-featured-copy>Copy Attribution</button>
-          <a class="fm-button" href="${escapeHtml(track.sourceUrl)}" target="_blank" rel="noopener">Open Source</a>
+          <a class="fm-button" href="${escapeHtml(safeHref(track.sourceUrl))}" target="_blank" rel="noopener">Open Source</a>
         </div>
       </div>
     `;
@@ -845,7 +875,7 @@
       if (shouldPlay && canEmbedHere(track)) {
         playEmbeddedTrack(track);
       } else if (shouldPlay && track.sourceUrl) {
-        window.open(track.sourceUrl, "_blank", "noopener");
+        window.open(safeHref(track.sourceUrl), "_blank", "noopener");
         setStatus("Opened the source link. Add a local audio upload in Studio to play it here.");
       } else if (canEmbedHere(track)) {
         setStatus("This SoundCloud track can play inside Lemonteed FM. Press Play.");
@@ -885,7 +915,7 @@
       } else if (canEmbedHere(track)) {
         playEmbeddedTrack(track);
       } else if (track.sourceUrl) {
-        window.open(track.sourceUrl, "_blank", "noopener");
+        window.open(safeHref(track.sourceUrl), "_blank", "noopener");
         setStatus("Opened the source link. Add a local audio upload in Studio to play it here.");
       } else {
         setStatus("This track needs a local audio file before it can play here.");
@@ -1211,7 +1241,7 @@
 
   if (openSource) {
     openSource.addEventListener("click", () => {
-      window.open(currentTrack().sourceUrl, "_blank", "noopener");
+      window.open(safeHref(currentTrack().sourceUrl), "_blank", "noopener");
     });
   }
 
