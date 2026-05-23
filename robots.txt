@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /operator-log/
+Disallow: /million-dollar-receipt/
 Disallow: /content/
 Disallow: /studio/
 Disallow: /scripts/

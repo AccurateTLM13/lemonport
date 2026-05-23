@@ -1,0 +1,127 @@
+{
+  "title": "The Million Dollar Receipt",
+  "tagline": "1,000,000 people bought nothing together.",
+  "goalCount": 1000000,
+  "priceCents": 100,
+  "launched": false,
+  "apiBase": "",
+  "mockStats": {
+    "totalCents": 1847200,
+    "count": 18472,
+    "remaining": 981528
+  },
+  "moneyModel": {
+    "label": "Transparent split",
+    "allocations": [
+      { "use": "Creator/operator", "percent": 50 },
+      { "use": "Weird public internet projects", "percent": 25 },
+      { "use": "Local small business experiments", "percent": 15 },
+      { "use": "Platform/legal/admin/taxes", "percent": 10 }
+    ]
+  },
+  "tiers": [
+    { "min": 1, "max": 100, "label": "Founding Fools" },
+    { "min": 101, "max": 1000, "label": "Premium Regret" },
+    { "min": 1001, "max": 10000, "label": "Certified Enablers" },
+    { "min": 10001, "max": 50000, "label": "Nothing Investors" },
+    { "min": 50001, "max": 100000, "label": "Receipt Royalty" },
+    { "min": 100001, "max": 500000, "label": "Internet Witnesses" },
+    { "min": 500001, "max": 999999, "label": "Late to Nothing" },
+    { "min": 1000000, "max": 1000000, "label": "The Final Nothing" }
+  ],
+  "milestones": [
+    { "cents": 10000, "unlock": "Add a barcode to the receipt", "key": "barcode" },
+    { "cents": 50000, "unlock": "Add printer sound effects", "key": "printerSfx" },
+    { "cents": 100000, "unlock": "Release the first Nothing Report", "key": "nothingReport" },
+    { "cents": 500000, "unlock": "Add the Wall of Regret", "key": "wallOfRegret" },
+    { "cents": 1000000, "unlock": "Add receipt search", "key": "receiptSearch" },
+    { "cents": 2500000, "unlock": "Attempt a physical receipt print", "key": "physicalPrint" },
+    { "cents": 5000000, "unlock": "Launch the Nothing Museum", "key": "nothingMuseum" },
+    { "cents": 10000000, "unlock": "Create a live receipt printer cam", "key": "printerCam" },
+    { "cents": 25000000, "unlock": "Release a downloadable giant receipt PDF", "key": "receiptPdf" },
+    { "cents": 50000000, "unlock": "Build the Million Dollar Nothing documentary page", "key": "documentary" },
+    { "cents": 100000000, "unlock": "Archive the final receipt forever", "key": "finalArchive" }
+  ],
+  "legal": {
+    "disclaimer": "You are purchasing a $1 novelty listing on a public digital receipt. This is not an investment, donation, raffle, sweepstakes, or promise of future value. You receive a public receipt line and a shareable digital receipt card.",
+    "moderation": "Messages may be moderated before appearing publicly. Offensive, hateful, illegal, or spammy submissions may be rejected or edited.",
+    "refund": "Probably not, because refunding nothing creates too much something."
+  },
+  "faq": [
+    {
+      "q": "What am I buying?",
+      "a": "A $1 public listing on The Million Dollar Receipt."
+    },
+    {
+      "q": "Do I get anything useful?",
+      "a": "No."
+    },
+    {
+      "q": "Is this a donation?",
+      "a": "No. A transparent allocation of funds is published on this page."
+    },
+    {
+      "q": "Is this an investment?",
+      "a": "No."
+    },
+    {
+      "q": "Can I get a refund?",
+      "a": "Probably not, because refunding nothing creates too much something."
+    },
+    {
+      "q": "Can I write anything in my message?",
+      "a": "No. Messages can be moderated."
+    },
+    {
+      "q": "What happens at $1,000,000?",
+      "a": "The final receipt gets archived, celebrated, and turned into a permanent internet artifact."
+    }
+  ],
+  "howItWorks": [
+    "Click Buy Nothing for $1.",
+    "Watch your lemon ride through the Nothing Factory.",
+    "Pay one dollar. Receive zero utility.",
+    "Get a permanent line on the world's longest receipt for absolutely nothing."
+  ],
+  "wallOfRegret": [
+    { "alias": "TLM13", "message": "Cheaper than therapy.", "number": 42 },
+    { "alias": "VOID_WALKER", "message": "I expected nothing and received it.", "number": 1337 },
+    { "alias": "CPA_DAD", "message": "My accountant has questions.", "number": 9001 },
+    { "alias": "SUB_HATER", "message": "This is still better than most subscriptions.", "number": 404 }
+  ],
+  "nothingReport": {
+    "title": "Q1 Nothing Report",
+    "date": "2026-05-23",
+    "summary": "Strong demand for nothing continues as consumers seek alternatives to expensive somethings.",
+    "sections": [
+      { "heading": "Nothing sold", "body": "18,472 units of certified nothing moved through the factory this quarter." },
+      { "heading": "Top buyer messages", "body": "\"Cheaper than therapy.\" \"I expected nothing and received it.\"" },
+      { "heading": "Funniest names", "body": "VOID_WALKER, CPA_DAD, SUB_HATER" },
+      { "heading": "Milestones hit", "body": "Barcode unlocked. Printer sound effects pending." },
+      { "heading": "Current absurdity index", "body": "Elevated but stable." },
+      { "heading": "Operational challenges", "body": "Existential quality control backlog at the Nothing Factory." }
+    ]
+  },
+  "mockReceipts": [
+    { "number": 18472, "alias": "TLM13", "message": "Worth every penny. Unfortunately.", "purchasedAt": "2026-05-23T14:22:00Z", "messageStatus": "published" },
+    { "number": 18471, "alias": "VOID_WALKER", "message": "I expected nothing and received it.", "purchasedAt": "2026-05-23T14:18:00Z", "messageStatus": "published" },
+    { "number": 18470, "alias": "RECEIPT_FAN", "message": "", "purchasedAt": "2026-05-23T14:15:00Z", "messageStatus": "published" },
+    { "number": 18469, "alias": "CPA_DAD", "message": "My accountant has questions.", "purchasedAt": "2026-05-23T14:10:00Z", "messageStatus": "published" },
+    { "number": 18468, "alias": "SUB_HATER", "message": "This is still better than most subscriptions.", "purchasedAt": "2026-05-23T14:05:00Z", "messageStatus": "published" },
+    { "number": 18467, "alias": "LEMON_LOVER", "message": "The conveyor got me.", "purchasedAt": "2026-05-23T13:58:00Z", "messageStatus": "published" },
+    { "number": 18466, "alias": "NOTHING_BETA", "message": "Early to nothing.", "purchasedAt": "2026-05-23T13:50:00Z", "messageStatus": "published" },
+    { "number": 18465, "alias": "REGRET_KING", "message": "", "purchasedAt": "2026-05-23T13:42:00Z", "messageStatus": "published" },
+    { "number": 18464, "alias": "INTERNET_WIT", "message": "A million-dollar idea, unfortunately.", "purchasedAt": "2026-05-23T13:30:00Z", "messageStatus": "published" },
+    { "number": 18463, "alias": "FACTORY_GHOST", "message": "Certified by existential QC.", "purchasedAt": "2026-05-23T13:22:00Z", "messageStatus": "published" },
+    { "number": 18462, "alias": "BAD_DECISION", "message": "Complete.", "purchasedAt": "2026-05-23T13:15:00Z", "messageStatus": "published" },
+    { "number": 18461, "alias": "THERMAL_INK", "message": "Print me.", "purchasedAt": "2026-05-23T13:08:00Z", "messageStatus": "published" },
+    { "number": 18460, "alias": "CHECKOUT_GUY", "message": "", "purchasedAt": "2026-05-23T13:00:00Z", "messageStatus": "published" },
+    { "number": 18459, "alias": "NO_UTILITY", "message": "Utility: none detected.", "purchasedAt": "2026-05-23T12:55:00Z", "messageStatus": "published" },
+    { "number": 18458, "alias": "MUSEUM_GUEST", "message": "Put me in the Nothing Museum.", "purchasedAt": "2026-05-23T12:48:00Z", "messageStatus": "published" },
+    { "number": 18457, "alias": "FRIEND_TAG", "message": "Challenge accepted.", "purchasedAt": "2026-05-23T12:40:00Z", "messageStatus": "published" },
+    { "number": 18456, "alias": "DOT_MATRIX", "message": "", "purchasedAt": "2026-05-23T12:32:00Z", "messageStatus": "published" },
+    { "number": 18455, "alias": "STANDARD_ED", "message": "Nothing, Standard Edition.", "purchasedAt": "2026-05-23T12:25:00Z", "messageStatus": "published" },
+    { "number": 18454, "alias": "PREMIUM_REG", "message": "Premium Regret tier unlocked.", "purchasedAt": "2026-05-23T12:18:00Z", "messageStatus": "published" },
+    { "number": 18453, "alias": "FOUNDING_F", "message": "Founding Fool #53.", "purchasedAt": "2026-05-23T12:10:00Z", "messageStatus": "published" }
+  ]
+}
