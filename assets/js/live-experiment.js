@@ -13,12 +13,50 @@
     }
   }
 
+  function safeHref(value) {
+    const href = String(value || "").trim();
+
+    if (!href || href === "#") {
+      return "#";
+    }
+
+    if (href.startsWith("#")) {
+      return href;
+    }
+
+    if (href.startsWith("/") && !href.startsWith("//") && !href.includes("\\")) {
+      return href;
+    }
+
+    try {
+      const parsed = new URL(href, window.location.origin);
+
+      if (parsed.protocol === "http:" || parsed.protocol === "https:") {
+        return parsed.href;
+      }
+    } catch (error) {
+      return "#";
+    }
+
+    return "#";
+  }
+
+  function appendMultilineText(parent, lines) {
+    (lines || []).forEach((item, index) => {
+      if (index) {
+        parent.append(document.createElement("br"));
+      }
+
+      parent.append(document.createTextNode(String(item)));
+    });
+  }
+
   function linkButton(button, config) {
     if (!button || !config) {
       return;
     }
 
-    button.href = config.href || "#";
+    button.href = safeHref(config.href);
     button.textContent = config.label || "";
   }
 
@@ -57,7 +95,7 @@
       hero.actions.forEach((item) => {
         const anchor = document.createElement("a");
         anchor.className = "experiment-button";
-        anchor.href = item.href || "#";
+        anchor.href = safeHref(item.href);
 
         if (item.icon) {
           const icon = document.createElement("span");
@@ -122,11 +160,11 @@
     if (foot) {
       foot.textContent = "";
       const left = document.createElement("p");
-      left.innerHTML = (ledger.footerLeft || []).map((item) => String(item)).join("<br>");
+      appendMultilineText(left, ledger.footerLeft || []);
       const brand = document.createElement("strong");
       brand.textContent = ledger.footerBrand || "Lemonteed";
       const right = document.createElement("p");
-      right.innerHTML = (ledger.footerRight || []).map((item) => String(item)).join("<br>");
+      appendMultilineText(right, ledger.footerRight || []);
       foot.append(left, brand, right);
     }
   }
@@ -209,7 +247,7 @@
         icon.innerHTML = iconSvg(entry.icon);
         heading.textContent = entry.title || "";
         copy.textContent = entry.copy || "";
-        anchor.href = entry.href || "#";
+        anchor.href = safeHref(entry.href);
         anchor.setAttribute("aria-label", entry.label || entry.title || "Open");
         anchor.textContent = "->";
 
@@ -249,7 +287,11 @@
     const mascot = document.querySelector(".live-mascot");
 
     if (mascot && data.assets && data.assets.mascot) {
-      mascot.src = data.assets.mascot;
+      const mascotPath = String(data.assets.mascot).trim();
+
+      if (mascotPath.startsWith("/") && !mascotPath.startsWith("//") && !mascotPath.includes("\\")) {
+        mascot.src = mascotPath;
+      }
     }
   }
 

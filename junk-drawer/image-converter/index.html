@@ -642,7 +642,7 @@
         async function handleFiles(files) {
             if (files.length > 0) placeholder.classList.add('hidden');
             for (const file of files) {
-                const id = `${file.name}-${file.lastModified}`;
+                const id = `file-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
                 if (filesMap.has(id)) continue;
 
                 filesMap.set(id, file);
@@ -650,35 +650,66 @@
             }
         }
 
+        function removeFile(id) {
+            filesMap.delete(id);
+            const row = document.getElementById(`row-${id}`);
+
+            if (row) {
+                row.remove();
+            }
+
+            if (filesMap.size === 0) {
+                placeholder.classList.remove('hidden');
+            }
+        }
+
+        statusArea.addEventListener('click', (event) => {
+            const button = event.target.closest('[data-remove-id]');
+
+            if (button) {
+                removeFile(button.dataset.removeId);
+            }
+        });
+
         async function addFileUI(file, id) {
             const row = document.createElement('div');
             row.className = 'file-row';
             row.id = `row-${id}`;
 
-            // Thumbnail handling for HEIC
-            let thumbUrl = URL.createObjectURL(file);
+            const thumb = document.createElement('img');
+            thumb.className = 'file-row__thumb';
+            thumb.width = 48;
+            thumb.height = 48;
+            thumb.alt = '';
+
             if (file.name.toLowerCase().endsWith('.heic')) {
-                thumbUrl = 'https://cdn-icons-png.flaticon.com/512/337/337948.png'; // Fallback icon
+                thumb.src = 'https://cdn-icons-png.flaticon.com/512/337/337948.png';
+            } else {
+                thumb.src = URL.createObjectURL(file);
             }
 
-            row.innerHTML = `
-                <img src="${thumbUrl}" class="file-row__thumb" width="48" height="48" alt="">
-                <div>
-                    <p class="file-row__name">${file.name}</p>
-                    <p class="text-xs text-slate-400">${(file.size / 1024).toFixed(1)} KB • <span class="status-badge">Pending</span></p>
-                </div>
-                <button onclick="removeFile('${id}')" class="file-row__remove" aria-label="Remove ${file.name}">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                </button>
-            `;
+            const details = document.createElement('div');
+
+            const name = document.createElement('p');
+            name.className = 'file-row__name';
+            name.textContent = file.name;
+
+            const meta = document.createElement('p');
+            meta.className = 'text-xs text-slate-400';
+            meta.innerHTML = `${(file.size / 1024).toFixed(1)} KB • <span class="status-badge">Pending</span>`;
+
+            details.append(name, meta);
+
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.className = 'file-row__remove';
+            removeButton.dataset.removeId = id;
+            removeButton.setAttribute('aria-label', `Remove ${file.name}`);
+            removeButton.innerHTML = '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
+
+            row.append(thumb, details, removeButton);
             statusArea.appendChild(row);
         }
-
-        window.removeFile = (id) => {
-            filesMap.delete(id);
-            document.getElementById(`row-${id}`).remove();
-            if (filesMap.size === 0) placeholder.classList.remove('hidden');
-        };
 
         clearBtn.onclick = () => {
             filesMap.clear();
@@ -774,7 +805,7 @@
             URL.revokeObjectURL(url);
         }
     </script>
-    <a href="/hashbrownpro/wafflehousepro.html" target="_blank"
+    <a href="/hashbrownpro/wafflehousepro.html" target="_blank" rel="noopener"
         class="secret-menu-link"
         aria-label="Secret Menu" title="Secret Menu"></a>
 </body>

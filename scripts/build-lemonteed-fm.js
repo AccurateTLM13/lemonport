@@ -1,5 +1,6 @@
 const fs = require("node:fs");
 const path = require("node:path");
+const { assertSafePublicUrl, assertSafeRelativeAssetPath } = require("./security-utils");
 
 const root = path.resolve(__dirname, "..");
 const contentFile = path.join(root, "content", "lemonteed-fm.json");
@@ -85,6 +86,19 @@ function validateData(data) {
     if (!normalized.canHost && !normalized.sourceUrl) {
       throw new Error(`Source-only track "${normalized.title}" needs sourceUrl.`);
     }
+
+    if (normalized.sourceUrl) {
+      assertSafePublicUrl(normalized.sourceUrl, `Track "${normalized.title}" sourceUrl`);
+    }
+
+    [normalized.previewAudio, normalized.fullAudio, normalized.artworkSmall, normalized.artworkLarge].forEach((assetPath, index) => {
+      if (!assetPath) {
+        return;
+      }
+
+      const labels = ["previewAudio", "fullAudio", "artworkSmall", "artworkLarge"];
+      assertSafeRelativeAssetPath(assetPath, `Track "${normalized.title}" ${labels[index]}`);
+    });
 
     return normalized;
   });

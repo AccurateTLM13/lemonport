@@ -710,43 +710,71 @@
             fileInput.value = '';
         }
 
+        function removeFile(id) {
+            filesMap.delete(id);
+            const el = document.getElementById(`row-${id}`);
+
+            if (el) {
+                el.remove();
+            }
+
+            if (filesMap.size === 0) {
+                placeholder.classList.remove('hidden');
+            }
+        }
+
+        statusArea.addEventListener('click', (event) => {
+            const button = event.target.closest('[data-remove-id]');
+
+            if (button) {
+                removeFile(button.dataset.removeId);
+            }
+        });
+
         function addFileUI(file, id) {
             const row = document.createElement('div');
             row.className = 'file-row';
             row.id = `row-${id}`;
 
-            const thumbUrl = URL.createObjectURL(file);
+            const thumb = document.createElement('img');
+            thumb.src = URL.createObjectURL(file);
+            thumb.className = 'file-row__thumb';
+            thumb.alt = '';
 
-            row.innerHTML = `
-                <img src="${thumbUrl}" class="file-row__thumb" alt="">
-                <div class="file-row__details">
-                    <p class="file-row__name" title="${file.name}">${file.name}</p>
-                    <p class="file-row__meta">
-                        <span class="orig-size">Original: ${formatBytes(file.size)}</span>
-                        <span class="comp-status"></span>
-                    </p>
-                </div>
-                <div class="file-row__actions">
-                    <a href="#" class="file-row__dl hidden" aria-label="Download ${file.name}">Download</a>
-                    <button onclick="removeFile('${id}')" class="file-row__remove" aria-label="Remove">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                    </button>
-                </div>
-            `;
+            const details = document.createElement('div');
+            details.className = 'file-row__details';
+
+            const name = document.createElement('p');
+            name.className = 'file-row__name';
+            name.title = file.name;
+            name.textContent = file.name;
+
+            const meta = document.createElement('p');
+            meta.className = 'file-row__meta';
+            meta.innerHTML = `<span class="orig-size">Original: ${formatBytes(file.size)}</span><span class="comp-status"></span>`;
+
+            details.append(name, meta);
+
+            const actions = document.createElement('div');
+            actions.className = 'file-row__actions';
+
+            const downloadLink = document.createElement('a');
+            downloadLink.href = '#';
+            downloadLink.className = 'file-row__dl hidden';
+            downloadLink.setAttribute('aria-label', `Download ${file.name}`);
+            downloadLink.textContent = 'Download';
+
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.className = 'file-row__remove';
+            removeButton.dataset.removeId = id;
+            removeButton.setAttribute('aria-label', `Remove ${file.name}`);
+            removeButton.innerHTML = '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
+
+            actions.append(downloadLink, removeButton);
+            row.append(thumb, details, actions);
             statusArea.appendChild(row);
         }
-
-        window.removeFile = (id) => {
-            const data = filesMap.get(id);
-            if (data && data.compressedBlob) {
-                // We're just using object urls for downloads
-            }
-            filesMap.delete(id);
-            const el = document.getElementById(`row-${id}`);
-            if (el) el.remove();
-            
-            if (filesMap.size === 0) placeholder.classList.remove('hidden');
-        };
 
         clearBtn.onclick = () => {
             filesMap.clear();

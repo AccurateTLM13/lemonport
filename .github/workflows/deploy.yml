@@ -24,6 +24,12 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -p "${{ secrets.BLUEHOST_PORT }}" "${{ secrets.BLUEHOST_HOST }}" >> ~/.ssh/known_hosts
 
+      - name: Remove CMS paths from production
+        run: |
+          ssh -p "${{ secrets.BLUEHOST_PORT }}" \
+            "${{ secrets.BLUEHOST_USER }}@${{ secrets.BLUEHOST_HOST }}" \
+            "rm -rf '${{ secrets.BLUEHOST_PATH }}/content' '${{ secrets.BLUEHOST_PATH }}/studio' '${{ secrets.BLUEHOST_PATH }}/scripts' '${{ secrets.BLUEHOST_PATH }}/.studio-uploads' '${{ secrets.BLUEHOST_PATH }}/.studio-backups'"
+
       - name: Deploy static files
         run: |
           rsync -avz \
@@ -32,5 +38,10 @@ jobs:
             --exclude ".gitignore" \
             --exclude ".DS_Store" \
             --exclude "Thumbs.db" \
+            --exclude "content/" \
+            --exclude "studio/" \
+            --exclude "scripts/" \
+            --exclude ".studio-uploads/" \
+            --exclude ".studio-backups/" \
             -e "ssh -p ${{ secrets.BLUEHOST_PORT }}" \
             ./ "${{ secrets.BLUEHOST_USER }}@${{ secrets.BLUEHOST_HOST }}:${{ secrets.BLUEHOST_PATH }}"

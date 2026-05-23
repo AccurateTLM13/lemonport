@@ -15,12 +15,17 @@ const { mediaHealth } = require("./media-health");
 const { variantsForProject, absoluteFromPublicUrl } = require("./generate-image-variants");
 const { contentFile: liveExperimentFile, validateLiveExperiment, buildLiveExperiment } = require("./build-live-experiment");
 const { contentFile: lemonteedFmFile, validateLemonteedFm, buildLemonteedFm } = require("./build-lemonteed-fm");
+const { resolvePathWithinRoot } = require("./security-utils");
 
 const root = path.resolve(__dirname, "..");
 const contentFile = path.join(root, "content", "projects.json");
 const categoriesFile = path.join(root, "content", "categories.json");
 const studioDir = path.join(root, "studio");
 const port = Number(process.env.PORT || 5173);
+const allowRemote = process.env.STUDIO_ALLOW_REMOTE === "1";
+const studioHost = allowRemote ? "0.0.0.0" : String(process.env.STUDIO_HOST || "127.0.0.1");
+const studioWriteToken = String(process.env.STUDIO_WRITE_TOKEN || "").trim();
+const mutatingMethods = new Set(["POST", "PATCH", "DELETE", "PUT"]);
 const maxBodyBytes = 80 * 1024 * 1024;
 const galleryWidths = [320, 480, 640, 768, 900, 1024, 1600];
 const statuses = ["Draft", "Ready", "Published", "Hidden", "Archived", "Deleted"];
@@ -60,11 +65,48 @@ function sendJson(response, status, data) {
 function sendError(response, error) {
   console.error("SERVER ERROR:", error);
   const validation = error.validation || null;
-  sendJson(response, 400, {
+  const status = error.statusCode || 400;
+  sendJson(response, status, {
     error: error.message,
     errors: validation ? validation.errors : undefined,
     warnings: validation ? validation.warnings : undefined
   });
+}
+
+function isApiPath(pathname) {
+  return pathname === "/api" || pathname.startsWith("/api/");
+}
+
+function assertWriteAuthorized(request) {
+  const url = new URL(request.url, `http://${request.headers.host}`);
+
+  if (!mutatingMethods.has(request.method) || !isApiPath(url.pathname)) {
+    return;
+  }
+
+  if (!studioWriteToken) {
+    if (allowRemote) {
+      const error = new Error("Write API disabled. Set STUDIO_WRITE_TOKEN when STUDIO_ALLOW_REMOTE=1.");
+      error.statusCode = 403;
+      throw error;
+    }
+
+    return;
+  }
+
+  const header = String(request.headers.authorization || "");
+  const expected = `Bearer ${studioWriteToken}`;
+
+  if (header !== expected) {
+    const error = new Error("Unauthorized.");
+    error.statusCode = 401;
+    throw error;
+  }
+}
+
+function absoluteFromPublicPath(publicPath) {
+  const relative = decodeURIComponent(String(publicPath || "").replace(/^\//, ""));
+  return resolvePathWithinRoot(root, relative);
 }
 
 function sendText(response, status, text) {
@@ -390,15 +432,19 @@ function removeImageSet(project) {
     return;
   }
 
-  const decoded = decodeURIComponent(source.replace(/^\//, ""));
-  const absolute = path.resolve(root, decoded);
+  const absolute = absoluteFromPublicPath(source);
+
+  if (!absolute) {
+    return;
+  }
+
   const imageDir = path.dirname(absolute);
   const ext = path.extname(absolute);
   const base = path.basename(absolute, ext);
 
   [absolute, ...galleryWidths.map((width) => path.join(imageDir, `${base}-${width}${ext}`))]
     .forEach((file) => {
-      if (file.startsWith(root) && fs.existsSync(file)) {
+      if (fs.existsSync(file)) {
         fs.unlinkSync(file);
       }
     });
@@ -587,14 +633,18 @@ function imageSetFiles(project) {
     return [];
   }
 
-  const decoded = decodeURIComponent(source.replace(/^\//, ""));
-  const absolute = path.resolve(root, decoded);
+  const absolute = absoluteFromPublicPath(source);
+
+  if (!absolute) {
+    return [];
+  }
+
   const imageDir = path.dirname(absolute);
   const ext = path.extname(absolute);
   const base = path.basename(absolute, ext);
 
   return [absolute, ...galleryWidths.map((width) => path.join(imageDir, `${base}-${width}${ext}`))]
-    .filter((file) => file.startsWith(root) && fs.existsSync(file));
+    .filter((file) => fs.existsSync(file));
 }
 
 function backupImageSet(project) {
@@ -988,9 +1038,9 @@ async function cleanupUnusedMedia(request, response) {
       throw new Error(`Refusing to delete a file that is not currently unused: ${file}`);
     }
 
-    const absolute = path.resolve(root, normalized);
+    const absolute = resolvePathWithinRoot(root, normalized);
 
-    if (!absolute.startsWith(root) || !fs.existsSync(absolute)) {
+    if (!absolute || !fs.existsSync(absolute)) {
       return;
     }
 
@@ -1128,9 +1178,15 @@ function serveFile(request, response) {
       : decodedPathname;
   const base = pathname.startsWith("/studio/") ? studioDir : root;
   const relative = pathname.startsWith("/studio/") ? pathname.replace(/^\/studio\//, "") : pathname.replace(/^\//, "");
-  const filePath = path.resolve(base, relative);
 
-  if (!filePath.startsWith(base) || !fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
+  if (!pathname.startsWith("/studio/") && (relative.startsWith("content/") || relative.startsWith("scripts/"))) {
+    sendText(response, 404, "Not found");
+    return;
+  }
+
+  const filePath = resolvePathWithinRoot(base, relative);
+
+  if (!filePath || !fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
     sendText(response, 404, "Not found");
     return;
   }
@@ -1141,6 +1197,7 @@ function serveFile(request, response) {
 
 async function route(request, response) {
   try {
+    assertWriteAuthorized(request);
     const url = new URL(request.url, `http://${request.headers.host}`);
 
     if (request.method === "GET" && url.pathname === "/api/projects") {
@@ -1336,7 +1393,15 @@ async function route(request, response) {
   }
 }
 
-http.createServer(route).listen(port, () => {
-  console.log(`Lemonteed Studio: http://localhost:${port}/studio/`);
-  console.log(`Public site:       http://localhost:${port}/`);
+http.createServer(route).listen(port, studioHost, () => {
+  const hostLabel = studioHost === "0.0.0.0" ? "all interfaces" : studioHost;
+  console.log(`Lemonteed Studio: http://${studioHost === "0.0.0.0" ? "localhost" : studioHost}:${port}/studio/`);
+  console.log(`Public site:       http://${studioHost === "0.0.0.0" ? "localhost" : studioHost}:${port}/`);
+  console.log(`Listening on:      ${hostLabel}:${port}`);
+
+  if (allowRemote && !studioWriteToken) {
+    console.warn("STUDIO_ALLOW_REMOTE=1 is set without STUDIO_WRITE_TOKEN. Write APIs are disabled.");
+  } else if (studioWriteToken) {
+    console.log("Write API token auth enabled.");
+  }
 });

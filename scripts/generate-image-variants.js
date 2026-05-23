@@ -4,6 +4,7 @@ const { execFileSync } = require("node:child_process");
 const { build } = require("./build-gallery");
 const { backupFile } = require("./file-backup");
 const { assertValidContent } = require("./content-validation");
+const { resolvePathWithinRoot } = require("./security-utils");
 
 const root = path.resolve(__dirname, "..");
 const contentFile = path.join(root, "content", "projects.json");
@@ -22,7 +23,7 @@ function absoluteFromPublicUrl(url) {
     return null;
   }
 
-  return path.join(root, decodeURIComponent(url.replace(/^\//, "")));
+  return resolvePathWithinRoot(root, decodeURIComponent(url.replace(/^\//, "")));
 }
 
 function imageDimensions(filePath) {

@@ -1,5 +1,6 @@
 const fs = require("node:fs");
 const path = require("node:path");
+const { resolvePathWithinRoot } = require("./security-utils");
 
 const root = path.resolve(__dirname, "..");
 const statuses = ["Draft", "Ready", "Published", "Hidden", "Archived", "Deleted"];
@@ -26,8 +27,8 @@ function publicPathExists(url) {
     return false;
   }
 
-  const filePath = path.resolve(root, decodeURIComponent(url.replace(/^\//, "")));
-  return filePath.startsWith(root) && fs.existsSync(filePath);
+  const filePath = resolvePathWithinRoot(root, decodeURIComponent(url.replace(/^\//, "")));
+  return Boolean(filePath && fs.existsSync(filePath));
 }
 
 function expectedVariantWidths(project) {
