@@ -12,10 +12,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/mdr.css?v=4">
+  <link rel="stylesheet" href="/assets/css/mdr.css?v=5">
   <script src="/assets/js/mdr-config.js?v=1" defer></script>
   <script src="/assets/js/mdr-stats.js?v=1" defer></script>
-  <script src="/assets/js/mdr.js?v=4" defer></script>
+  <script src="/assets/js/mdr.js?v=5" defer></script>
 </head>
 <body class="mdr-page" data-mobile-path="buy">
   <a class="mdr-skip" href="#mdr-main">Skip to content</a>
@@ -37,12 +37,17 @@
       <!-- 1. Hero Control Room -->
       <section class="mdr-hero-room mdr-zone mdr-zone--buy" aria-labelledby="mdr-title">
         <div class="mdr-hero-room__copy">
-          <p class="mdr-eyebrow">Public internet register 01</p>
-          <h1 id="mdr-title">The Million Dollar Receipt</h1>
-          <p class="mdr-lede" id="mdr-tagline">1,000,000 people. $1 each. Absolutely nothing purchased.</p>
-          <p class="mdr-lede-sub">A public receipt for the internet's smallest bad decision.</p>
+          <p class="mdr-eyebrow">Nothing Factory · Public Register 01</p>
+          <h1 id="mdr-title">
+            <span class="mdr-hero-title__line">The Million Dollar</span>
+            <span class="mdr-hero-title__line mdr-hero-title__line--accent">Receipt</span>
+          </h1>
+          <p class="mdr-lede mdr-lede--primary" id="mdr-tagline">1,000,000 people. $1 each.</p>
+          <p class="mdr-lede mdr-lede--secondary">Absolutely nothing purchased.</p>
+          <p class="mdr-lede-sub">A public receipt for the internet&rsquo;s smallest bad decision.</p>
 
           <div class="mdr-hero-stats">
+            <span class="mdr-hero-stats__label">Live register total</span>
             <span class="mdr-hero-stats__total" id="mdr-hero-total">$0 / $1,000,000</span>
             <span class="mdr-hero-stats__meta" id="mdr-hero-meta">—</span>
           </div>
@@ -58,44 +63,90 @@
 
         <div class="mdr-hero-room__machine">
           <div class="mdr-machine" id="mdr-kiosk" data-phase="idle">
-            <img class="mdr-machine__frame" src="/million-dollar-receipt/assets/machine-frame.svg" alt="" width="480" height="520">
-            <div class="mdr-machine__display">
-              <div class="mdr-machine__conveyor" id="mdr-conveyor-window">
-                <div class="mdr-machine__belt" style="background-image:url('/million-dollar-receipt/assets/conveyor-belt.svg')"></div>
-                <img class="mdr-machine__lemon" id="mdr-lemon" src="/million-dollar-receipt/assets/lemon.svg" alt="" width="48" height="48">
-                <div class="mdr-machine__beam" id="mdr-scanner-beam"></div>
-                <img class="mdr-machine__stamp-img" id="mdr-stamp" src="/million-dollar-receipt/assets/stamp.svg" alt="" hidden>
+            <img class="mdr-machine__frame" src="/million-dollar-receipt/assets/machine-frame.svg" alt="" width="480" height="560">
+            <div class="mdr-machine__overlay" aria-hidden="true">
+              <div class="mdr-machine__viewport" id="mdr-conveyor-window">
+                <div class="mdr-machine__intake">
+                  <img class="mdr-machine__lemon" id="mdr-lemon" src="/million-dollar-receipt/assets/lemon.svg" alt="" width="48" height="48">
+                </div>
+                <div class="mdr-machine__conveyor">
+                  <div class="mdr-machine__belt"></div>
+                </div>
+                <div class="mdr-machine__scanner">
+                  <img class="mdr-machine__scanner-rail" src="/million-dollar-receipt/assets/scanner-rail.svg" alt="">
+                  <div class="mdr-machine__beam" id="mdr-scanner-beam"></div>
+                </div>
+                <div class="mdr-machine__stamp-module">
+                  <img class="mdr-machine__stamp-img" id="mdr-stamp" src="/million-dollar-receipt/assets/stamp.svg" alt="">
+                </div>
               </div>
-              <div class="mdr-machine__readout">
-                <span>ITEM: NOTHING</span>
-                <span>PRICE: $1.00</span>
-                <span id="mdr-kiosk-status">STATUS: READY</span>
+              <div class="mdr-machine__printer-slot">
+                <div class="mdr-machine__mini-receipt" id="mdr-mini-receipt"></div>
+              </div>
+              <div class="mdr-machine__terminal">
+                <div class="mdr-machine__terminal-head">TERMINAL DISPLAY</div>
+                <div class="mdr-machine__readout">
+                  <span class="mdr-machine__readout-line">ITEM: NOTHING, STANDARD</span>
+                  <span class="mdr-machine__readout-line">PRICE: $1.00</span>
+                  <span class="mdr-machine__readout-line" id="mdr-kiosk-status">STATUS: READY</span>
+                </div>
               </div>
             </div>
             <div class="mdr-machine__lights" aria-hidden="true">
-              <span class="mdr-machine__light is-on"></span>
-              <span class="mdr-machine__light"></span>
-              <span class="mdr-machine__light"></span>
+              <span class="mdr-machine__light is-on" title="Power"></span>
+              <span class="mdr-machine__light" title="Conveyor"></span>
+              <span class="mdr-machine__light" title="Printer"></span>
             </div>
             <button class="mdr-machine__bay" type="button" id="mdr-buy-button-machine" aria-label="Buy Nothing for $1">
-              <span>Buy Nothing</span>
-              <span>$1.00</span>
+              <span class="mdr-machine__bay-label">Buy Nothing</span>
+              <span class="mdr-machine__bay-price">$1.00</span>
             </button>
-            <button class="mdr-machine__skip" type="button" id="mdr-skip-animation" hidden>Skip</button>
+            <button class="mdr-machine__skip" type="button" id="mdr-skip-animation" hidden>Skip sequence</button>
           </div>
 
-          <div class="mdr-machine__drawer" id="mdr-checkout" hidden>
-            <div class="mdr-machine__drawer-head">
-              <span>CHECKOUT FOR NOTHING</span>
-              <span>$1.00</span>
+          <div class="mdr-pos" id="mdr-checkout" hidden>
+            <div class="mdr-pos__chrome">
+              <header class="mdr-pos__header">
+                <div class="mdr-pos__header-row">
+                  <span class="mdr-pos__id">LNW · REGISTER 01</span>
+                  <span class="mdr-pos__mode">CHECKOUT</span>
+                </div>
+                <div class="mdr-pos__header-title">Nothing Factory Terminal</div>
+                <div class="mdr-pos__header-divider" aria-hidden="true"></div>
+              </header>
+              <div class="mdr-pos__ticket" aria-label="Line items">
+                <div class="mdr-pos__ticket-head">
+                  <span>Item</span>
+                  <span>Qty</span>
+                  <span>Amt</span>
+                </div>
+                <div class="mdr-pos__ticket-line">
+                  <span class="mdr-pos__item-name">NOTHING, STANDARD</span>
+                  <span class="mdr-pos__item-qty">1</span>
+                  <span class="mdr-pos__item-price">$1.00</span>
+                </div>
+                <div class="mdr-pos__ticket-sub">
+                  <span>Utility included</span>
+                  <span>$0.00</span>
+                </div>
+                <div class="mdr-pos__ticket-rule" aria-hidden="true"></div>
+                <div class="mdr-pos__ticket-total">
+                  <span>Total due</span>
+                  <span>$1.00</span>
+                </div>
+              </div>
+              <form class="mdr-pos__form" id="mdr-checkout-form">
+                <div class="mdr-pos__form-head">Buyer record</div>
+                <label class="mdr-field mdr-field--pos"><span class="mdr-field__label">Alias <em>required</em></span><input type="text" name="alias" maxlength="32" required placeholder="TLM13" autocomplete="off"></label>
+                <label class="mdr-field mdr-field--pos"><span class="mdr-field__label">Message <em>optional</em></span><textarea name="message" maxlength="120" rows="2" placeholder="Leave a note on the receipt…"></textarea></label>
+                <p class="mdr-tier-preview" id="mdr-tier-preview"></p>
+                <p class="mdr-error" id="mdr-checkout-error" role="alert"></p>
+                <button class="mdr-pos__commit" type="submit">
+                  <span class="mdr-pos__commit-label">Authorize $1.00</span>
+                  <span class="mdr-pos__commit-sub">Print permanent receipt line</span>
+                </button>
+              </form>
             </div>
-            <form id="mdr-checkout-form">
-              <label class="mdr-field"><span>Alias</span><input type="text" name="alias" maxlength="32" required placeholder="TLM13"></label>
-              <label class="mdr-field"><span>Message <em>(optional)</em></span><textarea name="message" maxlength="120" rows="2"></textarea></label>
-              <p class="mdr-tier-preview" id="mdr-tier-preview"></p>
-              <p class="mdr-error" id="mdr-checkout-error" role="alert"></p>
-              <button class="mdr-btn mdr-btn--primary mdr-btn--full" type="submit">Complete the Bad Decision</button>
-            </form>
           </div>
         </div>
       </section>
@@ -124,8 +175,9 @@
       <!-- 3. Receipt museum -->
       <section class="mdr-museum mdr-zone mdr-zone--read" id="mdr-receipt-section" aria-label="Receipt artifact">
         <aside class="mdr-museum__meta">
+          <p class="mdr-section-label">Archive specimen</p>
           <h2>The artifact</h2>
-          <p class="mdr-museum__desc">A narrow thermal receipt proving collective financial nonsense.</p>
+          <p class="mdr-museum__desc">A narrow thermal receipt proving collective financial nonsense. Preserved as a public register line.</p>
           <dl class="mdr-museum__facts">
             <div><dt>Current total</dt><dd id="mdr-museum-total">—</dd></div>
             <div><dt>Latest serial</dt><dd id="mdr-museum-serial">—</dd></div>
@@ -133,20 +185,36 @@
           </dl>
           <p class="mdr-museum__note" id="mdr-counter-meta"></p>
         </aside>
-        <div class="mdr-museum__artifact">
-          <img class="mdr-thermal__edge mdr-thermal__edge--top" src="/million-dollar-receipt/assets/receipt-edge.svg" alt="">
-          <div class="mdr-thermal" id="mdr-sacred-receipt"></div>
-          <img class="mdr-thermal__edge mdr-thermal__edge--bottom" src="/million-dollar-receipt/assets/receipt-edge.svg" alt="">
-          <img class="mdr-thermal__stamp-overlay" src="/million-dollar-receipt/assets/stamp.svg" alt="" aria-hidden="true">
+        <div class="mdr-museum__display">
+          <div class="mdr-museum__case">
+            <div class="mdr-museum__case-glow" aria-hidden="true"></div>
+            <div class="mdr-museum__case-frame">
+              <div class="mdr-museum__artifact">
+                <img class="mdr-thermal__edge mdr-thermal__edge--top" src="/million-dollar-receipt/assets/receipt-edge.svg" alt="">
+                <div class="mdr-thermal" id="mdr-sacred-receipt"></div>
+                <img class="mdr-thermal__edge mdr-thermal__edge--bottom" src="/million-dollar-receipt/assets/receipt-edge.svg" alt="">
+                <img class="mdr-thermal__stamp-overlay" src="/million-dollar-receipt/assets/stamp.svg" alt="" aria-hidden="true">
+              </div>
+              <p class="mdr-museum__specimen-label">Specimen · Public Register 01 · Thermal print</p>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- Confirmation -->
       <section class="mdr-confirm-zone mdr-zone mdr-zone--buy" id="mdr-confirmation" hidden>
-        <div class="mdr-museum__artifact mdr-museum__artifact--solo">
-          <img class="mdr-thermal__edge mdr-thermal__edge--top" src="/million-dollar-receipt/assets/receipt-edge.svg" alt="">
-          <div class="mdr-thermal" id="mdr-confirm-receipt"></div>
-          <img class="mdr-thermal__edge mdr-thermal__edge--bottom" src="/million-dollar-receipt/assets/receipt-edge.svg" alt="">
+        <div class="mdr-museum__display">
+          <div class="mdr-museum__case mdr-museum__case--confirm">
+            <div class="mdr-museum__case-glow" aria-hidden="true"></div>
+            <div class="mdr-museum__case-frame">
+              <div class="mdr-museum__artifact mdr-museum__artifact--solo">
+                <img class="mdr-thermal__edge mdr-thermal__edge--top" src="/million-dollar-receipt/assets/receipt-edge.svg" alt="">
+                <div class="mdr-thermal" id="mdr-confirm-receipt"></div>
+                <img class="mdr-thermal__edge mdr-thermal__edge--bottom" src="/million-dollar-receipt/assets/receipt-edge.svg" alt="">
+              </div>
+              <p class="mdr-museum__specimen-label">Your line · freshly printed</p>
+            </div>
+          </div>
         </div>
         <div class="mdr-confirm-actions">
           <button class="mdr-btn" type="button" id="mdr-view-line">View line</button>
@@ -161,13 +229,17 @@
       <section class="mdr-split mdr-zone mdr-zone--read" id="mdr-archive">
         <div class="mdr-split__col">
           <div class="mdr-split__head">
-            <h2>Public archive</h2>
+            <div>
+              <p class="mdr-section-label">Public record</p>
+              <h2>Public archive</h2>
+            </div>
             <button class="mdr-btn mdr-btn--sm" type="button" id="mdr-random-button">Random line</button>
           </div>
           <div class="mdr-archive-log" id="mdr-recent"></div>
           <button class="mdr-btn mdr-btn--ghost mdr-btn--full mdr-read-cta" type="button" id="mdr-buy-from-read">Send a Lemon Through the Machine</button>
         </div>
         <div class="mdr-split__col">
+          <p class="mdr-section-label">Factory modules</p>
           <h2 class="mdr-split__head">Module states</h2>
           <ul class="mdr-module-list" id="mdr-milestone-list"></ul>
           <div class="mdr-wall-compact" id="mdr-wall-grid"></div>
@@ -176,6 +248,7 @@
 
       <!-- 5. Utility dock -->
       <section class="mdr-dock mdr-zone mdr-zone--read" aria-label="Information">
+        <p class="mdr-section-label">Reference terminal</p>
         <div class="mdr-dock__tabs" role="tablist">
           <button type="button" class="mdr-dock__tab is-active" role="tab" aria-selected="true" data-tab="faq">FAQ</button>
           <button type="button" class="mdr-dock__tab" role="tab" aria-selected="false" data-tab="legal">Legal / Trust</button>

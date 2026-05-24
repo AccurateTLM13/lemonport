@@ -253,7 +253,6 @@
 
   function renderStaticSections() {
     document.title = config.title || document.title;
-    $("mdr-tagline").textContent = config.tagline || "";
     $("mdr-footer-tagline").textContent = config.tagline || "";
 
     $("mdr-faq-list").innerHTML = (config.faq || [])
@@ -324,13 +323,26 @@
   }
 
   function openCheckoutDrawer() {
+    const kiosk = $("mdr-kiosk");
     $("mdr-checkout").hidden = false;
+    if (kiosk) {
+      kiosk.dataset.checkout = "open";
+    }
     $("mdr-skip-animation").hidden = !prefersReducedMotion;
     $("mdr-checkout").scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "nearest" });
   }
 
+  function closeCheckoutDrawer() {
+    const kiosk = $("mdr-kiosk");
+    $("mdr-checkout").hidden = true;
+    if (kiosk) {
+      delete kiosk.dataset.checkout;
+    }
+  }
+
   function beginCheckoutSequence() {
     clearTimers();
+    closeCheckoutDrawer();
     $("mdr-confirmation").hidden = true;
 
     if (prefersReducedMotion) {
@@ -346,6 +358,12 @@
     schedule(() => setKioskPhase("scan"), 700);
     schedule(() => setKioskPhase("stamp"), 1100);
     schedule(() => setKioskPhase("print"), 1400);
+    schedule(() => {
+      const mini = $("mdr-mini-receipt");
+      if (mini) {
+        mini.textContent = "NOTHING · $1.00";
+      }
+    }, 1400);
     schedule(() => {
       setKioskPhase("checkout");
       openCheckoutDrawer();
@@ -366,7 +384,7 @@
 
   function showConfirmation(receipt) {
     lastReceipt = receipt;
-    $("mdr-checkout").hidden = true;
+    closeCheckoutDrawer();
     $("mdr-confirmation").hidden = false;
     renderConfirmReceipt(receipt);
     setKioskPhase("idle");
