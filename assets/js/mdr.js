@@ -5,24 +5,27 @@
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   let stats = { ...config.mockStats, recent: config.mockReceipts || [] };
-  let checkoutPhase = "idle";
   let animationTimers = [];
-  let archiveCursor = 0;
-  let archiveItems = [];
   let lastReceipt = null;
-
-  const els = {};
 
   function $(id) {
     return document.getElementById(id);
   }
 
-  function formatMoney(cents) {
-    return `$${(Number(cents) / 100).toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+  function formatMoney(cents, decimals) {
+    const value = Number(cents) / 100;
+    if (decimals) {
+      return `$${value.toFixed(2)}`;
+    }
+    return `$${value.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
   }
 
   function formatReceiptNumber(number) {
-    return `#${String(number).padStart(6, "0")}`;
+    return String(number).padStart(6, "0");
+  }
+
+  function serialForNumber(number) {
+    return `MDR-${formatReceiptNumber(number)}-NTH`;
   }
 
   function escapeHtml(value) {
@@ -39,18 +42,6 @@
     return match ? match.label : "Internet Witnesses";
   }
 
-  function formatDate(value) {
-    try {
-      return new Intl.DateTimeFormat("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric"
-      }).format(new Date(value));
-    } catch {
-      return value;
-    }
-  }
-
   function clearTimers() {
     animationTimers.forEach(clearTimeout);
     animationTimers = [];
@@ -60,6 +51,13 @@
     const id = window.setTimeout(fn, delay);
     animationTimers.push(id);
     return id;
+  }
+
+  function setKioskPhase(phase) {
+    const kiosk = $("mdr-kiosk");
+    if (kiosk) {
+      kiosk.dataset.phase = phase;
+    }
   }
 
   async function apiFetch(path, options) {
@@ -96,7 +94,7 @@
     const goal = config.goalCount * config.priceCents;
 
     $("mdr-counter-total").textContent = `${formatMoney(total)} / ${formatMoney(goal)}`;
-    $("mdr-counter-meta").textContent = `${count.toLocaleString()} people have bought nothing. ${remaining.toLocaleString()} spots remain.`;
+    $("mdr-counter-meta").textContent = `${count.toLocaleString()} buyers · ${remaining.toLocaleString()} spots left`;
     $("mdr-counter-bar").style.width = `${Math.min(100, (count / config.goalCount) * 100)}%`;
 
     const tierPreview = $("mdr-tier-preview");
@@ -104,59 +102,137 @@
       tierPreview.textContent = `Next tier: ${tierForNumber(count + 1)}`;
     }
 
-    const buyersEl = $("mdr-terminal-buyers");
-    const remainingEl = $("mdr-terminal-remaining");
-    const statusEl = $("mdr-terminal-status");
-
-    if (buyersEl) {
-      buyersEl.textContent = count.toLocaleString();
+    if ($("mdr-terminal-buyers")) {
+      $("mdr-terminal-buyers").textContent = count.toLocaleString();
     }
 
-    if (remainingEl) {
-      remainingEl.textContent = remaining.toLocaleString();
+    if ($("mdr-terminal-remaining")) {
+      $("mdr-terminal-remaining").textContent = remaining.toLocaleString();
     }
 
-    if (statusEl) {
-      statusEl.textContent = remaining > 0 ? "AVAILABLE" : "SOLD OUT";
+    if ($("mdr-terminal-status")) {
+      $("mdr-terminal-status").textContent = remaining > 0 ? "AVAILABLE" : "SOLD OUT";
+    }
+
+    if ($("mdr-kiosk-status")) {
+      $("mdr-kiosk-status").textContent = remaining > 0 ? "READY" : "FULL";
+    }
+
+    if ($("mdr-factory-status")) {
+      $("mdr-factory-status").textContent = `REGISTER 01 · ${remaining > 0 ? "STANDBY" : "CLOSED"}`;
     }
   }
 
-  function renderReceiptLine(receipt, options) {
-    const opts = options || {};
-    const message =
-      receipt.messageStatus === "pending"
-        ? "(message pending moderation)"
-        : receipt.message
-          ? `"${receipt.message}"`
-          : "";
-    const tier = receipt.tier || tierForNumber(receipt.number);
+  function renderSacredReceipt() {
+    const total = stats.totalCents ?? config.mockStats.totalCents;
+    const count = stats.count ?? config.mockStats.count;
+    const remaining = stats.remaining ?? config.mockStats.remaining;
+    const latest = (stats.recent || config.mockReceipts || [])[0];
 
-    return `
-      <article class="mdr-receipt-line${opts.highlight ? " mdr-highlight" : ""}" data-number="${receipt.number}">
-        <div class="mdr-receipt-line__head">
-          <span>${formatReceiptNumber(receipt.number)} &nbsp; ${escapeHtml(receipt.alias)} bought NOTHING</span>
-          <span>$1.00</span>
-        </div>
-        ${message ? `<p class="mdr-receipt-line__message">${escapeHtml(message)}</p>` : ""}
-        <span class="mdr-receipt-line__tier">${escapeHtml(tier)}</span>
-        <p class="mdr-receipt-line__message">${escapeHtml(formatDate(receipt.purchasedAt))}</p>
-      </article>
+    $("mdr-sacred-receipt").innerHTML = `
+      <div class="mdr-thermal__store">
+        LEMONTEED NOTHING WORKS<br>
+        PUBLIC INTERNET REGISTER 01
+      </div>
+      <hr class="mdr-thermal__rule">
+      <p class="mdr-thermal__title">THE MILLION DOLLAR RECEIPT</p>
+      <hr class="mdr-thermal__rule">
+      <div class="mdr-thermal__row mdr-thermal__row--head">
+        <span>ITEM</span><span>PRICE</span>
+      </div>
+      <div class="mdr-thermal__row">
+        <span>NOTHING, STANDARD</span><span>$1.00</span>
+      </div>
+      <hr class="mdr-thermal__rule">
+      <p class="mdr-thermal__label">CURRENT TOTAL</p>
+      <p class="mdr-thermal__value">${formatMoney(total)}</p>
+      <p class="mdr-thermal__label">BUYERS</p>
+      <p class="mdr-thermal__value">${count.toLocaleString()}</p>
+      <p class="mdr-thermal__label">REMAINING</p>
+      <p class="mdr-thermal__value">${remaining.toLocaleString()}</p>
+      ${
+        latest
+          ? `
+      <hr class="mdr-thermal__rule">
+      <p class="mdr-thermal__label">LATEST LINE</p>
+      <p class="mdr-thermal__value">${escapeHtml(latest.alias)}</p>
+      <p class="mdr-thermal__label">RECEIPT NO</p>
+      <p class="mdr-thermal__value">${serialForNumber(latest.number)}</p>
+      ${
+        latest.message
+          ? `<p class="mdr-thermal__label">MESSAGE</p><p class="mdr-thermal__message">"${escapeHtml(latest.message)}"</p>`
+          : ""
+      }
+      `
+          : ""
+      }
+      <hr class="mdr-thermal__rule">
+      <div class="mdr-thermal__row"><span>SUBTOTAL</span><span>${formatMoney(total, true)}</span></div>
+      <div class="mdr-thermal__row"><span>UTILITY</span><span>$0.00</span></div>
+      <div class="mdr-thermal__row"><span>REGRET</span><span>INCLUDED</span></div>
+      <div class="mdr-thermal__row"><span>TOTAL</span><span>${formatMoney(total, true)}</span></div>
+      <hr class="mdr-thermal__rule">
+      <p class="mdr-thermal__foot">${count.toLocaleString()} OF 1,000,000</p>
+      <div class="mdr-thermal__barcode" aria-hidden="true"></div>
     `;
   }
 
-  function renderRecent() {
-    const recent = stats.recent || config.mockReceipts || [];
-    $("mdr-recent").innerHTML = recent.slice(0, 8).map((item) => renderReceiptLine(item)).join("");
+  function renderConfirmReceipt(receipt) {
+    $("mdr-confirm-receipt").innerHTML = `
+      <div class="mdr-thermal__store">
+        LEMONTEED NOTHING WORKS<br>
+        PUBLIC INTERNET REGISTER 01
+      </div>
+      <hr class="mdr-thermal__rule">
+      <p class="mdr-thermal__title">PURCHASE CONFIRMED</p>
+      <hr class="mdr-thermal__rule">
+      <div class="mdr-thermal__row mdr-thermal__row--head">
+        <span>ITEM</span><span>PRICE</span>
+      </div>
+      <div class="mdr-thermal__row">
+        <span>NOTHING, STANDARD</span><span>$1.00</span>
+      </div>
+      <p class="mdr-thermal__label">PURCHASED BY</p>
+      <p class="mdr-thermal__value">${escapeHtml(receipt.alias)}</p>
+      <p class="mdr-thermal__label">RECEIPT NO</p>
+      <p class="mdr-thermal__value">${serialForNumber(receipt.number)}</p>
+      <p class="mdr-thermal__label">TIER</p>
+      <p class="mdr-thermal__value">${escapeHtml(receipt.tier || tierForNumber(receipt.number))}</p>
+      ${
+        receipt.message
+          ? `<p class="mdr-thermal__label">MESSAGE</p><p class="mdr-thermal__message">"${escapeHtml(receipt.message)}"</p>`
+          : ""
+      }
+      <hr class="mdr-thermal__rule">
+      <div class="mdr-thermal__row"><span>SUBTOTAL</span><span>$1.00</span></div>
+      <div class="mdr-thermal__row"><span>UTILITY</span><span>$0.00</span></div>
+      <div class="mdr-thermal__row"><span>REGRET</span><span>INCLUDED</span></div>
+      <div class="mdr-thermal__row"><span>TOTAL</span><span>$1.00</span></div>
+      <hr class="mdr-thermal__rule">
+      <p class="mdr-thermal__foot">${receipt.number.toLocaleString()} OF 1,000,000</p>
+      <div class="mdr-thermal__barcode" aria-hidden="true"></div>
+    `;
+  }
+
+  function renderArchivePreview() {
+    const recent = (stats.recent || config.mockReceipts || []).slice(0, 5);
+    $("mdr-recent").innerHTML = recent
+      .map(
+        (item) => `
+      <div class="mdr-log-line" data-number="${item.number}">
+        <span class="mdr-log-line__num">#${formatReceiptNumber(item.number)}</span>
+        <span class="mdr-log-line__alias">${escapeHtml(item.alias)}</span>
+        <span class="mdr-log-line__price">$1.00</span>
+      </div>
+    `
+      )
+      .join("");
   }
 
   function renderStaticSections() {
     document.title = config.title || document.title;
     $("mdr-tagline").textContent = config.tagline || "";
     $("mdr-footer-tagline").textContent = config.tagline || "";
-
-    $("mdr-how-list").innerHTML = (config.howItWorks || [])
-      .map((step) => `<li>${escapeHtml(step)}</li>`)
-      .join("");
 
     $("mdr-faq-list").innerHTML = (config.faq || [])
       .map((item) => `<div><dt>${escapeHtml(item.q)}</dt><dd>${escapeHtml(item.a)}</dd></div>`)
@@ -169,9 +245,8 @@
 
     if (config.moneyModel) {
       $("mdr-allocation").innerHTML = `
-        <p><strong>${escapeHtml(config.moneyModel.label)}</strong></p>
         <table>
-          <thead><tr><th>Use</th><th>Percent</th></tr></thead>
+          <thead><tr><th>Use</th><th>%</th></tr></thead>
           <tbody>
             ${(config.moneyModel.allocations || [])
               .map((row) => `<tr><td>${escapeHtml(row.use)}</td><td>${row.percent}%</td></tr>`)
@@ -181,21 +256,15 @@
       `;
     }
 
-    $("mdr-tier-filter").innerHTML =
-      `<option value="">All tiers</option>` +
-      (config.tiers || [])
-        .map((tier) => `<option value="${escapeHtml(tier.label)}">${escapeHtml(tier.label)}</option>`)
-        .join("");
-
     $("mdr-milestone-list").innerHTML = (config.milestones || [])
+      .slice(0, 6)
       .map((milestone) => {
         const unlocked = (stats.totalCents ?? 0) >= milestone.cents;
         return `
-          <li class="mdr-milestone-row ${unlocked ? "is-unlocked" : "is-locked"}">
-            <span class="mdr-milestone-row__status">${unlocked ? "UNLOCKED" : "LOCKED"}</span>
-            <span class="mdr-milestone-row__amount">${formatMoney(milestone.cents)}</span>
-            <span class="mdr-milestone-row__label">${escapeHtml(milestone.unlock)}</span>
-            <span class="mdr-milestone-row__module">${escapeHtml(milestone.key || "module")}</span>
+          <li class="mdr-module ${unlocked ? "is-unlocked" : ""}">
+            <span class="mdr-module__light" aria-hidden="true"></span>
+            <span class="mdr-module__name">${escapeHtml(milestone.unlock)}</span>
+            <span class="mdr-module__amt">${formatMoney(milestone.cents)}</span>
           </li>
         `;
       })
@@ -204,23 +273,15 @@
     $("mdr-wall-grid").innerHTML = (config.wallOfRegret || [])
       .map(
         (entry) => `
-          <article class="mdr-specimen">
-            <header class="mdr-specimen__head">
-              <span class="mdr-specimen__tag">SPECIMEN ${String(entry.number).padStart(4, "0")}</span>
-              <span class="mdr-specimen__receipt">${formatReceiptNumber(entry.number)}</span>
-            </header>
-            <blockquote class="mdr-specimen__quote">${escapeHtml(entry.message)}</blockquote>
-            <footer class="mdr-specimen__foot">
-              <cite>${escapeHtml(entry.alias)}</cite>
-              <span>ARCHIVED REGRET</span>
-            </footer>
-          </article>
+          <div class="mdr-wall-item">
+            "${escapeHtml(entry.message)}"
+            <cite>${escapeHtml(entry.alias)} · #${formatReceiptNumber(entry.number)}</cite>
+          </div>
         `
       )
       .join("");
 
     if (config.nothingReport) {
-      $("mdr-report-title").textContent = config.nothingReport.title;
       $("mdr-report-body").innerHTML = `
         <p>${escapeHtml(config.nothingReport.summary)}</p>
         ${(config.nothingReport.sections || [])
@@ -229,193 +290,42 @@
       `;
     }
 
-    renderReceiptHeaderFooter();
-    updateMilestoneFeatures();
+    renderSacredReceipt();
   }
 
-  function updateMilestoneFeatures() {
-    const total = stats.totalCents ?? config.mockStats.totalCents;
-    const milestones = config.milestones || [];
-    const unlocked = new Set(
-      milestones.filter((milestone) => total >= milestone.cents).map((milestone) => milestone.key)
-    );
-
-    $("mdr-physical").hidden = !unlocked.has("physicalPrint");
-    $("mdr-printer-sfx").hidden = !unlocked.has("printerSfx");
-  }
-
-  function playPrinterSound() {
-    if (prefersReducedMotion) {
-      return;
-    }
-
-    try {
-      const context = new (window.AudioContext || window.webkitAudioContext)();
-      const oscillator = context.createOscillator();
-      const gain = context.createGain();
-      oscillator.type = "square";
-      oscillator.frequency.value = 880;
-      gain.gain.value = 0.03;
-      oscillator.connect(gain);
-      gain.connect(context.destination);
-      oscillator.start();
-      oscillator.stop(context.currentTime + 0.08);
-    } catch {
-      // Audio optional.
-    }
-  }
-
-  function renderReceiptHeaderFooter() {
-    const total = stats.totalCents ?? config.mockStats.totalCents;
-    const count = stats.count ?? config.mockStats.count;
-    const complete = count >= config.goalCount;
-    const showBarcode = total >= 10000;
-
-    $("mdr-receipt-header").textContent =
-      `THE MILLION DOLLAR RECEIPT\n--------------------------------\nITEM: NOTHING\nQTY GOAL: 1,000,000\nPRICE EACH: $1.00\nTOTAL GOAL: $1,000,000.00\n--------------------------------`;
-
-    $("mdr-receipt-footer").textContent = complete
-      ? `--------------------------------\nSUBTOTAL: $1,000,000.00\nTAX: EMOTIONALLY COMPLICATED\nTOTAL: INTERNET HISTORY\n--------------------------------\n\n1,000,000 PEOPLE BOUGHT NOTHING TOGETHER.`
-      : `--------------------------------\nCURRENT COUNT: ${count.toLocaleString()}\nSTATUS: ACCEPTING BAD DECISIONS\n--------------------------------`;
-
-    if (showBarcode && !$("mdr-receipt-footer").querySelector(".mdr-barcode")) {
-      const barcode = document.createElement("div");
-      barcode.className = "mdr-barcode";
-      barcode.setAttribute("aria-hidden", "true");
-      $("mdr-receipt-footer").append(barcode);
-    }
-  }
-
-  async function loadArchive(reset) {
-    if (reset) {
-      archiveCursor = 0;
-      archiveItems = [];
-    }
-
-    let batch;
-
-    if (apiBase) {
-      const params = new URLSearchParams({
-        cursor: String(archiveCursor),
-        limit: "50"
-      });
-      const q = $("mdr-search").value.trim();
-      const tier = $("mdr-tier-filter").value;
-
-      if (q) {
-        params.set("q", q);
-      }
-
-      if (tier) {
-        params.set("tier", tier);
-      }
-
-      batch = await apiFetch(`/receipts?${params.toString()}`);
-      archiveItems = reset ? batch.items : archiveItems.concat(batch.items);
-      archiveCursor = batch.nextCursor ?? archiveCursor + batch.items.length;
-      $("mdr-load-more").hidden = batch.nextCursor == null;
-    } else {
-      let source = [...(config.mockReceipts || [])];
-
-      const q = $("mdr-search").value.trim().toLowerCase();
-      const tier = $("mdr-tier-filter").value;
-
-      if (q) {
-        source = source.filter(
-          (item) =>
-            String(item.number).includes(q) ||
-            item.alias.toLowerCase().includes(q) ||
-            (item.message && item.message.toLowerCase().includes(q))
-        );
-      }
-
-      if (tier) {
-        source = source.filter((item) => tierForNumber(item.number) === tier);
-      }
-
-      if (reset) {
-        archiveItems = source;
-      }
-
-      batch = { items: archiveItems, nextCursor: null };
-      $("mdr-load-more").hidden = true;
-    }
-
-    $("mdr-receipt-body").innerHTML = archiveItems.map((item) => renderReceiptLine(item)).join("");
-  }
-
-  function hideFlowPanels() {
-    $("mdr-machine-section").hidden = true;
-    $("mdr-checkout").hidden = true;
-    $("mdr-confirmation").hidden = true;
-  }
-
-  function revealCheckout() {
-    checkoutPhase = "checkoutReady";
-    $("mdr-machine-section").hidden = false;
+  function openCheckoutDrawer() {
     $("mdr-checkout").hidden = false;
-    $("mdr-checkout").classList.add("is-revealed");
+    $("mdr-skip-animation").hidden = !prefersReducedMotion;
     $("mdr-checkout").scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "nearest" });
   }
 
-  function runConveyorSequence() {
+  function beginCheckoutSequence() {
     clearTimers();
-    hideFlowPanels();
-    checkoutPhase = "preparing";
-
-    const conveyor = document.querySelector(".mdr-conveyor");
-    const lemonTag = $("mdr-lemon-tag");
-    const scanner = $("mdr-scanner");
-    const stamp = $("mdr-stamp");
-    const box = $("mdr-box");
-    const skip = $("mdr-skip-animation");
-
-    $("mdr-machine-section").hidden = false;
-    $("mdr-machine-copy").textContent = "Preparing your nothing…";
-    skip.hidden = false;
-
-    conveyor.className = "mdr-conveyor";
-    lemonTag.hidden = true;
-    scanner.hidden = true;
-    stamp.hidden = true;
-    stamp.classList.remove("is-slammed");
-    box.hidden = true;
+    $("mdr-confirmation").hidden = true;
 
     if (prefersReducedMotion) {
-      revealCheckout();
+      setKioskPhase("checkout");
+      openCheckoutDrawer();
       return;
     }
 
-    conveyor.classList.add("is-dropping");
-    schedule(() => {
-      conveyor.classList.remove("is-dropping");
-      conveyor.classList.add("is-riding");
-      $("mdr-machine-copy").textContent = "Routing through the Nothing Factory…";
-    }, 300);
+    setKioskPhase("awake");
+    $("mdr-skip-animation").hidden = false;
 
+    schedule(() => setKioskPhase("conveyor"), 200);
+    schedule(() => setKioskPhase("scan"), 700);
+    schedule(() => setKioskPhase("stamp"), 1100);
+    schedule(() => setKioskPhase("print"), 1400);
     schedule(() => {
-      scanner.hidden = false;
-      $("mdr-machine-copy").textContent = "Scanning for utility…";
-    }, 1500);
-
-    schedule(() => {
-      stamp.hidden = false;
-      stamp.classList.add("is-slammed");
-      lemonTag.hidden = false;
-      $("mdr-machine-copy").textContent = "Certified nothing detected.";
-    }, 1900);
-
-    schedule(() => {
-      box.hidden = false;
-      $("mdr-machine-copy").textContent = "Packaging your bad decision…";
-    }, 2200);
-
-    schedule(revealCheckout, 2700);
+      setKioskPhase("checkout");
+      openCheckoutDrawer();
+    }, 1700);
   }
 
   function skipAnimation() {
     clearTimers();
-    revealCheckout();
+    setKioskPhase("checkout");
+    openCheckoutDrawer();
   }
 
   function basicProfanityCheck(value) {
@@ -424,27 +334,16 @@
     return !blocked.some((word) => lower.includes(word));
   }
 
-  function renderShareCard(receipt) {
-    const card = `
-      <p class="mdr-share-card__title">THE MILLION DOLLAR RECEIPT</p>
-      <p class="mdr-share-card__number">${formatReceiptNumber(receipt.number)}</p>
-      <p class="mdr-share-card__line">${escapeHtml(receipt.alias)} bought NOTHING for $1.00</p>
-      <p class="mdr-share-card__line">${escapeHtml(receipt.tier || tierForNumber(receipt.number))}</p>
-      <p class="mdr-share-card__footer">1 of 1,000,000 · ${escapeHtml(config.tagline || "")}</p>
-    `;
-    $("mdr-share-card").innerHTML = card;
-
-    const shareText = `I'm officially part of The Million Dollar Receipt.\n${receipt.alias} bought nothing for $1.\nReceipt ${formatReceiptNumber(receipt.number)}.`;
-    $("mdr-share-text").value = shareText;
-  }
-
   function showConfirmation(receipt) {
     lastReceipt = receipt;
-    hideFlowPanels();
+    $("mdr-checkout").hidden = true;
     $("mdr-confirmation").hidden = false;
-    $("mdr-conf-number").textContent = formatReceiptNumber(receipt.number);
-    $("mdr-conf-tier").textContent = receipt.tier || tierForNumber(receipt.number);
-    renderShareCard(receipt);
+    renderConfirmReceipt(receipt);
+    setKioskPhase("idle");
+
+    const shareText = `I'm officially part of The Million Dollar Receipt.\n${receipt.alias} bought nothing for $1.\nReceipt ${serialForNumber(receipt.number)}.`;
+    $("mdr-share-text").value = shareText;
+
     $("mdr-confirmation").scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "nearest" });
   }
 
@@ -456,7 +355,7 @@
     errorEl.textContent = "";
 
     if (!alias) {
-      errorEl.textContent = "Alias is required.";
+      errorEl.textContent = "Alias required.";
       return;
     }
 
@@ -474,17 +373,14 @@
 
       if (result.mode === "mock" && result.receipt) {
         showConfirmation(result.receipt);
-        await loadStats();
-        renderCounter();
-        renderRecent();
-        await loadArchive(true);
+        await refreshData();
         return;
       }
 
       if (result.url) {
         window.location.href = result.url;
       }
-    } catch (error) {
+    } catch {
       const nextNumber = (stats.count ?? config.mockStats.count) + 1;
       const mockReceipt = {
         number: nextNumber,
@@ -502,41 +398,19 @@
         stats.totalCents = nextNumber * 100;
         stats.remaining = Math.max(0, config.goalCount - nextNumber);
         stats.recent = [mockReceipt, ...(stats.recent || config.mockReceipts || [])].slice(0, 20);
-        renderCounter();
-        renderRecent();
-        await loadArchive(true);
+        await refreshData();
         return;
       }
 
-      errorEl.textContent = error.message;
+      errorEl.textContent = "Checkout unavailable.";
     }
   }
 
-  async function handleReturnFromPayment() {
-    const params = new URLSearchParams(window.location.search);
-    const paid = params.get("paid");
-    const mockNumber = params.get("number");
-
-    if (!paid) {
-      return;
-    }
-
-    if (paid === "mock" && mockNumber) {
-      const receipt = await apiFetch(`/receipts/${mockNumber}`);
-      showConfirmation(receipt);
-      window.history.replaceState({}, "", window.location.pathname);
-      return;
-    }
-
-    try {
-      const list = await apiFetch("/receipts?limit=1");
-      if (list.items && list.items[0]) {
-        showConfirmation(list.items[0]);
-        window.history.replaceState({}, "", window.location.pathname);
-      }
-    } catch {
-      // Payment return without API — user can find receipt in archive.
-    }
+  async function refreshData() {
+    renderCounter();
+    renderSacredReceipt();
+    renderArchivePreview();
+    renderStaticSections();
   }
 
   async function copyShareText() {
@@ -557,31 +431,38 @@
     }
 
     const canvas = document.createElement("canvas");
-    canvas.width = 900;
-    canvas.height = 520;
+    canvas.width = 640;
+    canvas.height = 900;
     const ctx = canvas.getContext("2d");
 
-    ctx.fillStyle = "#f4efe3";
+    ctx.fillStyle = "#f3ecdf";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#12110f";
-    ctx.font = "700 28px Courier New, monospace";
-    ctx.fillText("THE MILLION DOLLAR RECEIPT", 48, 72);
-    ctx.font = "700 64px Courier New, monospace";
-    ctx.fillText(formatReceiptNumber(lastReceipt.number), 48, 170);
-    ctx.font = "24px Courier New, monospace";
-    ctx.fillText(`${lastReceipt.alias} bought NOTHING for $1.00`, 48, 240);
-    ctx.fillText(lastReceipt.tier || tierForNumber(lastReceipt.number), 48, 290);
-    ctx.fillText("1 of 1,000,000", 48, 340);
-    ctx.fillText(config.tagline || "", 48, 420);
+    ctx.fillStyle = "#0f0e0d";
+    ctx.font = "700 22px Courier New, monospace";
+
+    const lines = [
+      "LEMONTEED NOTHING WORKS",
+      "THE MILLION DOLLAR RECEIPT",
+      "",
+      `RECEIPT: ${serialForNumber(lastReceipt.number)}`,
+      `${lastReceipt.alias} bought NOTHING`,
+      "$1.00",
+      "",
+      `${lastReceipt.number.toLocaleString()} OF 1,000,000`
+    ];
+
+    lines.forEach((line, index) => {
+      ctx.fillText(line, 40, 60 + index * 36);
+    });
 
     const link = document.createElement("a");
     link.href = canvas.toDataURL("image/png");
-    link.download = `million-dollar-receipt-${lastReceipt.number}.png`;
+    link.download = `mdr-${lastReceipt.number}.png`;
     link.click();
   }
 
   function bindEvents() {
-    $("mdr-buy-button").addEventListener("click", runConveyorSequence);
+    $("mdr-buy-button").addEventListener("click", beginCheckoutSequence);
     $("mdr-skip-animation").addEventListener("click", skipAnimation);
 
     $("mdr-checkout-form").addEventListener("submit", (event) => {
@@ -590,36 +471,13 @@
     });
 
     $("mdr-view-line").addEventListener("click", () => {
-      if (!lastReceipt) {
-        return;
+      if (lastReceipt) {
+        window.location.href = `/million-dollar-receipt/receipt/?id=${lastReceipt.number}`;
       }
-
-      window.location.href = `/million-dollar-receipt/receipt/?id=${lastReceipt.number}`;
     });
 
     $("mdr-download-card").addEventListener("click", downloadShareCard);
     $("mdr-share-button").addEventListener("click", copyShareText);
-    $("mdr-challenge-button").addEventListener("click", () => {
-      copyShareText();
-      $("mdr-buy-button").focus();
-    });
-
-    $("mdr-load-more").addEventListener("click", () => loadArchive(false));
-    $("mdr-play-printer").addEventListener("click", playPrinterSound);
-
-    $("mdr-search").addEventListener(
-      "input",
-      debounce(() => loadArchive(true), 250)
-    );
-
-    $("mdr-tier-filter").addEventListener("change", () => loadArchive(true));
-
-    $("mdr-jump-number").addEventListener("change", (event) => {
-      const value = Number(event.target.value);
-      if (value > 0) {
-        window.location.href = `/million-dollar-receipt/receipt/?id=${value}`;
-      }
-    });
 
     $("mdr-random-button").addEventListener("click", async () => {
       try {
@@ -634,17 +492,8 @@
     });
   }
 
-  function debounce(fn, wait) {
-    let timer;
-    return function debounced(...args) {
-      clearTimeout(timer);
-      timer = setTimeout(() => fn.apply(this, args), wait);
-    };
-  }
-
   async function initLanding() {
-    els.root = document.querySelector(".mdr-page");
-    if (!els.root || !config.title) {
+    if (!$("mdr-kiosk") || !config.title) {
       return;
     }
 
@@ -652,9 +501,7 @@
     await loadStats();
     renderCounter();
     renderStaticSections();
-    renderRecent();
-    await loadArchive(true);
-    await handleReturnFromPayment();
+    renderArchivePreview();
   }
 
   async function initReceiptPage() {
@@ -682,34 +529,23 @@
       return;
     }
 
-    document.title = `${formatReceiptNumber(receipt.number)} | The Million Dollar Receipt`;
+    document.title = `${serialForNumber(receipt.number)} | The Million Dollar Receipt`;
 
     root.innerHTML = `
-      <article class="mdr-receipt-detail">
-        <p class="mdr-kicker">THE MILLION DOLLAR RECEIPT</p>
-        <h1>${formatReceiptNumber(receipt.number)}</h1>
-        <p class="mdr-tagline">${escapeHtml(receipt.alias)} bought NOTHING for $1.00</p>
-        <p class="mdr-tier-badge">${escapeHtml(receipt.tier || tierForNumber(receipt.number))}</p>
-        ${
-          receipt.message
-            ? `<p class="mdr-hero-copy">Message: "${escapeHtml(receipt.message)}"</p>`
-            : receipt.messageStatus === "pending"
-              ? `<p class="mdr-hero-copy">Message pending moderation.</p>`
-              : ""
-        }
-        <p class="mdr-hero-copy">Purchased: ${escapeHtml(formatDate(receipt.purchasedAt))}</p>
-        <div class="mdr-share-card" id="mdr-share-card"></div>
-        <div class="mdr-confirmation-actions">
-          <button class="mdr-button" type="button" id="mdr-share-button">Share</button>
-          <button class="mdr-button" type="button" id="mdr-download-card">Download Receipt Card</button>
-          <a class="mdr-button mdr-button--primary" href="/million-dollar-receipt/">Buy nothing too</a>
-        </div>
-        <textarea class="mdr-share-text" id="mdr-share-text" readonly hidden aria-label="Share text"></textarea>
-      </article>
+      <div class="mdr-sacred__frame">
+        <div class="mdr-thermal" id="mdr-confirm-receipt"></div>
+      </div>
+      <div class="mdr-confirmation__actions" style="margin-top:16px">
+        <button class="mdr-utility-btn" type="button" id="mdr-share-button">Share</button>
+        <button class="mdr-utility-btn" type="button" id="mdr-download-card">Download</button>
+        <a class="mdr-utility-btn" href="/million-dollar-receipt/">Buy nothing too</a>
+      </div>
+      <textarea class="mdr-share-text" id="mdr-share-text" readonly hidden aria-label="Share text"></textarea>
     `;
 
     lastReceipt = receipt;
-    renderShareCard(receipt);
+    renderConfirmReceipt(receipt);
+    $("mdr-share-text").value = `${receipt.alias} bought nothing. Receipt ${serialForNumber(receipt.number)}.`;
     $("mdr-share-button").addEventListener("click", copyShareText);
     $("mdr-download-card").addEventListener("click", downloadShareCard);
   }
