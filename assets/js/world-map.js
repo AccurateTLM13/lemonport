@@ -35,7 +35,7 @@
       title: "LEMON DOM",
       label: "EFFECTS / DOM",
       description: "Juicy UI effects for plain old websites.",
-      url: "https://mnfrdrsh.github.io/lemon-dom/"
+      url: "/lemon-dom/"
     },
     {
       id: "vrg",

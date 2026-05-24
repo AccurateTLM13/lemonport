@@ -1,12 +1,18 @@
 # Lemon DOM — standalone repository export
 
-This folder contains everything needed for the **separate** Lemon DOM GitHub repository.
+This folder is a **copy** of the Lemon DOM library and demo, packaged for publishing to its **own** GitHub repository when you are ready.
 
-It is **not** part of the Lemonteed site. The live demo should be published to GitHub Pages from its own repo.
+## Important
 
-## Publish to GitHub
+The **live demo stays on Lemonteed** at:
 
-1. Create a new public repository on GitHub named `lemon-dom` (empty, no README).
+**https://lemonteed.com/lemon-dom/**
+
+Do not point the Lemonteed world map at a GitHub Pages URL until you have actually created that repo and deployed it.
+
+## When you want a separate GitHub repo
+
+1. Create a new empty public repository (name it whatever you like, e.g. `lemon-dom`).
 
 2. From this folder:
 
@@ -16,19 +22,18 @@ git init
 git add .
 git commit -m "Initial commit: Lemon DOM v1"
 git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/lemon-dom.git
+git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
 git push -u origin main
 ```
 
-Or run `./publish.sh` after `git init` and creating the remote.
+3. Enable **GitHub Pages** → Source: **GitHub Actions**
 
-3. Enable **GitHub Pages** in the new repo:
-   - Settings → Pages → Build and deployment → **GitHub Actions**
+4. Optionally update Lemonteed map links to your new Pages URL — only after it is live.
 
-4. The demo deploys to: `https://YOUR_USERNAME.github.io/lemon-dom/`
+## Keeping copies in sync
 
-## Lemonteed integration
+When you change the demo on Lemonteed (`/lemon-dom/`), copy updated files here before publishing to the standalone repo:
 
-The Lemonteed world map links to the external GitHub Pages URL. The `/lemon-dom/` path on lemonteed.com is a redirect stub only.
-
-Update `assets/js/world-map.js` and `index.html` zone href if your GitHub Pages URL differs from `https://mnfrdrsh.github.io/lemon-dom/`.
+- `index.html` (adjust meta URLs for your GitHub Pages domain)
+- `lemon-dom.css`
+- `lemon-dom.js`

@@ -8,11 +8,11 @@ Inspired by the experimental direction of [Liquid DOM](https://github.com/Andrew
 
 ## Live demo
 
-Once GitHub Pages is enabled, the demo lives at:
+The canonical demo is hosted on **Lemonteed**:
 
-**https://mnfrdrsh.github.io/lemon-dom/**
+**https://lemonteed.com/lemon-dom/**
 
-This repository's `index.html` is the product landing page and live demo.
+This repository folder is an export for a standalone GitHub repo. After you publish and enable GitHub Pages, your copy will live at your own Pages URL.
 
 ## Quick start
 
@@ -105,7 +105,7 @@ git init
 git add .
 git commit -m "Initial commit: Lemon DOM v1"
 git branch -M main
-git remote add origin https://github.com/mnfrdrsh/lemon-dom.git
+git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
 git push -u origin main
 ```
 
