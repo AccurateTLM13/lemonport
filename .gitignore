@@ -2,3 +2,4 @@
 .codex-screens/
 *.tmp
 .studio-backups/
+/lemon-dom-standalone/
