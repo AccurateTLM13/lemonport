@@ -92,10 +92,36 @@
     const count = stats.count ?? config.mockStats.count;
     const remaining = stats.remaining ?? config.mockStats.remaining;
     const goal = config.goalCount * config.priceCents;
+    const latest = (stats.recent || config.mockReceipts || [])[0];
+    const counterBar = $("mdr-counter-bar");
 
-    $("mdr-counter-total").textContent = `${formatMoney(total)} / ${formatMoney(goal)}`;
-    $("mdr-counter-meta").textContent = `${count.toLocaleString()} buyers · ${remaining.toLocaleString()} spots left`;
-    $("mdr-counter-bar").style.width = `${Math.min(100, (count / config.goalCount) * 100)}%`;
+    if ($("mdr-counter-total")) {
+      $("mdr-counter-total").textContent = formatMoney(total);
+    }
+
+    if ($("mdr-counter-meta")) {
+      $("mdr-counter-meta").textContent = `${count.toLocaleString()} buyers · ${remaining.toLocaleString()} spots left`;
+    }
+
+    if (counterBar) {
+      counterBar.style.width = `${Math.min(100, (count / config.goalCount) * 100)}%`;
+    }
+
+    if ($("mdr-hero-total")) {
+      $("mdr-hero-total").textContent = `${formatMoney(total)} / ${formatMoney(goal)}`;
+    }
+
+    if ($("mdr-hero-meta")) {
+      $("mdr-hero-meta").textContent = `${count.toLocaleString()} receipts · ${remaining.toLocaleString()} remaining`;
+    }
+
+    if ($("mdr-museum-total")) {
+      $("mdr-museum-total").textContent = formatMoney(total);
+    }
+
+    if ($("mdr-museum-serial")) {
+      $("mdr-museum-serial").textContent = latest ? serialForNumber(latest.number) : "—";
+    }
 
     const tierPreview = $("mdr-tier-preview");
     if (tierPreview) {
@@ -111,15 +137,11 @@
     }
 
     if ($("mdr-terminal-status")) {
-      $("mdr-terminal-status").textContent = remaining > 0 ? "AVAILABLE" : "SOLD OUT";
+      $("mdr-terminal-status").textContent = remaining > 0 ? "STILL ABSURD" : "SOLD OUT";
     }
 
     if ($("mdr-kiosk-status")) {
-      $("mdr-kiosk-status").textContent = remaining > 0 ? "READY" : "FULL";
-    }
-
-    if ($("mdr-factory-status")) {
-      $("mdr-factory-status").textContent = `REGISTER 01 · ${remaining > 0 ? "STANDBY" : "CLOSED"}`;
+      $("mdr-kiosk-status").textContent = remaining > 0 ? "STATUS: READY" : "STATUS: FULL";
     }
   }
 
@@ -270,7 +292,7 @@
       })
       .join("");
 
-    $("mdr-wall-grid").innerHTML = (config.wallOfRegret || [])
+    const wallHtml = (config.wallOfRegret || [])
       .map(
         (entry) => `
           <div class="mdr-wall-item">
@@ -280,6 +302,14 @@
         `
       )
       .join("");
+
+    if ($("mdr-wall-grid")) {
+      $("mdr-wall-grid").innerHTML = wallHtml;
+    }
+
+    if ($("mdr-wall-regret")) {
+      $("mdr-wall-regret").innerHTML = wallHtml;
+    }
 
     if (config.nothingReport) {
       $("mdr-report-body").innerHTML = `
@@ -461,25 +491,83 @@
     link.click();
   }
 
-  function bindEvents() {
-    $("mdr-buy-button").addEventListener("click", beginCheckoutSequence);
-    $("mdr-skip-animation").addEventListener("click", skipAnimation);
+  function setMobilePath(path) {
+    document.body.dataset.mobilePath = path;
 
-    $("mdr-checkout-form").addEventListener("submit", (event) => {
+    document.querySelectorAll(".mdr-path-nav__btn").forEach((btn) => {
+      const isActive = btn.dataset.path === path;
+      btn.classList.toggle("is-active", isActive);
+      btn.setAttribute("aria-pressed", isActive ? "true" : "false");
+    });
+  }
+
+  function switchDockTab(tabId) {
+    document.querySelectorAll(".mdr-dock__tab").forEach((tab) => {
+      const isActive = tab.dataset.tab === tabId;
+      tab.classList.toggle("is-active", isActive);
+      tab.setAttribute("aria-selected", isActive ? "true" : "false");
+    });
+
+    document.querySelectorAll(".mdr-dock__panel").forEach((panel) => {
+      const isActive = panel.id === `mdr-tab-${tabId}`;
+      panel.classList.toggle("is-active", isActive);
+      panel.hidden = !isActive;
+    });
+  }
+
+  function scrollToReceipt() {
+    setMobilePath("read");
+    $("mdr-receipt-section")?.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
+  }
+
+  function bindEvents() {
+    $("mdr-buy-button")?.addEventListener("click", beginCheckoutSequence);
+    $("mdr-buy-button-machine")?.addEventListener("click", beginCheckoutSequence);
+    $("mdr-skip-animation")?.addEventListener("click", skipAnimation);
+
+    $("mdr-checkout-form")?.addEventListener("submit", (event) => {
       event.preventDefault();
       submitCheckout(event.currentTarget);
     });
 
-    $("mdr-view-line").addEventListener("click", () => {
+    $("mdr-read-receipt-btn")?.addEventListener("click", () => {
+      setMobilePath("read");
+      scrollToReceipt();
+    });
+
+    $("mdr-explain-after-buy")?.addEventListener("click", () => {
+      setMobilePath("read");
+      $("mdr-receipt-section")?.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
+    });
+
+    $("mdr-buy-from-read")?.addEventListener("click", () => {
+      setMobilePath("buy");
+      beginCheckoutSequence();
+    });
+
+    document.querySelectorAll(".mdr-path-nav__btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        setMobilePath(btn.dataset.path);
+        if (btn.dataset.path === "buy") {
+          window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+        }
+      });
+    });
+
+    document.querySelectorAll(".mdr-dock__tab").forEach((tab) => {
+      tab.addEventListener("click", () => switchDockTab(tab.dataset.tab));
+    });
+
+    $("mdr-view-line")?.addEventListener("click", () => {
       if (lastReceipt) {
         window.location.href = `/million-dollar-receipt/receipt/?id=${lastReceipt.number}`;
       }
     });
 
-    $("mdr-download-card").addEventListener("click", downloadShareCard);
-    $("mdr-share-button").addEventListener("click", copyShareText);
+    $("mdr-download-card")?.addEventListener("click", downloadShareCard);
+    $("mdr-share-button")?.addEventListener("click", copyShareText);
 
-    $("mdr-random-button").addEventListener("click", async () => {
+    $("mdr-random-button")?.addEventListener("click", async () => {
       try {
         const receipt = await apiFetch("/receipts/random");
         window.location.href = `/million-dollar-receipt/receipt/?id=${receipt.number}`;
