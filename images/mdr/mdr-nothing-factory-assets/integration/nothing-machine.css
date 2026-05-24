@@ -1,0 +1,135 @@
+/* Nothing Factory machine integration
+   Asset strategy: baked high-fidelity machine base + positioned interactive overlays. */
+.nothing-machine {
+  --nf-green: #b9ff00;
+  --nf-green-soft: rgba(185,255,0,.36);
+  --nf-dark: #030403;
+  position: relative;
+  width: min(100%, 900px);
+  aspect-ratio: 1448 / 1086;
+  isolation: isolate;
+  filter: drop-shadow(0 30px 80px rgba(0,0,0,.55));
+}
+
+.nothing-machine__base {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+.nothing-machine__lemon {
+  position: absolute;
+  left: 12.8%;
+  top: 37.4%;
+  width: 7.2%;
+  height: auto;
+  z-index: 3;
+  transform-origin: 50% 55%;
+  filter: drop-shadow(0 10px 12px rgba(0,0,0,.65));
+}
+
+.nothing-machine__beam {
+  position: absolute;
+  left: 67.1%;
+  top: 25.2%;
+  width: 4.4%;
+  height: 31.2%;
+  z-index: 4;
+  opacity: 0;
+  background: linear-gradient(to bottom, transparent 0%, rgba(185,255,0,.85) 18%, #dcff72 50%, rgba(185,255,0,.85) 82%, transparent 100%);
+  filter: blur(3px) drop-shadow(0 0 18px var(--nf-green-soft));
+  mix-blend-mode: screen;
+  border-radius: 999px;
+}
+
+.nothing-machine__receipt-slip {
+  position: absolute;
+  left: 77.3%;
+  top: 30%;
+  width: 11.8%;
+  height: auto;
+  z-index: 4;
+  opacity: 0;
+  transform: translateY(-8%) scaleY(.2);
+  transform-origin: top center;
+}
+
+.nothing-machine__hitbox {
+  position: absolute;
+  left: 22.4%;
+  top: 83.1%;
+  width: 55.6%;
+  height: 10.4%;
+  z-index: 8;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.nothing-machine__hitbox:focus-visible {
+  outline: 2px solid var(--nf-green);
+  outline-offset: 6px;
+}
+
+.nothing-machine__hitbox::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  box-shadow: 0 0 40px rgba(185,255,0,.42), inset 0 0 18px rgba(255,255,255,.24);
+  transition: opacity .18s ease;
+}
+
+.nothing-machine__hitbox:hover::after,
+.nothing-machine[data-state="checkout"] .nothing-machine__hitbox::after {
+  opacity: 1;
+}
+
+.nothing-machine[data-state="conveyor"] .nothing-machine__lemon {
+  animation: nf-lemon-travel 1.45s cubic-bezier(.45,0,.2,1) forwards;
+}
+
+.nothing-machine[data-state="scan"] .nothing-machine__lemon,
+.nothing-machine[data-state="print"] .nothing-machine__lemon,
+.nothing-machine[data-state="checkout"] .nothing-machine__lemon {
+  left: 63.2%;
+  top: 36.8%;
+  width: 5.8%;
+}
+
+.nothing-machine[data-state="scan"] .nothing-machine__beam {
+  opacity: 1;
+  animation: nf-scan-pulse .78s ease-in-out;
+}
+
+.nothing-machine[data-state="print"] .nothing-machine__receipt-slip,
+.nothing-machine[data-state="checkout"] .nothing-machine__receipt-slip {
+  opacity: 1;
+  transform: translateY(0) scaleY(1);
+  transition: opacity .2s ease, transform .5s cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes nf-lemon-travel {
+  0% { left: 12.8%; top: 37.4%; transform: rotate(0deg) scale(1); }
+  20% { top: 37%; transform: rotate(85deg) scale(1.02); }
+  62% { top: 37%; transform: rotate(360deg) scale(1); }
+  100% { left: 63.2%; top: 36.8%; width: 5.8%; transform: rotate(540deg) scale(.92); }
+}
+
+@keyframes nf-scan-pulse {
+  0%,100% { opacity: 0; transform: scaleX(.45); }
+  18%,72% { opacity: 1; transform: scaleX(1); }
+  45% { opacity: .72; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nothing-machine * { animation: none !important; transition: none !important; }
+  .nothing-machine[data-state] .nothing-machine__lemon { left: 63.2%; top: 36.8%; width: 5.8%; }
+}

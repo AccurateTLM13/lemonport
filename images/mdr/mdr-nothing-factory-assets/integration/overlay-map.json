@@ -1,0 +1,48 @@
+{
+  "asset": "nothing-factory-machine.webp",
+  "aspectRatio": "1448 / 1086",
+  "coordinateSystem": "percentages relative to .nothing-machine wrapper",
+  "overlays": {
+    "lemonStart": {
+      "left": "12.8%",
+      "top": "37.4%",
+      "width": "7.2%"
+    },
+    "lemonScan": {
+      "left": "63.2%",
+      "top": "36.8%",
+      "width": "5.8%"
+    },
+    "scannerBeam": {
+      "left": "67.1%",
+      "top": "25.2%",
+      "width": "4.4%",
+      "height": "31.2%"
+    },
+    "receiptSlip": {
+      "left": "77.3%",
+      "top": "30.0%",
+      "width": "11.8%"
+    },
+    "buyHitbox": {
+      "left": "22.4%",
+      "top": "83.1%",
+      "width": "55.6%",
+      "height": "10.4%"
+    },
+    "terminalText": {
+      "left": "10.6%",
+      "top": "64.0%",
+      "width": "78.0%",
+      "height": "13.3%"
+    }
+  },
+  "states": [
+    "idle",
+    "intake",
+    "conveyor",
+    "scan",
+    "print",
+    "checkout"
+  ]
+}
