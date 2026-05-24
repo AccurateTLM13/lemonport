@@ -282,6 +282,17 @@ function loadContent() {
 function runCli() {
   const { projects, categories } = loadContent();
   const result = validateContent(projects, categories);
+  const mdrFile = path.join(root, "content", "million-dollar-receipt.json");
+
+  if (fs.existsSync(mdrFile)) {
+    try {
+      const { validateMdr } = require("./build-mdr");
+      const mdrResult = validateMdr(JSON.parse(fs.readFileSync(mdrFile, "utf8")));
+      mdrResult.errors.forEach((error) => result.errors.push(`million-dollar-receipt.json: ${error}`));
+    } catch (error) {
+      result.errors.push(`million-dollar-receipt.json: ${error.message}`);
+    }
+  }
 
   if (result.errors.length || result.warnings.length) {
     console.log(formatValidationResult(result));

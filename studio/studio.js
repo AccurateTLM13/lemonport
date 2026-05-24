@@ -394,6 +394,14 @@
         <h3>Category Counts</h3>
         ${categoryCounts ? `<ul>${categoryCounts}</ul>` : "<p>No categories loaded.</p>"}
       </section>
+      <section class="dashboard-list dashboard-list--dev">
+        <h3>Hidden pages (dev only)</h3>
+        <p>Direct URL only — not in public nav or sitemap. Studio is local-only and not deployed.</p>
+        <ul>
+          <li><span>The Million Dollar Receipt</span><a href="/million-dollar-receipt/" target="_blank" rel="noreferrer">Open</a></li>
+          <li><span>Operator Log</span><a href="/operator-log/" target="_blank" rel="noreferrer">Open</a></li>
+        </ul>
+      </section>
     `;
   }
 
