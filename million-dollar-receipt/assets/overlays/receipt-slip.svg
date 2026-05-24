@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 168" fill="none" aria-hidden="true">
+  <defs>
+    <pattern id="mdrSlipTex" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f4f0e6"/>
+      <circle cx="2" cy="2" r="0.5" fill="#ebe3d4" opacity="0.6"/>
+    </pattern>
+  </defs>
+  <rect width="120" height="168" fill="url(#mdrSlipTex)"/>
+  <rect x="8" y="10" width="104" height="1" fill="#ccc5b8"/>
+  <rect x="12" y="22" width="72" height="3" rx="1" fill="#1a1a1a" opacity="0.15"/>
+  <rect x="12" y="32" width="96" height="2" rx="1" fill="#1a1a1a" opacity="0.1"/>
+  <rect x="12" y="40" width="88" height="2" rx="1" fill="#1a1a1a" opacity="0.1"/>
+  <rect x="12" y="52" width="64" height="2" rx="1" fill="#1a1a1a" opacity="0.12"/>
+  <text x="60" y="78" text-anchor="middle" fill="#1a1a1a" font-family="IBM Plex Mono, Courier New, monospace" font-size="8" font-weight="700">NOTHING</text>
+  <text x="60" y="92" text-anchor="middle" fill="#1a1a1a" font-family="IBM Plex Mono, Courier New, monospace" font-size="7">$1.00</text>
+  <rect x="20" y="108" width="80" height="20" fill="#1a1a1a" opacity="0.08"/>
+  <rect x="8" y="158" width="104" height="1" fill="#ccc5b8" stroke-dasharray="3 2"/>
+</svg>

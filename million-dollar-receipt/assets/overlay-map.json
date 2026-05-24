@@ -1,0 +1,51 @@
+{
+  "canvas": {
+    "width": 1448,
+    "height": 1086,
+    "aspectRatio": "1448 / 1086"
+  },
+  "overlays": {
+    "lemon": {
+      "left": "13%",
+      "top": "37%",
+      "width": "5%",
+      "transformOrigin": "center"
+    },
+    "scan": {
+      "left": "68%",
+      "top": "24%",
+      "width": "4%",
+      "opacity": 0,
+      "pointerEvents": "none"
+    },
+    "slip": {
+      "left": "77%",
+      "top": "31%",
+      "width": "11%",
+      "opacity": 0,
+      "transform": "translateY(-8%)",
+      "pointerEvents": "none"
+    },
+    "hitbox": {
+      "left": "24%",
+      "bottom": "6%",
+      "width": "52%",
+      "height": "10%"
+    }
+  },
+  "states": ["idle", "intake", "conveyor", "scan", "print", "checkout"],
+  "timingMs": {
+    "intake": 0,
+    "conveyor": 250,
+    "scan": 1400,
+    "print": 2100,
+    "checkout": 2800
+  },
+  "animation": {
+    "lemonTravel": {
+      "duration": "1.2s",
+      "from": { "left": "13%", "rotate": "0deg" },
+      "to": { "left": "63%", "rotate": "540deg" }
+    }
+  }
+}

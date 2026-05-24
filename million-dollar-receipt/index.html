@@ -12,10 +12,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/mdr.css?v=5">
+  <link rel="stylesheet" href="/assets/css/mdr.css?v=7">
   <script src="/assets/js/mdr-config.js?v=1" defer></script>
   <script src="/assets/js/mdr-stats.js?v=1" defer></script>
-  <script src="/assets/js/mdr.js?v=5" defer></script>
+  <script src="/assets/js/mdr.js?v=7" defer></script>
 </head>
 <body class="mdr-page" data-mobile-path="buy">
   <a class="mdr-skip" href="#mdr-main">Skip to content</a>
@@ -62,47 +62,46 @@
         </div>
 
         <div class="mdr-hero-room__machine">
-          <div class="mdr-machine" id="mdr-kiosk" data-phase="idle">
-            <img class="mdr-machine__frame" src="/million-dollar-receipt/assets/machine-frame.svg" alt="" width="480" height="560">
-            <div class="mdr-machine__overlay" aria-hidden="true">
-              <div class="mdr-machine__viewport" id="mdr-conveyor-window">
-                <div class="mdr-machine__intake">
-                  <img class="mdr-machine__lemon" id="mdr-lemon" src="/million-dollar-receipt/assets/lemon.svg" alt="" width="48" height="48">
-                </div>
-                <div class="mdr-machine__conveyor">
-                  <div class="mdr-machine__belt"></div>
-                </div>
-                <div class="mdr-machine__scanner">
-                  <img class="mdr-machine__scanner-rail" src="/million-dollar-receipt/assets/scanner-rail.svg" alt="">
-                  <div class="mdr-machine__beam" id="mdr-scanner-beam"></div>
-                </div>
-                <div class="mdr-machine__stamp-module">
-                  <img class="mdr-machine__stamp-img" id="mdr-stamp" src="/million-dollar-receipt/assets/stamp.svg" alt="">
-                </div>
-              </div>
-              <div class="mdr-machine__printer-slot">
-                <div class="mdr-machine__mini-receipt" id="mdr-mini-receipt"></div>
-              </div>
-              <div class="mdr-machine__terminal">
-                <div class="mdr-machine__terminal-head">TERMINAL DISPLAY</div>
-                <div class="mdr-machine__readout">
-                  <span class="mdr-machine__readout-line">ITEM: NOTHING, STANDARD</span>
-                  <span class="mdr-machine__readout-line">PRICE: $1.00</span>
-                  <span class="mdr-machine__readout-line" id="mdr-kiosk-status">STATUS: READY</span>
-                </div>
-              </div>
-            </div>
-            <div class="mdr-machine__lights" aria-hidden="true">
-              <span class="mdr-machine__light is-on" title="Power"></span>
-              <span class="mdr-machine__light" title="Conveyor"></span>
-              <span class="mdr-machine__light" title="Printer"></span>
-            </div>
-            <button class="mdr-machine__bay" type="button" id="mdr-buy-button-machine" aria-label="Buy Nothing for $1">
-              <span class="mdr-machine__bay-label">Buy Nothing</span>
-              <span class="mdr-machine__bay-price">$1.00</span>
+          <div class="mdr-machine-stage" id="mdr-machine-stage" data-state="idle">
+            <picture class="mdr-machine-base">
+              <source srcset="/million-dollar-receipt/assets/machine/nothing-factory-machine-1448.webp 1448w,
+                              /million-dollar-receipt/assets/machine/nothing-factory-machine-1200.webp 1200w,
+                              /million-dollar-receipt/assets/machine/nothing-factory-machine-1024.webp 1024w,
+                              /million-dollar-receipt/assets/machine/nothing-factory-machine-768.webp 768w,
+                              /million-dollar-receipt/assets/machine/nothing-factory-machine-640.webp 640w,
+                              /million-dollar-receipt/assets/machine/nothing-factory-machine-480.webp 480w"
+                      sizes="(max-width: 768px) 100vw, 58vw"
+                      type="image/webp">
+              <img src="/million-dollar-receipt/assets/machine/nothing-factory-machine.webp"
+                   alt=""
+                   width="1448"
+                   height="1086"
+                   decoding="async">
+            </picture>
+            <img class="mdr-machine-lemon"
+                 id="mdr-machine-lemon"
+                 src="/million-dollar-receipt/assets/overlays/lemon.svg"
+                 alt=""
+                 aria-hidden="true">
+            <img class="mdr-machine-scan"
+                 id="mdr-machine-scan"
+                 src="/million-dollar-receipt/assets/overlays/scanner-beam.svg"
+                 alt=""
+                 aria-hidden="true">
+            <img class="mdr-machine-slip"
+                 id="mdr-machine-slip"
+                 src="/million-dollar-receipt/assets/overlays/receipt-slip.svg"
+                 alt=""
+                 aria-hidden="true">
+            <img class="mdr-machine-glow"
+                 src="/million-dollar-receipt/assets/overlays/button-glow.svg"
+                 alt=""
+                 aria-hidden="true">
+            <button class="mdr-machine-hitbox" type="button" id="mdr-buy-button-machine">
+              <span class="mdr-sr-only">Buy Nothing for $1</span>
             </button>
-            <button class="mdr-machine__skip" type="button" id="mdr-skip-animation" hidden>Skip sequence</button>
           </div>
+          <button class="mdr-machine-skip" type="button" id="mdr-skip-animation" hidden>Skip sequence</button>
 
           <div class="mdr-pos" id="mdr-checkout" hidden>
             <div class="mdr-pos__chrome">
@@ -190,10 +189,10 @@
             <div class="mdr-museum__case-glow" aria-hidden="true"></div>
             <div class="mdr-museum__case-frame">
               <div class="mdr-museum__artifact">
-                <img class="mdr-thermal__edge mdr-thermal__edge--top" src="/million-dollar-receipt/assets/receipt-edge.svg" alt="">
+                <img class="mdr-thermal__edge mdr-thermal__edge--top" src="/million-dollar-receipt/assets/overlays/receipt-edge.svg" alt="">
                 <div class="mdr-thermal" id="mdr-sacred-receipt"></div>
-                <img class="mdr-thermal__edge mdr-thermal__edge--bottom" src="/million-dollar-receipt/assets/receipt-edge.svg" alt="">
-                <img class="mdr-thermal__stamp-overlay" src="/million-dollar-receipt/assets/stamp.svg" alt="" aria-hidden="true">
+                <img class="mdr-thermal__edge mdr-thermal__edge--bottom" src="/million-dollar-receipt/assets/overlays/receipt-edge.svg" alt="">
+                <img class="mdr-thermal__stamp-overlay" src="/million-dollar-receipt/assets/overlays/stamp.svg" alt="" aria-hidden="true">
               </div>
               <p class="mdr-museum__specimen-label">Specimen · Public Register 01 · Thermal print</p>
             </div>
@@ -208,9 +207,9 @@
             <div class="mdr-museum__case-glow" aria-hidden="true"></div>
             <div class="mdr-museum__case-frame">
               <div class="mdr-museum__artifact mdr-museum__artifact--solo">
-                <img class="mdr-thermal__edge mdr-thermal__edge--top" src="/million-dollar-receipt/assets/receipt-edge.svg" alt="">
+                <img class="mdr-thermal__edge mdr-thermal__edge--top" src="/million-dollar-receipt/assets/overlays/receipt-edge.svg" alt="">
                 <div class="mdr-thermal" id="mdr-confirm-receipt"></div>
-                <img class="mdr-thermal__edge mdr-thermal__edge--bottom" src="/million-dollar-receipt/assets/receipt-edge.svg" alt="">
+                <img class="mdr-thermal__edge mdr-thermal__edge--bottom" src="/million-dollar-receipt/assets/overlays/receipt-edge.svg" alt="">
               </div>
               <p class="mdr-museum__specimen-label">Your line · freshly printed</p>
             </div>

@@ -53,11 +53,21 @@
     return id;
   }
 
-  function setKioskPhase(phase) {
-    const kiosk = $("mdr-kiosk");
-    if (kiosk) {
-      kiosk.dataset.phase = phase;
+  function setMachineState(state) {
+    const stage = $("mdr-machine-stage");
+    if (stage) {
+      stage.dataset.state = state;
     }
+  }
+
+  function resetMachineOverlays() {
+    const stage = $("mdr-machine-stage");
+    if (!stage) {
+      return;
+    }
+
+    stage.dataset.state = "idle";
+    delete stage.dataset.checkout;
   }
 
   async function apiFetch(path, options) {
@@ -138,10 +148,6 @@
 
     if ($("mdr-terminal-status")) {
       $("mdr-terminal-status").textContent = remaining > 0 ? "STILL ABSURD" : "SOLD OUT";
-    }
-
-    if ($("mdr-kiosk-status")) {
-      $("mdr-kiosk-status").textContent = remaining > 0 ? "STATUS: READY" : "STATUS: FULL";
     }
   }
 
@@ -323,20 +329,20 @@
   }
 
   function openCheckoutDrawer() {
-    const kiosk = $("mdr-kiosk");
+    const stage = $("mdr-machine-stage");
     $("mdr-checkout").hidden = false;
-    if (kiosk) {
-      kiosk.dataset.checkout = "open";
+    if (stage) {
+      stage.dataset.checkout = "open";
     }
     $("mdr-skip-animation").hidden = !prefersReducedMotion;
     $("mdr-checkout").scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "nearest" });
   }
 
   function closeCheckoutDrawer() {
-    const kiosk = $("mdr-kiosk");
+    const stage = $("mdr-machine-stage");
     $("mdr-checkout").hidden = true;
-    if (kiosk) {
-      delete kiosk.dataset.checkout;
+    if (stage) {
+      delete stage.dataset.checkout;
     }
   }
 
@@ -346,33 +352,26 @@
     $("mdr-confirmation").hidden = true;
 
     if (prefersReducedMotion) {
-      setKioskPhase("checkout");
+      setMachineState("checkout");
       openCheckoutDrawer();
       return;
     }
 
-    setKioskPhase("awake");
+    setMachineState("intake");
     $("mdr-skip-animation").hidden = false;
 
-    schedule(() => setKioskPhase("conveyor"), 200);
-    schedule(() => setKioskPhase("scan"), 700);
-    schedule(() => setKioskPhase("stamp"), 1100);
-    schedule(() => setKioskPhase("print"), 1400);
+    schedule(() => setMachineState("conveyor"), 250);
+    schedule(() => setMachineState("scan"), 1400);
+    schedule(() => setMachineState("print"), 2100);
     schedule(() => {
-      const mini = $("mdr-mini-receipt");
-      if (mini) {
-        mini.textContent = "NOTHING · $1.00";
-      }
-    }, 1400);
-    schedule(() => {
-      setKioskPhase("checkout");
+      setMachineState("checkout");
       openCheckoutDrawer();
-    }, 1700);
+    }, 2800);
   }
 
   function skipAnimation() {
     clearTimers();
-    setKioskPhase("checkout");
+    setMachineState("checkout");
     openCheckoutDrawer();
   }
 
@@ -387,7 +386,7 @@
     closeCheckoutDrawer();
     $("mdr-confirmation").hidden = false;
     renderConfirmReceipt(receipt);
-    setKioskPhase("idle");
+    resetMachineOverlays();
 
     const shareText = `I'm officially part of The Million Dollar Receipt.\n${receipt.alias} bought nothing for $1.\nReceipt ${serialForNumber(receipt.number)}.`;
     $("mdr-share-text").value = shareText;
@@ -599,7 +598,7 @@
   }
 
   async function initLanding() {
-    if (!$("mdr-kiosk") || !config.title) {
+    if (!$("mdr-machine-stage") || !config.title) {
       return;
     }
 
