@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Lemon DOM">
+  <defs>
+    <radialGradient id="g" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#fff6b0"/>
+      <stop offset="55%" stop-color="#ffe66d"/>
+      <stop offset="100%" stop-color="#e8b830"/>
+    </radialGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#0c1018"/>
+  <ellipse cx="32" cy="34" rx="18" ry="22" fill="url(#g)"/>
+  <ellipse cx="26" cy="26" rx="6" ry="4" fill="#fff" opacity="0.35"/>
+</svg>
