@@ -17,48 +17,31 @@
       <stop offset="0%" stop-color="#353330"/>
       <stop offset="100%" stop-color="#1a1917"/>
     </linearGradient>
-    <filter id="mdrInset" x="-2%" y="-2%" width="104%" height="104%">
-      <feDropShadow dx="0" dy="1" stdDeviation="0" flood-color="#000" flood-opacity="0.45"/>
-    </filter>
   </defs>
   <!-- Outer chassis -->
   <rect x="6" y="6" width="468" height="548" rx="8" fill="url(#mdrBezel)" stroke="#070706" stroke-width="2"/>
   <rect x="14" y="14" width="452" height="532" rx="6" fill="none" stroke="#3a3835" stroke-width="1"/>
-  <!-- Top status bar -->
-  <rect x="28" y="28" width="424" height="52" rx="3" fill="#161514" stroke="#2f2d2b"/>
-  <rect x="40" y="40" width="88" height="28" rx="2" fill="#0d0c0b" stroke="#c8ff00" stroke-width="1" opacity="0.85"/>
-  <text x="84" y="58" text-anchor="middle" fill="#c8ff00" font-family="IBM Plex Mono, Courier New, monospace" font-size="8" letter-spacing="1.2">LNW · REG 01</text>
-  <circle cx="52" cy="54" r="5" fill="#39ff14" opacity="0.9"/>
-  <circle cx="68" cy="54" r="4" fill="#333"/>
-  <circle cx="82" cy="54" r="4" fill="#333"/>
-  <rect x="340" y="40" width="100" height="28" rx="2" fill="#0a0908" stroke="#333"/>
-  <text x="390" y="58" text-anchor="middle" fill="#5c5c5c" font-family="IBM Plex Mono, Courier New, monospace" font-size="7" letter-spacing="1">NOTHING FACTORY</text>
-  <!-- Main viewport bezel -->
-  <rect x="28" y="92" width="424" height="196" rx="4" fill="url(#mdrScreen)" stroke="#333" stroke-width="2"/>
-  <!-- Intake chute -->
-  <path d="M40 108 L40 176 L88 176 L104 148 L104 108 Z" fill="#141312" stroke="#444" stroke-width="1"/>
-  <text x="68" y="122" text-anchor="middle" fill="#444" font-family="IBM Plex Mono, Courier New, monospace" font-size="6" letter-spacing="0.8">INTAKE</text>
-  <!-- Conveyor window -->
-  <rect x="108" y="108" width="244" height="88" rx="2" fill="#0a0908" stroke="#2a2826"/>
-  <line x1="108" y1="178" x2="352" y2="178" stroke="#333" stroke-width="10" stroke-dasharray="14 7"/>
-  <!-- Scanner arch -->
-  <rect x="248" y="100" width="64" height="104" rx="2" fill="none" stroke="#c8ff00" stroke-width="1" stroke-dasharray="3 2" opacity="0.55"/>
-  <line x1="280" y1="104" x2="280" y2="200" stroke="#ff4444" stroke-width="1" opacity="0.35"/>
-  <text x="280" y="118" text-anchor="middle" fill="#555" font-family="IBM Plex Mono, Courier New, monospace" font-size="6" letter-spacing="0.8">SCAN</text>
-  <!-- Stamp module -->
-  <rect x="360" y="108" width="80" height="88" rx="2" fill="#121110" stroke="#444"/>
-  <rect x="372" y="120" width="56" height="40" rx="1" fill="#0a0908" stroke="#555" stroke-dasharray="2 2"/>
-  <text x="400" y="122" text-anchor="middle" fill="#444" font-family="IBM Plex Mono, Courier New, monospace" font-size="6" letter-spacing="0.8">STAMP</text>
-  <!-- Lower viewport panel (terminal preview area in SVG) -->
-  <rect x="40" y="204" width="400" height="72" rx="2" fill="#0d0c0b" stroke="#2a2826"/>
-  <!-- Printer slot -->
-  <rect x="168" y="300" width="144" height="20" rx="2" fill="#050505" stroke="#333"/>
-  <rect x="176" y="306" width="128" height="8" rx="1" fill="#1a1917"/>
-  <text x="240" y="314" text-anchor="middle" fill="#444" font-family="IBM Plex Mono, Courier New, monospace" font-size="6" letter-spacing="0.8">RECEIPT OUT</text>
-  <!-- Terminal display panel -->
-  <rect x="28" y="332" width="424" height="96" rx="3" fill="url(#mdrPanel)" stroke="#333" stroke-width="1"/>
-  <rect x="40" y="344" width="400" height="72" rx="2" fill="#080807" stroke="#222"/>
-  <!-- Button bay recess -->
-  <rect x="28" y="440" width="424" height="96" rx="4" fill="url(#mdrBay)" stroke="#1a1917"/>
-  <rect x="120" y="456" width="240" height="64" rx="3" fill="#0a0908" stroke="#333" stroke-dasharray="4 3"/>
+  <!-- Top status strip (minimal) -->
+  <rect x="28" y="28" width="424" height="36" rx="3" fill="#161514" stroke="#2f2d2b"/>
+  <circle cx="48" cy="46" r="5" fill="#39ff14" opacity="0.85"/>
+  <text x="72" y="50" fill="#5c5c5c" font-family="IBM Plex Mono, Courier New, monospace" font-size="7" letter-spacing="1.4">LNW · REG 01</text>
+  <!-- Main processing viewport (generous negative space) -->
+  <rect x="28" y="76" width="424" height="212" rx="4" fill="url(#mdrScreen)" stroke="#333" stroke-width="2"/>
+  <!-- Intake chute (left) -->
+  <path d="M44 96 L44 168 L96 168 L112 132 L112 96 Z" fill="#141312" stroke="#3a3835" stroke-width="1"/>
+  <!-- Conveyor trough (center, dominant) -->
+  <rect x="116" y="120" width="228" height="72" rx="2" fill="#0a0908" stroke="#2a2826"/>
+  <line x1="116" y1="178" x2="344" y2="178" stroke="#333" stroke-width="12" stroke-dasharray="16 8"/>
+  <!-- Scanner arch (single event zone over belt) -->
+  <path d="M236 112 L236 200 Q284 208 332 200 L332 112 Q284 104 236 112 Z" fill="none" stroke="#c8ff00" stroke-width="1" opacity="0.28"/>
+  <!-- Receipt output module (right, unified) -->
+  <rect x="356" y="96" width="84" height="168" rx="3" fill="#121110" stroke="#3a3835"/>
+  <rect x="368" y="108" width="60" height="88" rx="2" fill="#0a0908" stroke="#333"/>
+  <rect x="376" y="204" width="44" height="48" rx="1" fill="#080807" stroke="#2a2826"/>
+  <!-- Terminal + action panel (below, connected) -->
+  <rect x="28" y="304" width="424" height="148" rx="3" fill="url(#mdrPanel)" stroke="#333" stroke-width="1"/>
+  <rect x="40" y="316" width="400" height="56" rx="2" fill="#080807" stroke="#222"/>
+  <!-- Buy bay recess (mechanical extension of terminal) -->
+  <rect x="40" y="384" width="400" height="56" rx="3" fill="url(#mdrBay)" stroke="#2a2826"/>
+  <rect x="140" y="392" width="200" height="40" rx="2" fill="#0a0908" stroke="#444"/>
 </svg>

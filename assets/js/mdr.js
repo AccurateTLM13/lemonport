@@ -141,7 +141,7 @@
     }
 
     if ($("mdr-kiosk-status")) {
-      $("mdr-kiosk-status").textContent = remaining > 0 ? "STATUS: READY" : "STATUS: FULL";
+      $("mdr-kiosk-status").textContent = remaining > 0 ? "READY" : "REGISTER FULL";
     }
   }
 

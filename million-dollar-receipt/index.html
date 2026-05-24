@@ -12,10 +12,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/mdr.css?v=5">
+  <link rel="stylesheet" href="/assets/css/mdr.css?v=6">
   <script src="/assets/js/mdr-config.js?v=1" defer></script>
   <script src="/assets/js/mdr-stats.js?v=1" defer></script>
-  <script src="/assets/js/mdr.js?v=5" defer></script>
+  <script src="/assets/js/mdr.js?v=6" defer></script>
 </head>
 <body class="mdr-page" data-mobile-path="buy">
   <a class="mdr-skip" href="#mdr-main">Skip to content</a>
@@ -65,42 +65,37 @@
           <div class="mdr-machine" id="mdr-kiosk" data-phase="idle">
             <img class="mdr-machine__frame" src="/million-dollar-receipt/assets/machine-frame.svg" alt="" width="480" height="560">
             <div class="mdr-machine__overlay" aria-hidden="true">
+              <span class="mdr-machine__label mdr-machine__label--intake">INTAKE</span>
+              <span class="mdr-machine__label mdr-machine__label--scan">SCAN</span>
+              <span class="mdr-machine__label mdr-machine__label--receipt">RECEIPT</span>
+              <span class="mdr-machine__label mdr-machine__label--status">STATUS</span>
               <div class="mdr-machine__viewport" id="mdr-conveyor-window">
-                <div class="mdr-machine__intake">
-                  <img class="mdr-machine__lemon" id="mdr-lemon" src="/million-dollar-receipt/assets/lemon.svg" alt="" width="48" height="48">
+                <div class="mdr-machine__intake"></div>
+                <div class="mdr-machine__process">
+                  <div class="mdr-machine__belt-track">
+                    <div class="mdr-machine__belt"></div>
+                    <img class="mdr-machine__lemon" id="mdr-lemon" src="/million-dollar-receipt/assets/lemon.svg" alt="" width="48" height="48">
+                    <div class="mdr-machine__scan-gate">
+                      <div class="mdr-machine__beam" id="mdr-scanner-beam"></div>
+                    </div>
+                  </div>
                 </div>
-                <div class="mdr-machine__conveyor">
-                  <div class="mdr-machine__belt"></div>
-                </div>
-                <div class="mdr-machine__scanner">
-                  <img class="mdr-machine__scanner-rail" src="/million-dollar-receipt/assets/scanner-rail.svg" alt="">
-                  <div class="mdr-machine__beam" id="mdr-scanner-beam"></div>
-                </div>
-                <div class="mdr-machine__stamp-module">
+                <div class="mdr-machine__output">
                   <img class="mdr-machine__stamp-img" id="mdr-stamp" src="/million-dollar-receipt/assets/stamp.svg" alt="">
+                  <div class="mdr-machine__mini-receipt" id="mdr-mini-receipt"></div>
                 </div>
-              </div>
-              <div class="mdr-machine__printer-slot">
-                <div class="mdr-machine__mini-receipt" id="mdr-mini-receipt"></div>
               </div>
               <div class="mdr-machine__terminal">
-                <div class="mdr-machine__terminal-head">TERMINAL DISPLAY</div>
                 <div class="mdr-machine__readout">
-                  <span class="mdr-machine__readout-line">ITEM: NOTHING, STANDARD</span>
-                  <span class="mdr-machine__readout-line">PRICE: $1.00</span>
-                  <span class="mdr-machine__readout-line" id="mdr-kiosk-status">STATUS: READY</span>
+                  <span class="mdr-machine__readout-line">NOTHING · $1.00</span>
+                  <span class="mdr-machine__readout-line" id="mdr-kiosk-status">READY</span>
                 </div>
+                <button class="mdr-machine__bay" type="button" id="mdr-buy-button-machine" aria-label="Buy Nothing for $1">
+                  <span class="mdr-machine__bay-label">Buy Nothing</span>
+                  <span class="mdr-machine__bay-price">$1.00</span>
+                </button>
               </div>
             </div>
-            <div class="mdr-machine__lights" aria-hidden="true">
-              <span class="mdr-machine__light is-on" title="Power"></span>
-              <span class="mdr-machine__light" title="Conveyor"></span>
-              <span class="mdr-machine__light" title="Printer"></span>
-            </div>
-            <button class="mdr-machine__bay" type="button" id="mdr-buy-button-machine" aria-label="Buy Nothing for $1">
-              <span class="mdr-machine__bay-label">Buy Nothing</span>
-              <span class="mdr-machine__bay-price">$1.00</span>
-            </button>
             <button class="mdr-machine__skip" type="button" id="mdr-skip-animation" hidden>Skip sequence</button>
           </div>
 
