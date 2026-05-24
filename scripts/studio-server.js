@@ -1397,6 +1397,7 @@ http.createServer(route).listen(port, studioHost, () => {
   const hostLabel = studioHost === "0.0.0.0" ? "all interfaces" : studioHost;
   console.log(`Lemonteed Studio: http://${studioHost === "0.0.0.0" ? "localhost" : studioHost}:${port}/studio/`);
   console.log(`Public site:       http://${studioHost === "0.0.0.0" ? "localhost" : studioHost}:${port}/`);
+  console.log(`MDR (hidden dev):  http://${studioHost === "0.0.0.0" ? "localhost" : studioHost}:${port}/million-dollar-receipt/`);
   console.log(`Listening on:      ${hostLabel}:${port}`);
 
   if (allowRemote && !studioWriteToken) {

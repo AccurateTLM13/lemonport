@@ -1705,14 +1705,26 @@ button:disabled {
   white-space: nowrap;
 }
 
-.dashboard-list button {
+.dashboard-list button,
+.dashboard-list a {
   min-height: 28px;
   border: 1px solid var(--ink);
   background: transparent;
   color: var(--ink);
   font-size: 11px;
   font-weight: 700;
+  text-decoration: none;
   text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+}
+
+.dashboard-list--dev p {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
 }
 
 .studio-tools {
