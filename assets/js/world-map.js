@@ -35,7 +35,7 @@
       title: "LEMON DOM",
       label: "EFFECTS / DOM",
       description: "Juicy UI effects for plain old websites.",
-      url: "/lemon-dom/"
+      url: "https://mnfrdrsh.github.io/lemon-dom/"
     },
     {
       id: "vrg",
@@ -149,6 +149,10 @@
         cta.className = "zone-drawer__cta";
         cta.href = zone.url;
         cta.textContent = `Enter ${zone.title}`;
+        if (/^https?:\/\//i.test(zone.url)) {
+          cta.target = "_blank";
+          cta.rel = "noopener noreferrer";
+        }
         drawer.append(cta);
       } else {
         const disabled = document.createElement("span");
