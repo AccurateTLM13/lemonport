@@ -39,8 +39,7 @@
   }
 
   function alreadyApplied(el, effect) {
-    var record = getRecord(el);
-    return !!record.effects[effect];
+    return !!getRecord(el).effects[effect];
   }
 
   function markApplied(el, effect) {
@@ -92,11 +91,7 @@
   function squeeze(target) {
     resolveElements(target).forEach(function (el) {
       if (alreadyApplied(el, "squeeze")) return;
-      el.classList.add("lemon-squeeze", "lemon-shape");
-
-      if (el.offsetWidth >= el.offsetHeight * 1.15) {
-        el.classList.add("lemon-shape--wide");
-      }
+      el.classList.add("lemon-squeeze");
 
       function setSqueezeVector(clientX, clientY) {
         var rect = el.getBoundingClientRect();
@@ -163,8 +158,8 @@
           });
         },
         {
-          threshold: 0.12,
-          rootMargin: "0px 0px -8% 0px"
+          threshold: 0.15,
+          rootMargin: "0px 0px -6% 0px"
         }
       );
 
@@ -176,25 +171,13 @@
 
   function init(options) {
     var root = (options && options.root) || document;
-    var scope = root.querySelectorAll
-      ? root
-      : document;
+    var scope = root.querySelectorAll ? root : document;
 
-    scope.querySelectorAll("[data-lemon-glass]").forEach(function (el) {
-      glass(el);
-    });
-    scope.querySelectorAll("[data-lemon-juice]").forEach(function (el) {
-      juice(el);
-    });
-    scope.querySelectorAll("[data-lemon-squeeze]").forEach(function (el) {
-      squeeze(el);
-    });
-    scope.querySelectorAll("[data-lemon-zest]").forEach(function (el) {
-      zest(el);
-    });
-    scope.querySelectorAll("[data-lemon-peel]").forEach(function (el) {
-      peel(el);
-    });
+    scope.querySelectorAll("[data-lemon-glass]").forEach(glass);
+    scope.querySelectorAll("[data-lemon-juice]").forEach(juice);
+    scope.querySelectorAll("[data-lemon-squeeze]").forEach(squeeze);
+    scope.querySelectorAll("[data-lemon-zest]").forEach(zest);
+    scope.querySelectorAll("[data-lemon-peel]").forEach(peel);
   }
 
   function destroy() {
@@ -215,8 +198,6 @@
         "lemon-squeeze",
         "lemon-zest",
         "lemon-peel",
-        "lemon-shape",
-        "lemon-shape--wide",
         "is-juicing",
         "is-squeezing",
         "is-peeled"

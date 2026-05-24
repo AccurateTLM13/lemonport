@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lemon DOM | Juicy UI effects for plain old websites</title>
-  <meta name="description" content="Lemon DOM is a lightweight, dependency-free visual effects library for glass surfaces, cursor glow, tactile hover, texture overlays, and scroll reveals.">
+  <meta name="description" content="Lemon DOM is a lightweight vanilla HTML/CSS/JS effects library — glass, glow, squeeze, zest, and peel for everyday websites. No build step. No dependencies.">
   <link rel="canonical" href="https://lemonteed.com/lemon-dom/">
   <meta property="og:title" content="Lemon DOM">
   <meta property="og:description" content="Juicy UI effects for plain old websites. A tiny vanilla tribute inspired by Liquid DOM.">
@@ -22,157 +22,267 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <div class="page" id="main">
-    <header class="top-nav">
-      <a href="/" aria-label="Back to Lemonteed Atlas">← Lemonteed Atlas</a>
-      <span class="badge">V1 · No build step</span>
+  <div class="site" id="main">
+    <header class="topbar">
+      <div class="container topbar__inner">
+        <a class="topbar__brand" href="/">
+          <small>Lemonteed</small>
+          <strong>Lemon DOM</strong>
+        </a>
+        <span class="pill">Vanilla JS · No build step</span>
+      </div>
     </header>
 
     <section class="hero" aria-labelledby="hero-title">
-      <span class="badge">Lemonteed / Lemon DOM</span>
-      <h1 id="hero-title">Lemon DOM</h1>
-      <p>Juicy UI effects for plain old websites.</p>
-      <p>A lightweight, dependency-free visual effects library — glass, glow, squeeze, zest, and peel — usable by simply opening <code>index.html</code> in a browser.</p>
-      <div class="hero-actions">
-        <a class="btn btn--accent" href="https://github.com/lemonteed/lemonteed" target="_blank" rel="noopener noreferrer">Get the files from the repo</a>
-        <button class="btn" type="button" id="reinit-btn">Re-run LemonDOM.init()</button>
+      <div class="container hero__grid">
+        <div class="hero__copy">
+          <p class="eyebrow">A tiny visual effects library</p>
+          <h1 class="hero__title" id="hero-title">Lemon DOM</h1>
+          <p class="hero__subhead">Juicy UI effects for plain old websites.</p>
+          <p class="hero__body">No framework. No build step. No dependency pulp. Drop three files into any page, add a few data attributes, and call <code>LemonDOM.init()</code>.</p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#usage">See basic usage</a>
+            <a class="btn btn--ghost" href="https://github.com/mnfrdrsh/lemonport/tree/main/lemon-dom" target="_blank" rel="noopener noreferrer">View source files</a>
+          </div>
+        </div>
+
+        <div class="hero__stage" aria-label="Live Lemon DOM demo">
+          <div class="hero__stage-glow" aria-hidden="true"></div>
+          <article
+            class="hero__panel lemon-glass lemon-juice lemon-squeeze lemon-zest"
+            data-lemon-glass
+            data-lemon-juice
+            data-lemon-squeeze
+            data-lemon-zest
+          >
+            <div class="hero__panel-head">
+              <span>Live preview</span>
+              <strong>All effects active</strong>
+            </div>
+            <div class="hero__panel-body">
+              <h2>Press. Glow. Release.</h2>
+              <p>Glass surface, cursor bloom, tactile squeeze, and a whisper of zest — working together in one panel.</p>
+            </div>
+            <div class="hero__chips" aria-hidden="true">
+              <span class="chip">glass</span>
+              <span class="chip">juice</span>
+              <span class="chip">squeeze</span>
+              <span class="chip">zest</span>
+            </div>
+            <p class="hero__hint">Move cursor · press and hold · release</p>
+          </article>
+        </div>
       </div>
     </section>
 
-    <section class="section" aria-labelledby="showcase-title">
-      <div class="section-head">
-        <h2 id="showcase-title">Interactive showcase</h2>
-        <p>Hover, press, and move your cursor — this lemon stacks every effect.</p>
-      </div>
+    <section class="section" aria-labelledby="features-title">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">What it does</p>
+          <h2 id="features-title">Five effects. One small API.</h2>
+          <p>Each effect is opt-in via a data attribute or a method call. Mix them freely, customize with CSS variables, and keep your markup boring on purpose.</p>
+        </div>
 
-      <article
-        class="showcase-card lemon-glass lemon-juice lemon-squeeze lemon-zest"
-        data-lemon-glass
-        data-lemon-juice
-        data-lemon-squeeze
-        data-lemon-zest
-        style="--lemon-blur: 22px; --lemon-glow-opacity: 0.42; --lemon-squeeze-active-x: 1.06; --lemon-squeeze-active-y: 0.82;"
-      >
-        <h3>All the juice, none of the build tools</h3>
-        <p>Frosted glass, cursor bloom, a real lemon squeeze, and a subtle zest grain — layered together so you can feel what Lemon DOM is aiming for before you drop it into your own markup.</p>
-        <span class="hint">Press and drag to squeeze · move cursor · hover</span>
-      </article>
-    </section>
-
-    <section class="section" aria-labelledby="effects-title">
-      <div class="section-head">
-        <h2 id="effects-title">Effect gallery</h2>
-        <p>Five data attributes. Drop them on any element, then call <code>LemonDOM.init()</code>.</p>
-      </div>
-
-      <div class="grid">
-        <article class="effect-card lemon-glass" data-lemon-glass>
-          <h3>Glass</h3>
-          <code>data-lemon-glass</code>
-          <p>Frosted surfaces with backdrop blur, soft borders, inner highlights, and translucent gradients.</p>
-        </article>
-
-        <article
-          class="effect-card lemon-glass lemon-juice"
-          data-lemon-glass
-          data-lemon-juice
-          style="--lemon-juice-size: 320px;"
-        >
-          <h3>Juice</h3>
-          <code>data-lemon-juice</code>
-          <p>Cursor-follow radial glow driven by <code>--lemon-x</code> and <code>--lemon-y</code>.</p>
-        </article>
-
-        <article
-          class="effect-card lemon-glass lemon-squeeze"
-          data-lemon-glass
-          data-lemon-squeeze
-        >
-          <h3>Squeeze</h3>
-          <code>data-lemon-squeeze</code>
-          <p>Lemon-shaped pods that bulge wide, compress tall, and spring back when you let go.</p>
-        </article>
-
-        <article
-          class="effect-card lemon-glass lemon-zest"
-          data-lemon-glass
-          data-lemon-zest
-        >
-          <h3>Zest</h3>
-          <code>data-lemon-zest</code>
-          <p>CSS-only grain overlay for a premium, slightly analog finish.</p>
-        </article>
-
-        <article
-          class="effect-card lemon-glass lemon-peel"
-          data-lemon-glass
-          data-lemon-peel
-          style="--lemon-peel-duration: 1.1s;"
-        >
-          <h3>Peel</h3>
-          <code>data-lemon-peel</code>
-          <p>Scroll-triggered reveal via <code>IntersectionObserver</code> — mask, clip-path, and motion.</p>
-        </article>
+        <div class="features">
+          <article class="feature">
+            <span class="feature__index">01</span>
+            <h3>Glass</h3>
+            <code>data-lemon-glass</code>
+            <p>Frosted surfaces with blur, soft borders, and inner light.</p>
+          </article>
+          <article class="feature">
+            <span class="feature__index">02</span>
+            <h3>Juice</h3>
+            <code>data-lemon-juice</code>
+            <p>Cursor-follow bloom using <code>--lemon-x</code> and <code>--lemon-y</code>.</p>
+          </article>
+          <article class="feature">
+            <span class="feature__index">03</span>
+            <h3>Squeeze</h3>
+            <code>data-lemon-squeeze</code>
+            <p>Tactile press feedback with subtle compression and spring.</p>
+          </article>
+          <article class="feature">
+            <span class="feature__index">04</span>
+            <h3>Zest</h3>
+            <code>data-lemon-zest</code>
+            <p>CSS-only grain for a quieter, more analog finish.</p>
+          </article>
+          <article class="feature">
+            <span class="feature__index">05</span>
+            <h3>Peel</h3>
+            <code>data-lemon-peel</code>
+            <p>Scroll-triggered reveal via <code>IntersectionObserver</code>.</p>
+          </article>
+        </div>
       </div>
     </section>
 
-    <section class="section" aria-labelledby="usage-title">
-      <div class="section-head">
-        <h2 id="usage-title">Basic usage</h2>
-        <p>Three files. No npm. No bundler. Just link and init.</p>
-      </div>
+    <section class="section" aria-labelledby="gallery-title">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Interactive gallery</p>
+          <h2 id="gallery-title">See each effect on its own.</h2>
+          <p>A composed demo grid — one featured surface, focused examples, and a peel reveal waiting below the fold.</p>
+        </div>
 
-      <div class="code-panel lemon-glass" data-lemon-glass>
-        <span class="label">HTML + JS</span>
-        <pre><code>&lt;link rel="stylesheet" href="lemon-dom.css"&gt;
+        <div class="gallery">
+          <article
+            class="demo-card demo-card--featured lemon-glass lemon-juice lemon-zest"
+            data-lemon-glass
+            data-lemon-juice
+            data-lemon-zest
+            style="--lemon-juice-size: 520px; --lemon-glow-opacity: 0.4;"
+          >
+            <span class="demo-card__label">Featured</span>
+            <h3>Glass + Juice + Zest</h3>
+            <p>The everyday stack: readable frosted surface, responsive highlight, and just enough texture to keep it from feeling flat.</p>
+            <code>data-lemon-glass data-lemon-juice data-lemon-zest</code>
+          </article>
+
+          <article class="demo-card demo-card--squeeze lemon-glass" data-lemon-glass>
+            <div>
+              <span class="demo-card__label">Squeeze</span>
+              <h3>Tactile press</h3>
+              <p>Subtle wide-and-flat compression on press — premium feedback without turning your UI into fruit cosplay.</p>
+            </div>
+            <div
+              class="squeeze-target lemon-squeeze"
+              data-lemon-squeeze
+              tabindex="0"
+              role="button"
+              aria-label="Squeeze demo target"
+            >
+              Press me
+            </div>
+          </article>
+
+          <article class="demo-card demo-card--small lemon-glass" data-lemon-glass>
+            <span class="demo-card__label">Glass</span>
+            <h3>Frosted panel</h3>
+            <p>Translucent depth with graceful fallback when blur isn't available.</p>
+            <code>data-lemon-glass</code>
+          </article>
+
+          <article
+            class="demo-card demo-card--small lemon-glass lemon-juice"
+            data-lemon-glass
+            data-lemon-juice
+            style="--lemon-juice-size: 280px;"
+          >
+            <span class="demo-card__label">Juice</span>
+            <h3>Cursor bloom</h3>
+            <p>Soft radial glow that follows pointer movement across the surface.</p>
+            <code>data-lemon-juice</code>
+          </article>
+
+          <article class="demo-card demo-card--small lemon-glass lemon-zest" data-lemon-glass data-lemon-zest>
+            <span class="demo-card__label">Zest</span>
+            <h3>Grain overlay</h3>
+            <p>Quiet film grain via CSS — no image assets required.</p>
+            <code>data-lemon-zest</code>
+          </article>
+
+          <article
+            class="demo-card demo-card--wide lemon-glass lemon-peel"
+            data-lemon-glass
+            data-lemon-peel
+          >
+            <span class="demo-card__label">Peel</span>
+            <h3>Scroll reveal</h3>
+            <p>This panel peels into view as it enters the viewport — smooth mask, opacity, and motion with reduced-motion respect built in.</p>
+            <code>data-lemon-peel</code>
+          </article>
+
+          <article
+            class="demo-card demo-card--peel lemon-glass lemon-peel"
+            data-lemon-glass
+            data-lemon-peel
+            style="--lemon-peel-duration: 1s;"
+          >
+            <span class="demo-card__label">Peel</span>
+            <h3>Second reveal</h3>
+            <p>Stack peel on cards, sections, or notes for staggered entrance rhythm.</p>
+            <code>data-lemon-peel</code>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="usage" aria-labelledby="usage-title">
+      <div class="container code-block">
+        <div class="section__head">
+          <p class="eyebrow">Basic usage</p>
+          <h2 id="usage-title">Three files. One init call.</h2>
+        </div>
+
+        <div class="code-block__intro">
+          <p>Link the stylesheet and script, mark up your elements, then initialize. Per-element tuning lives in CSS custom properties — no config object required.</p>
+        </div>
+
+        <div class="code-panel lemon-glass" data-lemon-glass>
+          <div class="code-panel__toolbar">
+            <div class="code-tabs" role="tablist" aria-label="Code examples">
+              <button class="code-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="code-html" id="tab-html" data-code-tab="html">HTML</button>
+              <button class="code-tab" type="button" role="tab" aria-selected="false" aria-controls="code-js" id="tab-js" data-code-tab="js">JavaScript</button>
+            </div>
+            <button class="copy-btn" type="button" id="copy-code-btn" aria-live="polite">Copy code</button>
+          </div>
+
+          <pre id="code-html" role="tabpanel" aria-labelledby="tab-html"><code>&lt;link rel="stylesheet" href="lemon-dom.css"&gt;
 &lt;script src="lemon-dom.js" defer&gt;&lt;/script&gt;
 
-&lt;div
+&lt;article
   data-lemon-glass
   data-lemon-juice
   data-lemon-squeeze
   style="--lemon-blur: 24px; --lemon-accent: #ffe66d;"
 &gt;
-  Custom glass card
-&lt;/div&gt;
+  Your card content
+&lt;/article&gt;</code></pre>
 
-&lt;script&gt;
-  LemonDOM.init();
-  // or apply individually:
-  LemonDOM.glass(".card");
-  LemonDOM.juice(document.querySelector(".hero"));
-&lt;/script&gt;</code></pre>
+          <pre id="code-js" role="tabpanel" aria-labelledby="tab-js" hidden><code>// Scan the page for all data-lemon-* attributes
+LemonDOM.init();
+
+// Or apply effects individually
+LemonDOM.glass(".card");
+LemonDOM.juice(document.querySelector(".hero"));
+LemonDOM.squeeze(".btn-tactile");
+LemonDOM.zest(".panel");
+LemonDOM.peel(".reveal");
+
+// Clean up listeners when needed
+LemonDOM.destroy();</code></pre>
+        </div>
       </div>
     </section>
 
-    <section class="section" aria-labelledby="notes-title">
-      <div class="section-head">
-        <h2 id="notes-title">Notes</h2>
-      </div>
+    <section class="section" aria-labelledby="credit-title">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Credit where it's due</p>
+          <h2 id="credit-title">Inspired by Liquid DOM.</h2>
+        </div>
 
-      <div class="note-grid">
-        <article class="note lemon-peel" data-lemon-peel>
-          <h3>Inspired by Liquid DOM</h3>
-          <p>
-            Lemon DOM is a practical, no-build-step tribute inspired by
-            <a href="https://github.com/AndrewPrifer/liquid-dom" target="_blank" rel="noopener noreferrer">Liquid DOM</a>
-            by Andrew Prifer. It is not affiliated with Liquid DOM, does not claim feature parity, and does not copy its source code.
-          </p>
-        </article>
+        <div class="notes">
+          <article class="note note--accent lemon-peel" data-lemon-peel>
+            <h3>A respectful tribute</h3>
+            <p>Inspired by the experimental visual direction of <a href="https://github.com/AndrewPrifer/liquid-dom" target="_blank" rel="noopener noreferrer">Liquid DOM</a> by Andrew Prifer. Lemon DOM is a lightweight vanilla-web tribute built for practical everyday sites — not affiliated, not a clone, and not claiming feature parity.</p>
+          </article>
 
-        <article class="note lemon-peel" data-lemon-peel>
-          <h3>Browser support &amp; fallbacks</h3>
-          <p>
-            Glass uses <code>backdrop-filter</code> where supported and falls back to a solid translucent surface elsewhere.
-            Peel and squeeze honor <code>prefers-reduced-motion</code>. Juice requires pointer events; touch users still get the static glass look.
-          </p>
-        </article>
+          <article class="note lemon-peel" data-lemon-peel>
+            <h3>Fallbacks</h3>
+            <p>Glass degrades to a solid translucent surface without <code>backdrop-filter</code>. Peel, squeeze, and juice honor <code>prefers-reduced-motion</code>.</p>
+          </article>
+        </div>
       </div>
     </section>
 
-    <footer class="site-footer">
-      <span><strong>Lemon DOM</strong> — vanilla HTML, CSS, and JavaScript</span>
-      <span>Part of the <a href="/">Lemonteed</a> atlas</span>
+    <footer class="footer">
+      <div class="container footer__inner">
+        <span><strong>Lemon DOM</strong> — HTML, CSS, and JavaScript only</span>
+        <span>Part of the <a href="/">Lemonteed</a> atlas</span>
+      </div>
     </footer>
   </div>
 
@@ -180,13 +290,72 @@
     document.addEventListener("DOMContentLoaded", function () {
       LemonDOM.init();
 
-      var reinitBtn = document.getElementById("reinit-btn");
-      if (reinitBtn) {
-        reinitBtn.addEventListener("click", function () {
-          LemonDOM.destroy();
-          LemonDOM.init();
+      var tabs = document.querySelectorAll("[data-code-tab]");
+      var panels = {
+        html: document.getElementById("code-html"),
+        js: document.getElementById("code-js")
+      };
+      var copyBtn = document.getElementById("copy-code-btn");
+      var activeTab = "html";
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          activeTab = tab.getAttribute("data-code-tab");
+          tabs.forEach(function (item) {
+            var isActive = item === tab;
+            item.classList.toggle("is-active", isActive);
+            item.setAttribute("aria-selected", isActive ? "true" : "false");
+          });
+          Object.keys(panels).forEach(function (key) {
+            panels[key].hidden = key !== activeTab;
+          });
+        });
+      });
+
+      if (copyBtn) {
+        copyBtn.addEventListener("click", function () {
+          var text = panels[activeTab].textContent;
+          function markCopied() {
+            copyBtn.textContent = "Copied";
+            copyBtn.classList.add("is-copied");
+            window.setTimeout(function () {
+              copyBtn.textContent = "Copy code";
+              copyBtn.classList.remove("is-copied");
+            }, 1800);
+          }
+
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(markCopied).catch(function () {
+              markCopied();
+            });
+          } else {
+            markCopied();
+          }
         });
       }
+
+      document.querySelectorAll(".squeeze-target").forEach(function (target) {
+        function pressOn() {
+          target.classList.add("is-squeezing");
+        }
+
+        function pressOff() {
+          target.classList.remove("is-squeezing");
+        }
+
+        target.addEventListener("keydown", function (event) {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            pressOn();
+          }
+        });
+
+        target.addEventListener("keyup", function (event) {
+          if (event.key === "Enter" || event.key === " ") {
+            pressOff();
+          }
+        });
+      });
     });
   </script>
 </body>
