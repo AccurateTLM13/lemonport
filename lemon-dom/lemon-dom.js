@@ -92,7 +92,43 @@
   function squeeze(target) {
     resolveElements(target).forEach(function (el) {
       if (alreadyApplied(el, "squeeze")) return;
-      el.classList.add("lemon-squeeze");
+      el.classList.add("lemon-squeeze", "lemon-shape");
+
+      if (el.offsetWidth >= el.offsetHeight * 1.15) {
+        el.classList.add("lemon-shape--wide");
+      }
+
+      function setSqueezeVector(clientX, clientY) {
+        var rect = el.getBoundingClientRect();
+        if (!rect.width || !rect.height) return;
+        var dx = (clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
+        var dy = (clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
+        dx = Math.max(-1, Math.min(1, dx));
+        dy = Math.max(-1, Math.min(1, dy));
+        el.style.setProperty("--lemon-squeeze-dx", dx.toFixed(3));
+        el.style.setProperty("--lemon-squeeze-dy", dy.toFixed(3));
+      }
+
+      function onPointerDown(event) {
+        if (event.button !== 0) return;
+        el.classList.add("is-squeezing");
+        setSqueezeVector(event.clientX, event.clientY);
+      }
+
+      function onPointerMove(event) {
+        if (!el.classList.contains("is-squeezing")) return;
+        setSqueezeVector(event.clientX, event.clientY);
+      }
+
+      function onPointerUp() {
+        el.classList.remove("is-squeezing");
+      }
+
+      trackListener(el, "pointerdown", onPointerDown);
+      trackListener(el, "pointermove", onPointerMove);
+      trackListener(el, "pointerup", onPointerUp);
+      trackListener(el, "pointercancel", onPointerUp);
+      trackListener(el, "pointerleave", onPointerUp);
       markApplied(el, "squeeze");
     });
   }
@@ -179,11 +215,16 @@
         "lemon-squeeze",
         "lemon-zest",
         "lemon-peel",
+        "lemon-shape",
+        "lemon-shape--wide",
         "is-juicing",
+        "is-squeezing",
         "is-peeled"
       );
       el.style.removeProperty("--lemon-x");
       el.style.removeProperty("--lemon-y");
+      el.style.removeProperty("--lemon-squeeze-dx");
+      el.style.removeProperty("--lemon-squeeze-dy");
       instances.delete(el);
     });
   }

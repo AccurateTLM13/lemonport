@@ -5,7 +5,39 @@
   --lemon-radius: 28px;
   --lemon-border-opacity: 0.22;
   --lemon-glow-opacity: 0.35;
-  --lemon-squeeze-scale: 0.985;
+  --lemon-squeeze-scale-x: 1.04;
+  --lemon-squeeze-scale-y: 0.9;
+  --lemon-squeeze-active-x: 1.1;
+  --lemon-squeeze-active-y: 0.78;
+  --lemon-squeeze-spring: cubic-bezier(0.34, 1.45, 0.64, 1);
+  --lemon-shape-clip: polygon(
+    50% 1%,
+    69% 7%,
+    86% 22%,
+    95% 46%,
+    89% 71%,
+    73% 90%,
+    50% 99%,
+    27% 90%,
+    11% 71%,
+    5% 46%,
+    14% 22%,
+    31% 7%
+  );
+  --lemon-shape-clip-wide: polygon(
+    2% 50%,
+    10% 26%,
+    26% 10%,
+    50% 3%,
+    74% 10%,
+    90% 26%,
+    98% 50%,
+    90% 74%,
+    74% 90%,
+    50% 97%,
+    26% 90%,
+    10% 74%
+  );
   --lemon-accent: #ffe66d;
   --lemon-accent-soft: rgba(255, 230, 109, 0.55);
   --lemon-surface: rgba(18, 20, 28, 0.62);
@@ -88,36 +120,91 @@
 
 /* ── Effect: squeeze ── */
 
+.lemon-shape {
+  clip-path: var(--lemon-shape-clip);
+  border-radius: 0;
+  --lemon-radius: 0;
+}
+
+.lemon-shape--wide {
+  clip-path: var(--lemon-shape-clip-wide);
+}
+
 .lemon-squeeze {
+  --lemon-squeeze-dx: 0;
+  --lemon-squeeze-dy: 0;
   transform: translateZ(0);
+  transform-origin: center center;
+  touch-action: manipulation;
+  cursor: grab;
   transition:
-    transform 0.28s var(--lemon-peel-ease),
-    box-shadow 0.28s ease,
-    border-color 0.28s ease;
+    transform 0.42s var(--lemon-squeeze-spring),
+    box-shadow 0.32s ease,
+    border-color 0.32s ease,
+    filter 0.32s ease;
   will-change: transform;
 }
 
 .lemon-squeeze::before {
-  transition: transform 0.45s var(--lemon-peel-ease);
+  transition:
+    transform 0.42s var(--lemon-squeeze-spring),
+    opacity 0.32s ease;
+}
+
+.lemon-squeeze:active {
+  cursor: grabbing;
 }
 
 @media (hover: hover) {
   .lemon-squeeze:hover {
-    transform: scale(var(--lemon-squeeze-scale));
+    transform:
+      scale(var(--lemon-squeeze-scale-x), var(--lemon-squeeze-scale-y))
+      rotate(calc(var(--lemon-squeeze-dx) * -1.5deg));
+    filter: brightness(1.04);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.18),
-      0 18px 44px rgba(0, 0, 0, 0.42),
-      0 0 0 1px rgba(255, 230, 109, 0.18);
+      inset 0 -16px 28px rgba(255, 230, 109, 0.08),
+      inset 0 2px 0 rgba(255, 255, 255, 0.2),
+      0 16px 40px rgba(0, 0, 0, 0.4),
+      0 0 28px rgba(255, 230, 109, 0.16);
   }
 
   .lemon-squeeze:hover::before {
-    transform: translateX(8%) translateY(-4%);
+    transform:
+      translate(
+        calc(var(--lemon-squeeze-dx) * 6%),
+        calc(var(--lemon-squeeze-dy) * -8% - 4%)
+      )
+      scale(1.08);
+    opacity: 1;
   }
 }
 
+.lemon-squeeze.is-squeezing,
 .lemon-squeeze:active {
-  transform: scale(calc(var(--lemon-squeeze-scale) - 0.012));
-  transition-duration: 0.12s;
+  transform:
+    scale(
+      calc(var(--lemon-squeeze-active-x) + (var(--lemon-squeeze-dx) * 0.04)),
+      calc(var(--lemon-squeeze-active-y) - (var(--lemon-squeeze-dy) * 0.05))
+    )
+    rotate(calc(var(--lemon-squeeze-dx) * -2.5deg));
+  filter: brightness(1.08) saturate(1.08);
+  transition-duration: 0.1s;
+  box-shadow:
+    inset 0 -22px 36px rgba(255, 230, 109, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 10px 24px rgba(0, 0, 0, 0.36),
+    0 0 36px rgba(255, 230, 109, 0.28);
+}
+
+.lemon-squeeze.is-squeezing::before,
+.lemon-squeeze:active::before {
+  transform:
+    translate(
+      calc(var(--lemon-squeeze-dx) * 10%),
+      calc(var(--lemon-squeeze-dy) * -12% - 8%)
+    )
+    scale(1.14);
+  opacity: 1;
 }
 
 /* ── Effect: zest ── */
@@ -160,9 +247,17 @@
 
 @media (prefers-reduced-motion: reduce) {
   .lemon-squeeze,
+  .lemon-squeeze::before,
   .lemon-juice::after,
   .lemon-peel {
     transition: none !important;
+  }
+
+  .lemon-squeeze:hover,
+  .lemon-squeeze:active,
+  .lemon-squeeze.is-squeezing {
+    transform: none;
+    filter: none;
   }
 
   .lemon-peel {
@@ -365,6 +460,8 @@ a {
 .showcase-card {
   padding: clamp(1.5rem, 3vw, 2.25rem);
   min-height: 220px;
+  max-width: 720px;
+  margin-inline: auto;
 }
 
 .showcase-card h3 {
@@ -399,6 +496,28 @@ a {
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
+}
+
+.grid .effect-card.lemon-squeeze {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: min(100%, 260px);
+  aspect-ratio: 10 / 14;
+  min-height: 280px;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+.grid--lemons {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  justify-items: center;
+}
+
+.grid--lemons .effect-card.lemon-squeeze {
+  grid-column: auto;
+  width: min(100%, 240px);
+  aspect-ratio: 10 / 14;
 }
 
 .effect-card h3 {
