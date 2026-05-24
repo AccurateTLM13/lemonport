@@ -31,6 +31,13 @@
       url: "/junk-drawer/"
     },
     {
+      id: "lemon-dom",
+      title: "LEMON DOM",
+      label: "EFFECTS / DOM",
+      description: "Juicy UI effects for plain old websites.",
+      url: "/lemon-dom/"
+    },
+    {
       id: "vrg",
       title: "VRG VAULT",
       label: "CARDS / COLLECTIBLES",

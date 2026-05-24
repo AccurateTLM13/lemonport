@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lemon DOM | Juicy UI effects for plain old websites</title>
+  <meta name="description" content="Lemon DOM is a lightweight, dependency-free visual effects library for glass surfaces, cursor glow, tactile hover, texture overlays, and scroll reveals.">
+  <link rel="canonical" href="https://lemonteed.com/lemon-dom/">
+  <meta property="og:title" content="Lemon DOM">
+  <meta property="og:description" content="Juicy UI effects for plain old websites. A tiny vanilla tribute inspired by Liquid DOM.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lemonteed.com/lemon-dom/">
+  <meta property="og:image" content="https://lemonteed.com/images/lemonteed-fm/disco-lemon.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Lemon DOM">
+  <meta name="twitter:description" content="Juicy UI effects for plain old websites.">
+  <meta name="twitter:image" content="https://lemonteed.com/images/lemonteed-fm/disco-lemon.webp">
+  <link rel="icon" href="/images/favicons/favicon.ico" sizes="any">
+  <link rel="stylesheet" href="lemon-dom.css">
+  <script src="lemon-dom.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="page" id="main">
+    <header class="top-nav">
+      <a href="/" aria-label="Back to Lemonteed Atlas">← Lemonteed Atlas</a>
+      <span class="badge">V1 · No build step</span>
+    </header>
+
+    <section class="hero" aria-labelledby="hero-title">
+      <span class="badge">Lemonteed / Lemon DOM</span>
+      <h1 id="hero-title">Lemon DOM</h1>
+      <p>Juicy UI effects for plain old websites.</p>
+      <p>A lightweight, dependency-free visual effects library — glass, glow, squeeze, zest, and peel — usable by simply opening <code>index.html</code> in a browser.</p>
+      <div class="hero-actions">
+        <a class="btn btn--accent" href="https://github.com/lemonteed/lemonteed" target="_blank" rel="noopener noreferrer">Get the files from the repo</a>
+        <button class="btn" type="button" id="reinit-btn">Re-run LemonDOM.init()</button>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="showcase-title">
+      <div class="section-head">
+        <h2 id="showcase-title">Interactive showcase</h2>
+        <p>Hover, press, and move your cursor — this card stacks every effect.</p>
+      </div>
+
+      <article
+        class="showcase-card lemon-glass lemon-juice lemon-squeeze lemon-zest"
+        data-lemon-glass
+        data-lemon-juice
+        data-lemon-squeeze
+        data-lemon-zest
+        style="--lemon-blur: 22px; --lemon-radius: 32px; --lemon-glow-opacity: 0.42;"
+      >
+        <h3>All the juice, none of the build tools</h3>
+        <p>Frosted glass, cursor bloom, tactile squeeze, and a subtle zest grain — layered together so you can feel what Lemon DOM is aiming for before you drop it into your own markup.</p>
+        <span class="hint">Move cursor · hover · tap</span>
+      </article>
+    </section>
+
+    <section class="section" aria-labelledby="effects-title">
+      <div class="section-head">
+        <h2 id="effects-title">Effect gallery</h2>
+        <p>Five data attributes. Drop them on any element, then call <code>LemonDOM.init()</code>.</p>
+      </div>
+
+      <div class="grid">
+        <article class="effect-card lemon-glass" data-lemon-glass>
+          <h3>Glass</h3>
+          <code>data-lemon-glass</code>
+          <p>Frosted surfaces with backdrop blur, soft borders, inner highlights, and translucent gradients.</p>
+        </article>
+
+        <article
+          class="effect-card lemon-glass lemon-juice"
+          data-lemon-glass
+          data-lemon-juice
+          style="--lemon-juice-size: 320px;"
+        >
+          <h3>Juice</h3>
+          <code>data-lemon-juice</code>
+          <p>Cursor-follow radial glow driven by <code>--lemon-x</code> and <code>--lemon-y</code>.</p>
+        </article>
+
+        <article
+          class="effect-card lemon-glass lemon-squeeze"
+          data-lemon-glass
+          data-lemon-squeeze
+        >
+          <h3>Squeeze</h3>
+          <code>data-lemon-squeeze</code>
+          <p>Tactile hover compression, shine shift, and a gentle glow on interaction.</p>
+        </article>
+
+        <article
+          class="effect-card lemon-glass lemon-zest"
+          data-lemon-glass
+          data-lemon-zest
+        >
+          <h3>Zest</h3>
+          <code>data-lemon-zest</code>
+          <p>CSS-only grain overlay for a premium, slightly analog finish.</p>
+        </article>
+
+        <article
+          class="effect-card lemon-glass lemon-peel"
+          data-lemon-glass
+          data-lemon-peel
+          style="--lemon-peel-duration: 1.1s;"
+        >
+          <h3>Peel</h3>
+          <code>data-lemon-peel</code>
+          <p>Scroll-triggered reveal via <code>IntersectionObserver</code> — mask, clip-path, and motion.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="usage-title">
+      <div class="section-head">
+        <h2 id="usage-title">Basic usage</h2>
+        <p>Three files. No npm. No bundler. Just link and init.</p>
+      </div>
+
+      <div class="code-panel lemon-glass" data-lemon-glass>
+        <span class="label">HTML + JS</span>
+        <pre><code>&lt;link rel="stylesheet" href="lemon-dom.css"&gt;
+&lt;script src="lemon-dom.js" defer&gt;&lt;/script&gt;
+
+&lt;div
+  data-lemon-glass
+  data-lemon-juice
+  data-lemon-squeeze
+  style="--lemon-blur: 24px; --lemon-accent: #ffe66d;"
+&gt;
+  Custom glass card
+&lt;/div&gt;
+
+&lt;script&gt;
+  LemonDOM.init();
+  // or apply individually:
+  LemonDOM.glass(".card");
+  LemonDOM.juice(document.querySelector(".hero"));
+&lt;/script&gt;</code></pre>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="notes-title">
+      <div class="section-head">
+        <h2 id="notes-title">Notes</h2>
+      </div>
+
+      <div class="note-grid">
+        <article class="note lemon-peel" data-lemon-peel>
+          <h3>Inspired by Liquid DOM</h3>
+          <p>
+            Lemon DOM is a practical, no-build-step tribute inspired by
+            <a href="https://github.com/AndrewPrifer/liquid-dom" target="_blank" rel="noopener noreferrer">Liquid DOM</a>
+            by Andrew Prifer. It is not affiliated with Liquid DOM, does not claim feature parity, and does not copy its source code.
+          </p>
+        </article>
+
+        <article class="note lemon-peel" data-lemon-peel>
+          <h3>Browser support &amp; fallbacks</h3>
+          <p>
+            Glass uses <code>backdrop-filter</code> where supported and falls back to a solid translucent surface elsewhere.
+            Peel and squeeze honor <code>prefers-reduced-motion</code>. Juice requires pointer events; touch users still get the static glass look.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <span><strong>Lemon DOM</strong> — vanilla HTML, CSS, and JavaScript</span>
+      <span>Part of the <a href="/">Lemonteed</a> atlas</span>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      LemonDOM.init();
+
+      var reinitBtn = document.getElementById("reinit-btn");
+      if (reinitBtn) {
+        reinitBtn.addEventListener("click", function () {
+          LemonDOM.destroy();
+          LemonDOM.init();
+        });
+      }
+    });
+  </script>
+</body>
+</html>
