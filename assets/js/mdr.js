@@ -98,7 +98,27 @@
     $("mdr-counter-total").textContent = `${formatMoney(total)} / ${formatMoney(goal)}`;
     $("mdr-counter-meta").textContent = `${count.toLocaleString()} people have bought nothing. ${remaining.toLocaleString()} spots remain.`;
     $("mdr-counter-bar").style.width = `${Math.min(100, (count / config.goalCount) * 100)}%`;
-    $("mdr-tier-preview").textContent = `Next tier: ${tierForNumber(count + 1)}`;
+
+    const tierPreview = $("mdr-tier-preview");
+    if (tierPreview) {
+      tierPreview.textContent = `Next tier: ${tierForNumber(count + 1)}`;
+    }
+
+    const buyersEl = $("mdr-terminal-buyers");
+    const remainingEl = $("mdr-terminal-remaining");
+    const statusEl = $("mdr-terminal-status");
+
+    if (buyersEl) {
+      buyersEl.textContent = count.toLocaleString();
+    }
+
+    if (remainingEl) {
+      remainingEl.textContent = remaining.toLocaleString();
+    }
+
+    if (statusEl) {
+      statusEl.textContent = remaining > 0 ? "AVAILABLE" : "SOLD OUT";
+    }
   }
 
   function renderReceiptLine(receipt, options) {
@@ -170,16 +190,30 @@
     $("mdr-milestone-list").innerHTML = (config.milestones || [])
       .map((milestone) => {
         const unlocked = (stats.totalCents ?? 0) >= milestone.cents;
-        return `<li class="${unlocked ? "is-unlocked" : ""}"><strong>${formatMoney(milestone.cents)}</strong> — ${escapeHtml(milestone.unlock)}</li>`;
+        return `
+          <li class="mdr-milestone-row ${unlocked ? "is-unlocked" : "is-locked"}">
+            <span class="mdr-milestone-row__status">${unlocked ? "UNLOCKED" : "LOCKED"}</span>
+            <span class="mdr-milestone-row__amount">${formatMoney(milestone.cents)}</span>
+            <span class="mdr-milestone-row__label">${escapeHtml(milestone.unlock)}</span>
+            <span class="mdr-milestone-row__module">${escapeHtml(milestone.key || "module")}</span>
+          </li>
+        `;
       })
       .join("");
 
     $("mdr-wall-grid").innerHTML = (config.wallOfRegret || [])
       .map(
         (entry) => `
-          <article>
-            <blockquote>${escapeHtml(entry.message)}</blockquote>
-            <cite>${escapeHtml(entry.alias)} · ${formatReceiptNumber(entry.number)}</cite>
+          <article class="mdr-specimen">
+            <header class="mdr-specimen__head">
+              <span class="mdr-specimen__tag">SPECIMEN ${String(entry.number).padStart(4, "0")}</span>
+              <span class="mdr-specimen__receipt">${formatReceiptNumber(entry.number)}</span>
+            </header>
+            <blockquote class="mdr-specimen__quote">${escapeHtml(entry.message)}</blockquote>
+            <footer class="mdr-specimen__foot">
+              <cite>${escapeHtml(entry.alias)}</cite>
+              <span>ARCHIVED REGRET</span>
+            </footer>
           </article>
         `
       )

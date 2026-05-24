@@ -12,10 +12,10 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
-  <link rel="stylesheet" href="/assets/css/mdr.css?v=1">
+  <link rel="stylesheet" href="/assets/css/mdr.css?v=2">
   <script src="/assets/js/mdr-config.js?v=1" defer></script>
   <script src="/assets/js/mdr-stats.js?v=1" defer></script>
-  <script src="/assets/js/mdr.js?v=1" defer></script>
+  <script src="/assets/js/mdr.js?v=2" defer></script>
 </head>
 <body class="mdr-page">
   <a class="mdr-skip" href="#mdr-main">Skip to content</a>
@@ -30,24 +30,90 @@
     <main class="mdr-main" id="mdr-main" tabindex="-1">
       <article class="mdr-canvas" aria-labelledby="mdr-title">
 
-        <section class="mdr-hero" aria-label="Introduction">
-          <p class="mdr-kicker">Public internet experiment</p>
-          <h1 id="mdr-title">The Million Dollar Receipt</h1>
-          <p class="mdr-tagline" id="mdr-tagline">1,000,000 people bought nothing together.</p>
-          <p class="mdr-hero-copy">One dollar. One receipt line. One giant public artifact proving that 1,000,000 people bought nothing together.</p>
-          <div class="mdr-hero-actions">
-            <button class="mdr-button mdr-button--primary" type="button" id="mdr-buy-button">Buy Nothing for $1</button>
-            <a class="mdr-button mdr-button--ghost" href="#mdr-archive">View the Receipt</a>
+        <section class="mdr-hero mdr-hero--stage" aria-label="Introduction">
+          <div class="mdr-hero__grid">
+            <div class="mdr-hero__main">
+              <div class="mdr-machine-badge mdr-machine-badge--inline">
+                <span class="mdr-machine-badge__code">LNW-01</span>
+                <strong>Lemonteed Nothing Works</strong>
+              </div>
+              <p class="mdr-kicker">Public internet experiment</p>
+              <h1 id="mdr-title">The Million Dollar Receipt</h1>
+              <p class="mdr-tagline" id="mdr-tagline">1,000,000 people bought nothing together.</p>
+              <p class="mdr-hero-copy">One dollar. One receipt line. One giant public artifact proving that 1,000,000 people bought nothing together.</p>
+              <div class="mdr-hero-actions">
+                <button class="mdr-button mdr-button--cta" type="button" id="mdr-buy-button">
+                  <span class="mdr-button__label">Buy Nothing for $1</span>
+                  <span class="mdr-button__meta">Nothing, Standard Edition · $1.00 · Utility: none</span>
+                </button>
+                <a class="mdr-button mdr-button--ghost" href="#mdr-archive">View the Receipt</a>
+              </div>
+              <p class="mdr-disclaimer">You are buying a $1 listing on a public digital receipt. No equity. No prize. No useful product. Finally, honesty.</p>
+            </div>
+
+            <aside class="mdr-hero__machine" aria-label="Nothing Factory preview">
+              <div class="mdr-hero-preview">
+                <div class="mdr-hero-preview__head">
+                  <span>FACTORY PREVIEW</span>
+                  <span class="mdr-hero-preview__led">STANDBY</span>
+                </div>
+                <div class="mdr-hero-preview__conveyor" aria-hidden="true">
+                  <div class="mdr-hero-preview__belt"></div>
+                  <div class="mdr-hero-preview__lemon">
+                    <img src="/images/home/lemon-mascot.webp" alt="" width="40" height="40">
+                  </div>
+                  <div class="mdr-hero-preview__scanner">
+                    <span>ITEM: NOTHING</span>
+                    <span>VALUE: DEBATABLE</span>
+                  </div>
+                </div>
+                <div class="mdr-hero-preview__printer" aria-hidden="true">
+                  <div class="mdr-hero-preview__strip">
+                    <span>THE MILLION DOLLAR RECEIPT</span>
+                    <span>NOTHING · $1.00</span>
+                    <span>#PENDING</span>
+                  </div>
+                  <div class="mdr-hero-preview__feed"></div>
+                </div>
+                <p class="mdr-hero-preview__note">Preview module · full conveyor activates at checkout</p>
+              </div>
+            </aside>
           </div>
-          <p class="mdr-disclaimer">You are buying a $1 listing on a public digital receipt. No equity. No prize. No useful product. Finally, honesty.</p>
         </section>
 
         <section class="mdr-terminal" aria-label="Current receipt total">
-          <div class="mdr-terminal__panel">
-            <span class="mdr-terminal__label">CURRENT RECEIPT TOTAL</span>
+          <div class="mdr-terminal__panel mdr-terminal__panel--pos">
+            <div class="mdr-terminal__head">
+              <span class="mdr-terminal__led" aria-hidden="true">●</span>
+              <span class="mdr-terminal__label">CURRENT RECEIPT TOTAL</span>
+              <span class="mdr-terminal__model">POS / THERMAL-01</span>
+            </div>
             <p class="mdr-terminal__total" id="mdr-counter-total">$0 / $1,000,000</p>
+            <dl class="mdr-terminal__rows">
+              <div class="mdr-terminal__row">
+                <dt>Item</dt>
+                <dd>NOTHING, STANDARD EDITION</dd>
+              </div>
+              <div class="mdr-terminal__row">
+                <dt>Status</dt>
+                <dd id="mdr-terminal-status">AVAILABLE</dd>
+              </div>
+              <div class="mdr-terminal__row">
+                <dt>Utility</dt>
+                <dd>NONE DETECTED</dd>
+              </div>
+              <div class="mdr-terminal__row">
+                <dt>Buyers</dt>
+                <dd id="mdr-terminal-buyers">—</dd>
+              </div>
+              <div class="mdr-terminal__row">
+                <dt>Remaining</dt>
+                <dd id="mdr-terminal-remaining">—</dd>
+              </div>
+            </dl>
             <p class="mdr-terminal__meta" id="mdr-counter-meta">Loading counter…</p>
             <div class="mdr-terminal__bar" aria-hidden="true"><span id="mdr-counter-bar"></span></div>
+            <div class="mdr-barcode mdr-barcode--terminal" aria-hidden="true"></div>
           </div>
         </section>
 
@@ -135,13 +201,19 @@
           <ol class="mdr-steps" id="mdr-how-list"></ol>
         </section>
 
-        <section class="mdr-section" aria-label="Latest receipt lines">
-          <h2>Latest receipt lines</h2>
-          <div class="mdr-receipt-strip" id="mdr-recent"></div>
+        <section class="mdr-section mdr-section--paper" aria-label="Latest receipt lines">
+          <div class="mdr-section__head">
+            <h2>Latest receipt lines</h2>
+            <span class="mdr-section__tag">FEED / LIVE</span>
+          </div>
+          <div class="mdr-receipt-strip mdr-paper-panel" id="mdr-recent"></div>
         </section>
 
         <section class="mdr-section mdr-milestones" id="mdr-milestones" aria-label="Milestone unlocks">
-          <h2>Milestone unlocks</h2>
+          <div class="mdr-section__head">
+            <h2>Milestone unlocks</h2>
+            <span class="mdr-section__tag">FACTORY MODULES</span>
+          </div>
           <ul class="mdr-milestone-list" id="mdr-milestone-list"></ul>
         </section>
 
@@ -166,7 +238,7 @@
               <button class="mdr-button" type="button" id="mdr-random-button">Show Me Someone Who Bought Nothing</button>
             </div>
           </div>
-          <div class="mdr-giant-receipt" id="mdr-giant-receipt">
+          <div class="mdr-giant-receipt mdr-paper-panel" id="mdr-giant-receipt">
             <div class="mdr-giant-receipt__header" id="mdr-receipt-header"></div>
             <div class="mdr-giant-receipt__body" id="mdr-receipt-body"></div>
             <div class="mdr-giant-receipt__footer" id="mdr-receipt-footer"></div>
@@ -175,7 +247,11 @@
         </section>
 
         <section class="mdr-section mdr-wall" id="mdr-wall" aria-label="Wall of Regret">
-          <h2>Wall of Regret</h2>
+          <div class="mdr-section__head">
+            <h2>Wall of Regret</h2>
+            <span class="mdr-section__tag">CURATED EVIDENCE</span>
+          </div>
+          <p class="mdr-wall-intro">A museum wall of buyer messages deemed regrettably honest. Specimens archived from the public receipt.</p>
           <div class="mdr-wall-grid" id="mdr-wall-grid"></div>
         </section>
 
