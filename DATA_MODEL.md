@@ -204,3 +204,10 @@ The generated file is:
 - `assets/js/live-experiment-data.js`
 
 Do not edit the generated file directly.
+
+## Art-Directed and Special-Case Pages
+
+Certain subpages and directories in the repository serve as bespoke experiments and maintain independent, custom designs:
+
+1. **`hashbrownpro/wafflehousepro.html`**: An art-directed concept page showing a mock redesign of Waffle House's digital presence (modeled after Apple landing page aesthetics). It is registered in the JSON data model (`content/projects.json`) under the `what-if` category (with `href` pointing to `/hashbrownpro/wafflehousepro.html`). It retains its own scoped styling rather than sharing global styling blocks.
+2. **`lemon-lab/clanker-cloud-run/`**: A playable browser arcade game themed around cloud infrastructure. It is registered in `sitemap.xml` for public indexing, but is considered an independent experiment page and is not represented in the structured JSON gallery database.

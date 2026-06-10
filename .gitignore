@@ -3,3 +3,8 @@
 *.tmp
 .studio-backups/
 /lemon-dom-standalone/
+
+# Local AI tooling — never commit
+.cursor/
+.agents/
+.gstack/

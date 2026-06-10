@@ -241,6 +241,28 @@ function validateContent(projects, categories, options = {}) {
     }
   });
 
+  // Validate Memetic Warfare artifactId references
+  const gameDataPath = path.join(root, "assets", "js", "memetic-game-data.js");
+  if (fs.existsSync(gameDataPath)) {
+    try {
+      const vm = require("node:vm");
+      const gameDataCode = fs.readFileSync(gameDataPath, "utf8");
+      const sandbox = { window: {} };
+      vm.createContext(sandbox);
+      vm.runInNewContext(gameDataCode, sandbox);
+      const gameData = sandbox.window.memeticGameData;
+      if (gameData && Array.isArray(gameData.weapons)) {
+        gameData.weapons.forEach((weapon) => {
+          if (hasText(weapon.artifactId) && !projectsById.has(weapon.artifactId)) {
+            errors.push(`Memetic Warfare weapon "${weapon.id}" references missing project ID "${weapon.artifactId}".`);
+          }
+        });
+      }
+    } catch (error) {
+      errors.push(`Failed to parse memetic-game-data.js: ${error.message}`);
+    }
+  }
+
   return { errors, warnings };
 }
 

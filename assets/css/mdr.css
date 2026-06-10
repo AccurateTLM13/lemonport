@@ -500,6 +500,30 @@
   color: var(--mdr-terminal);
 }
 
+.mdr-pos__warning {
+  padding: 0.85rem 1.15rem;
+  background: rgba(255, 138, 0, 0.08);
+  border-bottom: 1px dashed rgba(255, 138, 0, 0.25);
+  font-family: var(--mdr-mono);
+  color: #ff8a00;
+}
+
+.mdr-pos__warning span {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.mdr-pos__warning p {
+  margin: 0;
+  font-size: 0.58rem;
+  line-height: 1.4;
+  color: var(--mdr-text-dim);
+}
+
 .mdr-pos__form {
   padding: 1rem 1.15rem 1.15rem;
 }

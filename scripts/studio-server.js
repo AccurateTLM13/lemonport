@@ -85,6 +85,43 @@ function assertWriteAuthorized(request) {
     return;
   }
 
+  // CSRF validation: Validate Origin and Referer headers against Host origin
+  const host = request.headers.host;
+  const origin = request.headers.origin;
+  const referer = request.headers.referer;
+
+  if (origin) {
+    let originUrl;
+    try {
+      originUrl = new URL(origin);
+    } catch (e) {
+      const error = new Error("CSRF check failed: Malformed Origin.");
+      error.statusCode = 403;
+      throw error;
+    }
+    if (originUrl.host !== host) {
+      const error = new Error("CSRF check failed: Invalid Origin.");
+      error.statusCode = 403;
+      throw error;
+    }
+  }
+
+  if (referer) {
+    let refererUrl;
+    try {
+      refererUrl = new URL(referer);
+    } catch (e) {
+      const error = new Error("CSRF check failed: Malformed Referer.");
+      error.statusCode = 403;
+      throw error;
+    }
+    if (refererUrl.host !== host) {
+      const error = new Error("CSRF check failed: Invalid Referer.");
+      error.statusCode = 403;
+      throw error;
+    }
+  }
+
   if (!studioWriteToken) {
     if (allowRemote) {
       const error = new Error("Write API disabled. Set STUDIO_WRITE_TOKEN when STUDIO_ALLOW_REMOTE=1.");
@@ -366,12 +403,19 @@ function decodeDataUrl(dataUrl) {
   const match = String(dataUrl || "").match(/^data:([^;]+);base64,(.+)$/);
 
   if (!match) {
-    throw new Error("Upload a valid file.");
+    throw new Error("Invalid data URL.");
+  }
+
+  const mime = match[1];
+  const buffer = Buffer.from(match[2], "base64");
+
+  if (buffer.length > 15 * 1024 * 1024) {
+    throw new Error("Uploaded image exceeds the maximum size limit of 15MB.");
   }
 
   return {
-    mime: match[1],
-    buffer: Buffer.from(match[2], "base64")
+    mime,
+    buffer
   };
 }
 
@@ -384,20 +428,29 @@ function publicFmAudioPath(filename) {
 }
 
 function imageDimensions(filePath) {
-  const output = execFileSync("magick", ["identify", "-format", "%w %h", filePath], { encoding: "utf8" });
+  const output = execFileSync("magick", ["identify", "-format", "%w %h", filePath], { encoding: "utf8", timeout: 5000 });
   const [width, height] = output.trim().split(/\s+/).map(Number);
+  if (!width || !height || Number.isNaN(width) || Number.isNaN(height)) {
+    throw new Error("Invalid image dimensions parsed.");
+  }
   return { width, height };
 }
 
 function makeWebpSet(sourcePath, imageDir, slug) {
+  // Preflight dimension check
+  const dimensions = imageDimensions(sourcePath);
+  if (dimensions.width > 10000 || dimensions.height > 10000) {
+    throw new Error("Uploaded image dimensions are too large (max 10,000 x 10,000 pixels).");
+  }
+
   const original = path.join(imageDir, `${slug}.webp`);
 
-  execFileSync("magick", [sourcePath, "-auto-orient", "-strip", "-quality", "84", "-define", "webp:method=6", original]);
-  const dimensions = imageDimensions(original);
+  execFileSync("magick", [sourcePath, "-auto-orient", "-strip", "-quality", "84", "-define", "webp:method=6", original], { timeout: 15000 });
+  const convertedDimensions = imageDimensions(original);
   const variants = [];
 
   galleryWidths.forEach((width) => {
-    if (width >= dimensions.width) {
+    if (width >= convertedDimensions.width) {
       return;
     }
 
@@ -413,15 +466,15 @@ function makeWebpSet(sourcePath, imageDir, slug) {
       "-define",
       "webp:method=6",
       file
-    ]);
+    ], { timeout: 15000 });
     variants.push({ width, url: publicImagePath(path.basename(imageDir), `${slug}-${width}.webp`) });
   });
 
-  variants.push({ width: dimensions.width, url: publicImagePath(path.basename(imageDir), `${slug}.webp`) });
+  variants.push({ width: convertedDimensions.width, url: publicImagePath(path.basename(imageDir), `${slug}.webp`) });
 
   return {
     original,
-    dimensions,
+    dimensions: convertedDimensions,
     variants
   };
 }
@@ -1331,9 +1384,217 @@ async function route(request, response) {
     }
 
     // ── Mutation Desk API ────────────────────────────────────────────────────
-    // TODO: Mutation Desk — add phase CREATE, UPDATE, DELETE routes here.
-    // TODO: Mutation Desk — add fragment editor endpoints here.
-    // TODO: Mutation Desk — add preview-current-phase endpoint here.
+    // POST /api/mutation/schedule (CREATE a phase)
+    if (request.method === "POST" && url.pathname === "/api/mutation/schedule") {
+      const body = await readJsonBody(request);
+      const phaseNum = Number(body.phase);
+      if (Number.isNaN(phaseNum)) {
+        throw new Error("Phase number is required and must be a number.");
+      }
+      if (!body.title) {
+        throw new Error("Title is required.");
+      }
+      if (!body.fragment) {
+        throw new Error("Fragment filename is required.");
+      }
+      const cleanFrag = String(body.fragment).trim();
+      if (!/^[a-zA-Z0-9_-]+\.json$/.test(cleanFrag)) {
+        throw new Error("Fragment filename contains invalid characters. Must end with .json");
+      }
+
+      let schedule = [];
+      if (fs.existsSync(MUTATION_SCHEDULE_FILE)) {
+        schedule = JSON.parse(fs.readFileSync(MUTATION_SCHEDULE_FILE, "utf8"));
+      }
+      if (schedule.some((p) => Number(p.phase) === phaseNum)) {
+        throw new Error(`Phase number ${phaseNum} already exists.`);
+      }
+
+      const newPhase = {
+        phase: phaseNum,
+        title: String(body.title).trim(),
+        phaseLabel: String(body.phaseLabel || `File Fragment ${String(phaseNum).padStart(3, "0")}`).trim(),
+        publishAt: String(body.publishAt || new Date().toISOString()).trim(),
+        fragment: cleanFrag,
+        status: String(body.status || "Draft").trim(),
+        nextMutationHint: body.nextMutationHint ? String(body.nextMutationHint).trim() : null,
+        requiresUnlock: body.requiresUnlock === true
+      };
+
+      schedule.push(newPhase);
+      schedule.sort((a, b) => Number(a.phase) - Number(b.phase));
+
+      backupFile(MUTATION_SCHEDULE_FILE);
+      fs.mkdirSync(path.dirname(MUTATION_SCHEDULE_FILE), { recursive: true });
+      fs.writeFileSync(MUTATION_SCHEDULE_FILE, `${JSON.stringify(schedule, null, 2)}\n`);
+
+      sendJson(response, 201, { phase: newPhase });
+      return;
+    }
+
+    // PATCH /api/mutation/schedule/:phase (UPDATE a phase)
+    const scheduleMatch = url.pathname.match(/^\/api\/mutation\/schedule\/(\d+)$/);
+    if (scheduleMatch && request.method === "PATCH") {
+      const phaseNum = Number(scheduleMatch[1]);
+      const body = await readJsonBody(request);
+
+      if (!fs.existsSync(MUTATION_SCHEDULE_FILE)) {
+        sendJson(response, 404, { error: "schedule.json not found." });
+        return;
+      }
+
+      const schedule = JSON.parse(fs.readFileSync(MUTATION_SCHEDULE_FILE, "utf8"));
+      const phaseIndex = schedule.findIndex((p) => Number(p.phase) === phaseNum);
+      if (phaseIndex === -1) {
+        sendJson(response, 404, { error: `Phase ${phaseNum} not found.` });
+        return;
+      }
+
+      const phaseObj = schedule[phaseIndex];
+
+      if (body.phase !== undefined) {
+        const newPhaseNum = Number(body.phase);
+        if (Number.isNaN(newPhaseNum)) {
+          throw new Error("New phase number must be a number.");
+        }
+        if (newPhaseNum !== phaseNum && schedule.some((p) => Number(p.phase) === newPhaseNum)) {
+          throw new Error(`Phase number ${newPhaseNum} already exists.`);
+        }
+        phaseObj.phase = newPhaseNum;
+      }
+
+      if (body.title !== undefined) {
+        phaseObj.title = String(body.title).trim();
+      }
+      if (body.phaseLabel !== undefined) {
+        phaseObj.phaseLabel = String(body.phaseLabel).trim();
+      }
+      if (body.publishAt !== undefined) {
+        phaseObj.publishAt = String(body.publishAt).trim();
+      }
+      if (body.fragment !== undefined) {
+        const cleanFrag = String(body.fragment).trim();
+        if (!/^[a-zA-Z0-9_-]+\.json$/.test(cleanFrag)) {
+          throw new Error("Fragment filename contains invalid characters. Must end with .json");
+        }
+        phaseObj.fragment = cleanFrag;
+      }
+      if (body.status !== undefined) {
+        phaseObj.status = String(body.status).trim();
+      }
+      if (body.nextMutationHint !== undefined) {
+        phaseObj.nextMutationHint = body.nextMutationHint ? String(body.nextMutationHint).trim() : null;
+      }
+      if (body.requiresUnlock !== undefined) {
+        phaseObj.requiresUnlock = body.requiresUnlock === true;
+      }
+
+      schedule.sort((a, b) => Number(a.phase) - Number(b.phase));
+      backupFile(MUTATION_SCHEDULE_FILE);
+      fs.writeFileSync(MUTATION_SCHEDULE_FILE, `${JSON.stringify(schedule, null, 2)}\n`);
+
+      sendJson(response, 200, { phase: phaseObj });
+      return;
+    }
+
+    // DELETE /api/mutation/schedule/:phase (DELETE a phase)
+    if (scheduleMatch && request.method === "DELETE") {
+      const phaseNum = Number(scheduleMatch[1]);
+      if (!fs.existsSync(MUTATION_SCHEDULE_FILE)) {
+        sendJson(response, 404, { error: "schedule.json not found." });
+        return;
+      }
+
+      const schedule = JSON.parse(fs.readFileSync(MUTATION_SCHEDULE_FILE, "utf8"));
+      const index = schedule.findIndex((p) => Number(p.phase) === phaseNum);
+      if (index === -1) {
+        sendJson(response, 404, { error: `Phase ${phaseNum} not found.` });
+        return;
+      }
+
+      schedule.splice(index, 1);
+      backupFile(MUTATION_SCHEDULE_FILE);
+      fs.writeFileSync(MUTATION_SCHEDULE_FILE, `${JSON.stringify(schedule, null, 2)}\n`);
+
+      sendJson(response, 200, { deleted: phaseNum });
+      return;
+    }
+
+    // GET /api/mutation/fragments (LIST all fragment files)
+    if (request.method === "GET" && url.pathname === "/api/mutation/fragments") {
+      fs.mkdirSync(MUTATION_FRAGMENTS_DIR, { recursive: true });
+      const files = fs.readdirSync(MUTATION_FRAGMENTS_DIR)
+        .filter((f) => f.endsWith(".json"))
+        .map((filename) => {
+          const absolute = path.join(MUTATION_FRAGMENTS_DIR, filename);
+          const stats = fs.statSync(absolute);
+          return {
+            filename,
+            size: stats.size,
+            mtime: stats.mtime.toISOString()
+          };
+        });
+      sendJson(response, 200, { fragments: files });
+      return;
+    }
+
+    // GET /api/mutation/fragments/:filename (GET specific fragment JSON)
+    const fragmentMatch = url.pathname.match(/^\/api\/mutation\/fragments\/([^/]+)$/);
+    if (fragmentMatch && request.method === "GET") {
+      const filename = decodeURIComponent(fragmentMatch[1]);
+      if (!/^[a-zA-Z0-9_-]+\.json$/.test(filename)) {
+        sendJson(response, 400, { error: "Invalid fragment filename." });
+        return;
+      }
+      const absolute = resolvePathWithinRoot(MUTATION_FRAGMENTS_DIR, filename);
+      if (!absolute || !fs.existsSync(absolute)) {
+        sendJson(response, 404, { error: `Fragment file ${filename} not found.` });
+        return;
+      }
+      const content = JSON.parse(fs.readFileSync(absolute, "utf8"));
+      sendJson(response, 200, content);
+      return;
+    }
+
+    // PUT /api/mutation/fragments/:filename (CREATE or UPDATE specific fragment JSON)
+    if (fragmentMatch && request.method === "PUT") {
+      const filename = decodeURIComponent(fragmentMatch[1]);
+      if (!/^[a-zA-Z0-9_-]+\.json$/.test(filename)) {
+        sendJson(response, 400, { error: "Invalid fragment filename." });
+        return;
+      }
+      const absolute = resolvePathWithinRoot(MUTATION_FRAGMENTS_DIR, filename);
+      if (!absolute) {
+        sendJson(response, 403, { error: "Access denied." });
+        return;
+      }
+      const body = await readJsonBody(request);
+      fs.mkdirSync(MUTATION_FRAGMENTS_DIR, { recursive: true });
+      if (fs.existsSync(absolute)) {
+        backupFile(absolute);
+      }
+      fs.writeFileSync(absolute, `${JSON.stringify(body, null, 2)}\n`);
+      sendJson(response, 200, { filename, saved: true });
+      return;
+    }
+
+    // DELETE /api/mutation/fragments/:filename (DELETE specific fragment file)
+    if (fragmentMatch && request.method === "DELETE") {
+      const filename = decodeURIComponent(fragmentMatch[1]);
+      if (!/^[a-zA-Z0-9_-]+\.json$/.test(filename)) {
+        sendJson(response, 400, { error: "Invalid fragment filename." });
+        return;
+      }
+      const absolute = resolvePathWithinRoot(MUTATION_FRAGMENTS_DIR, filename);
+      if (!absolute || !fs.existsSync(absolute)) {
+        sendJson(response, 404, { error: `Fragment file ${filename} not found.` });
+        return;
+      }
+      backupFile(absolute);
+      fs.unlinkSync(absolute);
+      sendJson(response, 200, { filename, deleted: true });
+      return;
+    }
 
     if (request.method === "GET" && url.pathname === "/api/mutation/schedule") {
       if (!fs.existsSync(MUTATION_SCHEDULE_FILE)) {

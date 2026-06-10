@@ -1,12 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 120" fill="none" aria-hidden="true">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="420" viewBox="0 0 64 420" fill="none">
   <defs>
-    <linearGradient id="mdrBeam" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#b6ff00" stop-opacity="0"/>
-      <stop offset="35%" stop-color="#b6ff00" stop-opacity="1"/>
-      <stop offset="65%" stop-color="#b6ff00" stop-opacity="1"/>
-      <stop offset="100%" stop-color="#b6ff00" stop-opacity="0"/>
+    <linearGradient id="beamY" x1="32" y1="0" x2="32" y2="420" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#B9FF00" stop-opacity="0"/>
+      <stop offset="0.18" stop-color="#B9FF00" stop-opacity=".8"/>
+      <stop offset="0.5" stop-color="#D7FF5A" stop-opacity="1"/>
+      <stop offset="0.82" stop-color="#B9FF00" stop-opacity=".8"/>
+      <stop offset="1" stop-color="#B9FF00" stop-opacity="0"/>
     </linearGradient>
+    <filter id="glow" x="-80%" y="-10%" width="260%" height="120%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
   </defs>
-  <rect x="13" y="0" width="6" height="120" fill="url(#mdrBeam)" opacity="0.85"/>
-  <line x1="16" y1="4" x2="16" y2="116" stroke="#d4ff66" stroke-width="1.5" opacity="0.9"/>
+  <rect x="27" y="8" width="10" height="404" rx="5" fill="url(#beamY)" filter="url(#glow)"/>
+  <rect x="31" y="24" width="2" height="372" rx="1" fill="#F0FFC0" opacity=".95"/>
 </svg>

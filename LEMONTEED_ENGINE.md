@@ -18,6 +18,8 @@ Static public pages include:
 - `junk-drawer/index.html`
 - `junk-drawer/image-converter/index.html`
 - `live-experiment/index.html`
+- `lemonteed-fm/index.html`
+- `million-dollar-receipt/index.html`
 - `operator-log/index.html` (hidden; noindex; not in sitemap)
 
 Shared public assets include:
@@ -34,8 +36,13 @@ The content source of truth is:
 
 - `content/projects.json`
 - `content/categories.json`
+- `content/live-experiment.json`
+- `content/lemonteed-fm.json`
+- `content/million-dollar-receipt.json`
+- `content/vrg-vault.json`
+- `content/operator-log/schedule.json`
 
-These files define artifact metadata and category metadata. Agents should update these files through Lemonteed Studio when possible, or by careful direct JSON edits when explicitly needed.
+These files define artifact metadata, category profiles, audio tracks, and mutation parameters. Agents should update these files through Lemonteed Studio when possible, or by careful direct JSON edits when explicitly needed.
 
 ## Generated Files
 
@@ -43,8 +50,13 @@ The generated browser data files are:
 
 - `assets/js/gallery-data.js`
 - `assets/js/gallery-categories.js`
+- `assets/js/live-experiment-data.js`
+- `assets/js/vrg-vault-data.js`
+- `assets/js/mdr-config.js`
+- `assets/js/mdr-stats.js`
+- `lemonteed-fm/tracks.js`
 
-These files are produced by `scripts/build-gallery.js`. Do not manually edit them as the source of truth. Update `content/projects.json` or `content/categories.json`, then rebuild.
+These files are produced by respective build scripts under `scripts/`. Do not manually edit them as the source of truth. Update the corresponding content JSON file and rebuild.
 
 Responsive image variants under `images/**` are also generated assets. Keep them tied to the metadata in `content/projects.json`.
 

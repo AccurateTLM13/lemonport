@@ -607,6 +607,24 @@
     renderCounter();
     renderStaticSections();
     renderArchivePreview();
+    const isLocalOrMock = !apiBase || /localhost|127\.0\.0\.1|0\.0\.0\.0/i.test(apiBase);
+    const isMockMode = isLocalOrMock || !config.launched;
+    const mockWarning = $("mdr-mock-warning");
+    if (mockWarning) {
+      mockWarning.hidden = !isMockMode;
+    }
+
+    if (isMockMode) {
+      const buyBtnDesktop = $("mdr-buy-button")?.querySelector(".mdr-btn__label--desktop");
+      const buyBtnMobile = $("mdr-buy-button")?.querySelector(".mdr-btn__label--mobile");
+      if (buyBtnDesktop) buyBtnDesktop.textContent = "Send Lemon to Mock Checkout";
+      if (buyBtnMobile) buyBtnMobile.textContent = "Simulate Buy Nothing";
+
+      const commitLabel = $("mdr-checkout-form")?.querySelector(".mdr-pos__commit-label");
+      const commitSub = $("mdr-checkout-form")?.querySelector(".mdr-pos__commit-sub");
+      if (commitLabel) commitLabel.textContent = "Simulate $1.00 Payment";
+      if (commitSub) commitSub.textContent = "Simulate permanent receipt line";
+    }
   }
 
   async function initReceiptPage() {

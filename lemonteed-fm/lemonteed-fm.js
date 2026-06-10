@@ -242,11 +242,71 @@
     }
   }
 
+  function getMockableDate() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const now = new Date();
+    if (urlParams.has("debug") || urlParams.has("piet_debug")) {
+      const mockHour = urlParams.get("piet_hour");
+      const mockMin = urlParams.get("piet_minute");
+      if (mockHour !== null) {
+        now.setHours(parseInt(mockHour, 10));
+      }
+      if (mockMin !== null) {
+        now.setMinutes(parseInt(mockMin, 10));
+      }
+    }
+    return now;
+  }
+
   function getIsPietHours() {
-    // TODO: Integration phase:
-    // Replace the temporary toggle state with local browser time activation.
-    // Piet Mode should activate from 11 PM to 5 AM based on visitor browser time.
-    return isPietModeActive;
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("debug") || urlParams.has("piet_debug")) {
+      return isPietModeActive;
+    }
+    const hour = new Date().getHours();
+    return hour >= 23 || hour < 5;
+  }
+
+  function getCurrentSegment(date) {
+    const mins = date.getHours() * 60 + date.getMinutes();
+    
+    if (mins >= 23 * 60 && mins < 24 * 60) {
+      return {
+        index: 0,
+        name: "The Sign-On",
+        timeRange: "11:00 PM - 12:00 AM",
+        nextName: "Static Breaks"
+      };
+    } else if (mins >= 0 && mins < 90) {
+      return {
+        index: 1,
+        name: "Static Breaks",
+        timeRange: "12:00 AM - 1:30 AM",
+        nextName: "Piet's Certified Correct Takes"
+      };
+    } else if (mins >= 90 && mins < 180) {
+      return {
+        index: 2,
+        name: "Piet's Certified Correct Takes",
+        timeRange: "1:30 AM - 3:00 AM",
+        nextName: "Songs for People Still Awake"
+      };
+    } else if (mins >= 180 && mins < 270) {
+      return {
+        index: 3,
+        name: "Songs for People Still Awake",
+        timeRange: "3:00 AM - 4:30 AM",
+        nextName: "Sunrise Shutdown"
+      };
+    } else if (mins >= 270 && mins < 300) {
+      return {
+        index: 4,
+        name: "Sunrise Shutdown",
+        timeRange: "4:30 AM - 5:00 AM",
+        nextName: "The Sign-On"
+      };
+    }
+    return null;
   }
 
   function updatePietClock() {
@@ -254,10 +314,11 @@
       return;
     }
 
+    const date = getMockableDate();
     const time = new Intl.DateTimeFormat([], {
       hour: "numeric",
       minute: "2-digit"
-    }).format(new Date());
+    }).format(date);
 
     pietClockEls.forEach((element) => {
       element.textContent = time;
@@ -391,13 +452,131 @@
     }
   }
 
+  function updateBroadcastLog(date) {
+    const broadcastLogContainer = document.querySelector(".broadcast-log ol");
+    if (!broadcastLogContainer) return;
+
+    const mins = date.getHours() * 60 + date.getMinutes();
+    const logItems = [];
+
+    const formatLogTime = (h, m) => {
+      const ampm = h >= 12 ? "PM" : "AM";
+      const displayHour = h % 12 === 0 ? 12 : h % 12;
+      const displayMin = m.toString().padStart(2, "0");
+      return `${displayHour}:${displayMin} ${ampm}`;
+    };
+
+    if (mins >= 23 * 60 || mins < 5 * 60) {
+      if (mins >= 23 * 60 || mins < 0) {
+        logItems.push({ time: "11:00 PM", text: "Piet entered the booth." });
+        if (mins >= 23 * 60 + 15) {
+          logItems.push({ time: "11:15 PM", text: "Booth fan turned on (loudly)." });
+        }
+        if (mins >= 23 * 60 + 42) {
+          logItems.push({ time: "11:42 PM", text: "First questionable take approved." });
+        }
+      } else {
+        logItems.push({ time: "11:00 PM", text: "Piet entered the booth." });
+        logItems.push({ time: "11:15 PM", text: "Booth fan turned on." });
+        logItems.push({ time: "11:42 PM", text: "First questionable take approved." });
+      }
+
+      if (mins >= 0 && mins < 5 * 60) {
+        logItems.push({ time: "12:00 AM", text: "Segment active: Static Breaks." });
+        if (mins >= 20) {
+          logItems.push({ time: "12:20 AM", text: "Signal drift detected." });
+        }
+        if (mins >= 60) {
+          logItems.push({ time: "1:00 AM", text: "Static break survived." });
+        }
+      }
+
+      if (mins >= 90) {
+        logItems.push({ time: "1:30 AM", text: "Segment active: Certified Correct Takes." });
+        if (mins >= 105) {
+          logItems.push({ time: "1:45 AM", text: "Unpaid executive producer checked in." });
+        }
+        if (mins >= 150) {
+          logItems.push({ time: "2:30 AM", text: "Coffee supply depleted." });
+        }
+      }
+
+      if (mins >= 180) {
+        logItems.push({ time: "3:00 AM", text: "Segment active: Songs for People Still Awake." });
+        if (mins >= 210) {
+          logItems.push({ time: "3:30 AM", text: "Vibe recalibrated to maximum cozy." });
+        }
+        if (mins >= 255) {
+          logItems.push({ time: "4:15 AM", text: "Ambient noise level normalized." });
+        }
+      }
+
+      if (mins >= 270) {
+        logItems.push({ time: "4:30 AM", text: "Segment active: Sunrise Shutdown." });
+        if (mins >= 285) {
+          logItems.push({ time: "4:45 AM", text: "Preparing to power down transceivers." });
+        }
+      }
+      
+      const currentFormatted = formatLogTime(date.getHours(), date.getMinutes());
+      const segment = getCurrentSegment(date);
+      if (segment) {
+        logItems.push({ time: currentFormatted, text: `Transmission status: ${segment.name}.` });
+      }
+    }
+
+    broadcastLogContainer.innerHTML = logItems
+      .slice(-4)
+      .map(item => `<li><time>${escapeHtml(item.time)}</time> ${escapeHtml(item.text)}</li>`)
+      .join("");
+  }
+
+  function updatePietModeState() {
+    const active = getIsPietHours();
+    document.body.classList.toggle("piet-mode", active);
+    applyModeContent();
+
+    if (active) {
+      updatePietClock();
+      
+      const date = getMockableDate();
+      const segment = getCurrentSegment(date);
+      
+      if (segment) {
+        const liveTitle = document.querySelector("[data-piet-live-title]");
+        const liveNext = document.querySelector("[data-piet-live-next]");
+        const segmentTime = document.querySelector("[data-piet-segment-time]");
+        
+        if (liveTitle) liveTitle.textContent = segment.name;
+        if (liveNext) liveNext.textContent = `Next: ${segment.nextName}`;
+        if (segmentTime) {
+          segmentTime.textContent = new Intl.DateTimeFormat([], {
+            hour: "numeric",
+            minute: "2-digit"
+          }).format(date);
+        }
+        
+        const scheduleItems = document.querySelectorAll(".piet-schedule-list .piet-schedule-item");
+        scheduleItems.forEach((item, idx) => {
+          if (idx === segment.index) {
+            item.classList.add("is-active");
+          } else {
+            item.classList.remove("is-active");
+          }
+        });
+        
+        updateBroadcastLog(date);
+      }
+    }
+  }
+
   function startPietIntervals() {
     if (pietIntervalsStarted) {
       return;
     }
 
     pietIntervalsStarted = true;
-    window.setInterval(updatePietClock, 30000);
+    window.setInterval(updatePietModeState, 10000);
     window.setInterval(updateFakeListenerCount, 5000);
     window.setInterval(rotatePietQuote, 45000);
     window.setInterval(rotateSignalStatus, 60000);
@@ -405,18 +584,14 @@
 
   function setPietMode(isEnabled, shouldPersist) {
     isPietModeActive = Boolean(isEnabled);
-    document.body.classList.toggle("piet-mode", isPietModeActive);
-    applyModeContent();
-
+    
     if (shouldPersist) {
       storePietMode(isPietModeActive);
     }
 
-    if (isPietModeActive) {
-      // TODO: Integration phase:
-      // Current segment should be calculated from the visitor's local time.
-      // Segment times are local to the visitor, not a fixed server timezone.
-      updatePietClock();
+    updatePietModeState();
+
+    if (getIsPietHours()) {
       updateFakeListenerCount();
       startPietIntervals();
     }
@@ -428,17 +603,25 @@
   }
 
   function initPietMode() {
-    setPietMode(readStoredPietMode(), false);
-
+    const urlParams = new URLSearchParams(window.location.search);
+    const isDebug = urlParams.has("debug") || urlParams.has("piet_debug");
+    
     if (pietToggle) {
-      pietToggle.addEventListener("click", () => {
-        setPietMode(!getIsPietHours(), true);
-      });
+      if (!isDebug) {
+        pietToggle.style.display = "none";
+      } else {
+        pietToggle.addEventListener("click", () => {
+          setPietMode(!getIsPietHours(), true);
+        });
+      }
     }
 
     if (pietScheduleButton) {
       pietScheduleButton.addEventListener("click", scrollToPietSchedule);
     }
+
+    isPietModeActive = isDebug ? readStoredPietMode() : getIsPietHours();
+    setPietMode(isPietModeActive, false);
   }
 
   function formatTime(value) {

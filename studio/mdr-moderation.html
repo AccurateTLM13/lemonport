@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MDR Moderation — Lemonteed Studio</title>
+    <link rel="stylesheet" href="/studio/studio.css">
+    <style>
+      .moderation-header {
+        padding: 24px 28px 20px;
+        border-bottom: 1px solid var(--hairline, #dedcd5);
+        background: #fafaf7;
+      }
+      .moderation-header h1 {
+        margin: 0 0 6px;
+        font-size: 20px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .moderation-header p {
+        margin: 0;
+        font-size: 13px;
+        color: var(--muted, #85837d);
+      }
+      .config-bar {
+        background: #f4f2ea;
+        padding: 16px 28px;
+        border-bottom: 1px solid var(--hairline, #dedcd5);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        align-items: flex-end;
+      }
+      .config-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .config-group label {
+        font-size: 11px;
+        font-family: "Courier New", Courier, monospace;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #555;
+      }
+      .config-group input {
+        padding: 6px 10px;
+        font-size: 12px;
+        border: 1px solid #c9c6bc;
+        background: #fff;
+        font-family: inherit;
+        min-width: 220px;
+      }
+      .config-group input:focus {
+        border-color: #292928;
+        outline: none;
+      }
+      .moderation-body {
+        padding: 28px;
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        gap: 28px;
+      }
+      .stats-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+      }
+      .stat-card {
+        padding: 16px 20px;
+        border: 1px solid var(--hairline, #dedcd5);
+        background: #fff;
+        text-align: center;
+      }
+      .stat-card h3 {
+        margin: 0 0 6px;
+        font-size: 11px;
+        font-family: "Courier New", Courier, monospace;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #85837d;
+      }
+      .stat-card p {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 700;
+        color: #292928;
+      }
+      .filter-toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        border-bottom: 1px solid var(--hairline, #dedcd5);
+        padding-bottom: 16px;
+      }
+      .filter-buttons {
+        display: flex;
+        gap: 8px;
+      }
+      .filter-btn {
+        padding: 6px 12px;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        border: 1px solid #c9c6bc;
+        background: #fafaf7;
+        cursor: pointer;
+        transition: all 120ms ease;
+      }
+      .filter-btn:hover {
+        background: #e7e5dc;
+      }
+      .filter-btn.is-active {
+        background: #292928;
+        color: #fff;
+        border-color: #292928;
+      }
+      .search-box {
+        position: relative;
+      }
+      .search-box input {
+        padding: 6px 12px;
+        font-size: 12px;
+        border: 1px solid #c9c6bc;
+        background: #fff;
+        width: 250px;
+      }
+      .search-box input:focus {
+        border-color: #292928;
+        outline: none;
+      }
+      .table-card {
+        padding: 24px;
+        border: 1px solid var(--hairline, #dedcd5);
+        background: #fff;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+        text-align: left;
+      }
+      th {
+        padding: 10px 12px;
+        font-family: "Courier New", Courier, monospace;
+        font-weight: 700;
+        text-transform: uppercase;
+        background: #fafaf7;
+        border-bottom: 2px solid var(--hairline, #dedcd5);
+        color: #555;
+      }
+      td {
+        padding: 12px;
+        border-bottom: 1px solid #f4f2ea;
+        vertical-align: middle;
+      }
+      tr:hover td {
+        background: #fafaf7;
+      }
+      .badge {
+        display: inline-block;
+        padding: 2px 6px;
+        font-size: 10px;
+        font-family: "Courier New", Courier, monospace;
+        font-weight: 700;
+        text-transform: uppercase;
+        border-radius: 2px;
+        border: 1px solid #ddd;
+      }
+      .badge--pending { background: #fff2cc; border-color: #ffd966; color: #7f6000; }
+      .badge--published { background: #e2f0d9; border-color: #a9d18e; color: #385723; }
+      .badge--rejected { background: #fbebeb; border-color: #e59999; color: #c00000; }
+      
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        border: 1px solid #c9c6bc;
+        background: #f4f2ea;
+        color: #292928;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 140ms ease;
+      }
+      .btn:hover { background: #e7e5dc; }
+      .btn--primary {
+        border-color: #292928;
+        background: #292928;
+        color: #f4f2ea;
+      }
+      .btn--primary:hover { background: #44423e; }
+      .btn--success {
+        border-color: #a9d18e;
+        background: #e2f0d9;
+        color: #385723;
+      }
+      .btn--success:hover { background: #d0e8c4; }
+      .btn--danger {
+        border-color: #e59999;
+        background: #fbebeb;
+        color: #c00000;
+      }
+      .btn--danger:hover { background: #f5d1d1; }
+      .btn--small {
+        padding: 4px 8px;
+        font-size: 10px;
+      }
+      
+      #output-toast {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        padding: 12px 24px;
+        background: #292928;
+        color: #fff;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 12px;
+        font-weight: 700;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 9999;
+        display: none;
+      }
+      
+      .empty-state {
+        text-align: center;
+        padding: 48px 0;
+        color: #85837d;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="studio-shell">
+      <header class="studio-header" style="display:flex;align-items:center;gap:16px;padding:0 20px;min-height:48px;border-bottom:1px solid #dedcd5;background:#f7f7f4;">
+        <a href="/studio/" style="font-family:'Courier New',Courier,monospace;font-size:12px;font-weight:700;color:#292928;text-decoration:none;text-transform:uppercase;">← Studio</a>
+        <span style="font-family:'Courier New',Courier,monospace;font-size:12px;font-weight:700;text-transform:uppercase;color:#85837d;">/ MDR Moderation</span>
+      </header>
+
+      <div class="moderation-header">
+        <h1>MDR Message Moderation</h1>
+        <p>Review, approve, or reject public messages attached to the Million Dollar Receipts.</p>
+      </div>
+
+      <div class="config-bar">
+        <div class="config-group">
+          <label for="cfg-api-base">MDR API Base URL</label>
+          <input id="cfg-api-base" type="text" value="http://127.0.0.1:8787">
+        </div>
+        <div class="config-group">
+          <label for="cfg-admin-token">MDR Admin Token</label>
+          <input id="cfg-admin-token" type="password" placeholder="Leave empty if local authentication is not required">
+        </div>
+        <button class="btn btn--primary" id="btn-reconnect" type="button">Connect & Refresh</button>
+      </div>
+
+      <div class="moderation-body">
+        
+        <!-- Stats -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <h3>Total Messages</h3>
+            <p id="stat-total">0</p>
+          </div>
+          <div class="stat-card">
+            <h3>Pending</h3>
+            <p id="stat-pending" style="color:#b25900;">0</p>
+          </div>
+          <div class="stat-card">
+            <h3>Published</h3>
+            <p id="stat-published" style="color:#385723;">0</p>
+          </div>
+          <div class="stat-card">
+            <h3>Rejected</h3>
+            <p id="stat-rejected" style="color:#c00000;">0</p>
+          </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="filter-toolbar">
+          <div class="filter-buttons">
+            <button class="filter-btn is-active" data-filter="all" type="button">All Messages</button>
+            <button class="filter-btn" data-filter="pending" type="button">Pending</button>
+            <button class="filter-btn" data-filter="published" type="button">Published</button>
+            <button class="filter-btn" data-filter="rejected" type="button">Rejected</button>
+          </div>
+          <div class="search-box">
+            <input id="search-input" type="search" placeholder="Search by number, alias, message...">
+          </div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="table-card">
+          <div style="overflow-x:auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Receipt #</th>
+                  <th>Alias</th>
+                  <th>Message</th>
+                  <th>Tier</th>
+                  <th>Date Purchased</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="receipts-table-body">
+                <tr><td colspan="7" style="text-align:center;color:#888;">Connect to the API to display receipts list.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="output-toast">Notification</div>
+
+    <script>
+      let receipts = [];
+      let currentFilter = "all";
+
+      // Session storage settings persistence
+      const apiInput = document.getElementById("cfg-api-base");
+      const tokenInput = document.getElementById("cfg-admin-token");
+
+      if (sessionStorage.getItem("mdr_api_base")) {
+        apiInput.value = sessionStorage.getItem("mdr_api_base");
+      }
+      if (sessionStorage.getItem("mdr_admin_token")) {
+        tokenInput.value = sessionStorage.getItem("mdr_admin_token");
+      }
+
+      function saveConfig() {
+        sessionStorage.setItem("mdr_api_base", apiInput.value.trim());
+        sessionStorage.setItem("mdr_admin_token", tokenInput.value.trim());
+      }
+
+      function showToast(message, isError = false) {
+        const toast = document.getElementById("output-toast");
+        toast.textContent = message;
+        toast.style.background = isError ? "#c00000" : "#292928";
+        toast.style.display = "block";
+        setTimeout(() => {
+          toast.style.display = "none";
+        }, 3000);
+      }
+
+      async function apiFetch(path, options = {}) {
+        const base = apiInput.value.trim().replace(/\/$/, "");
+        const token = tokenInput.value.trim();
+
+        if (!options.headers) {
+          options.headers = {};
+        }
+        if (token) {
+          options.headers["Authorization"] = `Bearer ${token}`;
+        }
+        if (options.body && typeof options.body === "object") {
+          options.headers["Content-Type"] = "application/json";
+          options.body = JSON.stringify(options.body);
+        }
+
+        const res = await fetch(`${base}${path}`, options);
+        if (!res.ok) {
+          const text = await res.text();
+          let msg = "Request failed.";
+          try {
+            const data = JSON.parse(text);
+            msg = data.error || msg;
+          } catch(e) {}
+          throw new Error(msg);
+        }
+        return res.json();
+      }
+
+      async function loadReceipts() {
+        saveConfig();
+        const tbody = document.getElementById("receipts-table-body");
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#888;">Fetching receipts...</td></tr>';
+        
+        try {
+          receipts = await apiFetch("/moderation");
+          updateStats();
+          filterAndRenderTable();
+        } catch (e) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#c00000;font-weight:700;">Connection failed: ${e.message}</td></tr>`;
+          showToast("Connection failed: " + e.message, true);
+        }
+      }
+
+      function updateStats() {
+        const total = receipts.length;
+        const pending = receipts.filter(r => r.messageStatus === "pending").length;
+        const published = receipts.filter(r => r.messageStatus === "published").length;
+        const rejected = receipts.filter(r => r.messageStatus === "rejected").length;
+
+        document.getElementById("stat-total").textContent = total;
+        document.getElementById("stat-pending").textContent = pending;
+        document.getElementById("stat-published").textContent = published;
+        document.getElementById("stat-rejected").textContent = rejected;
+      }
+
+      function filterAndRenderTable() {
+        const tbody = document.getElementById("receipts-table-body");
+        tbody.innerHTML = "";
+
+        const searchQuery = document.getElementById("search-input").value.trim().toLowerCase();
+
+        const filtered = receipts.filter(r => {
+          // Status filter
+          if (currentFilter !== "all" && r.messageStatus !== currentFilter) {
+            return false;
+          }
+          // Search query
+          if (searchQuery) {
+            const numMatch = String(r.number).includes(searchQuery);
+            const aliasMatch = String(r.alias).toLowerCase().includes(searchQuery);
+            const msgMatch = String(r.message).toLowerCase().includes(searchQuery);
+            return numMatch || aliasMatch || msgMatch;
+          }
+          return true;
+        });
+
+        if (filtered.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" class="empty-state">No matching receipt messages found.</td></tr>`;
+          return;
+        }
+
+        filtered.forEach(r => {
+          const dateStr = new Date(r.purchasedAt).toLocaleString();
+          const tr = document.createElement("tr");
+
+          let actionsHtml = "";
+          if (r.messageStatus === "pending") {
+            actionsHtml = `
+              <button class="btn btn--small btn--success" onclick="updateStatus(${r.number}, 'published')">Approve</button>
+              <button class="btn btn--small btn--danger" onclick="updateStatus(${r.number}, 'rejected')">Reject</button>
+            `;
+          } else if (r.messageStatus === "published") {
+            actionsHtml = `
+              <button class="btn btn--small btn--danger" onclick="updateStatus(${r.number}, 'rejected')">Reject</button>
+              <button class="btn btn--small" onclick="updateStatus(${r.number}, 'pending')">Set Pending</button>
+            `;
+          } else if (r.messageStatus === "rejected") {
+            actionsHtml = `
+              <button class="btn btn--small btn--success" onclick="updateStatus(${r.number}, 'published')">Approve</button>
+              <button class="btn btn--small" onclick="updateStatus(${r.number}, 'pending')">Set Pending</button>
+            `;
+          }
+
+          tr.innerHTML = `
+            <td style="font-weight:700;font-family:'Courier New',monospace;">#${r.number}</td>
+            <td><strong>${escapeHtml(r.alias)}</strong></td>
+            <td style="max-width:300px;word-break:break-all;font-style:italic;">"${escapeHtml(r.message)}"</td>
+            <td><code style="font-size:10px;">${escapeHtml(r.tier)}</code></td>
+            <td><span style="color:#666;font-size:11px;">${dateStr}</span></td>
+            <td><span class="badge badge--${r.messageStatus}">${r.messageStatus}</span></td>
+            <td><div style="display:flex;gap:6px;">${actionsHtml}</div></td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      window.updateStatus = async function(number, newStatus) {
+        try {
+          const res = await apiFetch("/moderation/status", {
+            method: "POST",
+            body: { number, status: newStatus }
+          });
+          
+          showToast(`✓ Receipt #${number} status updated to ${newStatus}.`);
+          
+          // Local state update
+          const idx = receipts.findIndex(r => r.number === number);
+          if (idx !== -1) {
+            receipts[idx].messageStatus = newStatus;
+          }
+          updateStats();
+          filterAndRenderTable();
+        } catch (e) {
+          showToast("Update failed: " + e.message, true);
+        }
+      };
+
+      // Search and Filter wireup
+      document.getElementById("search-input").addEventListener("input", filterAndRenderTable);
+
+      const filterButtons = document.querySelectorAll(".filter-btn");
+      filterButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          filterButtons.forEach(b => b.classList.remove("is-active"));
+          btn.classList.add("is-active");
+          currentFilter = btn.dataset.filter;
+          filterAndRenderTable();
+        });
+      });
+
+      document.getElementById("btn-reconnect").addEventListener("click", loadReceipts);
+
+      // Escape helper
+      function escapeHtml(value) {
+        return String(value ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;");
+      }
+
+      // Initial load
+      loadReceipts();
+    </script>
+  </body>
+</html>

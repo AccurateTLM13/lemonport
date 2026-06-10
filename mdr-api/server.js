@@ -25,7 +25,7 @@ async function handleRequest(req, res) {
       searchParams: url.searchParams,
       rawBody,
       headers: req.headers
-    });
+    }, store);
 
     res.writeHead(result.status, result.headers);
     res.end(result.body);
@@ -51,7 +51,11 @@ function seedFromConfig() {
 if (require.main === module) {
   seedFromConfig();
   http.createServer(handleRequest).listen(port, "127.0.0.1", () => {
+    console.log("\n=======================================================");
     console.log(`MDR API listening on http://127.0.0.1:${port}`);
+    console.log("Database: SQLite (native node:sqlite)");
+    console.log("Start command used: node --experimental-sqlite mdr-api/server.js");
+    console.log("=======================================================\n");
   });
 }
 

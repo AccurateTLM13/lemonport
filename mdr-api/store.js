@@ -1,11 +1,21 @@
-const fs = require("node:fs");
 const path = require("node:path");
 const crypto = require("node:crypto");
+const fs = require("node:fs");
 
-const root = path.resolve(__dirname, "..");
+let DatabaseSync;
+try {
+  DatabaseSync = require("node:sqlite").DatabaseSync;
+} catch (error) {
+  console.error("\n=======================================================");
+  console.error("ERROR: The 'node:sqlite' module could not be loaded.");
+  console.error("Please run the script with the '--experimental-sqlite' flag.");
+  console.error("Example: node --experimental-sqlite mdr-api/server.js");
+  console.error("=======================================================\n");
+  process.exit(1);
+}
+
 const dataDir = path.join(__dirname, "data");
-const receiptsFile = path.join(dataDir, "receipts.json");
-const eventsFile = path.join(dataDir, "stripe-events.json");
+const dbFile = path.join(dataDir, "receipts.db");
 const GOAL_COUNT = 1000000;
 const PRICE_CENTS = 100;
 
@@ -24,20 +34,33 @@ function ensureDataDir() {
   fs.mkdirSync(dataDir, { recursive: true });
 }
 
-function readJson(file, fallback) {
-  ensureDataDir();
+ensureDataDir();
+const db = new DatabaseSync(dbFile);
 
-  if (!fs.existsSync(file)) {
-    return fallback;
-  }
-
-  return JSON.parse(fs.readFileSync(file, "utf8"));
-}
-
-function writeJson(file, data) {
-  ensureDataDir();
-  fs.writeFileSync(file, `${JSON.stringify(data, null, 2)}\n`);
-}
+// Initialize DB schema
+db.exec(`
+  CREATE TABLE IF NOT EXISTS receipts (
+    number INTEGER PRIMARY KEY,
+    serial TEXT NOT NULL UNIQUE,
+    alias TEXT NOT NULL,
+    message TEXT NOT NULL DEFAULT '',
+    message_status TEXT NOT NULL DEFAULT 'published',
+    tier TEXT NOT NULL,
+    amount_cents INTEGER NOT NULL DEFAULT 100,
+    purchased_at TEXT NOT NULL,
+    stripe_session_id TEXT UNIQUE
+  );
+  
+  CREATE TABLE IF NOT EXISTS stripe_events (
+    event_id TEXT PRIMARY KEY,
+    processed_at TEXT NOT NULL
+  );
+  
+  CREATE TABLE IF NOT EXISTS meta (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL
+  );
+`);
 
 function tierForNumber(number) {
   const match = TIERS.find((tier) => number >= tier.min && number <= tier.max);
@@ -48,28 +71,28 @@ function serialForNumber(number) {
   return `MDR-${String(number).padStart(6, "0")}-NTH`;
 }
 
-function loadReceipts() {
-  return readJson(receiptsFile, { nextNumber: 1, items: [] });
-}
-
-function saveReceipts(data) {
-  writeJson(receiptsFile, data);
-}
-
-function loadEvents() {
-  return readJson(eventsFile, { processed: [] });
-}
-
-function saveEvents(data) {
-  writeJson(eventsFile, data);
+function rowToReceipt(row) {
+  if (!row) return null;
+  return {
+    number: row.number,
+    serial: row.serial,
+    alias: row.alias,
+    message: row.message_status === "published" ? row.message : "",
+    messageStatus: row.message_status,
+    tier: row.tier,
+    amountCents: row.amount_cents,
+    purchasedAt: row.purchased_at
+  };
 }
 
 function getStats() {
-  const data = loadReceipts();
-  const count = data.items.length;
+  const countRow = db.prepare("SELECT COUNT(*) AS count FROM receipts").get();
+  const count = countRow ? countRow.count : 0;
   const totalCents = count * PRICE_CENTS;
-  const recent = data.items.slice(-20).reverse();
-
+  
+  const recentRows = db.prepare("SELECT * FROM receipts ORDER BY number DESC LIMIT 20").all();
+  const recent = recentRows.map(rowToReceipt);
+  
   return {
     totalCents,
     count,
@@ -80,136 +103,207 @@ function getStats() {
   };
 }
 
-function formatReceipt(item) {
-  return {
-    number: item.number,
-    serial: item.serial,
-    alias: item.alias,
-    message: item.messageStatus === "published" ? item.message : "",
-    messageStatus: item.messageStatus,
-    tier: item.tier,
-    amountCents: item.amountCents,
-    purchasedAt: item.purchasedAt
-  };
-}
-
 function getReceipt(number) {
-  const data = loadReceipts();
-  const item = data.items.find((entry) => entry.number === number);
-  return item ? formatReceipt(item) : null;
+  const row = db.prepare("SELECT * FROM receipts WHERE number = ?").get(number);
+  return row ? rowToReceipt(row) : null;
 }
 
 function listReceipts(options = {}) {
-  const data = loadReceipts();
-  let items = [...data.items];
-
+  let query = "SELECT * FROM receipts WHERE 1=1";
+  const params = [];
+  
   if (options.tier) {
-    items = items.filter((item) => item.tier === options.tier);
+    query += " AND tier = ?";
+    params.push(options.tier);
   }
-
+  
   if (options.q) {
-    const query = String(options.q).toLowerCase();
-    items = items.filter((item) => {
-      return (
-        String(item.number).includes(query) ||
-        item.alias.toLowerCase().includes(query) ||
-        (item.message && item.message.toLowerCase().includes(query))
-      );
-    });
+    query += " AND (CAST(number AS TEXT) LIKE ? OR LOWER(alias) LIKE ? OR LOWER(message) LIKE ?)";
+    const wildcard = `%${options.q.toLowerCase()}%`;
+    params.push(wildcard, wildcard, wildcard);
   }
-
-  items.sort((a, b) => b.number - a.number);
-
+  
+  // Get total count matching query
+  const countQuery = query.replace("SELECT *", "SELECT COUNT(*) AS total");
+  const totalRow = db.prepare(countQuery).get(...params);
+  const total = totalRow ? totalRow.total : 0;
+  
+  // Add sorting, pagination
+  query += " ORDER BY number DESC LIMIT ? OFFSET ?";
   const limit = Math.min(Math.max(Number(options.limit) || 50, 1), 100);
   const cursor = Number(options.cursor) || 0;
-  const slice = items.slice(cursor, cursor + limit);
-
+  params.push(limit, cursor);
+  
+  const rows = db.prepare(query).all(...params);
+  
   return {
-    items: slice.map(formatReceipt),
-    nextCursor: cursor + slice.length < items.length ? cursor + slice.length : null,
-    total: items.length
+    items: rows.map(rowToReceipt),
+    nextCursor: cursor + rows.length < total ? cursor + rows.length : null,
+    total
   };
 }
 
 function getRandomReceipt() {
-  const data = loadReceipts();
-
-  if (!data.items.length) {
-    return null;
-  }
-
-  const index = crypto.randomInt(0, data.items.length);
-  return formatReceipt(data.items[index]);
+  const row = db.prepare("SELECT * FROM receipts ORDER BY RANDOM() LIMIT 1").get();
+  return row ? rowToReceipt(row) : null;
 }
 
 function createReceipt({ alias, message, stripeSessionId }) {
-  const data = loadReceipts();
-
-  if (data.items.length >= GOAL_COUNT) {
+  // Check count
+  const countRow = db.prepare("SELECT COUNT(*) AS count FROM receipts").get();
+  const count = countRow ? countRow.count : 0;
+  
+  if (count >= GOAL_COUNT) {
     throw new Error("Sold out.");
   }
-
-  if (stripeSessionId && data.items.some((item) => item.stripeSessionId === stripeSessionId)) {
-    return formatReceipt(data.items.find((item) => item.stripeSessionId === stripeSessionId));
+  
+  // Deduplicate by stripeSessionId
+  if (stripeSessionId) {
+    const existing = db.prepare("SELECT * FROM receipts WHERE stripe_session_id = ?").get(stripeSessionId);
+    if (existing) {
+      return rowToReceipt(existing);
+    }
   }
-
-  const number = data.nextNumber;
-  const receipt = {
+  
+  // Get next number
+  const nextRow = db.prepare("SELECT COALESCE(MAX(number), 0) + 1 AS next FROM receipts").get();
+  const number = nextRow ? nextRow.next : 1;
+  
+  const serial = serialForNumber(number);
+  const safeAlias = String(alias || "ANONYMOUS").trim().slice(0, 32);
+  const safeMessage = String(message || "").trim().slice(0, 120);
+  const messageStatus = safeMessage ? "pending" : "published";
+  const tier = tierForNumber(number);
+  const purchasedAt = new Date().toISOString();
+  const safeSessionId = stripeSessionId || null;
+  
+  const insert = db.prepare(`
+    INSERT INTO receipts (
+      number, serial, alias, message, message_status, tier, amount_cents, purchased_at, stripe_session_id
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+  
+  insert.run(
     number,
-    serial: serialForNumber(number),
-    alias: String(alias || "ANONYMOUS").trim().slice(0, 32),
-    message: String(message || "").trim().slice(0, 120),
-    messageStatus: message && message.trim() ? "pending" : "published",
-    tier: tierForNumber(number),
+    serial,
+    safeAlias,
+    safeMessage,
+    messageStatus,
+    tier,
+    PRICE_CENTS,
+    purchasedAt,
+    safeSessionId
+  );
+  
+  return {
+    number,
+    serial,
+    alias: safeAlias,
+    message: messageStatus === "published" ? safeMessage : "",
+    messageStatus,
+    tier,
     amountCents: PRICE_CENTS,
-    purchasedAt: new Date().toISOString(),
-    stripeSessionId: stripeSessionId || null
+    purchasedAt
   };
-
-  data.items.push(receipt);
-  data.nextNumber += 1;
-  saveReceipts(data);
-
-  return formatReceipt(receipt);
 }
 
 function markEventProcessed(eventId) {
-  const events = loadEvents();
-
-  if (events.processed.includes(eventId)) {
+  const existing = db.prepare("SELECT 1 FROM stripe_events WHERE event_id = ?").get(eventId);
+  if (existing) {
     return false;
   }
-
-  events.processed.push(eventId);
-  saveEvents(events);
+  
+  const insert = db.prepare("INSERT INTO stripe_events (event_id, processed_at) VALUES (?, ?)");
+  insert.run(eventId, new Date().toISOString());
   return true;
 }
 
 function seedMockReceipts(configReceipts) {
-  const data = loadReceipts();
-
-  if (data.items.length) {
-    return data.items.length;
+  const countRow = db.prepare("SELECT COUNT(*) AS count FROM receipts").get();
+  const count = countRow ? countRow.count : 0;
+  
+  if (count > 0) {
+    return count;
   }
-
-  (configReceipts || []).forEach((entry) => {
-    const number = entry.number;
-    data.items.push({
-      number,
-      serial: serialForNumber(number),
-      alias: entry.alias,
-      message: entry.message || "",
-      messageStatus: entry.messageStatus || "published",
-      tier: tierForNumber(number),
-      amountCents: PRICE_CENTS,
-      purchasedAt: entry.purchasedAt,
-      stripeSessionId: null
+  
+  const insert = db.prepare(`
+    INSERT OR IGNORE INTO receipts (
+      number, serial, alias, message, message_status, tier, amount_cents, purchased_at, stripe_session_id
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+  
+  // Wrap seeding in a transaction to make it extremely fast
+  db.exec("BEGIN TRANSACTION;");
+  try {
+    (configReceipts || []).forEach((entry) => {
+      const number = entry.number;
+      const serial = serialForNumber(number);
+      const alias = entry.alias;
+      const message = entry.message || "";
+      const messageStatus = entry.messageStatus || "published";
+      const tier = tierForNumber(number);
+      const purchasedAt = entry.purchasedAt;
+      
+      insert.run(
+        number,
+        serial,
+        alias,
+        message,
+        messageStatus,
+        tier,
+        PRICE_CENTS,
+        purchasedAt,
+        null
+      );
     });
-    data.nextNumber = Math.max(data.nextNumber, number + 1);
-  });
+    db.exec("COMMIT;");
+  } catch (error) {
+    db.exec("ROLLBACK;");
+    throw error;
+  }
+  
+  const finalCountRow = db.prepare("SELECT COUNT(*) AS count FROM receipts").get();
+  return finalCountRow ? finalCountRow.count : 0;
+}
 
-  saveReceipts(data);
-  return data.items.length;
+function listModerationReceipts(options = {}) {
+  let query = "SELECT * FROM receipts WHERE message != ''";
+  const params = [];
+  if (options.status) {
+    query += " AND message_status = ?";
+    params.push(options.status);
+  }
+  query += " ORDER BY purchased_at DESC";
+  const rows = db.prepare(query).all(...params);
+  return rows.map((row) => ({
+    number: row.number,
+    serial: row.serial,
+    alias: row.alias,
+    message: row.message,
+    messageStatus: row.message_status,
+    tier: row.tier,
+    amountCents: row.amount_cents,
+    purchasedAt: row.purchased_at
+  }));
+}
+
+function updateMessageStatus(number, status) {
+  if (!["pending", "published", "rejected"].includes(status)) {
+    throw new Error("Invalid message status.");
+  }
+  const update = db.prepare("UPDATE receipts SET message_status = ? WHERE number = ?");
+  update.run(status, number);
+  const row = db.prepare("SELECT * FROM receipts WHERE number = ?").get(number);
+  return row ? {
+    number: row.number,
+    serial: row.serial,
+    alias: row.alias,
+    message: row.message,
+    messageStatus: row.message_status,
+    tier: row.tier,
+    amountCents: row.amount_cents,
+    purchasedAt: row.purchased_at
+  } : null;
 }
 
 module.exports = {
@@ -225,5 +319,6 @@ module.exports = {
   createReceipt,
   markEventProcessed,
   seedMockReceipts,
-  loadReceipts
+  listModerationReceipts,
+  updateMessageStatus
 };

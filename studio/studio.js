@@ -322,7 +322,14 @@
     return `${title} concept image from the Lemonteed ${categoryLabel(category)} archive`;
   }
 
-  async function api(path, options) {
+  async function api(path, options = {}) {
+    const token = sessionStorage.getItem("studio_write_token");
+    if (token) {
+      if (!options.headers) {
+        options.headers = {};
+      }
+      options.headers["Authorization"] = `Bearer ${token}`;
+    }
     const response = await fetch(path, options);
     const data = await response.json();
 

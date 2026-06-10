@@ -1,0 +1,16 @@
+name = "million-dollar-receipt-api"
+main = "worker.js"
+compatibility_date = "2024-03-01"
+compatibility_flags = [ "nodejs_compat" ]
+
+[vars]
+# Default local mock URLs. Stripe keys and site URLs can be overridden here
+# or injected as secrets via wrangler CLI (e.g., wrangler secret put STRIPE_SECRET_KEY)
+STRIPE_SECRET_KEY = ""
+STRIPE_WEBHOOK_SECRET = ""
+MDR_SITE_URL = "http://localhost:5173"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "million-dollar-receipt-db"
+database_id = "d1-database-id-placeholder"

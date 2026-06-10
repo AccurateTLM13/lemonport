@@ -6,7 +6,7 @@ This repo stays a static HTML/CSS/JS site, but `scripts/studio-server.js` adds a
 
 ```powershell
 cd C:\Users\JP\Desktop\portfol
-node scripts\studio-server.js
+node scripts/studio-server.js
 ```
 
 Open:
@@ -56,6 +56,8 @@ http://localhost:5173/
 - Regenerates responsive variants for one project or selected projects.
 - Replaces a project image while preserving the artifact ID and slug.
 - Edits the Live Experiment Cloud Flip dossier from `content/live-experiment.json` and rebuilds `assets/js/live-experiment-data.js`.
+- Edits Lemonteed FM playlist tracks and manages audio/artwork uploads from the Studio UI.
+- Queries operator log schedules and triggers mutation promotions from the Studio backend.
 
 ## Requirements
 

@@ -1,9 +1,6 @@
 <!doctype html>
 <html lang="en">
   <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCB0LW648K"></script>
-  <script src="/assets/js/analytics.js" defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Mutation Desk — Lemonteed Studio</title>
@@ -12,93 +9,303 @@
       .mutation-desk-header {
         padding: 24px 28px 20px;
         border-bottom: 1px solid var(--hairline, #dedcd5);
+        background: #fafaf7;
       }
       .mutation-desk-header h1 {
         margin: 0 0 6px;
-        font-size: 18px;
+        font-size: 20px;
         font-weight: 700;
         text-transform: uppercase;
+        letter-spacing: 0.05em;
       }
       .mutation-desk-header p {
         margin: 0;
-        font-size: 12px;
+        font-size: 13px;
         color: var(--muted, #85837d);
       }
-      .mutation-desk-body {
-        padding: 28px;
-        display: grid;
-        gap: 20px;
-        max-width: 860px;
+      .mutation-tabs {
+        display: flex;
+        border-bottom: 1px solid var(--hairline, #dedcd5);
+        background: #f4f2ea;
+        padding: 0 28px;
       }
-      .mutation-status-card {
-        padding: 20px;
-        border: 1px solid var(--hairline, #dedcd5);
-        background: #fff;
-        display: grid;
-        gap: 10px;
-      }
-      .mutation-status-card h2 {
-        margin: 0;
+      .mutation-tab {
+        padding: 14px 20px;
+        font-family: "Courier New", Courier, monospace;
         font-size: 13px;
         font-weight: 700;
         text-transform: uppercase;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        color: #85837d;
+        border-bottom: 3px solid transparent;
+        transition: all 150ms ease;
       }
-      .mutation-status-card pre {
-        margin: 0;
-        font-size: 11px;
-        line-height: 1.55;
-        white-space: pre-wrap;
-        word-break: break-all;
-        color: #44423e;
+      .mutation-tab:hover {
+        color: #292928;
+        background: #e7e5dc;
       }
-      .mutation-actions {
+      .mutation-tab.is-active {
+        color: #292928;
+        border-bottom-color: #f6c84f;
+        background: #fff;
+      }
+      .mutation-desk-body {
+        padding: 28px;
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        gap: 28px;
+      }
+      .mutation-section {
+        display: none;
+      }
+      .mutation-section.is-active {
+        display: block;
+      }
+      .desk-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+      @media(min-width: 900px) {
+        .desk-grid {
+          grid-template-columns: 1.6fr 1fr;
+        }
+      }
+      .card {
+        padding: 24px;
+        border: 1px solid var(--hairline, #dedcd5);
+        background: #fff;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      }
+      .card h2 {
+        margin: 0 0 16px;
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-bottom: 1px solid #f4f2ea;
+        padding-bottom: 8px;
         display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
       }
-      .mutation-btn {
+      .table-responsive {
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+        text-align: left;
+      }
+      th {
+        padding: 10px 12px;
+        font-family: "Courier New", Courier, monospace;
+        font-weight: 700;
+        text-transform: uppercase;
+        background: #fafaf7;
+        border-bottom: 2px solid var(--hairline, #dedcd5);
+        color: #555;
+      }
+      td {
+        padding: 12px;
+        border-bottom: 1px solid #f4f2ea;
+        vertical-align: middle;
+      }
+      tr:hover td {
+        background: #fafaf7;
+      }
+      .badge {
+        display: inline-block;
+        padding: 2px 6px;
+        font-size: 10px;
+        font-family: "Courier New", Courier, monospace;
+        font-weight: 700;
+        text-transform: uppercase;
+        border-radius: 2px;
+        border: 1px solid #ddd;
+      }
+      .badge--ready { background: #e2f0d9; border-color: #a9d18e; color: #385723; }
+      .badge--published { background: #ddebf7; border-color: #9cc2e5; color: #1f4e79; }
+      .badge--draft { background: #fff2cc; border-color: #ffd966; color: #7f6000; }
+      
+      .btn {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
         padding: 8px 16px;
         border: 1px solid #c9c6bc;
         background: #f4f2ea;
         color: #292928;
         font-family: "Courier New", Courier, monospace;
-        font-size: 12px;
+        font-size: 11px;
         font-weight: 700;
         text-transform: uppercase;
         cursor: pointer;
-        transition: background 140ms ease;
+        transition: all 140ms ease;
       }
-      .mutation-btn:hover { background: #e7e5dc; }
-      .mutation-btn--primary {
+      .btn:hover { background: #e7e5dc; border-color: #999; }
+      .btn--primary {
         border-color: #292928;
         background: #292928;
         color: #f4f2ea;
       }
-      .mutation-btn--primary:hover { background: #44423e; }
-      .mutation-todo {
-        padding: 20px;
-        border: 1px dashed #c9c6bc;
+      .btn--primary:hover { background: #44423e; }
+      .btn--danger {
+        border-color: #e59999;
+        background: #fbebeb;
+        color: #c00000;
+      }
+      .btn--danger:hover { background: #f5d1d1; }
+      .btn--small {
+        padding: 4px 8px;
+        font-size: 10px;
+      }
+      
+      .form-group {
+        margin-bottom: 14px;
+      }
+      .form-group label {
+        display: block;
+        font-size: 11px;
+        font-family: "Courier New", Courier, monospace;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+        color: #444;
+      }
+      .form-group input[type="text"],
+      .form-group input[type="number"],
+      .form-group input[type="datetime-local"],
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 8px 10px;
+        border: 1px solid #c9c6bc;
         background: #fafaf7;
         font-size: 12px;
-        color: #85837d;
-        line-height: 1.6;
+        font-family: inherit;
+        box-sizing: border-box;
       }
-      .mutation-todo strong { color: #292928; }
-      .mutation-todo ul { margin: 8px 0 0 16px; }
-      #mutation-output {
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        border-color: #292928;
+        background: #fff;
+        outline: none;
+      }
+      .form-group--checkbox {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .form-group--checkbox label {
+        margin-bottom: 0;
+        cursor: pointer;
+      }
+      .form-group--checkbox input {
+        cursor: pointer;
+      }
+      
+      .editor-container {
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        border: 1px solid var(--hairline, #dedcd5);
+        background: #fff;
+        min-height: 500px;
+      }
+      .fragment-sidebar {
+        border-right: 1px solid var(--hairline, #dedcd5);
+        background: #fafaf7;
+        padding: 16px;
+      }
+      .fragment-list {
+        display: grid;
+        gap: 6px;
+        margin-top: 12px;
+        max-height: 400px;
+        overflow-y: auto;
+      }
+      .fragment-item {
+        padding: 8px 12px;
+        background: #fff;
+        border: 1px solid #e7e5dc;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 11px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 120ms ease;
+      }
+      .fragment-item:hover {
+        background: #f4f2ea;
+        border-color: #c9c6bc;
+      }
+      .fragment-item.is-active {
+        background: #e7e5dc;
+        border-color: #292928;
+        font-weight: 700;
+      }
+      .fragment-item__name {
+        word-break: break-all;
+      }
+      .fragment-main {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .json-editor-area {
+        flex: 1;
+        width: 100%;
+        min-height: 350px;
+        font-family: Consolas, "Courier New", monospace;
         font-size: 12px;
-        color: #44423e;
-        line-height: 1.55;
-        min-height: 20px;
+        line-height: 1.5;
+        padding: 14px;
+        border: 1px solid #c9c6bc;
+        background: #2b2b2b;
+        color: #f8f8f2;
+        box-sizing: border-box;
+        resize: vertical;
+      }
+      .json-editor-area:focus {
+        border-color: #f6c84f;
+        outline: none;
+      }
+      
+      #output-toast {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        padding: 12px 24px;
+        background: #292928;
+        color: #fff;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 12px;
+        font-weight: 700;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 9999;
+        display: none;
+      }
+      
+      .evidence-row {
+        background: #f4f2ea;
+        padding: 12px;
+        border-left: 4px solid #f6c84f;
+        font-size: 11px;
+        font-family: "Courier New", Courier, monospace;
+        line-height: 1.5;
+        margin-top: 16px;
       }
     </style>
   </head>
   <body>
     <div class="studio-shell">
-      <!-- Studio top nav placeholder - links back to main studio -->
       <header class="studio-header" style="display:flex;align-items:center;gap:16px;padding:0 20px;min-height:48px;border-bottom:1px solid #dedcd5;background:#f7f7f4;">
         <a href="/studio/" style="font-family:'Courier New',Courier,monospace;font-size:12px;font-weight:700;color:#292928;text-decoration:none;text-transform:uppercase;">← Studio</a>
         <span style="font-family:'Courier New',Courier,monospace;font-size:12px;font-weight:700;text-transform:uppercase;color:#85837d;">/ Mutation Desk</span>
@@ -106,95 +313,560 @@
 
       <div class="mutation-desk-header">
         <h1>Mutation Desk</h1>
-        <p>Operator Log: Off-Clock Protocol — phase management and promotion controls.</p>
+        <p>Operator Log: Off-Clock Protocol — schedule management and fragment compilation.</p>
       </div>
 
+      <nav class="mutation-tabs">
+        <button class="mutation-tab is-active" data-tab="schedule" type="button">Mutation Schedule</button>
+        <button class="mutation-tab" data-tab="fragments" type="button">Fragments Editor</button>
+      </nav>
+
       <div class="mutation-desk-body">
+        
+        <!-- SECTION: SCHEDULE -->
+        <section class="mutation-section is-active" id="section-schedule">
+          <div class="desk-grid">
+            
+            <div class="card">
+              <h2>
+                <span>Schedule Timeline</span>
+                <button class="btn btn--primary btn--small" id="btn-show-create-phase" type="button">+ Add Phase</button>
+              </h2>
+              <div class="table-responsive">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Phase</th>
+                      <th>Title</th>
+                      <th>Label</th>
+                      <th>Publish At</th>
+                      <th>Fragment</th>
+                      <th>Status</th>
+                      <th>Unlock</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="schedule-table-body">
+                    <tr><td colspan="8" style="text-align:center;">Loading schedule...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              
+              <div class="evidence-row" id="manifest-summary">
+                Active Phase: Loading...
+              </div>
+              
+              <div style="margin-top: 20px;" class="mutation-actions">
+                <button class="btn btn--primary" id="btn-promote-active" type="button">Force Re-Promote Active</button>
+                <a class="btn" href="/operator-log/" target="_blank" rel="noopener">Open Operator Log ↗</a>
+              </div>
+            </div>
 
-        <!-- Current Status -->
-        <div class="mutation-status-card">
-          <h2>Current Manifest</h2>
-          <pre id="manifest-display">Loading...</pre>
-        </div>
+            <!-- Form Card -->
+            <div class="card" id="phase-form-card" style="display:none;">
+              <h2 id="form-title">Create Phase</h2>
+              <form id="phase-form">
+                <div class="form-group">
+                  <label for="f-phase">Phase Number</label>
+                  <input id="f-phase" name="phase" type="number" required min="1">
+                </div>
+                <div class="form-group">
+                  <label for="f-title">Phase Title</label>
+                  <input id="f-title" name="title" type="text" required placeholder="Locked File / First Leak">
+                </div>
+                <div class="form-group">
+                  <label for="f-label">Phase Label</label>
+                  <input id="f-label" name="phaseLabel" type="text" placeholder="File Fragment 001">
+                </div>
+                <div class="form-group">
+                  <label for="f-publish">Publish At (ISO or Local DateTime)</label>
+                  <input id="f-publish" name="publishAt" type="text" required placeholder="YYYY-MM-DDTHH:MM:SS-05:00">
+                </div>
+                <div class="form-group">
+                  <label for="f-fragment">Fragment File</label>
+                  <select id="f-fragment" name="fragment" required>
+                    <option value="">-- Choose Fragment --</option>
+                  </select>
+                  <p style="font-size:10px;color:#888;margin:4px 0 0 0;">Create fragment files under the "Fragments Editor" tab.</p>
+                </div>
+                <div class="form-group">
+                  <label for="f-status">Status</label>
+                  <select id="f-status" name="status">
+                    <option value="Draft">Draft</option>
+                    <option value="Ready">Ready</option>
+                    <option value="Published">Published</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="f-hint">Next Mutation Hint</label>
+                  <input id="f-hint" name="nextMutationHint" type="text" placeholder="Archive instability detected.">
+                </div>
+                <div class="form-group form-group--checkbox">
+                  <input id="f-unlock" name="requiresUnlock" type="checkbox">
+                  <label for="f-unlock">Requires Password/Unlock Code</label>
+                </div>
+                <div class="mutation-actions" style="margin-top: 20px;">
+                  <button class="btn btn--primary" type="submit">Save Phase</button>
+                  <button class="btn" id="btn-cancel-phase-form" type="button">Cancel</button>
+                </div>
+              </form>
+            </div>
 
-        <!-- Schedule -->
-        <div class="mutation-status-card">
-          <h2>Mutation Schedule</h2>
-          <pre id="schedule-display">Loading...</pre>
-        </div>
+          </div>
+        </section>
 
-        <!-- Actions -->
-        <div class="mutation-actions">
-          <button class="mutation-btn mutation-btn--primary" id="btn-promote" type="button">Run Promotion</button>
-          <button class="mutation-btn" id="btn-refresh" type="button">Refresh Schedule</button>
-          <a class="mutation-btn" href="/operator-log/" target="_blank" rel="noopener">Preview Page ↗</a>
-        </div>
+        <!-- SECTION: FRAGMENTS -->
+        <section class="mutation-section" id="section-fragments">
+          <div class="editor-container">
+            
+            <aside class="fragment-sidebar">
+              <button class="btn btn--primary" style="width:100%;margin-bottom:12px;" id="btn-new-fragment" type="button">New Fragment</button>
+              <label style="font-size:11px;font-family:'Courier New',monospace;font-weight:700;text-transform:uppercase;">Fragments Available</label>
+              <div class="fragment-list" id="fragment-list-container">
+                <div style="font-size:11px;color:#85837d;text-align:center;">Loading fragments...</div>
+              </div>
+            </aside>
 
-        <div id="mutation-output"></div>
+            <main class="fragment-main">
+              <div id="editor-header" style="display:flex;justify-content:space-between;align-items:center;">
+                <h3 style="margin:0;font-size:14px;font-family:'Courier New',monospace;text-transform:uppercase;" id="active-fragment-title">Select a fragment to edit</h3>
+                <button class="btn btn--danger btn--small" id="btn-delete-fragment" type="button" style="display:none;">Delete File</button>
+              </div>
+              
+              <div id="json-editor-wrap" style="display:none;flex:1;flex-direction:column;gap:12px;">
+                <textarea class="json-editor-area" id="fragment-json-input" spellcheck="false"></textarea>
+                <div class="mutation-actions">
+                  <button class="btn btn--primary" id="btn-save-fragment" type="button">Save Fragment Content</button>
+                  <span id="json-validation-msg" style="font-size:11px;font-family:'Courier New',monospace;font-weight:700;"></span>
+                </div>
+              </div>
+              
+              <div id="editor-placeholder" style="text-align:center;color:#85837d;padding:100px 0;font-size:12px;">
+                No fragment file loaded. Choose a file from the sidebar or click "New Fragment".
+              </div>
+            </main>
 
-        <!-- TODO callout -->
-        <div class="mutation-todo">
-          <strong>TODO: Full Mutation Desk UI</strong>
-          <ul>
-            <li>Create / edit / delete mutation phases</li>
-            <li>Generate random fragment filenames</li>
-            <li>Edit publishAt, phaseLabel, title, status</li>
-            <li>Edit content blocks (text, quote, evidence) with live preview</li>
-            <li>Mark phases Draft / Ready / Published</li>
-            <li>Preview current public page output</li>
-            <li>Clean old public fragments</li>
-            <li>View promotion history log</li>
-          </ul>
-          <p style="margin-top:10px;">For now: edit <code>content/operator-log/schedule.json</code> and fragments directly, then use <strong>Run Promotion</strong> above or <code>node scripts/promote-operator-mutation.js</code> in the terminal.</p>
-        </div>
+          </div>
+        </section>
 
       </div>
     </div>
 
-    <script>
-      const output = document.getElementById("mutation-output");
-      const manifestEl = document.getElementById("manifest-display");
-      const scheduleEl = document.getElementById("schedule-display");
+    <div id="output-toast">Notification</div>
 
-      async function loadSchedule() {
+    <script>
+      // Auth token support
+      function getAuthHeaders() {
+        const headers = { "Content-Type": "application/json" };
+        const token = sessionStorage.getItem("studio_write_token");
+        if (token) {
+          headers["Authorization"] = `Bearer ${token}`;
+        }
+        return headers;
+      }
+
+      function showToast(message, isError = false) {
+        const toast = document.getElementById("output-toast");
+        toast.textContent = message;
+        toast.style.background = isError ? "#c00000" : "#292928";
+        toast.style.display = "block";
+        setTimeout(() => {
+          toast.style.display = "none";
+        }, 3000);
+      }
+
+      // Tab switching
+      const tabs = document.querySelectorAll(".mutation-tab");
+      const sections = document.querySelectorAll(".mutation-section");
+      tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+          tabs.forEach(t => t.classList.remove("is-active"));
+          sections.forEach(s => s.classList.remove("is-active"));
+          tab.classList.add("is-active");
+          document.getElementById(`section-${tab.dataset.tab}`).classList.add("is-active");
+        });
+      });
+
+      // App State
+      let schedule = [];
+      let fragmentsList = [];
+      let activeFragmentName = "";
+      let isEditingPhaseNum = null; // if number, editing existing phase
+
+      // Load all schedule and fragments
+      async function loadAllData() {
         try {
-          const res = await fetch("/api/mutation/schedule");
-          const data = await res.json();
-          manifestEl.textContent = data.manifest
-            ? JSON.stringify(data.manifest, null, 2)
-            : "No manifest found. Run a promotion first.";
-          scheduleEl.textContent = Array.isArray(data.schedule)
-            ? data.schedule.map((p) =>
-                `Phase ${p.phase} [${p.status}] "${p.phaseLabel || p.title}" — publishAt: ${p.publishAt}\n  Fragment: ${p.fragment}`
-              ).join("\n\n")
-            : JSON.stringify(data.schedule, null, 2);
-        } catch (err) {
-          manifestEl.textContent = "Error loading schedule: " + err.message;
+          // 1. Get schedule and manifest
+          const scheduleRes = await fetch("/api/mutation/schedule");
+          const scheduleData = await scheduleRes.json();
+          schedule = scheduleData.schedule || [];
+          
+          const activePhaseText = scheduleData.manifest 
+            ? `Active Phase: ${scheduleData.manifest.activePhase} — "${scheduleData.manifest.phaseLabel}" (Fragment: ${scheduleData.manifest.activeFragment})`
+            : "Active Phase: None. (Need to run promotion)";
+          document.getElementById("manifest-summary").textContent = activePhaseText;
+          
+          renderScheduleTable();
+
+          // 2. Get fragment files list
+          const fragmentsRes = await fetch("/api/mutation/fragments");
+          const fragmentsData = await fragmentsRes.json();
+          fragmentsList = fragmentsData.fragments || [];
+          
+          renderFragmentSidebar();
+          renderFragmentDropdown();
+        } catch (e) {
+          showToast("Error loading data: " + e.message, true);
         }
       }
 
-      document.getElementById("btn-refresh").addEventListener("click", () => {
-        output.textContent = "";
-        loadSchedule();
+      // Render Schedule
+      function renderScheduleTable() {
+        const tbody = document.getElementById("schedule-table-body");
+        tbody.innerHTML = "";
+
+        if (schedule.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;">No phases scheduled yet.</td></tr>`;
+          return;
+        }
+
+        schedule.forEach(p => {
+          const statusClass = p.status.toLowerCase();
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td style="font-weight:700;font-family:'Courier New',monospace;">Phase ${p.phase}</td>
+            <td><strong>${escapeHtml(p.title)}</strong></td>
+            <td>${escapeHtml(p.phaseLabel || "")}</td>
+            <td><code style="font-size:10px;">${escapeHtml(p.publishAt)}</code></td>
+            <td><code style="color:#0066cc;">${escapeHtml(p.fragment)}</code></td>
+            <td><span class="badge badge--${statusClass}">${p.status}</span></td>
+            <td>${p.requiresUnlock ? "🔑 Yes" : "No"}</td>
+            <td>
+              <button class="btn btn--small" onclick="editPhase(${p.phase})">Edit</button>
+              <button class="btn btn--small btn--danger" onclick="deletePhase(${p.phase})">Delete</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      // Render Fragment List
+      function renderFragmentSidebar() {
+        const container = document.getElementById("fragment-list-container");
+        container.innerHTML = "";
+        
+        if (fragmentsList.length === 0) {
+          container.innerHTML = `<div style="font-size:11px;color:#85837d;text-align:center;">No fragment files.</div>`;
+          return;
+        }
+
+        fragmentsList.forEach(f => {
+          const item = document.createElement("div");
+          item.className = `fragment-item ${f.filename === activeFragmentName ? "is-active" : ""}`;
+          item.innerHTML = `
+            <span class="fragment-item__name">${escapeHtml(f.filename)}</span>
+            <span style="color:#888;font-size:9px;">${Math.round(f.size)}B</span>
+          `;
+          item.addEventListener("click", () => loadFragmentContent(f.filename));
+          container.appendChild(item);
+        });
+      }
+
+      // Render Dropdown for schedule form
+      function renderFragmentDropdown() {
+        const select = document.getElementById("f-fragment");
+        // Keep the placeholder option
+        select.innerHTML = '<option value="">-- Choose Fragment --</option>';
+        fragmentsList.forEach(f => {
+          const opt = document.createElement("option");
+          opt.value = f.filename;
+          opt.textContent = f.filename;
+          select.appendChild(opt);
+        });
+      }
+
+      // Form display controls
+      document.getElementById("btn-show-create-phase").addEventListener("click", () => {
+        isEditingPhaseNum = null;
+        document.getElementById("form-title").textContent = "Create Phase";
+        document.getElementById("phase-form").reset();
+        
+        // Suggest next phase number
+        const maxPhase = schedule.reduce((max, p) => p.phase > max ? p.phase : max, 0);
+        document.getElementById("f-phase").value = maxPhase + 1;
+        document.getElementById("f-phase").disabled = false;
+        
+        // Set default ISO datetime
+        document.getElementById("f-publish").value = new Date().toISOString();
+
+        document.getElementById("phase-form-card").style.display = "block";
+        document.getElementById("phase-form-card").scrollIntoView({ behavior: "smooth" });
       });
 
-      document.getElementById("btn-promote").addEventListener("click", async () => {
-        output.textContent = "Running promotion...";
+      document.getElementById("btn-cancel-phase-form").addEventListener("click", () => {
+        document.getElementById("phase-form-card").style.display = "none";
+      });
+
+      // Edit Phase Action
+      window.editPhase = function(phaseNum) {
+        const p = schedule.find(x => x.phase === phaseNum);
+        if (!p) return;
+
+        isEditingPhaseNum = phaseNum;
+        document.getElementById("form-title").textContent = `Edit Phase ${p.phase}`;
+        
+        document.getElementById("f-phase").value = p.phase;
+        // Lock the phase number unless they know what they are doing, but the server handles updates anyway
+        document.getElementById("f-phase").disabled = true;
+
+        document.getElementById("f-title").value = p.title;
+        document.getElementById("f-label").value = p.phaseLabel || "";
+        document.getElementById("f-publish").value = p.publishAt;
+        document.getElementById("f-fragment").value = p.fragment;
+        document.getElementById("f-status").value = p.status;
+        document.getElementById("f-hint").value = p.nextMutationHint || "";
+        document.getElementById("f-unlock").checked = p.requiresUnlock === true;
+
+        document.getElementById("phase-form-card").style.display = "block";
+        document.getElementById("phase-form-card").scrollIntoView({ behavior: "smooth" });
+      };
+
+      // Delete Phase Action
+      window.deletePhase = async function(phaseNum) {
+        if (!confirm(`Are you sure you want to delete Phase ${phaseNum} from the schedule?`)) {
+          return;
+        }
         try {
-          const res = await fetch("/api/mutation/promote", { method: "POST" });
+          const res = await fetch(`/api/mutation/schedule/${phaseNum}`, {
+            method: "DELETE",
+            headers: getAuthHeaders()
+          });
           const data = await res.json();
-          if (data.promoted) {
-            output.textContent = `✓ Promoted: Phase ${data.manifest.activePhase} — ${data.manifest.phaseLabel} (${data.manifest.activeFragment})`;
+          if (res.ok) {
+            showToast(`✓ Phase ${phaseNum} deleted.`);
+            loadAllData();
+            document.getElementById("phase-form-card").style.display = "none";
           } else {
-            output.textContent = `No eligible phase: ${data.message || "Check schedule publishAt dates and statuses."}`;
+            showToast("Error: " + data.error, true);
           }
-          loadSchedule();
         } catch (err) {
-          output.textContent = "Promotion error: " + err.message;
+          showToast("Request failed: " + err.message, true);
+        }
+      };
+
+      // Submit Phase Form
+      document.getElementById("phase-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        
+        const payload = {
+          phase: Number(document.getElementById("f-phase").value),
+          title: formData.get("title"),
+          phaseLabel: formData.get("phaseLabel"),
+          publishAt: formData.get("publishAt"),
+          fragment: formData.get("fragment"),
+          status: formData.get("status"),
+          nextMutationHint: formData.get("nextMutationHint") || null,
+          requiresUnlock: document.getElementById("f-unlock").checked
+        };
+
+        const isEditing = isEditingPhaseNum !== null;
+        const url = isEditing 
+          ? `/api/mutation/schedule/${isEditingPhaseNum}`
+          : "/api/mutation/schedule";
+        
+        const method = isEditing ? "PATCH" : "POST";
+
+        try {
+          const res = await fetch(url, {
+            method,
+            headers: getAuthHeaders(),
+            body: JSON.stringify(payload)
+          });
+          const data = await res.json();
+          if (res.ok) {
+            showToast(isEditing ? "✓ Phase updated." : "✓ Phase created.");
+            document.getElementById("phase-form-card").style.display = "none";
+            loadAllData();
+          } else {
+            showToast("Error: " + data.error, true);
+          }
+        } catch (err) {
+          showToast("Save failed: " + err.message, true);
         }
       });
 
-      loadSchedule();
+      // Promote Trigger
+      document.getElementById("btn-promote-active").addEventListener("click", async () => {
+        showToast("Running promotion algorithm...");
+        try {
+          const res = await fetch("/api/mutation/promote", {
+            method: "POST",
+            headers: getAuthHeaders()
+          });
+          const data = await res.json();
+          if (data.promoted) {
+            showToast(`✓ Promoted: Phase ${data.manifest.activePhase} is now active.`);
+          } else {
+            showToast(`No eligible changes: ${data.message || "Check publish dates."}`);
+          }
+          loadAllData();
+        } catch (e) {
+          showToast("Promotion error: " + e.message, true);
+        }
+      });
+
+      // Load Fragment JSON File Content
+      async function loadFragmentContent(filename) {
+        activeFragmentName = filename;
+        renderFragmentSidebar();
+        
+        document.getElementById("editor-placeholder").style.display = "none";
+        document.getElementById("json-editor-wrap").style.display = "flex";
+        document.getElementById("active-fragment-title").textContent = `Editing: ${filename}`;
+        document.getElementById("btn-delete-fragment").style.display = "inline-flex";
+        
+        const textInput = document.getElementById("fragment-json-input");
+        textInput.value = "Loading...";
+        document.getElementById("json-validation-msg").textContent = "";
+
+        try {
+          const res = await fetch(`/api/mutation/fragments/${encodeURIComponent(filename)}`);
+          const data = await res.json();
+          textInput.value = JSON.stringify(data, null, 2);
+        } catch (err) {
+          textInput.value = "";
+          showToast("Failed to read fragment: " + err.message, true);
+        }
+      }
+
+      // Save Fragment
+      document.getElementById("btn-save-fragment").addEventListener("click", async () => {
+        const textInput = document.getElementById("fragment-json-input");
+        const valMsg = document.getElementById("json-validation-msg");
+        valMsg.textContent = "";
+        
+        let parsed;
+        try {
+          parsed = JSON.parse(textInput.value);
+        } catch (e) {
+          valMsg.textContent = "✘ Invalid JSON format: " + e.message;
+          valMsg.style.color = "#c00000";
+          return;
+        }
+
+        showToast("Saving fragment...");
+        try {
+          const res = await fetch(`/api/mutation/fragments/${encodeURIComponent(activeFragmentName)}`, {
+            method: "PUT",
+            headers: getAuthHeaders(),
+            body: JSON.stringify(parsed)
+          });
+          if (res.ok) {
+            showToast(`✓ Saved: ${activeFragmentName}`);
+            valMsg.textContent = "✓ Saved & Validated";
+            valMsg.style.color = "#385723";
+            loadAllData();
+          } else {
+            const err = await res.json();
+            showToast("Failed to save: " + err.error, true);
+          }
+        } catch (err) {
+          showToast("Save failed: " + err.message, true);
+        }
+      });
+
+      // Delete Fragment
+      document.getElementById("btn-delete-fragment").addEventListener("click", async () => {
+        if (!confirm(`Are you sure you want to permanently delete the fragment file ${activeFragmentName}? This cannot be undone.`)) {
+          return;
+        }
+        try {
+          const res = await fetch(`/api/mutation/fragments/${encodeURIComponent(activeFragmentName)}`, {
+            method: "DELETE",
+            headers: getAuthHeaders()
+          });
+          if (res.ok) {
+            showToast(`✓ Fragment ${activeFragmentName} deleted.`);
+            activeFragmentName = "";
+            document.getElementById("json-editor-wrap").style.display = "none";
+            document.getElementById("btn-delete-fragment").style.display = "none";
+            document.getElementById("active-fragment-title").textContent = "Select a fragment to edit";
+            document.getElementById("editor-placeholder").style.display = "block";
+            loadAllData();
+          } else {
+            const err = await res.json();
+            showToast("Delete failed: " + err.error, true);
+          }
+        } catch (err) {
+          showToast("Delete failed: " + err.message, true);
+        }
+      });
+
+      // New Fragment creator
+      document.getElementById("btn-new-fragment").addEventListener("click", async () => {
+        let name = prompt("Enter a filename for the new fragment (e.g. evidence_log.json):");
+        if (name === null) return;
+        name = name.trim();
+        if (!name) {
+          alert("Filename is required.");
+          return;
+        }
+        if (!name.endsWith(".json")) {
+          name = name + ".json";
+        }
+        if (!/^[a-zA-Z0-9_-]+\.json$/.test(name)) {
+          alert("Invalid characters in filename. Use letters, numbers, hyphens, and underscores.");
+          return;
+        }
+
+        const template = {
+          headline: "OPERATOR LOG",
+          subhead: "Log details",
+          statusLine: "STATUS: STABLE",
+          bodyClass: "phase-open",
+          lockedCopy: "Log remains encrypted.",
+          blocks: [
+            {
+              type: "text",
+              kicker: "FIELD NOTE",
+              title: "Title Here",
+              body: "Log body text goes here."
+            }
+          ]
+        };
+
+        showToast("Creating fragment file...");
+        try {
+          const res = await fetch(`/api/mutation/fragments/${encodeURIComponent(name)}`, {
+            method: "PUT",
+            headers: getAuthHeaders(),
+            body: JSON.stringify(template)
+          });
+          if (res.ok) {
+            showToast(`✓ Fragment ${name} created.`);
+            await loadAllData();
+            loadFragmentContent(name);
+          } else {
+            const err = await res.json();
+            showToast("Failed to create fragment: " + err.error, true);
+          }
+        } catch (e) {
+          showToast("Request failed: " + e.message, true);
+        }
+      });
+
+      // Helpers
+      function escapeHtml(value) {
+        return String(value ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;");
+      }
+
+      // Init
+      loadAllData();
     </script>
   </body>
 </html>
