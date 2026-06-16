@@ -24,8 +24,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/lighthouse-handoff.css?v=1">
-  <script src="/assets/js/lighthouse-handoff.js?v=1" defer></script>
+  <link rel="stylesheet" href="/assets/css/lighthouse-handoff.css?v=2">
+  <script src="/assets/js/lighthouse-handoff.js?v=2" defer></script>
 </head>
 <body class="lh-page">
   <a class="lh-skip" href="#lh-main">Skip to content</a>
@@ -37,23 +37,28 @@
       <a class="lh-header__back" href="/">← Archive</a>
     </header>
 
+    <div class="lh-sticky-cta" id="lh-sticky-cta" hidden>
+      <span class="lh-sticky-cta__label">Lighthouse Handoff</span>
+      <a class="lh-sticky-cta__link" href="#tester-signup">Test the handoff</a>
+    </div>
+
     <main class="lh-main" id="lh-main" tabindex="-1">
 
       <!-- Hero -->
       <section class="lh-section lh-hero" id="hero" aria-labelledby="lh-hero-title">
         <div class="lh-hero__copy">
           <p class="lh-kicker">Chrome Extension · Handoff Layer</p>
-          <span class="lh-badge lh-badge--status">Local AI experiment in progress</span>
           <h1 id="lh-hero-title">Turn PageSpeed Insights into coding-agent-ready Markdown.</h1>
+          <span class="lh-badge lh-badge--status">Local AI experiment in progress</span>
           <p class="lh-lede">PageSpeed gives you the diagnosis.<br>Lighthouse Handoff turns it into a structured handoff with priorities, developer tasks, guardrails, acceptance criteria, and testing steps.</p>
           <p class="lh-lede-sub">Not another dashboard.<br>A handoff layer.</p>
           <div class="lh-hero__actions">
             <a class="lh-btn lh-btn--primary" href="#tester-signup">Test the handoff</a>
-            <a class="lh-btn lh-btn--ghost" href="#roadmap">View roadmap</a>
+            <a class="lh-link" href="#roadmap">View roadmap</a>
           </div>
         </div>
 
-        <aside class="lh-preview" aria-label="Markdown handoff preview">
+        <aside class="lh-preview lh-preview--teaser" aria-label="Markdown handoff preview">
           <div class="lh-preview__chrome">
             <span class="lh-preview__dot" aria-hidden="true"></span>
             <span class="lh-preview__dot" aria-hidden="true"></span>
@@ -152,7 +157,7 @@
             <h3>Agent-Ready Handoff</h3>
             <p>Priorities, tasks, guardrails, and acceptance criteria are included.</p>
           </li>
-          <li class="lh-workflow__step">
+          <li class="lh-workflow__step lh-workflow__step--payoff">
             <span class="lh-workflow__num">05</span>
             <h3>Developer Workflow</h3>
             <p>Paste into Cursor, your IDE, or any coding agent and start fixing.</p>
@@ -168,7 +173,7 @@
           <p class="lh-section__intro">This is what Lighthouse Handoff produces — structured Markdown you can hand to a developer or coding agent.</p>
         </header>
 
-        <div class="lh-terminal">
+        <div class="lh-terminal lh-terminal--canonical">
           <div class="lh-terminal__bar">
             <span class="lh-preview__dot" aria-hidden="true"></span>
             <span class="lh-preview__dot" aria-hidden="true"></span>
@@ -221,6 +226,11 @@
           </div>
         </div>
         <p class="lh-example__note">Example only. Actual reports depend on the analyzed page and available Lighthouse data.</p>
+
+        <div class="lh-example__bridge">
+          <p class="lh-signup__question lh-signup__question--inline"><strong>Would you actually hand this report to a coding agent?</strong></p>
+          <a class="lh-btn lh-btn--primary" href="#tester-signup">Test the handoff</a>
+        </div>
       </section>
 
       <!-- Local AI Experiment -->
@@ -230,6 +240,11 @@
           <h2 id="lh-ai-title">Without AI: useful report.<br>With Local AI: better handoff.</h2>
           <p class="lh-section__intro">The core extension works without AI. The Local AI version is being tested to improve grouping, prioritization, and handoff quality.</p>
         </header>
+
+        <blockquote class="lh-ai__callout">
+          <p>The goal is not to build another chatbot.</p>
+          <p>The goal is to test one narrow question:<br><strong>Can a small local model make the handoff better?</strong></p>
+        </blockquote>
 
         <div class="lh-ai__compare">
           <article class="lh-ai__card">
@@ -255,11 +270,6 @@
             </ul>
           </article>
         </div>
-
-        <blockquote class="lh-ai__callout">
-          <p>The goal is not to build another chatbot.</p>
-          <p>The goal is to test one narrow question:<br><strong>Can a small local model make the handoff better?</strong></p>
-        </blockquote>
       </section>
 
       <!-- Roadmap -->
@@ -277,23 +287,23 @@
         </header>
 
         <ol class="lh-timeline">
-          <li class="lh-timeline__item is-expanded" data-phase="1">
-            <button type="button" class="lh-timeline__toggle" aria-expanded="true" aria-controls="lh-phase-1">
+          <li class="lh-timeline__item" data-phase="1">
+            <button type="button" class="lh-timeline__toggle" aria-expanded="false" aria-controls="lh-phase-1">
               <span class="lh-timeline__phase">Phase 1</span>
               <span class="lh-timeline__title">Standard Handoff</span>
               <span class="lh-badge lh-badge--done">Completed</span>
             </button>
-            <div class="lh-timeline__detail" id="lh-phase-1">
+            <div class="lh-timeline__detail" id="lh-phase-1" hidden>
               <p>Core Chrome extension that extracts Lighthouse data and outputs structured Markdown with priorities, tasks, guardrails, and acceptance criteria.</p>
             </div>
           </li>
-          <li class="lh-timeline__item is-expanded" data-phase="2">
-            <button type="button" class="lh-timeline__toggle" aria-expanded="true" aria-controls="lh-phase-2">
+          <li class="lh-timeline__item" data-phase="2">
+            <button type="button" class="lh-timeline__toggle" aria-expanded="false" aria-controls="lh-phase-2">
               <span class="lh-timeline__phase">Phase 2</span>
               <span class="lh-timeline__title">Report Quality</span>
               <span class="lh-badge lh-badge--active">In Progress</span>
             </button>
-            <div class="lh-timeline__detail" id="lh-phase-2">
+            <div class="lh-timeline__detail" id="lh-phase-2" hidden>
               <p>Improving grouping logic, task clarity, and guardrail generation from raw Lighthouse audits.</p>
             </div>
           </li>
@@ -307,14 +317,15 @@
               <p>Testing a small local model to improve prioritization, root-cause suggestions, and handoff language without requiring cloud API calls.</p>
             </div>
           </li>
-          <li class="lh-timeline__item" data-phase="4">
-            <button type="button" class="lh-timeline__toggle" aria-expanded="false" aria-controls="lh-phase-4">
+          <li class="lh-timeline__item lh-timeline__item--current is-expanded" data-phase="4">
+            <button type="button" class="lh-timeline__toggle" aria-expanded="true" aria-controls="lh-phase-4">
               <span class="lh-timeline__phase">Phase 4</span>
               <span class="lh-timeline__title">Tester Feedback</span>
               <span class="lh-badge lh-badge--next">Next</span>
             </button>
-            <div class="lh-timeline__detail" id="lh-phase-4" hidden>
+            <div class="lh-timeline__detail" id="lh-phase-4">
               <p>Collecting feedback from developers and builders on whether the handoff is actually useful for coding agent workflows.</p>
+              <a class="lh-btn lh-btn--primary lh-btn--compact" href="#tester-signup">Test the handoff</a>
             </div>
           </li>
           <li class="lh-timeline__item" data-phase="5">
@@ -340,6 +351,7 @@
         </header>
 
         <!-- TODO: Replace form action with backend endpoint or form service (e.g. Formspree, Netlify Forms) -->
+        <div class="lh-signup__panel">
         <form class="lh-form" id="lh-tester-form" action="#" method="post" novalidate>
           <div class="lh-form__grid">
             <div class="lh-field">
@@ -392,10 +404,12 @@
             </div>
           </div>
           <div class="lh-form__actions">
+            <p class="lh-signup__question lh-signup__question--submit"><strong>Would you actually hand this report to a coding agent?</strong></p>
             <button type="submit" class="lh-btn lh-btn--primary">Test the handoff</button>
             <p class="lh-form__status" id="lh-form-status" role="status" aria-live="polite"></p>
           </div>
         </form>
+        </div>
       </section>
 
       <!-- FAQ -->

@@ -192,12 +192,34 @@
     });
   }
 
+  function initStickyCta() {
+    var hero = document.getElementById("hero");
+    var sticky = document.getElementById("lh-sticky-cta");
+
+    if (!hero || !sticky || !("IntersectionObserver" in window)) {
+      return;
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        sticky.hidden = entry.isIntersecting;
+      });
+    }, {
+      root: null,
+      threshold: 0,
+      rootMargin: "-40px 0px 0px 0px"
+    });
+
+    observer.observe(hero);
+  }
+
   function init() {
     initSmoothScroll();
     initCopyReport();
     initRoadmapToggle();
     initHeroTyping();
     initTesterForm();
+    initStickyCta();
   }
 
   if (document.readyState === "loading") {
