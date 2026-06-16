@@ -47,6 +47,9 @@
     <pattern id="microGrid" width="28" height="28" patternUnits="userSpaceOnUse">
       <path d="M28 0H0v28" fill="none" stroke="#c9a227" stroke-opacity=".07"/>
     </pattern>
+    <clipPath id="towerClip">
+      <path d="M284 872h192L438 338H322Z"/>
+    </clipPath>
     <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
       <feGaussianBlur stdDeviation=".35"/>
     </filter>
@@ -90,21 +93,36 @@
 
     <!-- Tower body -->
     <path d="M284 872h192L438 338H322Z" fill="url(#towerFill)" stroke="url(#towerStroke)" stroke-width="5"/>
-    <path d="M322 338h116M314 420h132M306 506h148M300 592h160M294 678h172M288 764h184M278 872h204" stroke="#c9a227" stroke-opacity=".36" stroke-width="3"/>
-    <path d="M323 338 284 872M438 338l38 534" stroke="#f0cb65" stroke-opacity=".28" stroke-width="2"/>
+    <g clip-path="url(#towerClip)">
+      <path d="M322 338h116M314 420h132M306 506h148M300 592h160M294 678h172M288 764h184M278 872h204" stroke="#c9a227" stroke-opacity=".36" stroke-width="3"/>
+      <path d="M318 378h124M316 462h130M310 548h142M304 636h154M298 724h166M292 812h178" stroke="#f3d986" stroke-opacity=".1" stroke-width="1.6"/>
+      <path d="M342 338v40M386 338v40M426 338v40M326 420v42M372 420v42M420 420v42M318 506v42M362 506v42M410 506v42M306 592v44M354 592v44M406 592v44M302 678v46M350 678v46M404 678v46M292 764v48M344 764v48M400 764v48M452 764v48" stroke="#d4a843" stroke-opacity=".12" stroke-width="1.5"/>
+      <path d="M323 338 284 872M438 338l38 534" stroke="#f0cb65" stroke-opacity=".28" stroke-width="2"/>
+      <path d="M330 340c-10 128-14 268-12 420M430 340c10 128 14 268 12 420" stroke="#f3d986" stroke-opacity=".08" stroke-width="1.5" stroke-dasharray="4 12"/>
+      <path d="M306 392c54 32 104 32 148 0M300 512c60 34 114 34 160 0M294 638c64 36 122 36 172 0M288 766c70 38 132 38 184 0" stroke="#f3d986" stroke-opacity=".09" stroke-width="2"/>
+      <path d="M324 354c34 18 72 18 112 0M316 438c42 20 86 20 132 0M308 524c48 22 96 22 144 0M302 610c52 24 106 24 160 0M296 696c58 26 116 26 172 0M290 782c62 28 124 28 184 0" stroke="#c9a227" stroke-opacity=".12" stroke-width="1.6" stroke-dasharray="7 9"/>
+      <path d="M318 420c28 16 72 16 124 0M306 506c34 18 86 18 148 0M300 592c42 20 94 20 160 0M294 678c50 22 106 22 172 0M288 764c58 24 120 24 184 0" stroke="#8a7340" stroke-opacity=".1" stroke-width="1.4"/>
+    </g>
     <path d="M341 390h78v58h-78zM336 510h88v62h-88zM332 632h96v68h-96zM348 750h64v86h-64z" fill="#10100f" fill-opacity=".18" stroke="#d4a843" stroke-opacity=".36" stroke-width="3"/>
-    <path d="M356 390v58M380 390v58M404 390v58M358 510v62M380 510v62M402 510v62M356 632v68M380 632v68M404 632v68" stroke="#c9a227" stroke-opacity=".18" stroke-width="1.5"/>
-    <path d="M306 392c54 32 104 32 148 0M300 512c60 34 114 34 160 0M294 638c64 36 122 36 172 0M288 766c70 38 132 38 184 0" stroke="#f3d986" stroke-opacity=".09" stroke-width="2"/>
-    <path d="M324 354c34 18 72 18 112 0M316 438c42 20 86 20 132 0M308 524c48 22 96 22 144 0M302 610c52 24 106 24 160 0M296 696c58 26 116 26 172 0M290 782c62 28 124 28 184 0" stroke="#c9a227" stroke-opacity=".12" stroke-width="1.6" stroke-dasharray="7 9"/>
+    <path d="M348 397h64v44h-64zM344 518h72v46h-72zM340 640h80v52h-80zM356 760h48v66h-48z" fill="#000" fill-opacity=".11" stroke="#f3d986" stroke-opacity=".13" stroke-width="1.5"/>
+    <path d="M341 390l7 7M419 390l-7 7M341 448l7-7M419 448l-7-7M336 510l8 8M424 510l-8 8M336 572l8-8M424 572l-8-8M332 632l8 8M428 632l-8 8M332 700l8-8M428 700l-8-8M348 750l8 10M412 750l-8 10M348 836l8-10M412 836l-8-10" stroke="#f0cb65" stroke-opacity=".18" stroke-width="1.5"/>
+    <path d="M356 390v58M380 390v58M404 390v58M358 510v62M380 510v62M402 510v62M356 632v68M380 632v68M404 632v68M368 750v86M392 750v86" stroke="#c9a227" stroke-opacity=".18" stroke-width="1.5"/>
+    <path d="M270 872h220l-14 30H284zM250 902h260l-24 32H274z" fill="#c9a227" fill-opacity=".035" stroke="#d4a843" stroke-opacity=".32" stroke-width="3"/>
+    <path d="M292 884h176M278 914h204M310 872v30M354 872v30M402 872v30M446 872v30M292 902v32M344 902v32M398 902v32M454 902v32" stroke="#c9a227" stroke-opacity=".16" stroke-width="1.7"/>
 
     <!-- External service ladder / precision detail -->
-    <path d="M465 380c26 90 36 200 32 330M474 420h34M482 488h32M489 558h30M494 628h26M496 698h22" stroke="#d4a843" stroke-opacity=".22" stroke-width="2"/>
+    <path d="M465 380c26 90 36 200 32 330M474 420h34M482 488h32M489 558h30M494 628h26M496 698h22" stroke="#d4a843" stroke-opacity=".25" stroke-width="2"/>
+    <path d="M476 402c22 88 30 190 24 306" stroke="#f3d986" stroke-opacity=".11" stroke-width="1.3"/>
     <path d="M294 386c-24 86-34 194-30 324M256 428h34M252 496h32M250 566h30M250 636h26M254 706h22" stroke="#d4a843" stroke-opacity=".16" stroke-width="2"/>
+    <path d="M284 408c-19 84-26 184-20 300" stroke="#f3d986" stroke-opacity=".08" stroke-width="1.3"/>
 
     <!-- Terrain -->
     <path d="M128 894c48-38 94-58 138-60 30-2 58 6 84 24 38-36 78-52 120-48 47 4 91 34 132 86" stroke="#8a7340" stroke-opacity=".42" stroke-width="5"/>
     <path d="M78 930c82-48 160-70 234-66 38 2 72 11 102 28 54-22 105-26 154-12 36 10 70 28 102 54" stroke="#c9a227" stroke-opacity=".22" stroke-width="3"/>
     <path d="M174 900c22-10 46-14 72-12M280 878c28-8 54-8 78 0M468 856c34-8 66-2 96 18M132 940c40-14 78-18 114-12M374 916c46-18 92-18 138 0" stroke="#f3d986" stroke-opacity=".09" stroke-width="2"/>
+    <path d="M160 892l52 38 62-70M252 864l44 46 58-52M424 846l46 58 72-34M514 878l54 42 58-18M104 932l64-28 84 30M288 930l72-38 84 34M466 922l74-26 92 36" stroke="#8a7340" stroke-opacity=".18" stroke-width="2"/>
+    <path d="M206 884l20 18M304 870l18 22M486 850l24 28M558 888l20 20M168 920l28 16M380 902l34 18M540 906l38 16" stroke="#f3d986" stroke-opacity=".12" stroke-width="1.6"/>
+    <path d="M94 952c76-18 152-24 228-18 48 4 94 14 138 30M372 948c72-22 144-20 216 6" stroke="#c9a227" stroke-opacity=".1" stroke-width="2" stroke-dasharray="10 12"/>
 
     <!-- Tick marks / measurement notches -->
     <path d="M214 338h34M204 420h26M196 506h34M188 592h26M180 678h34M172 764h26M512 338h34M532 420h26M530 506h34M548 592h26M546 678h34M562 764h26" stroke="#c9a227" stroke-opacity=".13" stroke-width="2"/>
