@@ -11,6 +11,8 @@ This document tracks security work completed in the hardening pass and remaining
 - Shared URL/path helpers in `scripts/security-utils.js`.
 - Live Experiment and Lemonteed FM URL validation at build time and safe client rendering.
 - Junk-drawer tools no longer inject filenames into inline handlers.
+- Image converter page logic moved to `/assets/js/image-converter.js` (no inline scripts).
+- CSP includes `worker-src 'self' blob:` so `heic2any` can spawn its Web Worker for HEIC conversion.
 
 ## Verify after deploy
 
