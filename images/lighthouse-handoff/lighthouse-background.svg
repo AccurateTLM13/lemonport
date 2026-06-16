@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 840" role="img" aria-labelledby="title desc">
+  <title id="title">Faded lighthouse field report background</title>
+  <desc id="desc">A restrained technical lighthouse illustration with muted brass lines and blueprint-style construction marks.</desc>
+  <defs>
+    <linearGradient id="beam" x1="168" y1="210" x2="640" y2="60" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#d4a843" stop-opacity=".42"/>
+      <stop offset=".5" stop-color="#c9a227" stop-opacity=".12"/>
+      <stop offset="1" stop-color="#c9a227" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="tower" x1="230" y1="226" x2="404" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#d4a843" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#8a7340" stop-opacity=".42"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0v32" fill="none" stroke="#c9a227" stroke-opacity=".08"/>
+    </pattern>
+  </defs>
+
+  <rect width="640" height="840" fill="none"/>
+  <path d="M180 216 640 64v152L180 258Z" fill="url(#beam)"/>
+  <path d="M0 0h640v840H0z" fill="url(#grid)" opacity=".55"/>
+
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M238 748h174l-28-474H266Z" stroke="url(#tower)" stroke-width="5"/>
+    <path d="M252 276h146M258 386h134M264 496h122M270 608h110M232 748h186" stroke="#c9a227" stroke-opacity=".38" stroke-width="3"/>
+    <path d="M268 274 324 190l60 84" stroke="#d4a843" stroke-opacity=".62" stroke-width="4"/>
+    <path d="M250 274h150v-42H250zM270 232v-42h110v42M292 190v-44h66v44" stroke="#d4a843" stroke-opacity=".72" stroke-width="4"/>
+    <path d="M286 332h78v70h-78zM294 446h62v66h-62zM300 560h50v66h-50z" stroke="#c9a227" stroke-opacity=".32" stroke-width="3"/>
+    <path d="M184 750c50-28 106-40 168-36 45 2 88 14 130 36M150 778c73-34 142-50 207-46 51 3 100 18 147 46" stroke="#8a7340" stroke-opacity=".32" stroke-width="4"/>
+    <path d="M88 156h72M124 120v72M488 360h84M530 318v84M70 528h52M96 502v52" stroke="#d4a843" stroke-opacity=".18" stroke-width="3"/>
+    <path d="M214 250 92 304M420 250l122-54M224 700l-94 58M410 700l92 58" stroke="#c9a227" stroke-opacity=".13" stroke-width="2" stroke-dasharray="8 10"/>
+  </g>
+</svg>

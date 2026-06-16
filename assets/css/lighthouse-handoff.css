@@ -38,6 +38,19 @@
   text-rendering: optimizeLegibility;
 }
 
+.lh-page::before {
+  content: "";
+  position: fixed;
+  top: clamp(120px, 18vh, 190px);
+  right: max(-160px, calc((100vw - var(--lh-max)) / 2 - 220px));
+  z-index: 0;
+  width: clamp(320px, 42vw, 620px);
+  height: clamp(420px, 66vw, 780px);
+  background: url("/images/lighthouse-handoff/lighthouse-background.svg") center / contain no-repeat;
+  opacity: 0.11;
+  pointer-events: none;
+}
+
 .lh-page *,
 .lh-page *::before,
 .lh-page *::after {
@@ -68,6 +81,8 @@
 /* Shell & header */
 
 .lh-shell {
+  position: relative;
+  z-index: 1;
   min-height: 100vh;
 }
 
@@ -124,15 +139,19 @@
 
 .lh-sticky-cta {
   position: sticky;
-  top: 52px;
+  top: 72px;
   z-index: 80;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 10px var(--lh-gutter);
-  border-bottom: 1px solid var(--lh-border-strong);
-  background: rgb(26 26 24 / 0.96);
+  width: min(calc(100% - (var(--lh-gutter) * 2)), var(--lh-max));
+  margin: 10px auto 0;
+  padding: 10px 12px 10px 16px;
+  border: 1px solid var(--lh-border-strong);
+  border-radius: var(--lh-radius);
+  background: rgb(26 26 24 / 0.94);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.28);
   backdrop-filter: blur(8px);
 }
 
@@ -149,7 +168,7 @@
 
 .lh-sticky-cta__link {
   min-height: 36px;
-  padding: 8px 16px;
+  padding: 8px 18px;
   border: 1px solid var(--lh-gold);
   border-radius: var(--lh-radius);
   background: rgb(201 162 39 / 0.15);
@@ -1173,7 +1192,8 @@ a.lh-btn {
   }
 
   .lh-sticky-cta {
-    top: 49px;
+    top: 66px;
+    padding-inline: 18px 14px;
   }
 
   .lh-hero {
