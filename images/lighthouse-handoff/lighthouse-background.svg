@@ -1,33 +1,86 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 840" role="img" aria-labelledby="title desc">
-  <title id="title">Faded lighthouse field report background</title>
-  <desc id="desc">A restrained technical lighthouse illustration with muted brass lines and blueprint-style construction marks.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 980" role="img" aria-labelledby="title desc">
+  <title id="title">Faded architectural lighthouse background</title>
+  <desc id="desc">A precise brass-line lighthouse illustration with lens details, beacon geometry, blueprint marks, and coastal rock contours.</desc>
   <defs>
-    <linearGradient id="beam" x1="168" y1="210" x2="640" y2="60" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#d4a843" stop-opacity=".42"/>
-      <stop offset=".5" stop-color="#c9a227" stop-opacity=".12"/>
+    <linearGradient id="towerStroke" x1="284" y1="226" x2="470" y2="874" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f0cb65" stop-opacity=".92"/>
+      <stop offset=".48" stop-color="#c9a227" stop-opacity=".56"/>
+      <stop offset="1" stop-color="#8a7340" stop-opacity=".34"/>
+    </linearGradient>
+    <linearGradient id="towerFill" x1="318" y1="230" x2="466" y2="880" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#d4a843" stop-opacity=".12"/>
+      <stop offset=".52" stop-color="#c9a227" stop-opacity=".055"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="lensGlow" cx="380" cy="226" r="88" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f3d986" stop-opacity=".62"/>
+      <stop offset=".36" stop-color="#d4a843" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#d4a843" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="beamRight" x1="415" y1="224" x2="760" y2="84" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#d4a843" stop-opacity=".34"/>
+      <stop offset=".44" stop-color="#c9a227" stop-opacity=".095"/>
       <stop offset="1" stop-color="#c9a227" stop-opacity="0"/>
     </linearGradient>
-    <linearGradient id="tower" x1="230" y1="226" x2="404" y2="760" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#d4a843" stop-opacity=".9"/>
-      <stop offset="1" stop-color="#8a7340" stop-opacity=".42"/>
+    <linearGradient id="beamLeft" x1="346" y1="224" x2="8" y2="132" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#d4a843" stop-opacity=".18"/>
+      <stop offset=".48" stop-color="#c9a227" stop-opacity=".045"/>
+      <stop offset="1" stop-color="#c9a227" stop-opacity="0"/>
     </linearGradient>
-    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
-      <path d="M32 0H0v32" fill="none" stroke="#c9a227" stroke-opacity=".08"/>
+    <pattern id="microGrid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0H0v28" fill="none" stroke="#c9a227" stroke-opacity=".07"/>
     </pattern>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation=".35"/>
+    </filter>
   </defs>
 
-  <rect width="640" height="840" fill="none"/>
-  <path d="M180 216 640 64v152L180 258Z" fill="url(#beam)"/>
-  <path d="M0 0h640v840H0z" fill="url(#grid)" opacity=".55"/>
+  <rect width="760" height="980" fill="none"/>
+  <path d="M374 202 760 80v202L398 248Z" fill="url(#beamRight)"/>
+  <path d="M360 206 0 112v166l344-34Z" fill="url(#beamLeft)"/>
+  <rect width="760" height="980" fill="url(#microGrid)" opacity=".54"/>
+  <circle cx="380" cy="226" r="96" fill="url(#lensGlow)"/>
 
   <g fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M238 748h174l-28-474H266Z" stroke="url(#tower)" stroke-width="5"/>
-    <path d="M252 276h146M258 386h134M264 496h122M270 608h110M232 748h186" stroke="#c9a227" stroke-opacity=".38" stroke-width="3"/>
-    <path d="M268 274 324 190l60 84" stroke="#d4a843" stroke-opacity=".62" stroke-width="4"/>
-    <path d="M250 274h150v-42H250zM270 232v-42h110v42M292 190v-44h66v44" stroke="#d4a843" stroke-opacity=".72" stroke-width="4"/>
-    <path d="M286 332h78v70h-78zM294 446h62v66h-62zM300 560h50v66h-50z" stroke="#c9a227" stroke-opacity=".32" stroke-width="3"/>
-    <path d="M184 750c50-28 106-40 168-36 45 2 88 14 130 36M150 778c73-34 142-50 207-46 51 3 100 18 147 46" stroke="#8a7340" stroke-opacity=".32" stroke-width="4"/>
-    <path d="M88 156h72M124 120v72M488 360h84M530 318v84M70 528h52M96 502v52" stroke="#d4a843" stroke-opacity=".18" stroke-width="3"/>
-    <path d="M214 250 92 304M420 250l122-54M224 700l-94 58M410 700l92 58" stroke="#c9a227" stroke-opacity=".13" stroke-width="2" stroke-dasharray="8 10"/>
+    <!-- Drafting guides -->
+    <path d="M138 184h92M184 138v92M574 356h110M628 302v110M104 604h70M139 568v72" stroke="#d4a843" stroke-opacity=".16" stroke-width="2"/>
+    <path d="M214 248 82 316M546 230l118-48M250 842l-126 72M510 842l126 72" stroke="#c9a227" stroke-opacity=".14" stroke-width="2" stroke-dasharray="6 10"/>
+    <path d="M212 710h338M238 654h284M252 598h256M266 542h228M278 486h204" stroke="#c9a227" stroke-opacity=".07" stroke-width="1"/>
+
+    <!-- Lantern cap and gallery -->
+    <path d="M316 198 380 118l64 80" stroke="#f0cb65" stroke-opacity=".8" stroke-width="4"/>
+    <path d="M300 200h160l-16 30H316z" fill="#c9a227" fill-opacity=".055" stroke="#f0cb65" stroke-opacity=".76" stroke-width="4"/>
+    <path d="M322 230h116v70H322z" fill="#c9a227" fill-opacity=".045" stroke="#d4a843" stroke-opacity=".82" stroke-width="4"/>
+    <path d="M290 300h180M306 320h148M324 230v70M352 230v70M380 230v70M408 230v70M436 230v70" stroke="#d4a843" stroke-opacity=".44" stroke-width="2.4"/>
+    <path d="M304 300v38M456 300v38M284 338h192" stroke="#c9a227" stroke-opacity=".52" stroke-width="3"/>
+
+    <!-- Fresnel lens -->
+    <circle cx="380" cy="264" r="28" stroke="#f0cb65" stroke-opacity=".72" stroke-width="3"/>
+    <path d="M352 264h56M380 236v56M360 246c12 10 28 10 40 0M360 282c12-10 28-10 40 0" stroke="#f3d986" stroke-opacity=".36" stroke-width="2"/>
+
+    <!-- Tower body -->
+    <path d="M284 872h192L438 338H322Z" fill="url(#towerFill)" stroke="url(#towerStroke)" stroke-width="5"/>
+    <path d="M322 338h116M314 420h132M306 506h148M300 592h160M294 678h172M288 764h184M278 872h204" stroke="#c9a227" stroke-opacity=".36" stroke-width="3"/>
+    <path d="M323 338 284 872M438 338l38 534" stroke="#f0cb65" stroke-opacity=".28" stroke-width="2"/>
+    <path d="M341 390h78v58h-78zM336 510h88v62h-88zM332 632h96v68h-96zM348 750h64v86h-64z" fill="#10100f" fill-opacity=".18" stroke="#d4a843" stroke-opacity=".36" stroke-width="3"/>
+    <path d="M356 390v58M380 390v58M404 390v58M358 510v62M380 510v62M402 510v62M356 632v68M380 632v68M404 632v68" stroke="#c9a227" stroke-opacity=".18" stroke-width="1.5"/>
+
+    <!-- External service ladder / precision detail -->
+    <path d="M465 380c26 90 36 200 32 330M474 420h34M482 488h32M489 558h30M494 628h26M496 698h22" stroke="#d4a843" stroke-opacity=".22" stroke-width="2"/>
+    <path d="M294 386c-24 86-34 194-30 324M256 428h34M252 496h32M250 566h30M250 636h26M254 706h22" stroke="#d4a843" stroke-opacity=".16" stroke-width="2"/>
+
+    <!-- Terrain -->
+    <path d="M128 894c48-38 94-58 138-60 30-2 58 6 84 24 38-36 78-52 120-48 47 4 91 34 132 86" stroke="#8a7340" stroke-opacity=".42" stroke-width="5"/>
+    <path d="M78 930c82-48 160-70 234-66 38 2 72 11 102 28 54-22 105-26 154-12 36 10 70 28 102 54" stroke="#c9a227" stroke-opacity=".22" stroke-width="3"/>
+
+    <!-- Tick marks / measurement notches -->
+    <path d="M214 338h34M204 420h26M196 506h34M188 592h26M180 678h34M172 764h26M512 338h34M532 420h26M530 506h34M548 592h26M546 678h34M562 764h26" stroke="#c9a227" stroke-opacity=".13" stroke-width="2"/>
+  </g>
+
+  <g fill="#d4a843" opacity=".18" filter="url(#soften)">
+    <circle cx="174" cy="188" r="3"/>
+    <circle cx="628" cy="356" r="3"/>
+    <circle cx="140" cy="604" r="2.5"/>
+    <circle cx="380" cy="264" r="4"/>
   </g>
 </svg>
