@@ -6,6 +6,8 @@ See `LEMONTEED_ENGINE.md` for architecture overview, build pipeline, and image p
 
 See `STUDIO.md` for Studio features and local start instructions.
 
+See `agents/README.md` for the Lemonteed Production Pipeline, a local workflow system for planning, building, reviewing, and polishing development/design/content tasks without changing the public static-site architecture.
+
 ## Cursor Cloud specific instructions
 
 ### System dependency
