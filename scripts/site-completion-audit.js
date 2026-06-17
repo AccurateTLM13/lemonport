@@ -35,6 +35,7 @@ const PUBLIC_HTML_GLOBS = [
   "junk-drawer/index.html",
   "junk-drawer/image-converter/index.html",
   "junk-drawer/image-compressor/index.html",
+  "studio-lab/index.html",
   "lemonteed-fm/index.html",
   "lighthouse-handoff/index.html",
   "lemon-dom/index.html",
@@ -266,7 +267,8 @@ async function trackInteractionAudit(inventory) {
   }
 
   const mdrConfig = readFile("assets/js/mdr-config.js");
-  if (mdrConfig && /"apiBase":\s*""/.test(mdrConfig)) {
+  const mdrLaunched = mdrConfig && /"launched":\s*true/.test(mdrConfig);
+  if (mdrConfig && /"apiBase":\s*""/.test(mdrConfig) && mdrLaunched) {
     add("critical", {
       track: "code-reality",
       file: "assets/js/mdr-config.js",
@@ -274,6 +276,14 @@ async function trackInteractionAudit(inventory) {
       issue: "Production MDR apiBase is empty; client falls back to http://127.0.0.1:8787 for checkout and stats",
       element: "window.mdrConfig.apiBase",
       fix: "Set apiBase to deployed Worker/API URL in content/million-dollar-receipt.json and rebuild"
+    });
+  } else if (mdrConfig && /"apiBase":\s*""/.test(mdrConfig) && /"launched":\s*false/.test(mdrConfig)) {
+    add("low", {
+      track: "code-reality",
+      file: "assets/js/mdr-config.js",
+      route: "/million-dollar-receipt/",
+      issue: "MDR launch is archived; apiBase remains empty and mock/local fallback is expected",
+      fix: "Set launched and apiBase only when the public MDR launch is revived"
     });
   }
 }

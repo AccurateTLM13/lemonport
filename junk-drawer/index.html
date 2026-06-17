@@ -7,10 +7,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Junk Drawer | Lemonteed</title>
-    <meta name="description" content="Access to free tools and apps by Lemonteed.">
+    <meta name="description" content="Free browser tools, utilities, and oddities from Lemonteed — starting with Lighthouse Handoff, image tools, and Lemon DOM.">
     <link rel="canonical" href="https://lemonteed.com/junk-drawer/">
     <meta property="og:title" content="Junk Drawer | Lemonteed">
-    <meta property="og:description" content="Access to free tools and apps by Lemonteed.">
+    <meta property="og:description" content="Free browser tools, utilities, and oddities from Lemonteed — starting with Lighthouse Handoff.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://lemonteed.com/junk-drawer/">
     <meta property="og:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
@@ -20,18 +20,17 @@
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Junk Drawer | Lemonteed">
-    <meta name="twitter:description" content="Access to free tools and apps by Lemonteed.">
+    <meta name="twitter:description" content="Free browser tools, utilities, and oddities from Lemonteed.">
     <meta name="twitter:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
     <link rel="icon" href="/images/favicons/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
     <link rel="manifest" href="/site.webmanifest">
-    <link rel="stylesheet" href="/assets/css/style.css?v=9">
+    <link rel="stylesheet" href="/assets/css/style.css?v=10">
     <script src="/assets/js/mobile-header.js?v=1" defer></script>
-    <script src="/assets/js/coming-soon.js?v=1" defer></script>
   </head>
-  <body>
+  <body class="junk-drawer-page">
     <a class="skip-link" href="#junk-drawer-content">Skip to content</a>
     <div class="site-shell">
       <aside class="sidebar" aria-label="Site navigation">
@@ -39,7 +38,7 @@
           <a class="brand" href="/" aria-label="Lemonteed home">
             <img class="brand__logo" src="/images/lemonteedlogo-250.webp" srcset="/images/lemonteedlogo-250.webp 250w, /images/lemonteedlogo-456.webp 456w" sizes="160px" width="456" height="96" alt="Lemonteed">
           </a>
-          <button class="info-link" type="button" data-info-open>+ INFO</button>
+          <a class="info-link" href="/studio-lab/">+ STUDIO LAB</a>
           <a class="random-artifact" href="/archive/?random=1">SUMMON RANDOM ARTIFACT</a>
         </div>
         <nav class="category-nav" aria-label="Portfolio categories">
@@ -61,42 +60,77 @@
         <a class="op-status-badge" href="/operator-log/" aria-label="Operator log — off-clock archive">STATUS: OFF CLOCK</a>
       </aside>
 
-      <main class="content" id="junk-drawer-content">
-        <header class="junk-drawer-header">
+      <main class="content junk-drawer-main" id="junk-drawer-content">
+        <header class="junk-drawer-hero">
+          <div class="junk-drawer-hero__tape" aria-hidden="true"></div>
+          <p class="junk-drawer-hero__label">District 04 / Tools &amp; Utilities</p>
           <h1>Junk Drawer</h1>
-          <p>A collection of free tools, utilities, and apps built by Lemonteed.</p>
+          <p class="junk-drawer-hero__copy">The drawer that never quite closes. Browser tools, tiny apps, and useful oddities — sorted just enough to find what you need.</p>
+          <ul class="junk-drawer-hero__notes" aria-label="Junk drawer rules">
+            <li>Runs in your browser when possible</li>
+            <li>No account required</li>
+            <li>Weird but intentional</li>
+          </ul>
         </header>
 
-        <div class="tools-grid">
-          <a href="/junk-drawer/image-converter/" class="tool-card">
-            <h2>Image Converter</h2>
-            <p>Batch convert HEIC, PNG, JPEG, AVIF, SVG, and WebP entirely in your browser.</p>
-          </a>
-          <a href="/junk-drawer/image-compressor/" class="tool-card">
-            <h2>Image Compressor</h2>
-            <p>Squish PNG, JPEG, WebP, and AVIF files directly in your browser. Preview file savings, adjust quality, and download smaller images without uploading anything.</p>
-            <div class="tool-card-meta" style="margin-top: 16px; display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
-              <span class="status-badge" style="color: #16a34a; font-weight: bold;">Status: Available</span>
-              <span class="btn-text" style="color: #2563eb; font-weight: bold;">Open Compressor &rarr;</span>
+        <section class="junk-drawer-premier" aria-labelledby="premier-tool-title">
+          <div class="junk-drawer-premier__tag">Premier Tool</div>
+          <div class="junk-drawer-premier__layout">
+            <div class="junk-drawer-premier__visual" aria-hidden="true">
+              <img src="/images/lighthouse-handoff/lighthouse-background.svg" alt="" width="320" height="240">
             </div>
-          </a>
-          <a href="/lemon-dom/" class="tool-card">
-            <h2>Lemon DOM</h2>
-            <p>Juicy UI effects for plain old websites — glass, glow, squeeze, zest, and peel. Vanilla HTML, CSS, and JavaScript. No build step.</p>
-            <div class="tool-card-meta" style="margin-top: 16px; display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
-              <span class="status-badge" style="color: #16a34a; font-weight: bold;">Status: Available</span>
-              <span class="btn-text" style="color: #2563eb; font-weight: bold;">Open Lemon DOM &rarr;</span>
+            <div class="junk-drawer-premier__copy">
+              <p class="junk-drawer-premier__kicker">Chrome Extension / Handoff Layer</p>
+              <h2 id="premier-tool-title">Lighthouse Handoff</h2>
+              <p>Turn PageSpeed Insights into coding-agent-ready Markdown — priorities, tasks, guardrails, and acceptance criteria. The flagship thing in the drawer right now.</p>
+              <div class="junk-drawer-premier__actions">
+                <a class="junk-drawer-btn junk-drawer-btn--primary" href="/lighthouse-handoff/">Open tool page</a>
+                <a class="junk-drawer-btn junk-drawer-btn--ghost" href="https://chromewebstore.google.com/detail/lighthouse-handoff/aiddegolbikmimjpggbepjmlkbjphgcb" target="_blank" rel="noopener">Add to Chrome</a>
+              </div>
             </div>
-          </a>
-          <article class="tool-card">
-            <a class="tool-card__main" href="https://rec0ded88.com/" target="_blank" rel="noopener">
-              <img class="tool-card__logo" src="/images/junk/rec0ded88-logo.png" width="512" height="512" alt="Rec0deD:88 logo">
-              <h2>Rec0deD:88</h2>
-              <p>Play Retro Games Online In Your Browser.</p>
+          </div>
+        </section>
+
+        <section class="junk-drawer-shelf" aria-labelledby="drawer-shelf-title">
+          <div class="junk-drawer-shelf__head">
+            <h2 id="drawer-shelf-title">Everything else in the drawer</h2>
+            <p>Smaller compartments. Same energy.</p>
+          </div>
+
+          <div class="junk-drawer-grid">
+            <a href="/junk-drawer/image-converter/" class="junk-drawer-card">
+              <span class="junk-drawer-card__slot">Slot A</span>
+              <h3>Image Converter</h3>
+              <p>Batch convert HEIC, PNG, JPEG, AVIF, SVG, and WebP entirely in your browser.</p>
+              <span class="junk-drawer-card__cta">Open converter &rarr;</span>
             </a>
-            <p class="tool-card__credit">Credit: <a href="https://www.mattymctech.com/" target="_blank" rel="noopener">Matty McTech</a></p>
-          </article>
-        </div>
+
+            <a href="/junk-drawer/image-compressor/" class="junk-drawer-card">
+              <span class="junk-drawer-card__slot">Slot B</span>
+              <h3>Image Compressor</h3>
+              <p>Squish images locally, preview savings, tune quality, and download smaller files.</p>
+              <span class="junk-drawer-card__cta">Open compressor &rarr;</span>
+            </a>
+
+            <a href="/lemon-dom/" class="junk-drawer-card">
+              <span class="junk-drawer-card__slot">Slot C</span>
+              <h3>Lemon DOM</h3>
+              <p>Juicy UI effects for plain websites — glass, glow, squeeze, zest, and peel. No build step.</p>
+              <span class="junk-drawer-card__cta">Open Lemon DOM &rarr;</span>
+            </a>
+
+            <article class="junk-drawer-card junk-drawer-card--external">
+              <span class="junk-drawer-card__slot">Borrowed</span>
+              <a class="junk-drawer-card__main" href="https://rec0ded88.com/" target="_blank" rel="noopener">
+                <img class="junk-drawer-card__logo" src="/images/junk/rec0ded88-logo.png" width="96" height="96" alt="Rec0deD:88 logo">
+                <h3>Rec0deD:88</h3>
+                <p>Play retro games online in your browser.</p>
+                <span class="junk-drawer-card__cta">Visit site &rarr;</span>
+              </a>
+              <p class="junk-drawer-card__credit">Credit: <a href="https://www.mattymctech.com/" target="_blank" rel="noopener">Matty McTech</a></p>
+            </article>
+          </div>
+        </section>
       </main>
     </div>
   </body>

@@ -22,6 +22,7 @@ Static public pages include:
 - `lemonteed-fm/index.html`
 - `million-dollar-receipt/index.html`
 - `operator-log/index.html` (hidden; noindex; not in sitemap)
+- `studio-lab/index.html`
 
 Shared public assets include:
 
