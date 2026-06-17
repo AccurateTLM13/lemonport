@@ -1,3 +1,5 @@
+import { heicTo } from '/assets/js/heic-to-csp.js';
+
 const dropArea = document.getElementById('drop-area');
 const fileInput = document.getElementById('file-input');
 const statusArea = document.getElementById('status-area');
@@ -145,7 +147,7 @@ convertBtn.onclick = async () => {
 async function processImage(file, format, quality) {
     let blob = file;
     if (file.name.toLowerCase().endsWith('.heic')) {
-        blob = await heic2any({ blob, toType: "image/png" });
+        blob = await heicTo({ blob, type: 'image/png' });
     }
 
     return new Promise((resolve) => {
