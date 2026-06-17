@@ -48,8 +48,8 @@
       id: "studio",
       title: "STUDIO LAB",
       label: "BUILD / PROCESS",
-      description: "The operator's desk. Where things are built.",
-      url: "/operator-log/"
+      description: "Active builds, experiments, and works in progress.",
+      url: "/studio-lab/"
     },
     {
       id: "coming-soon",

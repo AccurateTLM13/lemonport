@@ -203,10 +203,6 @@ body.is-vrg-vault-mode .content {
   background: transparent;
 }
 
-body.is-vrg-vault-mode .vrg-page-title {
-  color: rgba(245, 249, 255, 0.92);
-}
-
 body.is-vrg-focus-open {
   overflow: hidden;
 }
@@ -215,16 +211,9 @@ body.is-vrg-focus-open {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 16px;
   margin-bottom: 24px;
-}
-
-.vrg-page-title {
-  margin: 0;
-  font-size: clamp(28px, 4vw, 42px);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
 }
 
 .vrg-view-toggle {

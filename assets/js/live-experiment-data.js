@@ -102,11 +102,11 @@ window.liveExperimentData = {
   },
   "currentBet": {
     "eyebrow": "Current Bet",
-    "title": "Website Roast",
-    "copy": "A paid website audit for local businesses. I roast the site, then give a clear plan to fix what actually matters.",
+    "title": "Rethinking The First Move",
+    "copy": "The Website Roast idea is archived. A better experiment is taking shape before the June clock starts.",
     "button": {
-      "label": "View The Website Roast ->",
-      "href": "/website-roast/"
+      "label": "Follow The Build Log ->",
+      "href": "#build-log"
     },
     "art": "/images/cloud-flip-computer-fire-ink.webp"
   },
@@ -121,10 +121,10 @@ window.liveExperimentData = {
     "items": [
       {
         "icon": "clipboard",
-        "title": "Submit Your Site As A Test",
-        "copy": "Volunteer your website for a roast.",
-        "href": "/website-roast/",
-        "label": "Submit your site as a test"
+        "title": "Pitch An Experiment",
+        "copy": "Got a tiny service idea worth testing with fake cloud money?",
+        "href": "#get-involved",
+        "label": "Pitch an experiment"
       },
       {
         "icon": "vote",

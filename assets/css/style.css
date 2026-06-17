@@ -1230,6 +1230,429 @@ button {
   text-underline-offset: 3px;
 }
 
+/* --- Junk Drawer Page --- */
+.junk-drawer-page .content {
+  background:
+    linear-gradient(180deg, rgb(236 234 221 / 0.45), transparent 220px),
+    var(--paper);
+}
+
+.junk-drawer-main {
+  padding-bottom: 48px;
+}
+
+.junk-drawer-hero {
+  position: relative;
+  margin-bottom: 28px;
+  padding: 28px 28px 24px;
+  border: 1px solid #d4d1c4;
+  background: #f3f1e8;
+  box-shadow: 0 5px 0 #d4d1c4, inset 0 1px 0 rgb(255 255 255 / 0.7);
+}
+
+.junk-drawer-hero__tape {
+  position: absolute;
+  top: -10px;
+  left: 28px;
+  width: 84px;
+  height: 24px;
+  background: rgb(255 236 170 / 0.72);
+  border: 1px solid rgb(214 188 108 / 0.45);
+  transform: rotate(-4deg);
+}
+
+.junk-drawer-hero__label,
+.junk-drawer-premier__kicker,
+.junk-drawer-shelf__head p,
+.junk-drawer-card__slot {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.junk-drawer-hero__label {
+  margin: 0 0 10px;
+  color: #7a776c;
+}
+
+.junk-drawer-hero h1 {
+  margin: 0 0 12px;
+  font-size: clamp(2rem, 4vw, 2.6rem);
+}
+
+.junk-drawer-hero__copy {
+  max-width: 58ch;
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.junk-drawer-hero__notes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.junk-drawer-hero__notes li {
+  padding: 6px 10px;
+  border: 1px dashed #c8c4b6;
+  background: rgb(255 255 255 / 0.45);
+  color: #5f5d56;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.junk-drawer-premier {
+  margin-bottom: 34px;
+  padding: 24px;
+  border: 2px solid #11100d;
+  background: linear-gradient(145deg, #fffdf7, #f0efe6);
+  box-shadow: 10px 10px 0 rgb(17 16 13 / 0.08);
+}
+
+.junk-drawer-premier__tag {
+  display: inline-block;
+  margin-bottom: 18px;
+  padding: 5px 10px;
+  background: #11100d;
+  color: #f7f4ea;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.junk-drawer-premier__layout {
+  display: grid;
+  gap: 24px;
+  align-items: center;
+}
+
+.junk-drawer-premier__visual {
+  display: grid;
+  place-items: center;
+  min-height: 180px;
+  padding: 18px;
+  border: 1px solid #d4d1c4;
+  background: #eceadd;
+}
+
+.junk-drawer-premier__visual img {
+  width: min(100%, 280px);
+  height: auto;
+}
+
+.junk-drawer-premier__kicker {
+  margin: 0 0 8px;
+  color: #7a776c;
+}
+
+.junk-drawer-premier h2 {
+  margin: 0 0 12px;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+}
+
+.junk-drawer-premier__copy p {
+  max-width: 52ch;
+  margin: 0 0 18px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.junk-drawer-premier__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.junk-drawer-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid #11100d;
+  color: inherit;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.junk-drawer-btn--primary {
+  background: #11100d;
+  color: #f7f4ea;
+}
+
+.junk-drawer-btn--primary:hover {
+  background: #2a2924;
+}
+
+.junk-drawer-btn--ghost {
+  background: transparent;
+}
+
+.junk-drawer-btn--ghost:hover {
+  background: rgb(17 16 13 / 0.05);
+}
+
+.junk-drawer-shelf__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 20px;
+  align-items: baseline;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.junk-drawer-shelf__head h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.junk-drawer-shelf__head p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.junk-drawer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 18px;
+}
+
+.junk-drawer-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 18px;
+  border: 1px solid #d4d1c4;
+  color: inherit;
+  background: #f7f6f0;
+  box-shadow: 0 4px 0 #d4d1c4;
+  text-decoration: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.junk-drawer-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #c2bfae;
+}
+
+.junk-drawer-card__slot {
+  margin-bottom: 12px;
+  color: #8a877b;
+}
+
+.junk-drawer-card h3 {
+  margin: 0 0 8px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 15px;
+  text-transform: uppercase;
+}
+
+.junk-drawer-card p {
+  flex: 1;
+  margin: 0 0 16px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.junk-drawer-card__cta {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.junk-drawer-card--external {
+  display: block;
+}
+
+.junk-drawer-card__main {
+  display: grid;
+  gap: 10px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.junk-drawer-card__logo {
+  width: 72px;
+  height: 72px;
+  border: 1px solid #11100d;
+  background: #000;
+  object-fit: cover;
+}
+
+.junk-drawer-card__credit {
+  margin: 14px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--hairline);
+  color: var(--muted);
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.junk-drawer-card__credit a {
+  color: var(--ink);
+}
+
+/* --- Studio Lab Page --- */
+.studio-lab-page .content {
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.5), transparent 180px), var(--paper);
+}
+
+.studio-lab-header {
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.studio-lab-kicker {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.studio-lab-header h1 {
+  margin: 0 0 12px;
+  font-size: clamp(2rem, 4vw, 2.6rem);
+}
+
+.studio-lab-lede {
+  max-width: 60ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.studio-lab-bench {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 18px;
+}
+
+.studio-project-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 20px;
+  border: 1px solid var(--hairline);
+  background: var(--panel);
+}
+
+.studio-project-card--featured {
+  grid-column: 1 / -1;
+  border-color: #11100d;
+  background: linear-gradient(145deg, #fffdf7, #f4f2ea);
+  box-shadow: 8px 8px 0 rgb(17 16 13 / 0.06);
+}
+
+.studio-project-card--muted,
+.studio-project-card--planned {
+  background: #f7f6f2;
+}
+
+.studio-project-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.studio-status {
+  padding: 4px 8px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.studio-status--progress {
+  background: #fff4cc;
+  color: #7a5d00;
+}
+
+.studio-status--shipped {
+  background: #e7f8ec;
+  color: #17653a;
+}
+
+.studio-status--archived {
+  background: #efeae2;
+  color: #6d6558;
+}
+
+.studio-status--planned {
+  background: #ebe9ff;
+  color: #4b3f9f;
+}
+
+.studio-project-card__zone {
+  color: var(--muted);
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.studio-project-card h2 {
+  margin: 0 0 10px;
+  font-size: 1.25rem;
+}
+
+.studio-project-card p {
+  flex: 1;
+  margin: 0 0 16px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.studio-project-card__cta {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.studio-project-card__note {
+  color: var(--muted);
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+@media (min-width: 760px) {
+  .junk-drawer-premier__layout {
+    grid-template-columns: 0.9fr 1.4fr;
+  }
+}
+
 @media (max-width: 700px) {
   .junk-drawer-module {
     margin-top: 0;
