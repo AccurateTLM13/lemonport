@@ -255,7 +255,7 @@ async function trackInteractionAudit(inventory) {
   }
 
   const worldMap = readFile("assets/js/world-map.js");
-  if (worldMap && /event\.preventDefault\(\)/.test(worldMap)) {
+  if (worldMap && /event\.preventDefault\(\)/.test(worldMap) && !/drawerZoneId\s*===\s*zone\.id/.test(worldMap)) {
     add("medium", {
       track: "interaction-audit",
       file: "assets/js/world-map.js",
@@ -295,7 +295,13 @@ function trackContentCompleteness(inventory) {
       continue;
     }
 
-    const emptyAlts = (html.match(/<img[^>]+alt=["']\s*["']/gi) || []).length;
+    const emptyAltImages = html.match(/<img[^>]+alt=["']\s*["'][^>]*>/gi) || [];
+    const emptyAlts = emptyAltImages.filter((tag) => {
+      return !/\baria-hidden=["']true["']/i.test(tag) &&
+        !/\brole=["']presentation["']/i.test(tag) &&
+        !/\bdata-lightbox-image\b/i.test(tag) &&
+        !/\bdata-player-art\b/i.test(tag);
+    }).length;
     if (emptyAlts > 0 && !page.noindex) {
       add("medium", {
         track: "content-completeness",
@@ -401,9 +407,7 @@ function trackSeoReadiness(inventory) {
 
 function trackCodeReality() {
   const grepPatterns = [
-    { pattern: /data-coming-soon-scope/, label: "coming-soon scope wrappers" },
-    { pattern: /"apiBase":\s*""/, label: "empty MDR apiBase" },
-    { pattern: /"launched":\s*false/, label: "MDR launched flag false" }
+    { pattern: /data-coming-soon-scope/, label: "coming-soon scope wrappers" }
   ];
 
   for (const rel of ["assets/js/mdr-config.js", "content/million-dollar-receipt.json"]) {

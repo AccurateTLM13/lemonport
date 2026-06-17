@@ -229,6 +229,10 @@
           return;
         }
 
+        if (zone.url && drawerZoneId === zone.id) {
+          return;
+        }
+
         event.preventDefault();
         activateZone(zone.id, { center: isMobile(), drawer: true });
       });
