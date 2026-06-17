@@ -422,6 +422,35 @@ a.lh-btn {
   grid-template-columns: minmax(0, 1fr);
 }
 
+.lh-hero__brand {
+  display: inline-grid;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.lh-hero__logo {
+  display: block;
+  width: clamp(72px, 12vw, 108px);
+  height: auto;
+  border: 1px solid var(--lh-border-strong);
+  border-radius: 22%;
+  background: rgb(201 162 39 / 0.08);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.28), 0 0 0 1px rgb(201 162 39 / 0.08);
+}
+
+.lh-hero__brand-text {
+  max-width: 22ch;
+  color: var(--lh-brass);
+  font-family: var(--lh-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
 .lh-hero__copy h1 {
   max-width: 18ch;
   margin: 0 0 20px;
