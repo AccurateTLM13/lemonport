@@ -7,18 +7,18 @@
   <script src="/assets/js/analytics.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Free Image Converter | Lemonteed</title>
+    <title>Image Converter | Lemonteed</title>
     <meta name="description"
         content="Batch convert HEIC, PNG, JPEG, AVIF, SVG, and WebP entirely locally in your browser. Free image converter tool by Lemonteed.">
     <link rel="canonical" href="https://lemonteed.com/junk-drawer/image-converter/">
-    <meta property="og:title" content="Your Free Image Converter | Lemonteed">
+    <meta property="og:title" content="Image Converter | Lemonteed">
     <meta property="og:description"
         content="Batch convert HEIC, PNG, JPEG, AVIF, SVG, and WebP locally. Your images never touch a server.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://lemonteed.com/junk-drawer/image-converter/">
     <meta property="og:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Your Free Image Converter | Lemonteed">
+    <meta name="twitter:title" content="Image Converter | Lemonteed">
     <meta name="twitter:description" content="Batch convert HEIC, PNG, JPEG, AVIF, SVG, and WebP locally.">
     <link rel="icon" href="/images/favicons/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png">
@@ -485,6 +485,7 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="/assets/css/junk-tools.css?v=2">
 </head>
 
 <body class="image-converter-page">
@@ -506,6 +507,7 @@
                 <a class="category-link" href="/what-if/" data-category-link="what-if">What If</a>
                 <a class="category-link" href="/misc-gens/" data-category-link="misc-gens">Misc Gens</a>
                 <a class="category-link" href="/memetic-warfare/">Memetic Warfare</a>
+                <a class="category-link" href="/live-experiment/">Live Experiment</a>
           <a class="category-link" href="/lemonteed-fm/">Lemonteed FM</a>
             </nav>
             <a href="/junk-drawer/" class="junk-drawer-module is-active" aria-label="Open Junk Drawer">
@@ -522,7 +524,7 @@
 
         <div class="converter-media">
             <img src="/images/junk/sunrise-watching.webp"
-                class="converter-media__image" width="848" height="1424" loading="lazy" decoding="async" alt="Illustration beside the privacy-first image converter workspace">
+                class="converter-media__image" width="848" height="1424" loading="lazy" decoding="async" alt="">
             <div class="converter-media__caption">
                 <h2>Privacy First</h2>
                 <p>All processing happens locally in your browser. Your images never
@@ -532,9 +534,15 @@
 
         <div class="converter-workspace">
             <header class="converter-header">
-                <h1>Your Free Image Converter</h1>
-                <p>Batch convert HEIC, PNG, JPEG, AVIF, SVG, and WebP.</p>
+                <nav class="tool-switcher" aria-label="Junk Drawer tools">
+                    <a href="/junk-drawer/image-converter/" aria-current="page">Converter</a>
+                    <a href="/junk-drawer/image-compressor/">Compressor</a>
+                </nav>
+                <h1>Image Converter</h1>
+                <p>Drop in the odd file format. Get back something useful.</p>
             </header>
+
+            <p class="tool-privacy-note">Browser-only workbench. Your images stay on this device; Lemonteed does not upload, store, or inspect them.</p>
 
             <div id="drop-area"
                 class="upload-zone">
@@ -547,7 +555,7 @@
                         </svg>
                     </div>
                     <p>Drop images here or click to browse</p>
-                    <p>Supports multi-file selection</p>
+                    <p>HEIC / PNG / JPEG / AVIF / SVG / WebP</p>
                 </div>
             </div>
 
@@ -558,7 +566,7 @@
                         <path
                             d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" />
                     </svg>
-                    <p>No files selected</p>
+                    <p>No images yet. The drawer is waiting.</p>
                     </div>
                 </div>
             </div>
@@ -566,8 +574,7 @@
             <footer class="converter-footer">
                 <div class="converter-controls">
                     <div class="converter-control">
-                        <label>Convert
-                            to</label>
+                        <label>Output format</label>
                         <select id="format-select"
                             >
                             <option value="png">PNG (Lossless)</option>
@@ -591,7 +598,7 @@
                             class="converter-button converter-button--secondary">Clear</button>
                         <button id="convert-btn"
                             class="converter-button converter-button--primary">
-                            <span id="btn-text">Convert & Download</span>
+                            <span id="btn-text">Convert Files</span>
                             <div id="btn-spinner" class="spinner hidden"></div>
                         </button>
                     </div>

@@ -516,6 +516,7 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="/assets/css/junk-tools.css?v=2">
 </head>
 
 <body class="image-compressor-page">
@@ -562,9 +563,15 @@
 
                 <div class="compressor-workspace">
                     <header class="compressor-header">
+                        <nav class="tool-switcher" aria-label="Junk Drawer tools">
+                            <a href="/junk-drawer/image-converter/">Converter</a>
+                            <a href="/junk-drawer/image-compressor/" aria-current="page">Compressor</a>
+                        </nav>
                         <h1>Image Compressor</h1>
-                        <p>Compress PNG, JPEG, WebP, and AVIF images directly in your browser.</p>
+                        <p>Squish heavy image files without sending them to a mystery server.</p>
                     </header>
+
+                    <p class="tool-privacy-note">Browser-only workbench. Your images stay on this device; Lemonteed does not upload, store, or inspect them.</p>
 
                     <div id="drop-area" class="upload-zone">
                         <input type="file" id="file-input" multiple accept="image/png,image/jpeg,image/webp,image/avif"
@@ -576,7 +583,7 @@
                                 </svg>
                             </div>
                             <p>Drop the heavy pixels here</p>
-                            <p>PNG · JPEG · WebP · AVIF</p>
+                            <p>PNG / JPEG / WebP / AVIF</p>
                         </div>
                     </div>
 
@@ -601,7 +608,7 @@
                             </div>
 
                             <div class="compressor-control">
-                                <label>Format</label>
+                                <label>Output format</label>
                                 <select id="format-select">
                                     <option value="original">Keep Original</option>
                                     <option value="jpeg">JPEG</option>
@@ -611,7 +618,7 @@
                             </div>
 
                             <div class="compressor-control">
-                                <label>Max Width</label>
+                                <label>Max width</label>
                                 <select id="width-select">
                                     <option value="original">Original Size</option>
                                     <option value="1920">1920px</option>
@@ -625,7 +632,7 @@
                         <div class="compressor-actions-row">
                             <button id="clear-btn" class="compressor-button compressor-button--secondary">Clear All</button>
                             <button id="compress-btn" class="compressor-button compressor-button--primary">
-                                <span id="btn-text">SQUISH THE PIXELS</span>
+                                <span id="btn-text">Compress Files</span>
                                 <div id="btn-spinner" class="spinner hidden"></div>
                             </button>
                         </div>
@@ -926,7 +933,7 @@
 
         function toggleLoading(active) {
             compressBtn.disabled = active;
-            document.getElementById('btn-text').innerText = active ? 'Squishing...' : 'SQUISH THE PIXELS';
+            document.getElementById('btn-text').innerText = active ? 'Compressing...' : 'Compress Files';
             document.getElementById('btn-spinner').classList.toggle('hidden', !active);
         }
     </script>
