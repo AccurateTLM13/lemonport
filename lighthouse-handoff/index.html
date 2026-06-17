@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCB0LW648K"></script>
+  <script src="/assets/js/analytics.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lighthouse Handoff | Lemonteed</title>
+  <meta name="description" content="A Chrome extension that turns PageSpeed Insights reports into coding-agent-ready Markdown with priorities, tasks, guardrails, and acceptance criteria.">
+  <link rel="canonical" href="https://lemonteed.com/lighthouse-handoff/">
+  <meta property="og:title" content="Lighthouse Handoff | Lemonteed">
+  <meta property="og:description" content="Turn PageSpeed Insights into coding-agent-ready Markdown. A handoff layer for developers and AI-assisted workflows.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lemonteed.com/lighthouse-handoff/">
+  <meta property="og:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Lighthouse Handoff | Lemonteed">
+  <meta name="twitter:description" content="Turn PageSpeed Insights into coding-agent-ready Markdown.">
+  <meta name="twitter:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+  <link rel="icon" href="/images/favicons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/lighthouse-handoff.css?v=4">
+  <script src="/assets/js/lighthouse-handoff.js?v=2" defer></script>
+</head>
+<body class="lh-page">
+  <a class="lh-skip" href="#lh-main">Skip to content</a>
+
+  <div class="lh-shell">
+    <header class="lh-header" role="banner">
+      <span class="lh-header__label">Lemonteed / Field Report</span>
+      <span class="lh-header__project">Lighthouse Handoff</span>
+      <a class="lh-header__back" href="/">← Archive</a>
+    </header>
+
+    <div class="lh-sticky-cta" id="lh-sticky-cta" hidden>
+      <span class="lh-sticky-cta__label">Lighthouse Handoff</span>
+      <a class="lh-sticky-cta__link" href="#tester-signup">Test the handoff</a>
+    </div>
+
+    <main class="lh-main" id="lh-main" tabindex="-1">
+
+      <!-- Hero -->
+      <section class="lh-section lh-hero" id="hero" aria-labelledby="lh-hero-title">
+        <div class="lh-hero__copy">
+          <p class="lh-kicker">Chrome Extension · Handoff Layer</p>
+          <h1 id="lh-hero-title">Turn PageSpeed Insights into coding-agent-ready Markdown.</h1>
+          <span class="lh-badge lh-badge--status">Local AI experiment in progress</span>
+          <p class="lh-lede">PageSpeed gives you the diagnosis.<br>Lighthouse Handoff turns it into a structured handoff — priorities, tasks, guardrails, and acceptance criteria.</p>
+          <p class="lh-lede-sub">Not another dashboard.<br>A handoff layer.</p>
+          <div class="lh-hero__actions">
+            <a class="lh-btn lh-btn--primary" href="#tester-signup">Test the handoff</a>
+            <a class="lh-link" href="#roadmap">View roadmap</a>
+          </div>
+        </div>
+
+        <aside class="lh-preview lh-preview--teaser" aria-label="Markdown handoff preview">
+          <div class="lh-preview__chrome">
+            <span class="lh-preview__dot" aria-hidden="true"></span>
+            <span class="lh-preview__dot" aria-hidden="true"></span>
+            <span class="lh-preview__dot" aria-hidden="true"></span>
+            <span class="lh-preview__title">handoff.md</span>
+          </div>
+          <div class="lh-preview__body" id="lh-hero-preview">
+            <pre class="lh-md" aria-hidden="true"><code><span class="lh-md-h1"># Lighthouse Handoff</span>
+<span class="lh-md-meta">Performance: 64</span>
+
+<span class="lh-md-h2">## Priority Fixes</span>
+<span class="lh-md-ol">1. Reduce render-blocking resources
+2. Properly size images
+3. Defer non-critical JavaScript</span>
+
+<span class="lh-md-h2">## Developer Tasks</span>
+<span class="lh-md-ul">- Identify blocking CSS and inline critical styles.
+- Convert oversized images to responsive formats.
+- Move non-critical scripts out of the initial render path.</span>
+
+<span class="lh-md-h2">## Acceptance Criteria</span>
+<span class="lh-md-ul">- Performance score improves after changes.
+- Largest Contentful Paint decreases.
+- No visual regressions on mobile.</span></code></pre>
+          </div>
+        </aside>
+      </section>
+
+      <!-- Problem -->
+      <section class="lh-section lh-problem" id="problem" aria-labelledby="lh-problem-title">
+        <header class="lh-section__head">
+          <p class="lh-section__marker">01 / Problem</p>
+          <h2 id="lh-problem-title">The score is not the hard part.<br>The handoff is.</h2>
+          <p class="lh-section__intro">PageSpeed tells you what failed — not what to do first, what to avoid, or how to hand the work to a developer or coding agent.</p>
+        </header>
+
+        <div class="lh-problem__grid">
+          <article class="lh-problem__col">
+            <h3 class="lh-problem__col-title">PageSpeed</h3>
+            <ul class="lh-problem__list">
+              <li>Scores</li>
+              <li>Audits</li>
+              <li>Diagnostics</li>
+              <li>Opportunities</li>
+            </ul>
+          </article>
+
+          <article class="lh-problem__col lh-problem__col--gap" aria-label="Translation gap">
+            <h3 class="lh-problem__col-title">Translation Gap</h3>
+            <ul class="lh-problem__list">
+              <li>What matters?</li>
+              <li>What should happen first?</li>
+              <li>What is risky?</li>
+              <li>What should a coding agent actually do?</li>
+            </ul>
+          </article>
+
+          <article class="lh-problem__col lh-problem__col--solution">
+            <h3 class="lh-problem__col-title">Lighthouse Handoff</h3>
+            <ul class="lh-problem__list">
+              <li>Priority fixes</li>
+              <li>Developer tasks</li>
+              <li>Guardrails</li>
+              <li>Acceptance criteria</li>
+              <li>Testing checklist</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- How It Works -->
+      <section class="lh-section lh-workflow" id="how-it-works" aria-labelledby="lh-workflow-title">
+        <header class="lh-section__head">
+          <p class="lh-section__marker">02 / Workflow</p>
+          <h2 id="lh-workflow-title">How it works</h2>
+        </header>
+
+        <ol class="lh-workflow__steps">
+          <li class="lh-workflow__step">
+            <span class="lh-workflow__num">01</span>
+            <h3>PageSpeed</h3>
+            <p>Run PageSpeed Insights on the page you want to improve.</p>
+          </li>
+          <li class="lh-workflow__step">
+            <span class="lh-workflow__num">02</span>
+            <h3>Issue Extraction</h3>
+            <p>Reads Lighthouse audits, opportunities, and diagnostics.</p>
+          </li>
+          <li class="lh-workflow__step">
+            <span class="lh-workflow__num">03</span>
+            <h3>Markdown Builder</h3>
+            <p>Findings become a developer-friendly Markdown report.</p>
+          </li>
+          <li class="lh-workflow__step">
+            <span class="lh-workflow__num">04</span>
+            <h3>Agent-Ready Handoff</h3>
+            <p>Priorities, tasks, guardrails, and acceptance criteria included.</p>
+          </li>
+          <li class="lh-workflow__step lh-workflow__step--payoff">
+            <span class="lh-workflow__num">05</span>
+            <h3>Developer Workflow</h3>
+            <p>Paste into Cursor, your IDE, or any coding agent and start fixing.</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Example Output -->
+      <section class="lh-section lh-example" id="example-output" aria-labelledby="lh-example-title">
+        <header class="lh-section__head">
+          <p class="lh-section__marker">03 / Output</p>
+          <h2 id="lh-example-title">Example output</h2>
+          <p class="lh-section__intro">Structured Markdown you can paste into Cursor or hand to any coding agent.</p>
+        </header>
+
+        <div class="lh-terminal lh-terminal--canonical">
+          <div class="lh-terminal__bar">
+            <span class="lh-preview__dot" aria-hidden="true"></span>
+            <span class="lh-preview__dot" aria-hidden="true"></span>
+            <span class="lh-preview__dot" aria-hidden="true"></span>
+            <span class="lh-terminal__label">pagespeed-handoff-example.md</span>
+            <button type="button" class="lh-btn lh-btn--small" id="lh-copy-report" data-copy-target="lh-example-content">Copy example report</button>
+          </div>
+          <div class="lh-terminal__scroll" id="lh-example-content" tabindex="0">
+            <pre class="lh-md lh-md--full"><code># Lighthouse Handoff
+
+## Score Summary
+- Performance: 58
+- Accessibility: 91
+- Best Practices: 83
+- SEO: 92
+
+## Priority Fixes
+1. Eliminate render-blocking resources (estimated savings: 1.2s)
+2. Properly size images (estimated savings: 840 KiB)
+3. Reduce unused JavaScript (estimated savings: 420 KiB)
+4. Add explicit width and height to image elements
+5. Improve Largest Contentful Paint element handling
+
+## Developer Tasks
+- Audit blocking CSS and JS in the document head; inline critical CSS or defer non-critical stylesheets.
+- Convert hero and above-the-fold images to responsive WebP/AVIF with appropriate `srcset`.
+- Split or lazy-load JavaScript bundles that are not required for initial render.
+- Add `width` and `height` attributes to `<img>` tags to prevent layout shift.
+- Identify the LCP element and ensure it is not lazy-loaded; preload if necessary.
+
+## Guardrails
+- Do not remove analytics or consent scripts without confirming business requirements.
+- Preserve existing visual design and brand typography during image optimization.
+- Avoid breaking third-party embeds when deferring scripts.
+- Test on mobile viewport — most PageSpeed issues surface on slow 4G profiles.
+
+## Acceptance Criteria
+- Performance score improves by at least 10 points after changes.
+- Largest Contentful Paint drops below 2.5s on mobile.
+- Cumulative Layout Shift remains below 0.1.
+- No visual regressions on primary landing page above the fold.
+- All critical user flows (navigation, forms, checkout) remain functional.
+
+## Testing Checklist
+- [ ] Re-run PageSpeed Insights after deployment
+- [ ] Verify LCP element loads within target on throttled mobile
+- [ ] Check layout stability during page load (CLS)
+- [ ] Confirm no broken images or missing styles
+- [ ] Smoke-test key user paths on real devices</code></pre>
+          </div>
+        </div>
+        <p class="lh-example__note">Example only. Actual reports depend on the analyzed page and available Lighthouse data.</p>
+
+        <div class="lh-example__bridge">
+          <p class="lh-signup__question lh-signup__question--inline"><strong>Would you actually hand this report to a coding agent?</strong></p>
+          <a class="lh-btn lh-btn--primary" href="#tester-signup">Test the handoff</a>
+        </div>
+      </section>
+
+      <!-- Local AI Experiment -->
+      <section class="lh-section lh-ai" id="local-ai" aria-labelledby="lh-ai-title">
+        <header class="lh-section__head">
+          <p class="lh-section__marker">04 / Experiment</p>
+          <h2 id="lh-ai-title">Without AI: useful report.<br>With Local AI: better handoff.</h2>
+          <p class="lh-section__intro">The core extension works without AI. Local AI is being tested to improve grouping, prioritization, and handoff quality.</p>
+        </header>
+
+        <blockquote class="lh-ai__callout">
+          <p>The goal is not to build another chatbot.</p>
+          <p>The goal is to test one narrow question:<br><strong>Can a small local model make the handoff better?</strong></p>
+        </blockquote>
+
+        <div class="lh-ai__compare">
+          <article class="lh-ai__card">
+            <h3>Standard Report</h3>
+            <ul>
+              <li>Deterministic</li>
+              <li>Fast</li>
+              <li>No model required</li>
+              <li>Works today</li>
+              <li>Structured from available Lighthouse data</li>
+            </ul>
+          </article>
+
+          <article class="lh-ai__card lh-ai__card--highlight">
+            <h3>Local AI Version</h3>
+            <ul>
+              <li>Better grouping</li>
+              <li>Priority clarification</li>
+              <li>Root-cause suggestions</li>
+              <li>Cleaner prompts</li>
+              <li>Risk awareness</li>
+              <li>Improved developer handoff language</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- Roadmap -->
+      <section class="lh-section lh-roadmap" id="roadmap" aria-labelledby="lh-roadmap-title">
+        <header class="lh-section__head">
+          <p class="lh-section__marker">05 / Roadmap</p>
+          <h2 id="lh-roadmap-title">Roadmap</h2>
+          <div class="lh-roadmap__progress" aria-label="Project progress">
+            <span class="lh-roadmap__progress-label">Progress</span>
+            <div class="lh-roadmap__progress-track" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" aria-label="40 percent complete">
+              <span class="lh-roadmap__progress-fill" style="width: 40%"></span>
+            </div>
+            <span class="lh-roadmap__progress-value">40%</span>
+          </div>
+        </header>
+
+        <ol class="lh-timeline">
+          <li class="lh-timeline__item" data-phase="1">
+            <button type="button" class="lh-timeline__toggle" aria-expanded="false" aria-controls="lh-phase-1">
+              <span class="lh-timeline__phase">Phase 1</span>
+              <span class="lh-timeline__title">Standard Handoff</span>
+              <span class="lh-badge lh-badge--done">Completed</span>
+            </button>
+            <div class="lh-timeline__detail" id="lh-phase-1" hidden>
+              <p>Chrome extension that extracts Lighthouse data into structured Markdown — priorities, tasks, guardrails, and acceptance criteria.</p>
+            </div>
+          </li>
+          <li class="lh-timeline__item" data-phase="2">
+            <button type="button" class="lh-timeline__toggle" aria-expanded="false" aria-controls="lh-phase-2">
+              <span class="lh-timeline__phase">Phase 2</span>
+              <span class="lh-timeline__title">Report Quality</span>
+              <span class="lh-badge lh-badge--active">In Progress</span>
+            </button>
+            <div class="lh-timeline__detail" id="lh-phase-2" hidden>
+              <p>Improving grouping, task clarity, and guardrails from raw Lighthouse audits.</p>
+            </div>
+          </li>
+          <li class="lh-timeline__item" data-phase="3">
+            <button type="button" class="lh-timeline__toggle" aria-expanded="false" aria-controls="lh-phase-3">
+              <span class="lh-timeline__phase">Phase 3</span>
+              <span class="lh-timeline__title">Local AI Version</span>
+              <span class="lh-badge lh-badge--testing">Testing</span>
+            </button>
+            <div class="lh-timeline__detail" id="lh-phase-3" hidden>
+              <p>Testing a local model for better prioritization and handoff language — no cloud API required.</p>
+            </div>
+          </li>
+          <li class="lh-timeline__item lh-timeline__item--current is-expanded" data-phase="4">
+            <button type="button" class="lh-timeline__toggle" aria-expanded="true" aria-controls="lh-phase-4">
+              <span class="lh-timeline__phase">Phase 4</span>
+              <span class="lh-timeline__title">Tester Feedback</span>
+              <span class="lh-badge lh-badge--next">Next</span>
+            </button>
+            <div class="lh-timeline__detail" id="lh-phase-4">
+              <p>Collecting feedback on whether the handoff is useful for coding agent workflows.</p>
+              <a class="lh-btn lh-btn--primary lh-btn--compact" href="#tester-signup">Test the handoff</a>
+            </div>
+          </li>
+          <li class="lh-timeline__item" data-phase="5">
+            <button type="button" class="lh-timeline__toggle" aria-expanded="false" aria-controls="lh-phase-5">
+              <span class="lh-timeline__phase">Phase 5</span>
+              <span class="lh-timeline__title">Public Release</span>
+              <span class="lh-badge lh-badge--planned">Planned</span>
+            </button>
+            <div class="lh-timeline__detail" id="lh-phase-5" hidden>
+              <p>Chrome Web Store release after tester feedback validates report quality and handoff usefulness.</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Tester Signup -->
+      <section class="lh-section lh-signup" id="tester-signup" aria-labelledby="lh-signup-title">
+        <header class="lh-section__head">
+          <p class="lh-section__marker">06 / Testers</p>
+          <h2 id="lh-signup-title">Help test Lighthouse Handoff</h2>
+          <p class="lh-section__intro">Looking for developers, builders, and site owners who use PageSpeed, coding agents, or AI-assisted workflows.</p>
+          <p class="lh-signup__question">The question is simple:<br><strong>Would you actually hand this report to a coding agent?</strong></p>
+        </header>
+
+        <!-- TODO: Replace form action with backend endpoint or form service (e.g. Formspree, Netlify Forms) -->
+        <div class="lh-signup__panel">
+          <form class="lh-form" id="lh-tester-form" action="#" method="post" novalidate>
+            <div class="lh-form__grid">
+              <div class="lh-field">
+                <label for="lh-name">Name</label>
+                <input type="text" id="lh-name" name="name" autocomplete="name" required>
+              </div>
+              <div class="lh-field">
+                <label for="lh-email">Email</label>
+                <input type="email" id="lh-email" name="email" autocomplete="email" required>
+              </div>
+              <div class="lh-field">
+                <label for="lh-role">Role</label>
+                <input type="text" id="lh-role" name="role" placeholder="Developer, site owner, agency…" required>
+              </div>
+              <div class="lh-field">
+                <label for="lh-websites">Type of websites</label>
+                <input type="text" id="lh-websites" name="websites" placeholder="E-commerce, marketing, SaaS…">
+              </div>
+              <div class="lh-field lh-field--full">
+                <label for="lh-agent">Do you use Cursor or another coding agent?</label>
+                <select id="lh-agent" name="coding_agent">
+                  <option value="">Select one</option>
+                  <option value="cursor">Cursor</option>
+                  <option value="copilot">GitHub Copilot</option>
+                  <option value="claude">Claude / Anthropic</option>
+                  <option value="other">Other coding agent</option>
+                  <option value="none">Not yet</option>
+                </select>
+              </div>
+              <fieldset class="lh-field lh-field--full">
+                <legend>What do you want to test?</legend>
+                <div class="lh-radio-group">
+                  <label class="lh-radio">
+                    <input type="radio" name="test_type" value="standard" required>
+                    <span>Standard report</span>
+                  </label>
+                  <label class="lh-radio">
+                    <input type="radio" name="test_type" value="local_ai">
+                    <span>Local AI</span>
+                  </label>
+                  <label class="lh-radio">
+                    <input type="radio" name="test_type" value="both">
+                    <span>Both</span>
+                  </label>
+                </div>
+              </fieldset>
+              <div class="lh-field lh-field--full">
+                <label for="lh-notes">Optional notes</label>
+                <textarea id="lh-notes" name="notes" rows="4" placeholder="What would make this handoff useful for your workflow?"></textarea>
+              </div>
+            </div>
+            <div class="lh-form__actions">
+              <button type="submit" class="lh-btn lh-btn--primary">Test the handoff</button>
+              <p class="lh-form__status" id="lh-form-status" role="status" aria-live="polite"></p>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="lh-section lh-faq" id="faq" aria-labelledby="lh-faq-title">
+        <header class="lh-section__head">
+          <p class="lh-section__marker">07 / FAQ</p>
+          <h2 id="lh-faq-title">FAQ</h2>
+        </header>
+
+        <dl class="lh-faq__list">
+          <div class="lh-faq__item">
+            <dt>Does it fix my website?</dt>
+            <dd>No. It creates a structured handoff so a developer or coding agent can work from it.</dd>
+          </div>
+          <div class="lh-faq__item">
+            <dt>Does it require AI?</dt>
+            <dd>No. The standard report works without AI.</dd>
+          </div>
+          <div class="lh-faq__item">
+            <dt>What does Local AI do?</dt>
+            <dd>It is being tested to improve grouping, prioritization, root-cause suggestions, and handoff quality.</dd>
+          </div>
+          <div class="lh-faq__item">
+            <dt>Who is it for?</dt>
+            <dd>Developers, builders, site owners, and people using coding agents or AI-assisted workflows.</dd>
+          </div>
+          <div class="lh-faq__item">
+            <dt>Is this another dashboard?</dt>
+            <dd>No. It is a handoff layer between PageSpeed data and developer action.</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- Footer Note -->
+      <footer class="lh-footer" role="contentinfo">
+        <p>Lighthouse Handoff is part of a broader Lemonteed experiment exploring static web workflows, local-first tooling, and AI-assisted handoffs.</p>
+        <a class="lh-footer__back" href="/">← Back to the archive</a>
+      </footer>
+
+    </main>
+  </div>
+</body>
+</html>
