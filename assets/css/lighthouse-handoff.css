@@ -25,6 +25,7 @@
 
   min-height: 100vh;
   margin: 0;
+  overflow-x: clip;
   color: var(--lh-ink);
   background-color: var(--lh-bg);
   background-image:
@@ -164,6 +165,10 @@
   font-family: var(--lh-mono);
   font-size: 11px;
   letter-spacing: 0.04em;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .lh-sticky-cta__link {
@@ -1185,6 +1190,42 @@ a.lh-btn {
   }
 }
 
+@media (max-width: 560px) {
+  .lh-page::before {
+    top: 190px;
+    right: -230px;
+    width: 520px;
+    height: 660px;
+    opacity: 0.075;
+  }
+
+  .lh-sticky-cta {
+    top: 86px;
+    width: min(calc(100% - 24px), var(--lh-max));
+    padding: 8px 8px 8px 12px;
+  }
+
+  .lh-sticky-cta__label {
+    font-size: 10px;
+  }
+
+  .lh-sticky-cta__link {
+    flex: 0 0 auto;
+    min-height: 34px;
+    padding: 7px 12px;
+    font-size: 11px;
+  }
+
+  .lh-terminal__bar {
+    flex-wrap: wrap;
+  }
+
+  .lh-terminal--canonical .lh-btn--small {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
 @media (min-width: 768px) {
   .lh-header {
     grid-template-columns: auto 1fr auto;
@@ -1215,6 +1256,12 @@ a.lh-btn {
 
   .lh-workflow__step p {
     grid-column: auto;
+  }
+}
+
+@supports not (overflow: clip) {
+  .lh-page {
+    overflow-x: hidden;
   }
 }
 

@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/lighthouse-handoff.css?v=3">
+  <link rel="stylesheet" href="/assets/css/lighthouse-handoff.css?v=4">
   <script src="/assets/js/lighthouse-handoff.js?v=2" defer></script>
 </head>
 <body class="lh-page">
@@ -352,62 +352,62 @@
 
         <!-- TODO: Replace form action with backend endpoint or form service (e.g. Formspree, Netlify Forms) -->
         <div class="lh-signup__panel">
-        <form class="lh-form" id="lh-tester-form" action="#" method="post" novalidate>
-          <div class="lh-form__grid">
-            <div class="lh-field">
-              <label for="lh-name">Name</label>
-              <input type="text" id="lh-name" name="name" autocomplete="name" required>
-            </div>
-            <div class="lh-field">
-              <label for="lh-email">Email</label>
-              <input type="email" id="lh-email" name="email" autocomplete="email" required>
-            </div>
-            <div class="lh-field">
-              <label for="lh-role">Role</label>
-              <input type="text" id="lh-role" name="role" placeholder="Developer, site owner, agency…" required>
-            </div>
-            <div class="lh-field">
-              <label for="lh-websites">Type of websites</label>
-              <input type="text" id="lh-websites" name="websites" placeholder="E-commerce, marketing, SaaS…">
-            </div>
-            <div class="lh-field lh-field--full">
-              <label for="lh-agent">Do you use Cursor or another coding agent?</label>
-              <select id="lh-agent" name="coding_agent">
-                <option value="">Select one</option>
-                <option value="cursor">Cursor</option>
-                <option value="copilot">GitHub Copilot</option>
-                <option value="claude">Claude / Anthropic</option>
-                <option value="other">Other coding agent</option>
-                <option value="none">Not yet</option>
-              </select>
-            </div>
-            <fieldset class="lh-field lh-field--full">
-              <legend>What do you want to test?</legend>
-              <div class="lh-radio-group">
-                <label class="lh-radio">
-                  <input type="radio" name="test_type" value="standard" required>
-                  <span>Standard report</span>
-                </label>
-                <label class="lh-radio">
-                  <input type="radio" name="test_type" value="local_ai">
-                  <span>Local AI</span>
-                </label>
-                <label class="lh-radio">
-                  <input type="radio" name="test_type" value="both">
-                  <span>Both</span>
-                </label>
+          <form class="lh-form" id="lh-tester-form" action="#" method="post" novalidate>
+            <div class="lh-form__grid">
+              <div class="lh-field">
+                <label for="lh-name">Name</label>
+                <input type="text" id="lh-name" name="name" autocomplete="name" required>
               </div>
-            </fieldset>
-            <div class="lh-field lh-field--full">
-              <label for="lh-notes">Optional notes</label>
-              <textarea id="lh-notes" name="notes" rows="4" placeholder="What would make this handoff useful for your workflow?"></textarea>
+              <div class="lh-field">
+                <label for="lh-email">Email</label>
+                <input type="email" id="lh-email" name="email" autocomplete="email" required>
+              </div>
+              <div class="lh-field">
+                <label for="lh-role">Role</label>
+                <input type="text" id="lh-role" name="role" placeholder="Developer, site owner, agency…" required>
+              </div>
+              <div class="lh-field">
+                <label for="lh-websites">Type of websites</label>
+                <input type="text" id="lh-websites" name="websites" placeholder="E-commerce, marketing, SaaS…">
+              </div>
+              <div class="lh-field lh-field--full">
+                <label for="lh-agent">Do you use Cursor or another coding agent?</label>
+                <select id="lh-agent" name="coding_agent">
+                  <option value="">Select one</option>
+                  <option value="cursor">Cursor</option>
+                  <option value="copilot">GitHub Copilot</option>
+                  <option value="claude">Claude / Anthropic</option>
+                  <option value="other">Other coding agent</option>
+                  <option value="none">Not yet</option>
+                </select>
+              </div>
+              <fieldset class="lh-field lh-field--full">
+                <legend>What do you want to test?</legend>
+                <div class="lh-radio-group">
+                  <label class="lh-radio">
+                    <input type="radio" name="test_type" value="standard" required>
+                    <span>Standard report</span>
+                  </label>
+                  <label class="lh-radio">
+                    <input type="radio" name="test_type" value="local_ai">
+                    <span>Local AI</span>
+                  </label>
+                  <label class="lh-radio">
+                    <input type="radio" name="test_type" value="both">
+                    <span>Both</span>
+                  </label>
+                </div>
+              </fieldset>
+              <div class="lh-field lh-field--full">
+                <label for="lh-notes">Optional notes</label>
+                <textarea id="lh-notes" name="notes" rows="4" placeholder="What would make this handoff useful for your workflow?"></textarea>
+              </div>
             </div>
-          </div>
-          <div class="lh-form__actions">
-            <button type="submit" class="lh-btn lh-btn--primary">Test the handoff</button>
-            <p class="lh-form__status" id="lh-form-status" role="status" aria-live="polite"></p>
-          </div>
-        </form>
+            <div class="lh-form__actions">
+              <button type="submit" class="lh-btn lh-btn--primary">Test the handoff</button>
+              <p class="lh-form__status" id="lh-form-status" role="status" aria-live="polite"></p>
+            </div>
+          </form>
         </div>
       </section>
 
