@@ -102,13 +102,13 @@ To support concurrent work streams and seamless handoffs between agent runs:
     * **MDR Moderation Desk:** Added message moderation status support in SQLite (`store.js`) and D1 (`store-d1.js`) stores. Wired moderation list and status toggle endpoints in `handlers.js`. Built a premium moderation panel in `studio/mdr-moderation.html` to approve/reject messages with real-time feedback.
   * **Codebase State:** End-to-end integration verified successfully. All configurations compile cleanly. Public launch archived pending a better idea.
 
-### Studio Lab + Junk Drawer Refresh (In Progress)
+### Studio Lab + Junk Drawer Refresh (Completed)
 
-* **Completed (current pass):**
-  * **Website Roast archived:** Live Experiment `currentBet` and get-involved links no longer point to missing `/website-roast/`. Removed `data-coming-soon-scope` from live experiment main content.
+* **Completed:**
+  * **Website Roast archived:** Live Experiment `currentBet` and get-involved links no longer point to missing `/website-roast/`.
   * **Junk Drawer redesign:** Lighthouse Handoff is the premier featured tool. Drawer-style hero, compartment cards, dead `+ INFO` button removed.
-  * **Studio Lab page:** New public `/studio-lab/` hub listing active/shipped/archived/planned projects. Homepage world-map zone now routes here instead of `/operator-log/`.
+  * **Studio Lab page:** Public `/studio-lab/` hub listing shipped/archived/planned projects. Homepage world-map zone routes here instead of `/operator-log/`.
+  * **Live Experiment archived:** Matches MDR treatment — `noindex`, `robots.txt` disallow, removed from sitemap and public navigation. Studio Lab lists it as archived.
   * **Sitemap:** Added `/studio-lab/`, junk-drawer routes, and `/lighthouse-handoff/`.
 * **Next steps:**
   * **Bench Radio (later):** Clickable radio on Studio Lab that streams Lemonteed FM while browsing projects.
-  * Re-run `node scripts/site-completion-audit.js` after deploy and verify remaining medium-priority SEO polish.

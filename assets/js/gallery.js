@@ -374,12 +374,6 @@
       categoryNav.append(link);
     });
 
-    const liveExperimentLink = document.createElement("a");
-    liveExperimentLink.className = "category-link";
-    liveExperimentLink.href = "/live-experiment/";
-    liveExperimentLink.textContent = "Live Experiment";
-    categoryNav.append(liveExperimentLink);
-
     categoryLinks = Array.from(document.querySelectorAll("[data-category-link]"));
   }
 

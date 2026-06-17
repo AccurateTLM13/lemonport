@@ -307,7 +307,7 @@ function trackContentCompleteness(inventory) {
       });
     }
 
-    if (/Setup Phase|coming soon|COMING SOON|starts in June 2026/i.test(html) && page.route === "/live-experiment/") {
+    if (/Setup Phase|coming soon|COMING SOON|starts in June 2026/i.test(html) && page.route === "/live-experiment/" && !page.noindex) {
       add("medium", {
         track: "content-completeness",
         file: page.file,
@@ -389,12 +389,12 @@ function trackSeoReadiness(inventory) {
     add("high", { track: "seo", file: "robots.txt", issue: "robots.txt missing Sitemap directive", fix: "Add Sitemap: https://lemonteed.com/sitemap.xml" });
   }
 
-  if (sitemapUrls.includes("/live-experiment/") === false) {
+  if (sitemapUrls.includes("/live-experiment/")) {
     add("high", {
       track: "seo",
       file: "sitemap.xml",
-      issue: "live-experiment/ is linked in global nav but absent from sitemap",
-      fix: "Add /live-experiment/ to sitemap.xml"
+      issue: "live-experiment/ is archived and should not appear in sitemap.xml",
+      fix: "Remove /live-experiment/ from sitemap.xml"
     });
   }
 }
