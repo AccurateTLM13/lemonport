@@ -55,6 +55,7 @@ npx wrangler dev --local --port 8788 --config mdr-api/wrangler.toml
 | Command | Purpose |
 |---------|---------|
 | `node scripts/content-validation.js` | Validate content JSON |
+| `node scripts/site-completion-audit.js` | Multi-track site completion + SEO readiness audit |
 | `node scripts/build-gallery.js` | Rebuild generated gallery data files |
 | `node scripts/media-health.js` | Report missing/unused image files |
 | `node scripts/generate-image-variants.js` | Regenerate responsive image variants |
@@ -69,7 +70,7 @@ npx wrangler dev --local --port 8788 --config mdr-api/wrangler.toml
 ### Notes
 
 - There is no `package.json` and no npm dependencies. All scripts use Node.js built-in modules only.
-- There are no automated test suites. Validate changes with `node scripts/content-validation.js` and the Studio validation API (`GET /api/validation`).
+- There are no automated test suites. Validate changes with `node scripts/content-validation.js`, `node scripts/site-completion-audit.js`, and the Studio validation API (`GET /api/validation`).
 - There is no linter configured. Code style is vanilla JavaScript following existing patterns in the repo.
 - The public site is purely static HTML/CSS/JS. Do not introduce frameworks or build tools for the public output.
 
