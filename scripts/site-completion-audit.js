@@ -277,14 +277,6 @@ async function trackInteractionAudit(inventory) {
       element: "window.mdrConfig.apiBase",
       fix: "Set apiBase to deployed Worker/API URL in content/million-dollar-receipt.json and rebuild"
     });
-  } else if (mdrConfig && /"apiBase":\s*""/.test(mdrConfig) && /"launched":\s*false/.test(mdrConfig)) {
-    add("low", {
-      track: "code-reality",
-      file: "assets/js/mdr-config.js",
-      route: "/million-dollar-receipt/",
-      issue: "MDR launch is archived; apiBase remains empty and mock/local fallback is expected",
-      fix: "Set launched and apiBase only when the public MDR launch is revived"
-    });
   }
 }
 
@@ -427,7 +419,8 @@ function trackCodeReality() {
     }
   }
 
-  if (fs.existsSync(path.join(root, "lemon-dom-repo/index.html"))) {
+  const lemonDomRepo = readFile("lemon-dom-repo/index.html");
+  if (lemonDomRepo && !/noindex/i.test(lemonDomRepo)) {
     add("low", {
       track: "code-reality",
       file: "lemon-dom-repo/index.html",
