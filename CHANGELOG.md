@@ -4,6 +4,14 @@ Major architecture, content, tooling, and experience changes should be recorded 
 
 This file is also the working source for a future public development-history page. Keep entries factual, dated, and written as a timeline of what changed.
 
+## 2026-07-01
+
+### Junk Drawer Affiliate Section
+
+- Added a Highly Biased Recommendations affiliate section to the Junk Drawer page (`junk-drawer/index.html`).
+- Added Memelord with tracking link `https://signup.memelord.com/lemonteed` and deadpan funny copy.
+- Styled sponsor cards (`.junk-drawer-card--sponsor`) in `assets/css/style.css` with a dashed golden border, subtle hover animations, and customized partner slots.
+
 ## 2026-05-15
 
 ### Responsive System And Mobile Chrome
