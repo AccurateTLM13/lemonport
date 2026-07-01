@@ -108,9 +108,9 @@ To support concurrent work streams and seamless handoffs between agent runs:
 
 * **Completed:**
   * **Website Roast archived:** Live Experiment `currentBet` and get-involved links no longer point to missing `/website-roast/`.
-  * **Junk Drawer redesign:** Lighthouse Handoff is the premier featured tool. Drawer-style hero, compartment cards, dead `+ INFO` button removed.
+  * **Junk Drawer redesign:** Lighthouse Handoff is the premier featured tool. Drawer-style hero, compartment cards, dead `+ INFO` button removed. Added FreeSource (`/free-source/`) as Slot D card in the drawer.
   * **Studio Lab page:** Public `/studio-lab/` hub listing shipped/archived/planned projects. Homepage world-map zone routes here instead of `/operator-log/`.
   * **Live Experiment archived:** Matches MDR treatment — `noindex`, `robots.txt` disallow, removed from sitemap and public navigation. Studio Lab lists it as archived.
-  * **Sitemap:** Added `/studio-lab/`, junk-drawer routes, and `/lighthouse-handoff/`.
+  * **Sitemap:** Added `/studio-lab/`, junk-drawer routes, `/lighthouse-handoff/`, and `/free-source/`.
 * **Next steps:**
   * **Bench Radio (later):** Clickable radio on Studio Lab that streams Lemonteed FM while browsing projects.
