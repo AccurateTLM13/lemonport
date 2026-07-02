@@ -17,6 +17,7 @@ Static public pages include:
 - `memetic-warfare/index.html`
 - `junk-drawer/index.html`
 - `junk-drawer/image-converter/index.html`
+- `junk-drawer/character-supply/index.html`
 - `live-experiment/index.html` (hidden; noindex; not in sitemap)
 - `lighthouse-handoff/index.html`
 - `lemonteed-fm/index.html`

@@ -1420,7 +1420,7 @@ button {
   gap: 8px 20px;
   align-items: baseline;
   margin-bottom: 18px;
-  padding-bottom: 12px;
+  padding-bottom: 0px;
   border-bottom: 1px solid var(--hairline);
 }
 

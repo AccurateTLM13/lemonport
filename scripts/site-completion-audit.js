@@ -35,6 +35,7 @@ const PUBLIC_HTML_GLOBS = [
   "junk-drawer/index.html",
   "junk-drawer/image-converter/index.html",
   "junk-drawer/image-compressor/index.html",
+  "junk-drawer/character-supply/index.html",
   "studio-lab/index.html",
   "lemonteed-fm/index.html",
   "lighthouse-handoff/index.html",
