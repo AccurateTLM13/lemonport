@@ -5,12 +5,12 @@ const { build } = require("./build-gallery");
 const { backupFile } = require("./file-backup");
 const { assertValidContent } = require("./content-validation");
 const { resolvePathWithinRoot } = require("./security-utils");
+const { galleryRoots: configuredGalleryRoots, galleryWidths } = require("./site-config");
 
 const root = path.resolve(__dirname, "..");
 const contentFile = path.join(root, "content", "projects.json");
 const categoriesFile = path.join(root, "content", "categories.json");
-const galleryWidths = [320, 480, 640, 768, 900, 1024, 1600];
-const galleryRoots = new Set(["vrg-cards", "what-if", "misc-gens", "memetic-warfare"]);
+const galleryRoots = new Set(configuredGalleryRoots);
 const force = process.argv.includes("--force");
 const dryRun = process.argv.includes("--dry-run");
 

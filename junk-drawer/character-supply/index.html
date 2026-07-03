@@ -7308,8 +7308,10 @@ const categoryOrder=["Popular","HTML Essentials","Typography","Arrows","Currency
 let activeCategory='Popular';
 let copyMode='char';
 let query='';
-let favorites=JSON.parse(localStorage.getItem('characterSupplyFavorites')||'[]');
-let recent=JSON.parse(localStorage.getItem('characterSupplyRecent')||'[]');
+function readStoredList(key){try{const raw=window.localStorage&&window.localStorage.getItem(key);const parsed=JSON.parse(raw||'[]');return Array.isArray(parsed)?parsed:[]}catch(e){return[]}}
+function writeStoredList(key,value){try{if(window.localStorage)window.localStorage.setItem(key,JSON.stringify(value))}catch(e){}}
+let favorites=readStoredList('characterSupplyFavorites');
+let recent=readStoredList('characterSupplyRecent');
 
 const els={
   grid:document.getElementById('characterGrid'), categories:document.getElementById('categories'), search:document.getElementById('search'),
@@ -7355,10 +7357,10 @@ function renderTokens(){
 async function copyItem(item,mode=copyMode){
   const value=getCopyValue(item,mode);
   try{await navigator.clipboard.writeText(value)}catch(e){const ta=document.createElement('textarea');ta.value=value;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove()}
-  recent=[item.c,...recent.filter(c=>c!==item.c)].slice(0,8);localStorage.setItem('characterSupplyRecent',JSON.stringify(recent));renderTokens();showStatus(`Copied ${mode==='char'?item.name:value}`);
+  recent=[item.c,...recent.filter(c=>c!==item.c)].slice(0,8);writeStoredList('characterSupplyRecent',recent);renderTokens();showStatus(`Copied ${mode==='char'?item.name:value}`);
 }
 function showStatus(message){els.status.textContent=message;els.status.classList.add('show');clearTimeout(showStatus.t);showStatus.t=setTimeout(()=>els.status.classList.remove('show'),1800)}
-function toggleFavorite(c){favorites=favorites.includes(c)?favorites.filter(x=>x!==c):[c,...favorites];localStorage.setItem('characterSupplyFavorites',JSON.stringify(favorites));renderGrid();renderTokens()}
+function toggleFavorite(c){favorites=favorites.includes(c)?favorites.filter(x=>x!==c):[c,...favorites];writeStoredList('characterSupplyFavorites',favorites);renderGrid();renderTokens()}
 function openDrawer(item){
   els.drawerContent.innerHTML=`<div class="drawer-glyph">${escapeHtml(visibleGlyph(item.c))}</div><h2>${escapeHtml(item.name)}</h2><div class="drawer-sub">${escapeHtml(item.cat)} · ${escapeHtml(item.uni)}</div><div class="code-list">
   ${[['Character',visibleGlyph(item.c),'char'],['HTML entity',item.html,'html'],['Numeric',item.dec,'decimal'],['Unicode',item.uni,'unicode'],['CSS escape',item.css,'css']].map(([label,val,mode])=>`<div class="code-row"><label>${escapeHtml(label)}</label><code>${escapeHtml(val)}</code><button data-drawer-copy="${mode}">Copy</button></div>`).join('')}</div><div class="drawer-uses"><strong>Common use</strong><br>${escapeHtml(item.use)}<br><br><strong>Search aliases</strong><br>${escapeHtml(item.aliases)}</div>`;

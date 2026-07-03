@@ -1,0 +1,8 @@
+.git/
+.studio-backups/
+.studio-uploads/
+.benchmark/
+.codex/
+.agents/
+assets/js/heic-to-csp.js
+mdr-api/.wrangler/

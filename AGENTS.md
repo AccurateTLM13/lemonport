@@ -57,6 +57,7 @@ npx wrangler dev --local --port 8788 --config mdr-api/wrangler.toml
 | Command | Purpose |
 |---------|---------|
 | `node scripts/content-validation.js` | Validate content JSON |
+| `node scripts/check.js` | Run standard validation, site audit, and media health checks |
 | `node scripts/site-completion-audit.js` | Multi-track site completion + SEO readiness audit |
 | `node scripts/build-gallery.js` | Rebuild generated gallery data files |
 | `node scripts/media-health.js` | Report missing/unused image files |

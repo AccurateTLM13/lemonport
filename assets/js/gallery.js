@@ -110,7 +110,9 @@
     const sizes = item.sizes || {};
     const source = item.image || item.thumbnail || sizes.large || sizes.medium || sizes.small;
     const intrinsicWidth = item.width || 1600;
-    const widths = [320, 480, 640, 768, 900, 1024, 1600];
+    const widths = Array.isArray(window.galleryWidths) && window.galleryWidths.length
+      ? window.galleryWidths
+      : [320, 480, 640, 768, 900, 1024, 1600];
     const seen = new Set();
 
     return widths.reduce((candidates, targetWidth) => {

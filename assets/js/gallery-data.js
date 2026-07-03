@@ -5850,8 +5850,10 @@ const galleryItems = [
     ]
   }
 ];
+const galleryWidths = [320,480,640,768,900,1024,1600];
 
 window.galleryItems = galleryItems;
+window.galleryWidths = galleryWidths;
 
 function normalizeGalleryValue(value) {
   return String(value || "").trim().toLowerCase();

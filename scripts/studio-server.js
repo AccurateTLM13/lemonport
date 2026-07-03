@@ -16,6 +16,7 @@ const { variantsForProject, absoluteFromPublicUrl } = require("./generate-image-
 const { contentFile: liveExperimentFile, validateLiveExperiment, buildLiveExperiment } = require("./build-live-experiment");
 const { contentFile: lemonteedFmFile, validateLemonteedFm, buildLemonteedFm } = require("./build-lemonteed-fm");
 const { resolvePathWithinRoot } = require("./security-utils");
+const { galleryWidths, statuses } = require("./site-config");
 
 const root = path.resolve(__dirname, "..");
 const contentFile = path.join(root, "content", "projects.json");
@@ -27,8 +28,6 @@ const studioHost = allowRemote ? "0.0.0.0" : String(process.env.STUDIO_HOST || "
 const studioWriteToken = String(process.env.STUDIO_WRITE_TOKEN || "").trim();
 const mutatingMethods = new Set(["POST", "PATCH", "DELETE", "PUT"]);
 const maxBodyBytes = 80 * 1024 * 1024;
-const galleryWidths = [320, 480, 640, 768, 900, 1024, 1600];
-const statuses = ["Draft", "Ready", "Published", "Hidden", "Archived", "Deleted"];
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",

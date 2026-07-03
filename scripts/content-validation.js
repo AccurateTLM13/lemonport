@@ -1,10 +1,9 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { resolvePathWithinRoot } = require("./security-utils");
+const { responsiveWidths, statuses } = require("./site-config");
 
 const root = path.resolve(__dirname, "..");
-const statuses = ["Draft", "Ready", "Published", "Hidden", "Archived", "Deleted"];
-const responsiveWidths = [320, 480, 640, 768, 900, 1024, 1600];
 
 function hasText(value) {
   return typeof value === "string" && value.trim().length > 0;

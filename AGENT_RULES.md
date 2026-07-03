@@ -86,6 +86,12 @@ Validate content data:
 node scripts/content-validation.js
 ```
 
+Run the standard local check suite:
+
+```powershell
+node scripts/check.js
+```
+
 Studio also exposes archive validation at:
 
 ```text
