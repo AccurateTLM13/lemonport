@@ -28,6 +28,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="/assets/css/style.css?v=10">
+    <link rel="stylesheet" href="/assets/css/junk-drawer.css?v=1">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -73,29 +74,33 @@
         <a class="op-status-badge" href="/operator-log/" aria-label="Operator log — off-clock archive">STATUS: OFF CLOCK</a>
       </aside>
 
-      <main class="content junk-drawer-main" id="junk-drawer-content">
+      <main class="content junk-drawer-main" id="junk-drawer-content" data-gallery-page data-gallery-title="Junk Drawer">
         <header class="junk-drawer-hero">
           <div class="junk-drawer-hero__tape" aria-hidden="true"></div>
-          <p class="junk-drawer-hero__label">District 04 / Tools &amp; Utilities</p>
+          <p class="junk-drawer-hero__label">District 04 / Browser Tools &amp; Useful Debris</p>
           <h1>Junk Drawer</h1>
-          <p class="junk-drawer-hero__copy">The drawer that never quite closes. Browser tools, tiny apps, and useful oddities — sorted just enough to find what you need.</p>
+          <p class="junk-drawer-hero__copy">The drawer that never quite closes. Browser-first utilities, experiments, reference shelves, and useful internet debris, sorted into compartments without sanding off the weird parts.</p>
           <ul class="junk-drawer-hero__notes" aria-label="Junk drawer rules">
-            <li>Runs in your browser when possible</li>
+            <li>Many tools run locally in your browser</li>
             <li>No account required</li>
             <li>Weird but intentional</li>
           </ul>
         </header>
 
         <section class="junk-drawer-premier" aria-labelledby="premier-tool-title">
-          <div class="junk-drawer-premier__tag">Premier Tool</div>
+          <div class="junk-drawer-premier__tag">Currently on top of the pile</div>
           <div class="junk-drawer-premier__layout">
             <div class="junk-drawer-premier__visual" aria-hidden="true">
               <img src="/images/lighthouse-handoff/lighthouse-handoff-card.webp" alt="" width="1280" height="800" aria-hidden="true">
             </div>
             <div class="junk-drawer-premier__copy">
-              <p class="junk-drawer-premier__kicker">Chrome Extension / Handoff Layer</p>
+              <p class="junk-drawer-premier__kicker">Project</p>
               <h2 id="premier-tool-title">Lighthouse Handoff</h2>
               <p>Turn PageSpeed Insights into coding-agent-ready Markdown — priorities, tasks, guardrails, and acceptance criteria. The flagship thing in the drawer right now.</p>
+              <ul class="junk-drawer-premier__meta" aria-label="Lighthouse Handoff notes">
+                <li>Chrome Web Store extension</li>
+                <li>Built for developer handoffs</li>
+              </ul>
               <div class="junk-drawer-premier__actions">
                 <a class="junk-drawer-btn junk-drawer-btn--primary" href="/lighthouse-handoff/">Open tool page</a>
                 <a class="junk-drawer-btn junk-drawer-btn--ghost" href="https://chromewebstore.google.com/detail/lighthouse-handoff/aiddegolbikmimjpggbepjmlkbjphgcb" target="_blank" rel="noopener">Add to Chrome</a>
@@ -106,56 +111,140 @@
 
         <section class="junk-drawer-shelf" aria-labelledby="drawer-shelf-title">
           <div class="junk-drawer-shelf__head">
-            <h2 id="drawer-shelf-title">Everything else in the drawer</h2>
-            <p>Smaller compartments. Same energy.</p>
+            <h2 id="drawer-shelf-title">Current Compartments</h2>
+            <p>Actual inventory. No empty bins yet.</p>
           </div>
 
-          <div class="junk-drawer-grid">
-            <a href="/junk-drawer/image-converter/" class="junk-drawer-card">
-              <span class="junk-drawer-card__slot">Slot A</span>
-              <h3>Image Converter</h3>
-              <p>Batch convert HEIC, PNG, JPEG, AVIF, SVG, and WebP entirely in your browser.</p>
-              <span class="junk-drawer-card__cta">Open converter &rarr;</span>
-            </a>
+          <div class="junk-drawer-directory">
+            <section class="junk-drawer-compartment junk-drawer-compartment--image" aria-labelledby="image-tools-title">
+              <div class="junk-drawer-compartment__head">
+                <h3 id="image-tools-title">Image Tools</h3>
+                <p>Local pixel chores. No mystery upload counter.</p>
+                <div class="junk-drawer-compartment__mark" aria-hidden="true">
+                  <span>320</span><span>768</span><span>WEBP</span>
+                </div>
+              </div>
+              <div class="junk-drawer-grid junk-drawer-grid--pair">
+                <a href="/junk-drawer/image-converter/" class="junk-drawer-card junk-drawer-card--converter">
+                  <span class="junk-drawer-card__type">Browser Tool</span>
+                  <div class="junk-drawer-card__visual junk-drawer-card__visual--convert" aria-hidden="true">
+                    <span>PNG</span>
+                    <b>&rarr;</b>
+                    <span>WEBP</span>
+                  </div>
+                  <h4>Image Converter</h4>
+                  <p>Batch convert HEIC, PNG, JPEG, AVIF, SVG, and WebP entirely in your browser.</p>
+                  <ul class="junk-drawer-card__meta" aria-label="Image Converter notes">
+                    <li>Batch workflow</li>
+                  </ul>
+                  <span class="junk-drawer-card__cta">Open converter &rarr;</span>
+                </a>
 
-            <a href="/junk-drawer/image-compressor/" class="junk-drawer-card">
-              <span class="junk-drawer-card__slot">Slot B</span>
-              <h3>Image Compressor</h3>
-              <p>Squish images locally, preview savings, tune quality, and download smaller files.</p>
-              <span class="junk-drawer-card__cta">Open compressor &rarr;</span>
-            </a>
+                <a href="/junk-drawer/image-compressor/" class="junk-drawer-card junk-drawer-card--compressor">
+                  <span class="junk-drawer-card__type">Browser Tool</span>
+                  <div class="junk-drawer-card__visual junk-drawer-card__visual--compress" aria-hidden="true">
+                    <span>4.8MB</span>
+                    <div><i></i></div>
+                    <span>820KB</span>
+                  </div>
+                  <h4>Image Compressor</h4>
+                  <p>Squish images locally, preview savings, tune quality, and download smaller files.</p>
+                  <ul class="junk-drawer-card__meta" aria-label="Image Compressor notes">
+                    <li>Quality controls</li>
+                  </ul>
+                  <span class="junk-drawer-card__cta">Open compressor &rarr;</span>
+                </a>
+              </div>
+            </section>
 
-            <a href="/lemon-dom/" class="junk-drawer-card">
-              <span class="junk-drawer-card__slot">Slot C</span>
-              <h3>Lemon DOM</h3>
-              <p>Juicy UI effects for plain websites — glass, glow, squeeze, zest, and peel. No build step.</p>
-              <span class="junk-drawer-card__cta">Open Lemon DOM &rarr;</span>
-            </a>
+            <section class="junk-drawer-compartment junk-drawer-compartment--text" aria-labelledby="text-reference-title">
+              <div class="junk-drawer-compartment__head">
+                <h3 id="text-reference-title">Text &amp; Reference</h3>
+                <p>Small marks, fast copying, fewer tabs with SEO sludge.</p>
+                <div class="junk-drawer-compartment__mark" aria-hidden="true">
+                  <span>&amp;amp;</span><span>U+2192</span><span>&copy;</span>
+                </div>
+              </div>
+              <div class="junk-drawer-grid junk-drawer-grid--single">
+                <a href="/junk-drawer/character-supply/" class="junk-drawer-card junk-drawer-card--character">
+                  <span class="junk-drawer-card__type">Browser Tool</span>
+                  <div class="junk-drawer-card__visual junk-drawer-card__visual--character" aria-hidden="true">
+                    <span>&amp;</span>
+                    <code>&amp;amp;</code>
+                  </div>
+                  <h4>Character Supply</h4>
+                  <p>A fast, ad-free HTML special character library for symbols, entities, code points, and CSS escapes.</p>
+                  <ul class="junk-drawer-card__meta" aria-label="Character Supply notes">
+                    <li>Copy modes</li>
+                  </ul>
+                  <span class="junk-drawer-card__cta">Open library &rarr;</span>
+                </a>
+              </div>
+            </section>
 
-            <a href="/free-source/" class="junk-drawer-card">
-              <span class="junk-drawer-card__slot">Slot D</span>
-              <h3>FreeSource</h3>
-              <p>A radically simple, plain-language license: use the work for whatever you want, for free. No credit required.</p>
-              <span class="junk-drawer-card__cta">Open generator &rarr;</span>
-            </a>
+            <section class="junk-drawer-compartment junk-drawer-compartment--experiments" aria-labelledby="experiments-title">
+              <div class="junk-drawer-compartment__head">
+                <h3 id="experiments-title">Experiments</h3>
+                <p>Useful enough to keep. Strange enough to stay in the drawer.</p>
+                <div class="junk-drawer-compartment__mark" aria-hidden="true">
+                  <span>PROTO</span><span>TEST</span><span>v0</span>
+                </div>
+              </div>
+              <div class="junk-drawer-grid junk-drawer-grid--experiments">
+                <a href="/lemon-dom/" class="junk-drawer-card junk-drawer-card--lemon-dom">
+                  <span class="junk-drawer-card__type">Experiment</span>
+                  <div class="junk-drawer-card__visual junk-drawer-card__visual--lemon-dom" aria-hidden="true">
+                    <span></span><span></span><span></span>
+                    <b>peel</b>
+                    <i>glow</i>
+                    <em>squeeze</em>
+                  </div>
+                  <h4>Lemon DOM</h4>
+                  <p>Juicy UI effects for plain websites — glass, glow, squeeze, zest, and peel. No build step.</p>
+                  <ul class="junk-drawer-card__meta" aria-label="Lemon DOM notes">
+                    <li>Vanilla JS</li>
+                  </ul>
+                  <span class="junk-drawer-card__cta">Open Lemon DOM &rarr;</span>
+                </a>
 
-            <a href="/junk-drawer/character-supply/" class="junk-drawer-card">
-              <span class="junk-drawer-card__slot">Slot E</span>
-              <h3>Character Supply</h3>
-              <p>A fast, ad-free HTML special character library for symbols, entities, code points, and CSS escapes.</p>
-              <span class="junk-drawer-card__cta">Open library &rarr;</span>
-            </a>
+                <a href="/free-source/" class="junk-drawer-card junk-drawer-card--free-source">
+                  <span class="junk-drawer-card__type">Project</span>
+                  <div class="junk-drawer-card__visual junk-drawer-card__visual--free-source" aria-hidden="true">
+                    <strong>FREESOURCE</strong>
+                    <span>USE IT FOR ANYTHING</span>
+                    <b>APPROVED</b>
+                  </div>
+                  <h4>FreeSource</h4>
+                  <p>A radically simple, plain-language license: use the work for whatever you want, for free.</p>
+                  <ul class="junk-drawer-card__meta" aria-label="FreeSource notes">
+                    <li>No credit required</li>
+                  </ul>
+                  <span class="junk-drawer-card__cta">Open generator &rarr;</span>
+                </a>
+              </div>
+            </section>
 
-            <article class="junk-drawer-card junk-drawer-card--external">
-              <span class="junk-drawer-card__slot">Borrowed</span>
-              <a class="junk-drawer-card__main" href="https://rec0ded88.com/" target="_blank" rel="noopener">
-                <img class="junk-drawer-card__logo" src="/images/junk/rec0ded88-logo.png" width="96" height="96" alt="Rec0deD:88 logo">
-                <h3>Rec0deD:88</h3>
-                <p>Play retro games online in your browser.</p>
-                <span class="junk-drawer-card__cta">Visit site &rarr;</span>
-              </a>
-              <p class="junk-drawer-card__credit">Credit: <a href="https://www.mattymctech.com/" target="_blank" rel="noopener">Matty McTech</a></p>
-            </article>
+            <section class="junk-drawer-compartment junk-drawer-compartment--other" aria-labelledby="other-things-title">
+              <div class="junk-drawer-compartment__head">
+                <h3 id="other-things-title">Other Useful Things</h3>
+                <p>Borrowed finds and neighboring oddities.</p>
+                <div class="junk-drawer-compartment__mark" aria-hidden="true">
+                  <span>FOUND</span><span>REF</span><span>OUT</span>
+                </div>
+              </div>
+              <div class="junk-drawer-grid junk-drawer-grid--external">
+                <article class="junk-drawer-card junk-drawer-card--external">
+                  <span class="junk-drawer-card__type">External Find</span>
+                  <a class="junk-drawer-card__main" href="https://rec0ded88.com/" target="_blank" rel="noopener" aria-label="Visit Rec0deD:88, external site">
+                    <img class="junk-drawer-card__logo" src="/images/junk/rec0ded88-logo.png" width="96" height="96" alt="Rec0deD:88 logo">
+                    <h4>Rec0deD:88</h4>
+                    <p>Play retro games online in your browser. Leaves Lemonteed, behaves accordingly.</p>
+                    <span class="junk-drawer-card__cta">Visit external site &rarr;</span>
+                  </a>
+                  <p class="junk-drawer-card__credit">Credit: <a href="https://www.mattymctech.com/" target="_blank" rel="noopener">Matty McTech</a></p>
+                </article>
+              </div>
+            </section>
           </div>
         </section>
 
@@ -165,11 +254,14 @@
             <p>Financial incentives have compromised our neutrality.</p>
           </div>
 
-          <div class="junk-drawer-grid">
+          <div class="junk-drawer-grid junk-drawer-grid--sponsor">
             <a href="https://signup.memelord.com/lemonteed" class="junk-drawer-card junk-drawer-card--sponsor" target="_blank" rel="noopener">
-              <span class="junk-drawer-card__slot">Shameful Kickback</span>
-              <h3>Memelord</h3>
+              <span class="junk-drawer-card__type">External Find</span>
+              <h4>Memelord</h4>
               <p>A SaaS platform for managing memetic operations. They promised to pay us if you register. We don't know what it actually does, but the logo is cool and we need the money.</p>
+              <ul class="junk-drawer-card__meta" aria-label="Memelord notes">
+                <li>Neutrality compromised</li>
+              </ul>
               <span class="junk-drawer-card__cta">Sign Up for Memelord &rarr;</span>
             </a>
           </div>
