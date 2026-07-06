@@ -54,7 +54,10 @@
             <img class="brand__logo" src="/images/lemonteedlogo-250.webp" srcset="/images/lemonteedlogo-250.webp 250w, /images/lemonteedlogo-456.webp 456w" sizes="160px" width="456" height="96" alt="Lemonteed">
           </a>
           <a class="info-link" href="/studio-lab/">+ STUDIO LAB</a>
-          <a class="random-artifact" href="/archive/?random=1">SUMMON RANDOM ARTIFACT</a>
+          <a class="random-artifact" href="/archive/?random=1" aria-label="Summon random artifact: opens a surprise archive page">
+            SUMMON RANDOM ARTIFACT
+            <span class="random-artifact__hint">Surprise archive page</span>
+          </a>
         </div>
         <nav class="category-nav" aria-label="Portfolio categories">
           <span class="nav-label">Categories</span>
@@ -77,7 +80,11 @@
       <main class="content junk-drawer-main" id="junk-drawer-content" data-gallery-page data-gallery-title="Junk Drawer">
         <header class="junk-drawer-hero">
           <div class="junk-drawer-hero__tape" aria-hidden="true"></div>
-          <p class="junk-drawer-hero__label">District 04 / Browser Tools &amp; Useful Debris</p>
+          <nav class="junk-drawer-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>District 04</span>
+            <strong>Junk Drawer</strong>
+          </nav>
           <h1>Junk Drawer</h1>
           <p class="junk-drawer-hero__copy">The drawer that never quite closes. Browser-first utilities, experiments, reference shelves, and useful internet debris, sorted into compartments without sanding off the weird parts.</p>
           <ul class="junk-drawer-hero__notes" aria-label="Junk drawer rules">
@@ -85,7 +92,27 @@
             <li>No account required</li>
             <li>Weird but intentional</li>
           </ul>
+          <details class="junk-drawer-legend">
+            <summary>Label decoder</summary>
+            <dl>
+              <div><dt>Browser Tool</dt><dd>Runs here, locally in your browser.</dd></div>
+              <div><dt>Experiment</dt><dd>Usable, but still wearing lab goggles.</dd></div>
+              <div><dt>Project</dt><dd>A Lemonteed page or thing, not always a utility.</dd></div>
+              <div><dt>External Find</dt><dd>Leaves Lemonteed for another site.</dd></div>
+              <div><dt>Sponsored</dt><dd>Money may be lurking nearby.</dd></div>
+            </dl>
+          </details>
         </header>
+
+        <nav class="junk-drawer-jump" aria-label="Junk Drawer sections">
+          <a href="#premier-tool-title">Featured</a>
+          <a href="#working-tools-title">Browser Tools</a>
+          <a href="#text-reference-title">Text &amp; Reference</a>
+          <a href="#experiments-title">Projects</a>
+          <a href="#elsewhere-title">External Finds</a>
+          <a href="#drawer-sponsors-title">Sponsored</a>
+          <a href="#related-districts-title">Related</a>
+        </nav>
 
         <section class="junk-drawer-premier" aria-labelledby="premier-tool-title">
           <div class="junk-drawer-premier__tag">Currently on top of the pile</div>
@@ -103,16 +130,16 @@
               </ul>
               <div class="junk-drawer-premier__actions">
                 <a class="junk-drawer-btn junk-drawer-btn--primary" href="/lighthouse-handoff/">Open tool page</a>
-                <a class="junk-drawer-btn junk-drawer-btn--ghost" href="https://chromewebstore.google.com/detail/lighthouse-handoff/aiddegolbikmimjpggbepjmlkbjphgcb" target="_blank" rel="noopener">Add to Chrome</a>
+                <a class="junk-drawer-btn junk-drawer-btn--external" href="https://chromewebstore.google.com/detail/lighthouse-handoff/aiddegolbikmimjpggbepjmlkbjphgcb" target="_blank" rel="noopener">Add to Chrome <span aria-hidden="true">&#8599;</span><span class="visually-hidden">, leaves Lemonteed</span></a>
               </div>
             </div>
           </div>
         </section>
 
-        <section class="junk-drawer-shelf" aria-labelledby="drawer-shelf-title">
+        <section class="junk-drawer-shelf" aria-labelledby="working-tools-title">
           <div class="junk-drawer-shelf__head">
-            <h2 id="drawer-shelf-title">Current Compartments</h2>
-            <p>Actual inventory. No empty bins yet.</p>
+            <h2 id="working-tools-title">Working Browser Tools</h2>
+            <p>Immediate utility. No account ritual.</p>
           </div>
 
           <div class="junk-drawer-directory">
@@ -121,12 +148,13 @@
                 <h3 id="image-tools-title">Image Tools</h3>
                 <p>Local pixel chores. No mystery upload counter.</p>
                 <div class="junk-drawer-compartment__mark" aria-hidden="true">
-                  <span>320</span><span>768</span><span>WEBP</span>
+                  <span>Formats</span><span>WEBP</span><span>AVIF</span>
                 </div>
               </div>
               <div class="junk-drawer-grid junk-drawer-grid--pair">
                 <a href="/junk-drawer/image-converter/" class="junk-drawer-card junk-drawer-card--converter">
                   <span class="junk-drawer-card__type">Browser Tool</span>
+                  <span class="junk-drawer-card__signal">Runs here</span>
                   <div class="junk-drawer-card__visual junk-drawer-card__visual--convert" aria-hidden="true">
                     <span>PNG</span>
                     <b>&rarr;</b>
@@ -137,11 +165,12 @@
                   <ul class="junk-drawer-card__meta" aria-label="Image Converter notes">
                     <li>Batch workflow</li>
                   </ul>
-                  <span class="junk-drawer-card__cta">Open converter &rarr;</span>
+                  <span class="junk-drawer-card__cta junk-drawer-card__cta--primary">Open converter</span>
                 </a>
 
                 <a href="/junk-drawer/image-compressor/" class="junk-drawer-card junk-drawer-card--compressor">
                   <span class="junk-drawer-card__type">Browser Tool</span>
+                  <span class="junk-drawer-card__signal">Runs here</span>
                   <div class="junk-drawer-card__visual junk-drawer-card__visual--compress" aria-hidden="true">
                     <span>4.8MB</span>
                     <div><i></i></div>
@@ -152,22 +181,32 @@
                   <ul class="junk-drawer-card__meta" aria-label="Image Compressor notes">
                     <li>Quality controls</li>
                   </ul>
-                  <span class="junk-drawer-card__cta">Open compressor &rarr;</span>
+                  <span class="junk-drawer-card__cta junk-drawer-card__cta--primary">Open compressor</span>
                 </a>
               </div>
             </section>
+          </div>
+        </section>
 
-            <section class="junk-drawer-compartment junk-drawer-compartment--text" aria-labelledby="text-reference-title">
+        <section class="junk-drawer-shelf" aria-labelledby="text-reference-title">
+          <div class="junk-drawer-shelf__head">
+            <h2 id="text-reference-title">Text &amp; Reference Tools</h2>
+            <p>Copyable bits for people who still name their files on purpose.</p>
+          </div>
+
+          <div class="junk-drawer-directory">
+            <section class="junk-drawer-compartment junk-drawer-compartment--text" aria-labelledby="text-tools-compartment-title">
               <div class="junk-drawer-compartment__head">
-                <h3 id="text-reference-title">Text &amp; Reference</h3>
+                <h3 id="text-tools-compartment-title">Characters &amp; Lists</h3>
                 <p>Small marks, fast copying, fewer tabs with SEO sludge.</p>
                 <div class="junk-drawer-compartment__mark" aria-hidden="true">
-                  <span>&amp;amp;</span><span>U+2192</span><span>&copy;</span>
+                  <span>Examples:</span><span>&amp;amp;</span><span>U+2192</span><span>&copy;</span>
                 </div>
               </div>
-              <div class="junk-drawer-grid junk-drawer-grid--single">
+              <div class="junk-drawer-grid junk-drawer-grid--text">
                 <a href="/junk-drawer/character-supply/" class="junk-drawer-card junk-drawer-card--character">
                   <span class="junk-drawer-card__type">Browser Tool</span>
+                  <span class="junk-drawer-card__signal">Runs here</span>
                   <div class="junk-drawer-card__visual junk-drawer-card__visual--character" aria-hidden="true">
                     <span>&amp;</span>
                     <code>&amp;amp;</code>
@@ -177,14 +216,39 @@
                   <ul class="junk-drawer-card__meta" aria-label="Character Supply notes">
                     <li>Copy modes</li>
                   </ul>
-                  <span class="junk-drawer-card__cta">Open library &rarr;</span>
+                  <span class="junk-drawer-card__cta junk-drawer-card__cta--primary">Open library</span>
+                </a>
+
+                <a href="/junk-drawer/list-mechanic/" class="junk-drawer-card junk-drawer-card--list-mechanic">
+                  <span class="junk-drawer-card__type">Browser Tool</span>
+                  <span class="junk-drawer-card__signal">Runs here</span>
+                  <div class="junk-drawer-card__visual junk-drawer-card__visual--list" aria-hidden="true">
+                    <span>messy lines</span>
+                    <b>&rarr;</b>
+                    <span>clean list</span>
+                  </div>
+                  <h4>List Mechanic</h4>
+                  <p>Paste rough list debris, repair it locally, then copy or download the cleaned result.</p>
+                  <ul class="junk-drawer-card__meta" aria-label="List Mechanic notes">
+                    <li>Local text repairs</li>
+                  </ul>
+                  <span class="junk-drawer-card__cta junk-drawer-card__cta--primary">Open mechanic</span>
                 </a>
               </div>
             </section>
+          </div>
+        </section>
 
-            <section class="junk-drawer-compartment junk-drawer-compartment--experiments" aria-labelledby="experiments-title">
+        <section class="junk-drawer-shelf" aria-labelledby="experiments-title">
+          <div class="junk-drawer-shelf__head">
+            <h2 id="experiments-title">Experiments &amp; Projects</h2>
+            <p>Less direct utility, still on purpose.</p>
+          </div>
+
+          <div class="junk-drawer-directory">
+            <section class="junk-drawer-compartment junk-drawer-compartment--experiments" aria-labelledby="experiments-compartment-title">
               <div class="junk-drawer-compartment__head">
-                <h3 id="experiments-title">Experiments</h3>
+                <h3 id="experiments-compartment-title">Useful Oddities</h3>
                 <p>Useful enough to keep. Strange enough to stay in the drawer.</p>
                 <div class="junk-drawer-compartment__mark" aria-hidden="true">
                   <span>PROTO</span><span>TEST</span><span>v0</span>
@@ -204,7 +268,7 @@
                   <ul class="junk-drawer-card__meta" aria-label="Lemon DOM notes">
                     <li>Vanilla JS</li>
                   </ul>
-                  <span class="junk-drawer-card__cta">Open Lemon DOM &rarr;</span>
+                  <span class="junk-drawer-card__cta junk-drawer-card__cta--secondary">Open Lemon DOM</span>
                 </a>
 
                 <a href="/free-source/" class="junk-drawer-card junk-drawer-card--free-source">
@@ -219,11 +283,20 @@
                   <ul class="junk-drawer-card__meta" aria-label="FreeSource notes">
                     <li>No credit required</li>
                   </ul>
-                  <span class="junk-drawer-card__cta">Open generator &rarr;</span>
+                  <span class="junk-drawer-card__cta junk-drawer-card__cta--secondary">Open generator</span>
                 </a>
               </div>
             </section>
+          </div>
+        </section>
 
+        <section class="junk-drawer-shelf" aria-labelledby="elsewhere-title">
+          <div class="junk-drawer-shelf__head">
+            <h2 id="elsewhere-title">Elsewhere in the Drawer</h2>
+            <p>Borrowed finds. Outbound doors are labeled before you touch them.</p>
+          </div>
+
+          <div class="junk-drawer-directory">
             <section class="junk-drawer-compartment junk-drawer-compartment--other" aria-labelledby="other-things-title">
               <div class="junk-drawer-compartment__head">
                 <h3 id="other-things-title">Other Useful Things</h3>
@@ -236,12 +309,15 @@
                 <article class="junk-drawer-card junk-drawer-card--external">
                   <span class="junk-drawer-card__type">External Find</span>
                   <a class="junk-drawer-card__main" href="https://rec0ded88.com/" target="_blank" rel="noopener" aria-label="Visit Rec0deD:88, external site">
-                    <img class="junk-drawer-card__logo" src="/images/junk/rec0ded88-logo.png" width="96" height="96" alt="Rec0deD:88 logo">
+                    <div class="junk-drawer-card__visual junk-drawer-card__visual--external" aria-hidden="true">
+                      <img class="junk-drawer-card__logo" src="/images/junk/rec0ded88-logo.png" width="96" height="96" alt="Rec0deD:88 logo">
+                      <span>Leaves Lemonteed</span>
+                    </div>
                     <h4>Rec0deD:88</h4>
                     <p>Play retro games online in your browser. Leaves Lemonteed, behaves accordingly.</p>
-                    <span class="junk-drawer-card__cta">Visit external site &rarr;</span>
+                    <span class="junk-drawer-card__cta junk-drawer-card__cta--external">Visit external site <span aria-hidden="true">&#8599;</span><span class="visually-hidden">, leaves Lemonteed</span></span>
                   </a>
-                  <p class="junk-drawer-card__credit">Credit: <a href="https://www.mattymctech.com/" target="_blank" rel="noopener">Matty McTech</a></p>
+                  <p class="junk-drawer-card__credit">Credit: <a href="https://www.mattymctech.com/" target="_blank" rel="noopener">Matty McTech <span aria-hidden="true">&#8599;</span><span class="visually-hidden">, leaves Lemonteed</span></a></p>
                 </article>
               </div>
             </section>
@@ -251,19 +327,35 @@
         <section class="junk-drawer-shelf" aria-labelledby="drawer-sponsors-title">
           <div class="junk-drawer-shelf__head">
             <h2 id="drawer-sponsors-title">Highly Biased Recommendations</h2>
-            <p>Financial incentives have compromised our neutrality.</p>
+            <p>How we irresponsibly attempt to keep the lights on.</p>
           </div>
 
           <div class="junk-drawer-grid junk-drawer-grid--sponsor">
             <a href="https://signup.memelord.com/lemonteed" class="junk-drawer-card junk-drawer-card--sponsor" target="_blank" rel="noopener">
-              <span class="junk-drawer-card__type">External Find</span>
+              <span class="junk-drawer-card__type">Sponsored</span>
+              <div class="junk-drawer-card__visual junk-drawer-card__visual--sponsor" aria-hidden="true">
+                <strong>PAID?</strong>
+                <span>probably</span>
+              </div>
               <h4>Memelord</h4>
-              <p>A SaaS platform for managing memetic operations. They promised to pay us if you register. We don't know what it actually does, but the logo is cool and we need the money.</p>
+              <p>A SaaS platform for managing memetic operations. Leaves Lemonteed. They promised to pay us if you register. We don't know what it actually does, but the logo is cool and we need the money.</p>
               <ul class="junk-drawer-card__meta" aria-label="Memelord notes">
-                <li>Neutrality compromised</li>
+                <li>Affiliate link</li>
               </ul>
-              <span class="junk-drawer-card__cta">Sign Up for Memelord &rarr;</span>
+              <span class="junk-drawer-card__cta junk-drawer-card__cta--external">Sign up for Memelord <span aria-hidden="true">&#8599;</span><span class="visually-hidden">, sponsored link leaves Lemonteed</span></span>
             </a>
+          </div>
+        </section>
+
+        <section class="junk-drawer-shelf junk-drawer-related" aria-labelledby="related-districts-title">
+          <div class="junk-drawer-shelf__head">
+            <h2 id="related-districts-title">Related Districts</h2>
+            <p>Nearby doors, less rummaging.</p>
+          </div>
+          <div class="junk-drawer-related__grid">
+            <a href="/studio-lab/">Studio Lab</a>
+            <a href="/archive/">Full Archive</a>
+            <a href="/lighthouse-handoff/">Lighthouse Handoff</a>
           </div>
         </section>
       </main>

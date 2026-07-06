@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCB0LW648K"></script>
+    <script src="/assets/js/analytics.js" defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>List Mechanic | Lemonteed</title>
+    <meta name="description" content="Paste a messy list, repair it locally in your browser, then copy or download the cleaned result.">
+    <link rel="canonical" href="https://lemonteed.com/junk-drawer/list-mechanic/">
+    <meta property="og:title" content="List Mechanic | Lemonteed">
+    <meta property="og:description" content="A browser-only repair bench for cleaning, sorting, numbering, splitting, joining, and exporting messy lists.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lemonteed.com/junk-drawer/list-mechanic/">
+    <meta property="og:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="List Mechanic | Lemonteed">
+    <meta name="twitter:description" content="Paste a messy list, repair it locally, then copy or download the cleaned result.">
+    <meta name="twitter:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+    <link rel="icon" href="/images/favicons/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="/assets/css/style.css?v=10">
+    <link rel="stylesheet" href="/assets/css/list-mechanic.css?v=2">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "List Mechanic",
+        "url": "https://lemonteed.com/junk-drawer/list-mechanic/",
+        "description": "A browser-only list cleaning and transformation utility.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
+    <script src="/assets/js/mobile-header.js?v=1" defer></script>
+    <script src="/assets/js/list-mechanic.js?v=2" defer></script>
+  </head>
+  <body class="list-mechanic-page">
+    <a class="skip-link" href="#list-mechanic-content">Skip to List Mechanic</a>
+    <div class="site-shell">
+      <aside class="sidebar" aria-label="Site navigation">
+        <div class="sidebar__top">
+          <a class="brand" href="/" aria-label="Lemonteed home">
+            <img class="brand__logo" src="/images/lemonteedlogo-250.webp" srcset="/images/lemonteedlogo-250.webp 250w, /images/lemonteedlogo-456.webp 456w" sizes="160px" width="456" height="96" alt="Lemonteed">
+          </a>
+          <a class="info-link" href="/junk-drawer/">+ JUNK DRAWER</a>
+          <a class="random-artifact" href="/archive/?random=1">SUMMON RANDOM ARTIFACT</a>
+        </div>
+        <nav class="category-nav" aria-label="Portfolio categories">
+          <span class="nav-label">Categories</span>
+          <a class="category-link" href="/archive/" data-category-link="all">All</a>
+          <a class="category-link" href="/vrg-cards/" data-category-link="vrg-cards">VRG Cards</a>
+          <a class="category-link" href="/what-if/" data-category-link="what-if">What If</a>
+          <a class="category-link" href="/misc-gens/" data-category-link="misc-gens">Misc Gens</a>
+          <a class="category-link" href="/memetic-warfare/">Memetic Warfare</a>
+          <a class="category-link" href="/lemonteed-fm/">Lemonteed FM</a>
+        </nav>
+        <a href="/junk-drawer/" class="junk-drawer-module is-active" aria-label="Open Junk Drawer">
+          <div class="junk-drawer-module__face">
+            <div class="junk-drawer-module__handle"></div>
+            <span class="junk-drawer-module__label">Junk Drawer</span>
+          </div>
+        </a>
+      </aside>
+
+      <main class="content list-mechanic-main" id="list-mechanic-content">
+        <section class="lm-shell" aria-labelledby="list-mechanic-title">
+          <header class="lm-header">
+            <div>
+              <p class="lm-kicker">Lemonteed Field Utility / LM-01</p>
+              <h1 id="list-mechanic-title">List Mechanic</h1>
+              <p class="lm-primary-line">Paste whatever disaster you have.</p>
+              <p class="lm-explainer">Clean, sort, split, join, number, and export rough lists from a browser-local repair bench.</p>
+            </div>
+            <div class="lm-header-card">
+              <p>Browser-local privacy note</p>
+              <strong>No API. No upload. No account. The list stays in this tab.</strong>
+              <a href="/junk-drawer/">Back to Junk Drawer</a>
+            </div>
+          </header>
+
+          <section class="lm-status" aria-live="polite" aria-atomic="true">
+            <span class="lm-status__label">Work Order</span>
+            <span id="processing-message">Awaiting incoming mess.</span>
+          </section>
+
+          <div class="lm-workbench">
+            <section class="lm-panel lm-panel--input" aria-labelledby="incoming-label">
+              <div class="lm-panel__head">
+                <div>
+                  <p class="lm-panel__tag">Bay 01</p>
+                  <h2 id="incoming-label">Incoming Mess</h2>
+                </div>
+                <div class="lm-stats" aria-label="Input statistics">
+                  <span><b id="input-line-count">0</b> lines</span>
+                  <span><b id="input-char-count">0</b> chars</span>
+                </div>
+              </div>
+              <label class="sr-only" for="input-list">Incoming Mess</label>
+              <textarea id="input-list" spellcheck="false" placeholder="Paste list fragments, duplicates, weird spacing, comma piles, or numbered leftovers here."></textarea>
+              <div class="lm-action-row">
+                <button type="button" class="lm-button lm-button--secondary" id="clear-input">Clear input</button>
+                <button type="button" class="lm-button lm-button--secondary" id="load-sample">Load sample</button>
+              </div>
+            </section>
+
+            <section class="lm-panel lm-panel--output" aria-labelledby="output-label">
+              <div class="lm-panel__head">
+                <div>
+                  <p class="lm-panel__tag">Bay 02</p>
+                  <h2 id="output-label">Repaired List</h2>
+                </div>
+                <div class="lm-stats" aria-label="Output statistics">
+                  <span><b id="output-line-count">0</b> lines</span>
+                  <span><b id="output-char-count">0</b> chars</span>
+                </div>
+              </div>
+              <label class="sr-only" for="output-list">Repaired List</label>
+              <textarea id="output-list" readonly spellcheck="false" placeholder="Repairs land here. Input is preserved until you replace it."></textarea>
+              <p class="lm-summary" id="result-summary">No output yet.</p>
+              <div class="lm-action-grid">
+                <button type="button" class="lm-button lm-button--primary lm-action-grid__primary" id="copy-result" disabled>Copy result</button>
+                <button type="button" class="lm-button lm-button--secondary" id="download-result" disabled>Download .txt</button>
+                <button type="button" class="lm-button lm-button--secondary" id="replace-input" disabled>Replace input with result</button>
+                <button type="button" class="lm-button lm-button--secondary" id="undo-last" disabled>Undo last transformation</button>
+                <button type="button" class="lm-button lm-button--quiet-danger lm-action-grid__quiet" id="clear-result" disabled>Clear result</button>
+              </div>
+            </section>
+          </div>
+
+          <section class="lm-controls" aria-label="List repair controls">
+            <section class="lm-control-card" aria-labelledby="quick-repairs-title">
+              <div class="lm-card-head">
+                <p>Bench Rack</p>
+                <h2 id="quick-repairs-title">Quick Repairs</h2>
+              </div>
+              <div class="lm-button-grid">
+                <button type="button" class="lm-button" data-action="trim">Trim whitespace</button>
+                <button type="button" class="lm-button" data-action="removeBlank">Remove blank lines</button>
+                <button type="button" class="lm-button" data-action="dedupe">Remove duplicates</button>
+                <button type="button" class="lm-button" data-action="sortAsc">Sort A-Z</button>
+                <button type="button" class="lm-button" data-action="sortDesc">Sort Z-A</button>
+                <button type="button" class="lm-button" data-action="reverse">Reverse order</button>
+                <button type="button" class="lm-button" data-action="randomize">Randomize</button>
+              </div>
+              <label class="lm-check">
+                <input type="checkbox" id="case-sensitive-dedupe">
+                <span>Case-sensitive deduplication</span>
+              </label>
+            </section>
+
+            <section class="lm-control-card" aria-labelledby="case-title">
+              <div class="lm-card-head">
+                <p>Paint Booth</p>
+                <h2 id="case-title">Case</h2>
+              </div>
+              <fieldset class="lm-segmented">
+                <legend class="sr-only">Case transform</legend>
+                <label><input type="radio" name="case-mode" value="keep" checked><span>Keep original</span></label>
+                <label><input type="radio" name="case-mode" value="lower"><span>lowercase</span></label>
+                <label><input type="radio" name="case-mode" value="upper"><span>UPPERCASE</span></label>
+                <label><input type="radio" name="case-mode" value="title"><span>Title Case</span></label>
+              </fieldset>
+              <button type="button" class="lm-button lm-button--primary" data-action="applyCase">Apply case</button>
+            </section>
+
+            <section class="lm-control-card" aria-labelledby="prefix-suffix-title">
+              <div class="lm-card-head">
+                <p>Fit & Finish</p>
+                <h2 id="prefix-suffix-title">Prefix and Suffix</h2>
+              </div>
+              <div class="lm-field-grid">
+                <label for="prefix-field">Prefix</label>
+                <input id="prefix-field" type="text" autocomplete="off" placeholder="- ">
+                <label for="suffix-field">Suffix</label>
+                <input id="suffix-field" type="text" autocomplete="off" placeholder=",">
+              </div>
+              <button type="button" class="lm-button lm-button--primary" data-action="applyAffixes">Apply</button>
+            </section>
+
+            <section class="lm-control-card" aria-labelledby="numbering-title">
+              <div class="lm-card-head">
+                <p>Tag Press</p>
+                <h2 id="numbering-title">Numbering</h2>
+              </div>
+              <label class="lm-check">
+                <input type="checkbox" id="numbering-enabled">
+                <span>Enable numbering</span>
+              </label>
+              <div class="lm-field-grid lm-field-grid--compact">
+                <label for="number-start">Starting number</label>
+                <input id="number-start" type="number" min="0" step="1" value="1">
+                <label for="number-format">Separator format</label>
+                <select id="number-format">
+                  <option value="dot">1.</option>
+                  <option value="paren">1)</option>
+                  <option value="padded">01</option>
+                </select>
+              </div>
+              <div class="lm-action-row">
+                <button type="button" class="lm-button lm-button--primary" data-action="applyNumbering">Apply numbering</button>
+                <button type="button" class="lm-button lm-button--secondary" data-action="removeNumbering">Remove numbering</button>
+              </div>
+            </section>
+
+            <section class="lm-control-card lm-control-card--wide" aria-labelledby="separators-title">
+              <div class="lm-card-head">
+                <p>Line Coupler</p>
+                <h2 id="separators-title">Separators</h2>
+              </div>
+              <div class="lm-separator-grid">
+                <div>
+                  <h3>Split into lines</h3>
+                  <div class="lm-button-grid">
+                    <button type="button" class="lm-button" data-action="splitComma">Split comma-separated text</button>
+                    <button type="button" class="lm-button" data-action="splitSemicolon">Split semicolon-separated text</button>
+                    <button type="button" class="lm-button" data-action="splitCustom">Split custom separator</button>
+                  </div>
+                </div>
+                <div>
+                  <h3>Join lines</h3>
+                  <div class="lm-button-grid">
+                    <button type="button" class="lm-button" data-action="joinComma">Join lines with comma</button>
+                    <button type="button" class="lm-button" data-action="joinSemicolon">Join lines with semicolon</button>
+                    <button type="button" class="lm-button" data-action="joinCustom">Join lines with custom separator</button>
+                  </div>
+                </div>
+              </div>
+              <label class="lm-custom-separator" for="custom-separator">Custom separator</label>
+              <input id="custom-separator" type="text" autocomplete="off" placeholder=" | ">
+            </section>
+          </section>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
