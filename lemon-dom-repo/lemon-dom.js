@@ -173,6 +173,8 @@
     var root = (options && options.root) || document;
     var scope = root.querySelectorAll ? root : document;
 
+    document.documentElement.classList.add("lemon-dom-effects");
+
     scope.querySelectorAll("[data-lemon-glass]").forEach(glass);
     scope.querySelectorAll("[data-lemon-juice]").forEach(juice);
     scope.querySelectorAll("[data-lemon-squeeze]").forEach(squeeze);
