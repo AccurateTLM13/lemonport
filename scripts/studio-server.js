@@ -17,6 +17,7 @@ const { contentFile: liveExperimentFile, validateLiveExperiment, buildLiveExperi
 const { contentFile: lemonteedFmFile, validateLemonteedFm, buildLemonteedFm } = require("./build-lemonteed-fm");
 const { resolvePathWithinRoot } = require("./security-utils");
 const { galleryWidths, statuses } = require("./site-config");
+const { loadSeo, saveSeoFile, buildSeo } = require("./build-seo");
 
 const root = path.resolve(__dirname, "..");
 const contentFile = path.join(root, "content", "projects.json");
@@ -1645,6 +1646,80 @@ async function route(request, response) {
       };
       fs.writeFileSync(MUTATION_MANIFEST_FILE, `${JSON.stringify(manifest, null, 2)}\n`);
       sendJson(response, 200, { promoted: true, manifest });
+      return;
+    }
+
+    // ── SEO Manager API ──────────────────────────────────────────────────────
+    // GET /api/seo
+    if (request.method === "GET" && url.pathname === "/api/seo") {
+      sendJson(response, 200, { pages: loadSeo() });
+      return;
+    }
+
+    // PATCH /api/seo  — save one or all page records, rebuild HTML files
+    if (request.method === "PATCH" && url.pathname === "/api/seo") {
+      const body = await readJsonBody(request);
+      const incoming = Array.isArray(body.pages) ? body.pages : null;
+      if (!incoming) {
+        sendJson(response, 400, { error: "pages array required." });
+        return;
+      }
+      // Merge incoming changes on top of current records (keyed by page key)
+      const current = loadSeo();
+      const byKey = new Map(current.map((r) => [r.key, r]));
+      incoming.forEach((record) => {
+        if (record.key && byKey.has(record.key)) {
+          byKey.set(record.key, { ...byKey.get(record.key), ...record, updatedAt: new Date().toISOString() });
+        }
+      });
+      const merged = Array.from(byKey.values());
+      saveSeoFile(merged);
+      const buildResults = buildSeo();
+      const patched = buildResults.filter((r) => r.status === "patched").length;
+      sendJson(response, 200, { pages: merged, patched });
+      return;
+    }
+
+    // POST /api/seo/og-image — upload an OG image, save to images/og/, return url
+    if (request.method === "POST" && url.pathname === "/api/seo/og-image") {
+      const body = await readJsonBody(request);
+      const { buffer } = decodeDataUrl(body.imageData);
+      const ogDir = path.join(root, "images", "og");
+      const uploadDir = path.join(root, ".studio-uploads");
+      const baseName = slugify(body.filename || body.key || "og-image");
+      let filename = `${baseName}.webp`;
+      let counter = 2;
+      while (fs.existsSync(path.join(ogDir, filename))) {
+        filename = `${baseName}-${counter}.webp`;
+        counter += 1;
+      }
+      const tempFile = path.join(uploadDir, `seo-og-upload-${baseName}`);
+      fs.mkdirSync(ogDir, { recursive: true });
+      fs.mkdirSync(uploadDir, { recursive: true });
+      fs.writeFileSync(tempFile, buffer);
+      try {
+        // Convert to WebP at 1200×630 — crop/fit to OG standard if oversized
+        const outFile = path.join(ogDir, filename);
+        execFileSync("magick", [
+          tempFile,
+          "-auto-orient",
+          "-strip",
+          "-resize", "1200x630^",
+          "-gravity", "center",
+          "-extent", "1200x630",
+          "-quality", "88",
+          "-define", "webp:method=6",
+          outFile
+        ], { timeout: 15000 });
+        const dims = imageDimensions(outFile);
+        sendJson(response, 201, {
+          url: `/images/og/${filename}`,
+          width: dims.width,
+          height: dims.height
+        });
+      } finally {
+        if (fs.existsSync(tempFile)) fs.unlinkSync(tempFile);
+      }
       return;
     }
 

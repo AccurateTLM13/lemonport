@@ -44,6 +44,7 @@ The content source of truth is:
 - `content/million-dollar-receipt.json`
 - `content/vrg-vault.json`
 - `content/operator-log/schedule.json`
+- `content/seo.json`
 
 These files define artifact metadata, category profiles, audio tracks, and mutation parameters. Agents should update these files through Lemonteed Studio when possible, or by careful direct JSON edits when explicitly needed.
 
@@ -58,6 +59,8 @@ The generated browser data files are:
 - `assets/js/mdr-config.js`
 - `assets/js/mdr-stats.js`
 - `lemonteed-fm/tracks.js`
+
+`scripts/build-seo.js` reads `content/seo.json` and patches the `<head>` of each registered public page's HTML file in place (backing up before writing). Run this after any `content/seo.json` change, or use the SEO Manager workspace in Studio which runs it automatically on save.
 
 These files are produced by respective build scripts under `scripts/`. Do not manually edit them as the source of truth. Update the corresponding content JSON file and rebuild.
 

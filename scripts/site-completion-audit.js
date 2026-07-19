@@ -38,6 +38,8 @@ const PUBLIC_HTML_GLOBS = [
   "junk-drawer/character-supply/index.html",
   "junk-drawer/list-mechanic/index.html",
   "studio-lab/index.html",
+  "ai-license/index.html",
+  "ai-access/index.html",
   "lemonteed-fm/index.html",
   "lighthouse-handoff/index.html",
   "lemon-dom/index.html",

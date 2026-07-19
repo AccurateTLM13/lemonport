@@ -2057,3 +2057,385 @@ button:disabled {
   background: #f7f7f4;
   cursor: pointer;
 }
+
+/* ── SEO Manager ─────────────────────────────────────────────────────────── */
+
+.seo-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.seo-panel > .panel-heading {
+  padding: 24px 24px 0;
+}
+
+.seo-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  flex: 1;
+  border-top: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.seo-page-list {
+  overflow-y: auto;
+  border-right: 1px solid var(--line);
+  background: var(--bg);
+}
+
+.seo-page-list__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.seo-view-link {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+
+.seo-view-link:hover {
+  color: var(--ink);
+}
+
+.seo-page-nav {
+  padding: 6px 0;
+}
+
+.seo-page-btn {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  color: var(--ink);
+  background: transparent;
+  font-size: 12px;
+  font-weight: 400;
+  text-align: left;
+  cursor: pointer;
+  min-height: auto;
+  line-height: 1.3;
+}
+
+.seo-page-btn:hover {
+  background: #eeece6;
+}
+
+.seo-page-btn.is-active {
+  background: var(--accent);
+  font-weight: 700;
+}
+
+.seo-page-btn__label {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.seo-page-btn.is-active .seo-page-btn__label {
+  color: inherit;
+}
+
+.seo-editor {
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.seo-editor__empty p {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.seo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 760px;
+}
+
+.seo-section {
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.seo-section:last-of-type {
+  border-bottom: none;
+}
+
+.seo-section__title {
+  margin: 0 0 16px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+}
+
+.seo-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.seo-label {
+  display: grid;
+  gap: 6px;
+}
+
+.seo-label--full {
+  grid-column: 1 / -1;
+}
+
+.seo-label__text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.seo-hint {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.seo-hint code {
+  background: #eceae3;
+  padding: 1px 4px;
+  border-radius: 2px;
+  font-size: 10px;
+}
+
+.seo-input,
+.seo-textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  color: var(--ink);
+  background: var(--panel);
+  font: inherit;
+  font-size: 13px;
+}
+
+.seo-input {
+  min-height: 42px;
+  padding: 8px 10px;
+}
+
+.seo-input--path {
+  font-size: 12px;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.seo-textarea {
+  padding: 10px;
+  resize: vertical;
+  line-height: 1.45;
+}
+
+.seo-input:focus,
+.seo-textarea:focus {
+  outline: 2px solid var(--ink);
+  outline-offset: 0;
+}
+
+/* Character counters */
+.seo-counter {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 2px;
+  background: #eceae3;
+  color: var(--muted);
+  min-width: 36px;
+  text-align: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.seo-counter--ok {
+  background: #d4f7a0;
+  color: #2c5f00;
+}
+
+.seo-counter--warn {
+  background: #fff3b0;
+  color: #7a5800;
+}
+
+.seo-counter--over {
+  background: #ffd6d6;
+  color: #a30000;
+}
+
+/* OG Image block */
+.seo-og-image-block {
+  display: grid;
+  gap: 10px;
+}
+
+.seo-og-image-block__head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.seo-og-image-dim {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.seo-og-preview {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 1200 / 630;
+  border: 1px solid var(--line);
+  background: #eceae3;
+  overflow: hidden;
+}
+
+.seo-og-preview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.seo-og-preview__empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.seo-og-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.seo-og-actions .seo-input {
+  flex: 1;
+  min-width: 200px;
+}
+
+.seo-upload-label {
+  display: flex;
+  align-items: center;
+  padding: 8px 14px;
+  min-height: 42px;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  background: transparent;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.seo-upload-label:hover {
+  background: #eceae3;
+}
+
+.seo-upload-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.seo-upload-status {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  align-self: center;
+}
+
+/* Actions bar */
+.seo-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  margin-top: 4px;
+  border-top: 1px solid var(--line);
+}
+
+.seo-save-btn {
+  min-height: var(--touch-target);
+  padding: 0 20px;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  background: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.seo-save-btn:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+.seo-reload-btn {
+  min-height: var(--touch-target);
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  background: transparent;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.seo-reload-btn:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.seo-page-link {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+
+.seo-page-link:hover {
+  color: var(--ink);
+}

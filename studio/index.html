@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Lemonteed Studio</title>
-    <link rel="stylesheet" href="/studio/studio.css?v=2">
+    <link rel="stylesheet" href="/studio/studio.css?v=3">
     <script src="/assets/js/memetic-game-data.js"></script>
-    <script src="/studio/studio.js?v=2" defer></script>
+    <script src="/studio/studio.js?v=3" defer></script>
   </head>
   <body>
     <div class="studio-app">
@@ -27,6 +27,7 @@
           <button type="button" data-workspace-nav="live">Live Experiment</button>
           <button type="button" data-workspace-nav="fm">Lemonteed FM</button>
           <button type="button" data-workspace-nav="report">Build Report</button>
+          <button type="button" data-workspace-nav="seo">SEO Manager</button>
         </nav>
         <div class="studio-dev-links" aria-label="Hidden dev pages">
           <span class="studio-dev-links__label">Dev only</span>
@@ -470,6 +471,138 @@
         </div>
 
         <div class="build-report" data-build-report-panel></div>
+      </section>
+
+      <section class="workspace-panel seo-panel" data-workspace="seo" aria-labelledby="seo-title">
+        <div class="panel-heading">
+          <h2 id="seo-title">SEO Manager</h2>
+          <p>Edit meta titles, descriptions, Open Graph data, and OG images for every public static page on the site.</p>
+        </div>
+
+        <div class="seo-layout">
+          <aside class="seo-page-list" aria-label="Pages">
+            <div class="seo-page-list__head">
+              <span>Pages</span>
+              <a href="/" target="_blank" rel="noreferrer" class="seo-view-link">View Site</a>
+            </div>
+            <div class="seo-page-nav" data-seo-page-nav></div>
+          </aside>
+
+          <div class="seo-editor" data-seo-editor>
+            <div class="seo-editor__empty" data-seo-empty>
+              <p>Select a page to edit its SEO metadata.</p>
+            </div>
+
+            <form class="seo-form" data-seo-form hidden>
+              <input type="hidden" name="key" data-seo-key>
+
+              <div class="seo-section">
+                <h3 class="seo-section__title">Page Identity</h3>
+                <div class="seo-form-grid">
+                  <label class="seo-label seo-label--full">
+                    <span class="seo-label__text">
+                      Title tag
+                      <span class="seo-counter" data-seo-counter="title"></span>
+                    </span>
+                    <input name="title" type="text" class="seo-input" autocomplete="off" placeholder="Page Title | Lemonteed" data-seo-field="title" data-seo-limit="60">
+                    <span class="seo-hint">Shown in browser tabs and search results. Aim for 50–60 characters.</span>
+                  </label>
+                  <label class="seo-label seo-label--full">
+                    <span class="seo-label__text">
+                      Meta description
+                      <span class="seo-counter" data-seo-counter="description"></span>
+                    </span>
+                    <textarea name="description" class="seo-textarea" rows="3" placeholder="A concise page summary for search engines and social previews." data-seo-field="description" data-seo-limit="160"></textarea>
+                    <span class="seo-hint">Aim for 120–160 characters. Shown under the title in search results.</span>
+                  </label>
+                  <label class="seo-label seo-label--full">
+                    <span class="seo-label__text">Canonical URL</span>
+                    <input name="canonicalUrl" type="url" class="seo-input" autocomplete="off" placeholder="https://lemonteed.com/page/" data-seo-field="canonicalUrl">
+                  </label>
+                </div>
+              </div>
+
+              <div class="seo-section">
+                <h3 class="seo-section__title">Open Graph (og:)</h3>
+                <div class="seo-form-grid">
+                  <label class="seo-label seo-label--full">
+                    <span class="seo-label__text">
+                      OG title
+                      <span class="seo-counter" data-seo-counter="ogTitle"></span>
+                    </span>
+                    <input name="ogTitle" type="text" class="seo-input" autocomplete="off" placeholder="Same as title tag unless you need a social-specific version" data-seo-field="ogTitle" data-seo-limit="60">
+                  </label>
+                  <label class="seo-label seo-label--full">
+                    <span class="seo-label__text">
+                      OG description
+                      <span class="seo-counter" data-seo-counter="ogDescription"></span>
+                    </span>
+                    <textarea name="ogDescription" class="seo-textarea" rows="3" placeholder="Social preview description" data-seo-field="ogDescription" data-seo-limit="160"></textarea>
+                  </label>
+
+                  <div class="seo-og-image-block seo-label--full">
+                    <div class="seo-og-image-block__head">
+                      <span class="seo-label__text">OG Image</span>
+                      <span class="seo-og-image-dim">1200 × 630 recommended</span>
+                    </div>
+                    <div class="seo-og-preview" data-seo-og-preview>
+                      <img data-seo-og-img src="" alt="OG image preview" hidden>
+                      <div class="seo-og-preview__empty" data-seo-og-empty>No OG image set</div>
+                    </div>
+                    <div class="seo-og-actions">
+                      <input name="ogImage" type="text" class="seo-input seo-input--path" autocomplete="off" placeholder="/images/og/my-page.webp" data-seo-field="ogImage">
+                      <label class="seo-upload-label" for="seo-og-upload">
+                        Upload new OG image
+                        <input id="seo-og-upload" type="file" accept="image/png,image/jpeg,image/webp" class="seo-upload-input" data-seo-og-upload>
+                      </label>
+                      <span class="seo-upload-status" data-seo-upload-status hidden></span>
+                    </div>
+                    <span class="seo-hint">Images will be converted to WebP and cropped to 1200×630. Stored in <code>images/og/</code>.</span>
+                  </div>
+
+                  <label class="seo-label">
+                    <span class="seo-label__text">OG image width</span>
+                    <input name="ogImageWidth" type="number" class="seo-input" value="1200" data-seo-field="ogImageWidth">
+                  </label>
+                  <label class="seo-label">
+                    <span class="seo-label__text">OG image height</span>
+                    <input name="ogImageHeight" type="number" class="seo-input" value="630" data-seo-field="ogImageHeight">
+                  </label>
+                </div>
+              </div>
+
+              <div class="seo-section">
+                <h3 class="seo-section__title">Twitter / X Card</h3>
+                <div class="seo-form-grid">
+                  <label class="seo-label seo-label--full">
+                    <span class="seo-label__text">
+                      Twitter title
+                      <span class="seo-counter" data-seo-counter="twitterTitle"></span>
+                    </span>
+                    <input name="twitterTitle" type="text" class="seo-input" autocomplete="off" placeholder="Leave blank to mirror OG title" data-seo-field="twitterTitle" data-seo-limit="60">
+                  </label>
+                  <label class="seo-label seo-label--full">
+                    <span class="seo-label__text">
+                      Twitter description
+                      <span class="seo-counter" data-seo-counter="twitterDescription"></span>
+                    </span>
+                    <textarea name="twitterDescription" class="seo-textarea" rows="2" placeholder="Leave blank to mirror OG description" data-seo-field="twitterDescription" data-seo-limit="160"></textarea>
+                  </label>
+                  <label class="seo-label seo-label--full">
+                    <span class="seo-label__text">Twitter image path</span>
+                    <input name="twitterImage" type="text" class="seo-input seo-input--path" autocomplete="off" placeholder="/images/og/my-page.webp — leave blank to mirror OG image" data-seo-field="twitterImage">
+                  </label>
+                </div>
+              </div>
+
+              <div class="seo-actions">
+                <button type="submit" class="seo-save-btn" data-seo-save>Save + Patch HTML</button>
+                <button type="button" class="seo-reload-btn" data-seo-reload>Reload from file</button>
+                <a class="seo-page-link" data-seo-page-link href="#" target="_blank" rel="noreferrer">Open page</a>
+              </div>
+            </form>
+          </div>
+        </div>
       </section>
 
       <div class="validation-panel" data-validation-panel hidden></div>
