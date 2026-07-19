@@ -8,14 +8,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lemonteed FM | Free-to-use Music Discovery</title>
-  <meta name="description"
-    content="Lemonteed FM is a tiny static music discovery player for free-to-use tracks, clear licenses, and questionable taste.">
+  <meta name="description" content="Lemonteed FM is a tiny programmed internet radio station for unusual tracks, clear licenses, and music the algorithm forgot.">
   <link rel="canonical" href="https://lemonteed.com/lemonteed-fm/">
   <meta property="og:title" content="Lemonteed FM">
   <meta property="og:description" content="Free-to-use tracks, questionable taste, and one extremely shiny lemon.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://lemonteed.com/lemonteed-fm/">
   <meta property="og:image" content="https://lemonteed.com/images/lemonteed-fm/lemonteed-fm.webp">
+  <meta property="og:image:secure_url" content="https://lemonteed.com/images/lemonteed-fm/lemonteed-fm.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Lemonteed FM">
   <meta name="twitter:description" content="Free-to-use tracks, questionable taste, and one extremely shiny lemon.">
@@ -29,360 +31,602 @@
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebApplication",
+      "@type": "RadioStation",
       "name": "Lemonteed FM",
       "url": "https://lemonteed.com/lemonteed-fm/",
-      "description": "A tiny static music discovery player for free-to-use tracks and clear licenses.",
-      "applicationCategory": "MultimediaApplication",
+      "description": "A tiny programmed internet radio station for unusual tracks and clear licenses.",
+      "broadcastFrequency": "LFM 93.7",
       "operatingSystem": "Web"
     }
   </script>
-  <script src="tracks.js" defer></script>
   <script src="lemonteed-fm.js" defer></script>
-  <meta property="og:image:secure_url" content="https://lemonteed.com/images/lemonteed-fm/lemonteed-fm.webp">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
 </head>
 
 <body class="lemonteed-fm-page">
-  <a class="skip-link" href="#crate">Skip to tracks</a>
+  <a class="skip-link" href="#live">Skip to now playing</a>
 
+  <!-- ── Mobile Header ─────────────────────────────────────── -->
+  <header class="fm-mobile-header" aria-label="Lemonteed FM mobile navigation">
+    <div class="fm-mobile-brand">
+      <img src="/images/lemonteed-fm/disco-lemon.webp" width="34" height="34" alt="Lemonteed FM logo">
+      <div>
+        <span class="fm-mobile-brand__name">Lemonteed FM</span>
+        <span class="fm-mobile-brand__freq">LFM 93.7</span>
+      </div>
+    </div>
+    <button class="fm-nav-toggle" type="button" data-nav-toggle aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav">☰</button>
+  </header>
+
+  <!-- ── Mobile Nav ───────────────────────────────────────── -->
+  <nav class="fm-mobile-nav" id="mobile-nav" aria-label="Station sections" data-mobile-nav>
+    <a href="#live">▶ Live</a>
+    <a href="#schedule">⏱ Schedule</a>
+    <a href="#freshly-added">✦ Freshly Added</a>
+    <a href="#crate">⊟ Track Crate</a>
+    <a href="#rotation">↻ Rotation</a>
+    <a href="#requests">✉ Requests</a>
+    <a href="#licensing">⊙ Licensing</a>
+    <a href="#about">◉ About</a>
+  </nav>
+
+  <!-- ── Shell ────────────────────────────────────────────── -->
   <div class="fm-shell">
+
+    <!-- ── Sidebar Rail ─────────────────────────────────── -->
     <aside class="fm-sidebar" aria-label="Lemonteed FM navigation">
-        <a class="fm-brand" href="/" aria-label="Lemonteed home">
-          <span class="fm-brand__mark">
-            <img src="/images/lemonteed-fm/disco-lemon.webp" width="96" height="96" alt="Lemonteed FM disco lemon logo">
-          </span>
-          <span>
-            <strong>Lemonteed FM</strong>
-            <small>LFM 93.7 / static signal</small>
-        </span>
+
+      <!-- Brand -->
+      <a class="fm-brand" href="/" aria-label="Lemonteed home">
+        <div class="fm-brand__mark">
+          <img src="/images/lemonteed-fm/disco-lemon.webp" width="48" height="48" alt="Lemonteed FM disco-ball lemon mascot">
+        </div>
+        <div class="fm-brand__text">
+          <span class="fm-brand__name">Lemonteed FM</span>
+          <span class="fm-brand__freq">LFM 93.7 / Static Signal</span>
+        </div>
       </a>
 
+      <!-- Navigation -->
       <nav class="fm-nav" aria-label="Station sections">
-        <a class="is-active" href="#home" aria-current="page">Home</a>
-        <a class="piet-only" href="#piet-schedule">Schedule</a>
-        <a href="#crate">Browse</a>
-        <a href="#crate">Crate</a>
-        <a href="#requests">Requests</a>
-        <a href="#licenses">Licenses</a>
-        <a href="#about">About</a>
+        <a href="#live" class="is-active" aria-current="page" data-icon="▶">Live</a>
+        <a href="#schedule" data-icon="⏱">Schedule</a>
+        <a href="#freshly-added" data-icon="✦">Freshly Added</a>
+        <a href="#crate" data-icon="⊟">Track Crate</a>
+        <a href="#rotation" data-icon="↻">Rotation</a>
+        <a href="#requests" data-icon="✉">Requests</a>
+        <a href="#licensing" data-icon="⊙">Licensing</a>
+        <a href="#about" data-icon="◉">About</a>
       </nav>
 
-      <div class="fm-sidebar__status" aria-label="Station status">
-        <span class="fm-pill">ON AIR</span>
-        <button class="fm-mode-toggle" type="button" data-piet-toggle aria-pressed="false">
-          <span>Late Night Mode</span>
-          <strong data-piet-toggle-label>Off</strong>
-        </button>
-        <dl class="fm-signal">
-          <div>
-            <dt data-mode-copy data-default="Signal" data-piet="Your Time">Signal</dt>
-            <dd data-mode-copy data-default="Lemon-lit" data-piet="11:37 PM" data-piet-clock>Lemon-lit</dd>
+      <!-- Station status block -->
+      <div class="fm-station-status" aria-label="Station status">
+        <div class="fm-on-air" aria-label="On air">
+          <span class="fm-on-air__dot" aria-hidden="true"></span>
+          <span class="fm-on-air__label">On Air</span>
+        </div>
+        <dl class="fm-signal-meta">
+          <div class="fm-signal-meta__row">
+            <dt class="fm-signal-meta__key">Signal</dt>
+            <dd class="fm-signal-meta__val">Lemon-lit</dd>
           </div>
-          <div>
-            <dt data-mode-copy data-default="License desk" data-piet="Listeners Online">License desk</dt>
-            <dd data-mode-copy data-default="Awake" data-piet="1,337" data-piet-listeners>Awake</dd>
+          <div class="fm-signal-meta__row">
+            <dt class="fm-signal-meta__key">Program</dt>
+            <dd class="fm-signal-meta__val">Least Funded</dd>
           </div>
-          <div>
-            <dt data-mode-copy data-default="Algorithm" data-piet="Requests">Algorithm</dt>
-            <dd data-mode-copy data-default="Ignored" data-piet="Open">Ignored</dd>
+          <div class="fm-signal-meta__row">
+            <dt class="fm-signal-meta__key">License mode</dt>
+            <dd class="fm-signal-meta__val">Verified</dd>
           </div>
-          <div>
-            <dt class="piet-only">Signal</dt>
-            <dd class="piet-only" data-piet-signal>Mostly Fine</dd>
+          <div class="fm-signal-meta__row">
+            <dt class="fm-signal-meta__key">Algorithm</dt>
+            <dd class="fm-signal-meta__val">Ignored</dd>
           </div>
         </dl>
       </div>
     </aside>
 
-    <main class="fm-main" id="home">
-      <header class="fm-hero">
-        <div class="fm-signal-wave" aria-hidden="true">
-          <svg viewBox="0 0 1200 420" preserveAspectRatio="none" focusable="false">
-            <path d="M0 228 C90 138 158 138 238 228 S390 318 480 228 638 138 728 228 888 318 978 228 1120 142 1200 210" />
-            <path d="M0 276 C110 210 185 206 260 276 S405 342 520 276 704 210 802 276 1008 342 1200 252" />
-            <path d="M0 178 C130 104 218 108 318 178 S514 250 628 178 828 102 934 178 1100 244 1200 194" />
+    <!-- ── Main Canvas ────────────────────────────────────── -->
+    <main class="fm-main">
+
+      <!-- ── 1. Now Broadcasting Hero ────────────────────── -->
+      <header class="fm-hero" id="live" aria-labelledby="now-broadcasting-title">
+
+        <!-- Ambient waveform -->
+        <div class="fm-hero__wave" aria-hidden="true">
+          <svg viewBox="0 0 960 120" preserveAspectRatio="none" focusable="false">
+            <path d="M0 60 C80 28 160 92 240 60 S400 28 480 60 640 92 720 60 880 28 960 60"/>
+            <path d="M0 60 C100 80 200 40 300 60 S500 80 600 60 800 40 900 60"/>
+            <path d="M0 60 C120 44 240 76 360 60 S600 44 720 60 840 76 960 60"/>
           </svg>
         </div>
-        <div class="fm-hero__copy">
-          <div class="fm-piet-status-row piet-only" aria-label="Late night broadcast status">
-            <span>11 PM - 5 AM</span>
-            <span>Your local time</span>
-            <span class="fm-on-air-pill">ON AIR</span>
+
+        <!-- Left: Broadcast information & controls -->
+        <div class="fm-hero__main">
+
+          <!-- Eyebrow: live status + frequency -->
+          <div class="fm-hero__eyebrow" aria-label="Broadcast status">
+            <span class="fm-live-badge" aria-label="On air">
+              <span class="fm-live-badge__dot" aria-hidden="true"></span>
+              NOW BROADCASTING
+            </span>
+            <span class="fm-freq-badge" aria-hidden="true">LFM 93.7</span>
           </div>
-          <p class="fm-kicker fm-default-only">Minimally compliant disco desk</p>
-          <div class="fm-hero__badges fm-default-only" aria-label="Station badges">
-            <span>LFM 93.7</span>
-            <span>Static signal</span>
-            <span>License-aware audio nonsense</span>
+
+          <!-- Program name -->
+          <p class="fm-hero__program" data-hero-program>Program: Internet's Least Funded Booth</p>
+
+          <!-- Track title -->
+          <h1 class="fm-hero__title" id="now-broadcasting-title" data-hero-title>Internet's Least Funded Booth</h1>
+          <p class="fm-hero__artist" data-hero-artist>Lemonteed FM</p>
+          <p class="fm-hero__album" data-hero-album>Station Originals</p>
+
+          <!-- License & source badges -->
+          <div class="fm-hero__meta">
+            <span class="fm-license-badge" data-hero-license>All Rights Reserved</span>
+            <span class="fm-source-badge" data-hero-source>SoundCloud</span>
           </div>
-          <h1 data-mode-copy data-default="Lemonteed FM" data-piet="PIET WAS RIGHT RADIO">Lemonteed FM</h1>
-          <p class="fm-subtitle" data-mode-copy data-default="Free-to-use tracks, questionable taste, and one extremely shiny lemon." data-piet="Piet's Late Night Lo-Fi Show">Free-to-use tracks, questionable taste, and one extremely shiny lemon.</p>
-          <p class="fm-body" data-mode-copy data-default="A tiny web player for free-to-use tracks, weird internet music, and songs the algorithm forgot." data-piet="The overnight desk is open. Lo-fi loops, static wisdom, and suspiciously accurate takes until sunrise.">A tiny web player for free-to-use tracks, weird internet music, and songs the algorithm forgot.</p>
-          <p class="fm-broadcast-line" data-mode-copy data-default="Broadcasting from the internet's least funded booth." data-piet="Broadcasting from somewhere between sleep and spite.">Broadcasting from the internet's least funded booth.</p>
-          <div class="fm-actions" aria-label="Primary actions">
-            <button class="fm-button fm-button--primary" type="button" data-start-listening data-mode-copy data-default="Start Listening" data-piet="Tune Into Piet">Start Listening</button>
-            <button class="fm-button fm-default-only" type="button" data-open-request>Request a Track</button>
-            <button class="fm-button piet-only" type="button" data-piet-schedule-button>Show Schedule</button>
+
+          <!-- Curator editorial note -->
+          <blockquote class="fm-hero__note" data-hero-note>
+            The booth theme. The signal that tells you something mildly unusual is about to happen.
+          </blockquote>
+
+          <!-- Playback controls -->
+          <div class="fm-hero__controls" role="group" aria-label="Playback controls">
+            <button class="fm-play-btn" type="button" data-hero-play aria-label="Play">▶</button>
+            <div class="fm-progress-wrap">
+              <div class="fm-progress-times" aria-hidden="true">
+                <span data-current-time>0:00</span>
+                <span data-duration-time>1:12</span>
+              </div>
+              <input class="fm-range" type="range" min="0" max="100" value="0" step="0.1" data-hero-progress aria-label="Track progress">
+            </div>
+            <div class="fm-volume-wrap" aria-label="Volume">
+              <span class="fm-volume-icon" aria-hidden="true">🔊</span>
+              <input class="fm-range" type="range" min="0" max="1" step="0.01" value="0.8" data-volume aria-label="Volume">
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="fm-hero__actions" role="group" aria-label="Track actions">
+            <button class="fm-btn" type="button" data-copy-hero-attribution>
+              ⎘ Copy Attribution
+            </button>
+            <button class="fm-btn" type="button" data-open-source>
+              ↗ Open Source
+            </button>
           </div>
         </div>
 
-        <aside class="fm-broadcast-card" aria-label="Now broadcasting">
-          <div class="fm-broadcast-card__top">
-            <span data-mode-copy data-default="Now broadcasting" data-piet="Piet's booth">Now broadcasting</span>
-            <strong data-mode-copy data-default="LFM 93.7" data-piet="11:37 PM" data-piet-clock>LFM 93.7</strong>
+        <!-- Right: Artwork -->
+        <div class="fm-hero__art" aria-hidden="true">
+          <div class="fm-hero__artwork-wrap">
+            <img
+              src="/images/lemonteed-fm/lemonteed-fm-93-7-internet-s-least-funded-booth.webp"
+              alt="Cover art: Internet's Least Funded Booth"
+              width="900"
+              height="900"
+              data-hero-art
+              loading="eager"
+            >
+            <!-- Mascot overlay -->
+            <div class="fm-hero__mascot-layer">
+              <img src="/images/lemonteed-fm/disco-lemon.webp" alt="Lemonteed FM disco-ball lemon mascot" width="88" height="88">
+            </div>
           </div>
-          <figure class="fm-mascot fm-piet-art" aria-label="Lemonteed FM mascot"
-            data-mode-aria-label data-default="Lemonteed FM mascot" data-piet="Piet hosting the late-night Lemonteed FM booth">
-            <!-- TODO: Replace temporary Piet artwork with final optimized WebP/transparent hero asset. -->
-            <img data-mode-art src="/images/lemonteed-fm/lemonteed-fm.webp" width="900" height="900"
-              data-default-src="/images/lemonteed-fm/lemonteed-fm.webp"
-              data-piet-src="/images/vrg-cards/piet.webp"
-              data-default-alt="A glossy Lemonteed mascot acting as the Lemonteed FM station host."
-              data-piet-alt="Piet wearing a red hat and sunglasses on a trading-card style broadcast image."
-              alt="A glossy Lemonteed mascot acting as the Lemonteed FM station host.">
-          </figure>
-          <div class="fm-eq" aria-hidden="true">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <p data-mode-copy data-default="Default cover art. Surprisingly serious sunglasses." data-piet="Signal drift detected." data-piet-signal-status>Default cover art. Surprisingly serious sunglasses.</p>
-        </aside>
+        </div>
       </header>
 
-      <section class="fm-section piet-broadcast" id="piet-schedule" aria-labelledby="piet-schedule-title">
+      <!-- ── 2. Schedule Strip ─────────────────────────────── -->
+      <section class="fm-section" id="schedule" aria-labelledby="schedule-title">
         <div class="fm-section__head">
           <div>
-            <p class="fm-kicker">Tonight's Lo-Fi Rotation</p>
-            <h2 id="piet-schedule-title">Piet's Overnight Board</h2>
+            <p class="fm-eyebrow"><span class="fm-eyebrow__dot" aria-hidden="true"></span> Programming</p>
+            <h2 class="fm-section-title" id="schedule-title">On Air Today</h2>
           </div>
-          <p class="fm-section__note">Carefully uncurated. Not a mistake.</p>
+          <p class="fm-section-note">Broadcast starts when the lemon is ready.</p>
         </div>
 
-        <div class="piet-broadcast-grid">
-          <article class="piet-live-card" aria-label="Current late-night segment">
-            <span class="fm-on-air-pill">LIVE NOW</span>
-            <h3 data-piet-live-title>Piet's Certified Correct Takes</h3>
-            <p><span data-piet-segment-time>1:37 AM</span> · YOUR LOCAL TIME</p>
-            <p data-piet-live-next>Next: Songs for People Still Awake</p>
-          </article>
-
-          <article class="piet-ticker" aria-live="polite">
-            <span>PIET JUST SAID:</span>
-            <p data-piet-quote>"You are not behind. You are buffering."</p>
-          </article>
-
-          <article class="broadcast-log">
-            <!-- TODO: Later, generate broadcast log items based on local time and current segment. -->
-            <h3>Broadcast Log</h3>
-            <ol>
-              <li><time>11:00 PM</time> Piet entered the booth.</li>
-              <li><time>11:42 PM</time> First questionable take approved.</li>
-              <li><time>12:18 AM</time> Static break survived.</li>
-              <li><time>1:37 AM</time> Current segment: Certified Correct Takes.</li>
-            </ol>
-          </article>
+        <div class="fm-schedule-strip" data-schedule-strip aria-label="Today's programming schedule">
+          <!-- Rendered by JS -->
         </div>
 
-        <div class="piet-schedule-list" aria-label="Late-night segment schedule">
-          <article class="piet-schedule-item">
-            <time>11:00 PM - 12:00 AM</time>
-            <h3>The Sign-On</h3>
-            <p>Piet opens the booth. The signal is weak but emotionally available.</p>
-          </article>
-          <article class="piet-schedule-item">
-            <time>12:00 AM - 1:30 AM</time>
-            <h3>Static Breaks</h3>
-            <p>Short interruptions of noise, thought, and questionable advice.</p>
-          </article>
-          <article class="piet-schedule-item is-active">
-            <time>1:30 AM - 3:00 AM</time>
-            <h3>Piet's Certified Correct Takes</h3>
-            <p>Hot takes no one asked for but everyone somehow needed.</p>
-          </article>
-          <article class="piet-schedule-item">
-            <time>3:00 AM - 4:30 AM</time>
-            <h3>Songs for People Still Awake</h3>
-            <p>For insomniacs, overthinkers, and people working tomorrow.</p>
-          </article>
-          <article class="piet-schedule-item">
-            <time>4:30 AM - 5:00 AM</time>
-            <h3>Sunrise Shutdown</h3>
-            <p>The booth cools down. The takes remain legally unresolved.</p>
-          </article>
-        </div>
-
-        <div class="piet-segment-cards" aria-label="Featured late-night segments">
-          <article>
-            <h3>Static Breaks</h3>
-            <p>Short interruptions of noise, thought, and questionable advice.</p>
-            <button class="fm-button" type="button">Listen In</button>
-          </article>
-          <article>
-            <h3>Piet's Certified Correct Takes</h3>
-            <p>Hot takes no one asked about but everyone somehow needed.</p>
-            <button class="fm-button" type="button">See The Takes</button>
-          </article>
-          <article>
-            <h3>Songs For People Still Awake</h3>
-            <p>For insomniacs, overthinkers, and people who work tomorrow.</p>
-            <button class="fm-button" type="button">Get Cozy</button>
-          </article>
+        <div class="fm-schedule-footer">
+          <a href="#crate" class="fm-link-subtle">Browse all tracks →</a>
         </div>
       </section>
 
-      <section class="fm-section fm-browser" id="crate" aria-labelledby="browse-title">
+      <!-- ── 3. Freshly Added ──────────────────────────────── -->
+      <section class="fm-section" id="freshly-added" aria-labelledby="fresh-title">
         <div class="fm-section__head">
           <div>
-            <p class="fm-kicker"><span data-track-count>0 tracks</span> <span data-mode-copy data-default="/ license-aware crate" data-piet="/ overnight crate">/ license-aware crate</span></p>
-            <h2 id="browse-title" data-mode-copy data-default="The Lemon Crate" data-piet="Tonight's Lo-Fi Rotation">The Lemon Crate</h2>
+            <p class="fm-eyebrow"><span class="fm-eyebrow__dot" aria-hidden="true"></span> Recently Added</p>
+            <h2 class="fm-section-title" id="fresh-title">Freshly Added</h2>
           </div>
-          <label class="fm-search">
-            <span>Search tracks</span>
-            <input type="search" data-search placeholder="Title, artist, tag, source, license">
-          </label>
+          <p class="fm-section-note">No algorithm. Just someone's questionable judgment.</p>
         </div>
 
+        <div class="fm-fresh-grid" data-fresh-grid aria-label="Recently added tracks">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+
+      <!-- ── 4. The Lemon Crate ────────────────────────────── -->
+      <section class="fm-section" id="crate" aria-labelledby="crate-title">
+        <div class="fm-section__head">
+          <div>
+            <p class="fm-eyebrow"><span class="fm-eyebrow__dot" aria-hidden="true"></span> <span data-crate-count>7 tracks</span> / license-aware crate</p>
+            <h2 class="fm-section-title" id="crate-title">The Lemon Crate</h2>
+          </div>
+          <p class="fm-section-note">Every track reviewed for visible usage terms.</p>
+        </div>
+
+        <!-- Search + Filters -->
+        <div class="fm-crate-controls" role="search" aria-label="Track search and filters">
+          <div class="fm-search-wrap">
+            <span class="fm-search-icon" aria-hidden="true">⌕</span>
+            <input
+              class="fm-search-input"
+              type="search"
+              data-search
+              placeholder="Title, artist, mood, license&hellip;"
+              aria-label="Search tracks"
+            >
+          </div>
+          <div class="fm-filters-wrap" role="group" aria-label="Filters">
+            <select class="fm-filter-select" data-filter="license" aria-label="Filter by license">
+              <option value="">All licenses</option>
+              <option value="All Rights Reserved">All Rights Reserved</option>
+              <option value="CC BY 4.0">CC BY 4.0</option>
+              <option value="CC BY 3.0">CC BY 3.0</option>
+              <option value="CC0">CC0 (Public Domain)</option>
+            </select>
+            <select class="fm-filter-select" data-filter="mood" aria-label="Filter by mood">
+              <option value="">All moods</option>
+              <option value="late-night editing">Late-night editing</option>
+              <option value="lo-fi focus">Lo-fi focus</option>
+              <option value="corporate menace">Corporate menace</option>
+              <option value="quiet panic">Quiet panic</option>
+              <option value="midnight radio">Midnight radio</option>
+            </select>
+            <select class="fm-filter-select" data-filter="genre" aria-label="Filter by genre">
+              <option value="">All genres</option>
+              <option value="lo-fi">Lo-fi</option>
+              <option value="synthwave">Synthwave</option>
+              <option value="indie-pop">Indie pop</option>
+              <option value="garage-rock">Garage rock</option>
+              <option value="station-id">Station ID</option>
+              <option value="novelty-rap">Novelty rap</option>
+              <option value="corporate-satire">Corporate satire</option>
+            </select>
+            <select class="fm-sort-select" data-sort aria-label="Sort tracks">
+              <option value="default">Default order</option>
+              <option value="az">A–Z</option>
+              <option value="za">Z–A</option>
+              <option value="newest">Newest first</option>
+              <option value="oldest">Oldest first</option>
+            </select>
+          </div>
+          <button class="fm-btn" type="button" data-clear-filters>Clear</button>
+        </div>
+
+        <!-- Active filter chips -->
+        <div class="fm-active-filters" data-filter-chips aria-label="Active filters" aria-live="polite"></div>
+
+        <!-- Status line -->
         <div class="fm-status-line" data-filter-status aria-live="polite"></div>
-        <div class="fm-featured-track" data-featured-track aria-label="Featured track"></div>
-        <div class="fm-crate-heading">
-          <div>
-            <span>#</span>
-            <span>Track</span>
-          </div>
-          <span>Vibe</span>
+
+        <!-- Featured track -->
+        <div data-featured-track></div>
+
+        <!-- Column header -->
+        <div class="fm-crate-header" aria-hidden="true">
+          <span>#</span>
+          <span>Track</span>
+          <span>Mood / Genre</span>
           <span>License</span>
-          <span>Actions</span>
+          <span></span>
         </div>
-        <div class="fm-track-list" data-track-list aria-label="Lemonteed FM tracks"></div>
+
+        <!-- Track list -->
+        <div class="fm-track-list" data-track-list aria-label="Lemonteed FM track library" role="list">
+          <!-- Rendered by JS -->
+        </div>
       </section>
 
-      <section class="fm-section fm-request-section" id="requests" aria-labelledby="requests-title">
+      <!-- ── 5. Weekly Rotation ────────────────────────────── -->
+      <section class="fm-section" id="rotation" aria-labelledby="rotation-title">
+        <div class="fm-rotation-card">
+          <div>
+            <p class="fm-rotation__drop">Drop #12 · Every Friday</p>
+            <h2 class="fm-section-title fm-rotation__headline" id="rotation-title">Seven tracks enter rotation every Friday.</h2>
+            <p class="fm-rotation__copy">
+              No algorithmic decision-making. No engagement optimization. Just a small rotating catalog updated weekly by someone with specific, unverifiable opinions about what belongs here.
+            </p>
+
+            <!-- Preview upcoming track -->
+            <div class="fm-rotation__preview" aria-label="Preview of upcoming track">
+              <div class="fm-rotation__preview-art">
+                <img src="/images/lemonteed-fm/impressions-before-coffee-480.webp" alt="Impressions Before Coffee" loading="lazy" width="48" height="48">
+              </div>
+              <div>
+                <p class="fm-rotation__preview-label">Coming this Friday</p>
+                <p class="fm-rotation__preview-title">Impressions Before Coffee</p>
+                <p class="fm-rotation__preview-artist">Lemonteed FM</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Email signup (optional, understated) -->
+          <div>
+            <p class="fm-rotation__drop" style="margin-bottom: 16px;">Get notified — optionally</p>
+            <form class="fm-signup" data-signup-form aria-label="Rotation notification signup">
+              <input type="email" name="email" placeholder="your@email.com" autocomplete="email" aria-label="Email address">
+              <button type="submit">Notify me</button>
+            </form>
+            <p class="fm-signup__disclaimer">
+              Weekly. No pitch. Unsubscribe when you want. Probably fine.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 6. Request & Submission Desk ─────────────────── -->
+      <section class="fm-section" id="requests" aria-labelledby="requests-title">
         <div class="fm-section__head">
           <div>
-            <p class="fm-kicker">Requests Desk</p>
-            <h2 id="requests-title" data-mode-copy data-default="Send something into the booth" data-piet="Send Something Into The Booth">Send something into the booth</h2>
+            <p class="fm-eyebrow"><span class="fm-eyebrow__dot" aria-hidden="true"></span> Requests Desk</p>
+            <h2 class="fm-section-title" id="requests-title">Send Something Into the Booth</h2>
           </div>
-          <p class="fm-section__note" data-mode-copy data-default="Bonus points if the license is clear. Minus points if the only source is &quot;trust me bro.&quot;" data-piet="Drop a track. Piet might play it. Or roast it. Either way, you win.">Bonus points if the license is clear. Minus points if the only source is "trust me bro."</p>
+          <p class="fm-section-note">Clear license required. Trust-me-bro is not a license.</p>
         </div>
 
-        <button class="fm-button fm-button--primary" type="button" data-open-request>Open Request Panel</button>
+        <div class="fm-request-grid">
 
-        <div class="fm-request-card" data-request-panel hidden>
-          <button class="fm-request-close" type="button" data-close-request aria-label="Close request panel">Close</button>
-          <aside class="fm-request-card__stamp" aria-hidden="true">
-            <span>REQUEST</span>
-            <strong>REC</strong>
-          </aside>
-          <form class="fm-request-form" data-request-form>
-            <label>
-              <span>Request type</span>
-              <select name="requestType">
-                <option value="Song">Song</option>
-                <option value="Artist">Artist</option>
-                <option value="Submit your own music">Submit your own music</option>
-                <option value="Report license issue">Report license issue</option>
-              </select>
-            </label>
-            <label>
-              <span>Artist name</span>
-              <input name="artistName" type="text" autocomplete="off">
-            </label>
-            <label>
-              <span>Song title</span>
-              <input name="songTitle" type="text" autocomplete="off">
-            </label>
-            <label>
-              <span>Link</span>
-              <input name="link" type="url" inputmode="url" placeholder="https://">
-            </label>
-            <label class="fm-wide">
-              <span>License/source notes</span>
-              <textarea name="licenseNotes" rows="4"></textarea>
-            </label>
-            <label class="fm-wide">
-              <span>Why should it be added?</span>
-              <textarea name="why" rows="4"></textarea>
-            </label>
-            <label>
-              <span>Optional email</span>
-              <input name="email" type="email" autocomplete="email">
-            </label>
-            <div class="fm-form-actions">
-              <button class="fm-button fm-button--primary" type="submit">Generate Mail Draft</button>
-              <p data-request-status aria-live="polite">This static form opens your mail app with the request details.
-              </p>
+          <!-- Panel A: Request a track -->
+          <div class="fm-request-panel">
+            <div class="fm-request-panel__icon" aria-hidden="true">📻</div>
+            <h3 class="fm-request-panel__title">Request a Track</h3>
+            <p class="fm-request-panel__desc">
+              Know a track that belongs in rotation? Send it in. We will review the license first, the vibe second, and ignore our feelings entirely.
+            </p>
+            <form class="fm-form" data-request-form aria-label="Track request form">
+              <label>
+                <span class="fm-form__label-text">Request type</span>
+                <select name="requestType">
+                  <option value="Song">Song</option>
+                  <option value="Artist">Artist</option>
+                  <option value="Report license issue">Report license issue</option>
+                </select>
+              </label>
+              <label>
+                <span class="fm-form__label-text">Artist name</span>
+                <input name="artistName" type="text" autocomplete="off" placeholder="Artist or band">
+              </label>
+              <label>
+                <span class="fm-form__label-text">Song title</span>
+                <input name="songTitle" type="text" autocomplete="off" placeholder="Track title">
+              </label>
+              <label>
+                <span class="fm-form__label-text">Source link</span>
+                <input name="link" type="url" inputmode="url" placeholder="https://">
+              </label>
+              <label>
+                <span class="fm-form__label-text">License or permission notes</span>
+                <textarea name="licenseNotes" rows="3" placeholder="Where did you verify the license?"></textarea>
+              </label>
+              <button class="fm-btn fm-btn--primary" type="submit">Generate Request Draft</button>
+            </form>
+            <p class="fm-request-panel__note">
+              This generates a mailto: draft. No data is stored. The lemon does not have a database.
+            </p>
+          </div>
+
+          <!-- Panel B: Submit music -->
+          <div class="fm-request-panel">
+            <div class="fm-request-panel__icon" aria-hidden="true">🎙</div>
+            <h3 class="fm-request-panel__title">Submit Your Music</h3>
+            <p class="fm-request-panel__desc">
+              Made something that might fit? Submissions are welcome if the license is visible and the track is self-contained. We are not a label, a publisher, or professionally equipped for any of this.
+            </p>
+            <form class="fm-form" data-request-form aria-label="Music submission form">
+              <label>
+                <span class="fm-form__label-text">Your name or handle</span>
+                <input name="artistName" type="text" autocomplete="name" placeholder="How should we credit you?">
+              </label>
+              <label>
+                <span class="fm-form__label-text">Track title</span>
+                <input name="songTitle" type="text" autocomplete="off" placeholder="Title of the track">
+              </label>
+              <label>
+                <span class="fm-form__label-text">Public link to the track</span>
+                <input name="link" type="url" inputmode="url" placeholder="https://soundcloud.com/...">
+              </label>
+              <label>
+                <span class="fm-form__label-text">License information</span>
+                <select name="requestType">
+                  <option value="CC BY 4.0">CC BY 4.0</option>
+                  <option value="CC BY 3.0">CC BY 3.0</option>
+                  <option value="CC0 Public Domain">CC0 — Public Domain</option>
+                  <option value="Custom — explain below">Custom — explain below</option>
+                </select>
+              </label>
+              <label>
+                <span class="fm-form__label-text">Why it belongs here</span>
+                <textarea name="why" rows="3" placeholder="One or two sentences. Honesty is appreciated."></textarea>
+              </label>
+              <label>
+                <span class="fm-form__label-text">Optional contact email</span>
+                <input name="email" type="email" autocomplete="email" placeholder="yours@domain.com">
+              </label>
+              <button class="fm-btn fm-btn--primary" type="submit">Generate Submission Draft</button>
+            </form>
+            <p class="fm-request-panel__note">
+              Every submission must include a verifiable license or permission link. Submissions without one are not reviewed.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 7. Rights & Licensing Trust Strip ────────────── -->
+      <section class="fm-section fm-trust-strip" id="licensing" aria-labelledby="licensing-title">
+        <p class="fm-eyebrow" style="justify-content: center;"><span class="fm-eyebrow__dot" aria-hidden="true"></span> Rights & Licensing</p>
+        <h2 class="fm-trust__headline" id="licensing-title">Clear rights, or it does not enter the booth.</h2>
+        <p class="fm-trust__sub">
+          Every listed track is reviewed for visible usage terms before it goes anywhere near this page. A track being free to hear does not make it free to reuse.
+        </p>
+
+        <div class="fm-trust-points" role="list">
+          <div class="fm-trust-point" role="listitem">
+            <span class="fm-trust-point__icon" aria-hidden="true">✓</span>
+            License reviewed before listing
+          </div>
+          <div class="fm-trust-point" role="listitem">
+            <span class="fm-trust-point__icon" aria-hidden="true">✓</span>
+            Badge shown beside every track
+          </div>
+          <div class="fm-trust-point" role="listitem">
+            <span class="fm-trust-point__icon" aria-hidden="true">✓</span>
+            Source link in every track record
+          </div>
+          <div class="fm-trust-point" role="listitem">
+            <span class="fm-trust-point__icon" aria-hidden="true">✓</span>
+            Attribution copy-able in one click
+          </div>
+          <div class="fm-trust-point" role="listitem">
+            <span class="fm-trust-point__icon" aria-hidden="true">⚠</span>
+            Free-to-use ≠ unrestricted
+          </div>
+          <div class="fm-trust-point" role="listitem">
+            <span class="fm-trust-point__icon" aria-hidden="true">⚠</span>
+            Verify original before publishing
+          </div>
+        </div>
+
+        <div class="fm-trust-actions">
+          <a class="fm-btn" href="#crate">Browse by license</a>
+          <button class="fm-btn" type="button" onclick="navigator.clipboard && navigator.clipboard.writeText('Impressions Before Coffee by Lemonteed FM. All Rights Reserved.').then(() => { const t = document.querySelector('.fm-toast'); if(t){t.textContent='Example attribution copied ✓'; t.classList.add(\'is-visible\'); setTimeout(()=>t.classList.remove(\'is-visible\'),2400); } })">
+            ⎘ Copy attribution example
+          </button>
+        </div>
+
+        <p class="fm-trust-disclaimer">
+          LemonteedFM shows license information where available. Users must verify the original source before using any track in their own project. This page does not provide legal advice.
+        </p>
+      </section>
+
+      <!-- ── 8. About ──────────────────────────────────────── -->
+      <section class="fm-section" id="about" aria-labelledby="about-title">
+        <div class="fm-section__head">
+          <div>
+            <p class="fm-eyebrow"><span class="fm-eyebrow__dot" aria-hidden="true"></span> About</p>
+            <h2 class="fm-section-title" id="about-title">A Tiny Player, Not a Music Empire</h2>
+          </div>
+        </div>
+
+        <div class="fm-about-layout">
+          <div>
+            <p class="fm-about__statement">
+              LemonteedFM is a tiny discovery player for unusual tracks, clear usage information, and music that fell through the cracks. It is not a streaming empire. It is one shiny lemon with access to a transmitter.
+            </p>
+            <p class="fm-about__body">
+              Broadcasting from the internet's least funded booth. Songs the algorithm forgot. Verified license. Unverified vibes. The catalog is small by design, updated slowly by someone with specific opinions and no professional authority whatsoever.
+            </p>
+          </div>
+
+          <div class="fm-about-facts" aria-label="Station facts">
+            <div class="fm-about-fact">
+              <span class="fm-about-fact__icon" aria-hidden="true">📻</span>
+              <div class="fm-about-fact__text">
+                <strong>Independently curated</strong>
+                No algorithmic ranking. No engagement optimization. One person's judgment.
+              </div>
             </div>
-          </form>
+            <div class="fm-about-fact">
+              <span class="fm-about-fact__icon" aria-hidden="true">⊟</span>
+              <div class="fm-about-fact__text">
+                <strong>Small rotating catalog</strong>
+                Seven new tracks every Friday. The old ones stick around unless something is wrong.
+              </div>
+            </div>
+            <div class="fm-about-fact">
+              <span class="fm-about-fact__icon" aria-hidden="true">⊙</span>
+              <div class="fm-about-fact__text">
+                <strong>Source-first attribution</strong>
+                Every track record links back to the original. Copy attribution in one click.
+              </div>
+            </div>
+            <div class="fm-about-fact">
+              <span class="fm-about-fact__icon" aria-hidden="true">🍋</span>
+              <div class="fm-about-fact__text">
+                <strong>Original Lemonteed broadcasts</strong>
+                Station IDs, originals, and field recordings from the booth. Questionable taste guaranteed.
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="fm-section fm-license-section" id="licenses" aria-labelledby="licenses-title">
-        <p class="fm-kicker">Licenses</p>
-        <h2 id="licenses-title" data-mode-copy data-default="Clear rights, or it does not enter the booth" data-piet="Clear Rights, Or It Does Not Enter The Booth">Clear rights, or it does not enter the booth</h2>
-        <div class="fm-license-grid">
-          <p data-mode-copy data-default="Every track on Lemonteed FM needs verified usage rights before it gets listed. A track being free to hear does not automatically mean it is free to reuse." data-piet="Every track on Lemonteed FM needs verified usage rights before it gets aired. A track being free to hear does not automatically mean it is free to use in your own project.">Every track on Lemonteed FM needs verified usage rights before it gets listed. A track being free to hear does not automatically mean it is free to reuse.</p>
-          <p>Attribution, license links, and source terms may matter. Open the source page before using a track in your own project.</p>
-        </div>
-        <p class="fm-license-punch">Free-use does not mean free-for-all.</p>
-        <p class="fm-disclaimer">Lemonteed FM shows license info where available, but users should verify the original
-          source before using a track in their own project.</p>
-      </section>
-
-      <section class="fm-section fm-about" id="about" aria-labelledby="about-title">
-        <p class="fm-kicker">About</p>
-        <h2 id="about-title" data-mode-copy data-default="A tiny player, not a music empire" data-piet="A Tiny Player, Not A Music Empire">A tiny player, not a music empire</h2>
-        <p>Lemonteed FM is a static discovery page for tracks with visible license information. It is built for quick
-          listening, copying attribution, and remembering that "free" is not a legal strategy.</p>
-      </section>
     </main>
-  </div>
+  </div><!-- /.fm-shell -->
 
-  <section class="fm-player" aria-label="Music player">
-    <audio data-audio preload="none"></audio>
+  <!-- ── Persistent Player Dock ─────────────────────────── -->
+  <div class="fm-player" role="region" aria-label="Music player">
 
-    <div class="fm-player__track">
-      <img data-player-art src="/images/lemonteed-fm/lemonteed-fm.webp" width="72" height="72" alt="Selected track artwork">
-      <div>
-        <em class="fm-player__broadcast piet-only">ON AIR: Piet's Late Night Lo-Fi Show</em>
-        <strong data-player-title>Choose a track</strong>
-        <span data-player-artist>Lemonteed FM</span>
-        <small data-player-license>License appears here</small>
+    <!-- Track info -->
+    <div class="fm-player__track-info">
+      <div class="fm-player__art">
+        <img
+          src="/images/lemonteed-fm/lemonteed-fm-93-7-internet-s-least-funded-booth-480.webp"
+          alt="Now playing artwork"
+          width="48"
+          height="48"
+          data-player-art
+        >
+      </div>
+      <div class="fm-player__meta">
+        <span class="fm-player__program" data-player-program>Internet's Least Funded Booth</span>
+        <span class="fm-player__title" data-player-title>Internet's Least Funded Booth</span>
+        <span class="fm-player__artist" data-player-artist>Lemonteed FM</span>
       </div>
     </div>
 
+    <!-- Controls (center) -->
     <div class="fm-player__controls">
-      <div class="fm-player__buttons">
-        <button type="button" data-prev aria-label="Previous track">Prev</button>
-        <button class="fm-play-button" type="button" data-play aria-label="Play selected track">Play</button>
-        <button type="button" data-next aria-label="Next track">Next</button>
+      <div class="fm-player__buttons" role="group" aria-label="Playback">
+        <button class="fm-player__btn" type="button" data-prev-btn aria-label="Previous track">⏮</button>
+        <button class="fm-player__btn fm-player__play" type="button" data-play-btn aria-label="Play">▶</button>
+        <button class="fm-player__btn" type="button" data-next-btn aria-label="Next track">⏭</button>
       </div>
-      <div class="fm-progress-row">
-        <span data-current-time>0:00</span>
-        <input data-progress type="range" min="0" max="1000" value="0" aria-label="Track progress">
-        <span data-duration>0:00</span>
+      <div class="fm-player__progress-row">
+        <span class="fm-player__time" data-player-current>0:00</span>
+        <div class="fm-player__progress">
+          <input class="fm-range" type="range" min="0" max="100" value="0" step="0.1" data-player-progress aria-label="Track progress">
+        </div>
+        <span class="fm-player__time fm-player__time--right" data-player-total>1:12</span>
       </div>
-      <div class="fm-player__embed" data-embed-host hidden></div>
-      <p class="fm-player__message" data-player-status aria-live="polite">Ready. The lemon is checking the cables.</p>
     </div>
 
+    <!-- Utility (right) -->
     <div class="fm-player__utility">
-      <label class="fm-volume">
-        <span>Volume</span>
-        <input data-volume type="range" min="0" max="1" step="0.01" value="0.8">
-      </label>
-      <div class="fm-player__links">
-        <button type="button" data-open-source>Open Source</button>
-        <button type="button" data-copy-attribution>Copy Attribution</button>
+      <div class="fm-player__volume" aria-label="Volume control">
+        <span class="fm-player__volume-icon" aria-hidden="true">🔊</span>
+        <input class="fm-range" type="range" min="0" max="1" step="0.01" value="0.8" data-volume aria-label="Volume">
       </div>
+      <div class="fm-player__divider" aria-hidden="true"></div>
+      <button class="fm-player__action-btn" type="button" data-player-copy-attr aria-label="Copy track attribution">
+        ⎘ Attribution
+      </button>
+      <button class="fm-player__action-btn" type="button" data-player-source aria-label="Open original source">
+        ↗ Source
+      </button>
     </div>
-  </section>
+
+    <!-- Mobile expand toggle -->
+    <button class="fm-player__expand-btn" type="button" data-player-expand aria-label="Expand player" aria-expanded="false">▲</button>
+
+  </div><!-- /.fm-player -->
+
 </body>
 
 </html>

@@ -1,1531 +1,1038 @@
+/* ─────────────────────────────────────────────────────────────
+   LemonteedFM — Station Engine
+   LFM 93.7 / Static Signal / License-Aware Audio Nonsense
+   ───────────────────────────────────────────────────────────── */
+
 (function () {
   "use strict";
 
-  const artworkSmall = "/images/lemonteed-fm/disco-lemon.webp";
-  const artworkLarge = "/images/lemonteed-fm/lemonteed-fm.webp";
-  const fallbackTracks = [
+  /* ── Track Data ─────────────────────────────────────────────── */
+  const TRACKS = [
     {
-      id: "easy-lemon",
-      title: "Easy Lemon",
-      artist: "Kevin MacLeod",
-      sourceName: "Incompetech",
-      sourceUrl: "https://commons.wikimedia.org/wiki/File:Easy_Lemon_%28ISRC_USUAN1200076%29.mp3",
-      previewAudio: "audio/easy-lemon-preview.mp3",
-      fullAudio: "audio/easy-lemon.mp3",
-      artwork: artworkSmall,
-      artworkSmall,
-      artworkLarge,
-      duration: "2:06",
-      license: "CC BY 3.0",
-      attribution: "Easy Lemon by Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 3.0 License. https://creativecommons.org/licenses/by/3.0/",
-      vibe: ["bright", "calm", "lemon-coded"],
-      tags: ["bright", "calm", "lemon-coded", "free-to-use"],
-      usage: "Verify the original source before using in your own project.",
-      canDownload: false,
-      canHost: true
+      id: "lemonteed-fm-93-7-internet-s-least-funded-booth",
+      title: "Internet's Least Funded Booth",
+      artist: "Lemonteed FM",
+      album: "Station Originals",
+      genre: "station-id",
+      mood: "late-night editing",
+      vibe: ["intro", "station dj"],
+      tags: ["lemonteedfm"],
+      duration: "1:12",
+      durationSec: 72,
+      artworkSmall: "/images/lemonteed-fm/lemonteed-fm-93-7-internet-s-least-funded-booth-480.webp",
+      artworkLarge: "/images/lemonteed-fm/lemonteed-fm-93-7-internet-s-least-funded-booth.webp",
+      fullAudio: "/images/lemonteed-fm/audio/internets-least-funded-booth.mp3",
+      sourceName: "SoundCloud",
+      sourceUrl: "https://soundcloud.com/lemonteedfm/the_lemon_is_strong",
+      license: "All Rights Reserved",
+      attribution: "Internet's Least Funded Booth by Lemonteed FM. All Rights Reserved.",
+      usage: "Verify the original source before using in any project. This track is not licensed for reuse.",
+      curatorNote: "The booth theme. The signal that tells you something mildly unusual is about to happen.",
+      program: "Internet's Least Funded Booth",
+      addedDate: "2025-11-04",
+      featured: true,
+      canHost: true,
+      canDownload: false
     },
     {
-      id: "funk-game-loop",
-      title: "Funk Game Loop",
-      artist: "Kevin MacLeod",
-      sourceName: "Incompetech",
-      sourceUrl: "https://commons.wikimedia.org/wiki/File:Funk_Game_Loop_%28ISRC_USUAN1100839%29.mp3",
-      previewAudio: "audio/funk-game-loop-preview.mp3",
-      fullAudio: "audio/funk-game-loop.mp3",
-      artwork: artworkSmall,
-      artworkSmall,
-      artworkLarge,
-      duration: "0:57",
-      license: "CC BY 3.0",
-      attribution: "Funk Game Loop by Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 3.0 License. https://creativecommons.org/licenses/by/3.0/",
-      vibe: ["funk", "loop", "game"],
-      tags: ["funk", "loop", "game", "free-to-use"],
-      usage: "Verify the original source before using in your own project.",
-      canDownload: false,
-      canHost: true
+      id: "impressions-before-coffee",
+      title: "Impressions Before Coffee",
+      artist: "Lemonteed FM",
+      album: "Station Originals",
+      genre: "lo-fi",
+      mood: "lo-fi focus",
+      vibe: ["lofi"],
+      tags: [],
+      duration: "2:34",
+      durationSec: 154,
+      artworkSmall: "/images/lemonteed-fm/impressions-before-coffee-480.webp",
+      artworkLarge: "/images/lemonteed-fm/impressions-before-coffee.webp",
+      fullAudio: "/images/lemonteed-fm/audio/impressions_before_coffee.mp3",
+      sourceName: "SoundCloud",
+      sourceUrl: "https://soundcloud.com/lemonteedfm/impressions-before-coffee",
+      license: "All Rights Reserved",
+      attribution: "Impressions Before Coffee by Lemonteed FM. All Rights Reserved.",
+      usage: "Verify the original source before using in any project. This track is not licensed for reuse.",
+      curatorNote: "Dusty morning loops for work that should have been finished yesterday.",
+      program: "Internet's Least Funded Booth",
+      addedDate: "2025-12-01",
+      featured: false,
+      canHost: true,
+      canDownload: false
     },
     {
-      id: "disco-lounge",
-      title: "Disco Lounge",
-      artist: "Kevin MacLeod",
-      sourceName: "Incompetech",
-      sourceUrl: "https://commons.wikimedia.org/wiki/File:Disco_Lounge_%28ISRC_USUAN1100602%29.mp3",
-      previewAudio: "audio/disco-lounge-preview.mp3",
-      fullAudio: "audio/disco-lounge.mp3",
-      artwork: artworkSmall,
-      artworkSmall,
-      artworkLarge,
-      duration: "4:13",
-      license: "CC BY 3.0",
-      attribution: "Disco Lounge by Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 3.0 License. https://creativecommons.org/licenses/by/3.0/",
-      vibe: ["disco", "lounge", "gold"],
-      tags: ["disco", "lounge", "gold", "free-to-use"],
-      usage: "Verify the original source before using in your own project.",
-      canDownload: false,
-      canHost: true
+      id: "dance-for-legal-s-sake",
+      title: "Dance For Legal's Sake",
+      artist: "Lemonteed FM",
+      album: "Station Originals",
+      genre: "corporate-satire",
+      mood: "corporate menace",
+      vibe: ["corporate dance-pop", "corporate satire"],
+      tags: [],
+      duration: "1:27",
+      durationSec: 87,
+      artworkSmall: "/images/lemonteed-fm/dance-for-legal-s-sake-480.webp",
+      artworkLarge: "/images/lemonteed-fm/dance-for-legal-s-sake.webp",
+      fullAudio: "/images/lemonteed-fm/audio/dance_for_legals_sake.mp3",
+      sourceName: "SoundCloud",
+      sourceUrl: "https://soundcloud.com/lemonteedfm/dance-for-legals-sake",
+      license: "All Rights Reserved",
+      attribution: "Dance For Legal's Sake by Lemonteed FM. All Rights Reserved.",
+      usage: "Verify the original source before using in any project. This track is not licensed for reuse.",
+      curatorNote: "A compliance anthem for teams that forgot fun was optional.",
+      program: "Songs the Algorithm Forgot",
+      addedDate: "2025-12-08",
+      featured: false,
+      canHost: true,
+      canDownload: false
     },
     {
-      id: "airport-lounge",
-      title: "Airport Lounge",
-      artist: "Kevin MacLeod",
-      sourceName: "Incompetech",
-      sourceUrl: "https://commons.wikimedia.org/wiki/File:Airport_Lounge_%28ISRC_USUAN1100806%29.mp3",
-      previewAudio: "audio/airport-lounge-preview.mp3",
-      fullAudio: "audio/airport-lounge.mp3",
-      artwork: artworkSmall,
-      artworkSmall,
-      artworkLarge,
-      duration: "5:08",
-      license: "CC BY 3.0",
-      attribution: "Airport Lounge by Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 3.0 License. https://creativecommons.org/licenses/by/3.0/",
-      vibe: ["jazz", "lounge", "airport"],
-      tags: ["jazz", "lounge", "elevator-adjacent", "free-to-use"],
-      usage: "Verify the original source before using in your own project.",
-      canDownload: false,
-      canHost: true
+      id: "monopoly-is-the-condition-of-every-business",
+      title: "Monopoly Is The Condition Of Every Business",
+      artist: "Lemonteed FM",
+      album: "Station Originals",
+      genre: "novelty-rap",
+      mood: "quiet panic",
+      vibe: ["90s Monopoly Rap", "Peter Thiel"],
+      tags: [],
+      duration: "2:33",
+      durationSec: 153,
+      artworkSmall: "/images/lemonteed-fm/monopoly-is-the-condition-of-every-business-480.webp",
+      artworkLarge: "/images/lemonteed-fm/monopoly-is-the-condition-of-every-business.webp",
+      fullAudio: "/images/lemonteed-fm/audio/monopoly-is-the-condition-of-every-successful-business-compressed.mp3",
+      sourceName: "SoundCloud",
+      sourceUrl: "https://soundcloud.com/lemonteedfm/monopoly-business",
+      license: "All Rights Reserved",
+      attribution: "Monopoly Is The Condition Of Every Business by Lemonteed FM. All Rights Reserved.",
+      usage: "Verify the original source before using in any project. This track is not licensed for reuse.",
+      curatorNote: "Inspired by a quote that sounds like a threat but got a book deal instead.",
+      program: "Songs the Algorithm Forgot",
+      addedDate: "2026-01-15",
+      featured: false,
+      canHost: true,
+      canDownload: false
     },
     {
-      id: "home-base-groove",
-      title: "Home Base Groove",
-      artist: "Kevin MacLeod",
-      sourceName: "Incompetech",
-      sourceUrl: "https://commons.wikimedia.org/wiki/File:Home_Base_Groove_%28Kevin_MacLeod%29_Time_0-22_%28ISRC_USUAN1100563%29.oga",
-      previewAudio: "audio/home-base-groove-preview.mp3",
-      fullAudio: "audio/home-base-groove.oga",
-      artwork: artworkSmall,
-      artworkSmall,
-      artworkLarge,
-      duration: "0:22",
-      license: "CC BY 3.0 US",
-      attribution: "Home Base Groove by Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 3.0 US. https://creativecommons.org/licenses/by/3.0/us/",
-      vibe: ["short", "groove", "game"],
-      tags: ["short", "groove", "game", "free-to-use"],
-      usage: "Verify the original source before using in your own project.",
-      canDownload: false,
-      canHost: true
+      id: "turn-the-lemon-dial",
+      title: "Turn the Lemon Dial",
+      artist: "Lemonteed FM",
+      album: "Station Originals",
+      genre: "synthwave",
+      mood: "midnight radio",
+      vibe: ["synthwave", "midnight radio"],
+      tags: [],
+      duration: "1:40",
+      durationSec: 100,
+      artworkSmall: "/images/lemonteed-fm/turn-the-lemon-dial-480.webp",
+      artworkLarge: "/images/lemonteed-fm/turn-the-lemon-dial.webp",
+      fullAudio: "/images/lemonteed-fm/audio/turn-the-lemon-dial.mp3",
+      sourceName: "SoundCloud",
+      sourceUrl: "https://soundcloud.com/lemonteedfm/turn-the-lemon-dial",
+      license: "All Rights Reserved",
+      attribution: "Turn the Lemon Dial by Lemonteed FM. All Rights Reserved.",
+      usage: "Verify the original source before using in any project. This track is not licensed for reuse.",
+      curatorNote: "The station's unofficial closing theme. Works best at 1 AM with the brightness down.",
+      program: "Midnight Lemon Dial",
+      addedDate: "2026-01-22",
+      featured: false,
+      canHost: true,
+      canDownload: false
     },
     {
-      id: "sneaky-snitch",
-      title: "Sneaky Snitch",
-      artist: "Kevin MacLeod",
-      sourceName: "Incompetech",
-      sourceUrl: "https://commons.wikimedia.org/wiki/File:Sneaky_Snitch_%28ISRC_USUAN1100772%29.mp3",
-      previewAudio: "audio/sneaky-snitch-preview.mp3",
-      fullAudio: "audio/sneaky-snitch.mp3",
-      artwork: artworkSmall,
-      artworkSmall,
-      artworkLarge,
-      duration: "2:17",
-      license: "CC BY 3.0",
-      attribution: "Sneaky Snitch by Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 3.0 License. https://creativecommons.org/licenses/by/3.0/",
-      vibe: ["humorous", "mystery", "internet-classic"],
-      tags: ["humorous", "mystery", "internet-classic", "free-to-use"],
-      usage: "Verify the original source before using in your own project.",
-      canDownload: false,
-      canHost: true
+      id: "trust-me-bro",
+      title: "Trust Me Bro",
+      artist: "Lemonteed FM",
+      album: "Station Originals",
+      genre: "garage-rock",
+      mood: "late-night editing",
+      vibe: ["punky garage rock", "chaotic internet anthem"],
+      tags: [],
+      duration: "2:32",
+      durationSec: 152,
+      artworkSmall: "/images/lemonteed-fm/trust-me-bro-2-480.webp",
+      artworkLarge: "/images/lemonteed-fm/trust-me-bro-2.webp",
+      fullAudio: "/images/lemonteed-fm/audio/trust-me-bro.mp3",
+      sourceName: "SoundCloud",
+      sourceUrl: "https://soundcloud.com/lemonteedfm/trust_me_bro",
+      license: "All Rights Reserved",
+      attribution: "Trust Me Bro by Lemonteed FM. All Rights Reserved.",
+      usage: "Verify the original source before using in any project. This track is not licensed for reuse.",
+      curatorNote: "The official anthem of every pitch deck that did not include a source.",
+      program: "Songs the Algorithm Forgot",
+      addedDate: "2026-02-05",
+      featured: false,
+      canHost: true,
+      canDownload: false
+    },
+    {
+      id: "track-seven",
+      title: "Track Seven",
+      artist: "Lemonteed FM",
+      album: "Station Originals",
+      genre: "indie-pop",
+      mood: "quiet panic",
+      vibe: ["sad indie pop", "lo-fi bedroom music"],
+      tags: [],
+      duration: "2:41",
+      durationSec: 161,
+      artworkSmall: "/images/lemonteed-fm/track-seven-480.webp",
+      artworkLarge: "/images/lemonteed-fm/track-seven.webp",
+      fullAudio: "/images/lemonteed-fm/audio/track-seven.mp3",
+      sourceName: "SoundCloud",
+      sourceUrl: "https://soundcloud.com/lemonteedfm/track-seven",
+      license: "All Rights Reserved",
+      attribution: "Track Seven by Lemonteed FM. All Rights Reserved.",
+      usage: "Verify the original source before using in any project. This track is not licensed for reuse.",
+      curatorNote: "Named Track Seven because that is what the file was called and nothing better came to mind.",
+      program: "Midnight Lemon Dial",
+      addedDate: "2026-03-01",
+      featured: false,
+      canHost: true,
+      canDownload: false
     }
   ];
-  const tracks = Array.isArray(window.LEMONTEED_FM_TRACKS) && window.LEMONTEED_FM_TRACKS.length
-    ? window.LEMONTEED_FM_TRACKS
-    : fallbackTracks;
 
-  const audio = document.querySelector("[data-audio]");
-  const trackList = document.querySelector("[data-track-list]");
-  const featuredTrack = document.querySelector("[data-featured-track]");
-  const searchInput = document.querySelector("[data-search]");
-  const filterStatus = document.querySelector("[data-filter-status]");
-  const trackCount = document.querySelector("[data-track-count]");
-  const playerArt = document.querySelector("[data-player-art]");
-  const playerTitle = document.querySelector("[data-player-title]");
-  const playerArtist = document.querySelector("[data-player-artist]");
-  const playerLicense = document.querySelector("[data-player-license]");
-  const playButton = document.querySelector("[data-play]");
-  const prevButton = document.querySelector("[data-prev]");
-  const nextButton = document.querySelector("[data-next]");
-  const progress = document.querySelector("[data-progress]");
-  const currentTime = document.querySelector("[data-current-time]");
-  const duration = document.querySelector("[data-duration]");
-  const volume = document.querySelector("[data-volume]");
-  const openSource = document.querySelector("[data-open-source]");
-  const copyAttribution = document.querySelector("[data-copy-attribution]");
-  const playerStatus = document.querySelector("[data-player-status]");
-  const embedHost = document.querySelector("[data-embed-host]");
-  const startListening = document.querySelector("[data-start-listening]");
-  const openRequestButtons = Array.from(document.querySelectorAll("[data-open-request]"));
-  const closeRequestButton = document.querySelector("[data-close-request]");
-  const requestPanel = document.querySelector("[data-request-panel]");
-  const requestForm = document.querySelector("[data-request-form]");
-  const requestStatus = document.querySelector("[data-request-status]");
-  const modeCopyEls = Array.from(document.querySelectorAll("[data-mode-copy]"));
-  const modeAriaLabelEls = Array.from(document.querySelectorAll("[data-mode-aria-label]"));
-  const modeArt = document.querySelector("[data-mode-art]");
-  const pietToggle = document.querySelector("[data-piet-toggle]");
-  const pietToggleLabel = document.querySelector("[data-piet-toggle-label]");
-  const pietScheduleButton = document.querySelector("[data-piet-schedule-button]");
-  const pietQuote = document.querySelector("[data-piet-quote]");
-  const pietListenerCount = document.querySelector("[data-piet-listeners]");
-  const pietSignalStatus = document.querySelector("[data-piet-signal-status]");
-  const pietSignal = document.querySelector("[data-piet-signal]");
-  const pietClockEls = Array.from(document.querySelectorAll("[data-piet-clock]"));
-
-  let currentIndex = 0;
-  let filteredIndexes = tracks.map((track, index) => index);
-  let isSeeking = false;
-  let embeddedTrackId = "";
-  let soundCloudApiPromise = null;
-  let soundCloudWidget = null;
-  let soundCloudDuration = 0;
-  let soundCloudPosition = 0;
-  let soundCloudPlaying = false;
-
-  /* ======================================================
-     Piet Late Night Mode - Temporary Prototype
-     TODO: Replace temporary toggle with final local-time activation.
-  ====================================================== */
-
-  const PIET_MODE_STORAGE_KEY = "lemonteedFmPietMode";
-  const PIET_MODE_DEFAULT_ON = false;
-  const pietQuotes = [
-    "You are not behind. You are buffering.",
-    "The algorithm is just a vending machine for your worst instincts.",
-    "Being awake at 2:17 AM is not a schedule. It is a side quest.",
-    "Every group chat has one unpaid executive producer.",
-    "Nobody reads the terms. That's where they keep the goblins.",
-    "If the signal sounds bad, that means it's authentic.",
-    "A playlist is just a diary with plausible deniability.",
-    "You cannot optimize your way out of needing a nap.",
-    "The booth fan says we are cleared for one more bad idea.",
-    "Questionable? Yes. Incorrect? Rarely."
+  /* ── Schedule Programs ──────────────────────────────────────── */
+  const SCHEDULE = [
+    {
+      id: "least-funded",
+      name: "Internet's Least Funded Booth",
+      time: "9:00 AM",
+      timeHour: 9,
+      desc: "Original compositions and station IDs from the booth. Unexpectedly sincere.",
+      state: "now"
+    },
+    {
+      id: "algo-forgot",
+      name: "Songs the Algorithm Forgot",
+      time: "12:00 PM",
+      timeHour: 12,
+      desc: "Tracks the recommendation engine passed over. Justified, possibly.",
+      state: "next"
+    },
+    {
+      id: "midnight-dial",
+      name: "Midnight Lemon Dial",
+      time: "10:00 PM",
+      timeHour: 22,
+      desc: "Late night synthwave and bedroom recordings for people who should be asleep.",
+      state: "later"
+    }
   ];
-  const pietSignalStatuses = [
-    "Signal drift detected.",
-    "Piet is checking the booth fan.",
-    "Static break incoming.",
-    "Transmission quality: questionable.",
-    "Current vibe recalibrated.",
-    "The hill is receiving."
+
+  /* ── Freshly Added (most recent 4) ─────────────────────────── */
+  const FRESH_IDS = [
+    "track-seven",
+    "trust-me-bro",
+    "turn-the-lemon-dial",
+    "monopoly-is-the-condition-of-every-business"
   ];
-  const pietTagRotation = [
-    ["lofi", "late night", "internet radio"],
-    ["morning regret", "official radio", "airwaves"],
-    ["corporate dance", "peter thinks", "late night"],
-    ["sad indie pop", "lo-fi before music", "internet radio"]
-  ];
-  let pietQuoteIndex = 0;
-  let pietSignalIndex = 0;
-  let isPietModeActive = PIET_MODE_DEFAULT_ON;
-  let pietIntervalsStarted = false;
 
-  function readStoredPietMode() {
-    try {
-      const storedValue = window.localStorage.getItem(PIET_MODE_STORAGE_KEY);
+  /* ── Player State ───────────────────────────────────────────── */
+  const state = {
+    currentIndex: 0,
+    isPlaying: false,
+    progressSec: 0,
+    volume: 0.8,
+    filteredTracks: [...TRACKS],
+    expandedRow: null,
+    openMenu: null,
+    progressTimer: null,
+    reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  };
 
-      if (storedValue === "on") {
-        return true;
-      }
+  /* ── Helpers ────────────────────────────────────────────────── */
+  const $ = (sel, ctx = document) => ctx.querySelector(sel);
+  const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+  const fmt = sec => `${Math.floor(sec / 60)}:${String(Math.floor(sec % 60)).padStart(2, "0")}`;
 
-      if (storedValue === "off") {
-        return false;
-      }
-    } catch (error) {
-      // localStorage can be unavailable in restricted browser contexts.
+  function el(tag, attrs = {}, ...children) {
+    const node = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === "class") node.className = v;
+      else if (k === "html") node.innerHTML = v;
+      else if (k.startsWith("data-")) node.setAttribute(k, v);
+      else node[k] = v;
     }
-
-    return PIET_MODE_DEFAULT_ON;
+    for (const child of children) {
+      if (child == null) continue;
+      node.append(typeof child === "string" ? document.createTextNode(child) : child);
+    }
+    return node;
   }
 
-  function storePietMode(isEnabled) {
-    try {
-      window.localStorage.setItem(PIET_MODE_STORAGE_KEY, isEnabled ? "on" : "off");
-    } catch (error) {
-      // The toggle still works for the current page view without persistence.
-    }
-  }
-
-  function getMockableDate() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const now = new Date();
-    if (urlParams.has("debug") || urlParams.has("piet_debug")) {
-      const mockHour = urlParams.get("piet_hour");
-      const mockMin = urlParams.get("piet_minute");
-      if (mockHour !== null) {
-        now.setHours(parseInt(mockHour, 10));
-      }
-      if (mockMin !== null) {
-        now.setMinutes(parseInt(mockMin, 10));
-      }
-    }
-    return now;
-  }
-
-  function getIsPietHours() {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has("debug") || urlParams.has("piet_debug")) {
-      return isPietModeActive;
-    }
-    const hour = new Date().getHours();
-    return hour >= 23 || hour < 5;
-  }
-
-  function getCurrentSegment(date) {
-    const mins = date.getHours() * 60 + date.getMinutes();
-    
-    if (mins >= 23 * 60 && mins < 24 * 60) {
-      return {
-        index: 0,
-        name: "The Sign-On",
-        timeRange: "11:00 PM - 12:00 AM",
-        nextName: "Static Breaks"
-      };
-    } else if (mins >= 0 && mins < 90) {
-      return {
-        index: 1,
-        name: "Static Breaks",
-        timeRange: "12:00 AM - 1:30 AM",
-        nextName: "Piet's Certified Correct Takes"
-      };
-    } else if (mins >= 90 && mins < 180) {
-      return {
-        index: 2,
-        name: "Piet's Certified Correct Takes",
-        timeRange: "1:30 AM - 3:00 AM",
-        nextName: "Songs for People Still Awake"
-      };
-    } else if (mins >= 180 && mins < 270) {
-      return {
-        index: 3,
-        name: "Songs for People Still Awake",
-        timeRange: "3:00 AM - 4:30 AM",
-        nextName: "Sunrise Shutdown"
-      };
-    } else if (mins >= 270 && mins < 300) {
-      return {
-        index: 4,
-        name: "Sunrise Shutdown",
-        timeRange: "4:30 AM - 5:00 AM",
-        nextName: "The Sign-On"
-      };
-    }
-    return null;
-  }
-
-  function updatePietClock() {
-    if (!getIsPietHours() || !pietClockEls.length) {
-      return;
-    }
-
-    const date = getMockableDate();
-    const time = new Intl.DateTimeFormat([], {
-      hour: "numeric",
-      minute: "2-digit"
-    }).format(date);
-
-    pietClockEls.forEach((element) => {
-      element.textContent = time;
-    });
-  }
-
-  function rotatePietQuote() {
-    if (!getIsPietHours() || !pietQuote || !pietQuotes.length) {
-      return;
-    }
-
-    pietQuote.classList.add("is-fading");
-    window.setTimeout(() => {
-      pietQuoteIndex = (pietQuoteIndex + 1) % pietQuotes.length;
-      pietQuote.textContent = `"${pietQuotes[pietQuoteIndex]}"`;
-      pietQuote.classList.remove("is-fading");
-    }, 320);
-  }
-
-  function updateFakeListenerCount() {
-    if (!getIsPietHours() || !pietListenerCount) {
-      return;
-    }
-
-    // Flavor-only fake listener count. Not real analytics.
-    const baseListeners = 1337;
-    const variance = Math.floor(Math.sin(Date.now() / 45000) * 8);
-    pietListenerCount.textContent = (baseListeners + variance).toLocaleString("en-US");
-  }
-
-  function rotateSignalStatus() {
-    if (!getIsPietHours() || !pietSignalStatuses.length) {
-      return;
-    }
-
-    pietSignalIndex = (pietSignalIndex + 1) % pietSignalStatuses.length;
-    const status = pietSignalStatuses[pietSignalIndex];
-
-    if (pietSignalStatus) {
-      pietSignalStatus.textContent = status;
-    }
-
-    if (pietSignal) {
-      pietSignal.textContent = status.replace(/\.$/, "");
-    }
-  }
-
-  function scrollToPietSchedule() {
-    if (!getIsPietHours()) {
-      setPietMode(true, true);
-    }
-
-    document.querySelector("#piet-schedule")?.scrollIntoView({
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-      block: "start"
-    });
-  }
-
-  function pietTagsForTrack(track, index) {
-    if (!getIsPietHours()) {
-      return track.vibe || track.tags || [];
-    }
-
-    const title = String(track.title || "").toLowerCase();
-
-    if (title.includes("coffee")) {
-      return ["lofi", "morning regret", "peter thinks"];
-    }
-
-    if (title.includes("dance")) {
-      return ["corporate dance", "official radio", "late night"];
-    }
-
-    if (title.includes("monopoly")) {
-      return ["peter thinks", "internet radio", "airwaves"];
-    }
-
-    if (title.includes("trust")) {
-      return ["late night", "questionable", "official radio"];
-    }
-
-    if (title.includes("seven")) {
-      return ["sad indie pop", "lo-fi before music", "morning regret"];
-    }
-
-    if (title.includes("dial")) {
-      return ["airwaves", "late night", "internet radio"];
-    }
-
-    return pietTagRotation[index % pietTagRotation.length];
-  }
-
-  function applyModeContent() {
-    const mode = getIsPietHours() ? "piet" : "default";
-
-    modeCopyEls.forEach((element) => {
-      const nextValue = element.dataset[mode];
-
-      if (typeof nextValue === "string") {
-        element.textContent = nextValue;
-      }
-    });
-
-    modeAriaLabelEls.forEach((element) => {
-      const nextValue = element.dataset[mode];
-
-      if (typeof nextValue === "string") {
-        element.setAttribute("aria-label", nextValue);
-      }
-    });
-
-    if (modeArt) {
-      const nextSrc = modeArt.dataset[`${mode}Src`];
-      const nextAlt = modeArt.dataset[`${mode}Alt`];
-
-      if (nextSrc) {
-        modeArt.src = nextSrc;
-      }
-
-      if (typeof nextAlt === "string") {
-        modeArt.alt = nextAlt;
-      }
-    }
-
-    if (pietToggle) {
-      pietToggle.setAttribute("aria-pressed", getIsPietHours() ? "true" : "false");
-    }
-
-    if (pietToggleLabel) {
-      pietToggleLabel.textContent = getIsPietHours() ? "On" : "Off";
-    }
-  }
-
-  function updateBroadcastLog(date) {
-    const broadcastLogContainer = document.querySelector(".broadcast-log ol");
-    if (!broadcastLogContainer) return;
-
-    const mins = date.getHours() * 60 + date.getMinutes();
-    const logItems = [];
-
-    const formatLogTime = (h, m) => {
-      const ampm = h >= 12 ? "PM" : "AM";
-      const displayHour = h % 12 === 0 ? 12 : h % 12;
-      const displayMin = m.toString().padStart(2, "0");
-      return `${displayHour}:${displayMin} ${ampm}`;
+  /* ── Toast ──────────────────────────────────────────────────── */
+  const toast = (() => {
+    const t = el("div", { class: "fm-toast", role: "status", "aria-live": "polite" });
+    document.body.appendChild(t);
+    let timer;
+    return (msg) => {
+      t.textContent = msg;
+      t.classList.add("is-visible");
+      clearTimeout(timer);
+      timer = setTimeout(() => t.classList.remove("is-visible"), 2400);
     };
+  })();
 
-    if (mins >= 23 * 60 || mins < 5 * 60) {
-      if (mins >= 23 * 60 || mins < 0) {
-        logItems.push({ time: "11:00 PM", text: "Piet entered the booth." });
-        if (mins >= 23 * 60 + 15) {
-          logItems.push({ time: "11:15 PM", text: "Booth fan turned on (loudly)." });
-        }
-        if (mins >= 23 * 60 + 42) {
-          logItems.push({ time: "11:42 PM", text: "First questionable take approved." });
-        }
-      } else {
-        logItems.push({ time: "11:00 PM", text: "Piet entered the booth." });
-        logItems.push({ time: "11:15 PM", text: "Booth fan turned on." });
-        logItems.push({ time: "11:42 PM", text: "First questionable take approved." });
-      }
+  /* ── Audio Engine ───────────────────────────────────────────── */
+  const audio = el("audio", { preload: "none" });
+  document.body.appendChild(audio);
 
-      if (mins >= 0 && mins < 5 * 60) {
-        logItems.push({ time: "12:00 AM", text: "Segment active: Static Breaks." });
-        if (mins >= 20) {
-          logItems.push({ time: "12:20 AM", text: "Signal drift detected." });
-        }
-        if (mins >= 60) {
-          logItems.push({ time: "1:00 AM", text: "Static break survived." });
-        }
-      }
-
-      if (mins >= 90) {
-        logItems.push({ time: "1:30 AM", text: "Segment active: Certified Correct Takes." });
-        if (mins >= 105) {
-          logItems.push({ time: "1:45 AM", text: "Unpaid executive producer checked in." });
-        }
-        if (mins >= 150) {
-          logItems.push({ time: "2:30 AM", text: "Coffee supply depleted." });
-        }
-      }
-
-      if (mins >= 180) {
-        logItems.push({ time: "3:00 AM", text: "Segment active: Songs for People Still Awake." });
-        if (mins >= 210) {
-          logItems.push({ time: "3:30 AM", text: "Vibe recalibrated to maximum cozy." });
-        }
-        if (mins >= 255) {
-          logItems.push({ time: "4:15 AM", text: "Ambient noise level normalized." });
-        }
-      }
-
-      if (mins >= 270) {
-        logItems.push({ time: "4:30 AM", text: "Segment active: Sunrise Shutdown." });
-        if (mins >= 285) {
-          logItems.push({ time: "4:45 AM", text: "Preparing to power down transceivers." });
-        }
-      }
-      
-      const currentFormatted = formatLogTime(date.getHours(), date.getMinutes());
-      const segment = getCurrentSegment(date);
-      if (segment) {
-        logItems.push({ time: currentFormatted, text: `Transmission status: ${segment.name}.` });
-      }
-    }
-
-    broadcastLogContainer.innerHTML = logItems
-      .slice(-4)
-      .map(item => `<li><time>${escapeHtml(item.time)}</time> ${escapeHtml(item.text)}</li>`)
-      .join("");
-  }
-
-  function updatePietModeState() {
-    const active = getIsPietHours();
-    document.body.classList.toggle("piet-mode", active);
-    applyModeContent();
-
-    if (active) {
-      updatePietClock();
-      
-      const date = getMockableDate();
-      const segment = getCurrentSegment(date);
-      
-      if (segment) {
-        const liveTitle = document.querySelector("[data-piet-live-title]");
-        const liveNext = document.querySelector("[data-piet-live-next]");
-        const segmentTime = document.querySelector("[data-piet-segment-time]");
-        
-        if (liveTitle) liveTitle.textContent = segment.name;
-        if (liveNext) liveNext.textContent = `Next: ${segment.nextName}`;
-        if (segmentTime) {
-          segmentTime.textContent = new Intl.DateTimeFormat([], {
-            hour: "numeric",
-            minute: "2-digit"
-          }).format(date);
-        }
-        
-        const scheduleItems = document.querySelectorAll(".piet-schedule-list .piet-schedule-item");
-        scheduleItems.forEach((item, idx) => {
-          if (idx === segment.index) {
-            item.classList.add("is-active");
-          } else {
-            item.classList.remove("is-active");
-          }
-        });
-        
-        updateBroadcastLog(date);
-      }
-    }
-  }
-
-  function startPietIntervals() {
-    if (pietIntervalsStarted) {
-      return;
-    }
-
-    pietIntervalsStarted = true;
-    window.setInterval(updatePietModeState, 10000);
-    window.setInterval(updateFakeListenerCount, 5000);
-    window.setInterval(rotatePietQuote, 45000);
-    window.setInterval(rotateSignalStatus, 60000);
-  }
-
-  function setPietMode(isEnabled, shouldPersist) {
-    isPietModeActive = Boolean(isEnabled);
-    
-    if (shouldPersist) {
-      storePietMode(isPietModeActive);
-    }
-
-    updatePietModeState();
-
-    if (getIsPietHours()) {
-      updateFakeListenerCount();
-      startPietIntervals();
-    }
-
-    if (tracks[currentIndex]) {
-      updatePlayer(currentTrack());
-      applyFilter();
-    }
-  }
-
-  function initPietMode() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const isDebug = urlParams.has("debug") || urlParams.has("piet_debug");
-    
-    if (pietToggle) {
-      if (!isDebug) {
-        pietToggle.style.display = "none";
-      } else {
-        pietToggle.addEventListener("click", () => {
-          setPietMode(!getIsPietHours(), true);
-        });
-      }
-    }
-
-    if (pietScheduleButton) {
-      pietScheduleButton.addEventListener("click", scrollToPietSchedule);
-    }
-
-    isPietModeActive = isDebug ? readStoredPietMode() : getIsPietHours();
-    setPietMode(isPietModeActive, false);
-  }
-
-  function formatTime(value) {
-    if (!Number.isFinite(value) || value < 0) {
-      return "0:00";
-    }
-
-    const minutes = Math.floor(value / 60);
-    const seconds = Math.floor(value % 60).toString().padStart(2, "0");
-    return `${minutes}:${seconds}`;
-  }
-
-  function setStatus(message) {
-    if (playerStatus) {
-      playerStatus.textContent = message;
-    }
-  }
-
-  function escapeHtml(value) {
-    return String(value ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;");
-  }
-
-  function safeHref(value) {
-    const href = String(value || "").trim();
-
-    if (!href || href === "#") {
-      return "#";
-    }
-
-    if (href.startsWith("/") && !href.startsWith("//") && !href.includes("\\")) {
-      return href;
-    }
-
-    try {
-      const parsed = new URL(href, window.location.origin);
-
-      if (parsed.protocol === "http:" || parsed.protocol === "https:") {
-        return parsed.href;
-      }
-    } catch (error) {
-      return "#";
-    }
-
-    return "#";
+  function trackAt(index) {
+    return TRACKS[index] ?? TRACKS[0];
   }
 
   function currentTrack() {
-    return tracks[currentIndex];
+    return trackAt(state.currentIndex);
   }
 
-  function playbackUrl(track) {
-    return track.previewAudio || track.fullAudio || "";
+  function loadTrack(track) {
+    audio.src = track.fullAudio || "";
+    audio.volume = state.volume;
+    updatePlayerUI(track);
   }
 
-  function canPlayHere(track) {
-    return Boolean(track && track.canHost && playbackUrl(track));
-  }
-
-  function isSoundCloudTrack(track) {
-    return Boolean(track && /soundcloud\.com/i.test(`${track.sourceUrl || ""} ${track.sourceName || ""}`));
-  }
-
-  function canEmbedHere(track) {
-    return Boolean(track && !canPlayHere(track) && isSoundCloudTrack(track) && track.sourceUrl);
-  }
-
-  function soundCloudEmbedUrl(track, autoPlay) {
-    const sourceUrl = safeHref(track.sourceUrl);
-
-    if (!/^https:\/\/(www\.)?soundcloud\.com\//i.test(sourceUrl)) {
-      return null;
-    }
-
-    const params = new URLSearchParams({
-      url: sourceUrl,
-      color: "#f6c84f",
-      auto_play: autoPlay ? "true" : "false",
-      hide_related: "true",
-      show_comments: "false",
-      show_user: "true",
-      show_reposts: "false",
-      show_teaser: "false",
-      visual: "false"
-    });
-    return `https://w.soundcloud.com/player/?${params.toString()}`;
-  }
-
-  function loadSoundCloudApi() {
-    if (window.SC && window.SC.Widget) {
-      return Promise.resolve(window.SC);
-    }
-
-    if (soundCloudApiPromise) {
-      return soundCloudApiPromise;
-    }
-
-    soundCloudApiPromise = new Promise((resolve, reject) => {
-      const script = document.createElement("script");
-      script.src = "https://w.soundcloud.com/player/api.js";
-      script.async = true;
-      script.onload = () => {
-        if (window.SC && window.SC.Widget) {
-          resolve(window.SC);
-        } else {
-          reject(new Error("SoundCloud widget API did not initialize."));
-        }
-      };
-      script.onerror = () => reject(new Error("SoundCloud widget API failed to load."));
-      document.head.append(script);
-    });
-
-    return soundCloudApiPromise;
-  }
-
-  function updateSoundCloudProgress(position, total) {
-    if (progress && total > 0 && !isSeeking) {
-      progress.value = String(Math.round((position / total) * 1000));
-    }
-
-    if (currentTime) {
-      currentTime.textContent = formatTime(position / 1000);
-    }
-
-    if (duration && total > 0) {
-      duration.textContent = formatTime(total / 1000);
-    }
-  }
-
-  function stopEmbeddedPlayback() {
-    if (soundCloudWidget) {
-      try {
-        soundCloudWidget.pause();
-      } catch (error) {
-        // The iframe may already be gone.
-      }
-    }
-
-    if (embedHost) {
-      embedHost.hidden = true;
-      embedHost.textContent = "";
-    }
-
-    soundCloudWidget = null;
-    soundCloudDuration = 0;
-    soundCloudPosition = 0;
-    soundCloudPlaying = false;
-    embeddedTrackId = "";
-    document.body.classList.remove("is-playing");
-  }
-
-  function playEmbeddedTrack(track) {
-    if (!embedHost || !canEmbedHere(track)) {
-      return false;
-    }
-
-    if (embeddedTrackId === track.id && soundCloudWidget) {
-      soundCloudWidget.play();
-      return true;
-    }
-
-    audio.pause();
-    audio.removeAttribute("src");
-    delete audio.dataset.trackId;
-    audio.load();
-
-    soundCloudWidget = null;
-    soundCloudDuration = 0;
-    soundCloudPosition = 0;
-    soundCloudPlaying = false;
-    embedHost.hidden = false;
-    embedHost.innerHTML = `
-      <iframe
-        title="${escapeHtml(track.title)} on SoundCloud"
-        src="${soundCloudEmbedUrl(track, true)}"
-        allow="autoplay"
-        loading="lazy"></iframe>
-    `;
-    embeddedTrackId = track.id;
-    document.body.classList.add("is-playing");
-
-    if (playButton) {
-      playButton.textContent = "Loading";
-      playButton.setAttribute("aria-label", "Loading SoundCloud playback");
-    }
-
-    if (progress) {
-      progress.disabled = false;
-      progress.value = "0";
-    }
-
-    if (currentTime) {
-      currentTime.textContent = "0:00";
-    }
-
-    setStatus(`Loading ${track.title} from SoundCloud inside Lemonteed FM.`);
-
-    const iframe = embedHost.querySelector("iframe");
-    loadSoundCloudApi()
-      .then((SC) => {
-        if (!iframe || embeddedTrackId !== track.id) {
-          return;
-        }
-
-        const widget = SC.Widget(iframe);
-        soundCloudWidget = widget;
-
-        widget.bind(SC.Widget.Events.READY, () => {
-          if (embeddedTrackId !== track.id) {
-            return;
-          }
-
-          widget.setVolume(Math.round(Number(volume ? volume.value : 0.8) * 100));
-          widget.getDuration((value) => {
-            soundCloudDuration = Number(value) || 0;
-            updateSoundCloudProgress(soundCloudPosition, soundCloudDuration);
-          });
-          widget.play();
-        });
-
-        widget.bind(SC.Widget.Events.PLAY, () => {
-          soundCloudPlaying = true;
-          document.body.classList.add("is-playing");
-          if (playButton) {
-            playButton.textContent = "Pause";
-            playButton.setAttribute("aria-label", "Pause SoundCloud playback");
-          }
-          setStatus(`Now playing from SoundCloud: ${track.title}.`);
-        });
-
-        widget.bind(SC.Widget.Events.PAUSE, () => {
-          soundCloudPlaying = false;
-          document.body.classList.remove("is-playing");
-          if (embeddedTrackId === track.id && playButton) {
-            playButton.textContent = "Play";
-            playButton.setAttribute("aria-label", "Play selected track");
-          }
-        });
-
-        widget.bind(SC.Widget.Events.FINISH, () => {
-          soundCloudPlaying = false;
-          moveTrack(1, true);
-        });
-
-        widget.bind(SC.Widget.Events.PLAY_PROGRESS, (event) => {
-          soundCloudPosition = Number(event.currentPosition) || 0;
-          if (!soundCloudDuration) {
-            widget.getDuration((value) => {
-              soundCloudDuration = Number(value) || 0;
-              updateSoundCloudProgress(soundCloudPosition, soundCloudDuration);
-            });
-          } else {
-            updateSoundCloudProgress(soundCloudPosition, soundCloudDuration);
-          }
-        });
-      })
-      .catch(() => {
-        if (embeddedTrackId !== track.id || !embedHost) {
-          return;
-        }
-
-        embedHost.innerHTML = `
-          <iframe
-            title="${escapeHtml(track.title)} on SoundCloud"
-            src="${soundCloudEmbedUrl(track, true)}"
-            allow="autoplay"
-            loading="lazy"></iframe>
-        `;
-        if (playButton) {
-          playButton.textContent = "Stop";
-          playButton.setAttribute("aria-label", "Stop SoundCloud playback");
-        }
-        setStatus("SoundCloud controls were unavailable, so the embedded player is handling playback.");
-      });
-
-    return true;
-  }
-
-  function renderTracks() {
-    if (!trackList) {
-      return;
-    }
-
-    trackList.textContent = "";
-
-    filteredIndexes.forEach((trackIndex) => {
-      const track = tracks[trackIndex];
-      const card = document.createElement("article");
-      card.className = "fm-track-card";
-      card.tabIndex = 0;
-      card.dataset.trackIndex = String(trackIndex);
-      card.classList.toggle("is-active", trackIndex === currentIndex);
-      card.setAttribute("aria-label", `${track.title} by ${track.artist}`);
-
-      const tags = pietTagsForTrack(track, trackIndex).slice(0, 3).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
-      const playLabel = canPlayHere(track) || canEmbedHere(track) ? "Play" : "Source";
-      card.innerHTML = `
-        <div class="fm-track-main">
-          <span class="fm-track-number">${trackIndex + 1}</span>
-          <img src="${escapeHtml(track.artworkSmall || track.artwork)}" width="68" height="68" loading="lazy" alt="">
-          <div>
-            <strong class="fm-track-title">${escapeHtml(track.title)}</strong>
-            <span class="fm-track-artist">${escapeHtml(track.artist)} / ${escapeHtml(track.sourceName || "Source")}</span>
-            <span class="fm-track-meta">${escapeHtml(track.duration || "0:00")} - ${canPlayHere(track) ? "Hosted audio" : canEmbedHere(track) ? "Embedded stream" : "Source-only"}</span>
-          </div>
-        </div>
-        <div class="fm-tags">${tags}</div>
-        <strong class="fm-license-badge">${escapeHtml(track.license || "License needed")}</strong>
-        <div class="fm-track-actions">
-          <button type="button" data-card-play="${trackIndex}">${playLabel}</button>
-          <button type="button" data-card-share="${trackIndex}">Share</button>
-          <button type="button" data-card-copy="${trackIndex}">Copy Credit</button>
-          <a href="${escapeHtml(safeHref(track.sourceUrl))}" target="_blank" rel="noopener">Source</a>
-        </div>
-      `;
-      trackList.append(card);
-    });
-
-    if (filterStatus) {
-      const count = filteredIndexes.length;
-      filterStatus.textContent = count === tracks.length
-        ? getIsPietHours()
-          ? `${tracks.length} tracks in tonight's lo-fi rotation. Carefully uncurated. Not a mistake.`
-          : `${tracks.length} verified tracks loaded. The recommendation engine is a lemon with a clipboard.`
-        : `${count} track${count === 1 ? "" : "s"} match your search.`;
-    }
-  }
-
-  function renderFeaturedTrack(track) {
-    if (!featuredTrack || !track) {
-      return;
-    }
-
-    const tags = pietTagsForTrack(track, currentIndex).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
-    const featuredLabel = getIsPietHours() ? "NOW PLAYING" : "Now in rotation";
-    const featuredSource = getIsPietHours()
-      ? `${track.artist} / ${track.sourceName || "SoundCloud"}`
-      : track.artist;
-    featuredTrack.innerHTML = `
-      <img src="${escapeHtml(track.artworkLarge || track.artwork)}" width="210" height="210" loading="lazy" alt="">
-      <div class="fm-featured-track__copy">
-        <p class="fm-kicker">${featuredLabel}</p>
-        <h3>${escapeHtml(track.title)}</h3>
-        <p>${escapeHtml(featuredSource)}</p>
-        <div class="fm-featured-meta">
-          <span>${escapeHtml(track.license || "License needed")}</span>
-          <span>${escapeHtml(track.sourceName || "Source")}</span>
-          <span>${escapeHtml(track.duration || "0:00")}</span>
-        </div>
-        <div class="fm-tags">${tags}</div>
-        <div class="fm-featured-actions">
-          <button class="fm-button fm-button--primary" type="button" data-featured-play>${canPlayHere(track) || canEmbedHere(track) ? "Play Featured" : "Open Source"}</button>
-          <button class="fm-button" type="button" data-featured-share>Share Track</button>
-          <button class="fm-button" type="button" data-featured-copy>Copy Attribution</button>
-          <a class="fm-button" href="${escapeHtml(safeHref(track.sourceUrl))}" target="_blank" rel="noopener">Open Source</a>
-        </div>
-      </div>
-    `;
-  }
-
-  function updatePlayer(track) {
-    if (!track) {
-      return;
-    }
-
-    if (playerArt) {
-      playerArt.src = track.artworkSmall || track.artwork;
-    }
-
-    if (playerTitle) {
-      playerTitle.textContent = track.title;
-    }
-
-    if (playerArtist) {
-      playerArtist.textContent = getIsPietHours()
-        ? `${track.artist} / ${track.sourceName || "SoundCloud"}`
-        : track.artist;
-    }
-
-    if (playerLicense) {
-      playerLicense.textContent = getIsPietHours()
-        ? "lofi / late night / internet radio"
-        : track.license;
-    }
-
-    if (duration) {
-      duration.textContent = track.duration;
-    }
-
-    if (progress && !audio.duration) {
-      progress.value = "0";
-    }
-
-    if (progress) {
-      progress.disabled = !(canPlayHere(track) || canEmbedHere(track));
-    }
-
-    if (playButton) {
-      const embedded = embeddedTrackId === track.id;
-      playButton.textContent = embedded && soundCloudPlaying ? "Pause" : (canPlayHere(track) || canEmbedHere(track) ? "Play" : "Source");
-      playButton.setAttribute("aria-label", embedded && soundCloudPlaying ? "Pause SoundCloud playback" : (canPlayHere(track) || canEmbedHere(track) ? "Play selected track" : "Open selected track source"));
-    }
-
-    renderFeaturedTrack(track);
-    renderTracks();
-  }
-
-  function selectTrack(index, shouldPlay) {
-    if (!tracks[index]) {
-      return;
-    }
-
-    const track = tracks[index];
-    const changed = currentIndex !== index;
-    currentIndex = index;
-
-    if (changed) {
-      stopEmbeddedPlayback();
-    }
-
-    updatePlayer(track);
-
-    if (!canPlayHere(track)) {
-      audio.pause();
-      audio.removeAttribute("src");
-      delete audio.dataset.trackId;
-      audio.load();
-      if (playButton) {
-        playButton.textContent = canEmbedHere(track) ? "Play" : "Source";
-      }
-      if (shouldPlay && canEmbedHere(track)) {
-        playEmbeddedTrack(track);
-      } else if (shouldPlay && track.sourceUrl) {
-        window.open(safeHref(track.sourceUrl), "_blank", "noopener");
-        setStatus("Opened the source link. Add a local audio upload in Studio to play it here.");
-      } else if (canEmbedHere(track)) {
-        setStatus("This SoundCloud track can play inside Lemonteed FM. Press Play.");
-      } else {
-        setStatus("This track is source-only. Add a local audio upload in Studio to play it here.");
-      }
-      return;
-    }
-
-    setStatus(`${track.title} selected. License: ${track.license}.`);
-
-    if (shouldPlay) {
-      playCurrent();
-    } else if (changed && !audio.paused) {
-      pauseCurrent();
-    }
-  }
-
-  function playCurrent() {
+  function play() {
     const track = currentTrack();
-
-    const source = playbackUrl(track);
-
-    if (!canPlayHere(track)) {
-      if (embeddedTrackId === track.id && soundCloudWidget) {
-        if (soundCloudPlaying) {
-          soundCloudWidget.pause();
-        } else {
-          soundCloudWidget.play();
-        }
-      } else if (embeddedTrackId === track.id) {
-        stopEmbeddedPlayback();
-        if (playButton) {
-          playButton.textContent = "Play";
-          playButton.setAttribute("aria-label", "Play selected track");
-        }
-      } else if (canEmbedHere(track)) {
-        playEmbeddedTrack(track);
-      } else if (track.sourceUrl) {
-        window.open(safeHref(track.sourceUrl), "_blank", "noopener");
-        setStatus("Opened the source link. Add a local audio upload in Studio to play it here.");
-      } else {
-        setStatus("This track needs a local audio file before it can play here.");
-      }
-      return;
+    if (!audio.src || audio.src === window.location.href) {
+      loadTrack(track);
     }
-
-    if (audio.dataset.trackId !== track.id || !audio.getAttribute("src")) {
-      audio.src = source;
-      audio.dataset.trackId = track.id;
-      audio.load();
-    }
-
-    audio.play()
-      .then(() => {
-        if (playButton) {
-          playButton.textContent = "Pause";
-        }
-        setStatus(`Now playing: ${track.title}.`);
-      })
-      .catch(() => {
-        setStatus("Playback was blocked by the browser. Press Play again.");
+    const p = audio.play();
+    if (p && p.catch) {
+      p.catch(() => {
+        // Fallback: simulate playback if audio fails
+        startSimulation();
       });
+    }
+    state.isPlaying = true;
+    startProgressSync();
+    syncPlayState(true);
+    $(".fm-hero__wave")?.classList.add("is-playing");
   }
 
-  function pauseCurrent() {
-    if (embeddedTrackId === currentTrack().id) {
-      if (soundCloudWidget) {
-        soundCloudWidget.pause();
-      } else {
-        stopEmbeddedPlayback();
-      }
-      if (playButton) {
-        playButton.textContent = "Play";
-        playButton.setAttribute("aria-label", "Play selected track");
-      }
-      setStatus("Paused SoundCloud playback.");
-      return;
-    }
-
+  function pause() {
     audio.pause();
-    stopEmbeddedPlayback();
-    if (playButton) {
-      playButton.textContent = "Play";
-    }
-    setStatus("Paused. The lemon is pretending this was intentional.");
+    state.isPlaying = false;
+    stopProgressSync();
+    syncPlayState(false);
+    $(".fm-hero__wave")?.classList.remove("is-playing");
   }
 
-  function playableIndexes() {
-    return tracks
-      .map((track, index) => ({ track, index }))
-      .filter((item) => canPlayHere(item.track) || canEmbedHere(item.track))
-      .map((item) => item.index);
+  function togglePlay() {
+    state.isPlaying ? pause() : play();
   }
 
-  function moveTrack(direction, shouldPlay) {
-    const indexes = playableIndexes();
-
-    if (!indexes.length) {
-      return;
-    }
-
-    const position = indexes.indexOf(currentIndex);
-    const safePosition = position === -1 ? 0 : position;
-    const nextPosition = (safePosition + direction + indexes.length) % indexes.length;
-    selectTrack(indexes[nextPosition], shouldPlay);
+  function goPrev() {
+    state.currentIndex = (state.currentIndex - 1 + TRACKS.length) % TRACKS.length;
+    state.progressSec = 0;
+    const track = currentTrack();
+    loadTrack(track);
+    if (state.isPlaying) play();
+    syncCrateHighlight();
   }
 
-  function updateProgress() {
-    if (!progress || isSeeking) {
-      return;
-    }
-
-    const total = audio.duration;
-    const elapsed = audio.currentTime;
-
-    if (Number.isFinite(total) && total > 0) {
-      progress.value = String(Math.round((elapsed / total) * 1000));
-      if (duration) {
-        duration.textContent = formatTime(total);
-      }
-    } else {
-      progress.value = "0";
-    }
-
-    if (currentTime) {
-      currentTime.textContent = formatTime(elapsed);
-    }
+  function goNext() {
+    state.currentIndex = (state.currentIndex + 1) % TRACKS.length;
+    state.progressSec = 0;
+    const track = currentTrack();
+    loadTrack(track);
+    if (state.isPlaying) play();
+    syncCrateHighlight();
   }
 
-  function applyFilter() {
-    const query = (searchInput ? searchInput.value : "").trim().toLowerCase();
-
-    if (!query) {
-      filteredIndexes = tracks.map((track, index) => index);
-      renderTracks();
-      return;
-    }
-
-    filteredIndexes = tracks
-      .map((track, index) => ({ track, index }))
-      .filter(({ track }) => {
-        const haystack = [
-          track.title,
-          track.artist,
-          track.sourceName,
-          track.license,
-          track.attribution,
-          ...pietTagsForTrack(track, index),
-          ...(track.vibe || []),
-          ...(track.tags || [])
-        ].join(" ").toLowerCase();
-
-        return haystack.includes(query);
-      })
-      .map((item) => item.index);
-
-    renderTracks();
+  function selectTrack(id) {
+    const idx = TRACKS.findIndex(t => t.id === id);
+    if (idx < 0) return;
+    state.currentIndex = idx;
+    state.progressSec = 0;
+    const track = currentTrack();
+    loadTrack(track);
+    play();
+    syncCrateHighlight();
+    // Scroll to hero
+    document.getElementById("live")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  function copyText(text) {
-    if (navigator.clipboard && window.isSecureContext) {
-      return navigator.clipboard.writeText(text);
-    }
+  /* ── Simulation (when real audio is unavailable) ─────────────── */
+  let simTimer = null;
 
-    const textarea = document.createElement("textarea");
-    textarea.value = text;
-    textarea.setAttribute("readonly", "");
-    textarea.style.position = "fixed";
-    textarea.style.left = "-9999px";
-    document.body.append(textarea);
-    textarea.select();
-
-    return new Promise((resolve, reject) => {
-      try {
-        const copied = document.execCommand("copy");
-        textarea.remove();
-        copied ? resolve() : reject(new Error("Copy command failed"));
-      } catch (error) {
-        textarea.remove();
-        reject(error);
-      }
-    });
-  }
-
-  function trackShareUrl(track) {
-    const url = new URL(window.location.href);
-    url.hash = `track-${track.id}`;
-    return url.toString();
-  }
-
-  function shareTrack(track) {
-    const payload = {
-      title: `${track.title} - Lemonteed FM`,
-      text: `Lemonteed FM signal check: "${track.title}" by ${track.artist}.`,
-      url: trackShareUrl(track)
-    };
-
-    if (navigator.share) {
-      return navigator.share(payload)
-        .then(() => setStatus(`Shared ${track.title}. The signal escaped.`));
-    }
-
-    return copyText(`${payload.text}\n${payload.url}`)
-      .then(() => setStatus(`Share link copied for ${track.title}.`));
-  }
-
-  function buildMailto(form) {
-    const data = new FormData(form);
-    const lines = [
-      "Lemonteed FM Request",
-      "",
-      `Request type: ${data.get("requestType") || ""}`,
-      `Artist name: ${data.get("artistName") || ""}`,
-      `Song title: ${data.get("songTitle") || ""}`,
-      `Link: ${data.get("link") || ""}`,
-      "",
-      "License/source notes:",
-      data.get("licenseNotes") || "",
-      "",
-      "Why should it be added?",
-      data.get("why") || "",
-      "",
-      `Optional email: ${data.get("email") || ""}`
-    ];
-
-    return `mailto:?subject=${encodeURIComponent("Lemonteed FM Request")}&body=${encodeURIComponent(lines.join("\n"))}`;
-  }
-
-  initPietMode();
-
-  if (trackCount) {
-    trackCount.textContent = `${tracks.length} tracks`;
-  }
-
-  renderTracks();
-  const initialTrackId = window.location.hash.replace(/^#track-/, "");
-  const initialTrackIndex = initialTrackId
-    ? tracks.findIndex((track) => track.id === initialTrackId)
-    : -1;
-  selectTrack(initialTrackIndex >= 0 ? initialTrackIndex : 0, false);
-
-  if (trackList) {
-    trackList.addEventListener("click", (event) => {
-      const play = event.target.closest("[data-card-play]");
-      const card = event.target.closest("[data-track-index]");
-
-      if (play) {
-        selectTrack(Number(play.dataset.cardPlay), true);
-        return;
-      }
-
-      const share = event.target.closest("[data-card-share]");
-      if (share) {
-        const track = tracks[Number(share.dataset.cardShare)];
-        if (track) {
-          shareTrack(track)
-            .catch(() => setStatus("Share failed. The booth door got stuck."));
-        }
-        return;
-      }
-
-      const copy = event.target.closest("[data-card-copy]");
-      if (copy) {
-        const track = tracks[Number(copy.dataset.cardCopy)];
-        if (track) {
-          copyText(track.attribution)
-            .then(() => setStatus(`Attribution copied for ${track.title}.`))
-            .catch(() => setStatus("Copy failed. Use the player attribution button instead."));
-        }
-        return;
-      }
-
-      if (card && !event.target.closest("a")) {
-        selectTrack(Number(card.dataset.trackIndex), false);
-      }
-    });
-
-    trackList.addEventListener("keydown", (event) => {
-      if (event.key !== "Enter" && event.key !== " ") {
-        return;
-      }
-
-      const card = event.target.closest("[data-track-index]");
-      if (card) {
-        event.preventDefault();
-        selectTrack(Number(card.dataset.trackIndex), event.key === "Enter");
-      }
-    });
-  }
-
-  if (searchInput) {
-    searchInput.addEventListener("input", applyFilter);
-  }
-
-  if (playButton) {
-    playButton.addEventListener("click", () => {
-      if (canEmbedHere(currentTrack())) {
-        playCurrent();
-        return;
-      }
-
-      audio.paused ? playCurrent() : pauseCurrent();
-    });
-  }
-
-  if (prevButton) {
-    prevButton.addEventListener("click", () => moveTrack(-1, !audio.paused || Boolean(embeddedTrackId)));
-  }
-
-  if (nextButton) {
-    nextButton.addEventListener("click", () => moveTrack(1, !audio.paused || Boolean(embeddedTrackId)));
-  }
-
-  if (progress) {
-    progress.addEventListener("input", () => {
-      isSeeking = true;
-      const track = currentTrack();
-      const total = canEmbedHere(track) && embeddedTrackId === track.id
-        ? soundCloudDuration / 1000
-        : audio.duration;
-
-      if (Number.isFinite(total) && total > 0) {
-        const nextTime = (Number(progress.value) / 1000) * total;
-        if (currentTime) {
-          currentTime.textContent = formatTime(nextTime);
-        }
-      }
-    });
-
-    progress.addEventListener("change", () => {
-      const track = currentTrack();
-      const isEmbedded = canEmbedHere(track) && embeddedTrackId === track.id;
-      const total = isEmbedded ? soundCloudDuration / 1000 : audio.duration;
-
-      if (Number.isFinite(total) && total > 0) {
-        const nextTime = (Number(progress.value) / 1000) * total;
-        if (isEmbedded && soundCloudWidget) {
-          soundCloudWidget.seekTo(nextTime * 1000);
-        } else {
-          audio.currentTime = nextTime;
-        }
-      }
-
-      isSeeking = false;
-      if (isEmbedded) {
-        updateSoundCloudProgress(soundCloudPosition, soundCloudDuration);
+  function startSimulation() {
+    stopSimulation();
+    const track = currentTrack();
+    const total = track.durationSec;
+    simTimer = setInterval(() => {
+      if (!state.isPlaying) return;
+      state.progressSec += 0.5;
+      if (state.progressSec >= total) {
+        state.progressSec = 0;
+        goNext();
       } else {
         updateProgress();
       }
+    }, 500);
+  }
+
+  function stopSimulation() {
+    if (simTimer) { clearInterval(simTimer); simTimer = null; }
+  }
+
+  /* ── Progress Sync ──────────────────────────────────────────── */
+  function startProgressSync() {
+    stopProgressSync();
+    if (audio.src && audio.src !== window.location.href) {
+      state.progressTimer = setInterval(updateProgress, 500);
+    } else {
+      startSimulation();
+    }
+  }
+
+  function stopProgressSync() {
+    if (state.progressTimer) { clearInterval(state.progressTimer); state.progressTimer = null; }
+    stopSimulation();
+  }
+
+  function updateProgress() {
+    const track = currentTrack();
+    const current = audio.duration ? audio.currentTime : state.progressSec;
+    const total = audio.duration || track.durationSec;
+    const pct = total ? (current / total) * 100 : 0;
+
+    // Hero progress
+    const heroRange = $("[data-hero-progress]");
+    if (heroRange) {
+      heroRange.value = pct;
+      heroRange.style.setProperty("--progress", pct + "%");
+    }
+    $("[data-current-time]")?.textContent && ($("[data-current-time]").textContent = fmt(current));
+    $("[data-duration-time]")?.textContent && ($("[data-duration-time]").textContent = fmt(total));
+
+    // Player dock progress
+    const playerRange = $("[data-player-progress]");
+    if (playerRange) {
+      playerRange.value = pct;
+      playerRange.style.setProperty("--progress", pct + "%");
+    }
+    $("[data-player-current]")?.textContent !== undefined && ($("[data-player-current]").textContent = fmt(current));
+    $("[data-player-total]")?.textContent !== undefined && ($("[data-player-total]").textContent = fmt(total));
+
+    // Top-edge progress line on player
+    document.querySelector(".fm-player")?.style.setProperty("--player-progress", pct + "%");
+  }
+
+  /* ── UI Sync ────────────────────────────────────────────────── */
+  function syncPlayState(playing) {
+    const icon = playing ? "⏸" : "▶";
+    const label = playing ? "Pause" : "Play";
+    $$("[data-play-btn]").forEach(btn => {
+      btn.textContent = icon;
+      btn.setAttribute("aria-label", label);
+    });
+    $$("[data-hero-play]").forEach(btn => {
+      btn.textContent = icon;
+      btn.setAttribute("aria-label", label);
     });
   }
 
-  if (volume) {
-    audio.volume = Number(volume.value);
-    volume.addEventListener("input", () => {
-      audio.volume = Number(volume.value);
-      if (soundCloudWidget) {
-        soundCloudWidget.setVolume(Math.round(Number(volume.value) * 100));
-      }
+  function updatePlayerUI(track) {
+    // Player dock
+    const playerArt = $("[data-player-art]");
+    if (playerArt) { playerArt.src = track.artworkSmall; playerArt.alt = track.title; }
+    const playerTitle = $("[data-player-title]");
+    if (playerTitle) playerTitle.textContent = track.title;
+    const playerArtist = $("[data-player-artist]");
+    if (playerArtist) playerArtist.textContent = track.artist;
+    const playerProgram = $("[data-player-program]");
+    if (playerProgram) playerProgram.textContent = track.program;
+
+    // Hero
+    const heroArt = $("[data-hero-art]");
+    if (heroArt) { heroArt.src = track.artworkLarge; heroArt.alt = track.title; }
+    const heroTitle = $("[data-hero-title]");
+    if (heroTitle) heroTitle.textContent = track.title;
+    const heroArtist = $("[data-hero-artist]");
+    if (heroArtist) heroArtist.textContent = track.artist;
+    const heroAlbum = $("[data-hero-album]");
+    if (heroAlbum) heroAlbum.textContent = track.album;
+    const heroProgram = $("[data-hero-program]");
+    if (heroProgram) heroProgram.textContent = "Program: " + track.program;
+    const heroNote = $("[data-hero-note]");
+    if (heroNote) heroNote.textContent = track.curatorNote;
+    const heroLicense = $("[data-hero-license]");
+    if (heroLicense) heroLicense.textContent = track.license;
+    const heroSource = $("[data-hero-source]");
+    if (heroSource) heroSource.textContent = track.sourceName;
+
+    // Duration
+    $("[data-duration-time]")?.textContent !== undefined && ($("[data-duration-time]").textContent = track.duration);
+    $("[data-player-total]")?.textContent !== undefined && ($("[data-player-total]").textContent = track.duration);
+
+    // Reset progress
+    $("[data-current-time]") && ($("[data-current-time]").textContent = "0:00");
+    $("[data-player-current]") && ($("[data-player-current]").textContent = "0:00");
+    const heroRange = $("[data-hero-progress]");
+    if (heroRange) { heroRange.value = 0; heroRange.style.setProperty("--progress", "0%"); }
+    const playerRange = $("[data-player-progress]");
+    if (playerRange) { playerRange.value = 0; playerRange.style.setProperty("--progress", "0%"); }
+    document.querySelector(".fm-player")?.style.setProperty("--player-progress", "0%");
+  }
+
+  function syncCrateHighlight() {
+    $$(".fm-track-row").forEach(row => {
+      row.classList.toggle("is-playing", row.dataset.trackId === currentTrack().id);
     });
   }
 
-  if (openSource) {
-    openSource.addEventListener("click", () => {
-      window.open(safeHref(currentTrack().sourceUrl), "_blank", "noopener");
-    });
+  /* ── Crate Rendering ────────────────────────────────────────── */
+  function licenseBadgeHtml(license) {
+    const isCC = license.startsWith("CC");
+    return `<span class="fm-license-badge${isCC ? " fm-license-badge--cc" : ""}">${escHtml(license)}</span>`;
   }
 
-  if (copyAttribution) {
-    copyAttribution.addEventListener("click", () => {
-      copyText(currentTrack().attribution)
-        .then(() => setStatus("Attribution copied. Credit department is briefly calm."))
-        .catch(() => setStatus("Copy failed. Select the attribution from the track card instead."));
-    });
+  function escHtml(str) {
+    return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   }
 
-  if (startListening) {
-    startListening.addEventListener("click", () => {
-      document.querySelector("#crate")?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-      selectTrack(currentIndex, true);
-    });
-  }
+  function renderCrate() {
+    const list = $("[data-track-list]");
+    if (!list) return;
 
-  function openRequestPanel() {
-    if (!requestPanel) {
+    if (state.filteredTracks.length === 0) {
+      list.innerHTML = `<div class="fm-no-results">No tracks match your search. The algorithm would call this a success.</div>`;
+      $("[data-crate-count]") && ($("[data-crate-count]").textContent = "0 tracks");
       return;
     }
 
-    requestPanel.hidden = false;
-    requestPanel.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
-    const firstInput = requestPanel.querySelector("select, input, textarea, button");
-    if (firstInput && typeof firstInput.focus === "function") {
-      firstInput.focus({ preventScroll: true });
-    }
-  }
+    $("[data-crate-count]") && ($("[data-crate-count]").textContent = `${state.filteredTracks.length} track${state.filteredTracks.length !== 1 ? "s" : ""}`);
 
-  function closeRequestPanel() {
-    if (requestPanel) {
-      requestPanel.hidden = true;
-    }
-  }
+    list.innerHTML = state.filteredTracks.map((track, i) => {
+      const isPlaying = track.id === currentTrack().id && state.isPlaying;
+      return `
+        <div class="fm-track-row${isPlaying ? " is-playing" : ""}" data-track-id="${track.id}">
+          <div class="fm-track-row__main" tabindex="0" role="button" aria-expanded="false" aria-label="Expand details for ${escHtml(track.title)}">
+            <div class="fm-track-row__num">
+              <span class="fm-track-row__num-val">${i + 1}</span>
+              <span class="fm-track-row__play-icon" aria-hidden="true">${isPlaying ? "▶" : "▶"}</span>
+            </div>
+            <div class="fm-track-row__identity">
+              <div class="fm-track-row__thumb">
+                <img src="${track.artworkSmall}" alt="" loading="lazy" width="40" height="40">
+              </div>
+              <div>
+                <span class="fm-track-row__title">${escHtml(track.title)}</span>
+                <span class="fm-track-row__artist">${escHtml(track.artist)}</span>
+              </div>
+            </div>
+            <div class="fm-track-row__vibes">
+              ${track.vibe.slice(0, 2).map(v => `<span class="fm-vibe-tag">${escHtml(v)}</span>`).join("")}
+            </div>
+            <div class="fm-track-row__license">
+              ${licenseBadgeHtml(track.license)}
+            </div>
+            <div class="fm-track-row__menu">
+              <button class="fm-overflow-btn" type="button" aria-label="More options for ${escHtml(track.title)}" aria-haspopup="true" aria-expanded="false">⋯</button>
+              <div class="fm-overflow-menu" role="menu">
+                <button type="button" data-action="play" role="menuitem">▶ Play now</button>
+                <button type="button" data-action="copy-attr" role="menuitem">⎘ Copy attribution</button>
+                <button type="button" data-action="open-source" role="menuitem">↗ Open original source</button>
+                <button type="button" data-action="view-license" role="menuitem">⊙ View license details</button>
+              </div>
+            </div>
+          </div>
+          <div class="fm-track-detail" id="detail-${track.id}">
+            <div class="fm-track-detail__grid">
+              <div>
+                <span class="fm-detail-block__label">Curator note</span>
+                <p class="fm-detail-block__val">${escHtml(track.curatorNote)}</p>
+              </div>
+              <div>
+                <span class="fm-detail-block__label">Full attribution</span>
+                <p class="fm-detail-block__val">${escHtml(track.attribution)}</p>
+              </div>
+              <div>
+                <span class="fm-detail-block__label">License</span>
+                <p class="fm-detail-block__val">${licenseBadgeHtml(track.license)}</p>
+              </div>
+              <div>
+                <span class="fm-detail-block__label">Source</span>
+                <p class="fm-detail-block__val"><a href="${escHtml(track.sourceUrl)}" target="_blank" rel="noopener">Open on ${escHtml(track.sourceName)} ↗</a></p>
+              </div>
+              <div>
+                <span class="fm-detail-block__label">Duration</span>
+                <p class="fm-detail-block__val">${escHtml(track.duration)}</p>
+              </div>
+              <div>
+                <span class="fm-detail-block__label">Added</span>
+                <p class="fm-detail-block__val">${escHtml(track.addedDate)}</p>
+              </div>
+            </div>
+            <div class="fm-usage-warning">
+              ⚠ ${escHtml(track.usage)}
+            </div>
+          </div>
+        </div>
+      `;
+    }).join("");
 
-  openRequestButtons.forEach((button) => {
-    button.addEventListener("click", openRequestPanel);
-  });
+    // Attach crate row events
+    $$(".fm-track-row", list).forEach(row => {
+      const trackId = row.dataset.trackId;
+      const track = TRACKS.find(t => t.id === trackId);
 
-  if (closeRequestButton) {
-    closeRequestButton.addEventListener("click", closeRequestPanel);
-  }
+      // Expand on main click
+      const mainRow = row.querySelector(".fm-track-row__main");
+      mainRow?.addEventListener("click", () => toggleRowDetail(row, trackId));
+      mainRow?.addEventListener("keydown", e => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleRowDetail(row, trackId); }
+      });
 
-  if (featuredTrack) {
-    featuredTrack.addEventListener("click", (event) => {
-      if (event.target.closest("[data-featured-play]")) {
-        selectTrack(currentIndex, true);
-        return;
-      }
+      // Overflow button
+      const overflowBtn = row.querySelector(".fm-overflow-btn");
+      const overflowMenu = row.querySelector(".fm-overflow-menu");
 
-      if (event.target.closest("[data-featured-share]")) {
-        shareTrack(currentTrack())
-          .catch(() => setStatus("Share failed. The booth door got stuck."));
-        return;
-      }
+      overflowBtn?.addEventListener("click", e => {
+        e.stopPropagation();
+        const isOpen = overflowMenu.classList.contains("is-open");
+        closeAllMenus();
+        if (!isOpen) {
+          overflowMenu.classList.add("is-open");
+          overflowBtn.setAttribute("aria-expanded", "true");
+          state.openMenu = overflowMenu;
+        }
+      });
 
-      if (event.target.closest("[data-featured-copy]")) {
-        copyText(currentTrack().attribution)
-          .then(() => setStatus(`Attribution copied for ${currentTrack().title}.`))
-          .catch(() => setStatus("Copy failed. Use the player attribution button instead."));
-      }
+      // Overflow menu actions
+      overflowMenu?.querySelectorAll("[data-action]").forEach(btn => {
+        btn.addEventListener("click", e => {
+          e.stopPropagation();
+          const action = btn.dataset.action;
+          closeAllMenus();
+          if (!track) return;
+          if (action === "play") selectTrack(track.id);
+          else if (action === "copy-attr") copyAttribution(track);
+          else if (action === "open-source") window.open(track.sourceUrl, "_blank", "noopener");
+          else if (action === "view-license") { toggleRowDetail(row, trackId, true); }
+        });
+      });
     });
   }
 
-  if (requestForm) {
-    requestForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const mailto = buildMailto(requestForm);
+  function toggleRowDetail(row, trackId, forceOpen = false) {
+    const detail = row.querySelector(".fm-track-detail");
+    const mainRow = row.querySelector(".fm-track-row__main");
+    if (!detail) return;
 
-      if (requestStatus) {
-        requestStatus.textContent = "Opening a mail draft with your request.";
-      }
+    const isOpen = detail.classList.contains("is-open");
 
-      window.location.href = mailto;
+    // Close previously open row
+    if (state.expandedRow && state.expandedRow !== row) {
+      state.expandedRow.querySelector(".fm-track-detail")?.classList.remove("is-open");
+      state.expandedRow.querySelector(".fm-track-row__main")?.setAttribute("aria-expanded", "false");
+    }
+
+    const shouldOpen = forceOpen || !isOpen;
+    detail.classList.toggle("is-open", shouldOpen);
+    mainRow?.setAttribute("aria-expanded", String(shouldOpen));
+    state.expandedRow = shouldOpen ? row : null;
+  }
+
+  function closeAllMenus() {
+    $$(".fm-overflow-menu.is-open").forEach(m => m.classList.remove("is-open"));
+    $$(".fm-overflow-btn[aria-expanded=true]").forEach(b => b.setAttribute("aria-expanded", "false"));
+    state.openMenu = null;
+  }
+
+  /* ── Freshly Added ──────────────────────────────────────────── */
+  function renderFreshlyAdded() {
+    const grid = $("[data-fresh-grid]");
+    if (!grid) return;
+
+    const freshTracks = FRESH_IDS.map(id => TRACKS.find(t => t.id === id)).filter(Boolean);
+
+    grid.innerHTML = freshTracks.map(track => `
+      <article class="fm-track-card" data-track-id="${track.id}">
+        <div class="fm-track-card__art">
+          <img src="${track.artworkSmall}" alt="${escHtml(track.title)} artwork" loading="lazy" width="400" height="400">
+          <div class="fm-track-card__play">
+            <button type="button" aria-label="Play ${escHtml(track.title)}">▶</button>
+          </div>
+          <div class="fm-track-card__tags">
+            <span class="fm-tag">${escHtml(track.mood)}</span>
+          </div>
+        </div>
+        <div class="fm-track-card__body">
+          <div class="fm-track-card__title">${escHtml(track.title)}</div>
+          <div class="fm-track-card__artist">${escHtml(track.artist)}</div>
+          <p class="fm-track-card__note">${escHtml(track.curatorNote)}</p>
+          <div class="fm-track-card__footer">
+            <span class="fm-track-card__date">Added ${track.addedDate}</span>
+            ${licenseBadgeHtml(track.license)}
+          </div>
+        </div>
+      </article>
+    `).join("");
+
+    // Attach play events
+    $$(".fm-track-card", grid).forEach(card => {
+      const id = card.dataset.trackId;
+      const playBtn = card.querySelector("button");
+      card.addEventListener("click", () => selectTrack(id));
+      playBtn?.addEventListener("click", e => { e.stopPropagation(); selectTrack(id); });
     });
   }
 
-  audio.addEventListener("play", () => {
-    document.body.classList.add("is-playing");
-    if (playButton) {
-      playButton.textContent = "Pause";
-    }
-  });
+  /* ── Featured Track ─────────────────────────────────────────── */
+  function renderFeatured() {
+    const wrap = $("[data-featured-track]");
+    if (!wrap) return;
+    const track = TRACKS.find(t => t.featured) ?? TRACKS[0];
+    wrap.innerHTML = `
+      <div class="fm-featured-track">
+        <div class="fm-featured-track__art">
+          <img src="${track.artworkSmall}" alt="${escHtml(track.title)}" loading="lazy" width="64" height="64">
+        </div>
+        <div class="fm-featured-track__info">
+          <div class="fm-featured-track__title">${escHtml(track.title)}</div>
+          <div class="fm-featured-track__artist">${escHtml(track.artist)}</div>
+          <div class="fm-featured-track__note">${escHtml(track.curatorNote)}</div>
+        </div>
+        <div class="fm-featured-track__actions">
+          <button class="fm-btn fm-btn--primary" type="button" data-play-featured>▶ Play</button>
+          <button class="fm-btn" type="button" data-copy-featured>⎘ Copy attribution</button>
+        </div>
+      </div>
+    `;
 
-  audio.addEventListener("pause", () => {
-    if (embeddedTrackId) {
-      return;
+    wrap.querySelector("[data-play-featured]")?.addEventListener("click", () => selectTrack(track.id));
+    wrap.querySelector("[data-copy-featured]")?.addEventListener("click", () => copyAttribution(track));
+  }
+
+  /* ── Schedule Strip ─────────────────────────────────────────── */
+  function renderSchedule() {
+    const strip = $("[data-schedule-strip]");
+    if (!strip) return;
+    strip.innerHTML = SCHEDULE.map(prog => `
+      <div class="fm-schedule-item${prog.state === "now" ? " is-now" : ""}">
+        <div class="fm-schedule-item__label">
+          ${prog.state === "now" ? '<span class="fm-on-air__dot" aria-hidden="true"></span>' : ""}
+          ${prog.state === "now" ? "On Air Now" : prog.state === "next" ? "Up Next" : "Later Tonight"}
+        </div>
+        <span class="fm-schedule-item__time">${prog.time}</span>
+        <div class="fm-schedule-item__name">${escHtml(prog.name)}</div>
+        <p class="fm-schedule-item__desc">${escHtml(prog.desc)}</p>
+      </div>
+    `).join("");
+  }
+
+  /* ── Search & Filter ────────────────────────────────────────── */
+  let filterState = { query: "", license: "", mood: "", genre: "", sort: "default" };
+  const activeChips = [];
+
+  function applyFilters() {
+    const { query, license, mood, genre, sort } = filterState;
+    let tracks = [...TRACKS];
+
+    if (query) {
+      const q = query.toLowerCase();
+      tracks = tracks.filter(t =>
+        t.title.toLowerCase().includes(q) ||
+        t.artist.toLowerCase().includes(q) ||
+        t.license.toLowerCase().includes(q) ||
+        t.vibe.some(v => v.toLowerCase().includes(q)) ||
+        t.mood.toLowerCase().includes(q) ||
+        t.genre.toLowerCase().includes(q) ||
+        t.program.toLowerCase().includes(q)
+      );
     }
 
-    document.body.classList.remove("is-playing");
-    if (playButton) {
-      playButton.textContent = "Play";
-    }
-  });
+    if (license) tracks = tracks.filter(t => t.license === license);
+    if (mood)    tracks = tracks.filter(t => t.mood === mood);
+    if (genre)   tracks = tracks.filter(t => t.genre === genre);
 
-  audio.addEventListener("timeupdate", updateProgress);
-  audio.addEventListener("loadedmetadata", updateProgress);
-  audio.addEventListener("ended", () => moveTrack(1, true));
+    if (sort === "az")      tracks.sort((a, b) => a.title.localeCompare(b.title));
+    if (sort === "za")      tracks.sort((a, b) => b.title.localeCompare(a.title));
+    if (sort === "newest")  tracks.sort((a, b) => b.addedDate.localeCompare(a.addedDate));
+    if (sort === "oldest")  tracks.sort((a, b) => a.addedDate.localeCompare(b.addedDate));
+
+    state.filteredTracks = tracks;
+    renderCrate();
+    syncCrateHighlight();
+    renderChips();
+    updateStatusLine(tracks.length);
+  }
+
+  function renderChips() {
+    const container = $("[data-filter-chips]");
+    if (!container) return;
+    const chips = [];
+    if (filterState.license) chips.push({ key: "license", label: "License: " + filterState.license });
+    if (filterState.mood)    chips.push({ key: "mood",    label: "Mood: " + filterState.mood });
+    if (filterState.genre)   chips.push({ key: "genre",   label: "Genre: " + filterState.genre });
+
+    container.innerHTML = chips.map(c => `
+      <span class="fm-filter-chip">
+        ${escHtml(c.label)}
+        <button type="button" aria-label="Remove ${escHtml(c.label)} filter" data-remove-filter="${c.key}">✕</button>
+      </span>
+    `).join("");
+
+    $$("[data-remove-filter]", container).forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterState[btn.dataset.removeFilter] = "";
+        const select = $(`[data-filter="${btn.dataset.removeFilter}"]`);
+        if (select) select.value = "";
+        applyFilters();
+      });
+    });
+  }
+
+  function updateStatusLine(count) {
+    const line = $("[data-filter-status]");
+    if (!line) return;
+    const hasFilters = filterState.query || filterState.license || filterState.mood || filterState.genre;
+    line.textContent = hasFilters ? `Showing ${count} of ${TRACKS.length} tracks` : "";
+  }
+
+  /* ── Attribution ────────────────────────────────────────────── */
+  function copyAttribution(track) {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(track.attribution).then(() => toast("Attribution copied ✓")).catch(() => fallbackCopy(track.attribution));
+    } else {
+      fallbackCopy(track.attribution);
+    }
+  }
+
+  function fallbackCopy(text) {
+    const ta = el("textarea", { value: text, style: "position:fixed;opacity:0" });
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    toast("Attribution copied ✓");
+  }
+
+  /* ── Request Form ───────────────────────────────────────────── */
+  function handleRequestForm(form) {
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const type    = data.get("requestType") || "";
+      const artist  = data.get("artistName") || "";
+      const song    = data.get("songTitle") || "";
+      const link    = data.get("link") || "";
+      const notes   = data.get("licenseNotes") || "";
+      const why     = data.get("why") || "";
+      const email   = data.get("email") || "";
+
+      const body = [
+        `Request type: ${type}`,
+        artist && `Artist: ${artist}`,
+        song && `Song: ${song}`,
+        link && `Link: ${link}`,
+        notes && `License / source notes:\n${notes}`,
+        why && `Why it should be added:\n${why}`,
+        email && `Email: ${email}`
+      ].filter(Boolean).join("\n\n");
+
+      const subject = encodeURIComponent(`LFM Request: ${artist || "Artist"} — ${song || "Track"}`);
+      window.location.href = `mailto:contact@lemonteed.com?subject=${subject}&body=${encodeURIComponent(body)}`;
+    });
+  }
+
+  /* ── Mobile Nav ─────────────────────────────────────────────── */
+  function initMobileNav() {
+    const toggle = $("[data-nav-toggle]");
+    const nav = $("[data-mobile-nav]");
+    if (!toggle || !nav) return;
+
+    toggle.addEventListener("click", () => {
+      const isOpen = nav.classList.contains("is-open");
+      nav.classList.toggle("is-open", !isOpen);
+      toggle.setAttribute("aria-expanded", String(!isOpen));
+      toggle.textContent = isOpen ? "☰" : "✕";
+    });
+
+    // Close on link click
+    $$("a", nav).forEach(a => {
+      a.addEventListener("click", () => {
+        nav.classList.remove("is-open");
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.textContent = "☰";
+      });
+    });
+  }
+
+  /* ── Mobile Player Expand ───────────────────────────────────── */
+  function initMobilePlayer() {
+    const expandBtn = $("[data-player-expand]");
+    const player = $(".fm-player");
+    if (!expandBtn || !player) return;
+
+    expandBtn.addEventListener("click", () => {
+      const isExpanded = player.classList.contains("is-expanded");
+      player.classList.toggle("is-expanded", !isExpanded);
+      expandBtn.setAttribute("aria-expanded", String(!isExpanded));
+      expandBtn.textContent = isExpanded ? "▲" : "▼";
+    });
+  }
+
+  /* ── Volume ─────────────────────────────────────────────────── */
+  function initVolume() {
+    $$("[data-volume]").forEach(slider => {
+      slider.value = state.volume;
+      slider.style.setProperty("--progress", (state.volume * 100) + "%");
+      slider.addEventListener("input", () => {
+        const val = parseFloat(slider.value);
+        state.volume = val;
+        audio.volume = val;
+        $$("[data-volume]").forEach(s => {
+          s.value = val;
+          s.style.setProperty("--progress", (val * 100) + "%");
+        });
+      });
+    });
+  }
+
+  /* ── Seek ────────────────────────────────────────────────────── */
+  function initSeek() {
+    $$("[data-hero-progress], [data-player-progress]").forEach(range => {
+      range.addEventListener("input", () => {
+        const pct = parseFloat(range.value) / 100;
+        const track = currentTrack();
+        const total = audio.duration || track.durationSec;
+        const seekTo = pct * total;
+        if (audio.duration) audio.currentTime = seekTo;
+        else state.progressSec = seekTo;
+        $$("[data-hero-progress], [data-player-progress]").forEach(r => {
+          r.value = range.value;
+          r.style.setProperty("--progress", range.value + "%");
+        });
+      });
+    });
+  }
+
+  /* ── Signup Form ─────────────────────────────────────────────── */
+  function initSignup() {
+    const form = $("[data-signup-form]");
+    if (!form) return;
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      toast("You are now in the queue. Broadcasts are weekly.");
+      form.reset();
+    });
+  }
+
+  /* ── Global Click to close menus ───────────────────────────── */
+  document.addEventListener("click", () => closeAllMenus());
+
+  /* ── Audio native events ────────────────────────────────────── */
+  audio.addEventListener("ended", goNext);
   audio.addEventListener("error", () => {
-    setStatus("Audio failed to load. Use Open Source and verify the original file.");
+    if (state.isPlaying) startSimulation();
   });
-}());
+
+  /* ── Active nav link sync on scroll ─────────────────────────── */
+  function initNavHighlight() {
+    const sections = $$("section[id], header[id]").filter(s => s.id);
+    const navLinks = $$(".fm-nav a, .fm-mobile-nav a");
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach(link => {
+            const href = link.getAttribute("href");
+            link.classList.toggle("is-active", href === `#${id}`);
+            if (href === `#${id}`) link.setAttribute("aria-current", "page");
+            else link.removeAttribute("aria-current");
+          });
+        }
+      });
+    }, { rootMargin: "0px 0px -60% 0px", threshold: 0.1 });
+
+    sections.forEach(s => obs.observe(s));
+  }
+
+  /* ── Init ───────────────────────────────────────────────────── */
+  function init() {
+    // Render dynamic sections
+    renderSchedule();
+    renderFreshlyAdded();
+    renderFeatured();
+    renderCrate();
+
+    // Set initial hero to first track
+    updatePlayerUI(currentTrack());
+
+    // Hero play button
+    $("[data-hero-play]")?.addEventListener("click", togglePlay);
+
+    // Player buttons
+    $("[data-play-btn]")?.addEventListener("click", togglePlay);
+    $("[data-prev-btn]")?.addEventListener("click", goPrev);
+    $("[data-next-btn]")?.addEventListener("click", goNext);
+
+    // Copy attribution from hero
+    $("[data-copy-hero-attribution]")?.addEventListener("click", () => copyAttribution(currentTrack()));
+    $("[data-open-source]")?.addEventListener("click", () => window.open(currentTrack().sourceUrl, "_blank", "noopener"));
+
+    // Player dock attribution + source
+    $("[data-player-copy-attr]")?.addEventListener("click", () => copyAttribution(currentTrack()));
+    $("[data-player-source]")?.addEventListener("click", () => window.open(currentTrack().sourceUrl, "_blank", "noopener"));
+
+    // Search
+    $("[data-search]")?.addEventListener("input", e => {
+      filterState.query = e.target.value.trim();
+      applyFilters();
+    });
+
+    // Filters
+    $$("[data-filter]").forEach(sel => {
+      sel.addEventListener("change", () => {
+        filterState[sel.dataset.filter] = sel.value;
+        applyFilters();
+      });
+    });
+
+    // Sort
+    $("[data-sort]")?.addEventListener("change", e => {
+      filterState.sort = e.target.value;
+      applyFilters();
+    });
+
+    // Clear filters
+    $("[data-clear-filters]")?.addEventListener("click", () => {
+      filterState = { query: "", license: "", mood: "", genre: "", sort: "default" };
+      $("[data-search]") && ($("[data-search]").value = "");
+      $$("[data-filter]").forEach(s => s.value = "");
+      $("[data-sort]") && ($("[data-sort]").value = "default");
+      applyFilters();
+    });
+
+    // Volume
+    initVolume();
+
+    // Seek
+    initSeek();
+
+    // Mobile nav
+    initMobileNav();
+
+    // Mobile player expand
+    initMobilePlayer();
+
+    // Nav highlight
+    initNavHighlight();
+
+    // Request forms
+    $$("[data-request-form]").forEach(handleRequestForm);
+
+    // Signup
+    initSignup();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
