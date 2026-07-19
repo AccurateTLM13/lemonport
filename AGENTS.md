@@ -114,6 +114,7 @@ To support concurrent work streams and seamless handoffs between agent runs:
   * **Studio Lab page:** Public `/studio-lab/` hub listing shipped/archived/planned projects. Homepage world-map zone routes here instead of `/operator-log/`.
   * **Live Experiment archived:** Matches MDR treatment — `noindex`, `robots.txt` disallow, removed from sitemap and public navigation. Studio Lab lists it as archived.
   * **Sitemap:** Added `/studio-lab/`, junk-drawer routes, `/lighthouse-handoff/`, and `/free-source/`.
+  * **Junk Drawer Card Visuals:** Replaced CSS/span-based visual card placeholders in `/junk-drawer/` with correlating WebP screenshot/interface images from `/images/junk/` and added responsive CSS styles in `assets/css/junk-drawer.css` to frame the thumbnails.
 * **Next steps:**
   * **Bench Radio (later):** Clickable radio on Studio Lab that streams Lemonteed FM while browsing projects.
 

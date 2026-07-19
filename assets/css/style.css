@@ -176,20 +176,17 @@ button {
   min-height: var(--touch-target);
   width: 100%;
   max-width: none;
-  padding: 8px 9px;
+  padding: 8px 10px;
   border: 1px solid #11100d;
-  color: var(--ink);
-  background: #f6efd9;
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.8),
-    inset 0 -2px 0 rgb(0 0 0 / 0.12),
-    1px 1px 0 #11100d;
+  color: #f7f4ea;
+  background: #11100d;
+  box-shadow: 2px 2px 0 rgb(17 16 13 / 0.15);
   cursor: pointer;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
   font-family: "Courier New", Courier, monospace;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.06em;
   line-height: 1.05;
@@ -204,10 +201,10 @@ button {
   display: block;
   width: 8px;
   height: 8px;
-  border: 1px solid #11100d;
+  border: 1px solid #f7f4ea;
   border-radius: 50%;
-  background: #11100d;
-  box-shadow: 0 0 0 2px rgb(17 16 13 / 0.08);
+  background: #f7f4ea;
+  box-shadow: 0 0 0 2px rgb(255 255 255 / 0.12);
   flex: 0 0 auto;
   animation: chaos-dot 1.35s steps(2, end) infinite;
 }
@@ -221,19 +218,16 @@ button {
 }
 
 .random-artifact:hover {
-  background: #fff6dc;
-  box-shadow:
-    inset 0 2px 0 rgb(255 255 255 / 0.68),
-    inset 0 -1px 0 rgb(0 0 0 / 0.2),
-    1px 1px 0 #11100d;
-  transform: translate(1px, 1px);
+  background: #2a2924;
+  color: #f7f4ea;
+  box-shadow: 3px 3px 0 rgb(17 16 13 / 0.20);
+  transform: translate(-1px, -1px);
 }
 
 .random-artifact:active {
-  box-shadow:
-    inset 0 2px 3px rgb(0 0 0 / 0.18),
-    0 0 0 #11100d;
-  transform: translate(1px, 1px);
+  background: #11100d;
+  box-shadow: 1px 1px 0 rgb(17 16 13 / 0.15);
+  transform: translate(0, 0);
 }
 
 @keyframes chaos-dot {
@@ -268,33 +262,29 @@ button {
   display: inline-flex;
   min-height: var(--touch-target);
   width: max-content;
-  padding-left: 14px;
+  padding: 5px 8px;
   align-items: center;
+  border: 1px solid #c8c4b6;
+  background: rgb(255 255 255 / 0.62);
   color: #55534e;
   font-family: "Courier New", Courier, monospace;
-  font-size: 16px;
+  font-size: 11px;
   font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 140ms ease, color 140ms ease, border-color 140ms ease;
 }
 
 .category-link::before {
-  position: absolute;
-  top: 0.58em;
-  left: 0;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #ebe9e3;
-  content: "";
+  display: none;
 }
 
 .category-link:hover,
 .category-link.is-active {
-  color: var(--ink);
-}
-
-.category-link.is-active::before {
-  background: var(--ink);
+  background: #11100d;
+  color: #f7f4ea;
+  border-color: #11100d;
 }
 
 .content {
