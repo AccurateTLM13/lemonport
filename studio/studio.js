@@ -76,7 +76,8 @@
     game: ["Memetic Game", "Weapon audit"],
     live: ["Live Experiment", "Cloud Flip dossier"],
     fm: ["Lemonteed FM", "Playlist manager"],
-    report: ["Build Report", "Publish readiness"]
+    report: ["Build Report", "Publish readiness"],
+    seo: ["SEO Manager", "Titles, descriptions, OG"]
   };
 
   let projects = [];
@@ -3114,9 +3115,233 @@
     }
   });
 
+  // ── SEO Manager ───────────────────────────────────────────────────────────
+
+  const seoPageNav = document.querySelector("[data-seo-page-nav]");
+  const seoEditor = document.querySelector("[data-seo-editor]");
+  const seoEmpty = document.querySelector("[data-seo-empty]");
+  const seoForm = document.querySelector("[data-seo-form]");
+  const seoOgImg = document.querySelector("[data-seo-og-img]");
+  const seoOgEmpty = document.querySelector("[data-seo-og-empty]");
+  const seoOgUpload = document.querySelector("[data-seo-og-upload]");
+  const seoUploadStatus = document.querySelector("[data-seo-upload-status]");
+  const seoPageLink = document.querySelector("[data-seo-page-link]");
+  const seoReloadBtn = document.querySelector("[data-seo-reload]");
+
+  let seoPages = [];
+  let activeSeoKey = "";
+
+  function updateSeoCounter(fieldName) {
+    const field = seoForm ? seoForm.querySelector(`[data-seo-field="${fieldName}"]`) : null;
+    const counter = seoForm ? seoForm.querySelector(`[data-seo-counter="${fieldName}"]`) : null;
+    if (!field || !counter) return;
+    const limit = Number(field.dataset.seoLimit || 0);
+    if (!limit) return;
+    const len = field.value.length;
+    counter.textContent = `${len}/${limit}`;
+    counter.classList.remove("seo-counter--ok", "seo-counter--warn", "seo-counter--over");
+    if (len === 0) return;
+    if (len <= limit) {
+      counter.classList.add(len >= limit * 0.85 ? "seo-counter--warn" : "seo-counter--ok");
+    } else {
+      counter.classList.add("seo-counter--over");
+    }
+  }
+
+  function updateAllSeoCounters() {
+    ["title", "description", "ogTitle", "ogDescription", "twitterTitle", "twitterDescription"].forEach(updateSeoCounter);
+  }
+
+  function updateOgPreview(path) {
+    const absoluteUrl = path && path.trim()
+      ? (path.startsWith("http") ? path : `${path}`)
+      : "";
+    if (seoOgImg && seoOgEmpty) {
+      if (absoluteUrl) {
+        seoOgImg.src = absoluteUrl;
+        seoOgImg.hidden = false;
+        seoOgEmpty.hidden = true;
+      } else {
+        seoOgImg.src = "";
+        seoOgImg.hidden = true;
+        seoOgEmpty.hidden = false;
+      }
+    }
+  }
+
+  function populateSeoForm(record) {
+    if (!seoForm) return;
+    const fields = ["title", "description", "ogTitle", "ogDescription", "ogImage",
+      "ogImageWidth", "ogImageHeight", "twitterTitle", "twitterDescription", "twitterImage", "canonicalUrl"];
+    fields.forEach((field) => {
+      const el = seoForm.querySelector(`[data-seo-field="${field}"]`);
+      if (el) el.value = record[field] || "";
+    });
+    updateAllSeoCounters();
+    updateOgPreview(record.ogImage || "");
+    if (seoPageLink) {
+      seoPageLink.href = record.canonicalUrl || "/";
+    }
+  }
+
+  function activateSeoPage(key) {
+    const record = seoPages.find((p) => p.key === key);
+    if (!record) return;
+    activeSeoKey = key;
+
+    // Update nav active state
+    if (seoPageNav) {
+      seoPageNav.querySelectorAll(".seo-page-btn").forEach((btn) => {
+        btn.classList.toggle("is-active", btn.dataset.seoKey === key);
+      });
+    }
+
+    // Show form, hide empty state
+    if (seoEmpty) seoEmpty.hidden = true;
+    if (seoForm) seoForm.hidden = false;
+
+    populateSeoForm(record);
+  }
+
+  function renderSeoPageNav(pages) {
+    if (!seoPageNav) return;
+    seoPageNav.innerHTML = pages.map((page) => `
+      <button type="button" class="seo-page-btn${activeSeoKey === page.key ? " is-active" : ""}"
+        data-seo-key="${escapeHtml(page.key)}">
+        ${escapeHtml(page.label.split(":").pop().trim())}
+        <span class="seo-page-btn__label">${escapeHtml(page.htmlPath)}</span>
+      </button>
+    `).join("");
+  }
+
+  async function loadSeoData() {
+    try {
+      const data = await api("/api/seo");
+      seoPages = Array.isArray(data.pages) ? data.pages : [];
+      renderSeoPageNav(seoPages);
+      if (activeSeoKey) {
+        activateSeoPage(activeSeoKey);
+      }
+    } catch (error) {
+      showError(error);
+    }
+  }
+
+  async function saveSeoPage(event) {
+    event.preventDefault();
+    if (!seoForm || !activeSeoKey) return;
+    const record = seoPages.find((p) => p.key === activeSeoKey);
+    if (!record) return;
+
+    const saveBtn = seoForm.querySelector("[data-seo-save]");
+    if (saveBtn) saveBtn.disabled = true;
+
+    const updated = { ...record };
+    ["title", "description", "ogTitle", "ogDescription", "ogImage",
+      "twitterTitle", "twitterDescription", "twitterImage", "canonicalUrl"].forEach((field) => {
+      const el = seoForm.querySelector(`[data-seo-field="${field}"]`);
+      if (el) updated[field] = el.value.trim();
+    });
+    ["ogImageWidth", "ogImageHeight"].forEach((field) => {
+      const el = seoForm.querySelector(`[data-seo-field="${field}"]`);
+      if (el) updated[field] = Number(el.value) || 0;
+    });
+
+    try {
+      setStatus(`Saving SEO for ${record.label}...`);
+      const result = await api("/api/seo", {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ pages: [updated] })
+      });
+      seoPages = Array.isArray(result.pages) ? result.pages : seoPages;
+      renderSeoPageNav(seoPages);
+      setStatus(`SEO saved + ${result.patched} HTML file(s) patched.`);
+    } catch (error) {
+      showError(error);
+    } finally {
+      if (saveBtn) saveBtn.disabled = false;
+    }
+  }
+
+  async function uploadSeoOgImage(file) {
+    if (!file || !activeSeoKey) return;
+    if (seoUploadStatus) {
+      seoUploadStatus.textContent = "Uploading…";
+      seoUploadStatus.hidden = false;
+    }
+    try {
+      const dataUrl = await readFileAsDataUrl(file);
+      const result = await api("/api/seo/og-image", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ imageData: dataUrl, key: activeSeoKey, filename: activeSeoKey })
+      });
+
+      // Update the ogImage field and preview
+      const ogImageField = seoForm ? seoForm.querySelector("[data-seo-field='ogImage']") : null;
+      if (ogImageField) ogImageField.value = result.url;
+
+      const widthField = seoForm ? seoForm.querySelector("[data-seo-field='ogImageWidth']") : null;
+      if (widthField) widthField.value = result.width || 1200;
+      const heightField = seoForm ? seoForm.querySelector("[data-seo-field='ogImageHeight']") : null;
+      if (heightField) heightField.value = result.height || 630;
+
+      updateOgPreview(result.url);
+      if (seoUploadStatus) {
+        seoUploadStatus.textContent = `Uploaded: ${result.url}`;
+      }
+      setStatus(`OG image uploaded: ${result.url}`);
+    } catch (error) {
+      if (seoUploadStatus) seoUploadStatus.textContent = "Upload failed.";
+      showError(error);
+    }
+  }
+
+  // Wire up SEO workspace events
+  if (seoPageNav) {
+    seoPageNav.addEventListener("click", (event) => {
+      const btn = event.target.closest("[data-seo-key]");
+      if (btn) activateSeoPage(btn.dataset.seoKey);
+    });
+  }
+
+  if (seoForm) {
+    seoForm.addEventListener("submit", saveSeoPage);
+    seoForm.addEventListener("input", (event) => {
+      const field = event.target.closest("[data-seo-field]");
+      if (!field) return;
+      const name = field.dataset.seoField;
+      updateSeoCounter(name);
+      if (name === "ogImage") updateOgPreview(field.value);
+    });
+  }
+
+  if (seoOgUpload) {
+    seoOgUpload.addEventListener("change", () => {
+      const file = seoOgUpload.files && seoOgUpload.files[0];
+      if (file) uploadSeoOgImage(file);
+    });
+  }
+
+  if (seoReloadBtn) {
+    seoReloadBtn.addEventListener("click", () => {
+      loadSeoData().then(() => setStatus("SEO data reloaded from file.")).catch(showError);
+    });
+  }
+
+  workspaceButtons.forEach((btn) => {
+    if (btn.dataset.workspaceNav === "seo") {
+      btn.addEventListener("click", () => {
+        if (!seoPages.length) loadSeoData().catch(showError);
+      });
+    }
+  });
+
   setWorkspace(activeWorkspace);
   renderPending();
   loadProjects().catch(showError);
   loadLiveExperiment().catch(showError);
   loadLemonteedFm().catch(showError);
 }());
+

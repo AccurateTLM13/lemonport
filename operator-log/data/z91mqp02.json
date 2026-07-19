@@ -1,0 +1,54 @@
+{
+  "headline": "OPERATOR LOG",
+  "subhead": "This file is only available after hours.",
+  "statusLine": "ACCESS LEVEL: RESTRICTED",
+  "bodyClass": "phase-locked",
+  "lockedCopy": "Most records are unavailable during standard business hours. Clock out to proceed.",
+  "unlockCopy": "Clock-out confirmed. Personal archive available.",
+  "blocks": [
+    {
+      "type": "text",
+      "kicker": "FIELD NOTE 001",
+      "title": "The Day Job",
+      "body": "During the day, the operator works inside a real manufacturing business. Marketing, systems, practical problems. Dealer communications, product presentation, internal tooling, websites that have to actually work when a sales rep needs them at 6am on a trade show floor."
+    },
+    {
+      "type": "quote",
+      "body": "A website is not a decoration. It is a machine people use when nobody has time to explain things twice."
+    },
+    {
+      "type": "text",
+      "kicker": "FIELD NOTE 002",
+      "title": "The Night Shift",
+      "body": "At night, the same problems get dragged into the Lemonteed lab and turned into websites, tools, dashboards, experiments, and occasionally cursed artifacts. The work is different. The discipline is the same."
+    },
+    {
+      "type": "text",
+      "kicker": "FIELD NOTE 003",
+      "title": "Why Both",
+      "body": "The 9-to-5 keeps the work grounded. Real business constraints, real deadlines, real users who do not care about your process. The off-clock work keeps the thinking alive. Neither one works without the other."
+    },
+    {
+      "type": "evidence",
+      "title": "Evidence Locker",
+      "items": [
+        {
+          "title": "Manufacturing Brand Systems",
+          "description": "Public-facing pages, dealer messaging, product presentation, and practical marketing systems built for a real industrial business.",
+          "image": null,
+          "alt": "Manufacturing brand and web work"
+        },
+        {
+          "title": "Internal Tooling",
+          "description": "Dashboards and internal tools that operators actually use. Designed for clarity, not aesthetics.",
+          "image": null,
+          "alt": "Internal business tooling"
+        }
+      ]
+    },
+    {
+      "type": "quote",
+      "body": "Static does not mean dead. It means controlled, fast, portable, and harder to break."
+    }
+  ]
+}

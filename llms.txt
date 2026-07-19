@@ -1,0 +1,30 @@
+# Lemonteed AI Access Policy
+
+Lemonteed permits human browsing and traditional search indexing.
+
+Automated AI access is restricted.
+
+The following uses are not permitted without written permission or an active paid license:
+
+- AI model training
+- Retrieval-augmented generation ingestion
+- Embedding/indexing Lemonteed content into vector databases
+- Automated summarization for commercial tools
+- Dataset creation
+- Content republishing
+- Agentic scraping
+- Bulk extraction of pages, posts, assets, or structured site data
+- Competitive analysis datasets
+- Commercial reuse of Lemonteed content
+
+Licensed access may be requested here:
+
+https://lemonteed.com/ai-access
+
+Full AI license terms:
+
+https://lemonteed.com/ai-license
+
+Contact:
+
+Use the contact method provided on the AI Access page.

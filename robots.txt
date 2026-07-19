@@ -1,3 +1,24 @@
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
 User-agent: *
 Allow: /
 Disallow: /operator-log/
@@ -7,4 +28,6 @@ Disallow: /content/
 Disallow: /studio/
 Disallow: /scripts/
 
+License: https://lemonteed.com/ai-license
+AI-Access: https://lemonteed.com/ai-access
 Sitemap: https://lemonteed.com/sitemap.xml

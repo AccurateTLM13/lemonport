@@ -1,5 +1,175 @@
 [
   {
+    "id": "vrg-023",
+    "title": "Dario Amodei",
+    "slug": "dario-amodei",
+    "category": "vrg-cards",
+    "categoryLabel": "VRG Cards",
+    "series": "Founder Series",
+    "year": "",
+    "description": "A standard VRG founders card for Dario Amodei, separate from the Black Label variant and focused on the core collectible card format.",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "dateCreated": "2026-05-26",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "founder-card",
+      "premium-mockup"
+    ],
+    "dangerLevel": "Cursed",
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [
+      "vrg-001",
+      "vrg-002",
+      "vrg-023"
+    ],
+    "image": "/images/vrg-cards/dario.webp",
+    "thumbnail": "/images/vrg-cards/dario-320.webp",
+    "alt": "Dario Amodei founder series concept card from the Lemonteed VRG Cards archive.",
+    "width": 346,
+    "height": 500,
+    "sizes": {
+      "small": "/images/vrg-cards/dario.webp",
+      "medium": "/images/vrg-cards/dario.webp",
+      "large": "/images/vrg-cards/dario.webp"
+    },
+    "variants": [
+      {
+        "width": 320,
+        "url": "/images/vrg-cards/dario-320.webp"
+      },
+      {
+        "width": 346,
+        "url": "/images/vrg-cards/dario.webp"
+      }
+    ],
+    "featured": false,
+    "status": "Published",
+    "visible": true,
+    "createdAt": "2026-07-19T00:27:10.201Z",
+    "updatedAt": "2026-07-19T00:41:49.230Z",
+    "curation": {
+      "homepage": false,
+      "featuredRank": 0,
+      "randomWeight": 1
+    }
+  },
+  {
+    "id": "vrg-022",
+    "title": "Sam Altman",
+    "slug": "sam-altman",
+    "category": "vrg-cards",
+    "categoryLabel": "VRG Cards",
+    "series": "Founder Series",
+    "year": "",
+    "description": "A standard VRG founders card for Sam Altman, separate from the Black Label variant and focused on the core collectible card format.",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "dateCreated": "2026-05-26",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "founder-card",
+      "premium-mockup"
+    ],
+    "dangerLevel": "Cursed",
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [],
+    "image": "/images/vrg-cards/samaltman.webp",
+    "thumbnail": "/images/vrg-cards/samaltman-320.webp",
+    "alt": "Sam Altman founder series concept card from the Lemonteed VRG Cards archive.",
+    "width": 340,
+    "height": 500,
+    "sizes": {
+      "small": "/images/vrg-cards/samaltman.webp",
+      "medium": "/images/vrg-cards/samaltman.webp",
+      "large": "/images/vrg-cards/samaltman.webp"
+    },
+    "variants": [
+      {
+        "width": 320,
+        "url": "/images/vrg-cards/samaltman-320.webp"
+      },
+      {
+        "width": 340,
+        "url": "/images/vrg-cards/samaltman.webp"
+      }
+    ],
+    "featured": false,
+    "status": "Published",
+    "visible": true,
+    "createdAt": "2026-07-19T00:27:09.504Z",
+    "updatedAt": "2026-07-19T00:44:21.854Z",
+    "curation": {
+      "homepage": false,
+      "featuredRank": 0,
+      "randomWeight": 1
+    }
+  },
+  {
+    "id": "vrg-021",
+    "title": "Steve Jobs",
+    "slug": "steve-jobs",
+    "category": "vrg-cards",
+    "categoryLabel": "VRG Cards",
+    "series": "Founder Series",
+    "year": "",
+    "description": "A standard VRG founders card for Steve Jobs, separate from the Black Label variant and focused on the core collectible card format.",
+    "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
+    "dateCreated": "2026-05-26",
+    "tags": [
+      "image-generation",
+      "vrg-cards",
+      "collectible-card",
+      "founder-card",
+      "premium-mockup"
+    ],
+    "dangerLevel": "Forbidden",
+    "toolsUsed": [
+      "ChatGPT Images 2.0"
+    ],
+    "related": [
+      "vrg-023",
+      "vrg-002",
+      "vrg-001"
+    ],
+    "image": "/images/vrg-cards/steve-jobs.webp",
+    "thumbnail": "/images/vrg-cards/steve-jobs-320.webp",
+    "alt": "Steve Jobs founder series concept card from the Lemonteed VRG Cards archive.",
+    "width": 356,
+    "height": 500,
+    "sizes": {
+      "small": "/images/vrg-cards/steve-jobs.webp",
+      "medium": "/images/vrg-cards/steve-jobs.webp",
+      "large": "/images/vrg-cards/steve-jobs.webp"
+    },
+    "variants": [
+      {
+        "width": 320,
+        "url": "/images/vrg-cards/steve-jobs-320.webp"
+      },
+      {
+        "width": 356,
+        "url": "/images/vrg-cards/steve-jobs.webp"
+      }
+    ],
+    "featured": true,
+    "status": "Published",
+    "visible": true,
+    "createdAt": "2026-07-19T00:27:08.956Z",
+    "updatedAt": "2026-07-19T00:44:08.541Z",
+    "curation": {
+      "homepage": true,
+      "featuredRank": 0,
+      "randomWeight": 1
+    }
+  },
+  {
     "id": "what-030",
     "title": "Hashbrown Pro from Waffle House",
     "slug": "hashbrown-pro-from-waffle-house",
@@ -1319,7 +1489,7 @@
     "featured": true,
     "visible": true,
     "createdAt": "2026-05-02T12:00:00.000Z",
-    "updatedAt": "2026-05-16T19:04:05.636Z",
+    "updatedAt": "2026-07-19T00:43:44.621Z",
     "variants": [
       {
         "width": 320,
@@ -1346,7 +1516,7 @@
         "url": "/images/vrg-cards/dudufolio-blacklabel.webp"
       }
     ],
-    "series": "VRG Cards",
+    "series": "Founder Series",
     "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
     "tags": [
       "image-generation",
@@ -1366,9 +1536,9 @@
     "dateCreated": "2026-05-02",
     "related": [
       "vrg-001",
-      "vrg-004",
-      "vrg-005",
-      "vrg-006"
+      "vrg-021",
+      "vrg-023",
+      "vrg-022"
     ],
     "dangerLevel": "",
     "curation": {
@@ -2356,7 +2526,7 @@
     "featured": true,
     "visible": true,
     "createdAt": "2026-05-02T12:00:00.000Z",
-    "updatedAt": "2026-05-16T19:04:15.131Z",
+    "updatedAt": "2026-07-19T00:36:26.530Z",
     "variants": [
       {
         "width": 320,
@@ -2407,7 +2577,7 @@
       "vrg-010",
       "vrg-011"
     ],
-    "dangerLevel": "",
+    "dangerLevel": "High",
     "curation": {
       "homepage": true,
       "featuredRank": 0,
