@@ -31,16 +31,7 @@
     <loc>https://lemonteed.com/junk-drawer/image-compressor/</loc>
   </url>
   <url>
-    <loc>https://lemonteed.com/junk-drawer/character-supply/</loc>
-  </url>
-  <url>
-    <loc>https://lemonteed.com/junk-drawer/list-mechanic/</loc>
-  </url>
-  <url>
     <loc>https://lemonteed.com/lighthouse-handoff/</loc>
-  </url>
-  <url>
-    <loc>https://lemonteed.com/free-source/</loc>
   </url>
   <url>
     <loc>https://lemonteed.com/lemon-lab/clanker-cloud-run/</loc>
@@ -56,5 +47,21 @@
   </url>
   <url>
     <loc>https://lemonteed.com/ai-access/</loc>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/operator-log/</loc>
+    <lastmod>2026-06-20</lastmod>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/operator-log/building-lighthouse-handoff/</loc>
+    <lastmod>2026-06-20</lastmod>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/operator-log/building-locailly/</loc>
+    <lastmod>2026-06-19</lastmod>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/operator-log/building-localhost-watchdog/</loc>
+    <lastmod>2026-06-18</lastmod>
   </url>
 </urlset>

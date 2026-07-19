@@ -21,7 +21,6 @@ Disallow: /
 
 User-agent: *
 Allow: /
-Disallow: /operator-log/
 Disallow: /million-dollar-receipt/
 Disallow: /live-experiment/
 Disallow: /content/

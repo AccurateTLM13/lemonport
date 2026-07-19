@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCB0LW648K"></script>
+  <script src="/assets/js/analytics.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Building Locailly: A Local AI Orchestration System | Operator's Log</title>
+  <meta name="description" content="An experiment in local AI orchestration — a Local Brain, Task Tracks, AI Pit Crew, capability routing, and optional NearbyNodes working together so one person can operate like a coordinated team using small local models.">
+  <link rel="canonical" href="https://lemonteed.com/operator-log/building-locailly/">
+  <meta property="og:title" content="Building Locailly: A Local AI Orchestration System | Operator's Log">
+  <meta property="og:description" content="An experiment in local AI orchestration — a Local Brain, Task Tracks, AI Pit Crew, capability routing, and optional NearbyNodes for one-person team operations.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://lemonteed.com/operator-log/building-locailly/">
+  <meta property="og:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+  <meta property="og:image:secure_url" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:published_time" content="2026-06-19T00:00:00.000Z">
+  <meta property="article:modified_time" content="2026-06-19T00:00:00.000Z">
+  <meta property="article:section" content="Build Log">
+  <meta property="article:tag" content="Local AI">
+  <meta property="article:tag" content="Experiments">
+  <meta property="article:tag" content="Privacy">
+  <meta property="article:tag" content="Automation">
+  <meta property="article:tag" content="WIP">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Building Locailly: A Local AI Orchestration System">
+  <meta name="twitter:description" content="An experiment in local AI orchestration with a Local Brain, Task Tracks, AI Pit Crew, and capability routing for one-person team operations.">
+  <meta name="twitter:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+  <link rel="icon" href="/images/favicons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
+  <link rel="stylesheet" href="/operator-log/operator.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Building Locailly: A Local AI Orchestration System",
+      "description": "An experiment in local AI orchestration — a Local Brain, Task Tracks, AI Pit Crew, capability routing, and optional NearbyNodes working together so one person can operate like a coordinated team using small local models.",
+      "image": "https://lemonteed.com/images/og/lemonteed-og-home-final.webp",
+      "datePublished": "2026-06-19",
+      "dateModified": "2026-06-19",
+      "author": {
+        "@type": "Person",
+        "name": "Lemonteed Operator"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Lemonteed",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://lemonteed.com/images/lemonteedlogo-250.webp"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://lemonteed.com/operator-log/building-locailly/"
+      },
+      "articleSection": "Build Log",
+      "keywords": ["Local AI", "Experiments", "Privacy", "Automation", "WIP"]
+    }
+  </script>
+</head>
+<body class="operator-page">
+  <a class="op-skip" href="#op-content">Skip to content</a>
+
+  <div class="op-shell">
+    <header class="op-header" role="banner">
+      <span class="op-header__classify">Lemonteed / Operator's Log</span>
+      <span class="op-header__phase">Build Log</span>
+      <a class="op-header__back" href="/operator-log/" aria-label="Return to Operator's Log index">← Log Index</a>
+    </header>
+
+    <main class="op-main" id="op-content" tabindex="-1">
+      <article class="op-article">
+        <header class="op-article-header">
+          <div class="op-article-meta">
+            <time class="op-article-date" datetime="2026-06-19">2026-06-19</time>
+            <span class="op-article-tag op-article-tag--experiment">Experiment</span>
+            <span class="op-article-project">Locailly</span>
+          </div>
+          <h1 class="op-headline">Building Locailly: A Local AI Orchestration System</h1>
+          <p class="op-subhead">An experiment in local AI orchestration — a Local Brain, Task Tracks, AI Pit Crew, capability routing, and optional NearbyNodes working together so one person can operate like a coordinated team using small local models.</p>
+        </header>
+
+        <div class="op-article-content">
+          <section class="op-section">
+            <h2 class="op-section-title">The Vision</h2>
+            <p>Cloud AI APIs are powerful, but they come with costs: latency, privacy concerns, rate limits, and dependency on external services. Locailly is an experiment in a different model — one person operating like a coordinated team, entirely on local hardware.</p>
+            <p>The goal isn't to replace cloud models with worse local alternatives. It's to decompose work into small, specialized tasks that small local models can handle well, then orchestrate those models into a coherent workflow. The result is a system where one person can manage multiple parallel workstreams without needing a team, a cloud budget, or a privacy compromise.</p>
+          </section>
+
+          <section class="op-section">
+            <h2 class="op-section-title">Architecture</h2>
+            <p>Locailly is built around several core components that work together:</p>
+
+            <div class="op-callout">
+              <h3 class="op-callout-title">Core Components</h3>
+              <ul class="op-list">
+                <li><strong>Local Brain:</strong> The orchestrator that decides which model handles which task, manages state, and coordinates the workflow</li>
+                <li><strong>Task Tracks:</strong> Parallel workstreams that maintain their own context and progress — like having multiple browser tabs, but for AI-driven work</li>
+                <li><strong>AI Pit Crew:</strong> Specialized small models, each optimized for a specific job — classification, summarization, formatting, validation</li>
+                <li><strong>Capability Routing:</strong> A system that matches incoming tasks to the best-fit model based on task type, complexity, and available resources</li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="op-section">
+            <h2 class="op-section-title">Worker Roles and Validation</h2>
+            <p>Each model in the pit crew has a defined role with clear input/output contracts. The Triage worker classifies incoming tasks by type and urgency. The Summarizer condenses long text into actionable points. The Formatter structures output for different downstream consumers. The Checker validates that outputs meet defined criteria before they're passed along.</p>
+            <p>Validation runs at every handoff point. When one worker's output becomes another's input, the system checks format, completeness, and basic quality signals. This prevents cascading errors — a malformed summary doesn't make it to the Formatter, and a bad format doesn't reach the output stage.</p>
+          </section>
+
+          <section class="op-section">
+            <h2 class="op-section-title">NearbyNodes: Optional Distribution</h2>
+            <p>For setups with multiple machines on the same network, NearbyNodes adds optional distribution. Work can be routed to other local machines based on capability and load. A Raspberry Pi might handle lightweight classification while a workstation runs the heavier models. This is opt-in — Locailly works fine on a single machine.</p>
+            <p>The distribution layer is designed to be invisible when not needed. If there's only one machine, NearbyNodes simply isn't active. No configuration, no overhead, no complexity unless you want it.</p>
+          </section>
+
+          <section class="op-section">
+            <h2 class="op-section-title">What's Working</h2>
+            <p>For structured tasks with clear rules, the local orchestration model holds up well. No network latency, no rate limits, no privacy concerns. The pit crew approach makes iteration easier — swap out one model without affecting the others. It's modular by design.</p>
+            <p>The Local Brain's routing logic is the most interesting piece. Getting it to correctly match tasks to the right model — and to know when no local model is sufficient — turns out to be the core challenge. Too aggressive in routing to local models and quality drops. Too conservative and you're back to cloud dependency.</p>
+          </section>
+
+          <section class="op-section">
+            <h2 class="op-section-title">Current Limitations</h2>
+            <p>This is an active experiment, not a shipped product. The models are small and limited in capability. They work well for structured tasks but struggle with anything requiring deep understanding or creativity. Resource usage is a real constraint — running multiple models simultaneously requires meaningful compute, which limits practical applications on consumer hardware.</p>
+            <p>The most honest assessment: Locailly works for specific, well-defined workflows. It's not a general-purpose AI replacement. It's a tool for people who know exactly what they want automated and can define the task boundaries clearly.</p>
+          </section>
+
+          <div class="op-status-box">
+            <h3 class="op-status-title">Status: Active Experiment (WIP)</h3>
+            <p>Locailly is an active experiment, not a shipped product. The concepts are being explored and tested — Local Brain routing, Task Tracks lifecycle, Pit Crew model selection — but there's no public release planned yet. This is work-in-progress.</p>
+          </div>
+
+          <nav class="op-entry-nav" aria-label="Entry navigation">
+            <a class="op-entry-nav__prev" href="/operator-log/building-lighthouse-handoff/">← Previous: Building Lighthouse Handoff</a>
+            <a class="op-entry-nav__next" href="/operator-log/building-localhost-watchdog/">Next entry: Building a Safer Way to Understand Local Development Servers →</a>
+          </nav>
+        </div>
+      </article>
+    </main>
+
+    <footer class="op-footer" role="contentinfo">
+      <span class="op-footer__left">LEMONTEED / OPERATOR'S LOG</span>
+      <span class="op-footer__right"><a href="/">← Back to the archive</a></span>
+    </footer>
+  </div>
+</body>
+</html>

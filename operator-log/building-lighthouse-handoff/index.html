@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCB0LW648K"></script>
+  <script src="/assets/js/analytics.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Building Lighthouse Handoff: Turning PageSpeed Reports Into Agent-Ready Work | Operator's Log</title>
+  <meta name="description" content="A Chrome extension and local companion that turns PageSpeed Insights into structured Markdown with confidence thresholds, fixed recommendation ordering, multi-run median testing, and variance analysis — ready for coding agents to act on.">
+  <link rel="canonical" href="https://lemonteed.com/operator-log/building-lighthouse-handoff/">
+  <meta property="og:title" content="Building Lighthouse Handoff: Turning PageSpeed Reports Into Agent-Ready Work | Operator's Log">
+  <meta property="og:description" content="A Chrome extension and local companion that turns PageSpeed Insights into structured Markdown with confidence thresholds, fixed ordering, multi-run median testing, and variance analysis.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://lemonteed.com/operator-log/building-lighthouse-handoff/">
+  <meta property="og:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+  <meta property="og:image:secure_url" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:published_time" content="2026-06-20T00:00:00.000Z">
+  <meta property="article:modified_time" content="2026-06-20T00:00:00.000Z">
+  <meta property="article:section" content="Build Log">
+  <meta property="article:tag" content="Chrome Extension">
+  <meta property="article:tag" content="PageSpeed">
+  <meta property="article:tag" content="Developer Tools">
+  <meta property="article:tag" content="AI Workflows">
+  <meta property="article:tag" content="Shipped">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Building Lighthouse Handoff: Turning PageSpeed Reports Into Agent-Ready Work">
+  <meta name="twitter:description" content="A Chrome extension and local companion that turns PageSpeed Insights into structured Markdown for coding agents.">
+  <meta name="twitter:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+  <link rel="icon" href="/images/favicons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
+  <link rel="stylesheet" href="/operator-log/operator.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Building Lighthouse Handoff: Turning PageSpeed Reports Into Agent-Ready Work",
+      "description": "A Chrome extension and local companion that turns PageSpeed Insights into structured Markdown with confidence thresholds, fixed recommendation ordering, multi-run median testing, and variance analysis.",
+      "image": "https://lemonteed.com/images/og/lemonteed-og-home-final.webp",
+      "datePublished": "2026-06-20",
+      "dateModified": "2026-06-20",
+      "author": {
+        "@type": "Person",
+        "name": "Lemonteed Operator"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Lemonteed",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://lemonteed.com/images/lemonteedlogo-250.webp"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://lemonteed.com/operator-log/building-lighthouse-handoff/"
+      },
+      "articleSection": "Build Log",
+      "keywords": ["Chrome Extension", "PageSpeed", "Developer Tools", "AI Workflows", "Shipped"]
+    }
+  </script>
+</head>
+<body class="operator-page">
+  <a class="op-skip" href="#op-content">Skip to content</a>
+
+  <div class="op-shell">
+    <header class="op-header" role="banner">
+      <span class="op-header__classify">Lemonteed / Operator's Log</span>
+      <span class="op-header__phase">Build Log</span>
+      <a class="op-header__back" href="/operator-log/" aria-label="Return to Operator's Log index">← Log Index</a>
+    </header>
+
+    <main class="op-main" id="op-content" tabindex="-1">
+      <article class="op-article">
+        <header class="op-article-header">
+          <div class="op-article-meta">
+            <time class="op-article-date" datetime="2026-06-20">2026-06-20</time>
+            <span class="op-article-tag op-article-tag--shipped">Shipped</span>
+            <span class="op-article-project">Lighthouse Handoff</span>
+          </div>
+          <h1 class="op-headline">Building Lighthouse Handoff: Turning PageSpeed Reports Into Agent-Ready Work</h1>
+          <p class="op-subhead">A Chrome extension and local companion that turns PageSpeed Insights into structured Markdown with confidence thresholds, fixed recommendation ordering, multi-run median testing, and variance analysis — ready for coding agents to act on.</p>
+        </header>
+
+        <div class="op-article-content">
+          <section class="op-section">
+            <h2 class="op-section-title">The Problem</h2>
+            <p>PageSpeed Insights gives you a diagnosis. A score, some warnings, a list of opportunities. But between that diagnosis and actual work lives a gap: translating those warnings into prioritized tasks with clear acceptance criteria.</p>
+            <p>For developers using AI coding agents, that gap is even wider. The agent needs structured input — not a screenshot of a dashboard, but a Markdown file with clear priorities, specific tasks, and guardrails that prevent regressions. The raw PageSpeed output is noisy, inconsistent between runs, and lacks the confidence signals an agent needs to act decisively.</p>
+          </section>
+
+          <section class="op-section">
+            <h2 class="op-section-title">The Build</h2>
+            <p>Lighthouse Handoff started as a personal tool — a Chrome extension that grabbed PageSpeed data and formatted it into something actionable. The first version was simple: extract the data, format it as Markdown, copy to clipboard. But the real value emerged when that Markdown was fed to coding agents.</p>
+            <p>The structured format — priorities, tasks, guardrails, acceptance criteria — gave the agent exactly what it needed to make targeted improvements without introducing regressions. What began as a clipboard helper became a full handoff layer between browser diagnostics and agent-driven development.</p>
+
+            <div class="op-callout">
+              <h3 class="op-callout-title">Core Capabilities</h3>
+              <ul class="op-list">
+                <li><strong>Confidence thresholds:</strong> Each recommendation carries a confidence score so the agent knows which fixes are high-signal vs speculative</li>
+                <li><strong>Fixed recommendation ordering:</strong> Consistent priority ranking across runs, so agents can track what changed without re-sorting noise</li>
+                <li><strong>Multi-run median testing:</strong> Runs PageSpeed multiple times and reports the median, filtering out one-off fluctuations</li>
+                <li><strong>Variance analysis:</strong> Shows how stable each metric is across runs, highlighting which scores are reliable and which are noisy</li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="op-section">
+            <h2 class="op-section-title">The Local Companion</h2>
+            <p>The Chrome extension handles extraction and formatting, but the real processing happens in a local companion endpoint. This local server component takes the raw PageSpeed data and runs the statistical analysis — computing medians across runs, calculating variance, and assigning confidence scores to each recommendation.</p>
+            <p>The companion keeps everything on-machine. No data leaves your development environment. The extension sends data to localhost, the companion processes it, and the structured Markdown output is ready for your agent. This separation also means the heavy lifting doesn't slow down the browser.</p>
+          </section>
+
+          <section class="op-section">
+            <h2 class="op-section-title">Lessons Learned</h2>
+            <p>The most interesting lesson was about the gap between human-readable and agent-readable output. Humans can interpret a PageSpeed dashboard and understand context — "this image is obviously the hero shot, don't compress it below 80%." Agents need explicit structure, clear boundaries, and unambiguous success criteria.</p>
+            <p>Another insight: raw PageSpeed scores are unreliable across runs. A page might score 85 on one run and 72 on the next, with identical code. Multi-run median testing with variance analysis turned out to be essential, not a nice-to-have. Without it, agents chase ghosts — trying to fix regressions that were just measurement noise.</p>
+          </section>
+
+          <section class="op-section">
+            <h2 class="op-section-title">Current Status</h2>
+            <p>Lighthouse Handoff is shipped and available in the Chrome Web Store. It's a free extension with no account required. The local companion runs as a standalone process alongside your development environment.</p>
+            <p>The tool continues to evolve based on real usage patterns. Recent work has focused on better handling of accessibility scores and improved formatting for different coding agent interfaces.</p>
+          </section>
+
+          <div class="op-related">
+            <h3 class="op-related-title">Related Links</h3>
+            <div class="op-related-links">
+              <a class="op-related-link" href="/lighthouse-handoff/">View the project page &rarr;</a>
+              <a class="op-related-link" href="https://chromewebstore.google.com/detail/lighthouse-handoff/aiddegolbikmimjpggbepjmlkbjphgcb" target="_blank" rel="noopener">Chrome Web Store &rarr;</a>
+              <a class="op-related-link" href="https://github.com/mnfrdrsh/lighthouse-handoff" target="_blank" rel="noopener">GitHub repository &rarr;</a>
+            </div>
+          </div>
+
+          <nav class="op-entry-nav" aria-label="Entry navigation">
+            <a class="op-entry-nav__prev" href="/operator-log/">← Back to log index</a>
+            <a class="op-entry-nav__next" href="/operator-log/building-locailly/">Next entry: Building a Tiny AI Pit Crew With Local Models →</a>
+          </nav>
+        </div>
+      </article>
+    </main>
+
+    <footer class="op-footer" role="contentinfo">
+      <span class="op-footer__left">LEMONTEED / OPERATOR'S LOG</span>
+      <span class="op-footer__right"><a href="/">← Back to the archive</a></span>
+    </footer>
+  </div>
+</body>
+</html>

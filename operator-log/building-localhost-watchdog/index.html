@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCB0LW648K"></script>
+  <script src="/assets/js/analytics.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Building Localhost Watchdog: A Safe Way to Manage Local Development Servers | Operator's Log</title>
+  <meta name="description" content="A Windows-first local server scanner, classifier, and process manager with a safety-first design: dry runs, confidence gates, PID/port revalidation, test-first execution, and no destructive action without confirmation.">
+  <link rel="canonical" href="https://lemonteed.com/operator-log/building-localhost-watchdog/">
+  <meta property="og:title" content="Building Localhost Watchdog: A Safe Way to Manage Local Development Servers | Operator's Log">
+  <meta property="og:description" content="A Windows-first local server scanner, classifier, and process manager with dry runs, confidence gates, PID/port revalidation, and test-first safety.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://lemonteed.com/operator-log/building-localhost-watchdog/">
+  <meta property="og:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+  <meta property="og:image:secure_url" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:published_time" content="2026-06-18T00:00:00.000Z">
+  <meta property="article:modified_time" content="2026-06-18T00:00:00.000Z">
+  <meta property="article:section" content="Build Log">
+  <meta property="article:tag" content="Developer Tools">
+  <meta property="article:tag" content="Local Development">
+  <meta property="article:tag" content="Safety">
+  <meta property="article:tag" content="Monitoring">
+  <meta property="article:tag" content="WIP">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Building Localhost Watchdog: A Safe Way to Manage Local Development Servers">
+  <meta name="twitter:description" content="A Windows-first local server scanner, classifier, and process manager with dry runs, confidence gates, and test-first safety.">
+  <meta name="twitter:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+  <link rel="icon" href="/images/favicons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
+  <link rel="stylesheet" href="/operator-log/operator.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Building Localhost Watchdog: A Safe Way to Manage Local Development Servers",
+      "description": "A Windows-first local server scanner, classifier, and process manager with a safety-first design: dry runs, confidence gates, PID/port revalidation, test-first execution, and no destructive action without confirmation.",
+      "image": "https://lemonteed.com/images/og/lemonteed-og-home-final.webp",
+      "datePublished": "2026-06-18",
+      "dateModified": "2026-06-18",
+      "author": {
+        "@type": "Person",
+        "name": "Lemonteed Operator"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Lemonteed",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://lemonteed.com/images/lemonteedlogo-250.webp"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://lemonteed.com/operator-log/building-localhost-watchdog/"
+      },
+      "articleSection": "Build Log",
+      "keywords": ["Developer Tools", "Local Development", "Safety", "Monitoring", "WIP"]
+    }
+  </script>
+</head>
+<body class="operator-page">
+  <a class="op-skip" href="#op-content">Skip to content</a>
+
+  <div class="op-shell">
+    <header class="op-header" role="banner">
+      <span class="op-header__classify">Lemonteed / Operator's Log</span>
+      <span class="op-header__phase">Build Log</span>
+      <a class="op-header__back" href="/operator-log/" aria-label="Return to Operator's Log index">← Log Index</a>
+    </header>
+
+    <main class="op-main" id="op-content" tabindex="-1">
+      <article class="op-article">
+        <header class="op-article-header">
+          <div class="op-article-meta">
+            <time class="op-article-date" datetime="2026-06-18">2026-06-18</time>
+            <span class="op-article-tag op-article-tag--experiment">Experiment</span>
+            <span class="op-article-project">Localhost Watchdog</span>
+          </div>
+          <h1 class="op-headline">Building Localhost Watchdog: A Safe Way to Manage Local Development Servers</h1>
+          <p class="op-subhead">A Windows-first local server scanner, classifier, and process manager with a safety-first design: dry runs, confidence gates, PID/port revalidation, test-first execution, and no destructive action without confirmation.</p>
+        </header>
+
+        <div class="op-article-content">
+          <section class="op-section">
+            <h2 class="op-section-title">The Problem</h2>
+            <p>Developers run multiple local servers simultaneously. A database API on one port, a frontend dev server on another, maybe a worker process on a third. But what's actually running? Which processes are healthy? Which ones are consuming resources they shouldn't?</p>
+            <p>The default tools — checking port status, looking at terminal output, restarting processes blindly — are fragile and error-prone. On Windows, this is especially painful. The native process management tools are different from Linux, the port conflict resolution is less straightforward, and the risk of accidentally killing the wrong process is real. There's a gap between "something is running on localhost" and "this service is healthy and I understand what it's doing."</p>
+          </section>
+
+          <section class="op-section">
+            <h2 class="op-section-title">The Build</h2>
+            <p>Localhost Watchdog is a Windows-first tool designed to fill that gap. It's built as three components working together: a scanner that discovers what's running, a classifier that identifies and categorizes each process, and a process manager that can act on what it finds — but only when it's confident and you've confirmed.</p>
+
+            <div class="op-callout">
+              <h3 class="op-callout-title">Architecture</h3>
+              <ul class="op-list">
+                <li><strong>Scanner:</strong> Discovers active processes on all local ports, mapping PIDs to services and collecting resource usage data</li>
+                <li><strong>Classifier:</strong> Identifies each process by type — dev server, database, API, worker — using process name, port, command line, and behavior patterns</li>
+                <li><strong>Process Manager:</strong> Can restart, stop, or inspect identified processes, but only through the safety model</li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="op-section">
+            <h2 class="op-section-title">The Safety Model</h2>
+            <p>The core design principle is that no destructive action happens without explicit confirmation. Localhost Watchdog is built around a safety model that prevents accidental damage:</p>
+
+            <div class="op-callout">
+              <h3 class="op-callout-title">Safety Guarantees</h3>
+              <ul class="op-list">
+                <li><strong>Dry runs:</strong> Every action is previewed before execution. You see exactly what will happen — which process will be stopped, which port will be freed — before it happens</li>
+                <li><strong>Confidence gates:</strong> Actions only proceed when the classifier's confidence exceeds a threshold. Low-confidence identifications are flagged, not acted on</li>
+                <li><strong>PID/port revalidation:</strong> Before any action, the tool rechecks that the target process still exists at the expected PID and port. Stale references are caught, not trusted</li>
+                <li><strong>Test-first execution:</strong> The scanner runs a lightweight validation pass before and after any management action, confirming the system state matches expectations</li>
+                <li><strong>No destructive action without confirmation:</strong> Stop, restart, and kill operations require explicit user confirmation, even when confidence is high</li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="op-section">
+            <h2 class="op-section-title">Why Windows-First</h2>
+            <p>Most developer tools assume a Unix-like environment. Port management, process handling, and system monitoring all have different APIs and different failure modes on Windows. Localhost Watchdog is designed for the Windows development experience first — native process APIs, PowerShell-compatible output, Windows-specific port conflict resolution.</p>
+            <p>This doesn't mean it can't work elsewhere. The architecture is designed to be platform-aware, with the safety model being universal. But the initial implementation targets the environment where the pain is most acute: developers running Node.js servers, Docker containers, and local databases on Windows machines.</p>
+          </section>
+
+          <section class="op-section">
+            <h2 class="op-section-title">Current State</h2>
+            <p>Localhost Watchdog is in active development. The scanner and classifier work — they can discover running processes, map ports to PIDs, and categorize services by type. The process manager's safety model is implemented but still being hardened.</p>
+            <p>The biggest challenge is the classifier's confidence accuracy. Process identification on Windows is noisy — multiple processes can bind to adjacent ports, command-line arguments vary between environments, and some services don't identify themselves clearly. The confidence gates are doing their job: catching uncertain identifications instead of acting on them blindly.</p>
+          </section>
+
+          <section class="op-section">
+            <h2 class="op-section-title">Lessons Learned</h2>
+            <p>The most interesting discovery is how much uncertainty developers live with when working locally. "Is this service running?" seems like a simple question, but the answer is often more complex than a yes/no. The process might be running but unresponsive. It might be bound to the right port but serving stale data. It might be a zombie process from a previous session.</p>
+            <p>Another insight: the safety model is more valuable than the management features. The dry-run preview and confidence gates catch mistakes that would otherwise require manual recovery. The tool's primary value isn't that it can stop a process — it's that it won't stop the wrong one.</p>
+          </section>
+
+          <div class="op-status-box">
+            <h3 class="op-status-title">Status: Active Experiment (WIP)</h3>
+            <p>Localhost Watchdog is being actively developed and tested on Windows. The scanner and classifier are functional. The process manager safety model is being hardened. No public release planned yet — this is work-in-progress.</p>
+          </div>
+
+          <nav class="op-entry-nav" aria-label="Entry navigation">
+            <a class="op-entry-nav__prev" href="/operator-log/building-locailly/">← Previous: Building Locailly</a>
+            <a class="op-entry-nav__next" href="/operator-log/">Back to log index</a>
+          </nav>
+        </div>
+      </article>
+    </main>
+
+    <footer class="op-footer" role="contentinfo">
+      <span class="op-footer__left">LEMONTEED / OPERATOR'S LOG</span>
+      <span class="op-footer__right"><a href="/">← Back to the archive</a></span>
+    </footer>
+  </div>
+</body>
+</html>

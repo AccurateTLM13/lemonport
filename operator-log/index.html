@@ -1,45 +1,150 @@
 <!doctype html>
 <html lang="en">
-  <head>
-  <!-- Google tag (gtag.js) -->
+<head>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCB0LW648K"></script>
   <script src="/assets/js/analytics.js" defer></script>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Operator Log: Off-Clock Protocol — Lemonteed</title>
-    <!-- Intentionally excluded from search indexing. Findable by curiosity, not crawlers. -->
-    <meta name="robots" content="noindex, nofollow">
-    <meta name="description" content="A restricted personnel file. Off-clock archive. Handle accordingly.">
-    <link rel="icon" href="/images/favicons/favicon.ico" sizes="any">
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
-    <link rel="stylesheet" href="/operator-log/operator.css">
-  </head>
-  <body class="operator-page">
-    <a class="op-skip" href="#op-content">Skip to content</a>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Operator's Log | Lemonteed</title>
+  <meta name="description" content="Build log documenting projects, experiments, lessons learned, and releases — from shipped Chrome extensions to local AI orchestration systems and developer safety tools.">
+  <link rel="canonical" href="https://lemonteed.com/operator-log/">
+  <meta property="og:title" content="Operator's Log | Lemonteed">
+  <meta property="og:description" content="Build log documenting projects, experiments, lessons learned, and releases — from shipped Chrome extensions to local AI orchestration systems and developer safety tools.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lemonteed.com/operator-log/">
+  <meta property="og:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+  <meta property="og:image:secure_url" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Operator's Log | Lemonteed">
+  <meta name="twitter:description" content="Build log documenting projects, experiments, lessons learned, and releases — from shipped Chrome extensions to local AI orchestration systems.">
+  <meta name="twitter:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+  <link rel="icon" href="/images/favicons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
+  <link rel="stylesheet" href="/operator-log/operator.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "Operator's Log",
+      "url": "https://lemonteed.com/operator-log/",
+      "description": "Build log documenting projects, experiments, lessons learned, and releases — from shipped Chrome extensions to local AI orchestration systems and developer safety tools.",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Lemonteed",
+        "url": "https://lemonteed.com/"
+      },
+      "blogPost": [
+        {
+          "@type": "BlogPosting",
+          "headline": "Building Lighthouse Handoff: Turning PageSpeed Reports Into Agent-Ready Work",
+          "url": "https://lemonteed.com/operator-log/building-lighthouse-handoff/",
+          "datePublished": "2026-06-20",
+          "author": {
+            "@type": "Person",
+            "name": "Lemonteed Operator"
+          }
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "Building Locailly: A Local AI Orchestration System",
+          "url": "https://lemonteed.com/operator-log/building-locailly/",
+          "datePublished": "2026-06-19",
+          "author": {
+            "@type": "Person",
+            "name": "Lemonteed Operator"
+          }
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "Building Localhost Watchdog: A Safe Way to Manage Local Development Servers",
+          "url": "https://lemonteed.com/operator-log/building-localhost-watchdog/",
+          "datePublished": "2026-06-18",
+          "author": {
+            "@type": "Person",
+            "name": "Lemonteed Operator"
+          }
+        }
+      ]
+    }
+  </script>
+</head>
+<body class="operator-page">
+  <a class="op-skip" href="#op-content">Skip to content</a>
 
-    <div class="op-shell">
+  <div class="op-shell">
+    <header class="op-header" role="banner">
+      <span class="op-header__classify">Lemonteed / Operator's Log</span>
+      <span class="op-header__phase" aria-live="polite">Build Log</span>
+      <a class="op-header__back" href="/" aria-label="Return to Lemonteed archive">← Archive</a>
+    </header>
 
-      <header class="op-header" role="banner">
-        <span class="op-header__classify">Lemonteed / Off-Clock Protocol</span>
-        <span class="op-header__phase" id="op-phase-label" aria-live="polite">—</span>
-        <a class="op-header__back" href="/" aria-label="Return to Lemonteed archive">← Archive</a>
-      </header>
+    <main class="op-main" id="op-content" tabindex="-1">
+      <div class="op-blog-index">
+        <header class="op-blog-header">
+          <h1 class="op-headline">Operator's Log</h1>
+          <p class="op-subhead">Build log documenting projects, experiments, lessons learned, and releases — from shipped Chrome extensions to local AI orchestration systems and developer safety tools.</p>
+          <span class="op-status-line is-cleared">STATUS: ACTIVE LOG</span>
+        </header>
 
-      <main class="op-main" id="op-content" tabindex="-1">
-        <div id="op-root" aria-live="polite">
-          <!-- Content rendered by operator.js -->
-        </div>
-      </main>
+        <section class="op-entries" aria-label="Blog entries">
+          <article class="op-entry-card">
+            <div class="op-entry-card__meta">
+              <time class="op-entry-card__date" datetime="2026-06-20">2026-06-20</time>
+              <span class="op-entry-card__tag op-entry-card__tag--shipped">Shipped</span>
+              <span class="op-entry-card__project">Lighthouse Handoff</span>
+            </div>
+            <h2 class="op-entry-card__title">
+              <a href="/operator-log/building-lighthouse-handoff/">Building Lighthouse Handoff: Turning PageSpeed Reports Into Actionable Work</a>
+            </h2>
+            <p class="op-entry-card__excerpt">A Chrome extension and local companion that turns PageSpeed Insights into structured Markdown with confidence thresholds, fixed recommendation ordering, multi-run median testing, and variance analysis — ready for coding agents to act on.</p>
+            <div class="op-entry-card__links">
+              <a class="op-entry-card__cta" href="/operator-log/building-lighthouse-handoff/">Read the full entry &rarr;</a>
+              <a class="op-entry-card__project-link" href="/lighthouse-handoff/">View project page &rarr;</a>
+            </div>
+          </article>
 
-      <footer class="op-footer" role="contentinfo">
-        <span class="op-footer__left">LEMONTEED / OPERATOR LOG</span>
-        <span class="op-footer__right"><a href="/">← Back to the archive</a></span>
-      </footer>
+          <article class="op-entry-card">
+            <div class="op-entry-card__meta">
+              <time class="op-entry-card__date" datetime="2026-06-19">2026-06-19</time>
+              <span class="op-entry-card__tag op-entry-card__tag--experiment">Experiment</span>
+              <span class="op-entry-card__project">Locailly</span>
+            </div>
+            <h2 class="op-entry-card__title">
+              <a href="/operator-log/building-locailly/">Building a Tiny AI Pit Crew With Local Models</a>
+            </h2>
+            <p class="op-entry-card__excerpt">An experiment in local AI orchestration — a Local Brain, Task Tracks, AI Pit Crew, capability routing, and optional NearbyNodes working together so one person can operate like a coordinated team using small local models.</p>
+            <div class="op-entry-card__links">
+              <a class="op-entry-card__cta" href="/operator-log/building-locailly/">Read the full entry &rarr;</a>
+            </div>
+          </article>
 
-    </div>
+          <article class="op-entry-card">
+            <div class="op-entry-card__meta">
+              <time class="op-entry-card__date" datetime="2026-06-18">2026-06-18</time>
+              <span class="op-entry-card__tag op-entry-card__tag--experiment">Experiment</span>
+              <span class="op-entry-card__project">Localhost Watchdog</span>
+            </div>
+            <h2 class="op-entry-card__title">
+              <a href="/operator-log/building-localhost-watchdog/">Building a Safer Way to Understand Local Development Servers</a>
+            </h2>
+            <p class="op-entry-card__excerpt">A Windows-first local server scanner, classifier, and process manager with a safety-first design: dry runs, confidence gates, PID/port revalidation, test-first execution, and no destructive action without confirmation.</p>
+            <div class="op-entry-card__links">
+              <a class="op-entry-card__cta" href="/operator-log/building-localhost-watchdog/">Read the full entry &rarr;</a>
+            </div>
+          </article>
+        </section>
+      </div>
+    </main>
 
-    <script src="/operator-log/operator.js" defer></script>
-  </body>
+    <footer class="op-footer" role="contentinfo">
+      <span class="op-footer__left">LEMONTEED / OPERATOR'S LOG</span>
+      <span class="op-footer__right"><a href="/">← Back to the archive</a></span>
+    </footer>
+  </div>
+</body>
 </html>
