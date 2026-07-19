@@ -7,7 +7,7 @@
   "use strict";
 
   /* ── Track Data ─────────────────────────────────────────────── */
-  const TRACKS = [
+  const TRACKS = window.LEMONTEED_FM_TRACKS || [
     {
       id: "lemonteed-fm-93-7-internet-s-least-funded-booth",
       title: "Internet's Least Funded Booth",
@@ -431,6 +431,15 @@
       btn.textContent = icon;
       btn.setAttribute("aria-label", label);
     });
+
+    // Update play icons inside crate rows
+    $$(".fm-track-row").forEach(row => {
+      const rowPlayIcon = row.querySelector(".fm-track-row__play-icon");
+      if (rowPlayIcon) {
+        const isCurrent = row.dataset.trackId === currentTrack().id;
+        rowPlayIcon.textContent = (isCurrent && playing) ? "⏸" : "▶";
+      }
+    });
   }
 
   function updatePlayerUI(track) {
@@ -478,7 +487,12 @@
 
   function syncCrateHighlight() {
     $$(".fm-track-row").forEach(row => {
-      row.classList.toggle("is-playing", row.dataset.trackId === currentTrack().id);
+      const isCurrent = row.dataset.trackId === currentTrack().id;
+      row.classList.toggle("is-playing", isCurrent);
+      const rowPlayIcon = row.querySelector(".fm-track-row__play-icon");
+      if (rowPlayIcon) {
+        rowPlayIcon.textContent = (isCurrent && state.isPlaying) ? "⏸" : "▶";
+      }
     });
   }
 
@@ -511,7 +525,7 @@
           <div class="fm-track-row__main" tabindex="0" role="button" aria-expanded="false" aria-label="Expand details for ${escHtml(track.title)}">
             <div class="fm-track-row__num">
               <span class="fm-track-row__num-val">${i + 1}</span>
-              <span class="fm-track-row__play-icon" aria-hidden="true">${isPlaying ? "▶" : "▶"}</span>
+              <span class="fm-track-row__play-icon" aria-hidden="true">${isPlaying ? "⏸" : "▶"}</span>
             </div>
             <div class="fm-track-row__identity">
               <div class="fm-track-row__thumb">
@@ -583,6 +597,17 @@
       mainRow?.addEventListener("click", () => toggleRowDetail(row, trackId));
       mainRow?.addEventListener("keydown", e => {
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleRowDetail(row, trackId); }
+      });
+
+      // Play/pause on number/play-icon click
+      const numCol = row.querySelector(".fm-track-row__num");
+      numCol?.addEventListener("click", e => {
+        e.stopPropagation();
+        if (currentTrack().id === trackId) {
+          togglePlay();
+        } else {
+          selectTrack(trackId);
+        }
       });
 
       // Overflow button
@@ -906,6 +931,9 @@
           r.value = range.value;
           r.style.setProperty("--progress", range.value + "%");
         });
+        // Dynamically update time indicators during drag seek
+        $("[data-current-time]") && ($("[data-current-time]").textContent = fmt(seekTo));
+        $("[data-player-current]") && ($("[data-player-current]").textContent = fmt(seekTo));
       });
     });
   }

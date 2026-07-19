@@ -20,6 +20,16 @@ function arrayField(value) {
     .filter(Boolean);
 }
 
+function parseDurationSec(durationStr) {
+  const parts = String(durationStr || "").split(":");
+  if (parts.length === 2) {
+    const mins = parseInt(parts[0], 10) || 0;
+    const secs = parseInt(parts[1], 10) || 0;
+    return mins * 60 + secs;
+  }
+  return 0;
+}
+
 function normalizeTrack(track, index) {
   const title = String(track.title || "").trim();
   const artist = String(track.artist || "").trim();
@@ -39,13 +49,20 @@ function normalizeTrack(track, index) {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "") || `track-${index + 1}`;
 
+  const duration = String(track.duration || "").trim();
+  const durationSec = Number(track.durationSec) || parseDurationSec(duration);
+
   return {
     id,
     title,
     artist,
+    album: String(track.album || "Station Originals").trim(),
+    genre: String(track.genre || "").trim(),
+    mood: String(track.mood || "").trim(),
     vibe: arrayField(track.vibe),
     tags: arrayField(track.tags),
-    duration: String(track.duration || "").trim(),
+    duration,
+    durationSec,
     artworkSmall: String(track.artworkSmall || track.artwork || defaultArtworkSmall).trim(),
     artworkLarge: String(track.artworkLarge || track.artwork || defaultArtworkLarge).trim(),
     previewAudio: String(track.previewAudio || "").trim(),
@@ -55,6 +72,10 @@ function normalizeTrack(track, index) {
     license: String(track.license || "").trim(),
     attribution: String(track.attribution || "").trim(),
     usage: String(track.usage || "Verify the original source before using in your own project.").trim(),
+    curatorNote: String(track.curatorNote || "").trim(),
+    program: String(track.program || "").trim(),
+    addedDate: String(track.addedDate || "").trim(),
+    featured: track.featured === true,
     canHost: track.canHost === true,
     canDownload: track.canDownload === true
   };
