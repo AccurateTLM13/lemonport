@@ -2060,6 +2060,141 @@ button:disabled {
 
 /* ── SEO Manager ─────────────────────────────────────────────────────────── */
 
+.junk-tools-panel {
+  padding: 24px;
+}
+
+.junk-tools-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.junk-tools-list {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+
+.junk-tool-row {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.junk-tool-row img {
+  width: 92px;
+  height: 68px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+
+.junk-tool-row h3,
+.junk-tool-row p {
+  margin: 0;
+}
+
+.junk-tool-row h3 {
+  font-size: 14px;
+}
+
+.junk-tool-row p {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.junk-tool-row__badge {
+  display: inline-block;
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.junk-tool-row__actions,
+.junk-tool-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.junk-tool-row__actions button,
+.junk-tool-actions button {
+  min-height: 36px;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  cursor: pointer;
+}
+
+.junk-tool-form {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  padding: 18px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+}
+
+.junk-tool-form h3 {
+  margin: 0 0 4px;
+  font-size: 15px;
+}
+
+.junk-tool-form label:not(.checkbox-row):not(.junk-tool-upload-label) {
+  display: grid;
+  gap: 6px;
+}
+
+.junk-tool-form input[type="text"],
+.junk-tool-form input[type="url"],
+.junk-tool-form textarea {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+  font: inherit;
+  font-size: 13px;
+}
+
+.junk-tool-form label > span,
+.junk-tool-upload-label {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+@media (max-width: 800px) {
+  .junk-tools-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .junk-tool-row {
+    grid-template-columns: 68px minmax(0, 1fr);
+  }
+
+  .junk-tool-row img {
+    width: 68px;
+    height: 54px;
+  }
+
+  .junk-tool-row__actions {
+    grid-column: 1 / -1;
+  }
+}
+
 .seo-panel {
   display: flex;
   flex-direction: column;

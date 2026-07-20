@@ -77,6 +77,7 @@
     live: ["Live Experiment", "Cloud Flip dossier"],
     fm: ["Lemonteed FM", "Playlist manager"],
     report: ["Build Report", "Publish readiness"],
+    "junk-drawer": ["Junk Drawer", "External tool shelf"],
     seo: ["SEO Manager", "Titles, descriptions, OG"]
   };
 
@@ -102,6 +103,8 @@
   let liveExperiment = null;
   let fmData = { tracks: [] };
   let activeFmTrackId = "";
+  let junkDrawerTools = [];
+  let activeJunkToolId = "";
 
   function setStatus(message, details) {
     status.textContent = message || "";
@@ -3112,6 +3115,137 @@
 
     if (cleanup) {
       cleanupUnusedMedia(cleanup.dataset.cleanupUnused);
+    }
+  });
+
+  // ── External Junk Drawer tools ────────────────────────────────────────────
+
+  const junkToolsList = document.querySelector("[data-junk-tools-list]");
+  const junkToolForm = document.querySelector("[data-junk-tool-form]");
+  const junkToolFormTitle = document.querySelector("[data-junk-tool-form-title]");
+  const junkToolImageUpload = document.querySelector("[data-junk-image-upload]");
+  const junkToolImagePath = document.querySelector("[data-junk-image-path]");
+  const junkToolReset = document.querySelector("[data-junk-tool-reset]");
+
+  function resetJunkToolForm() {
+    if (!junkToolForm) return;
+    junkToolForm.reset();
+    junkToolForm.elements.id.value = "";
+    activeJunkToolId = "";
+    if (junkToolFormTitle) junkToolFormTitle.textContent = "Add external tool";
+  }
+
+  function renderJunkTools() {
+    if (!junkToolsList) return;
+    if (!junkDrawerTools.length) {
+      junkToolsList.innerHTML = "<p class=\"empty-state\">No external tools yet. Add the first one here.</p>";
+      return;
+    }
+    junkToolsList.innerHTML = junkDrawerTools.map((tool) => `
+      <article class="junk-tool-row">
+        <img src="${escapeHtml(tool.image)}" alt="" loading="lazy">
+        <div>
+          <h3>${escapeHtml(tool.name)}</h3>
+          <p>${escapeHtml(tool.description)}</p>
+          <span class="junk-tool-row__badge">${tool.affiliate ? "Affiliate link" : "External find"}</span>
+        </div>
+        <div class="junk-tool-row__actions">
+          <button type="button" data-junk-edit="${escapeHtml(tool.id)}">Edit</button>
+          <button type="button" data-junk-delete="${escapeHtml(tool.id)}">Delete</button>
+        </div>
+      </article>
+    `).join("");
+  }
+
+  function editJunkTool(id) {
+    const tool = junkDrawerTools.find((item) => item.id === id);
+    if (!tool || !junkToolForm) return;
+    activeJunkToolId = id;
+    junkToolForm.elements.id.value = id;
+    junkToolForm.elements.name.value = tool.name || "";
+    junkToolForm.elements.description.value = tool.description || "";
+    junkToolForm.elements.url.value = tool.url || "";
+    junkToolForm.elements.image.value = tool.image || "";
+    junkToolForm.elements.affiliate.checked = tool.affiliate === true;
+    if (junkToolFormTitle) junkToolFormTitle.textContent = `Edit: ${tool.name}`;
+    junkToolForm.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  async function loadJunkTools() {
+    const data = await api("/api/junk-drawer");
+    junkDrawerTools = Array.isArray(data.externalTools) ? data.externalTools : [];
+    renderJunkTools();
+  }
+
+  async function saveJunkTool(event) {
+    event.preventDefault();
+    if (!junkToolForm) return;
+    const body = {
+      name: junkToolForm.elements.name.value.trim(),
+      description: junkToolForm.elements.description.value.trim(),
+      url: junkToolForm.elements.url.value.trim(),
+      image: junkToolForm.elements.image.value.trim(),
+      affiliate: junkToolForm.elements.affiliate.checked
+    };
+    const id = junkToolForm.elements.id.value;
+    const saveButton = junkToolForm.querySelector("[data-junk-tool-save]");
+    if (saveButton) saveButton.disabled = true;
+    try {
+      setStatus(`${id ? "Updating" : "Adding"} ${body.name}...`);
+      const result = await api(id ? `/api/junk-drawer/tools/${encodeURIComponent(id)}` : "/api/junk-drawer/tools", {
+        method: id ? "PATCH" : "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(body)
+      });
+      junkDrawerTools = result.externalTools || junkDrawerTools;
+      renderJunkTools();
+      resetJunkToolForm();
+      setStatus(`Junk Drawer rebuilt with ${junkDrawerTools.length} external tool(s).`);
+    } catch (error) {
+      showError(error);
+    } finally {
+      if (saveButton) saveButton.disabled = false;
+    }
+  }
+
+  async function uploadJunkToolImage(file) {
+    if (!file || !junkToolImagePath) return;
+    try {
+      setStatus("Uploading external tool image...");
+      const result = await api("/api/junk-drawer/image", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ imageData: await readFileAsDataUrl(file), filename: junkToolForm.elements.name.value || file.name })
+      });
+      junkToolImagePath.value = result.url;
+      setStatus(`Image uploaded: ${result.url}`);
+    } catch (error) {
+      showError(error);
+    }
+  }
+
+  if (junkToolsList) {
+    junkToolsList.addEventListener("click", (event) => {
+      const edit = event.target.closest("[data-junk-edit]");
+      const remove = event.target.closest("[data-junk-delete]");
+      if (edit) editJunkTool(edit.dataset.junkEdit);
+      if (remove) {
+        const tool = junkDrawerTools.find((item) => item.id === remove.dataset.junkDelete);
+        if (!tool || !window.confirm(`Delete “${tool.name}” from the Junk Drawer?`)) return;
+        api(`/api/junk-drawer/tools/${encodeURIComponent(tool.id)}`, { method: "DELETE" })
+          .then((result) => { junkDrawerTools = result.externalTools || []; renderJunkTools(); resetJunkToolForm(); setStatus("External tool deleted and page rebuilt."); })
+          .catch(showError);
+      }
+    });
+  }
+  if (junkToolForm) junkToolForm.addEventListener("submit", saveJunkTool);
+  if (junkToolReset) junkToolReset.addEventListener("click", resetJunkToolForm);
+  if (junkToolImageUpload) junkToolImageUpload.addEventListener("change", () => uploadJunkToolImage(junkToolImageUpload.files[0]));
+  workspaceButtons.forEach((btn) => {
+    if (btn.dataset.workspaceNav === "junk-drawer") {
+      btn.addEventListener("click", () => {
+        loadJunkTools().catch(showError);
+      });
     }
   });
 

@@ -66,6 +66,7 @@ npx wrangler dev --local --port 8788 --config mdr-api/wrangler.toml
 | `node scripts/build-lemonteed-fm.js` | Rebuild Lemonteed FM data |
 | `node scripts/build-mdr.js` | Rebuild Million Dollar Receipt config |
 | `node scripts/build-mdr-stats.js` | Rebuild Million Dollar Receipt stats |
+| `node scripts/build-junk-drawer.js` | Rebuild external Junk Drawer cards |
 | `node scripts/promote-operator-mutation.js` | Promote active operator log phase |
 | `node scripts/install-mdr-assets.js` | Install responsive assets for MDR |
 | `node --experimental-sqlite mdr-api/server.js` | Start the Million Dollar Receipt SQLite API backend |
@@ -117,6 +118,12 @@ To support concurrent work streams and seamless handoffs between agent runs:
   * **Junk Drawer Card Visuals:** Replaced CSS/span-based visual card placeholders in `/junk-drawer/` with correlating WebP screenshot/interface images from `/images/junk/` and added responsive CSS styles in `assets/css/junk-drawer.css` to frame the thumbnails.
 * **Next steps:**
   * **Bench Radio (later):** Clickable radio on Studio Lab that streams Lemonteed FM while browsing projects.
+
+### External Junk Drawer Tools (Completed)
+
+* **Completed:** Added the `content/junk-drawer.json` source of truth, public-card builder, and local Studio/API wiring for external tools with name, description, URL, WebP image uploads, and affiliate disclosure.
+* **Codebase state:** Existing External Finds content is represented in the new source file. Studio save operations rebuild `junk-drawer/index.html`; invalid API payloads are rejected, full checks pass, and browser verification found no console errors.
+* **Next steps:** Add external tools through Studio as needed.
 
 ### AI Scrape Toll Booth V1 (Completed)
 
