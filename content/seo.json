@@ -12,9 +12,9 @@
     "ogImageHeight": 630,
     "twitterTitle": "Lemonteed | Discover Creations From My Brain",
     "twitterDescription": "A static web universe of tools, games, songs, artifacts, and experimental internet objects.",
-    "twitterImage": "/images/og/lemonteed-og-home-final.webp",
+    "twitterImage": "/images/og/home.webp",
     "canonicalUrl": "https://lemonteed.com/",
-    "updatedAt": "2026-07-19T00:14:51.958Z"
+    "updatedAt": "2026-07-19T23:57:18.202Z"
   },
   {
     "key": "archive",
@@ -109,14 +109,14 @@
     "description": "Free browser tools, utilities, and oddities from Lemonteed — starting with Lighthouse Handoff, image tools, Character Supply, and Lemon DOM.",
     "ogTitle": "Junk Drawer | Lemonteed",
     "ogDescription": "Free browser tools, utilities, and oddities from Lemonteed — starting with Lighthouse Handoff.",
-    "ogImage": "/images/og/lemonteed-og-home-final.webp",
+    "ogImage": "/images/og/junk-drawer.webp",
     "ogImageWidth": 1200,
     "ogImageHeight": 630,
     "twitterTitle": "Junk Drawer | Lemonteed",
-    "twitterDescription": "Free browser tools, utilities, and oddities from Lemonteed.",
-    "twitterImage": "/images/og/lemonteed-og-home-final.webp",
+    "twitterDescription": "Free browser tools, utilities, and oddities from Lemonteed — starting with Lighthouse Handoff, image tools, Character Supply, and Lemon DOM.",
+    "twitterImage": "/images/og/junk-drawer.webp",
     "canonicalUrl": "https://lemonteed.com/junk-drawer/",
-    "updatedAt": "2026-07-16T20:24:33.948Z"
+    "updatedAt": "2026-07-19T23:34:24.317Z"
   },
   {
     "key": "junk-drawer-image-converter",

@@ -18,6 +18,7 @@ const { contentFile: lemonteedFmFile, validateLemonteedFm, buildLemonteedFm } = 
 const { resolvePathWithinRoot } = require("./security-utils");
 const { galleryWidths, statuses } = require("./site-config");
 const { loadSeo, saveSeoFile, buildSeo } = require("./build-seo");
+const { contentFile: junkDrawerFile, loadJunkDrawer, validateExternalTools, buildJunkDrawer, slugify: junkDrawerSlugify } = require("./build-junk-drawer");
 
 const root = path.resolve(__dirname, "..");
 const contentFile = path.join(root, "content", "projects.json");
@@ -220,6 +221,103 @@ function saveLemonteedFm(data) {
   }, null, 2)}\n`);
   buildLemonteedFm();
   return loadLemonteedFm();
+}
+
+function saveJunkDrawer(data) {
+  const result = validateExternalTools(data);
+  if (result.errors.length) {
+    const error = new Error("Junk Drawer validation failed.");
+    error.validation = result;
+    throw error;
+  }
+  backupFile(junkDrawerFile);
+  fs.writeFileSync(junkDrawerFile, `${JSON.stringify(data, null, 2)}\n`);
+  buildJunkDrawer();
+  return loadJunkDrawer();
+}
+
+function uniqueJunkDrawerId(tools, name, currentId = "") {
+  const base = junkDrawerSlugify(name);
+  let id = base;
+  let counter = 2;
+  while (tools.some((tool) => tool.id !== currentId && tool.id === id)) {
+    id = `${base}-${counter}`;
+    counter += 1;
+  }
+  return id;
+}
+
+function normalizeJunkDrawerTool(body, existing = null, tools = []) {
+  const name = String(body.name ?? existing?.name ?? "").trim();
+  const description = String(body.description ?? existing?.description ?? "").trim();
+  const image = String(body.image ?? existing?.image ?? "").trim();
+  const url = String(body.url ?? existing?.url ?? "").trim();
+  if (!name || !description || !image || !url) throw new Error("Name, description, image, and URL are required.");
+  const id = existing?.id || uniqueJunkDrawerId(tools, name);
+  const tool = {
+    ...(existing || {}),
+    id,
+    name,
+    description,
+    image,
+    url,
+    affiliate: body.affiliate === undefined ? existing?.affiliate === true : body.affiliate === true
+  };
+  if (body.credit || existing?.credit) {
+    const credit = body.credit || existing.credit;
+    tool.credit = { name: String(credit.name || "").trim(), url: String(credit.url || "").trim() };
+  }
+  return tool;
+}
+
+async function createJunkDrawerTool(request, response) {
+  const body = await readJsonBody(request);
+  const data = loadJunkDrawer();
+  const tool = normalizeJunkDrawerTool(body, null, data.externalTools);
+  data.externalTools.push(tool);
+  const saved = saveJunkDrawer(data);
+  sendJson(response, 201, { tool: saved.externalTools.find((item) => item.id === tool.id), externalTools: saved.externalTools });
+}
+
+async function updateJunkDrawerTool(request, response, id) {
+  const body = await readJsonBody(request);
+  const data = loadJunkDrawer();
+  const index = data.externalTools.findIndex((tool) => tool.id === id);
+  if (index < 0) { sendJson(response, 404, { error: "External tool not found." }); return; }
+  data.externalTools[index] = normalizeJunkDrawerTool(body, data.externalTools[index], data.externalTools);
+  const saved = saveJunkDrawer(data);
+  sendJson(response, 200, { tool: saved.externalTools[index], externalTools: saved.externalTools });
+}
+
+function deleteJunkDrawerTool(response, id) {
+  const data = loadJunkDrawer();
+  const index = data.externalTools.findIndex((tool) => tool.id === id);
+  if (index < 0) { sendJson(response, 404, { error: "External tool not found." }); return; }
+  data.externalTools.splice(index, 1);
+  const saved = saveJunkDrawer(data);
+  sendJson(response, 200, { deleted: id, externalTools: saved.externalTools });
+}
+
+async function uploadJunkDrawerImage(request, response) {
+  const body = await readJsonBody(request);
+  const { buffer } = decodeDataUrl(body.imageData);
+  const imageDir = path.join(root, "images", "junk");
+  const uploadDir = path.join(root, ".studio-uploads");
+  const base = `external-${junkDrawerSlugify(body.filename || "tool")}`;
+  let filename = `${base}.webp`;
+  let counter = 2;
+  while (fs.existsSync(path.join(imageDir, filename))) { filename = `${base}-${counter}.webp`; counter += 1; }
+  const tempFile = path.join(uploadDir, `${base}-upload`);
+  const outputFile = path.join(imageDir, filename);
+  fs.mkdirSync(imageDir, { recursive: true });
+  fs.mkdirSync(uploadDir, { recursive: true });
+  fs.writeFileSync(tempFile, buffer);
+  try {
+    execFileSync("magick", [tempFile, "-auto-orient", "-strip", "-resize", "1200x900^", "-gravity", "center", "-extent", "1200x900", "-quality", "84", "-define", "webp:method=6", outputFile], { timeout: 15000 });
+    sendJson(response, 201, { url: `/images/junk/${filename}` });
+  } finally {
+    if (fs.existsSync(tempFile)) fs.unlinkSync(tempFile);
+  }
 }
 
 function saveLiveExperiment(data) {
@@ -1274,6 +1372,11 @@ async function route(request, response) {
       return;
     }
 
+    if (request.method === "GET" && url.pathname === "/api/junk-drawer") {
+      sendJson(response, 200, loadJunkDrawer());
+      return;
+    }
+
     if (request.method === "GET" && url.pathname === "/api/validation") {
       const result = validateContent(loadProjects(), loadCategories());
       sendJson(response, 200, {
@@ -1296,6 +1399,26 @@ async function route(request, response) {
 
     if (request.method === "POST" && url.pathname === "/api/projects") {
       await createProject(request, response);
+      return;
+    }
+
+    if (request.method === "POST" && url.pathname === "/api/junk-drawer/tools") {
+      await createJunkDrawerTool(request, response);
+      return;
+    }
+
+    if (request.method === "POST" && url.pathname === "/api/junk-drawer/image") {
+      await uploadJunkDrawerImage(request, response);
+      return;
+    }
+
+    const junkDrawerMatch = url.pathname.match(/^\/api\/junk-drawer\/tools\/([^/]+)$/);
+    if (junkDrawerMatch && request.method === "PATCH") {
+      await updateJunkDrawerTool(request, response, junkDrawerMatch[1]);
+      return;
+    }
+    if (junkDrawerMatch && request.method === "DELETE") {
+      deleteJunkDrawerTool(response, junkDrawerMatch[1]);
       return;
     }
 

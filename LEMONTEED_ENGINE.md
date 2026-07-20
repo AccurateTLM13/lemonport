@@ -45,6 +45,7 @@ The content source of truth is:
 - `content/vrg-vault.json`
 - `content/operator-log/schedule.json`
 - `content/seo.json`
+- `content/junk-drawer.json`
 
 These files define artifact metadata, category profiles, audio tracks, and mutation parameters. Agents should update these files through Lemonteed Studio when possible, or by careful direct JSON edits when explicitly needed.
 
@@ -87,6 +88,8 @@ If a project has no `status`, `scripts/build-gallery.js` treats it as `Published
 `assets/js/coming-soon.js` can intercept links and buttons either directly with `data-coming-soon` or by scope with `data-coming-soon-scope`. Scoped use should be applied to page-owned content containers such as `main` or `article`, not the document body, unless the requested behavior is explicitly meant to include global chrome.
 
 Junk Drawer tools should keep their tool-specific logic local, but should use the shared `site-shell`, `sidebar`, `category-nav`, and mobile header script when the page is part of the public archive experience.
+
+External Junk Drawer cards are authored in `content/junk-drawer.json` and rebuilt into the marked External Finds section by `scripts/build-junk-drawer.js`. Affiliate entries receive visible disclosure and sponsored link attributes.
 
 ## Lemonteed Studio
 

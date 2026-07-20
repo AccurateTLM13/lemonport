@@ -61,6 +61,7 @@ http://localhost:5173/
 - Edits meta titles, descriptions, Open Graph data, and OG images for every registered public static page from the SEO Manager workspace.
 - Uploads new OG images (converted to WebP at 1200×630) directly into `images/og/` from the SEO Manager.
 - Saves SEO data to `content/seo.json` and patches the HTML files in place through `scripts/build-seo.js`.
+- Manages external Junk Drawer tools in `content/junk-drawer.json`, including name, description, URL, WebP preview image uploads, and affiliate disclosure, then rebuilds `junk-drawer/index.html`.
 
 ## Requirements
 

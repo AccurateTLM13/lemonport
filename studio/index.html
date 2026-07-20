@@ -27,6 +27,7 @@
           <button type="button" data-workspace-nav="live">Live Experiment</button>
           <button type="button" data-workspace-nav="fm">Lemonteed FM</button>
           <button type="button" data-workspace-nav="report">Build Report</button>
+          <button type="button" data-workspace-nav="junk-drawer">Junk Drawer</button>
           <button type="button" data-workspace-nav="seo">SEO Manager</button>
         </nav>
         <div class="studio-dev-links" aria-label="Hidden dev pages">
@@ -471,6 +472,32 @@
         </div>
 
         <div class="build-report" data-build-report-panel></div>
+      </section>
+
+      <section class="workspace-panel junk-tools-panel" data-workspace="junk-drawer" aria-labelledby="junk-tools-title">
+        <div class="panel-heading">
+          <h2 id="junk-tools-title">External Junk Drawer Tools</h2>
+          <p>Add outbound tools to the public Junk Drawer. Affiliate links are labeled publicly and receive sponsored link attributes.</p>
+        </div>
+        <div class="junk-tools-layout">
+          <div class="junk-tools-list" data-junk-tools-list></div>
+          <form class="junk-tool-form" data-junk-tool-form>
+            <input type="hidden" name="id">
+            <h3 data-junk-tool-form-title>Add external tool</h3>
+            <label><span>Name</span><input name="name" type="text" required autocomplete="off" placeholder="Useful Weird Thing"></label>
+            <label><span>Description</span><textarea name="description" rows="4" required placeholder="What it does, with a little personality."></textarea></label>
+            <label><span>URL</span><input name="url" type="url" required placeholder="https://example.com/"></label>
+            <label><span>Preview image</span><input name="image" type="text" required placeholder="/images/junk/external-tool.webp" data-junk-image-path></label>
+            <label class="seo-upload-label junk-tool-upload-label">Upload image
+              <input type="file" accept="image/png,image/jpeg,image/webp" class="seo-upload-input" data-junk-image-upload>
+            </label>
+            <label class="checkbox-row"><input name="affiliate" type="checkbox"><span>Includes an affiliate link</span></label>
+            <div class="junk-tool-actions">
+              <button type="submit" data-junk-tool-save>Save + Rebuild</button>
+              <button type="button" data-junk-tool-reset>Clear</button>
+            </div>
+          </form>
+        </div>
       </section>
 
       <section class="workspace-panel seo-panel" data-workspace="seo" aria-labelledby="seo-title">

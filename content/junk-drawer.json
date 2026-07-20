@@ -1,0 +1,24 @@
+{
+  "externalTools": [
+    {
+      "id": "recoded88",
+      "name": "Rec0deD:88",
+      "description": "Play retro games online in your browser. Leaves Lemonteed, behaves accordingly.",
+      "image": "/images/junk/recoded88.webp",
+      "url": "https://rec0ded88.com/",
+      "affiliate": false,
+      "credit": {
+        "name": "Matty McTech",
+        "url": "https://www.mattymctech.com/"
+      }
+    },
+    {
+      "id": "html-css-to-image",
+      "name": "HTML/CSS to Image",
+      "description": "Automate your image generation\nConvert HTML/CSS into PNG, JPG or WebP",
+      "image": "/images/junk/external-dog-rates-example-webp.webp",
+      "url": "https://htmlcsstoimage.com/",
+      "affiliate": false
+    }
+  ]
+}

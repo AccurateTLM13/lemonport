@@ -5,6 +5,7 @@ const root = path.resolve(__dirname, "..");
 
 const checks = [
   ["node", ["scripts/content-validation.js"]],
+  ["node", ["scripts/build-junk-drawer.js"]],
   ["node", ["scripts/site-completion-audit.js"]],
   ["node", ["scripts/media-health.js"]]
 ];
