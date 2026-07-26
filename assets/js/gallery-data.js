@@ -51,7 +51,8 @@ const galleryItems = [
         "width": 346,
         "url": "/images/vrg-cards/dario.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/dario-amodei/"
   },
   {
     "id": "vrg-022",
@@ -100,7 +101,8 @@ const galleryItems = [
         "width": 340,
         "url": "/images/vrg-cards/samaltman.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/sam-altman/"
   },
   {
     "id": "vrg-021",
@@ -153,7 +155,8 @@ const galleryItems = [
         "width": 356,
         "url": "/images/vrg-cards/steve-jobs.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/steve-jobs/"
   },
   {
     "id": "what-030",
@@ -297,7 +300,8 @@ const galleryItems = [
         "width": 1077,
         "url": "/images/what-if/tinfoil-palantir-bucket-hat.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/tinfoil-palantir-bucket-hat/"
   },
   {
     "id": "mwf-008",
@@ -373,7 +377,8 @@ const galleryItems = [
         "width": 1080,
         "url": "/images/memetic-warfare/the-tamagotchi-pendant-of-doom.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/the-tamagotchi-pendant-of-doom/"
   },
   {
     "id": "mwf-007",
@@ -449,7 +454,8 @@ const galleryItems = [
         "width": 1080,
         "url": "/images/memetic-warfare/the-discman-shield.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/the-discman-shield/"
   },
   {
     "id": "mwf-006",
@@ -525,7 +531,8 @@ const galleryItems = [
         "width": 1080,
         "url": "/images/memetic-warfare/flail-of-forgotten-passwords.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/flail-of-forgotten-passwords/"
   },
   {
     "id": "mwf-005",
@@ -601,7 +608,8 @@ const galleryItems = [
         "width": 1080,
         "url": "/images/memetic-warfare/the-vhs-greatsword.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/the-vhs-greatsword/"
   },
   {
     "id": "mwf-004",
@@ -677,7 +685,8 @@ const galleryItems = [
         "width": 1080,
         "url": "/images/memetic-warfare/the-pager-knuckle-dusters.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/the-pager-knuckle-dusters/"
   },
   {
     "id": "mwf-003",
@@ -753,7 +762,8 @@ const galleryItems = [
         "width": 1080,
         "url": "/images/memetic-warfare/the-keyboard-war-club.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/the-keyboard-war-club/"
   },
   {
     "id": "mwf-002",
@@ -829,7 +839,8 @@ const galleryItems = [
         "width": 1080,
         "url": "/images/memetic-warfare/the-blackberry-dagger.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/the-blackberry-dagger/"
   },
   {
     "id": "mwf-001",
@@ -905,7 +916,8 @@ const galleryItems = [
         "width": 1080,
         "url": "/images/memetic-warfare/the-aol-disc-throwing-stars.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/the-aol-disc-throwing-stars/"
   },
   {
     "id": "mwf-009",
@@ -981,7 +993,8 @@ const galleryItems = [
         "width": 1080,
         "url": "/images/memetic-warfare/the-wand-of-low-battery.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/the-wand-of-low-battery/"
   },
   {
     "id": "mwf-010",
@@ -1057,7 +1070,8 @@ const galleryItems = [
         "width": 1080,
         "url": "/images/memetic-warfare/the-bluetooth-longbow.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/the-bluetooth-longbow/"
   },
   {
     "id": "mwf-011",
@@ -1133,7 +1147,8 @@ const galleryItems = [
         "width": 1080,
         "url": "/images/memetic-warfare/the-spellbook-of-corrupted-files.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/the-spellbook-of-corrupted-files/"
   },
   {
     "id": "mwf-012",
@@ -1209,7 +1224,8 @@ const galleryItems = [
         "width": 1080,
         "url": "/images/memetic-warfare/the-webcam-crossbow.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/the-webcam-crossbow/"
   },
   {
     "id": "what-028",
@@ -1279,7 +1295,8 @@ const galleryItems = [
         "width": 941,
         "url": "/images/what-if/google-maps-x-tinder.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/google-maps-x-tinder/"
   },
   {
     "id": "what-027",
@@ -1358,7 +1375,8 @@ const galleryItems = [
         "width": 1672,
         "url": "/images/what-if/netflix-with-comments.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/netflix-with-comments/"
   },
   {
     "id": "vrg-001",
@@ -1434,7 +1452,8 @@ const galleryItems = [
         "width": 1054,
         "url": "/images/vrg-cards/elon-blacklabel.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/vrg-001/"
   },
   {
     "id": "vrg-002",
@@ -1506,7 +1525,8 @@ const galleryItems = [
         "width": 1024,
         "url": "/images/vrg-cards/dudufolio-blacklabel.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/vrg-002/"
   },
   {
     "id": "vrg-003",
@@ -1578,7 +1598,8 @@ const galleryItems = [
         "width": 927,
         "url": "/images/vrg-cards/0x45.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/vrg-003/"
   },
   {
     "id": "vrg-004",
@@ -1654,7 +1675,8 @@ const galleryItems = [
         "width": 1055,
         "url": "/images/vrg-cards/jason-blacklabel.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/vrg-004/"
   },
   {
     "id": "vrg-005",
@@ -1730,7 +1752,8 @@ const galleryItems = [
         "width": 1055,
         "url": "/images/vrg-cards/iampiet-blacklabel.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/vrg-005/"
   },
   {
     "id": "vrg-006",
@@ -1806,7 +1829,8 @@ const galleryItems = [
         "width": 1054,
         "url": "/images/vrg-cards/jovvvian-blacklabel.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/vrg-006/"
   },
   {
     "id": "vrg-007",
@@ -1878,7 +1902,8 @@ const galleryItems = [
         "width": 927,
         "url": "/images/vrg-cards/alex.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/vrg-007/"
   },
   {
     "id": "vrg-008",
@@ -1958,7 +1983,8 @@ const galleryItems = [
         "width": 1631,
         "url": "/images/vrg-cards/primeagen.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/vrg-008/"
   },
   {
     "id": "vrg-009",
@@ -2030,7 +2056,8 @@ const galleryItems = [
         "width": 927,
         "url": "/images/vrg-cards/bone.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/vrg-009/"
   },
   {
     "id": "vrg-010",
@@ -2102,7 +2129,8 @@ const galleryItems = [
         "width": 927,
         "url": "/images/vrg-cards/bruv.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/vrg-010/"
   },
   {
     "id": "vrg-011",
@@ -2174,7 +2202,8 @@ const galleryItems = [
         "width": 927,
         "url": "/images/vrg-cards/dudu.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/vrg-011/"
   },
   {
     "id": "vrg-012",
@@ -2250,7 +2279,8 @@ const galleryItems = [
         "width": 1536,
         "url": "/images/vrg-cards/elon-multi-card.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/vrg-012/"
   },
   {
     "id": "vrg-013",
@@ -2322,7 +2352,8 @@ const galleryItems = [
         "width": 927,
         "url": "/images/vrg-cards/eli.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/vrg-013/"
   },
   {
     "id": "vrg-014",
@@ -2394,7 +2425,8 @@ const galleryItems = [
         "width": 927,
         "url": "/images/vrg-cards/jean.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/vrg-014/"
   },
   {
     "id": "vrg-015",
@@ -2466,7 +2498,8 @@ const galleryItems = [
         "width": 927,
         "url": "/images/vrg-cards/jwon.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/vrg-015/"
   },
   {
     "id": "vrg-016",
@@ -2538,7 +2571,8 @@ const galleryItems = [
         "width": 927,
         "url": "/images/vrg-cards/piet.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/vrg-016/"
   },
   {
     "id": "vrg-018",
@@ -2610,7 +2644,8 @@ const galleryItems = [
         "width": 927,
         "url": "/images/vrg-cards/taoki.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/vrg-018/"
   },
   {
     "id": "vrg-019",
@@ -2682,7 +2717,8 @@ const galleryItems = [
         "width": 927,
         "url": "/images/vrg-cards/theo.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/vrg-019/"
   },
   {
     "id": "vrg-020",
@@ -2754,7 +2790,8 @@ const galleryItems = [
         "width": 927,
         "url": "/images/vrg-cards/yacine.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/vrg-020/"
   },
   {
     "id": "what-001",
@@ -2833,7 +2870,8 @@ const galleryItems = [
         "width": 1672,
         "url": "/images/what-if/AWS-by-Fisher-Price.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-001/"
   },
   {
     "id": "what-002",
@@ -2907,7 +2945,8 @@ const galleryItems = [
         "width": 1448,
         "url": "/images/what-if/Bank%20of%20Monopoly.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-002/"
   },
   {
     "id": "what-003",
@@ -2986,7 +3025,8 @@ const galleryItems = [
         "width": 1672,
         "url": "/images/what-if/Bloom-Price.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-003/"
   },
   {
     "id": "what-004",
@@ -3066,7 +3106,8 @@ const galleryItems = [
         "width": 1672,
         "url": "/images/what-if/CopilotX.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-004/"
   },
   {
     "id": "what-005",
@@ -3144,7 +3185,8 @@ const galleryItems = [
         "width": 1122,
         "url": "/images/what-if/DockerbyFisherPrice.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-005/"
   },
   {
     "id": "what-006",
@@ -3224,7 +3266,8 @@ const galleryItems = [
         "width": 1672,
         "url": "/images/what-if/Dollar%20Gucci.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-006/"
   },
   {
     "id": "what-007",
@@ -3300,7 +3343,8 @@ const galleryItems = [
         "width": 1254,
         "url": "/images/what-if/DownMarket.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-007/"
   },
   {
     "id": "what-008",
@@ -3380,7 +3424,8 @@ const galleryItems = [
         "width": 1672,
         "url": "/images/what-if/eDash.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-008/"
   },
   {
     "id": "what-009",
@@ -3458,7 +3503,8 @@ const galleryItems = [
         "width": 1536,
         "url": "/images/what-if/Fisher%20Fitbit.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-009/"
   },
   {
     "id": "what-010",
@@ -3541,7 +3587,8 @@ const galleryItems = [
         "width": 1672,
         "url": "/images/what-if/Fisher%20Price%20Analytics.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-010/"
   },
   {
     "id": "what-011",
@@ -3619,7 +3666,8 @@ const galleryItems = [
         "width": 1122,
         "url": "/images/what-if/GithubxFisherPrice.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-011/"
   },
   {
     "id": "what-012",
@@ -3699,7 +3747,8 @@ const galleryItems = [
         "width": 1672,
         "url": "/images/what-if/Google%20Health.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-012/"
   },
   {
     "id": "what-013",
@@ -3775,7 +3824,8 @@ const galleryItems = [
         "width": 1122,
         "url": "/images/what-if/GooglexNintendo.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-013/"
   },
   {
     "id": "what-014",
@@ -3855,7 +3905,8 @@ const galleryItems = [
         "width": 1672,
         "url": "/images/what-if/Magic%20DMV.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-014/"
   },
   {
     "id": "what-015",
@@ -3935,7 +3986,8 @@ const galleryItems = [
         "width": 1672,
         "url": "/images/what-if/Meme%20Creative%20Suite.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-015/"
   },
   {
     "id": "what-016",
@@ -4015,7 +4067,8 @@ const galleryItems = [
         "width": 1672,
         "url": "/images/what-if/MetaBusinessSuiteUsuabe.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-016/"
   },
   {
     "id": "what-017",
@@ -4091,7 +4144,8 @@ const galleryItems = [
         "width": 1448,
         "url": "/images/what-if/My%20First%20Defense%20Rocket.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-017/"
   },
   {
     "id": "what-018",
@@ -4171,7 +4225,8 @@ const galleryItems = [
         "width": 1672,
         "url": "/images/what-if/MyspaceBusinessSuite.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-018/"
   },
   {
     "id": "what-019",
@@ -4247,7 +4302,8 @@ const galleryItems = [
         "width": 1448,
         "url": "/images/what-if/RedditIn.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-019/"
   },
   {
     "id": "what-020",
@@ -4328,7 +4384,8 @@ const galleryItems = [
         "width": 1672,
         "url": "/images/what-if/Super%20Google%20Analytics.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-020/"
   },
   {
     "id": "what-021",
@@ -4408,7 +4465,8 @@ const galleryItems = [
         "width": 1672,
         "url": "/images/what-if/TACO.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-021/"
   },
   {
     "id": "what-022",
@@ -4489,7 +4547,8 @@ const galleryItems = [
         "width": 1672,
         "url": "/images/what-if/TinderIN.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-022/"
   },
   {
     "id": "what-023",
@@ -4569,7 +4628,8 @@ const galleryItems = [
         "width": 1672,
         "url": "/images/what-if/ToysRUsxPalantir.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-023/"
   },
   {
     "id": "what-024",
@@ -4645,7 +4705,8 @@ const galleryItems = [
         "width": 1448,
         "url": "/images/what-if/TurboxLego.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-024/"
   },
   {
     "id": "what-025",
@@ -4725,7 +4786,8 @@ const galleryItems = [
         "width": 1672,
         "url": "/images/what-if/WikiFlex.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-025/"
   },
   {
     "id": "what-026",
@@ -4806,7 +4868,8 @@ const galleryItems = [
         "width": 1672,
         "url": "/images/what-if/Xbox-Fisher-Price.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/what-026/"
   },
   {
     "id": "misc-001",
@@ -4881,7 +4944,8 @@ const galleryItems = [
         "width": 1448,
         "url": "/images/misc-gens/anthropic-mow.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/misc-001/"
   },
   {
     "id": "misc-002",
@@ -4956,7 +5020,8 @@ const galleryItems = [
         "width": 1448,
         "url": "/images/misc-gens/dj-cows-open-dojo-ferarri-mockup.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/misc-002/"
   },
   {
     "id": "misc-003",
@@ -5026,7 +5091,8 @@ const galleryItems = [
         "width": 1024,
         "url": "/images/misc-gens/dyer-poster.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/misc-003/"
   },
   {
     "id": "misc-004",
@@ -5103,7 +5169,8 @@ const galleryItems = [
         "width": 1448,
         "url": "/images/misc-gens/Linnect%20Solutions%20Branding%20Page.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/misc-004/"
   },
   {
     "id": "misc-005",
@@ -5178,7 +5245,8 @@ const galleryItems = [
         "width": 1122,
         "url": "/images/misc-gens/Local%20Lobby%20Legends.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/misc-005/"
   },
   {
     "id": "misc-006",
@@ -5252,7 +5320,8 @@ const galleryItems = [
         "width": 1055,
         "url": "/images/misc-gens/nashville-poster.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/misc-006/"
   },
   {
     "id": "misc-007",
@@ -5327,7 +5396,8 @@ const galleryItems = [
         "width": 1122,
         "url": "/images/misc-gens/one%20foot%20in%20one.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/misc-007/"
   },
   {
     "id": "misc-008",
@@ -5403,7 +5473,8 @@ const galleryItems = [
         "width": 1055,
         "url": "/images/misc-gens/panoptic-branding%20page-1.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/misc-008/"
   },
   {
     "id": "misc-009",
@@ -5479,7 +5550,8 @@ const galleryItems = [
         "width": 1055,
         "url": "/images/misc-gens/panoptic-branding%20page-2.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/misc-009/"
   },
   {
     "id": "misc-010",
@@ -5555,7 +5627,8 @@ const galleryItems = [
         "width": 1055,
         "url": "/images/misc-gens/panoptic-branding%20page-3.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/misc-010/"
   },
   {
     "id": "misc-011",
@@ -5631,7 +5704,8 @@ const galleryItems = [
         "width": 1055,
         "url": "/images/misc-gens/panoptic-branding%20page-4.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/misc-011/"
   },
   {
     "id": "misc-012",
@@ -5707,7 +5781,8 @@ const galleryItems = [
         "width": 1055,
         "url": "/images/misc-gens/panoptic-branding%20page-5.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/misc-012/"
   },
   {
     "id": "misc-013",
@@ -5783,7 +5858,8 @@ const galleryItems = [
         "width": 1055,
         "url": "/images/misc-gens/panoptic-branding%20page-6.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/misc-013/"
   },
   {
     "id": "misc-014",
@@ -5857,7 +5933,8 @@ const galleryItems = [
         "width": 1122,
         "url": "/images/misc-gens/trenton-poster.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/misc-014/"
   },
   {
     "id": "misc-015",
@@ -5927,7 +6004,8 @@ const galleryItems = [
         "width": 1024,
         "url": "/images/misc-gens/unioncity-poster.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/misc-015/"
   },
   {
     "id": "misc-016",
@@ -6002,7 +6080,8 @@ const galleryItems = [
         "width": 1448,
         "url": "/images/misc-gens/windows-98-chatgpt.webp"
       }
-    ]
+    ],
+    "href": "/artifacts/misc-016/"
   }
 ];
 const galleryWidths = [320,480,640,768,900,1024,1600];

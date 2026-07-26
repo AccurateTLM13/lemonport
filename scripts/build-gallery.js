@@ -71,6 +71,8 @@ function publicProject(project) {
 
   if (project.href) {
     publicData.href = project.href;
+  } else if (project.slug) {
+    publicData.href = `/artifacts/${encodeURIComponent(project.slug)}/`;
   }
 
   return publicData;

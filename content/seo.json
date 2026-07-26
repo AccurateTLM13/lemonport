@@ -304,5 +304,22 @@
     "twitterImage": "/images/og/lemonteed-og-home-final.webp",
     "canonicalUrl": "https://lemonteed.com/ai-access/",
     "updatedAt": "2026-07-16T20:24:33.951Z"
+  },
+  {
+    "key": "free-source",
+    "label": "FreeSource",
+    "htmlPath": "free-source/index.html",
+    "title": "FreeSource — Use it for whatever you want.",
+    "description": "FreeSource is a radically simple license: use the work for whatever you want, for free. No permission. No payment. No strings.",
+    "ogTitle": "FreeSource — Use it for whatever you want.",
+    "ogDescription": "No permission. No payment. No strings. A radically simple license for creators who genuinely mean free.",
+    "ogImage": "/images/og/lemonteed-og-home-final.webp",
+    "ogImageWidth": 1200,
+    "ogImageHeight": 630,
+    "twitterTitle": "FreeSource — Use it for whatever you want.",
+    "twitterDescription": "No permission. No payment. No strings. A radically simple license for creators who genuinely mean free.",
+    "twitterImage": "/images/og/lemonteed-og-home-final.webp",
+    "canonicalUrl": "https://lemonteed.com/free-source/",
+    "updatedAt": "2026-07-26T01:23:00.000Z"
   }
 ]

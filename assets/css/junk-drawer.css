@@ -625,7 +625,7 @@
 
 .junk-drawer-card__visual {
   display: grid;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   min-height: 0;
   margin: -18px -18px 16px -18px;
   padding: 0;
@@ -804,7 +804,7 @@
   gap: 12px 16px;
   align-items: start;
   width: 100%;
-  max-width: 620px;
+  max-width: 560px;
   padding: 14px;
   border-style: dashed;
   background: #efede4;
@@ -950,7 +950,7 @@
   }
 
   .junk-drawer-compartment--other {
-    grid-template-columns: minmax(170px, 0.28fr) minmax(0, 0.72fr);
+    grid-template-columns: minmax(170px, 0.28fr) minmax(0, 1fr);
   }
 
   .junk-drawer-compartment--text {

@@ -66,6 +66,7 @@ npx wrangler dev --local --port 8788 --config mdr-api/wrangler.toml
 | `node scripts/build-lemonteed-fm.js` | Rebuild Lemonteed FM data |
 | `node scripts/build-mdr.js` | Rebuild Million Dollar Receipt config |
 | `node scripts/build-mdr-stats.js` | Rebuild Million Dollar Receipt stats |
+| `node scripts/build-artifact-pages.js` | Generate static pages for all published artifacts + update sitemap |
 | `node scripts/build-junk-drawer.js` | Rebuild external Junk Drawer cards |
 | `node scripts/promote-operator-mutation.js` | Promote active operator log phase |
 | `node scripts/install-mdr-assets.js` | Install responsive assets for MDR |
@@ -144,3 +145,18 @@ To support concurrent work streams and seamless handoffs between agent runs:
   * **API routes added to `studio-server.js`:** `GET /api/seo`, `PATCH /api/seo`, `POST /api/seo/og-image`.
 * **Codebase State:** Fully implemented and validated. `content-validation.js` passes. `build-seo.js --dry-run` correctly identifies pages needing patching without touching files.
 * **Next steps:** None. The SEO manager is a complete, standalone tool.
+
+### Artifact Record System (Completed)
+
+* **Completed:**
+  * **`templates/artifact-page.html`:** HTML template for individual artifact pages with breadcrumbs, full-res responsive image, artifact record panel (category, series, date, description, origin, danger level, tags, tools), related artifact `<a>` links, prev/next/random navigation, and JSON-LD `CreativeWork` structured data.
+  * **`scripts/build-artifact-pages.js`:** Build script that reads `content/projects.json` and generates `artifacts/<slug>/index.html` for every published artifact. Also updates `sitemap.xml` with artifact entries and generates `image-sitemap.xml` with image metadata. Supports `--dry-run` and `--clean` flags.
+  * **`assets/css/artifact-page.css`:** Standalone CSS for artifact pages matching the existing design system (Courier New monospace, #f4f2ea panel, #d7d3c8 dividers, #11100d dark buttons).
+  * **Gallery card links:** `build-gallery.js` now injects `href: "/artifacts/<slug>/"` for all artifacts with a slug. Gallery cards render as `<a>` tags instead of `<button>` elements, making them crawlable.
+  * **Related items as links:** Lightbox related-item buttons changed from `<button>` to `<a>` elements with real hrefs, with `preventDefault` for in-lightbox navigation.
+  * **Sitemap:** Expanded from 23 to 103 URLs (23 original pages + 80 artifact pages). Added `/free-source/`.
+  * **Image sitemap:** New `image-sitemap.xml` with image location, caption, and title for all 80 artifacts. Referenced from `robots.txt`.
+  * **SEO registry:** Added `free-source` to `content/seo.json`.
+  * **Audit inventory:** `site-completion-audit.js` now dynamically reads artifact pages from `content/projects.json` and operator-log post directories instead of relying on a hardcoded list. Added `free-source/index.html`.
+* **Codebase State:** All 80 artifact pages generated. `content-validation.js` passes. `media-health.js` reports 0 missing referenced images. Gallery data rebuilt with hrefs. Sitemap and image sitemap valid.
+* **Next steps:** None. To regenerate after adding/editing artifacts, run `node scripts/build-artifact-pages.js`.

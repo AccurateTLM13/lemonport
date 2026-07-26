@@ -30,3 +30,4 @@ Disallow: /scripts/
 License: https://lemonteed.com/ai-license
 AI-Access: https://lemonteed.com/ai-access
 Sitemap: https://lemonteed.com/sitemap.xml
+Sitemap: https://lemonteed.com/image-sitemap.xml

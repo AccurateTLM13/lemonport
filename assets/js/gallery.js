@@ -278,10 +278,10 @@
     list.className = "artifact-related__list";
 
     relatedItems.forEach((relatedItem) => {
-      const button = document.createElement("button");
-      button.className = "artifact-related__button";
-      button.type = "button";
-      button.dataset.relatedId = relatedItem.id;
+      const control = document.createElement("a");
+      control.className = "artifact-related__button";
+      control.href = relatedItem.href || `/artifacts/${encodeURIComponent(relatedItem.id)}/`;
+      control.dataset.relatedId = relatedItem.id;
 
       const thumbnail = relatedThumbnail(relatedItem);
 
@@ -291,13 +291,13 @@
         img.alt = "";
         img.loading = "lazy";
         img.decoding = "async";
-        button.append(img);
+        control.append(img);
       }
 
       const title = document.createElement("span");
       title.textContent = relatedItem.title;
-      button.append(title);
-      list.append(button);
+      control.append(title);
+      list.append(control);
     });
 
     section.append(list);
@@ -728,6 +728,11 @@
         return;
       }
 
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+        return;
+      }
+
+      event.preventDefault();
       openItem(getItemById(button.dataset.relatedId));
     });
   }

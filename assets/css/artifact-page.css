@@ -1,0 +1,302 @@
+/* ─────────────────────────────────────────────────────────
+   artifact-page.css
+   Styles for individual artifact record pages.
+   Follows the design system from style.css.
+   ───────────────────────────────────────────────────────── */
+
+.artifact-page {
+  min-height: 100vh;
+  padding: var(--page-gutter);
+  background: var(--bg);
+}
+
+/* ─── Breadcrumbs ────────────────────────────────────────── */
+
+.artifact-breadcrumbs {
+  max-width: var(--container-lg);
+  margin: 0 auto var(--space-6);
+  padding: var(--space-4) 0;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.artifact-breadcrumbs ol {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.artifact-breadcrumbs li {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--muted);
+}
+
+.artifact-breadcrumbs li:not(:last-child)::after {
+  content: "→";
+  color: var(--hairline);
+}
+
+.artifact-breadcrumbs a {
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 140ms ease;
+}
+
+.artifact-breadcrumbs a:hover {
+  color: var(--focus);
+}
+
+.artifact-breadcrumbs li[aria-current="page"] {
+  color: var(--ink);
+}
+
+/* ─── Layout ─────────────────────────────────────────────── */
+
+.artifact-layout {
+  display: grid;
+  max-width: var(--container-lg);
+  margin: 0 auto;
+  gap: var(--space-8);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 900px) {
+  .artifact-layout {
+    grid-template-columns: minmax(0, 3fr) minmax(280px, 1fr);
+    align-items: start;
+  }
+}
+
+/* ─── Hero image ─────────────────────────────────────────── */
+
+.artifact-hero {
+  margin: 0;
+}
+
+.artifact-hero__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card);
+  background: var(--panel);
+  box-shadow: 0 4px 20px rgb(0 0 0 / 0.08);
+}
+
+/* ─── Detail panel ───────────────────────────────────────── */
+
+.artifact-detail {
+  position: sticky;
+  top: var(--space-6);
+  padding: 14px;
+  border: 1px solid #c9c6bc;
+  color: #252522;
+  background: #f4f2ea;
+  box-shadow: 0 12px 34px rgb(0 0 0 / 0.12);
+  font-family: "Courier New", Courier, monospace;
+}
+
+.artifact-detail__eyebrow {
+  margin: 0 0 8px;
+  color: #77736a;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.artifact-detail__title {
+  margin: 0 0 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #d7d3c8;
+  font-size: 18px;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+/* ─── Record fields (page variant) ───────────────────────── */
+
+.artifact-record--page {
+  display: grid;
+  margin: 0;
+  gap: 10px;
+}
+
+.artifact-record--page .artifact-record__field {
+  display: grid;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #d7d3c8;
+  gap: 4px;
+}
+
+.artifact-record--page .artifact-record__field dt {
+  color: #77736a;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.artifact-record--page .artifact-record__field dd {
+  margin: 0;
+  color: #292928;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* ─── VRG Vault link ─────────────────────────────────────── */
+
+.artifact-detail .artifact-record__vault-link {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 12px;
+  border: 1px solid #11100d;
+  color: #f7f4ea;
+  background: #11100d;
+  cursor: pointer;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color 140ms ease, transform 140ms ease;
+}
+
+.artifact-detail .artifact-record__vault-link:hover {
+  background: #2a2826;
+  transform: translateY(-1px);
+}
+
+/* ─── Related artifacts (page variant) ───────────────────── */
+
+.artifact-related--page {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid #d7d3c8;
+}
+
+.artifact-related--page h2 {
+  margin: 0 0 10px;
+  color: #77736a;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.artifact-related__link {
+  display: grid;
+  width: 100%;
+  min-height: 42px;
+  padding: 6px;
+  border: 1px solid #d0ccc0;
+  color: #292928;
+  background: transparent;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: left;
+  text-decoration: none;
+  text-transform: uppercase;
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  transition: border-color 140ms ease, background-color 140ms ease;
+}
+
+.artifact-related__link:hover {
+  border-color: #a9a59a;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.artifact-related__link img {
+  width: 34px;
+  height: 34px;
+  border-radius: 2px;
+  object-fit: cover;
+}
+
+/* ─── Navigation ─────────────────────────────────────────── */
+
+.artifact-nav {
+  display: grid;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid #d7d3c8;
+  gap: 8px;
+}
+
+.artifact-nav__link {
+  display: block;
+  padding: 8px 10px;
+  border: 1px solid #d0ccc0;
+  color: #292928;
+  background: transparent;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: border-color 140ms ease, background-color 140ms ease;
+}
+
+.artifact-nav__link:hover {
+  border-color: #a9a59a;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.artifact-nav__link--random {
+  border-color: #11100d;
+  color: #f7f4ea;
+  background: #11100d;
+}
+
+.artifact-nav__link--random:hover {
+  background: #2a2826;
+}
+
+/* ─── Back link ──────────────────────────────────────────── */
+
+.artifact-back {
+  display: block;
+  margin-top: 14px;
+  color: #77736a;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 140ms ease;
+}
+
+.artifact-back:hover {
+  color: var(--ink);
+}
+
+/* ─── Mobile adjustments ─────────────────────────────────── */
+
+@media (max-width: 899px) {
+  .artifact-detail {
+    position: static;
+  }
+
+  .artifact-hero__image {
+    border-radius: var(--radius-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .artifact-detail__title {
+    font-size: 16px;
+  }
+}

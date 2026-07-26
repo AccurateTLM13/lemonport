@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCB0LW648K"></script>
+  <script src="/assets/js/analytics.js" defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{TITLE}} | Lemonteed</title>
+    <meta name="description" content="{{META_DESCRIPTION}}">
+    <link rel="canonical" href="https://lemonteed.com/artifacts/{{SLUG}}/">
+    <meta property="og:title" content="{{TITLE}} | Lemonteed">
+    <meta property="og:description" content="{{OG_DESCRIPTION}}">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://lemonteed.com/artifacts/{{SLUG}}/">
+    <meta property="og:image" content="https://lemonteed.com{{OG_IMAGE}}">
+    <meta property="og:image:secure_url" content="https://lemonteed.com{{OG_IMAGE}}">
+    <meta property="og:image:type" content="image/webp">
+    <meta property="og:image:width" content="{{OG_WIDTH}}">
+    <meta property="og:image:height" content="{{OG_HEIGHT}}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{TITLE}} | Lemonteed">
+    <meta name="twitter:description" content="{{TWITTER_DESCRIPTION}}">
+    <meta name="twitter:image" content="https://lemonteed.com{{OG_IMAGE}}">
+    <link rel="icon" href="/images/favicons/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="/assets/css/style.css?v=9">
+    <link rel="stylesheet" href="/assets/css/artifact-page.css?v=1">
+    <script type="application/ld+json">
+{{JSON_LD}}
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#artifact-main">Skip to artifact</a>
+    <div class="artifact-page">
+      <nav class="artifact-breadcrumbs" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="/">Lemonteed</a></li>
+          <li><a href="{{CATEGORY_PATH}}">{{CATEGORY_LABEL}}</a></li>
+          <li aria-current="page">{{TITLE}}</li>
+        </ol>
+      </nav>
+
+      <main id="artifact-main" class="artifact-layout">
+        <figure class="artifact-hero">
+          <img
+            class="artifact-hero__image"
+            src="{{IMAGE_LARGE}}"
+            srcset="{{SRCSET}}"
+            sizes="(max-width: 760px) 100vw, (max-width: 1200px) 60vw, 720px"
+            alt="{{ALT}}"
+            width="{{WIDTH}}"
+            height="{{HEIGHT}}"
+            loading="eager"
+            decoding="async"
+          >
+        </figure>
+
+        <article class="artifact-detail">
+          <p class="artifact-detail__eyebrow">Artifact Record</p>
+          <h1 class="artifact-detail__title">{{TITLE}}</h1>
+
+          <dl class="artifact-record artifact-record--page">
+{{RECORD_FIELDS}}
+          </dl>
+
+{{VAULT_LINK}}
+{{RELATED_HTML}}
+
+          <nav class="artifact-nav" aria-label="Artifact navigation">
+{{PREV_LINK}}
+{{NEXT_LINK}}
+            <a class="artifact-nav__link artifact-nav__link--random" href="/archive/#random" id="random-artifact-link">Random Artifact</a>
+          </nav>
+
+          <a class="artifact-back" href="{{CATEGORY_PATH}}">← Back to {{CATEGORY_LABEL}}</a>
+        </article>
+      </main>
+    </div>
+  </body>
+</html>

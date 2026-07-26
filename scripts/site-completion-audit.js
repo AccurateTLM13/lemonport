@@ -48,8 +48,41 @@ const PUBLIC_HTML_GLOBS = [
   "million-dollar-receipt/index.html",
   "million-dollar-receipt/receipt/index.html",
   "operator-log/index.html",
+  "free-source/index.html",
   "hashbrownpro/wafflehousepro.html"
 ];
+
+/* Dynamically add generated artifact pages from content/projects.json */
+try {
+  const projectsPath = path.join(root, "content", "projects.json");
+  if (fs.existsSync(projectsPath)) {
+    const projects = JSON.parse(fs.readFileSync(projectsPath, "utf8"));
+    projects
+      .filter((p) => p.visible !== false && p.status === "Published" && p.slug)
+      .forEach((p) => {
+        PUBLIC_HTML_GLOBS.push(`artifacts/${encodeURIComponent(p.slug)}/index.html`);
+      });
+  }
+} catch {
+  /* continue with static list if projects.json is unavailable */
+}
+
+/* Dynamically add operator-log post pages */
+try {
+  const opLogDir = path.join(root, "operator-log");
+  if (fs.existsSync(opLogDir)) {
+    fs.readdirSync(opLogDir, { withFileTypes: true })
+      .filter((d) => d.isDirectory())
+      .forEach((d) => {
+        const postIndex = path.join(opLogDir, d.name, "index.html");
+        if (fs.existsSync(postIndex)) {
+          PUBLIC_HTML_GLOBS.push(`operator-log/${d.name}/index.html`);
+        }
+      });
+  }
+} catch {
+  /* continue without operator-log posts */
+}
 
 const findings = {
   critical: [],

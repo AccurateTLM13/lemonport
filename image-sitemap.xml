@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://lemonteed.com/artifacts/dario-amodei/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/vrg-cards/dario.webp</image:loc>
+      <image:caption>A standard VRG founders card for Dario Amodei, separate from the Black Label variant and focused on the core collectible card format.</image:caption>
+      <image:title>Dario Amodei</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/sam-altman/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/vrg-cards/samaltman.webp</image:loc>
+      <image:caption>A standard VRG founders card for Sam Altman, separate from the Black Label variant and focused on the core collectible card format.</image:caption>
+      <image:title>Sam Altman</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/steve-jobs/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/vrg-cards/steve-jobs.webp</image:loc>
+      <image:caption>A standard VRG founders card for Steve Jobs, separate from the Black Label variant and focused on the core collectible card format.</image:caption>
+      <image:title>Steve Jobs</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/hashbrown-pro-from-waffle-house/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/hashbrown-pro-from-waffle-house.webp</image:loc>
+      <image:caption>What if Waffle House's Website was designed by Apple</image:caption>
+      <image:title>Hashbrown Pro from Waffle House</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/tinfoil-palantir-bucket-hat/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/tinfoil-palantir-bucket-hat.webp</image:loc>
+      <image:caption>Premium 100% USA Grade Aluminum Tinfoil infused Bucket Hat from Palantir. Perfect for that Palantir conspiracy theorist loved one. Arrives just in time for Christmas 2028.</image:caption>
+      <image:title>Tinfoil Palantir Bucket Hat</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/the-tamagotchi-pendant-of-doom/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/memetic-warfare/the-tamagotchi-pendant-of-doom.webp</image:loc>
+      <image:caption>A grimy pink virtual pet encased in rope, beads, and ritual bindings. Worn around the neck like a cursed charm, it grows stronger the longer you neglect it.</image:caption>
+      <image:title>The Tamagotchi Pendant Of Doom</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/the-discman-shield/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/memetic-warfare/the-discman-shield.webp</image:loc>
+      <image:caption>A silver portable CD player reinforced with shattered compact discs around the rim. Lightweight, reflective, and fragile in the most dramatic way possible — one solid hit and it skips forever.</image:caption>
+      <image:title>The Discman Shield</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/flail-of-forgotten-passwords/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/memetic-warfare/flail-of-forgotten-passwords.webp</image:loc>
+      <image:caption>A crude wooden handle wrapped in fraying twine, chained to a cluster of obsolete USB drives, dongles, and charging bricks. Each swing carries the spiritual weight of every login you swore you wrote down somewhere.</image:caption>
+      <image:title>Flail Of Forgotten Passwords</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/the-vhs-greatsword/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/memetic-warfare/the-vhs-greatsword.webp</image:loc>
+      <image:caption>A massive fantasy blade built from stacked VHS tapes, duct tape, and dangling magnetic ribbon. Heavy, impractical, and emotionally devastating to anyone who remembers rewinding before returning.</image:caption>
+      <image:title>The VHS Greatsword</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/the-pager-knuckle-dusters/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/memetic-warfare/the-pager-knuckle-dusters.webp</image:loc>
+      <image:caption>A set of brass-knuckle-style fist weapons reinforced with old pagers across the knuckle bar. Before impact, they vibrate one last time — a tiny alert from violence itself.</image:caption>
+      <image:title>The Pager Knuckle Dusters</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/the-keyboard-war-club/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/memetic-warfare/the-keyboard-war-club.webp</image:loc>
+      <image:caption>A battered beige keyboard strapped to a wooden handle with rusted bands, rope, and nails. The missing keys suggest years of battle, but CTRL, ALT, and DEL remain untouched like sacred runes of emergency reset.</image:caption>
+      <image:title>The Keyboard War Club</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/the-blackberry-dagger/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/memetic-warfare/the-blackberry-dagger.webp</image:loc>
+      <image:caption>A corporate assassin’s relic: a BlackBerry handset forms the grip, with its tiny keyboard still intact and a sharp metal blade extending from the base. Built for silent calendar invites and hostile takeovers.</image:caption>
+      <image:title>The Blackberry Dagger</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/the-aol-disc-throwing-stars/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/memetic-warfare/the-aol-disc-throwing-stars.webp</image:loc>
+      <image:caption>Sharpened trial CDs cut into iridescent shuriken, still flashing promises of hundreds of free internet hours. Cheap, plentiful, and deadly to both enemies and childhood nostalgia.</image:caption>
+      <image:title>The AOL Disc Throwing Stars</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/the-wand-of-low-battery/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/memetic-warfare/the-wand-of-low-battery.webp</image:loc>
+      <image:caption>A cracked smartphone lashed to a carved wooden wand, screen permanently stuck at 1%. Used by techno-mages to cast panic spells, dim blue light, and summon the ancient phrase: &quot;Does anyone have a charger?&quot;</image:caption>
+      <image:title>The Wand of Low Battery</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/the-bluetooth-longbow/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/memetic-warfare/the-bluetooth-longbow.webp</image:loc>
+      <image:caption>A wooden archer's bow reinforced with old Bluetooth headsets, dangling earbuds, and frayed charging cables as string wraps. Its arrows never fly exactly where expected, but they do pair with nearby enemies without permission.</image:caption>
+      <image:title>The Bluetooth Longbow</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/the-spellbook-of-corrupted-files/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/memetic-warfare/the-spellbook-of-corrupted-files.webp</image:loc>
+      <image:caption>A chunky external hard drive bound inside a leather spellbook cover, cables hanging out like forbidden bookmarks. Mages open it to cast lost documents, glitched memories, and one devastating spell called &quot;Final_Final_REAL_v7.&quot;</image:caption>
+      <image:title>The Spellbook of Corrupted Files</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/the-webcam-crossbow/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/memetic-warfare/the-webcam-crossbow.webp</image:loc>
+      <image:caption>A compact crossbow built from webcam mounts, laptop hinges, and old conference-call cameras. Archers use it for surveillance shots, cursed zoom-ins, and precision attacks that somehow always happen while muted.</image:caption>
+      <image:title>The Webcam Crossbow</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/google-maps-x-tinder/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/google-maps-x-tinder.webp</image:loc>
+      <image:caption>What if Google Maps integrated with Tinder allowing you connect on the road?</image:caption>
+      <image:title>Google Maps x Tinder</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/netflix-with-comments/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/netflix-with-comments.webp</image:loc>
+      <image:caption>What if Netflix had comments?</image:caption>
+      <image:title>Netflix With Comments</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/vrg-001/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/vrg-cards/elon-blacklabel.webp</image:loc>
+      <image:caption>A premium Black Label founder-style card for Elon Musk, using dark metallic framing, cinematic portrait treatment, and collectible-grade tech founder energy.</image:caption>
+      <image:title>Elon Musk Black Label</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/vrg-002/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/vrg-cards/dudufolio-blacklabel.webp</image:loc>
+      <image:caption>A Black Label VRG card for Dudufolio, built with premium creator-card styling, dark framing, and polished internet-native collector energy.</image:caption>
+      <image:title>Dudufolio Black Label</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/vrg-003/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/vrg-cards/0x45.webp</image:loc>
+      <image:caption>A VRG creator card for 0x45, designed like a high-end digital collectible with social identity, rarity, and internet lore baked into the frame.</image:caption>
+      <image:title>0x45</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/vrg-004/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/vrg-cards/jason-blacklabel.webp</image:loc>
+      <image:caption>A premium Black Label card for Jason Levin, styled as a founder/creator collectible with sharp contrast, dark luxury framing, and social-era card culture.</image:caption>
+      <image:title>Jason Levin Black Label</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/vrg-005/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/vrg-cards/iampiet-blacklabel.webp</image:loc>
+      <image:caption>A Black Label VRG card for Piet, using the darker premium treatment from the creator-card series with refined collector presentation.</image:caption>
+      <image:title>Piet Black Label</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/vrg-006/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/vrg-cards/jovvvian-blacklabel.webp</image:loc>
+      <image:caption>A Black Label VRG card for Jovvvian, positioned as a polished internet creator collectible with dramatic framing and premium card-shop energy.</image:caption>
+      <image:title>Jovvvian Black Label</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/vrg-007/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/vrg-cards/alex.webp</image:loc>
+      <image:caption>A VRG creator card for Alex, part of the internet-native card experiment turning online personalities into collectible-grade visual artifacts.</image:caption>
+      <image:title>Alex</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/vrg-008/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/vrg-cards/primeagen.webp</image:loc>
+      <image:caption>A VRG card for The Primeagen, presented with creator-culture swagger, developer-world energy, and collectible sports-card composition.</image:caption>
+      <image:title>The Primeagen</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/vrg-009/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/vrg-cards/bone.webp</image:loc>
+      <image:caption>A VRG creator card for Bone, styled as part of the social-card lineup where handles, personas, and internet lore become collectible objects.</image:caption>
+      <image:title>Bone</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/vrg-010/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/vrg-cards/bruv.webp</image:loc>
+      <image:caption>A VRG creator card for Bruv, built around meme-adjacent creator identity and premium collectible card presentation.</image:caption>
+      <image:title>Bruv</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/vrg-011/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/vrg-cards/dudu.webp</image:loc>
+      <image:caption>A VRG creator card for Dudu, continuing the internet-card system with bold personality framing and digital collector aesthetics.</image:caption>
+      <image:title>Dudu</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/vrg-012/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/vrg-cards/elon-multi-card.webp</image:loc>
+      <image:caption>A multi-card Elon Musk VRG composition exploring variations of the founder-card format, arranged like a premium collector reveal.</image:caption>
+      <image:title>Elon's Multi Cards</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/vrg-013/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/vrg-cards/eli.webp</image:loc>
+      <image:caption>A VRG creator card for Eli, part of the broader experiment in turning internet personalities into polished fictional trading cards.</image:caption>
+      <image:title>Eli</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/vrg-014/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/vrg-cards/jean.webp</image:loc>
+      <image:caption>A VRG creator card for Jean, using the series format to package social identity as a collectible visual artifact.</image:caption>
+      <image:title>Jean</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/vrg-015/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/vrg-cards/jwon.webp</image:loc>
+      <image:caption>A VRG creator card for Jwon, designed as an internet-native collectible with clean card structure and persona-forward presentation.</image:caption>
+      <image:title>Jwon</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/vrg-016/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/vrg-cards/piet.webp</image:loc>
+      <image:caption>A standard VRG creator card for Piet, separate from the Black Label variant and focused on the core collectible card format.</image:caption>
+      <image:title>Piet</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/vrg-018/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/vrg-cards/taoki.webp</image:loc>
+      <image:caption>A VRG creator card for Taoki, framed as part of the fictional Vibe Rating &amp; Grading collectible universe.</image:caption>
+      <image:title>Taoki</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/vrg-019/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/vrg-cards/theo.webp</image:loc>
+      <image:caption>A VRG creator card for Theo, connecting dev-culture personality, product-world context, and premium collectible design language.</image:caption>
+      <image:title>Theo</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/vrg-020/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/vrg-cards/yacine.webp</image:loc>
+      <image:caption>A VRG creator card for Yacine, built around internet founder/creator mythology and the polished VRG card treatment.</image:caption>
+      <image:title>Yacine</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-001/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/AWS-by-Fisher-Price.webp</image:loc>
+      <image:caption>A Fisher-Price-style AWS dashboard that turns cloud infrastructure into chunky toy blocks, bright service cards, and playful enterprise chaos.</image:caption>
+      <image:title>AWS By Fisher Price</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-002/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/Bank%20of%20Monopoly.webp</image:loc>
+      <image:caption>A banking interface imagined through Monopoly logic, where accounts, property, rent, and fake-rich board game energy collide in one financial fever dream.</image:caption>
+      <image:title>Bank Of Monopoly</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-003/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/Bloom-Price.webp</image:loc>
+      <image:caption>Bloomberg Terminal rebuilt with Fisher-Price energy: serious market data forced through oversized buttons, toy-like charts, and cheerful financial panic.</image:caption>
+      <image:title>Bloom Price</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-004/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/CopilotX.webp</image:loc>
+      <image:caption>A reimagined coding assistant interface that pushes Copilot into a sharper, more theatrical product universe built around AI-powered dev flow.</image:caption>
+      <image:title>CopilotX</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-005/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/DockerbyFisherPrice.webp</image:loc>
+      <image:caption>Docker redesigned as a Fisher-Price toy system, turning containers, images, and deploy buttons into bright blocks for cloud toddlers with root access.</image:caption>
+      <image:title>DockerbyFisherPrice</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-006/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/Dollar%20Gucci.webp</image:loc>
+      <image:caption>A luxury retail swap where bargain-store logic crashes into Gucci aesthetics, creating discount-bin opulence with designer-level attitude.</image:caption>
+      <image:title>Dollar Gucci</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-007/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/DownMarket.webp</image:loc>
+      <image:caption>Downtime detection visualized like a stock market ticker, turning outages, incidents, and service health into Wall Street-flavored operational drama.</image:caption>
+      <image:title>DownMarket</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-008/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/eDash.webp</image:loc>
+      <image:caption>An eBay-style dashboard concept sharpened into a cleaner product experience, mixing marketplace energy with a more deliberate interface rhythm.</image:caption>
+      <image:title>EDash</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-009/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/Fisher%20Fitbit.webp</image:loc>
+      <image:caption>Fitbit translated through Fisher-Price aesthetics, turning health tracking into bright toy-like modules, chunky stats, and playful wellness data.</image:caption>
+      <image:title>Fisher Fitbit</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-010/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/Fisher%20Price%20Analytics.webp</image:loc>
+      <image:caption>Google Analytics reimagined as a Fisher-Price learning toy, where traffic, conversions, and dashboards become colorful plastic metrics for grown-up toddlers.</image:caption>
+      <image:title>Fisher Price Analytics</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-011/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/GithubxFisherPrice.webp</image:loc>
+      <image:caption>GitHub rebuilt with Fisher-Price styling, transforming repositories, commits, and pull requests into chunky toy panels for developers in goblin mode.</image:caption>
+      <image:title>GithubxFisherPrice</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-012/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/Google%20Health.webp</image:loc>
+      <image:caption>Apple Health imagined through a Google product lens: cleaner cards, brighter data surfaces, and a more search-driven approach to personal health metrics.</image:caption>
+      <image:title>Google Health</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-013/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/GooglexNintendo.webp</image:loc>
+      <image:caption>Google Analytics rebuilt as a Nintendo-inspired game world, where website traffic becomes levels, events become power-ups, and reporting turns into play.</image:caption>
+      <image:title>GooglexNintendo</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-014/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/Magic%20DMV.webp</image:loc>
+      <image:caption>The DMV redesigned as a Disney-owned experience, turning paperwork, lines, and bureaucratic dread into a suspiciously magical digital queue.</image:caption>
+      <image:title>Magic DMV</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-015/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/Meme%20Creative%20Suite.webp</image:loc>
+      <image:caption>A meme-first creative suite concept where design tools, templates, and internet-native chaos are packaged like serious software for unserious people.</image:caption>
+      <image:title>Meme Creative Suite</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-016/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/MetaBusinessSuiteUsuabe.webp</image:loc>
+      <image:caption>Meta Business Suite redesigned to actually feel usable, with clearer content performance, simpler controls, and less dashboard punishment.</image:caption>
+      <image:title>MetaBusinessSuiteUsuabe</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-017/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/My%20First%20Defense%20Rocket.webp</image:loc>
+      <image:caption>A defense-tech rocket concept filtered through Fisher-Price toy language, turning military hardware into a disturbingly cheerful beginner set.</image:caption>
+      <image:title>My First Defense Rocket</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-018/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/MyspaceBusinessSuite.webp</image:loc>
+      <image:caption>Meta Business Suite rebuilt with MySpace nostalgia, centered around Top 8-style social ranking, profile energy, and early-internet business chaos.</image:caption>
+      <image:title>MyspaceBusinessSuite</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-019/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/RedditIn.webp</image:loc>
+      <image:caption>LinkedIn reimagined with Reddit mechanics, turning professional networking into upvotes, threads, karma, and dangerously honest workplace discourse.</image:caption>
+      <image:title>RedditIn</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-020/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/Super%20Google%20Analytics.webp</image:loc>
+      <image:caption>Google Analytics redesigned as a Super Mario-style game world, translating traffic paths, goals, and performance into a playable analytics map.</image:caption>
+      <image:title>Super Google Analytics</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-021/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/TACO.webp</image:loc>
+      <image:caption>A Taco Bell-flavored interface concept where ordering, loyalty, and brand chaos get pushed into a loud, snackable product experience.</image:caption>
+      <image:title>TACO</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-022/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/TinderIN.webp</image:loc>
+      <image:caption>LinkedIn redesigned with Tinder mechanics, turning professional networking into profile swipes, career chemistry, and deeply cursed connection energy.</image:caption>
+      <image:title>TinderIN</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-023/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/ToysRUsxPalantir.webp</image:loc>
+      <image:caption>A Palantir-style dashboard redesigned with Toys R Us aesthetics, where surveillance-grade data meets toy aisle colors and corporate absurdity.</image:caption>
+      <image:title>ToysRUsxPalantir</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-024/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/TurboxLego.webp</image:loc>
+      <image:caption>TurboTax imagined as a LEGO/FarmVille-style tax game, turning deductions, refunds, and audit anxiety into a bright buildable interface.</image:caption>
+      <image:title>TurboxLego</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-025/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/WikiFlex.webp</image:loc>
+      <image:caption>A Wikipedia-style knowledge product crossed with flex culture, where information architecture gets dressed up like status signaling.</image:caption>
+      <image:title>WikiFlex</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/what-026/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/what-if/Xbox-Fisher-Price.webp</image:loc>
+      <image:caption>Xbox redesigned with Fisher-Price energy, replacing sleek console seriousness with bright plastic controls, chunky UI, and toy-box gaming logic.</image:caption>
+      <image:title>Xbox Fisher Price</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/misc-001/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/misc-gens/anthropic-mow.webp</image:loc>
+      <image:caption>A surreal Anthropic lawn-care riff that turns AI branding into a mower-themed product gag with clean visual satire.</image:caption>
+      <image:title>Anthropic Mow</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/misc-002/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/misc-gens/dj-cows-open-dojo-ferarri-mockup.webp</image:loc>
+      <image:caption>An OpenDojo Ferrari wrap mockup featuring DJ Cows, blending startup-brand absurdity, motorsport styling, and internet mascot energy.</image:caption>
+      <image:title>Dj Cows Open Dojo Ferarri Mockup</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/misc-003/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/misc-gens/dyer-poster.webp</image:loc>
+      <image:caption>A Dyer, Tennessee poster concept using local identity as the foundation for a bold, collectible regional print treatment.</image:caption>
+      <image:title>Dyer Poster</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/misc-004/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/misc-gens/Linnect%20Solutions%20Branding%20Page.webp</image:loc>
+      <image:caption>A Linnect Solutions branding page exploring logo presentation, identity structure, and polished brand-system layout.</image:caption>
+      <image:title>Linnect Solutions Branding Page</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/misc-005/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/misc-gens/Local%20Lobby%20Legends.webp</image:loc>
+      <image:caption>A nostalgic neighborhood-gaming scene where kids move like a real-life squad and floating clan tags turn the block into a multiplayer lobby.</image:caption>
+      <image:title>Local Lobby Legends</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/misc-006/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/misc-gens/nashville-poster.webp</image:loc>
+      <image:caption>A Nashville poster concept built around regional place identity, collectible print language, and bold local visual storytelling.</image:caption>
+      <image:title>Nashville Poster</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/misc-007/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/misc-gens/one%20foot%20in%20one.webp</image:loc>
+      <image:caption>A split-world childhood image: one foot in the physical woods, one foot in the loading-screen world of early online gaming.</image:caption>
+      <image:title>One Foot In One</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/misc-008/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/misc-gens/panoptic-branding%20page-1.webp</image:loc>
+      <image:caption>Page one of the Panoptic branding exploration, presenting the identity direction as a high-polish concept system.</image:caption>
+      <image:title>Panoptic Branding Page 1</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/misc-009/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/misc-gens/panoptic-branding%20page-2.webp</image:loc>
+      <image:caption>Page two of the Panoptic branding exploration, expanding the visual language through structured brand presentation.</image:caption>
+      <image:title>Panoptic Branding Page 2</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/misc-010/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/misc-gens/panoptic-branding%20page-3.webp</image:loc>
+      <image:caption>Page three of the Panoptic branding exploration, continuing the identity system with premium editorial layout energy.</image:caption>
+      <image:title>Panoptic Branding Page 3</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/misc-011/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/misc-gens/panoptic-branding%20page-4.webp</image:loc>
+      <image:caption>Page four of the Panoptic branding exploration, showing additional brand applications and design-system attitude.</image:caption>
+      <image:title>Panoptic Branding Page 4</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/misc-012/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/misc-gens/panoptic-branding%20page-5.webp</image:loc>
+      <image:caption>Page five of the Panoptic branding exploration, extending the concept into a more complete identity presentation.</image:caption>
+      <image:title>Panoptic Branding Page 5</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/misc-013/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/misc-gens/panoptic-branding%20page-6.webp</image:loc>
+      <image:caption>Page six of the Panoptic branding exploration, closing out the brand-system sequence with polished visual consistency.</image:caption>
+      <image:title>Panoptic Branding Page 6</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/misc-014/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/misc-gens/trenton-poster.webp</image:loc>
+      <image:caption>A Trenton, Tennessee poster concept built as a local-pride visual artifact with bold regional identity.</image:caption>
+      <image:title>Trenton Poster</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/misc-015/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/misc-gens/unioncity-poster.webp</image:loc>
+      <image:caption>A Union City poster concept turning a familiar local place into a more collectible, design-forward print piece.</image:caption>
+      <image:title>Unioncity Poster</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/artifacts/misc-016/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/misc-gens/windows-98-chatgpt.webp</image:loc>
+      <image:caption>ChatGPT reimagined through a Windows 98 interface, blending modern AI with beige-box nostalgia, clunky chrome, and retro desktop charm.</image:caption>
+      <image:title>Windows 98 Chatgpt</image:title>
+    </image:image>
+  </url>
+</urlset>
