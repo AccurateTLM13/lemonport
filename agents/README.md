@@ -24,6 +24,10 @@ The pipeline is documentation and coordination infrastructure only. It does not 
 4. Let `workers/ORCHESTRATOR.md` assign execution to the right worker docs.
 5. Update `STATUS.md`, `DECISIONS.md`, and `HANDOFF_TEMPLATE.md` as work progresses.
 
+## Project Plans
+
+- `../docs/LEMMY_TWO_LAYER_IMPLEMENTATION_PLAN.md` defines the staged public mascot and local Studio assistant build, including authority boundaries, agent ownership, acceptance criteria, and rollback.
+
 ## Non-Negotiable Lemonteed Constraints
 
 - Preserve the static public-site architecture.

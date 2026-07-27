@@ -19,6 +19,8 @@ const { resolvePathWithinRoot } = require("./security-utils");
 const { galleryWidths, statuses } = require("./site-config");
 const { loadSeo, saveSeoFile, buildSeo } = require("./build-seo");
 const { contentFile: junkDrawerFile, loadJunkDrawer, validateExternalTools, buildJunkDrawer, slugify: junkDrawerSlugify } = require("./build-junk-drawer");
+const { collectLemmyHealth, normalizeLimit } = require("./lemmy-health");
+const { executeLemmyAction } = require("./lemmy-actions");
 
 const root = path.resolve(__dirname, "..");
 const contentFile = path.join(root, "content", "projects.json");
@@ -193,6 +195,37 @@ function loadCategories() {
   }
 
   return JSON.parse(fs.readFileSync(categoriesFile, "utf8"));
+}
+
+function loadLemmyHealth(limit) {
+  const projects = loadProjects();
+  const categories = loadCategories();
+  return collectLemmyHealth({
+    projects,
+    categories,
+    validation: validateContent(projects, categories),
+    media: mediaHealth(projects, categories),
+    limit
+  });
+}
+
+function hasProject(projectId) {
+  return loadProjects().some((project) => project.id === projectId);
+}
+
+function regenerateProjectVariantsForLemmy(projectId) {
+  const projects = loadProjects();
+  const project = projects.find((item) => item.id === projectId);
+  if (!project) {
+    const error = new Error(`Unknown project ID: ${projectId}.`);
+    error.statusCode = 400;
+    throw error;
+  }
+
+  backupImageSet(project);
+  const result = regenerateProjectVariants(project, { force: true });
+  saveProjects(projects);
+  return { id: projectId, generated: result.generated, variantCount: project.variants.length };
 }
 
 function loadLiveExperiment() {
@@ -1389,6 +1422,27 @@ async function route(request, response) {
 
     if (request.method === "GET" && url.pathname === "/api/media-health") {
       sendJson(response, 200, mediaHealth(loadProjects(), loadCategories()));
+      return;
+    }
+
+    if (request.method === "GET" && url.pathname === "/api/lemmy/health") {
+      sendJson(response, 200, loadLemmyHealth(normalizeLimit(url.searchParams.get("limit"))));
+      return;
+    }
+
+    if (request.method === "POST" && url.pathname === "/api/lemmy/actions") {
+      const body = await readJsonBody(request);
+      const result = executeLemmyAction(body, {
+        hasProject,
+        validateArchive: () => {
+          const validation = validateContent(loadProjects(), loadCategories());
+          return { ok: validation.errors.length === 0, errors: validation.errors, warnings: validation.warnings };
+        },
+        refreshHealth: () => loadLemmyHealth(),
+        rebuildGallery: () => build(),
+        regenerateProjectVariants: regenerateProjectVariantsForLemmy
+      });
+      sendJson(response, 200, result);
       return;
     }
 

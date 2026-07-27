@@ -2574,3 +2574,238 @@ button:disabled {
 .seo-page-link:hover {
   color: var(--ink);
 }
+
+/* Lemmy health workspace */
+.lemmy-health-layout {
+  display: grid;
+  gap: 18px;
+}
+
+.lemmy-health-hero {
+  display: grid;
+  grid-template-columns: minmax(120px, 190px) minmax(0, 1fr);
+  gap: 22px;
+  align-items: center;
+  padding: 18px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.lemmy-health-hero img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 190px;
+}
+
+.lemmy-health-kicker {
+  margin: 0 0 5px;
+  color: var(--accent-ink, #647400);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.lemmy-health-hero h3 {
+  margin: 0 0 8px;
+  font-size: clamp(20px, 2.4vw, 32px);
+  line-height: 1.05;
+}
+
+.lemmy-health-hero > div > p:not(.lemmy-health-kicker) {
+  max-width: 620px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.lemmy-health-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.lemmy-health-actions button,
+.lemmy-issue button {
+  min-height: var(--touch-target);
+  padding: 0 12px;
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.lemmy-health-actions button:first-child {
+  background: var(--accent);
+}
+
+.lemmy-health-actions button:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+.lemmy-health-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.lemmy-health-summary-grid .dashboard-card {
+  min-height: 112px;
+}
+
+.lemmy-action-result {
+  padding: 12px 14px;
+  border: 1px solid #9bb822;
+  background: #f5f8dc;
+  color: #3f5d00;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.lemmy-action-result.is-error {
+  border-color: var(--danger);
+  background: #fff1f1;
+  color: var(--danger);
+}
+
+.lemmy-health-issues {
+  padding: 18px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.lemmy-health-issues__heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.lemmy-health-issues__heading h3,
+.lemmy-health-empty h3 {
+  margin: 0;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.lemmy-health-issues__heading span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.lemmy-issue-list {
+  display: grid;
+  gap: 8px;
+}
+
+.lemmy-issue {
+  display: grid;
+  grid-template-columns: minmax(150px, 220px) minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+.lemmy-issue--error {
+  border-color: var(--danger);
+}
+
+.lemmy-issue--warning {
+  border-color: #b4a735;
+}
+
+.lemmy-issue__meta {
+  display: grid;
+  gap: 4px;
+}
+
+.lemmy-issue__meta span {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.lemmy-issue__meta strong {
+  font-size: 11px;
+  letter-spacing: 0.03em;
+}
+
+.lemmy-issue p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.lemmy-issue__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.lemmy-issue__actions button {
+  min-height: 34px;
+  padding: 0 9px;
+  white-space: nowrap;
+}
+
+.lemmy-health-empty {
+  padding: 18px 0 4px;
+}
+
+.lemmy-health-empty p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+@media (max-width: 900px) {
+  .lemmy-health-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lemmy-issue {
+    grid-template-columns: minmax(130px, 190px) minmax(0, 1fr);
+  }
+
+  .lemmy-issue__actions {
+    grid-column: 2;
+    justify-self: start;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 620px) {
+  .lemmy-health-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .lemmy-health-hero img {
+    width: 150px;
+  }
+
+  .lemmy-health-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lemmy-issue {
+    grid-template-columns: 1fr;
+  }
+
+  .lemmy-issue__actions {
+    grid-column: auto;
+  }
+}

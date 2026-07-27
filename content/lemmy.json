@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 1,
+  "character": {
+    "id": "lemmy",
+    "name": "Lemmy",
+    "title": "Lemonteed groundskeeper",
+    "defaultAsset": "/images/lemmy/poses/idle.webp",
+    "stateAssets": {
+      "idle": "/images/lemmy/poses/idle.webp",
+      "wave": "/images/lemmy/poses/wave.webp",
+      "point": "/images/lemmy/poses/point.webp",
+      "run": "/images/lemmy/poses/run.webp",
+      "jump": "/images/lemmy/poses/jump.webp",
+      "thinking": "/images/lemmy/poses/thinking.webp",
+      "working": "/images/lemmy/poses/working.webp",
+      "concerned": "/images/lemmy/poses/concerned.webp",
+      "sleep": "/images/lemmy/poses/sleep.webp",
+      "celebrate": "/images/lemmy/poses/celebrate.webp",
+      "curious": "/images/lemmy/poses/curious.webp"
+    }
+  },
+  "preferences": {
+    "storageKey": "lemonteed.lemmy.v1",
+    "ambientDelayMs": 12000,
+    "dialogueCooldownMs": 90000
+  },
+  "destinations": [
+    {
+      "id": "strange",
+      "label": "Something Strange",
+      "hrefs": [
+        "/what-if/",
+        "/junk-drawer/"
+      ]
+    },
+    {
+      "id": "useful",
+      "label": "Something Useful",
+      "hrefs": [
+        "/junk-drawer/",
+        "/lighthouse-handoff/",
+        "/free-source/"
+      ]
+    },
+    {
+      "id": "loud",
+      "label": "Something Loud",
+      "hrefs": [
+        "/lemonteed-fm/",
+        "/memetic-warfare/"
+      ]
+    },
+    {
+      "id": "forgotten",
+      "label": "Something Forgotten",
+      "hrefs": [
+        "/archive/?random=1"
+      ]
+    },
+    {
+      "id": "surprise",
+      "label": "Surprise Me",
+      "hrefs": [
+        "/archive/?random=1",
+        "/what-if/",
+        "/vrg-cards/",
+        "/studio-lab/"
+      ]
+    }
+  ],
+  "zones": {
+    "home": {
+      "enabled": true,
+      "position": "bottom-left",
+      "states": [
+        "idle",
+        "wave",
+        "point"
+      ],
+      "messages": [
+        "Pick a zone. I keep the paths mostly clear."
+      ],
+      "destinationIds": [
+        "strange",
+        "useful",
+        "loud",
+        "forgotten",
+        "surprise"
+      ]
+    },
+    "studio-lab": {
+      "enabled": true,
+      "position": "bottom-right",
+      "states": [
+        "idle",
+        "working",
+        "point"
+      ],
+      "messages": [
+        "The lab is still warm. Try a build."
+      ],
+      "destinationIds": [
+        "useful",
+        "surprise"
+      ]
+    },
+    "junk-drawer": {
+      "enabled": true,
+      "position": "bottom-right",
+      "states": [
+        "idle",
+        "curious",
+        "point"
+      ],
+      "messages": [
+        "Something useful is probably hiding under something stranger."
+      ],
+      "destinationIds": [
+        "strange",
+        "useful"
+      ]
+    },
+    "fm": {
+      "enabled": true,
+      "position": "bottom-right",
+      "states": [
+        "idle",
+        "run",
+        "celebrate"
+      ],
+      "messages": [
+        "The signal is live. Please keep your expectations modest."
+      ],
+      "reactions": {
+        "lemonteed:track-started": {
+          "state": "celebrate",
+          "message": "Signal acquired."
+        }
+      },
+      "destinationIds": [
+        "loud",
+        "surprise"
+      ]
+    },
+    "vrg-vault": {
+      "enabled": true,
+      "position": "bottom-right",
+      "states": [
+        "idle",
+        "curious",
+        "thinking"
+      ],
+      "messages": [
+        "The vault is open. Inspect responsibly."
+      ],
+      "reactions": {
+        "lemonteed:artifact-opened": {
+          "state": "curious",
+          "message": "Careful with the rare ones."
+        }
+      },
+      "destinationIds": [
+        "forgotten",
+        "strange"
+      ]
+    },
+    "memetic-warfare": {
+      "enabled": true,
+      "position": "bottom-right",
+      "states": [
+        "idle",
+        "concerned",
+        "run"
+      ],
+      "messages": [
+        "Loadout first. Heroics later."
+      ],
+      "reactions": {
+        "lemonteed:game-started": {
+          "state": "run",
+          "message": "Loadout locked. Try not to anger the goblins."
+        }
+      },
+      "destinationIds": [
+        "loud",
+        "surprise"
+      ]
+    },
+    "what-if": {
+      "enabled": true,
+      "position": "bottom-right",
+      "states": [
+        "idle",
+        "curious",
+        "jump"
+      ],
+      "messages": [
+        "The woods are asking questions again."
+      ],
+      "reactions": {
+        "lemonteed:artifact-opened": {
+          "state": "curious",
+          "message": "That one might not exist in a better timeline."
+        }
+      },
+      "destinationIds": [
+        "strange",
+        "surprise"
+      ]
+    }
+  }
+}

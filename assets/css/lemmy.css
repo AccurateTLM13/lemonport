@@ -1,0 +1,188 @@
+/* Public Lemmy guide: intentionally small, authored, and non-blocking. */
+
+.prop-lemon.lemmy-trigger {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.prop-lemon.lemmy-trigger:focus-visible {
+  outline: 3px solid #f4df35;
+  outline-offset: 6px;
+}
+
+.prop-lemon.lemmy-trigger img {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+.lemmy-page-trigger {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 23;
+  width: clamp(76px, 10vw, 112px);
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.lemmy-page-trigger:focus-visible {
+  outline: 3px solid #f4df35;
+  outline-offset: 6px;
+}
+
+.lemmy-page-trigger img {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+.lemmy-panel {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 24;
+  width: min(360px, calc(100vw - 2rem));
+  padding: 1rem;
+  border: 1px solid rgba(244, 223, 53, 0.55);
+  border-radius: 6px;
+  background: rgba(7, 8, 7, 0.96);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.65);
+  color: #fff;
+}
+
+.lemmy-panel[hidden] {
+  display: none;
+}
+
+.lemmy-panel__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.lemmy-panel__eyebrow {
+  margin: 0 0 0.28rem;
+  color: #f4df35;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+}
+
+.lemmy-panel h2 {
+  margin: 0;
+  color: #fff;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.lemmy-panel__close,
+.lemmy-panel__minimize,
+.lemmy-panel__destination {
+  min-height: 44px;
+}
+
+.lemmy-panel__close {
+  flex: 0 0 44px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  background: transparent;
+  color: #fff;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.lemmy-panel__message {
+  margin: 1rem 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.lemmy-panel__destinations {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.lemmy-panel__destination {
+  display: flex;
+  align-items: center;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid rgba(244, 223, 53, 0.28);
+  border-radius: 4px;
+  background: rgba(244, 223, 53, 0.06);
+  color: #f4df35;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+}
+
+.lemmy-panel__destination:hover,
+.lemmy-panel__destination:focus-visible {
+  border-color: #f4df35;
+  background: rgba(244, 223, 53, 0.14);
+  color: #fff;
+}
+
+.lemmy-panel__minimize {
+  width: 100%;
+  margin-top: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.76);
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.lemmy-panel__close:hover,
+.lemmy-panel__close:focus-visible,
+.lemmy-panel__minimize:hover,
+.lemmy-panel__minimize:focus-visible {
+  border-color: #f4df35;
+  color: #f4df35;
+}
+
+@media (max-width: 760px) {
+  .lemmy-page-trigger {
+    right: 0.75rem;
+    bottom: 0.75rem;
+    width: 84px;
+  }
+
+  .lemmy-panel {
+    top: 7.6rem;
+    right: 1rem;
+    bottom: auto;
+    left: 1rem;
+    width: auto;
+    max-height: calc(100svh - 8.6rem - 124px);
+    overflow-y: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prop-lemon.lemmy-trigger,
+  .lemmy-panel,
+  .lemmy-panel__destination {
+    transition: none;
+  }
+}

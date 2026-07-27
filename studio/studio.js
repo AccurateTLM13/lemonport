@@ -48,6 +48,13 @@
   const fmSaveJsonButton = document.querySelector("[data-fm-save-json]");
   const fmFormTitle = document.querySelector("[data-fm-form-title]");
   const buildReportPanel = document.querySelector("[data-build-report-panel]");
+  const lemmyHealthPanel = document.querySelector("[data-lemmy-health]");
+  const lemmyHealthTitle = document.querySelector("[data-lemmy-health-title]");
+  const lemmyHealthSummary = document.querySelector("[data-lemmy-health-summary]");
+  const lemmyHealthSummaryGrid = document.querySelector("[data-lemmy-health-summary-grid]");
+  const lemmyHealthIssues = document.querySelector("[data-lemmy-health-issues]");
+  const lemmyRefreshButton = document.querySelector("[data-lemmy-refresh]");
+  const lemmyActionResult = document.querySelector("[data-lemmy-action-result]");
   const tagManager = document.querySelector("[data-tag-manager]");
   const seriesManager = document.querySelector("[data-series-manager]");
   const bulkForm = document.querySelector("[data-bulk-form]");
@@ -72,6 +79,7 @@
     uploads: ["Uploads", "Add new artifacts"],
     bulk: ["Bulk Tools", "Mass changes"],
     health: ["Media Health", "QA checks"],
+    lemmy: ["Lemmy", "Archive triage"],
     relations: ["Relations", "Connection map"],
     game: ["Memetic Game", "Weapon audit"],
     live: ["Live Experiment", "Cloud Flip dossier"],
@@ -105,6 +113,9 @@
   let activeFmTrackId = "";
   let junkDrawerTools = [];
   let activeJunkToolId = "";
+  let lemmyHealth = null;
+  let lemmyHealthLoading = false;
+  let lemmyActionLoading = false;
 
   function setStatus(message, details) {
     status.textContent = message || "";
@@ -456,6 +467,149 @@
         </section>
       </div>
     `;
+  }
+
+  function lemmySummaryValue(result, key) {
+    return Number(result && result.summary && result.summary[key] || 0);
+  }
+
+  function renderLemmyHealth(result) {
+    if (!lemmyHealthPanel || !result) {
+      return;
+    }
+
+    const summary = result.summary || {};
+    const media = result.mediaHealth || {};
+    const blocking = result.ok === false;
+    const issueCount = Number(result.issueCount || summary.issueCount || 0);
+    const visibleIssues = Array.isArray(result.issues) ? result.issues : [];
+    const stateText = blocking
+      ? "Archive needs attention before a confident publish."
+      : issueCount
+        ? "No blocking archive failure detected; review the listed issues."
+        : "No detected archive issues in this report.";
+
+    if (lemmyHealthTitle) {
+      lemmyHealthTitle.textContent = stateText;
+    }
+    if (lemmyHealthSummary) {
+      lemmyHealthSummary.textContent = `Checked ${Number(summary.projectCount || 0)} project(s) and ${Number(summary.categoryCount || 0)} categor${Number(summary.categoryCount || 0) === 1 ? "y" : "ies"}. ${issueCount} issue(s) found.`;
+    }
+    if (lemmyHealthSummaryGrid) {
+      lemmyHealthSummaryGrid.innerHTML = [
+        dashboardMetric("Drafts", lemmySummaryValue(result, "drafts"), "Not yet published", lemmySummaryValue(result, "drafts") ? "warning" : ""),
+        dashboardMetric("Ready", lemmySummaryValue(result, "ready"), "Ready records", ""),
+        dashboardMetric("Missing Alt", lemmySummaryValue(result, "missingAlt"), "Records to describe", lemmySummaryValue(result, "missingAlt") ? "warning" : ""),
+        dashboardMetric("Broken Related", lemmySummaryValue(result, "brokenRelated"), "Records with invalid links", lemmySummaryValue(result, "brokenRelated") ? "danger" : ""),
+        dashboardMetric("Missing Media", lemmySummaryValue(result, "missingMedia"), "Records missing image or thumb", lemmySummaryValue(result, "missingMedia") ? "danger" : ""),
+        dashboardMetric("Missing Variants", lemmySummaryValue(result, "missingVariants"), "Records with width gaps", lemmySummaryValue(result, "missingVariants") ? "warning" : ""),
+        dashboardMetric("Validation Errors", lemmySummaryValue(result, "validationErrors"), "Canonical validation", lemmySummaryValue(result, "validationErrors") ? "danger" : ""),
+        dashboardMetric("Unused Files", Number(media.unusedGalleryImageCount || 0), "Review in Media Health", Number(media.unusedGalleryImageCount || 0) ? "warning" : "")
+      ].join("");
+    }
+    if (lemmyHealthIssues) {
+      if (!visibleIssues.length) {
+        lemmyHealthIssues.innerHTML = `<div class="lemmy-health-empty"><h3>No detected Lemmy issues</h3><p>The archive has no issues in the returned report. This is not a deploy-readiness claim; run the standard checks before publishing.</p></div>`;
+        return;
+      }
+
+      lemmyHealthIssues.innerHTML = `
+        <div class="lemmy-health-issues__heading">
+          <h3>Prioritized issues</h3>
+          <span>Showing ${visibleIssues.length} of ${issueCount}</span>
+        </div>
+        <div class="lemmy-issue-list">
+          ${visibleIssues.map((issue) => {
+            const action = issue.suggestedAction && issue.suggestedAction.type === "open-record"
+              ? String(issue.suggestedAction.projectId || "")
+              : "";
+            return `
+              <article class="lemmy-issue lemmy-issue--${escapeHtml(issue.severity || "warning")}">
+                <div class="lemmy-issue__meta"><span>${escapeHtml(issue.severity || "warning")}</span><strong>${escapeHtml(issue.code || "ARCHIVE_ISSUE")}</strong></div>
+                <p>${escapeHtml(issue.message || "Unlabeled archive issue.")}</p>
+                ${action ? `<div class="lemmy-issue__actions"><button type="button" data-lemmy-open-record="${escapeHtml(action)}">Open Record</button>${issue.code === "PROJECT_MISSING_VARIANT" ? `<button type="button" data-lemmy-regenerate-variants="${escapeHtml(action)}">Regenerate Variants</button>` : ""}</div>` : ""}
+              </article>
+            `;
+          }).join("")}
+        </div>
+      `;
+    }
+  }
+
+  async function loadLemmyHealth() {
+    if (!lemmyHealthPanel || lemmyHealthLoading) {
+      return;
+    }
+
+    lemmyHealthLoading = true;
+    if (lemmyRefreshButton) {
+      lemmyRefreshButton.disabled = true;
+      lemmyRefreshButton.textContent = "Checking...";
+    }
+    setStatus("Refreshing Lemmy archive health...");
+
+    try {
+      lemmyHealth = await api("/api/lemmy/health");
+      renderLemmyHealth(lemmyHealth);
+      setStatus(lemmyHealth.ok ? "Lemmy health refreshed." : "Lemmy found archive issues.");
+    } catch (error) {
+      showError(error);
+    } finally {
+      lemmyHealthLoading = false;
+      if (lemmyRefreshButton) {
+        lemmyRefreshButton.disabled = false;
+        lemmyRefreshButton.textContent = "Refresh Health";
+      }
+    }
+  }
+
+  function setLemmyActionButtonsDisabled(disabled) {
+    lemmyHealthPanel?.querySelectorAll("[data-lemmy-refresh], [data-lemmy-operation], [data-lemmy-regenerate-variants]").forEach((button) => {
+      button.disabled = disabled;
+    });
+  }
+
+  function renderLemmyActionResult(result, errorMessage = "") {
+    if (!lemmyActionResult) {
+      return;
+    }
+
+    lemmyActionResult.hidden = false;
+    lemmyActionResult.textContent = errorMessage || `${result.summary}${result.warnings && result.warnings.length ? ` ${result.warnings.length} warning(s) returned.` : ""}`;
+    lemmyActionResult.classList.toggle("is-error", Boolean(errorMessage));
+  }
+
+  async function runLemmyAction(operation, argumentsValue = {}, confirmation = "") {
+    if (!lemmyHealthPanel || lemmyActionLoading) {
+      return;
+    }
+    if (confirmation && !window.confirm(confirmation)) {
+      return;
+    }
+
+    lemmyActionLoading = true;
+    setLemmyActionButtonsDisabled(true);
+    setStatus(`Running Lemmy operation: ${operation}...`);
+
+    try {
+      const result = await api("/api/lemmy/actions", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ operation, arguments: argumentsValue })
+      });
+      renderLemmyActionResult(result);
+      await loadProjects();
+      const refreshed = await api("/api/lemmy/health");
+      lemmyHealth = refreshed;
+      renderLemmyHealth(refreshed);
+      setStatus(`${result.summary} Health refreshed.`);
+    } catch (error) {
+      renderLemmyActionResult(null, error.message || "Lemmy operation failed.");
+      showError(error);
+    } finally {
+      lemmyActionLoading = false;
+      setLemmyActionButtonsDisabled(false);
+    }
   }
 
   function renderRelationsBoard() {
@@ -2761,6 +2915,9 @@
   workspaceButtons.forEach((button) => {
     button.addEventListener("click", () => {
       setWorkspace(button.dataset.workspaceNav);
+      if (button.dataset.workspaceNav === "lemmy") {
+        loadLemmyHealth();
+      }
     });
   });
 
@@ -2999,6 +3156,48 @@
   validateButton.addEventListener("click", validateArchive);
   mediaHealthButton.addEventListener("click", checkMediaHealth);
   buildReportButton.addEventListener("click", runBuildReport);
+  if (lemmyRefreshButton) {
+    lemmyRefreshButton.addEventListener("click", () => loadLemmyHealth());
+  }
+  if (lemmyHealthPanel) {
+    lemmyHealthPanel.addEventListener("click", (event) => {
+      const openRecord = event.target.closest("[data-lemmy-open-record]");
+      const operation = event.target.closest("[data-lemmy-operation]");
+      const regenerate = event.target.closest("[data-lemmy-regenerate-variants]");
+      const openMedia = event.target.closest("[data-lemmy-open-media]");
+      const openReport = event.target.closest("[data-lemmy-open-report]");
+
+      if (operation) {
+        const operationName = operation.dataset.lemmyOperation;
+        const confirmation = operationName === "rebuild-gallery"
+          ? "Rebuild the generated gallery data and related outputs now? This writes generated files and backups."
+          : "";
+        runLemmyAction(operationName, {}, confirmation);
+        return;
+      }
+      if (regenerate) {
+        runLemmyAction(
+          "regenerate-project-variants",
+          { projectId: regenerate.dataset.lemmyRegenerateVariants },
+          "Regenerate responsive image variants for this record now? This writes media files, metadata, and backups."
+        );
+        return;
+      }
+
+      if (openRecord) {
+        setWorkspace("library");
+        openEditor(openRecord.dataset.lemmyOpenRecord);
+        return;
+      }
+      if (openMedia) {
+        setWorkspace("health");
+        return;
+      }
+      if (openReport) {
+        setWorkspace("report");
+      }
+    });
+  }
   if (liveEditorForm) {
     liveEditorForm.addEventListener("submit", saveLiveExperiment);
     liveEditorForm.addEventListener("input", (event) => {

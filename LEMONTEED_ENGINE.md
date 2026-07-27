@@ -46,6 +46,7 @@ The content source of truth is:
 - `content/operator-log/schedule.json`
 - `content/seo.json`
 - `content/junk-drawer.json`
+- `content/lemmy.json`
 
 These files define artifact metadata, category profiles, audio tracks, and mutation parameters. Agents should update these files through Lemonteed Studio when possible, or by careful direct JSON edits when explicitly needed.
 
@@ -59,11 +60,14 @@ The generated browser data files are:
 - `assets/js/vrg-vault-data.js`
 - `assets/js/mdr-config.js`
 - `assets/js/mdr-stats.js`
+- `assets/js/lemmy-data.js`
 - `lemonteed-fm/tracks.js`
 
 `scripts/build-seo.js` reads `content/seo.json` and patches the `<head>` of each registered public page's HTML file in place (backing up before writing). Run this after any `content/seo.json` change, or use the SEO Manager workspace in Studio which runs it automatically on save.
 
 These files are produced by respective build scripts under `scripts/`. Do not manually edit them as the source of truth. Update the corresponding content JSON file and rebuild.
+
+Approved public Lemmy pose assets live under `images/lemmy/poses/`. They are transparent WebP derivatives of the supplied Codex Pet library and are referenced by `content/lemmy.json`; replacing them requires an explicit art-direction decision.
 
 Responsive image variants under `images/**` are also generated assets. Keep them tied to the metadata in `content/projects.json`.
 
@@ -72,6 +76,12 @@ Responsive image variants under `images/**` are also generated assets. Keep them
 `scripts/build-gallery.js` reads `content/projects.json` and `content/categories.json`, filters public data, and writes browser globals used by the public gallery.
 
 `scripts/promote-operator-mutation.js` reads `content/operator-log/schedule.json`, selects the newest eligible phase, clears `operator-log/data/`, copies the active fragment, and writes `operator-log/manifest.json`. Run this whenever a new mutation phase should go live.
+
+`scripts/build-lemmy.js` validates `content/lemmy.json` and writes `assets/js/lemmy-data.js` for the deterministic public Lemmy guide.
+
+`scripts/lemmy-health.js` is the pure/read-only collector used by Studio's `GET /api/lemmy/health` endpoint. It combines canonical validation, media-health results, project inspection, and bounded deterministic issue output without modifying content or generated files.
+
+`scripts/lemmy-actions.js` is the narrow dispatcher used by `POST /api/lemmy/actions`. It validates the exact operation contract and delegates to existing Studio validation, gallery-build, and project-variant helpers; it does not expose arbitrary paths, commands, URLs, or bulk metadata rewrites.
 
 The gallery build currently publishes projects where:
 

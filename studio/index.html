@@ -22,6 +22,7 @@
           <button type="button" data-workspace-nav="uploads">Uploads</button>
           <button type="button" data-workspace-nav="bulk">Bulk Tools</button>
           <button type="button" data-workspace-nav="health">Media Health</button>
+          <button type="button" data-workspace-nav="lemmy">Lemmy</button>
           <button type="button" data-workspace-nav="relations">Relations</button>
           <button type="button" data-workspace-nav="game">Memetic Game</button>
           <button type="button" data-workspace-nav="live">Live Experiment</button>
@@ -296,6 +297,36 @@
         </div>
 
         <div class="health-dashboard" data-health-dashboard></div>
+      </section>
+
+      <section class="workspace-panel lemmy-health-panel" data-workspace="lemmy" aria-labelledby="lemmy-health-title">
+        <div class="panel-heading">
+          <h2 id="lemmy-health-title">Lemmy</h2>
+          <p>Local, deterministic archive triage. Lemmy can report structured issues and point you to existing Studio workspaces; it does not have free-form write authority.</p>
+        </div>
+
+        <div class="lemmy-health-layout" data-lemmy-health>
+          <div class="lemmy-health-hero">
+            <img src="/images/lemmy/poses/working.webp" alt="Lemmy, the Lemonteed groundskeeper" width="220" height="220">
+            <div>
+              <p class="lemmy-health-kicker">Lemonteed groundskeeper</p>
+              <h3 data-lemmy-health-title>Ready to inspect the archive.</h3>
+              <p data-lemmy-health-summary>Refresh for a current read-only health report.</p>
+              <div class="lemmy-health-actions">
+                <button type="button" data-lemmy-refresh>Refresh Health</button>
+                <button type="button" data-lemmy-operation="validate-archive">Validate Archive</button>
+                <button type="button" data-lemmy-operation="rebuild-gallery">Rebuild Gallery</button>
+                <button type="button" data-lemmy-open-media>Open Media Health</button>
+                <button type="button" data-lemmy-open-report>Open Build Report</button>
+              </div>
+            </div>
+          </div>
+          <div class="lemmy-health-summary-grid" data-lemmy-health-summary-grid></div>
+          <div class="lemmy-action-result" data-lemmy-action-result role="status" hidden></div>
+          <div class="lemmy-health-issues" data-lemmy-health-issues aria-live="polite">
+            <p>Health has not been loaded yet.</p>
+          </div>
+        </div>
       </section>
 
       <section class="workspace-panel" data-workspace="relations" aria-labelledby="relations-title">

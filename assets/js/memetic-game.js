@@ -797,6 +797,9 @@
     runState = createRun();
     goblinOverlayShown = false;
     document.documentElement.classList.remove("is-goblin-mode");
+    document.dispatchEvent(new CustomEvent("lemonteed:game-started", {
+      detail: { id: "memetic-warfare" }
+    }));
     appendLog("The dungeon boots from a questionable floppy disk.", "normal", "run-start");
     startWave(1);
     runInterval = window.setInterval(gameTick, data.tickMs);
