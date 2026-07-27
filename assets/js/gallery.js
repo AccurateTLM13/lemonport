@@ -546,11 +546,18 @@
       lastFocusedElement = document.activeElement;
     }
 
-    setLightboxItem(activeItems[activeIndex]);
+    const openedItem = activeItems[activeIndex];
+    setLightboxItem(openedItem);
     lightbox.hidden = false;
     document.body.style.overflow = "hidden";
     lightbox.querySelector(".lightbox__button--close").focus();
-    setHashForItem(activeItems[activeIndex]);
+    setHashForItem(openedItem);
+    document.dispatchEvent(new CustomEvent("lemonteed:artifact-opened", {
+      detail: {
+        id: openedItem.id,
+        category: openedItem.category
+      }
+    }));
   }
 
   function openLightbox(index) {

@@ -294,6 +294,7 @@
 
   function play() {
     const track = currentTrack();
+    const wasPlaying = state.isPlaying;
     if (!audio.src || audio.src === window.location.href) {
       loadTrack(track);
     }
@@ -305,6 +306,12 @@
       });
     }
     state.isPlaying = true;
+    if (!wasPlaying || state.lastAnnouncedTrackId !== track.id) {
+      state.lastAnnouncedTrackId = track.id;
+      document.dispatchEvent(new CustomEvent("lemonteed:track-started", {
+        detail: { id: track.id }
+      }));
+    }
     startProgressSync();
     syncPlayState(true);
     $(".fm-hero__wave")?.classList.add("is-playing");

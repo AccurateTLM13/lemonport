@@ -29,7 +29,8 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="/assets/css/style.css?v=9">
-    <link rel="stylesheet" href="/assets/css/world-map.css?v=2">
+    <link rel="stylesheet" href="/assets/css/world-map.css?v=3">
+    <link rel="stylesheet" href="/assets/css/lemmy.css?v=2">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -39,10 +40,12 @@
         "description": "A static web universe of tools, games, songs, artifacts, and experimental internet objects."
       }
     </script>
+    <script src="/assets/js/lemmy-data.js?v=2" defer></script>
     <script src="/assets/js/world-map.js?v=2" defer></script>
+    <script src="/assets/js/lemmy.js?v=2" defer></script>
     <script src="/assets/js/operator-entry.js" defer></script>
   </head>
-  <body class="atlas-body">
+  <body class="atlas-body" data-lemmy-zone="home">
     <a class="skip-link" href="#zones">Skip to zones</a>
 
     <main class="lemon-world">
@@ -120,7 +123,9 @@
           <img class="prop prop-knife" src="/images/home/props/blackberryknife.webp" alt="" aria-hidden="true">
           <img class="prop prop-tamagotchi" src="/images/home/props/tamagotchi-necklace.webp" alt="" aria-hidden="true">
           <img class="prop prop-cards" src="/images/home/props/vrg-cards.webp" alt="" aria-hidden="true">
-          <img class="prop prop-lemon" src="/images/home/lemon-mascot.webp" alt="" aria-hidden="true">
+          <button class="prop prop-lemon lemmy-trigger" type="button" aria-label="Open Lemmy, the Lemonteed groundskeeper" aria-expanded="false">
+            <img src="/images/lemmy/poses/idle.webp" alt="" aria-hidden="true" width="220" height="220">
+          </button>
         </div>
       </section>
 

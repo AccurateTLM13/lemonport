@@ -91,6 +91,15 @@ To support concurrent work streams and seamless handoffs between agent runs:
 
 ## Active Projects & Feature Progress
 
+### Lemmy Two-Layer Integration
+
+* **Status: Slices 1–5 completed**
+  * **Completed:** Added the validated `content/lemmy.json` source of truth, `scripts/build-lemmy.js`, generated `assets/js/lemmy-data.js`, reusable public Lemmy behavior/styles, homepage integration with cards left and Lemmy right, and shared Lemmy triggers for `/what-if/`, `/vrg-cards/`, `/junk-drawer/`, `/lemonteed-fm/`, `/memetic-warfare/`, and `/studio-lab/`. Added three authored page events for artifact opens, track starts, and game starts, plus the Studio health collector, Lemmy workspace, and allowlisted action dispatcher.
+  * **Art direction:** Integrated 11 transparent 220px WebP pose assets derived from the supplied Codex Pet library under `images/lemmy/poses/`; state changes use these approved assets rather than inventing a second visual language.
+  * **Codebase State:** Public Lemmy is deterministic, browser-only, authored-data driven, safe-link only, keyboard accessible, locally preference-aware, cooldown-aware, and inactive on pages without enabled zone config. Studio Lemmy reports bounded structured health and accepts only named, authorized actions; mutating actions retain confirmation and existing backup semantics.
+  * **Validation:** Public Lemmy checks, Lemmy build/syntax checks, content validation, standard `scripts/check.js`, Studio health/action endpoint checks, same-origin/token rejection checks, homepage layout verification at 1440×900, 390×844, and 360×800, keyboard/focus checks, six public-zone checks, and Studio browser validation all passed. Existing site audit findings remain unchanged: 78 medium empty-alt findings, one low SEO finding, zero missing referenced images, and 100 unused gallery files.
+  * **Next steps:** None for the documented two-layer feature.
+
 ### Phased Hardening of Million Dollar Receipt (MDR)
 
 * **Status: Archived (public launch on hold)**
