@@ -135,22 +135,12 @@ To support concurrent work streams and seamless handoffs between agent runs:
 * **Codebase state:** Existing External Finds content is represented in the new source file. Studio save operations rebuild `junk-drawer/index.html`; invalid API payloads are rejected, full checks pass, and browser verification found no console errors.
 * **Next steps:** Add external tools through Studio as needed.
 
-### AI Scrape Toll Booth V1 (Completed)
-
-* **Completed:**
-  * Added public AI access policy files at `/robots.txt` and `/llms.txt`.
-  * Added indexable public policy/request pages at `/ai-license/` and `/ai-access/`.
-  * Preserved existing robots sitemap and archived/private path rules while adding AI crawler restrictions and policy links.
-* **Codebase State:** V1 is a public policy and intake layer only. No payment processor, API keys, crawler enforcement, bot fingerprinting, or authentication has been added.
-* **Next steps:**
-  * **V2 (later):** Add a real intake form/backend, licensing workflow, approved crawler terms, and optional structured content delivery if the owner wants enforcement or monetization.
-
 ### Studio SEO Manager (Completed)
 
 * **Completed:**
-  * **`content/seo.json`:** New source-of-truth file holding title, description, OG, and Twitter metadata for all 18 registered public static pages. Bootstrapped by scraping current values from the live HTML files.
+  * **`content/seo.json`:** New source-of-truth file holding title, description, OG, and Twitter metadata for all 16 registered public static pages. Bootstrapped by scraping current values from the live HTML files.
   * **`scripts/build-seo.js`:** Build script that reads `content/seo.json` and patches `<title>`, `<meta name="description">`, all `og:*` tags, `twitter:*` tags, and `<link rel="canonical">` in each page's HTML file in place. Backs up files before writing. Supports `--dry-run`. Can be imported as a module by the Studio server.
-  * **SEO Manager workspace in Studio:** New "SEO Manager" tab in the Studio nav. Page selector sidebar lists all 18 registered pages. Edit form includes: title tag (60-char counter), meta description (160-char counter), canonical URL, OG title, OG description, OG image path with live preview at 1200×630 aspect ratio, OG image upload (converts to WebP, crop-fits to 1200×630, stores in `images/og/`), OG width/height, Twitter title/description/image. Character counters turn yellow at 85% of limit and red when over. Save button writes `content/seo.json` and triggers `build-seo.js` to patch HTML immediately.
+  * **SEO Manager workspace in Studio:** New "SEO Manager" tab in the Studio nav. Page selector sidebar lists all 16 registered pages. Edit form includes: title tag (60-char counter), meta description (160-char counter), canonical URL, OG title, OG description, OG image path with live preview at 1200×630 aspect ratio, OG image upload (converts to WebP, crop-fits to 1200×630, stores in `images/og/`), OG width/height, Twitter title/description/image. Character counters turn yellow at 85% of limit and red when over. Save button writes `content/seo.json` and triggers `build-seo.js` to patch HTML immediately.
   * **API routes added to `studio-server.js`:** `GET /api/seo`, `PATCH /api/seo`, `POST /api/seo/og-image`.
 * **Codebase State:** Fully implemented and validated. `content-validation.js` passes. `build-seo.js --dry-run` correctly identifies pages needing patching without touching files.
 * **Next steps:** None. The SEO manager is a complete, standalone tool.

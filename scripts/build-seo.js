@@ -26,8 +26,6 @@ const REGISTERED_PAGES = [
   { key: "lemon-dom", label: "Lemon DOM", htmlPath: "lemon-dom/index.html", canonicalUrl: "https://lemonteed.com/lemon-dom/" },
   { key: "studio-lab", label: "Studio Lab", htmlPath: "studio-lab/index.html", canonicalUrl: "https://lemonteed.com/studio-lab/" },
   { key: "lemonteed-fm", label: "Lemonteed FM", htmlPath: "lemonteed-fm/index.html", canonicalUrl: "https://lemonteed.com/lemonteed-fm/" },
-  { key: "ai-license", label: "AI License", htmlPath: "ai-license/index.html", canonicalUrl: "https://lemonteed.com/ai-license/" },
-  { key: "ai-access", label: "AI Access Request", htmlPath: "ai-access/index.html", canonicalUrl: "https://lemonteed.com/ai-access/" }
 ];
 
 const CANONICAL_ORIGIN = "https://lemonteed.com";
