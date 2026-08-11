@@ -62,6 +62,7 @@ The generated browser data files are:
 - `assets/js/mdr-stats.js`
 - `assets/js/lemmy-data.js`
 - `lemonteed-fm/tracks.js`
+- `sitemap.xml` and `image-sitemap.xml` (rebuilt by `scripts/build-artifact-pages.js`, including published Operator Log article routes and figure images)
 
 `scripts/build-seo.js` reads `content/seo.json` and patches the `<head>` of each registered public page's HTML file in place (backing up before writing). Run this after any `content/seo.json` change, or use the SEO Manager workspace in Studio which runs it automatically on save.
 
@@ -78,6 +79,8 @@ Responsive image variants under `images/**` are also generated assets. Keep them
 `scripts/promote-operator-mutation.js` reads `content/operator-log/schedule.json`, selects the newest eligible phase, clears `operator-log/data/`, copies the active fragment, and writes `operator-log/manifest.json`. Run this whenever a new mutation phase should go live.
 
 `scripts/build-lemmy.js` validates `content/lemmy.json` and writes `assets/js/lemmy-data.js` for the deterministic public Lemmy guide.
+
+`scripts/build-artifact-pages.js` also refreshes generated sitemap entries for Operator Log article pages and article figure images by reading their canonical links and authored HTML metadata.
 
 `scripts/lemmy-health.js` is the pure/read-only collector used by Studio's `GET /api/lemmy/health` endpoint. It combines canonical validation, media-health results, project inspection, and bounded deterministic issue output without modifying content or generated files.
 

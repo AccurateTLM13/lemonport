@@ -533,6 +533,7 @@
   position: absolute;
   inset: 0 auto 0 0;
   width: 4px;
+  display: none;
   background: #d4d1c4;
   content: "";
 }
@@ -543,11 +544,6 @@
 .junk-drawer-card--list-mechanic {
   border-color: #bbb6a5;
   box-shadow: 0 4px 0 #bdb8a6;
-}
-
-.junk-drawer-card--converter,
-.junk-drawer-card--compressor {
-  border-left-color: rgb(212 209 196 / 0.78);
 }
 
 .junk-drawer-card--converter::before,
@@ -847,26 +843,25 @@
 .junk-drawer-card--sponsor {
   width: 100%;
   max-width: 620px;
-  border: 1px dashed #c09d58;
+  border: 1px dashed #c8c4b6;
   background:
-    linear-gradient(90deg, rgb(192 157 88 / 0.16) 0 8px, transparent 8px 16px),
     #fcfaf3;
-  box-shadow: 0 4px 0 #c09d58;
+  box-shadow: 0 4px 0 #d4d1c4;
 }
 
 .junk-drawer-card--sponsor::before {
-  background: #c09d58;
+  display: none;
 }
 
 .junk-drawer-card--sponsor:hover,
 .junk-drawer-card--sponsor:focus-visible {
-  border-color: #a88440;
+  border-color: #bfb9a6;
   background: #faf8ed;
-  box-shadow: 0 6px 0 #a88440;
+  box-shadow: 0 6px 0 #bdb8a6;
 }
 
 .junk-drawer-card--sponsor .junk-drawer-card__type {
-  border-color: #c09d58;
+  border-color: #c8c4b6;
   color: #6f5421;
   background: rgb(255 245 215 / 0.75);
 }

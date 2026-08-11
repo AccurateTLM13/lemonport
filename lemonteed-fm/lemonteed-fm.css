@@ -133,7 +133,7 @@ h1, h2, h3, h4 { margin: 0; font-family: var(--font-display); font-weight: 700; 
 /* ── Sidebar Rail ───────────────────────────────────────────── */
 .fm-sidebar {
   position: fixed;
-  inset: 16px auto calc(var(--fm-player-height) + 16px) 16px;
+  inset: 24px auto calc(var(--fm-player-height) + 16px) 16px;
   z-index: 40;
   display: grid;
   width: var(--fm-sidebar);
@@ -148,6 +148,47 @@ h1, h2, h3, h4 { margin: 0; font-family: var(--font-display); font-weight: 700; 
   box-shadow: var(--fm-shadow), inset 0 1px 0 rgb(255 255 255 / 0.07);
   backdrop-filter: blur(28px);
   overflow: hidden;
+}
+
+.fm-cross-nav {
+  display: grid;
+  gap: 7px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--fm-line);
+}
+
+.fm-cross-nav__label {
+  color: var(--fm-faint);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.fm-cross-nav a {
+  color: var(--fm-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.fm-cross-nav a::before {
+  content: "↗";
+  margin-right: 7px;
+  color: var(--fm-faint);
+}
+
+.fm-cross-nav a:hover,
+.fm-cross-nav a:focus-visible {
+  color: var(--fm-gold-soft);
+  text-decoration: none;
+  transform: translateX(2px);
 }
 
 /* Brand */
@@ -408,6 +449,10 @@ h1, h2, h3, h4 { margin: 0; font-family: var(--font-display); font-weight: 700; 
 }
 
 .fm-mobile-nav a:last-child { border-bottom: none; }
+.fm-mobile-nav .fm-mobile-nav__external {
+  color: var(--fm-gold-soft);
+  font-weight: 700;
+}
 .fm-mobile-nav a:hover { color: var(--fm-ink); }
 
 /* ── Main Canvas ────────────────────────────────────────────── */
@@ -654,7 +699,7 @@ h1, h2, h3, h4 { margin: 0; font-family: var(--font-display); font-weight: 700; 
 .fm-hero__note {
   padding: 12px 16px;
   margin-bottom: 24px;
-  border-left: 2px solid var(--fm-gold-dim);
+  border: 1px solid var(--fm-line);
   color: var(--fm-muted);
   font-size: 13px;
   font-style: italic;

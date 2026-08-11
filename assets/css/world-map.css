@@ -510,7 +510,7 @@
   }
 
   .dock-card.is-active {
-    border-color: rgba(244, 223, 53, 0.78);
+    border-color: rgba(255, 255, 255, 0.08);
     background: rgba(244, 223, 53, 0.08);
   }
 

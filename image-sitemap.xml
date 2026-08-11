@@ -641,4 +641,20 @@
       <image:title>Windows 98 Chatgpt</image:title>
     </image:image>
   </url>
+  <url>
+    <loc>https://lemonteed.com/operator-log/localhost-watchdog-update-02/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/operator-log/localhost-watchdog-update-02-inventory.webp</image:loc>
+      <image:caption>The current inventory view shows 35 scanned listeners, 3 visible listeners, 0 unknown visible listeners, and 32 hidden from view because they fall behind protection or confidence boundaries.</image:caption>
+      <image:title>Localhost Watchdog inventory dashboard showing 35 scanned listeners, 3 visible listeners, 0 unknown visible listeners, and 32 hidden from view</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/operator-log/localhost-watchdog-update-02/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/operator-log/localhost-watchdog-update-02-listener-report.webp</image:loc>
+      <image:caption>The listener evidence report ties the visible server to its project root, process chain, launcher context, lifecycle, history, and HTTP probe.</image:caption>
+      <image:title>Localhost Watchdog listener evidence report for demo-website on port 5173, showing process, project, launcher, lifecycle, history, and HTTP probe details</image:title>
+    </image:image>
+  </url>
 </urlset>

@@ -2603,7 +2603,7 @@
     "featured": false,
     "visible": false,
     "createdAt": "2026-05-02T12:00:00.000Z",
-    "updatedAt": "2026-05-12T15:31:21.824Z",
+    "updatedAt": "2026-08-04T00:41:31.826Z",
     "series": "VRG Cards",
     "origin": "Created in ChatGPT as part of the fictional Vibe Rating & Grading collectible card system.",
     "tags": [
@@ -2618,7 +2618,7 @@
     ],
     "status": "Draft",
     "image": "/images/vrg-cards/rob.webp",
-    "thumbnail": "/images/vrg-cards/rob.webp",
+    "thumbnail": "/images/vrg-cards/rob-768.webp",
     "dateCreated": "2026-05-02",
     "related": [
       "vrg-003",
@@ -2629,7 +2629,37 @@
       "vrg-011"
     ],
     "dangerLevel": "",
-    "variants": []
+    "variants": [
+      {
+        "width": 320,
+        "url": "/images/vrg-cards/rob-320.webp"
+      },
+      {
+        "width": 480,
+        "url": "/images/vrg-cards/rob-480.webp"
+      },
+      {
+        "width": 640,
+        "url": "/images/vrg-cards/rob-640.webp"
+      },
+      {
+        "width": 768,
+        "url": "/images/vrg-cards/rob-768.webp"
+      },
+      {
+        "width": 900,
+        "url": "/images/vrg-cards/rob-900.webp"
+      },
+      {
+        "width": 927,
+        "url": "/images/vrg-cards/rob.webp"
+      }
+    ],
+    "curation": {
+      "homepage": false,
+      "featuredRank": 0,
+      "randomWeight": 1
+    }
   },
   {
     "id": "vrg-018",

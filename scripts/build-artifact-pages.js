@@ -387,19 +387,58 @@ function buildSitemap() {
     return `  <url>\n    <loc>${SITE_URL}/artifacts/${encodeURIComponent(p.slug)}/</loc>${lastmodTag}\n  </url>`;
   });
 
-  /* Remove existing artifact entries from sitemap */
+  const operatorEntries = readOperatorLogPosts().map((post) => {
+    const lastmodTag = post.date ? `\n    <lastmod>${post.date}</lastmod>` : "";
+    return `  <url>\n    <loc>${escapeHtml(post.canonical)}</loc>${lastmodTag}\n  </url>`;
+  });
+
+  /* Remove existing generated artifact and Operator Log article entries */
   const cleanedSitemap = existingSitemap.replace(
     /\s*<url>\s*<loc>https:\/\/lemonteed\.com\/artifacts\/[^<]+<\/loc>[\s\S]*?<\/url>/g,
+    ""
+  ).replace(
+    /\s*<url>\s*<loc>https:\/\/lemonteed\.com\/operator-log\/[^<]+<\/loc>[\s\S]*?<\/url>/g,
     ""
   );
 
   /* Insert before closing </urlset> */
   const newSitemap = cleanedSitemap.replace(
     "</urlset>",
-    artifactEntries.join("\n") + "\n</urlset>"
+    operatorEntries.concat(artifactEntries).join("\n") + "\n</urlset>"
   );
 
-  return { sitemapContent: newSitemap, entryCount: artifactEntries.length };
+  return { sitemapContent: newSitemap, entryCount: artifactEntries.length + operatorEntries.length };
+}
+
+function readOperatorLogPosts() {
+  const operatorLogDir = path.join(root, "operator-log");
+  if (!fs.existsSync(operatorLogDir)) {
+    return [];
+  }
+
+  return fs.readdirSync(operatorLogDir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => {
+      const pagePath = path.join(operatorLogDir, entry.name, "index.html");
+      if (!fs.existsSync(pagePath)) {
+        return null;
+      }
+      const html = fs.readFileSync(pagePath, "utf8");
+      const canonical = html.match(/<link\s+rel="canonical"\s+href="([^"]+)"/i)?.[1] || "";
+      const date = html.match(/<time\s+class="op-article-date"\s+datetime="([^"]+)"/i)?.[1] || "";
+      if (!canonical) {
+        return null;
+      }
+      const images = [...html.matchAll(/<figure[^>]*class="[^"]*op-figure[^"]*"[^>]*>[\s\S]*?<img[^>]*src="([^"]+)"[^>]*alt="([^"]*)"[^>]*>[\s\S]*?<figcaption>([\s\S]*?)<\/figcaption>/gi)]
+        .map((match) => ({
+          src: match[1],
+          alt: match[2],
+          caption: match[3].replace(/<[^>]+>/g, "").trim()
+        }));
+      return { canonical, date, images };
+    })
+    .filter(Boolean)
+    .sort((a, b) => b.date.localeCompare(a.date));
 }
 
 function buildImageSitemap() {
@@ -427,11 +466,27 @@ function buildImageSitemap() {
     ].join("\n");
   }).filter(Boolean);
 
+  const operatorImageEntries = readOperatorLogPosts().flatMap((post) => post.images.map((image) => {
+    const imageUrl = image.src.startsWith("http") ? image.src : `${SITE_URL}${image.src}`;
+    const caption = escapeHtml(image.caption || image.alt || "");
+    const title = escapeHtml(image.alt || "Operator's Log image");
+    return [
+      `  <url>`,
+      `    <loc>${escapeHtml(post.canonical)}</loc>`,
+      `    <image:image>`,
+      `      <image:loc>${escapeHtml(imageUrl)}</image:loc>`,
+      `      <image:caption>${caption}</image:caption>`,
+      `      <image:title>${title}</image:title>`,
+      `    </image:image>`,
+      `  </url>`
+    ].join("\n");
+  }));
+
   const xml = [
     `<?xml version="1.0" encoding="UTF-8"?>`,
     `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"`,
     `        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">`,
-    entries.join("\n"),
+    entries.concat(operatorImageEntries).join("\n"),
     `</urlset>`,
     ``
   ].join("\n");

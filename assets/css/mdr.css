@@ -208,7 +208,6 @@
   margin-bottom: 1.5rem;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%), var(--mdr-bg-panel);
   border: 1px solid var(--mdr-border);
-  border-left: 2px solid var(--mdr-terminal);
   border-radius: var(--mdr-radius-sm);
 }
 
@@ -1085,7 +1084,6 @@
   padding: 0.5rem 0.65rem;
   background: var(--mdr-bg-panel);
   border: 1px solid var(--mdr-border);
-  border-left: 2px solid var(--mdr-accent);
   border-radius: var(--mdr-radius-sm);
   font-size: 0.72rem;
   color: var(--mdr-text-muted);

@@ -602,7 +602,7 @@
 .log-event {
   margin: 0 0 8px;
   padding: 8px;
-  border-left: 3px solid #cfc7b5;
+  border: 1px solid #cfc7b5;
   background: #f8f6ee;
   color: #4f4a41;
   font-family: "Courier New", Courier, monospace;
@@ -612,15 +612,12 @@
 }
 
 .log-event--good {
-  border-left-color: var(--relic-acid);
 }
 
 .log-event--bad {
-  border-left-color: var(--relic-danger);
 }
 
 .log-event--chaos {
-  border-left-color: var(--relic-gold);
   color: #151410;
 }
 
@@ -1545,7 +1542,7 @@
 }
 
 .player-rig-panel .runtime-weapon.is-active {
-  border-color: var(--relic-gold);
+  border-color: #cbc3b2;
   background: #fff8dc;
   box-shadow: inset 0 0 0 2px rgb(185 135 34 / 0.22);
 }
@@ -1638,7 +1635,7 @@
 }
 
 .combat-arena .enemy-card.is-hit {
-  border-color: var(--relic-gold);
+  border-color: rgb(246 242 231 / 0.28);
   animation: enemy-hit 260ms ease;
 }
 

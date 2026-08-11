@@ -1155,8 +1155,6 @@ button:disabled {
 }
 
 .game-row.has-warning {
-  border-left: 3px solid var(--danger);
-  padding-left: 8px;
 }
 
 .edit-layer[hidden] {
@@ -1698,7 +1696,7 @@ button:disabled {
 }
 
 .dashboard-card--danger {
-  border-color: var(--danger);
+  border-color: var(--line);
 }
 
 .dashboard-card--danger strong,
@@ -2717,11 +2715,11 @@ button:disabled {
 }
 
 .lemmy-issue--error {
-  border-color: var(--danger);
+  border-color: var(--line);
 }
 
 .lemmy-issue--warning {
-  border-color: #b4a735;
+  border-color: var(--line);
 }
 
 .lemmy-issue__meta {

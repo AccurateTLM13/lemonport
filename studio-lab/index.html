@@ -73,86 +73,125 @@
             <span class="junk-drawer-module__label">Junk Drawer</span>
           </div>
         </a>
-        <a class="op-status-badge" href="/operator-log/" aria-label="Operator log — off-clock archive">STATUS: OFF CLOCK</a>
+        <nav class="sidebar__utility-nav" aria-label="Lemonteed workbench">
+          <p class="sidebar__utility-label">Workbench</p>
+          <a class="sidebar__utility-link sidebar__utility-link--primary is-active" href="/studio-lab/" aria-current="page">Studio Lab</a>
+          <a class="sidebar__utility-link" href="/operator-log/">Operator's Log</a>
+        </nav>
       </aside>
 
       <main class="content" id="studio-lab-content">
         <header class="studio-lab-header">
-          <p class="studio-lab-kicker">Build Bench / Active Desk</p>
+          <p class="studio-lab-kicker">Build Bench / Latest Log</p>
           <h1>Studio Lab</h1>
-          <p class="studio-lab-lede">Everything I am building, shipping, or parking for a better idea. Public by default, polished when ready.</p>
+          <p class="studio-lab-lede">The latest build notes, with the project state still attached. Read what moved, then open the thing when it is ready.</p>
         </header>
 
-        <section class="studio-lab-bench" aria-label="Projects in progress">
-          <article class="studio-project-card studio-project-card--featured">
-            <div class="studio-project-card__meta">
-              <span class="studio-status studio-status--shipped">Shipped</span>
-              <span class="studio-project-card__zone">Junk Drawer</span>
+        <section class="studio-lab-feed" aria-labelledby="studio-lab-feed-title">
+          <header class="studio-lab-section-header">
+            <div>
+              <p class="studio-lab-section-label">Operator's Log / Recent entries</p>
+              <h2 id="studio-lab-feed-title">Latest build notes</h2>
             </div>
-            <h2>Lighthouse Handoff</h2>
-            <p>Chrome extension that turns PageSpeed Insights into coding-agent-ready Markdown with priorities and acceptance criteria.</p>
-            <a class="studio-project-card__cta" href="/lighthouse-handoff/">View the tool page &rarr;</a>
-          </article>
+            <a class="studio-lab-section-link" href="/operator-log/">Open the full log &rarr;</a>
+          </header>
 
-          <article class="studio-project-card">
-            <div class="studio-project-card__meta">
-              <span class="studio-status studio-status--shipped">Shipped</span>
-              <span class="studio-project-card__zone">FM Tower</span>
+          <div class="studio-lab-log-list">
+            <article class="studio-log-entry studio-log-entry--featured">
+              <div class="studio-log-entry__meta">
+                <span class="studio-status studio-status--progress">Update 02</span>
+                <time datetime="2026-08-02">August 2, 2026</time>
+                <span>Localhost Watchdog</span>
+              </div>
+              <h3><a href="/operator-log/localhost-watchdog-update-02/">Update 02 — Localhost Watchdog Can Manage Servers Now</a></h3>
+              <p>Localhost Watchdog moves from inspection into guarded management with evidence-based stop, start, restart, adoption, and a Windows tray companion.</p>
+              <div class="studio-log-entry__links">
+                <a class="studio-log-entry__link" href="/operator-log/localhost-watchdog-update-02/">Read the update &rarr;</a>
+                <a class="studio-log-entry__link studio-log-entry__link--muted" href="/operator-log/building-localhost-watchdog/">Read the introduction</a>
+              </div>
+            </article>
+
+            <article class="studio-log-entry">
+              <div class="studio-log-entry__meta">
+                <span class="studio-status studio-status--shipped">Build log</span>
+                <time datetime="2026-06-20">June 20, 2026</time>
+                <span>Lighthouse Handoff</span>
+              </div>
+              <h3><a href="/operator-log/building-lighthouse-handoff/">Building Lighthouse Handoff: Turning PageSpeed Reports Into Agent-Ready Work</a></h3>
+              <p>A Chrome extension and local companion that turns PageSpeed Insights into structured Markdown with confidence thresholds, fixed recommendation ordering, multi-run median testing, and variance analysis.</p>
+              <a class="studio-log-entry__link" href="/operator-log/building-lighthouse-handoff/">Read the entry &rarr;</a>
+            </article>
+
+            <article class="studio-log-entry">
+              <div class="studio-log-entry__meta">
+                <span class="studio-status studio-status--progress">Build log</span>
+                <time datetime="2026-06-19">June 19, 2026</time>
+                <span>Locailly</span>
+              </div>
+              <h3><a href="/operator-log/building-locailly/">Building Locailly: A Local AI Orchestration System</a></h3>
+              <p>An experiment in local AI orchestration — a Local Brain, Task Tracks, AI Pit Crew, capability routing, and optional NearbyNodes working together so one person can operate like a coordinated team using small local models.</p>
+              <a class="studio-log-entry__link" href="/operator-log/building-locailly/">Read the entry &rarr;</a>
+            </article>
+
+            <article class="studio-log-entry">
+              <div class="studio-log-entry__meta">
+                <span class="studio-status studio-status--progress">Build log</span>
+                <time datetime="2026-06-18">June 18, 2026</time>
+                <span>Localhost Watchdog</span>
+              </div>
+              <h3><a href="/operator-log/building-localhost-watchdog/">Building Localhost Watchdog: A Safe Way to Manage Local Development Servers</a></h3>
+              <p>A Windows-first local server scanner, classifier, and process manager with dry runs, confidence gates, PID/port revalidation, test-first execution, and no destructive action without confirmation.</p>
+              <a class="studio-log-entry__link" href="/operator-log/building-localhost-watchdog/">Read the entry &rarr;</a>
+            </article>
+          </div>
+        </section>
+
+        <section class="studio-lab-status" aria-labelledby="studio-lab-status-title">
+          <header class="studio-lab-section-header">
+            <div>
+              <p class="studio-lab-section-label">Project register / Current state</p>
+              <h2 id="studio-lab-status-title">What is still on the bench</h2>
             </div>
-            <h2>Lemonteed FM</h2>
-            <p>Static music discovery booth with clear licenses, request desk, and Piet mode after hours.</p>
-            <a class="studio-project-card__cta" href="/lemonteed-fm/">Tune in &rarr;</a>
-          </article>
+            <a class="studio-lab-section-link" href="/archive/">Browse the visual archive &rarr;</a>
+          </header>
 
-          <article class="studio-project-card">
-            <div class="studio-project-card__meta">
+          <ul class="studio-lab-status-list">
+            <li>
               <span class="studio-status studio-status--shipped">Shipped</span>
-              <span class="studio-project-card__zone">Junk Drawer</span>
-            </div>
-            <h2>Browser Utilities</h2>
-            <p>Image converter, compressor, and Lemon DOM — small tools that stay local and skip the upload.</p>
-            <a class="studio-project-card__cta" href="/junk-drawer/">Open Junk Drawer &rarr;</a>
-          </article>
-
-          <article class="studio-project-card">
-            <div class="studio-project-card__meta">
+              <a class="studio-lab-status__name" href="/lighthouse-handoff/">Lighthouse Handoff</a>
+              <span class="studio-lab-status__note">PageSpeed reports into agent-ready Markdown.</span>
+            </li>
+            <li>
               <span class="studio-status studio-status--shipped">Shipped</span>
-              <span class="studio-project-card__zone">Memetic Arena</span>
-            </div>
-            <h2>Memetic Warfare</h2>
-            <p>Ancient tech loadout builder and dungeon run tied back to the visual archive.</p>
-            <a class="studio-project-card__cta" href="/memetic-warfare/">Enter the arena &rarr;</a>
-          </article>
-
-          <article class="studio-project-card studio-project-card--muted">
-            <div class="studio-project-card__meta">
+              <a class="studio-lab-status__name" href="/lemonteed-fm/">Lemonteed FM</a>
+              <span class="studio-lab-status__note">Static music discovery booth with requests and Piet mode.</span>
+            </li>
+            <li>
+              <span class="studio-status studio-status--shipped">Shipped</span>
+              <a class="studio-lab-status__name" href="/junk-drawer/">Browser Utilities</a>
+              <span class="studio-lab-status__note">Local image tools and Lemon DOM.</span>
+            </li>
+            <li>
+              <span class="studio-status studio-status--shipped">Shipped</span>
+              <a class="studio-lab-status__name" href="/memetic-warfare/">Memetic Warfare</a>
+              <span class="studio-lab-status__note">Ancient tech loadout builder tied to the visual archive.</span>
+            </li>
+            <li>
               <span class="studio-status studio-status--archived">Archived</span>
-              <span class="studio-project-card__zone">Live Experiment</span>
-            </div>
-            <h2>The $100 Cloud Flip</h2>
-            <p>Paused while a better experiment shape comes together. The dossier still exists for local tinkering.</p>
-            <span class="studio-project-card__note">Hidden from search. Back when the idea is ready.</span>
-          </article>
-
-          <article class="studio-project-card studio-project-card--muted">
-            <div class="studio-project-card__meta">
+              <span class="studio-lab-status__name">The $100 Cloud Flip</span>
+              <span class="studio-lab-status__note">Paused while a better experiment shape comes together.</span>
+            </li>
+            <li>
               <span class="studio-status studio-status--archived">Archived</span>
-              <span class="studio-project-card__zone">Nothing Works</span>
-            </div>
-            <h2>Million Dollar Receipt</h2>
-            <p>Paused while a better launch shape comes together. The mock factory still exists for local tinkering.</p>
-            <span class="studio-project-card__note">Hidden from search. Back when the idea is ready.</span>
-          </article>
-
-          <article class="studio-project-card studio-project-card--planned">
-            <div class="studio-project-card__meta">
+              <span class="studio-lab-status__name">Million Dollar Receipt</span>
+              <span class="studio-lab-status__note">Paused while a better launch shape comes together.</span>
+            </li>
+            <li>
               <span class="studio-status studio-status--planned">Later</span>
-              <span class="studio-project-card__zone">Studio Lab</span>
-            </div>
-            <h2>Bench Radio</h2>
-            <p>A clickable radio on this page that streams Lemonteed FM while you browse active builds.</p>
-            <span class="studio-project-card__note">Thinking out loud — queued for a later dev pass.</span>
-          </article>
+              <span class="studio-lab-status__name">Bench Radio</span>
+              <span class="studio-lab-status__note">A future radio for browsing active builds.</span>
+            </li>
+          </ul>
         </section>
       </main>
     </div>

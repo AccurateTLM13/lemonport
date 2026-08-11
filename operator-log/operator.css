@@ -457,7 +457,7 @@ a:hover {
 .op-block-quote {
   position: relative;
   padding: 28px 32px;
-  border-left: 3px solid var(--op-yellow);
+  border: 1px solid var(--op-border);
   background: var(--op-surface);
 }
 
@@ -633,7 +633,6 @@ a:hover {
   margin-top: 48px;
   padding: 14px 20px;
   border: 1px solid var(--op-border);
-  border-left: 3px solid var(--op-border-bright);
   background: var(--op-surface);
   font-size: 11px;
   color: var(--op-text-muted);
@@ -937,10 +936,41 @@ a:hover {
   margin-bottom: 0;
 }
 
+.op-figure {
+  max-width: 760px;
+  margin: 28px 0 0;
+}
+
+.op-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--op-border-bright);
+  background: var(--op-surface);
+}
+
+.op-figure figcaption {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--op-text-dim);
+  line-height: 1.6;
+}
+
+.op-code {
+  max-width: 640px;
+  overflow-x: auto;
+  margin: 20px 0;
+  padding: 16px 20px;
+  border: 1px solid var(--op-border);
+  background: var(--op-surface);
+  color: var(--op-text);
+  font: 12px/1.7 var(--op-font-mono);
+  white-space: pre;
+}
+
 .op-callout {
   padding: 20px;
   border: 1px solid var(--op-border);
-  border-left: 3px solid var(--op-yellow);
   background: var(--op-surface);
   margin: 24px 0;
 }
@@ -978,6 +1008,15 @@ a:hover {
   position: absolute;
   left: -20px;
   color: var(--op-yellow-dim);
+}
+
+.op-list--numbered {
+  padding-left: 24px;
+  list-style: decimal;
+}
+
+.op-list--numbered li::before {
+  content: none;
 }
 
 .op-related {
@@ -1018,7 +1057,6 @@ a:hover {
 .op-status-box {
   padding: 20px;
   border: 1px solid var(--op-border);
-  border-left: 3px solid var(--op-yellow-dim);
   background: var(--op-surface);
 }
 

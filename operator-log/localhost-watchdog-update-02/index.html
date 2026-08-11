@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCB0LW648K"></script>
+  <script src="/assets/js/analytics.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Update 02 — Localhost Watchdog Can Manage Servers Now | Operator's Log</title>
+  <meta name="description" content="Localhost Watchdog moves from inspection into guarded management with evidence-based stop, start, restart, adoption, and a Windows tray companion.">
+  <link rel="canonical" href="https://lemonteed.com/operator-log/localhost-watchdog-update-02/">
+  <meta property="og:title" content="Update 02 — Localhost Watchdog Can Manage Servers Now | Operator's Log">
+  <meta property="og:description" content="Localhost Watchdog moves from inspection into guarded management with evidence-based stop, start, restart, adoption, and a Windows tray companion.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://lemonteed.com/operator-log/localhost-watchdog-update-02/">
+  <meta property="og:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+  <meta property="og:image:secure_url" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:published_time" content="2026-08-02T00:00:00.000Z">
+  <meta property="article:modified_time" content="2026-08-02T00:00:00.000Z">
+  <meta property="article:section" content="Build Log">
+  <meta property="article:tag" content="Developer Tools">
+  <meta property="article:tag" content="Local Development">
+  <meta property="article:tag" content="Process Management">
+  <meta property="article:tag" content="Safety">
+  <meta property="article:tag" content="WIP">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Update 02 — Localhost Watchdog Can Manage Servers Now">
+  <meta name="twitter:description" content="Localhost Watchdog moves from inspection into guarded management with evidence-based stop, start, restart, adoption, and a Windows tray companion.">
+  <meta name="twitter:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+  <link rel="icon" href="/images/favicons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
+  <link rel="stylesheet" href="/operator-log/operator.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Update 02 — Localhost Watchdog Can Manage Servers Now",
+      "description": "Localhost Watchdog moves from inspection into guarded management with evidence-based stop, start, restart, adoption, and a Windows tray companion.",
+      "image": [
+        "https://lemonteed.com/images/operator-log/localhost-watchdog-update-02-inventory.webp",
+        "https://lemonteed.com/images/operator-log/localhost-watchdog-update-02-listener-report.webp"
+      ],
+      "datePublished": "2026-08-02",
+      "dateModified": "2026-08-02",
+      "author": {
+        "@type": "Person",
+        "name": "Lemonteed Operator"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Lemonteed",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://lemonteed.com/images/lemonteedlogo-250.webp"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://lemonteed.com/operator-log/localhost-watchdog-update-02/"
+      },
+      "articleSection": "Build Log",
+      "keywords": ["Developer Tools", "Local Development", "Process Management", "Safety", "WIP"]
+    }
+  </script>
+</head>
+<body class="operator-page">
+  <a class="op-skip" href="#op-content">Skip to content</a>
+
+  <div class="op-shell">
+    <header class="op-header" role="banner">
+      <span class="op-header__classify">Lemonteed / Operator's Log</span>
+      <span class="op-header__phase">Build Log</span>
+      <a class="op-header__back" href="/operator-log/" aria-label="Return to Operator's Log index">← Log Index</a>
+    </header>
+
+    <main class="op-main" id="op-content" tabindex="-1">
+      <article class="op-article">
+        <header class="op-article-header">
+          <div class="op-article-meta">
+            <time class="op-article-date" datetime="2026-08-02">2026-08-02</time>
+            <span class="op-article-tag op-article-tag--experiment">Experiment</span>
+            <span class="op-article-tag">Developer Tools</span>
+            <span class="op-article-tag">Safety</span>
+            <span class="op-article-project">Localhost Watchdog</span>
+          </div>
+          <h1 class="op-headline">Update 02 — Localhost Watchdog Can Manage Servers Now</h1>
+          <p class="op-subhead">Localhost Watchdog moves from inspection into guarded management with evidence-based stop, start, restart, adoption, and a Windows tray companion.</p>
+        </header>
+
+        <div class="op-article-content">
+          <section class="op-section">
+            <h2 class="op-section-title">The dashboard is only the beginning</h2>
+            <p>The <a href="/operator-log/building-localhost-watchdog/">first version of Localhost Watchdog</a> could tell me what was running on my computer. It could not touch anything.</p>
+            <p>That boundary was intentional. A local server is not just a port. On Windows, the process listening on that port may be a child of a shell wrapper, the PID may have been reused, and the project I think I am looking at may no longer be the project actually serving the request.</p>
+            <p>A Stop button built on incomplete identity is just a faster way to stop the wrong thing.</p>
+            <p>This update moves Watchdog from inspection into guarded management. It can now stop a verified managed server gracefully, start explicitly registered projects, restart them, adopt compatible detected servers, and expose the same controls through a small Windows tray companion.</p>
+            <p>The interesting part is not that it can send a signal. It is the amount of evidence it requires before doing so.</p>
+
+            <figure class="op-figure">
+              <img src="/images/operator-log/localhost-watchdog-update-02-inventory.webp" alt="Localhost Watchdog inventory dashboard showing 35 scanned listeners, 3 visible listeners, 0 unknown visible listeners, and 32 hidden from view" width="1231" height="774" loading="lazy" decoding="async">
+              <figcaption>The current inventory view shows 35 scanned listeners, 3 visible listeners, 0 unknown visible listeners, and 32 hidden from view because they fall behind protection or confidence boundaries.</figcaption>
+            </figure>
+
+            <p>This is still the first layer of the product: find what is listening, decide what is safe to show, and make the boundaries visible.</p>
+            <p>The selected listener view goes further than a list of ports. It can show the project root, URL, final URL, process chain, launcher context, reachability, running duration, and repeated scan history for a server such as <code>demo-website</code> on port <code>5173</code>.</p>
+
+            <figure class="op-figure">
+              <img src="/images/operator-log/localhost-watchdog-update-02-listener-report.webp" alt="Localhost Watchdog listener evidence report for demo-website on port 5173, showing process, project, launcher, lifecycle, history, and HTTP probe details" width="1524" height="909" loading="lazy" decoding="async">
+              <figcaption>The listener evidence report ties the visible server to its project root, process chain, launcher context, lifecycle, history, and HTTP probe.</figcaption>
+            </figure>
+
+            <p>That detail matters because the management layer cannot safely operate on “whatever is using port 5173.” It needs a particular process instance, the listener it owns, the project connected to it, and enough confidence that those things still match.</p>
+            <p>The report can also mark a listener as inspect-only when the process tree is truncated: permission not granted by design. That is not a missing button. It is Watchdog refusing to infer what it cannot prove.</p>
+            <p>The important change happens after this screen.</p>
+          </section>
+
+          <section class="op-section">
+            <h2 class="op-section-title">A real stop is a chain of refusals</h2>
+            <p>The previous implementation already had the safety checks for a stop action:</p>
+            <ol class="op-list op-list--numbered">
+              <li>Scan the current listeners.</li>
+              <li>Identify the exact process instance.</li>
+              <li>Run a dry run.</li>
+              <li>Recheck the PID, creation time, listener, port, project, confidence, and protected boundaries.</li>
+              <li>Ask for explicit confirmation.</li>
+              <li>Record the request without touching the process.</li>
+            </ol>
+            <p>That last boundary has now moved. After confirmation, Watchdog issues a short-lived execution proof and performs another fresh revalidation immediately before acting.</p>
+            <p>If the PID was reused, the listener changed owners, the port changed, the project identity drifted, or required security metadata is unavailable, the action is blocked.</p>
+            <p>When the checks pass, the Windows graceful-stop backend targets that one verified process. It can request <code>CloseMainWindow</code> for compatible GUI processes or send a targeted <code>CTRL+BREAK</code> signal to supported development runtimes running inside a verified Windows console process group.</p>
+            <p>There is still no force kill.</p>
+            <p>No <code>taskkill</code>. No generic process-tree termination. No automatic escalation because the first graceful request took too long.</p>
+            <p>That means a stubborn server remains a problem to solve. I am fine with that for now. A tool that refuses an uncertain action is more useful than one that is very efficient at guessing.</p>
+          </section>
+
+          <section class="op-section">
+            <h2 class="op-section-title">Starting and restarting require ownership</h2>
+            <p>Stopping a detected server is only one side of management. If Watchdog is going to restart something later, it needs to know how that project was started in the first place.</p>
+            <p>Managed projects now have a structured launch contract containing the canonical project root, display path, runtime executable, launch arguments, working directory, environment values, preferred port, fallback strategy, and runtime metadata.</p>
+            <p>This is not an arbitrary command runner. The launcher validates the configuration, checks the working directory, selects an allowed port, starts a supported direct runtime in its own Windows console process group, and returns a stable identity containing both the PID and the process creation time.</p>
+            <p>Direct Node and Python runtimes are supported first. Shell wrappers such as <code>npm.cmd</code>, <code>pnpm.cmd</code>, and <code>yarn.cmd</code> still fail closed because the wrapper process and the process that eventually owns the listener are not always the same thing.</p>
+            <p>That is inconvenient. It is also real.</p>
+            <p>Restart is therefore not implemented as “stop, wait a second, and run the command again.” The managed flow has to:</p>
+            <ul class="op-list">
+              <li>resolve the registered project</li>
+              <li>identify the current managed process</li>
+              <li>revalidate the listener and port ownership</li>
+              <li>stop it gracefully</li>
+              <li>wait for the old identity to disappear and the port to become free</li>
+              <li>launch the project again</li>
+              <li>verify that the replacement process owns the expected listener</li>
+            </ul>
+            <p>Each boundary matters. A restart that stops successfully but never launches is different from one that launches but binds to another port. Watchdog records where the transition stopped instead of collapsing every failure into “restart failed.”</p>
+            <p>The result is also recorded in privacy-safe restart history so a later review can distinguish a clean replacement from a half-completed transition.</p>
+            <p>That makes the result understandable when the machine is left in a partial state, which is usually when you need the explanation most.</p>
+          </section>
+
+          <section class="op-section">
+            <h2 class="op-section-title">Adoption is not the same as discovery</h2>
+            <p>Watchdog can now turn some manually started servers into managed projects, but adoption begins with a draft.</p>
+            <p>The tool extracts what it can safely determine about the detected server: project root, runtime, executable, arguments, working directory, port, and launch compatibility. The draft can be reviewed before it becomes configuration.</p>
+            <p>Adoption is restricted to high-confidence loopback Node and Python processes that can be converted into the same direct-runtime contract used by managed projects.</p>
+            <p>Unknown listeners, protected processes, unsafe ports, duplicate projects, unsupported wrappers, and incomplete launch profiles are rejected.</p>
+            <p>This is an important distinction: a server can be visible without being manageable. Watchdog is not trying to adopt everything it can find. It is trying to avoid creating a project record that it cannot safely start or restart later.</p>
+          </section>
+
+          <section class="op-section">
+            <h2 class="op-section-title">The tray companion does not get a secret control plane</h2>
+            <p>The original roadmap expected a Tauri wrapper eventually. The first tray implementation uses PowerShell, .NET, and <code>System.Windows.Forms.NotifyIcon</code> around the existing Node backend and browser dashboard.</p>
+            <p>The companion can start the Watchdog backend when it is not already running, open the dashboard, refresh local state, show visible and stale-candidate counts, display native Windows notifications, and quit.</p>
+            <p>It also tracks backend ownership. Shutting down the tray companion does not stop development servers, and it only shuts down the Watchdog backend that the companion started itself.</p>
+            <p>Managed project actions still go through the same protected local API, session and CSRF checks, confirmation flow, revalidation, and audit boundaries as the dashboard. The tray is another way to reach the control surface, not a bypass around it.</p>
+            <p>The automated tray service and host-control tests are complete. I am not calling the tray experience release-ready yet. It still needs manual testing in a real Windows desktop session for icon visibility, tooltip updates, notifications, browser opening, restart behavior, and failure states.</p>
+          </section>
+
+          <section class="op-section">
+            <h2 class="op-section-title">The part that is still awkward</h2>
+            <p>Most normal frontend projects are not started with a direct call to <code>node</code>.</p>
+            <p>They are started with commands such as:</p>
+            <pre class="op-code"><code>npm run dev
+pnpm dev
+yarn dev</code></pre>
+            <p>Those commands introduce a wrapper between Watchdog and the runtime that eventually owns the port. Supporting them safely means keeping track of the wrapper PID, child runtime PID, actual listener owner, console process group, and whatever happens when hot reload replaces the child underneath everything.</p>
+            <p>Watchdog should not pretend that starting <code>npm.cmd</code> means it automatically knows which descendant is safe to manage. That compatibility problem is now one of the clearest next pieces of work.</p>
+            <p>The other next step is acceptance testing against ordinary projects rather than only controlled fixtures:</p>
+            <ul class="op-list">
+              <li>a direct Node server</li>
+              <li>a Python HTTP server</li>
+              <li>Vite, Next.js, and Astro</li>
+              <li>a project launched from VS Code</li>
+              <li>a project launched from Windows Terminal</li>
+              <li>a server that ignores graceful shutdown</li>
+              <li>a port whose ownership changes during an action</li>
+            </ul>
+            <p>The tray needs its manual pass. The project configuration needs a better setup and repair experience. Packaging needs to make starting Watchdog less annoying than managing the servers it was built to watch.</p>
+          </section>
+
+          <section class="op-section">
+            <h2 class="op-section-title">The shift</h2>
+            <p>The first update was about building a reliable view of the local machine. This one is about giving that view a carefully limited ability to act.</p>
+            <p>Localhost Watchdog can now answer more than “what is listening?” It can identify a managed project, start it through a known contract, stop a verified process, restart it, and explain where the lifecycle broke if the transition does not complete.</p>
+            <p>That is enough to call it a management layer.</p>
+            <p>It is not enough to call the problem solved.</p>
+            <p>The next test is whether the same safety model survives the way people actually run projects: package scripts, wrapper processes, hot reload, stale terminals, and ports changing ownership at the worst possible moment.</p>
+            <p>At least now the next failure will be a real lifecycle failure, not a missing Stop button.</p>
+          </section>
+
+          <aside class="op-related" aria-label="Related reading">
+            <h2 class="op-related-title">Related reading</h2>
+            <div class="op-related-links">
+              <a class="op-related-link" href="/operator-log/building-localhost-watchdog/">Read the Localhost Watchdog introduction →</a>
+            </div>
+          </aside>
+
+          <nav class="op-entry-nav" aria-label="Entry navigation">
+            <a class="op-entry-nav__prev" href="/operator-log/">← Back to log index</a>
+            <a class="op-entry-nav__next" href="/operator-log/building-lighthouse-handoff/">Next entry: Building Lighthouse Handoff →</a>
+          </nav>
+        </div>
+      </article>
+    </main>
+
+    <footer class="op-footer" role="contentinfo">
+      <span class="op-footer__left">LEMONTEED / OPERATOR'S LOG</span>
+      <span class="op-footer__right"><a href="/">← Back to the archive</a></span>
+    </footer>
+  </div>
+</body>
+</html>

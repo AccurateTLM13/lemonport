@@ -91,6 +91,13 @@ To support concurrent work streams and seamless handoffs between agent runs:
 
 ## Active Projects & Feature Progress
 
+### Operator Log: Localhost Watchdog Update 02
+
+* **Status: Completed locally; not deployed**
+  * **Completed:** Added `/operator-log/localhost-watchdog-update-02/` using the existing static Operator Log article layout, linked it to the Localhost Watchdog introduction, added the two supplied screenshots with intrinsic dimensions, captions, and descriptive alt text, updated archive metadata and bidirectional entry navigation, and refreshed sitemap/image-sitemap generation so future artifact builds retain the article route and images.
+  * **Codebase State:** The article preserves the approved Update 02 wording and limitations: guarded lifecycle management, evidence and revalidation, no force kill or `taskkill`, direct Node/Python support first, unresolved npm/pnpm/yarn wrappers, and outstanding real-project and manual tray acceptance testing. No RSS/Atom feed or separate public article registry exists in this static site.
+  * **Next steps:** None for the requested local implementation. Do not deploy without explicit approval.
+
 ### Lemmy Two-Layer Integration
 
 * **Status: Slices 1–5 completed**
@@ -122,7 +129,9 @@ To support concurrent work streams and seamless handoffs between agent runs:
   * **Website Roast archived:** Live Experiment `currentBet` and get-involved links no longer point to missing `/website-roast/`.
   * **Junk Drawer redesign:** Lighthouse Handoff is the premier featured tool. Drawer-style hero, compartment cards, dead `+ INFO` button removed. Added FreeSource (`/free-source/`) as Slot D card in the drawer.
   * **Character Supply added:** Added `/junk-drawer/character-supply/` as a Junk Drawer utility page for HTML special characters, entities, code points, and CSS escapes.
-  * **Studio Lab page:** Public `/studio-lab/` hub listing shipped/archived/planned projects. Homepage world-map zone routes here instead of `/operator-log/`.
+  * **Studio Lab page:** Public `/studio-lab/` hub now leads with the latest Operator Log entries, including Update 02, followed by a compact shipped/archived/planned project register. The log feed uses the Operator Log's dark treatment for contrast. Homepage world-map zone routes here instead of `/operator-log/`, making the build notes discoverable through the public workbench.
+  * **Shared workbench navigation:** Public sidebar variants expose crawlable `Studio Lab` and `Operator's Log` links, with custom Lemonteed FM rail and mobile links covered separately. Studio Lab is marked current where appropriate, and Lemonteed FM's rail now aligns with the main hero canvas.
+  * **Card border rule:** Removed accent-colored card borders, left stripes, and decorative card border accents across the public CSS variants; neutral hairlines, surface contrast, and typography carry state instead.
   * **Live Experiment archived:** Matches MDR treatment — `noindex`, `robots.txt` disallow, removed from sitemap and public navigation. Studio Lab lists it as archived.
   * **Sitemap:** Added `/studio-lab/`, junk-drawer routes, `/lighthouse-handoff/`, and `/free-source/`.
   * **Junk Drawer Card Visuals:** Replaced CSS/span-based visual card placeholders in `/junk-drawer/` with correlating WebP screenshot/interface images from `/images/junk/` and added responsive CSS styles in `assets/css/junk-drawer.css` to frame the thumbnails.

@@ -126,14 +126,14 @@
     "description": "Batch convert HEIC, PNG, JPEG, AVIF, SVG, and WebP entirely locally in your browser. Free image converter tool by Lemonteed.",
     "ogTitle": "Image Converter | Lemonteed",
     "ogDescription": "Batch convert HEIC, PNG, JPEG, AVIF, SVG, and WebP locally. Your images never touch a server.",
-    "ogImage": "/images/og/lemonteed-og-home-final.webp",
+    "ogImage": "/images/og/junk-drawer-image-converter.webp",
     "ogImageWidth": 1200,
     "ogImageHeight": 630,
     "twitterTitle": "Image Converter | Lemonteed",
     "twitterDescription": "Batch convert HEIC, PNG, JPEG, AVIF, SVG, and WebP locally.",
     "twitterImage": "",
     "canonicalUrl": "https://lemonteed.com/junk-drawer/image-converter/",
-    "updatedAt": "2026-07-16T20:24:33.948Z"
+    "updatedAt": "2026-08-04T02:32:40.799Z"
   },
   {
     "key": "junk-drawer-image-compressor",
@@ -143,14 +143,14 @@
     "description": "Compress PNG, JPEG, WebP, and AVIF images directly in your browser. No upload. No server. Just smaller files.",
     "ogTitle": "Image Compressor | Lemonteed",
     "ogDescription": "Squish image files down without shipping them off to some mystery server. Drop in PNG, JPEG, WebP, or AVIF files and compress them directly in your browser.",
-    "ogImage": "/images/og/lemonteed-og-home-final.webp",
+    "ogImage": "/images/og/junk-drawer-image-compressor.webp",
     "ogImageWidth": 1200,
     "ogImageHeight": 630,
     "twitterTitle": "Image Compressor | Lemonteed",
     "twitterDescription": "Squish image files down without shipping them off to some mystery server.",
     "twitterImage": "",
     "canonicalUrl": "https://lemonteed.com/junk-drawer/image-compressor/",
-    "updatedAt": "2026-07-16T20:24:33.949Z"
+    "updatedAt": "2026-08-04T02:32:51.110Z"
   },
   {
     "key": "junk-drawer-character-supply",
@@ -194,14 +194,14 @@
     "description": "A Chrome extension that turns PageSpeed Insights reports into coding-agent-ready Markdown with priorities, tasks, guardrails, and acceptance criteria.",
     "ogTitle": "Lighthouse Handoff | Lemonteed",
     "ogDescription": "Turn PageSpeed Insights into coding-agent-ready Markdown. A handoff layer for developers and AI-assisted workflows.",
-    "ogImage": "/images/og/lemonteed-og-home-final.webp",
+    "ogImage": "/images/og/lighthouse-handoff.webp",
     "ogImageWidth": 1200,
     "ogImageHeight": 630,
     "twitterTitle": "Lighthouse Handoff | Lemonteed",
     "twitterDescription": "Turn PageSpeed Insights into coding-agent-ready Markdown.",
     "twitterImage": "/images/og/lemonteed-og-home-final.webp",
     "canonicalUrl": "https://lemonteed.com/lighthouse-handoff/",
-    "updatedAt": "2026-07-16T20:24:33.950Z"
+    "updatedAt": "2026-08-04T02:32:16.296Z"
   },
   {
     "key": "free-source",
@@ -211,14 +211,14 @@
     "description": "FreeSource is a radically simple license: use the work for whatever you want, for free. No permission. No payment. No strings.",
     "ogTitle": "FreeSource — Use it for whatever you want.",
     "ogDescription": "No permission. No payment. No strings. A radically simple license for creators who genuinely mean free.",
-    "ogImage": "/images/og/lemonteed-og-home-final.webp",
+    "ogImage": "/images/og/free-source.webp",
     "ogImageWidth": 1200,
     "ogImageHeight": 630,
     "twitterTitle": "FreeSource — Use it for whatever you want.",
-    "twitterDescription": "No permission. No payment. No strings.",
+    "twitterDescription": "No permission. No payment. No strings. A radically simple license for creators who genuinely mean free.",
     "twitterImage": "/images/og/lemonteed-og-home-final.webp",
     "canonicalUrl": "https://lemonteed.com/free-source/",
-    "updatedAt": "2026-07-16T20:24:33.950Z"
+    "updatedAt": "2026-08-04T02:34:17.718Z"
   },
   {
     "key": "lemon-dom",
@@ -270,22 +270,5 @@
     "twitterImage": "/images/lemonteed-fm/lemonteed-fm.webp",
     "canonicalUrl": "https://lemonteed.com/lemonteed-fm/",
     "updatedAt": "2026-07-16T20:24:33.951Z"
-  },
-  {
-    "key": "free-source",
-    "label": "FreeSource",
-    "htmlPath": "free-source/index.html",
-    "title": "FreeSource — Use it for whatever you want.",
-    "description": "FreeSource is a radically simple license: use the work for whatever you want, for free. No permission. No payment. No strings.",
-    "ogTitle": "FreeSource — Use it for whatever you want.",
-    "ogDescription": "No permission. No payment. No strings. A radically simple license for creators who genuinely mean free.",
-    "ogImage": "/images/og/lemonteed-og-home-final.webp",
-    "ogImageWidth": 1200,
-    "ogImageHeight": 630,
-    "twitterTitle": "FreeSource — Use it for whatever you want.",
-    "twitterDescription": "No permission. No payment. No strings. A radically simple license for creators who genuinely mean free.",
-    "twitterImage": "/images/og/lemonteed-og-home-final.webp",
-    "canonicalUrl": "https://lemonteed.com/free-source/",
-    "updatedAt": "2026-07-26T01:23:00.000Z"
   }
 ]

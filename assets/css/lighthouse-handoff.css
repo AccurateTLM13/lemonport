@@ -600,7 +600,7 @@ a.lh-btn {
 }
 
 .lh-problem__col--solution {
-  border-color: var(--lh-gold);
+  border-color: var(--lh-border-strong);
   background: rgb(201 162 39 / 0.07);
   box-shadow: 0 0 0 1px rgb(201 162 39 / 0.08), 0 8px 28px rgb(0 0 0 / 0.2);
   opacity: 1;
@@ -778,7 +778,7 @@ a.lh-btn {
 .lh-ai__callout {
   margin: 0 0 24px;
   padding: 24px 28px;
-  border-left: 3px solid var(--lh-gold);
+  border: 1px solid var(--lh-border);
   border-radius: 0 var(--lh-radius) var(--lh-radius) 0;
   background: rgb(201 162 39 / 0.08);
 }
