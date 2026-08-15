@@ -25,7 +25,10 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
-  <link rel="stylesheet" href="/operator-log/operator.css">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="/assets/css/style.css?v=12">
+  <link rel="stylesheet" href="/operator-log/operator.css?v=3">
+  <link rel="stylesheet" href="/assets/css/lemmy.css?v=3">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -92,115 +95,252 @@
       ]
     }
   </script>
+  <script src="/assets/js/mobile-header.js?v=1" defer></script>
+  <script src="/assets/js/lemmy-data.js?v=2" defer></script>
+  <script src="/assets/js/lemmy.js?v=2" defer></script>
 </head>
-<body class="operator-page">
-  <a class="op-skip" href="#op-content">Skip to content</a>
+<body class="operator-page operator-hub-page" data-lemmy-zone="operator-log" data-lemmy-suppress-trigger="1">
+  <a class="skip-link" href="#op-content">Skip to content</a>
 
-  <div class="op-shell">
-    <header class="op-header" role="banner">
-      <span class="op-header__classify">Lemonteed / Operator's Log</span>
-      <span class="op-header__phase" aria-live="polite">Build Log</span>
-      <a class="op-header__back" href="/" aria-label="Return to Lemonteed archive">← Archive</a>
-    </header>
+  <div class="site-shell">
+    <aside class="sidebar" aria-label="Site navigation">
+      <div class="sidebar__brand-block">
+        <a class="brand" href="/" aria-label="Lemonteed home">
+          <img class="brand__logo" src="/images/lemonteedlogo-250.webp" srcset="/images/lemonteedlogo-250.webp 250w, /images/lemonteedlogo-456.webp 456w" sizes="160px" width="456" height="96" alt="Lemonteed">
+        </a>
+      </div>
 
-    <main class="op-main" id="op-content" tabindex="-1">
-      <div class="op-blog-index">
-        <header class="op-blog-header">
-          <h1 class="op-headline">Operator's Log</h1>
-          <p class="op-subhead">Build log documenting projects, experiments, lessons learned, and releases — from shipped Chrome extensions to local AI orchestration systems and developer safety tools.</p>
-          <span class="op-status-line is-cleared">STATUS: ACTIVE LOG</span>
+      <nav class="sidebar__group" aria-label="Lemonteed workbench">
+        <span class="sidebar__group-label">Workbench</span>
+        <a class="sidebar__nav-card" href="/studio-lab/">
+          <span class="sidebar__nav-card-label">Studio Lab</span>
+          <span class="sidebar__nav-card-badge">Active Builds</span>
+        </a>
+        <a class="sidebar__nav-card is-active" href="/operator-log/" aria-current="page">
+          <span class="sidebar__nav-card-label">Operator's Log</span>
+          <span class="sidebar__nav-card-badge">Active Log</span>
+        </a>
+        <a class="sidebar__nav-card" href="/benchmark/">
+          <span class="sidebar__nav-card-label">Design Benchmark</span>
+          <span class="sidebar__nav-card-badge">Evidence</span>
+        </a>
+      </nav>
+
+      <nav class="sidebar__group" aria-label="Districts &amp; Filters">
+        <span class="sidebar__group-label">Districts &amp; Filters</span>
+        <a class="sidebar__nav-card" href="/archive/" data-category-link="all">
+          <span class="sidebar__nav-card-label">All Artifacts</span>
+          <span class="sidebar__nav-card-arrow">&rarr;</span>
+        </a>
+        <a class="sidebar__nav-card" href="/vrg-cards/" data-category-link="vrg-cards">
+          <span class="sidebar__nav-card-label">VRG Cards</span>
+          <span class="sidebar__nav-card-arrow">&rarr;</span>
+        </a>
+        <a class="sidebar__nav-card" href="/what-if/" data-category-link="what-if">
+          <span class="sidebar__nav-card-label">What If</span>
+          <span class="sidebar__nav-card-arrow">&rarr;</span>
+        </a>
+        <a class="sidebar__nav-card" href="/misc-gens/" data-category-link="misc-gens">
+          <span class="sidebar__nav-card-label">Misc Gens</span>
+          <span class="sidebar__nav-card-arrow">&rarr;</span>
+        </a>
+        <a class="sidebar__nav-card" href="/memetic-warfare/">
+          <span class="sidebar__nav-card-label">Memetic Warfare</span>
+          <span class="sidebar__nav-card-arrow">&rarr;</span>
+        </a>
+        <a class="sidebar__nav-card" href="/lemonteed-fm/">
+          <span class="sidebar__nav-card-label">Lemonteed FM</span>
+          <span class="sidebar__nav-card-arrow">&rarr;</span>
+        </a>
+      </nav>
+
+      <div class="sidebar__group" aria-label="Experiments &amp; Utilities">
+        <span class="sidebar__group-label">Experiments &amp; Utilities</span>
+        <a class="sidebar__nav-card sidebar__nav-card--random" href="/archive/?random=1" title="Summon a random artifact from the archive" id="random-artifact-btn">
+          <span class="sidebar__nav-card-label">Summon Random Artifact</span>
+          <span class="sidebar__nav-card-badge" id="random-artifact-id">RND-???</span>
+        </a>
+        <a class="sidebar__nav-card sidebar__nav-card--drawer" href="/junk-drawer/" aria-label="Free Browser Tools">
+          <span class="sidebar__drawer-handle" aria-hidden="true"></span>
+          <span class="sidebar__nav-card-label">Free Browser Tools</span>
+        </a>
+      </div>
+    </aside>
+
+    <main class="content" id="op-content" tabindex="-1">
+      <header class="op-hub-header">
+        <div class="op-hub-header__meta">
+          <span class="op-hub-header__tag">[ OPERATOR ARCHIVE / SYSTEM LOG ]</span>
+          <span class="op-hub-header__status">STATUS: ACTIVE LOG</span>
+        </div>
+        <h1>Operator's Log</h1>
+        <p class="op-hub-lede">Build log documenting projects, experiments, lessons learned, and releases — from shipped Chrome extensions to local AI orchestration systems and developer safety tools.</p>
+      </header>
+
+      <section class="op-log-feed" aria-labelledby="op-feed-heading">
+        <header class="op-hub-feed-header">
+          <div class="op-hub-feed-titles">
+            <h2 id="op-feed-heading">Latest Builds</h2>
+            <p class="op-hub-feed-sub">Detailed logs, architectural notes, and feature progress from active projects.</p>
+          </div>
         </header>
 
-        <section class="op-entries" aria-label="Blog entries">
-          <article class="op-entry-card">
-            <div class="op-entry-card__meta">
-              <time class="op-entry-card__date" datetime="2026-08-14">2026-08-14</time>
-              <span class="op-entry-card__tag op-entry-card__tag--experiment">Experiment</span>
-              <span class="op-entry-card__tag">Case Study</span>
-              <span class="op-entry-card__tag">Design Systems</span>
-              <span class="op-entry-card__project">Design Skill Benchmark Lab</span>
+        <div class="studio-lab-log-list">
+          <!-- Entry 005 (Featured) -->
+          <article class="studio-build-entry studio-build-entry--featured" data-project="design-skill-benchmark">
+            <div class="studio-build-entry__rail">
+              <span class="studio-build-entry__num">
+                <span class="entry-num-mark" aria-hidden="true"></span>
+                #005
+              </span>
+              <span class="studio-status studio-status--build">BASELINE 001</span>
             </div>
-            <h2 class="op-entry-card__title">
-              <a href="/operator-log/design-skill-benchmark/">I Built a Test Bench for Website Design Skills</a>
-            </h2>
-            <p class="op-entry-card__excerpt">32 generated websites. Six models. Three design systems. One attempt to stop saying “this looks pretty good.”</p>
-            <div class="op-entry-card__links">
-              <a class="op-entry-card__cta" href="/operator-log/design-skill-benchmark/">Read the case study &rarr;</a>
-              <a class="op-entry-card__project-link" href="/benchmark/">Inspect 32-record archive &rarr;</a>
-              <a class="op-entry-card__project-link" href="/operator-log/design-skill-benchmark/data/baseline.csv" download>Download baseline &rarr;</a>
-            </div>
-          </article>
-
-          <article class="op-entry-card">
-            <div class="op-entry-card__meta">
-              <time class="op-entry-card__date" datetime="2026-08-02">2026-08-02</time>
-              <span class="op-entry-card__tag op-entry-card__tag--experiment">Experiment</span>
-              <span class="op-entry-card__tag">Developer Tools</span>
-              <span class="op-entry-card__tag">Safety</span>
-              <span class="op-entry-card__project">Localhost Watchdog</span>
-            </div>
-            <h2 class="op-entry-card__title">
-              <a href="/operator-log/localhost-watchdog-update-02/">Update 02 — Localhost Watchdog Can Manage Servers Now</a>
-            </h2>
-            <p class="op-entry-card__excerpt">Localhost Watchdog moves from inspection into guarded management with evidence-based stop, start, restart, adoption, and a Windows tray companion.</p>
-            <div class="op-entry-card__links">
-              <a class="op-entry-card__cta" href="/operator-log/localhost-watchdog-update-02/">Read the full entry &rarr;</a>
-            </div>
-          </article>
-
-          <article class="op-entry-card">
-            <div class="op-entry-card__meta">
-              <time class="op-entry-card__date" datetime="2026-06-20">2026-06-20</time>
-              <span class="op-entry-card__tag op-entry-card__tag--shipped">Shipped</span>
-              <span class="op-entry-card__project">Lighthouse Handoff</span>
-            </div>
-            <h2 class="op-entry-card__title">
-              <a href="/operator-log/building-lighthouse-handoff/">Building Lighthouse Handoff: Turning PageSpeed Reports Into Actionable Work</a>
-            </h2>
-            <p class="op-entry-card__excerpt">A Chrome extension and local companion that turns PageSpeed Insights into structured Markdown with confidence thresholds, fixed recommendation ordering, multi-run median testing, and variance analysis — ready for coding agents to act on.</p>
-            <div class="op-entry-card__links">
-              <a class="op-entry-card__cta" href="/operator-log/building-lighthouse-handoff/">Read the full entry &rarr;</a>
-              <a class="op-entry-card__project-link" href="/lighthouse-handoff/">View project page &rarr;</a>
+            <div class="studio-build-entry__main">
+              <div class="studio-build-entry__header">
+                <span class="project-tag">DESIGN SKILL BENCHMARK LAB</span>
+                <time datetime="2026-08-14" class="studio-build-entry__date">AUG 14, 2026</time>
+              </div>
+              <h3 class="studio-build-entry__title">
+                <a href="/operator-log/design-skill-benchmark/">I Built a Test Bench for Website Design Skills</a>
+              </h3>
+              <p class="studio-build-entry__desc">
+                Thirty-two generated websites, six models, three design systems, and a grading layer built to separate skill fidelity from attractive screenshots.
+              </p>
+              <div class="studio-build-artifact studio-build-artifact--report" aria-hidden="true">
+                <div class="artifact-report__row"><span class="artifact-report__label">OUTPUTS</span><span class="artifact-report__bar artifact-report__bar--ok" style="width:80%"></span><span class="artifact-report__val">32</span></div>
+                <div class="artifact-report__row"><span class="artifact-report__label">MODELS</span><span class="artifact-report__bar artifact-report__bar--warn" style="width:42%"></span><span class="artifact-report__val">06</span></div>
+                <div class="artifact-report__row"><span class="artifact-report__label">SKILLS</span><span class="artifact-report__bar artifact-report__bar--ok" style="width:24%"></span><span class="artifact-report__val">03</span></div>
+                <div class="artifact-report__row"><span class="artifact-report__label">VIEWPORTS</span><span class="artifact-report__bar artifact-report__bar--warn" style="width:42%"></span><span class="artifact-report__val">06</span></div>
+                <span class="artifact-report__tag">assistant-reviewed / baseline recorded</span>
+              </div>
+              <div class="studio-build-entry__actions">
+                <a class="lemon-cta-btn lemon-cta-btn--primary" href="/operator-log/design-skill-benchmark/">Read the case study &rarr;</a>
+                <a class="lemon-cta-btn lemon-cta-btn--secondary" href="/benchmark/">Browse 32 Records &rarr;</a>
+                <a class="lemon-cta-btn lemon-cta-btn--secondary" href="/operator-log/design-skill-benchmark/data/baseline.csv" download>Download CSV</a>
+              </div>
             </div>
           </article>
 
-          <article class="op-entry-card">
-            <div class="op-entry-card__meta">
-              <time class="op-entry-card__date" datetime="2026-06-19">2026-06-19</time>
-              <span class="op-entry-card__tag op-entry-card__tag--experiment">Experiment</span>
-              <span class="op-entry-card__project">Locailly</span>
+          <!-- Entry 004 -->
+          <article class="studio-build-entry" data-project="watchdog">
+            <div class="studio-build-entry__rail">
+              <span class="studio-build-entry__num">
+                <span class="entry-num-mark" aria-hidden="true"></span>
+                #004
+              </span>
+              <span class="studio-status studio-status--update">UPDATE 02</span>
             </div>
-            <h2 class="op-entry-card__title">
-              <a href="/operator-log/building-locailly/">Building a Tiny AI Pit Crew With Local Models</a>
-            </h2>
-            <p class="op-entry-card__excerpt">An experiment in local AI orchestration — a Local Brain, Task Tracks, AI Pit Crew, capability routing, and optional NearbyNodes working together so one person can operate like a coordinated team using small local models.</p>
-            <div class="op-entry-card__links">
-              <a class="op-entry-card__cta" href="/operator-log/building-locailly/">Read the full entry &rarr;</a>
+            <div class="studio-build-entry__main">
+              <div class="studio-build-entry__header">
+                <span class="project-tag project-tag--watchdog">LOCAL HOST WATCHDOG</span>
+                <time datetime="2026-08-02" class="studio-build-entry__date">AUG 02, 2026</time>
+              </div>
+              <h3 class="studio-build-entry__title">
+                <a href="/operator-log/localhost-watchdog-update-02/">Update 02 &mdash; Localhost Watchdog Can Manage Servers Now</a>
+              </h3>
+              <p class="studio-build-entry__desc">
+                Localhost Watchdog moves from inspection into guarded management with evidence-based stop, start, restart, adoption, and a Windows tray companion.
+              </p>
+              <!-- Terminal artifact fragment -->
+              <div class="studio-build-artifact studio-build-artifact--terminal" aria-hidden="true">
+                <div class="artifact-terminal__bar">
+                  <span class="artifact-terminal__dot"></span><span class="artifact-terminal__dot"></span><span class="artifact-terminal__dot"></span>
+                  <span class="artifact-terminal__title">watchdog.js &mdash; port scan</span>
+                </div>
+                <pre class="artifact-terminal__body"><span class="t-dim">$ </span><span class="t-cmd">node watchdog.js --scan</span>
+<span class="t-dim">[SCAN]  </span>Port 3000 <span class="t-ok">&rarr; ACTIVE</span>  node  PID 18442
+<span class="t-dim">[SCAN]  </span>Port 5173 <span class="t-ok">&rarr; ACTIVE</span>  node  PID 9821
+<span class="t-dim">[SCAN]  </span>Port 8080 <span class="t-warn">&rarr; STALE </span>  No response (408)
+<span class="t-dim">[GATE]  </span>Confidence: <span class="t-ok">0.92</span> &mdash; proceeding
+<span class="t-dim">[STOP]  </span>PID 8080 <span class="t-ok">&rarr; STOPPED</span>  (dry-run verified)</pre>
+              </div>
+              <div class="studio-build-entry__actions">
+                <a class="lemon-cta-btn lemon-cta-btn--primary" href="/operator-log/localhost-watchdog-update-02/">Read the update &rarr;</a>
+                <a class="lemon-cta-btn lemon-cta-btn--secondary" href="/operator-log/building-localhost-watchdog/">Read introduction</a>
+              </div>
             </div>
           </article>
 
-          <article class="op-entry-card">
-            <div class="op-entry-card__meta">
-              <time class="op-entry-card__date" datetime="2026-06-18">2026-06-18</time>
-              <span class="op-entry-card__tag op-entry-card__tag--experiment">Experiment</span>
-              <span class="op-entry-card__project">Localhost Watchdog</span>
+          <!-- Entry 003 -->
+          <article class="studio-build-entry" data-project="lighthouse">
+            <div class="studio-build-entry__rail">
+              <span class="studio-build-entry__num">#003</span>
+              <span class="studio-status studio-status--build">BUILD LOG</span>
             </div>
-            <h2 class="op-entry-card__title">
-              <a href="/operator-log/building-localhost-watchdog/">Building a Safer Way to Understand Local Development Servers</a>
-            </h2>
-            <p class="op-entry-card__excerpt">A Windows-first local server scanner, classifier, and process manager with a safety-first design: dry runs, confidence gates, PID/port revalidation, test-first execution, and no destructive action without confirmation.</p>
-            <div class="op-entry-card__links">
-              <a class="op-entry-card__cta" href="/operator-log/building-localhost-watchdog/">Read the full entry &rarr;</a>
+            <div class="studio-build-entry__main">
+              <div class="studio-build-entry__header">
+                <span class="project-tag project-tag--lighthouse">LIGHTHOUSE HANDOFF</span>
+                <time datetime="2026-06-20" class="studio-build-entry__date">JUN 20, 2026</time>
+              </div>
+              <h3 class="studio-build-entry__title">
+                <a href="/operator-log/building-lighthouse-handoff/">Building Lighthouse Handoff: Turning PageSpeed Reports Into Actionable Work</a>
+              </h3>
+              <p class="studio-build-entry__desc">
+                A Chrome extension and local companion that turns PageSpeed Insights into structured Markdown with confidence thresholds, fixed recommendation ordering, multi-run median testing, and variance analysis — ready for coding agents to act on.
+              </p>
+              <!-- Compact report snippet -->
+              <div class="studio-build-artifact studio-build-artifact--report" aria-hidden="true">
+                <div class="artifact-report__row"><span class="artifact-report__label">FCP</span><span class="artifact-report__bar artifact-report__bar--warn" style="width:62%"></span><span class="artifact-report__val">2.8s</span></div>
+                <div class="artifact-report__row"><span class="artifact-report__label">LCP</span><span class="artifact-report__bar artifact-report__bar--fail" style="width:78%"></span><span class="artifact-report__val">4.1s</span></div>
+                <div class="artifact-report__row"><span class="artifact-report__label">CLS</span><span class="artifact-report__bar artifact-report__bar--ok" style="width:18%"></span><span class="artifact-report__val">0.04</span></div>
+                <div class="artifact-report__row"><span class="artifact-report__label">TBT</span><span class="artifact-report__bar artifact-report__bar--warn" style="width:54%"></span><span class="artifact-report__val">480ms</span></div>
+                <span class="artifact-report__tag">median / 3 runs</span>
+              </div>
+              <div class="studio-build-entry__actions">
+                <a class="lemon-cta-btn lemon-cta-btn--primary" href="/operator-log/building-lighthouse-handoff/">Read the full entry &rarr;</a>
+                <a class="lemon-cta-btn lemon-cta-btn--secondary" href="/lighthouse-handoff/">View project page &rarr;</a>
+              </div>
             </div>
           </article>
-        </section>
-      </div>
+
+          <!-- Entry 002 -->
+          <article class="studio-build-entry" data-project="locailly">
+            <div class="studio-build-entry__rail">
+              <span class="studio-build-entry__num">#002</span>
+              <span class="studio-status studio-status--build">BUILD LOG</span>
+            </div>
+            <div class="studio-build-entry__main">
+              <div class="studio-build-entry__header">
+                <span class="project-tag project-tag--locailly">LOCAILLY</span>
+                <time datetime="2026-06-19" class="studio-build-entry__date">JUN 19, 2026</time>
+              </div>
+              <h3 class="studio-build-entry__title">
+                <a href="/operator-log/building-locailly/">Building Locailly: A Local AI Orchestration System</a>
+              </h3>
+              <p class="studio-build-entry__desc">
+                An experiment in local AI orchestration &mdash; a Local Brain, Task Tracks, AI Pit Crew, capability routing, and optional NearbyNodes working together so one person can operate like a coordinated team using small local models.
+              </p>
+              <div class="studio-build-entry__actions">
+                <a class="lemon-cta-btn lemon-cta-btn--primary" href="/operator-log/building-locailly/">Read the full entry &rarr;</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Entry 001 -->
+          <article class="studio-build-entry studio-build-entry--compact" data-project="watchdog">
+            <div class="studio-build-entry__rail">
+              <span class="studio-build-entry__num">#001</span>
+              <span class="studio-status studio-status--build">BUILD LOG</span>
+            </div>
+            <div class="studio-build-entry__main">
+              <div class="studio-build-entry__header">
+                <span class="project-tag project-tag--watchdog">LOCAL HOST WATCHDOG</span>
+                <time datetime="2026-06-18" class="studio-build-entry__date">JUN 18, 2026</time>
+              </div>
+              <h3 class="studio-build-entry__title">
+                <a href="/operator-log/building-localhost-watchdog/">Building Localhost Watchdog: A Safe Way to Manage Local Development Servers</a>
+              </h3>
+              <p class="studio-build-entry__desc studio-build-entry__desc--brief">
+                Windows-first port scanner and process manager with dry runs, confidence gates, PID revalidation, and no destructive action without confirmation.
+              </p>
+              <div class="studio-build-entry__actions">
+                <a class="lemon-cta-btn lemon-cta-btn--primary" href="/operator-log/building-localhost-watchdog/">Read the full entry &rarr;</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
     </main>
-
-    <footer class="op-footer" role="contentinfo">
-      <span class="op-footer__left">LEMONTEED / OPERATOR'S LOG</span>
-      <span class="op-footer__right"><a href="/">← Back to the archive</a></span>
-    </footer>
   </div>
 </body>
 </html>

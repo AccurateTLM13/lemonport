@@ -56,37 +56,67 @@
 
   <div class="site-shell">
     <aside class="sidebar" aria-label="Site navigation">
-      <div class="sidebar__top">
+      <div class="sidebar__brand-block">
         <a class="brand" href="/" aria-label="Lemonteed home">
           <img class="brand__logo" src="/images/lemonteedlogo-250.webp" srcset="/images/lemonteedlogo-250.webp 250w, /images/lemonteedlogo-456.webp 456w" sizes="160px" width="456" height="96" alt="Lemonteed">
         </a>
-        <a class="info-link" href="/studio-lab/">+ STUDIO LAB</a>
-        <a class="random-artifact" href="/archive/?random=1" aria-label="Summon random artifact: opens a surprise archive page">
-          SUMMON RANDOM ARTIFACT
-          <span class="random-artifact__hint">Surprise archive page</span>
+      </div>
+
+      <nav class="sidebar__group" aria-label="Lemonteed workbench">
+        <span class="sidebar__group-label">Workbench</span>
+        <a class="sidebar__nav-card" href="/studio-lab/">
+          <span class="sidebar__nav-card-label">Studio Lab</span>
+          <span class="sidebar__nav-card-badge">Active Builds</span>
+        </a>
+        <a class="sidebar__nav-card" href="/operator-log/">
+          <span class="sidebar__nav-card-label">Operator's Log</span>
+          <span class="sidebar__nav-card-badge">Build Notes</span>
+        </a>
+        <a class="sidebar__nav-card" href="/benchmark/">
+          <span class="sidebar__nav-card-label">Design Benchmark</span>
+          <span class="sidebar__nav-card-badge">Evidence</span>
+        </a>
+      </nav>
+
+      <nav class="sidebar__group" aria-label="Districts &amp; Filters">
+        <span class="sidebar__group-label">Districts &amp; Filters</span>
+        <a class="sidebar__nav-card" href="/archive/" data-category-link="all">
+          <span class="sidebar__nav-card-label">All Artifacts</span>
+          <span class="sidebar__nav-card-arrow">&rarr;</span>
+        </a>
+        <a class="sidebar__nav-card" href="/vrg-cards/" data-category-link="vrg-cards">
+          <span class="sidebar__nav-card-label">VRG Cards</span>
+          <span class="sidebar__nav-card-arrow">&rarr;</span>
+        </a>
+        <a class="sidebar__nav-card" href="/what-if/" data-category-link="what-if">
+          <span class="sidebar__nav-card-label">What If</span>
+          <span class="sidebar__nav-card-arrow">&rarr;</span>
+        </a>
+        <a class="sidebar__nav-card" href="/misc-gens/" data-category-link="misc-gens">
+          <span class="sidebar__nav-card-label">Misc Gens</span>
+          <span class="sidebar__nav-card-arrow">&rarr;</span>
+        </a>
+        <a class="sidebar__nav-card" href="/memetic-warfare/">
+          <span class="sidebar__nav-card-label">Memetic Warfare</span>
+          <span class="sidebar__nav-card-arrow">&rarr;</span>
+        </a>
+        <a class="sidebar__nav-card" href="/lemonteed-fm/">
+          <span class="sidebar__nav-card-label">Lemonteed FM</span>
+          <span class="sidebar__nav-card-arrow">&rarr;</span>
+        </a>
+      </nav>
+
+      <div class="sidebar__group" aria-label="Experiments &amp; Utilities">
+        <span class="sidebar__group-label">Experiments &amp; Utilities</span>
+        <a class="sidebar__nav-card sidebar__nav-card--random" href="/archive/?random=1" title="Summon a random artifact from the archive">
+          <span class="sidebar__nav-card-label">Summon Random Artifact</span>
+          <span class="sidebar__nav-card-badge">RND-???</span>
+        </a>
+        <a class="sidebar__nav-card sidebar__nav-card--drawer" href="/junk-drawer/" aria-label="Free Browser Tools">
+          <span class="sidebar__drawer-handle" aria-hidden="true"></span>
+          <span class="sidebar__nav-card-label">Free Browser Tools</span>
         </a>
       </div>
-      <nav class="category-nav" aria-label="Portfolio categories">
-        <span class="nav-label">Categories</span>
-        <a class="category-link" href="/archive/" data-category-link="all">All</a>
-        <a class="category-link" href="/vrg-cards/" data-category-link="vrg-cards">VRG Cards</a>
-        <a class="category-link" href="/what-if/" data-category-link="what-if">What If</a>
-        <a class="category-link" href="/misc-gens/" data-category-link="misc-gens">Misc Gens</a>
-        <a class="category-link" href="/memetic-warfare/">Memetic Warfare</a>
-        <a class="category-link" href="/lemonteed-fm/">Lemonteed FM</a>
-      </nav>
-      <a href="/junk-drawer/" class="junk-drawer-module" aria-label="Open Junk Drawer">
-        <div class="junk-drawer-module__face">
-          <div class="junk-drawer-module__handle"></div>
-          <span class="junk-drawer-module__label">Junk Drawer</span>
-        </div>
-      </a>
-      <nav class="sidebar__utility-nav" aria-label="Lemonteed workbench">
-        <p class="sidebar__utility-label">Workbench</p>
-        <a class="sidebar__utility-link sidebar__utility-link--primary" href="/studio-lab/">Studio Lab</a>
-        <a class="sidebar__utility-link" href="/operator-log/">Operator's Log</a>
-        <a class="sidebar__utility-link" href="/benchmark/">Design Benchmark</a>
-      </nav>
     </aside>
 
     <div class="lh-shell">

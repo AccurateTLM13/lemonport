@@ -1,3 +1,7 @@
+/**
+ * mobile-header.js - Mobile & Tablet Responsive Navigation
+ * Transforms the desktop sidebar into a compact 54px header with an accessible slide-over drawer.
+ */
 (function () {
   const sidebar = document.querySelector(".sidebar");
 
@@ -5,163 +9,142 @@
     return;
   }
 
-  const topRow = sidebar.querySelector(".sidebar__top");
-  const categoryNav = sidebar.querySelector(".category-nav");
-
-  if (!topRow || !categoryNav) {
-    return;
-  }
-
   sidebar.dataset.mobileHeaderReady = "true";
 
-  const menuButton = document.createElement("button");
-  menuButton.className = "mobile-menu-toggle";
-  menuButton.type = "button";
-  menuButton.setAttribute("aria-label", "Open navigation menu");
-  menuButton.setAttribute("aria-expanded", "false");
-  menuButton.textContent = "\u2630";
-  topRow.append(menuButton);
+  // 1. Locate or normalize the top header row inside the sidebar
+  let topRow = sidebar.querySelector(".sidebar__top") || sidebar.querySelector(".sidebar__brand-block");
+  if (!topRow) {
+    topRow = document.createElement("div");
+    topRow.className = "sidebar__top";
+    sidebar.prepend(topRow);
+    const brand = sidebar.querySelector(".brand");
+    if (brand) topRow.append(brand);
+  }
 
-  const categoryButton = document.createElement("button");
-  categoryButton.className = "mobile-category-toggle";
-  categoryButton.type = "button";
-  categoryButton.setAttribute("aria-label", "Open category menu");
-  categoryButton.setAttribute("aria-expanded", "false");
-  categoryButton.innerHTML = '<span data-mobile-category-label>All</span><span aria-hidden="true">\u25be</span>';
-  topRow.after(categoryButton);
+  // Ensure topRow has .sidebar__top class for consistent styling
+  topRow.classList.add("sidebar__top");
 
-  const drawer = document.createElement("div");
-  drawer.className = "mobile-nav-sheet";
-  drawer.hidden = true;
-  drawer.innerHTML = `
-    <div class="mobile-nav-sheet__backdrop" data-mobile-nav-close></div>
-    <section class="mobile-nav-sheet__panel" role="dialog" aria-modal="true" aria-label="Mobile navigation">
-      <div class="mobile-nav-sheet__head">
-        <span data-mobile-sheet-title>Artifact Terminal</span>
-        <button class="mobile-nav-sheet__close" type="button" data-mobile-nav-close aria-label="Close navigation">X</button>
-      </div>
-      <div class="mobile-nav-sheet__actions" data-mobile-nav-actions></div>
-      <nav class="mobile-nav-sheet__categories" data-mobile-nav-categories aria-label="Portfolio categories"></nav>
-    </section>
-  `;
-  document.body.append(drawer);
+  // 2. Add or find mobile menu toggle button
+  let menuButton = sidebar.querySelector(".mobile-menu-toggle");
+  if (!menuButton) {
+    menuButton = document.createElement("button");
+    menuButton.className = "mobile-menu-toggle";
+    menuButton.type = "button";
+    menuButton.setAttribute("aria-label", "Open navigation menu");
+    menuButton.setAttribute("aria-expanded", "false");
+    menuButton.innerHTML = '<span class="mobile-menu-toggle__icon" aria-hidden="true">☰</span><span class="mobile-menu-toggle__label">MENU</span>';
+    topRow.append(menuButton);
+  }
 
-  const title = drawer.querySelector("[data-mobile-sheet-title]");
-  const actions = drawer.querySelector("[data-mobile-nav-actions]");
-  const categories = drawer.querySelector("[data-mobile-nav-categories]");
+  // 3. Create or attach the mobile navigation sheet / drawer
+  let drawer = document.querySelector(".mobile-nav-sheet");
+  if (!drawer) {
+    drawer = document.createElement("div");
+    drawer.className = "mobile-nav-sheet";
+    drawer.hidden = true;
+    drawer.innerHTML = `
+      <div class="mobile-nav-sheet__backdrop" data-mobile-nav-close></div>
+      <section class="mobile-nav-sheet__panel" role="dialog" aria-modal="true" aria-label="Lemonteed Navigation">
+        <div class="mobile-nav-sheet__head">
+          <div class="mobile-nav-sheet__brand">
+            <span class="mobile-nav-sheet__logo-text">LEMONTEED</span>
+            <span class="mobile-nav-sheet__tag">NAVIGATION</span>
+          </div>
+          <button class="mobile-nav-sheet__close" type="button" data-mobile-nav-close aria-label="Close navigation">✕</button>
+        </div>
+        <div class="mobile-nav-sheet__scroll">
+          <div class="mobile-nav-sheet__section">
+            <div class="mobile-nav-sheet__section-title">WORKBENCH</div>
+            <div class="mobile-nav-sheet__links" data-mobile-workbench></div>
+          </div>
+          <div class="mobile-nav-sheet__section">
+            <div class="mobile-nav-sheet__section-title">DISTRICTS &amp; FILTERS</div>
+            <div class="mobile-nav-sheet__links" data-mobile-categories></div>
+          </div>
+          <div class="mobile-nav-sheet__section">
+            <div class="mobile-nav-sheet__section-title">EXPERIMENTS &amp; UTILITIES</div>
+            <div class="mobile-nav-sheet__links" data-mobile-utilities></div>
+          </div>
+        </div>
+      </section>
+    `;
+    document.body.append(drawer);
+  }
+
+  const workbenchContainer = drawer.querySelector("[data-mobile-workbench]");
+  const categoriesContainer = drawer.querySelector("[data-mobile-categories]");
+  const utilitiesContainer = drawer.querySelector("[data-mobile-utilities]");
   const closeButtons = Array.from(drawer.querySelectorAll("[data-mobile-nav-close]"));
-  const label = categoryButton.querySelector("[data-mobile-category-label]");
   let lastFocusedElement = null;
 
-  function activeCategoryLabel() {
-    const active = categoryNav.querySelector(".category-link.is-active, .category-link[aria-current]");
+  function populateDrawer() {
+    const rawPath = window.location.pathname;
+    const currentPath = rawPath.replace(/\/$/, '') || '/';
 
-    if (active) {
-      return active.textContent.trim();
+    // 1. Workbench links
+    const workbenchItems = [
+      { name: "Studio Lab", href: "/studio-lab/", badge: "Active Builds" },
+      { name: "Operator's Log", href: "/operator-log/", badge: "Build Notes" },
+      { name: "Design Benchmark", href: "/benchmark/", badge: "Evidence" }
+    ];
+
+    if (workbenchContainer) {
+      workbenchContainer.innerHTML = workbenchItems.map(item => {
+        const itemPath = item.href.replace(/\/$/, '');
+        const isCurrent = currentPath === itemPath || (itemPath !== '' && currentPath.startsWith(itemPath));
+        return `
+          <a class="mobile-nav-sheet__link ${isCurrent ? 'is-active' : ''}" href="${item.href}" ${isCurrent ? 'aria-current="page"' : ''}>
+            <span>${item.name}</span>
+            <span class="mobile-nav-sheet__badge">${item.badge}</span>
+          </a>
+        `;
+      }).join('');
     }
 
-    const pageElement = document.querySelector("[data-gallery-page]");
+    // 2. District & Category links
+    const categoryItems = [
+      { name: "All Artifacts", href: "/archive/", key: "all" },
+      { name: "VRG Cards", href: "/vrg-cards/", key: "vrg-cards" },
+      { name: "What If", href: "/what-if/", key: "what-if" },
+      { name: "Misc Gens", href: "/misc-gens/", key: "misc-gens" },
+      { name: "Memetic Warfare", href: "/memetic-warfare/", key: "memetic-warfare" },
+      { name: "Lemonteed FM", href: "/lemonteed-fm/", key: "lemonteed-fm" }
+    ];
 
-    if (pageElement && pageElement.dataset.galleryTitle) {
-      return pageElement.dataset.galleryTitle;
+    if (categoriesContainer) {
+      categoriesContainer.innerHTML = categoryItems.map(item => {
+        const itemPath = item.href.replace(/\/$/, '');
+        const isCurrent = currentPath === itemPath || (itemPath !== '/archive' && itemPath !== '' && currentPath.startsWith(itemPath));
+        return `
+          <a class="mobile-nav-sheet__link ${isCurrent ? 'is-active' : ''}" href="${item.href}" data-category="${item.key}" ${isCurrent ? 'aria-current="page"' : ''}>
+            <span>${item.name}</span>
+            <span class="mobile-nav-sheet__arrow">→</span>
+          </a>
+        `;
+      }).join('');
     }
 
-    return "All";
-  }
-
-  function updateActiveLabel() {
-    label.textContent = activeCategoryLabel();
-  }
-
-  function buildActions() {
-    actions.textContent = "";
-
-    const info = topRow.querySelector(".info-link");
-
-    if (info && (info.tagName !== "BUTTON" || document.querySelector("[data-info]"))) {
-      if (info.tagName === "BUTTON") {
-        const button = document.createElement("button");
-        button.className = "mobile-nav-sheet__action";
-        button.type = "button";
-        button.textContent = info.textContent.trim() || "Info";
-        button.addEventListener("click", () => {
-          closeDrawer();
-          info.click();
-        });
-        actions.append(button);
-      } else {
-        const link = info.cloneNode(true);
-        link.classList.add("mobile-nav-sheet__action");
-        actions.append(link);
-      }
+    // 3. Utilities & Actions
+    if (utilitiesContainer) {
+      utilitiesContainer.innerHTML = `
+        <a class="mobile-nav-sheet__action mobile-nav-sheet__action--random" href="/archive/?random=1">
+          <span>SUMMON RANDOM ARTIFACT</span>
+          <span class="mobile-nav-sheet__sub">RND-???</span>
+        </a>
+        <a class="mobile-nav-sheet__action" href="/junk-drawer/">
+          <span>FREE BROWSER TOOLS</span>
+        </a>
+      `;
     }
-
-    const junk = sidebar.querySelector(".junk-drawer-module");
-    if (junk) {
-      const link = document.createElement("a");
-      link.className = "mobile-nav-sheet__action";
-      link.href = junk.getAttribute("href") || "/junk-drawer/";
-      link.textContent = "Junk Drawer";
-      actions.append(link);
-    }
-
-    const operator = sidebar.querySelector(".op-status-badge");
-    if (operator) {
-      const link = document.createElement("a");
-      link.className = "mobile-nav-sheet__action";
-      link.href = operator.getAttribute("href") || "/operator-log/";
-      link.textContent = "Operator Log";
-      actions.append(link);
-    }
-
-    actions.hidden = actions.children.length === 0;
-  }
-
-  function sourceForLink(link) {
-    const href = link.getAttribute("href");
-    const key = link.dataset.categoryLink;
-    const links = Array.from(categoryNav.querySelectorAll(".category-link"));
-
-    return links.find((item) => {
-      if (key && item.dataset.categoryLink === key) {
-        return true;
-      }
-
-      return item.getAttribute("href") === href && item.textContent.trim() === link.textContent.trim();
-    });
-  }
-
-  function buildCategories() {
-    categories.textContent = "";
-
-    Array.from(categoryNav.querySelectorAll(".category-link")).forEach((source) => {
-      const link = source.cloneNode(true);
-      link.classList.add("mobile-nav-sheet__category");
-      link.addEventListener("click", (event) => {
-        const original = sourceForLink(link);
-
-        if (original) {
-          event.preventDefault();
-          closeDrawer();
-          original.click();
-          window.setTimeout(updateActiveLabel, 0);
-        }
-      });
-      categories.append(link);
-    });
   }
 
   function trapFocus(event) {
-    if (event.key !== "Tab" || drawer.hidden) {
-      return;
-    }
+    if (event.key !== "Tab" || drawer.hidden) return;
 
     const focusable = Array.from(drawer.querySelectorAll("a[href], button:not([disabled])"))
       .filter((item) => item.offsetParent !== null || item === document.activeElement);
 
-    if (!focusable.length) {
-      return;
-    }
+    if (!focusable.length) return;
 
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
@@ -175,67 +158,35 @@
     }
   }
 
-  function openDrawer(mode) {
-    updateActiveLabel();
-    buildActions();
-    buildCategories();
-    title.textContent = mode === "categories" ? "Categories" : "Artifact Terminal";
+  function openDrawer() {
+    populateDrawer();
     lastFocusedElement = document.activeElement;
     drawer.hidden = false;
     document.body.classList.add("mobile-nav-open");
     menuButton.setAttribute("aria-expanded", "true");
-    categoryButton.setAttribute("aria-expanded", "true");
-    const first = mode === "categories"
-      ? drawer.querySelector(".mobile-nav-sheet__category")
-      : drawer.querySelector(".mobile-nav-sheet__action, .mobile-nav-sheet__category");
 
-    if (first) {
-      first.focus();
-    }
+    const first = drawer.querySelector(".mobile-nav-sheet__link, .mobile-nav-sheet__close");
+    if (first) first.focus();
   }
 
   function closeDrawer() {
-    if (drawer.hidden) {
-      return;
-    }
-
+    if (drawer.hidden) return;
     drawer.hidden = true;
     document.body.classList.remove("mobile-nav-open");
     menuButton.setAttribute("aria-expanded", "false");
-    categoryButton.setAttribute("aria-expanded", "false");
 
     if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
       lastFocusedElement.focus();
     }
   }
 
-  function syncCompactState() {
-    sidebar.classList.toggle("is-mobile-compact", window.scrollY > 54);
-  }
-
-  menuButton.addEventListener("click", () => openDrawer("menu"));
-  categoryButton.addEventListener("click", () => openDrawer("categories"));
-  closeButtons.forEach((button) => button.addEventListener("click", closeDrawer));
+  menuButton.addEventListener("click", openDrawer);
+  closeButtons.forEach((btn) => btn.addEventListener("click", closeDrawer));
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
       closeDrawer();
     }
-
     trapFocus(event);
   });
-
-  if (categoryNav) {
-    const observer = new MutationObserver(updateActiveLabel);
-    observer.observe(categoryNav, {
-      attributes: true,
-      childList: true,
-      subtree: true,
-      characterData: true
-    });
-  }
-
-  window.addEventListener("scroll", syncCompactState, { passive: true });
-  updateActiveLabel();
-  syncCompactState();
-}());
+})();

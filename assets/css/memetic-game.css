@@ -888,64 +888,6 @@
   }
 }
 
-/* Loadout selection refactor */
-.memetic-shell {
-  display: block;
-}
-
-.memetic-shell .sidebar {
-  position: sticky;
-  top: 0;
-  z-index: 40;
-  width: 100%;
-  min-height: 0;
-  padding: 12px 18px;
-  border-bottom: 1px solid rgb(0 0 0 / 0.12);
-  background: rgb(247 247 244 / 0.96);
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.memetic-shell .sidebar__top {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-
-.memetic-shell .brand {
-  width: 138px;
-}
-
-.memetic-shell .category-nav {
-  display: flex;
-  overflow-x: auto;
-  align-items: center;
-  gap: 14px;
-  scrollbar-width: none;
-}
-
-.memetic-shell .category-nav::-webkit-scrollbar {
-  display: none;
-}
-
-.memetic-shell .nav-label {
-  display: none;
-}
-
-.memetic-shell .category-link {
-  flex: 0 0 auto;
-  font-size: 12px;
-  white-space: nowrap;
-}
-
-.memetic-shell .content {
-  width: 100%;
-  max-width: 1480px;
-  margin: 0 auto;
-  padding: 18px 18px 64px;
-}
 
 .memetic-app {
   min-height: auto;
@@ -1233,27 +1175,7 @@
 }
 
 @media (max-width: 820px) {
-  .memetic-shell .sidebar {
-    position: static;
-    padding: 10px 12px;
-  }
 
-  .memetic-shell .sidebar__top {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .memetic-shell .brand {
-    width: min(152px, 52vw);
-  }
-
-  .memetic-shell .content {
-    padding: 10px 8px 42px;
-  }
-
-  .status-chips {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 
   .weapon-grid {
     order: 1;
@@ -1878,39 +1800,4 @@
   }
 }
 
-@media (max-width: 700px) {
-  .memetic-shell .sidebar {
-    position: sticky;
-    top: 0;
-    z-index: var(--z-nav);
-    padding: 10px 12px 0;
-  }
 
-  .memetic-shell .sidebar__top {
-    display: grid;
-    width: 100%;
-    grid-template-columns: minmax(0, 1fr) var(--touch-target);
-    align-items: center;
-    justify-content: stretch;
-    gap: 8px;
-  }
-
-  .memetic-shell .brand {
-    width: 138px;
-    max-width: 58vw;
-  }
-
-  .memetic-shell .category-nav,
-  .memetic-shell .junk-drawer-module {
-    display: none;
-  }
-
-  .memetic-shell .sidebar.is-mobile-compact {
-    padding: 6px 10px;
-  }
-
-  .memetic-shell .sidebar.is-mobile-compact .brand {
-    width: 112px;
-    max-width: 34vw;
-  }
-}

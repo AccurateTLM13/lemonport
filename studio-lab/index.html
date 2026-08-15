@@ -44,6 +44,7 @@
       }
     </script>
     <script src="/assets/js/mobile-header.js?v=1" defer></script>
+    <script src="/assets/js/studio-lab.js?v=1" defer></script>
     <script src="/assets/js/lemmy-data.js?v=2" defer></script>
     <script src="/assets/js/lemmy.js?v=2" defer></script>
   </head>
@@ -59,43 +60,58 @@
 
         <nav class="sidebar__group" aria-label="Lemonteed workbench">
           <span class="sidebar__group-label">Workbench</span>
-          <a class="sidebar__nav-item is-active" href="/studio-lab/" aria-current="page">
-            <span class="sidebar__nav-tick" aria-hidden="true">&bull;</span>
-            Studio Lab
+          <a class="sidebar__nav-card is-active" href="/studio-lab/" aria-current="page">
+            <span class="sidebar__nav-card-label">Studio Lab</span>
+            <span class="sidebar__nav-card-badge">Active Builds</span>
           </a>
-          <a class="sidebar__nav-item" href="/operator-log/">
-            <span class="sidebar__nav-icon" aria-hidden="true">&nearr;</span>
-            Operator's Log
+          <a class="sidebar__nav-card" href="/operator-log/">
+            <span class="sidebar__nav-card-label">Operator's Log</span>
+            <span class="sidebar__nav-card-badge">Build Notes</span>
           </a>
-          <a class="sidebar__nav-item" href="/benchmark/">
-            <span class="sidebar__nav-icon" aria-hidden="true">&nearr;</span>
-            Design Benchmark
+          <a class="sidebar__nav-card" href="/benchmark/">
+            <span class="sidebar__nav-card-label">Design Benchmark</span>
+            <span class="sidebar__nav-card-badge">Evidence</span>
           </a>
         </nav>
 
-        <nav class="sidebar__group" aria-label="Portfolio categories">
-          <span class="sidebar__group-label">Filters</span>
-          <a class="category-link" href="/archive/" data-category-link="all">All</a>
-          <a class="category-link" href="/vrg-cards/" data-category-link="vrg-cards">VRG Cards</a>
-          <a class="category-link" href="/what-if/" data-category-link="what-if">What If</a>
-          <a class="category-link" href="/misc-gens/" data-category-link="misc-gens">Misc Gens</a>
-          <a class="category-link" href="/memetic-warfare/">Memetic Warfare</a>
-          <a class="category-link" href="/lemonteed-fm/">Lemonteed FM</a>
+        <nav class="sidebar__group" aria-label="Districts &amp; Filters">
+          <span class="sidebar__group-label">Districts &amp; Filters</span>
+          <a class="sidebar__nav-card" href="/archive/" data-category-link="all">
+            <span class="sidebar__nav-card-label">All Artifacts</span>
+            <span class="sidebar__nav-card-arrow">&rarr;</span>
+          </a>
+          <a class="sidebar__nav-card" href="/vrg-cards/" data-category-link="vrg-cards">
+            <span class="sidebar__nav-card-label">VRG Cards</span>
+            <span class="sidebar__nav-card-arrow">&rarr;</span>
+          </a>
+          <a class="sidebar__nav-card" href="/what-if/" data-category-link="what-if">
+            <span class="sidebar__nav-card-label">What If</span>
+            <span class="sidebar__nav-card-arrow">&rarr;</span>
+          </a>
+          <a class="sidebar__nav-card" href="/misc-gens/" data-category-link="misc-gens">
+            <span class="sidebar__nav-card-label">Misc Gens</span>
+            <span class="sidebar__nav-card-arrow">&rarr;</span>
+          </a>
+          <a class="sidebar__nav-card" href="/memetic-warfare/">
+            <span class="sidebar__nav-card-label">Memetic Warfare</span>
+            <span class="sidebar__nav-card-arrow">&rarr;</span>
+          </a>
+          <a class="sidebar__nav-card" href="/lemonteed-fm/">
+            <span class="sidebar__nav-card-label">Lemonteed FM</span>
+            <span class="sidebar__nav-card-arrow">&rarr;</span>
+          </a>
         </nav>
 
-        <div class="sidebar__group" aria-label="Archive & Experiments">
-          <span class="sidebar__group-label">Experiments</span>
-          <a class="random-artifact" href="/archive/?random=1" title="Summon a random artifact from the archive" id="random-artifact-btn">
-            <span class="random-artifact__label">SUMMON RANDOM ARTIFACT</span>
-            <span class="random-artifact__id" aria-hidden="true" id="random-artifact-id">RND-???</span>
+        <div class="sidebar__group" aria-label="Experiments &amp; Utilities">
+          <span class="sidebar__group-label">Experiments &amp; Utilities</span>
+          <a class="sidebar__nav-card sidebar__nav-card--random" href="/archive/?random=1" title="Summon a random artifact from the archive" id="random-artifact-btn">
+            <span class="sidebar__nav-card-label">Summon Random Artifact</span>
+            <span class="sidebar__nav-card-badge" id="random-artifact-id">RND-???</span>
           </a>
-          <a href="/junk-drawer/" class="junk-drawer-module" aria-label="Open Junk Drawer">
-            <div class="junk-drawer-module__face">
-              <div class="junk-drawer-module__handle"></div>
-              <span class="junk-drawer-module__label">Junk Drawer</span>
-            </div>
+          <a class="sidebar__nav-card sidebar__nav-card--drawer" href="/junk-drawer/" aria-label="Free Browser Tools">
+            <span class="sidebar__drawer-handle" aria-hidden="true"></span>
+            <span class="sidebar__nav-card-label">Free Browser Tools</span>
           </a>
-          <a class="sidebar__archive-link" href="/archive/">+ ARCHIVE INDEX</a>
         </div>
       </aside>
 
@@ -368,32 +384,5 @@
         </div>
       </main>
     </div>
-    <script>
-    (function() {
-      // RND-??? shuffler for Summon Random Artifact
-      var btn = document.getElementById('random-artifact-btn');
-      var idEl = document.getElementById('random-artifact-id');
-      if (!btn || !idEl) return;
-      var totalArtifacts = 80;
-      var shuffleInterval = null;
-      btn.addEventListener('mouseenter', function() {
-        var count = 0;
-        shuffleInterval = setInterval(function() {
-          var n = Math.floor(Math.random() * totalArtifacts) + 1;
-          idEl.textContent = 'RND-' + String(n).padStart(3, '0');
-          count++;
-          if (count >= 12) {
-            clearInterval(shuffleInterval);
-          }
-        }, 60);
-      });
-      btn.addEventListener('mouseleave', function() {
-        clearInterval(shuffleInterval);
-        idEl.textContent = 'RND-???';
-      });
-      // Suppress floating Lemmy trigger on Studio Lab
-      document.body.setAttribute('data-lemmy-suppress-trigger', '1');
-    })();
-    </script>
   </body>
 </html>
