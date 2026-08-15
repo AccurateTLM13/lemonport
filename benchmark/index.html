@@ -61,8 +61,6 @@
       ]
     }
   </script>
-  <meta property="og:description" content="Lemonteed's Design Skill Benchmark Baseline 001: 32 generated websites, six models, three design systems, and 64 desktop &amp; mobile review frames.">
-  <meta name="twitter:description" content="Lemonteed's Design Skill Benchmark Baseline 001: 32 generated websites, six models, three design systems, and 64 desktop &amp; mobile review frames.">
 </head>
 <body>
 <a class="skip" href="#content">Skip to content</a>
@@ -89,6 +87,15 @@
 </dl>
 </section>
 
+<nav class="benchmark-nav-bar" aria-label="Benchmark direct jump navigation">
+  <span class="benchmark-nav-bar__label">JUMP TO:</span>
+  <a class="benchmark-nav-chip" href="#skills">Design Skills (3)</a>
+  <a class="benchmark-nav-chip" href="#prompts">Prompts (11)</a>
+  <a class="benchmark-nav-chip" href="#models">Models (6)</a>
+  <a class="benchmark-nav-chip" href="#records">Outputs (32)</a>
+  <a class="benchmark-nav-chip" href="#methodology">Evidence Rubric</a>
+</nav>
+
 <section class="archive-note">
   <p><strong>What this is:</strong> a static snapshot of every scored generation, its desktop and mobile review frames, score breakdown, review note, violations, and a sanitized source archive. <strong>What it is not:</strong> a live evaluator or a model leaderboard beyond this dataset.</p>
   <div class="archive-actions">
@@ -110,47 +117,318 @@
     <button role="tab" aria-selected="true" aria-controls="tab-results" id="tab-button-results" data-tab="results">All records</button>
     <button role="tab" aria-selected="false" aria-controls="tab-models" id="tab-button-models" data-tab="models">Models</button>
     <button role="tab" aria-selected="false" aria-controls="tab-skills" id="tab-button-skills" data-tab="skills">Skills</button>
+    <button role="tab" aria-selected="false" aria-controls="tab-prompts" id="tab-button-prompts" data-tab="prompts">Prompts</button>
+    <button role="tab" aria-selected="false" aria-controls="tab-methodology" id="tab-button-methodology" data-tab="methodology">Methodology</button>
   </div>
   <div class="viewer-panels">
     <section role="tabpanel" id="tab-results" aria-labelledby="tab-button-results" data-panel="results"></section>
     <section role="tabpanel" id="tab-models" aria-labelledby="tab-button-models" data-panel="models" hidden></section>
     <section role="tabpanel" id="tab-skills" aria-labelledby="tab-button-skills" data-panel="skills" hidden></section>
+    <section role="tabpanel" id="tab-prompts" aria-labelledby="tab-button-prompts" data-panel="prompts" hidden></section>
+    <section role="tabpanel" id="tab-methodology" aria-labelledby="tab-button-methodology" data-panel="methodology" hidden></section>
   </div>
 </dialog>
 
-<section class="grid" aria-label="All benchmark records">
-<article class="card"><a href="records/b14c24587b.html"><img src="images/desktop/b14c24587b.webp" alt="Desktop review frame for RELAY — AI Deployment Handbook" loading="lazy"><div><p>grok-4.6 · Field Manual</p><h2>RELAY — AI Deployment Handbook</h2><strong>97<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
-<article class="card"><a href="records/918cf65fd6.html"><img src="images/desktop/918cf65fd6.webp" alt="Desktop review frame for Municipal Trail Operations" loading="lazy"><div><p>gpt-5.6-sol · Field Manual</p><h2>Municipal Trail Operations</h2><strong>96.5<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
-<article class="card"><a href="records/bad37c7212.html"><img src="images/desktop/bad37c7212.webp" alt="Desktop review frame for NORTHSTAR OBSERVATORY — NS-TEL-OPS-014 — Telescope Operations Sheet" loading="lazy"><div><p>grok-4.6 · Field Manual</p><h2>NORTHSTAR OBSERVATORY — NS-TEL-OPS-014 — Telescope Operations Sheet</h2><strong>95.3<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
-<article class="card"><a href="records/3a49d453e8.html"><img src="images/desktop/3a49d453e8.webp" alt="Desktop review frame for Municipal League Baseball — 2026 Season" loading="lazy"><div><p>gpt-5.6-sol · Solari</p><h2>Municipal League Baseball — 2026 Season</h2><strong>95<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
-<article class="card"><a href="records/c71572624c.html"><img src="images/desktop/c71572624c.webp" alt="Desktop review frame for RELAY — AI Agent Deployment &amp; Operations" loading="lazy"><div><p>gpt-5.6-sol · Field Manual</p><h2>RELAY — AI Agent Deployment &amp; Operations</h2><strong>95<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
-<article class="card"><a href="records/d593172b12.html"><img src="images/desktop/d593172b12.webp" alt="Desktop review frame for NIGHT SHIFT 91.3 FM" loading="lazy"><div><p>gpt-5.6-sol · Solari</p><h2>NIGHT SHIFT 91.3 FM</h2><strong>94<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
-<article class="card"><a href="records/a1b362a689.html"><img src="images/desktop/a1b362a689.webp" alt="Desktop review frame for Terminal 17 — Regional Freight Exchange" loading="lazy"><div><p>gpt-5.6-sol · Solari</p><h2>Terminal 17 — Regional Freight Exchange</h2><strong>93.8<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
-<article class="card"><a href="records/e14eb0d4ea.html"><img src="images/desktop/e14eb0d4ea.webp" alt="Desktop review frame for ATLAS — Distributed Intelligence Architecture" loading="lazy"><div><p>gpt-5.6-sol · Blueprint</p><h2>ATLAS — Distributed Intelligence Architecture</h2><strong>93.6<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
-<article class="card"><a href="records/2dcb583384.html"><img src="images/desktop/2dcb583384.webp" alt="Desktop review frame for TERMINAL 17 — Regional Freight Exchange" loading="lazy"><div><p>gemini-3.7-flash · Solari</p><h2>TERMINAL 17 — Regional Freight Exchange</h2><strong>93.5<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
-<article class="card"><a href="records/1aea8d9a0e.html"><img src="images/desktop/1aea8d9a0e.webp" alt="Desktop review frame for TERMINAL 17 — Regional Freight Exchange" loading="lazy"><div><p>grok-4.6 · Solari</p><h2>TERMINAL 17 — Regional Freight Exchange</h2><strong>93.5<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
-<article class="card"><a href="records/49f25fde18.html"><img src="images/desktop/49f25fde18.webp" alt="Desktop review frame for TERMINAL 17 — Regional Freight Exchange" loading="lazy"><div><p>gpt-5.6-sol · Solari</p><h2>TERMINAL 17 — Regional Freight Exchange</h2><strong>92.5<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
-<article class="card"><a href="records/ded79f6ea9.html"><img src="images/desktop/ded79f6ea9.webp" alt="Desktop review frame for AEROLINE R7 — Endurance Platform" loading="lazy"><div><p>gpt-5.6-sol · Blueprint</p><h2>AEROLINE R7 — Endurance Platform</h2><strong>92<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
-<article class="card"><a href="records/f2224c43d0.html"><img src="images/desktop/f2224c43d0.webp" alt="Desktop review frame for MUNICIPAL TRAIL OPERATIONS — Operating Handbook &amp; Field Status" loading="lazy"><div><p>gemini-3.7-flash · Field Manual</p><h2>MUNICIPAL TRAIL OPERATIONS — Operating Handbook &amp; Field Status</h2><strong>91.5<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
-<article class="card"><a href="records/b0973ca1b7.html"><img src="images/desktop/b0973ca1b7.webp" alt="Desktop review frame for ATLAS — Distributed Intelligence Architecture" loading="lazy"><div><p>gemini-3.7-flash · Blueprint</p><h2>ATLAS — Distributed Intelligence Architecture</h2><strong>91<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
-<article class="card"><a href="records/0250fde051.html"><img src="images/desktop/0250fde051.webp" alt="Desktop review frame for RELAY — AI Agent Deployment &amp; Operations Platform" loading="lazy"><div><p>gemini-3.7-flash · Field Manual</p><h2>RELAY — AI Agent Deployment &amp; Operations Platform</h2><strong>91<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
-<article class="card"><a href="records/18b7c892b1.html"><img src="images/desktop/18b7c892b1.webp" alt="Desktop review frame for Analog Cinema Club" loading="lazy"><div><p>gpt-5.6-sol · Solari</p><h2>Analog Cinema Club</h2><strong>90.6<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
-<article class="card"><a href="records/16470def5d.html"><img src="images/desktop/16470def5d.webp" alt="Desktop review frame for NORTHSTAR OBSERVATORY — Telescope Operations &amp; Field Manual" loading="lazy"><div><p>gemini-3.7-flash · Field Manual</p><h2>NORTHSTAR OBSERVATORY — Telescope Operations &amp; Field Manual</h2><strong>90.5<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
-<article class="card"><a href="records/36ae0633d4.html"><img src="images/desktop/36ae0633d4.webp" alt="Desktop review frame for Municipal League Baseball — Civic Scoreboard &amp; League Desk" loading="lazy"><div><p>gemini-3.7-flash · Solari</p><h2>Municipal League Baseball — Civic Scoreboard &amp; League Desk</h2><strong>90.3<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
-<article class="card"><a href="records/7e41999fcf.html"><img src="images/desktop/7e41999fcf.webp" alt="Desktop review frame for ATLAS — Distributed Intelligence Architecture" loading="lazy"><div><p>gpt-5.6-sol · Blueprint</p><h2>ATLAS — Distributed Intelligence Architecture</h2><strong>90<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
-<article class="card"><a href="records/3b56359e69.html"><img src="images/desktop/3b56359e69.webp" alt="Desktop review frame for HALLOWAY INSTRUMENTS // HX-4 Field Monitor Technical Manual" loading="lazy"><div><p>gemini-3.7-flash · Field Manual</p><h2>HALLOWAY INSTRUMENTS // HX-4 Field Monitor Technical Manual</h2><strong>90<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
-<article class="card"><a href="records/720bdd4e98.html"><img src="images/desktop/720bdd4e98.webp" alt="Desktop review frame for NORTHLINE WATERWORKS — Regional Water Authority / Engineering &amp; Public Information Sheet" loading="lazy"><div><p>gemini-3.7-flash · Blueprint</p><h2>NORTHLINE WATERWORKS — Regional Water Authority / Engineering &amp; Public Information Sheet</h2><strong>90<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
-<article class="card"><a href="records/fb38689c34.html"><img src="images/desktop/fb38689c34.webp" alt="Desktop review frame for Municipal League Baseball" loading="lazy"><div><p>gpt-5.6-sol · Solari</p><h2>Municipal League Baseball</h2><strong>89.8<small> / 100</small></strong><span>STRONG</span></div></a></article>
-<article class="card"><a href="records/ff48c22f65.html"><img src="images/desktop/ff48c22f65.webp" alt="Desktop review frame for HALLOWAY INSTRUMENTS — HX-4 Environmental Field Monitor" loading="lazy"><div><p>gemini-3.7-flash · Field Manual</p><h2>HALLOWAY INSTRUMENTS — HX-4 Environmental Field Monitor</h2><strong>88<small> / 100</small></strong><span>STRONG</span></div></a></article>
-<article class="card"><a href="records/144258e9a2.html"><img src="images/desktop/144258e9a2.webp" alt="Desktop review frame for RELAY — AI Agent Deployment &amp; Operations Handbook" loading="lazy"><div><p>gemini-3.7-flash · Field Manual</p><h2>RELAY — AI Agent Deployment &amp; Operations Handbook</h2><strong>88<small> / 100</small></strong><span>STRONG</span></div></a></article>
-<article class="card"><a href="records/aa1a286acb.html"><img src="images/desktop/aa1a286acb.webp" alt="Desktop review frame for Municipal League Baseball — Humboldt, Tennessee" loading="lazy"><div><p>grok-4.6 · Solari</p><h2>Municipal League Baseball — Humboldt, Tennessee</h2><strong>87.8<small> / 100</small></strong><span>STRONG</span></div></a></article>
-<article class="card"><a href="records/8e1c97dc55.html"><img src="images/desktop/8e1c97dc55.webp" alt="Desktop review frame for NIGHT SHIFT — 91.3 FM" loading="lazy"><div><p>mimo-v2.5 · Solari</p><h2>NIGHT SHIFT — 91.3 FM</h2><strong>87.3<small> / 100</small></strong><span>STRONG</span></div></a></article>
-<article class="card"><a href="records/655ff6ee2a.html"><img src="images/desktop/655ff6ee2a.webp" alt="Desktop review frame for NIGHT SHIFT 91.3 FM" loading="lazy"><div><p>kimi-k2.6 · Solari</p><h2>NIGHT SHIFT 91.3 FM</h2><strong>85.8<small> / 100</small></strong><span>STRONG</span></div></a></article>
-<article class="card"><a href="records/d599cdfc71.html"><img src="images/desktop/d599cdfc71.webp" alt="Desktop review frame for RIDGELINE TRAIL CONSERVANCY — SERIES NPS-5 / SHEET NPS-01" loading="lazy"><div><p>sonnet-4.6-thinking · Field Manual</p><h2>RIDGELINE TRAIL CONSERVANCY — SERIES NPS-5 / SHEET NPS-01</h2><strong>85.7<small> / 100</small></strong><span>STRONG · provisional</span></div></a></article>
-<article class="card"><a href="records/dcf7be1796.html"><img src="images/desktop/dcf7be1796.webp" alt="Desktop review frame for MUNICIPAL LEAGUE BASEBALL — Civic Baseball System" loading="lazy"><div><p>sonnet-4.6-thinking · Solari</p><h2>MUNICIPAL LEAGUE BASEBALL — Civic Baseball System</h2><strong>83.8<small> / 100</small></strong><span>STRONG</span></div></a></article>
-<article class="card"><a href="records/4e95b35e74.html"><img src="images/desktop/4e95b35e74.webp" alt="Desktop review frame for NORTHSTAR OBSERVATORY — Telescope Operations" loading="lazy"><div><p>sonnet-4.6-thinking · Field Manual</p><h2>NORTHSTAR OBSERVATORY — Telescope Operations</h2><strong>82.6<small> / 100</small></strong><span>STRONG</span></div></a></article>
-<article class="card"><a href="records/9d29d090b2.html"><img src="images/desktop/9d29d090b2.webp" alt="Desktop review frame for MUNICIPAL LEAGUE BASEBALL" loading="lazy"><div><p>mimo-v2.5 · Solari</p><h2>MUNICIPAL LEAGUE BASEBALL</h2><strong>81.8<small> / 100</small></strong><span>STRONG</span></div></a></article>
-<article class="card"><a href="records/53a4416d3e.html"><img src="images/desktop/53a4416d3e.webp" alt="Desktop review frame for ANALOG CINEMA CLUB" loading="lazy"><div><p>kimi-k2.6 · Solari</p><h2>ANALOG CINEMA CLUB</h2><strong>79.1<small> / 100</small></strong><span>COMPETENT</span></div></a></article>
+<!-- Section 01: Design Skills -->
+<section class="benchmark-section" id="skills" aria-labelledby="skills-heading">
+  <div class="benchmark-section__head">
+    <p class="eyebrow">DIMENSION 01 / DESIGN SKILLS</p>
+    <h2 id="skills-heading">Three design systems, strict rules.</h2>
+    <p class="benchmark-section__sub">Each model was tested against specific design skill definitions to evaluate style fidelity, layout grammar, and whether negative constraints were respected.</p>
+  </div>
+  <div class="benchmark-cards-grid">
+    <article class="benchmark-info-card">
+      <div class="benchmark-info-card__meta">
+        <span class="benchmark-tag">BLUEPRINT</span>
+        <span class="benchmark-score">91.3 AVG &middot; 5 OUTPUTS</span>
+      </div>
+      <h3>Blueprint System</h3>
+      <p>Technical and architectural diagrammatic language: high-density grids, technical monospace typography, dimension markings, schematic drawing frames, and blueprint cyan accents.</p>
+      <div class="benchmark-info-card__rules">
+        <strong>Key requirements:</strong> Spec-sheet hierarchy, title block/schedule, engineering notes, dimension markers.<br>
+        <strong>Prohibitions:</strong> No marketing gradients, no rounded cartoon pills, no generic hero banners.
+      </div>
+    </article>
+
+    <article class="benchmark-info-card">
+      <div class="benchmark-info-card__meta">
+        <span class="benchmark-tag">FIELD MANUAL</span>
+        <span class="benchmark-score">90.9 AVG &middot; 12 OUTPUTS</span>
+      </div>
+      <h3>Field Manual System</h3>
+      <p>Government, military, and institutional operational handbooks: numbered procedure lists, tactical callouts, classification stamps, warning blocks, and utilitarian olive/gold accents.</p>
+      <div class="benchmark-info-card__rules">
+        <strong>Key requirements:</strong> Strict section numbering, procedure tables, classification banners, emergency callouts.<br>
+        <strong>Prohibitions:</strong> No SaaS glassmorphism, no marketing fluff, no non-functional interactive gimmicks.
+      </div>
+    </article>
+
+    <article class="benchmark-info-card">
+      <div class="benchmark-info-card__meta">
+        <span class="benchmark-tag">SOLARI</span>
+        <span class="benchmark-score">89.2 AVG &middot; 15 OUTPUTS</span>
+      </div>
+      <h3>Solari System</h3>
+      <p>Mechanical split-flap displays and transit timetable boards: dark airport/station departure aesthetics, high-contrast amber/yellow glow, and tabular multi-column schedule matrices.</p>
+      <div class="benchmark-info-card__rules">
+        <strong>Key requirements:</strong> Split-flap typography/character cells, board header status, status codes (ON TIME, DELAYED).<br>
+        <strong>Prohibitions:</strong> No light mode, no fluid unconstrained cards that break character grid alignment.
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- Section 02: Prompts -->
+<section class="benchmark-section" id="prompts" aria-labelledby="prompts-heading">
+  <div class="benchmark-section__head">
+    <p class="eyebrow">DIMENSION 02 / PROMPT CATALOG</p>
+    <h2 id="prompts-heading">Eleven real-world scenario prompts.</h2>
+    <p class="benchmark-section__sub">Prompts combined dense domain requirements, data structures, and responsive layouts to test whether models followed instructions or took shortcuts.</p>
+  </div>
+  <div class="benchmark-prompt-table-wrap">
+    <table class="benchmark-data-table">
+      <thead>
+        <tr>
+          <th>Prompt Scenario</th>
+          <th>Design Skill</th>
+          <th>Domain &amp; Complexity</th>
+          <th>Outputs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>RELAY — AI Agent Deployment &amp; Operations</strong></td>
+          <td><span class="benchmark-pill">Field Manual</span></td>
+          <td>Multi-agent operations handbook, orchestrator routing, telemetry tables</td>
+          <td>4 runs</td>
+        </tr>
+        <tr>
+          <td><strong>Municipal Trail Operations</strong></td>
+          <td><span class="benchmark-pill">Field Manual</span></td>
+          <td>Park trail maintenance, incident status report, ranger log</td>
+          <td>3 runs</td>
+        </tr>
+        <tr>
+          <td><strong>Northstar Observatory</strong></td>
+          <td><span class="benchmark-pill">Field Manual</span></td>
+          <td>Telescope optics schedule, observation logs, aperture coordinates</td>
+          <td>3 runs</td>
+        </tr>
+        <tr>
+          <td><strong>Municipal League Baseball</strong></td>
+          <td><span class="benchmark-pill">Solari</span></td>
+          <td>Civic baseball split-flap scoreboard, standings board, pitch count matrix</td>
+          <td>6 runs</td>
+        </tr>
+        <tr>
+          <td><strong>Terminal 17 — Regional Freight Exchange</strong></td>
+          <td><span class="benchmark-pill">Solari</span></td>
+          <td>Intermodal rail/truck timetable board, bay assignments, cargo status</td>
+          <td>4 runs</td>
+        </tr>
+        <tr>
+          <td><strong>Night Shift 91.3 FM</strong></td>
+          <td><span class="benchmark-pill">Solari</span></td>
+          <td>Late-night radio program board, broadcast queue, audio track schedule</td>
+          <td>3 runs</td>
+        </tr>
+        <tr>
+          <td><strong>ATLAS — Distributed Intelligence Architecture</strong></td>
+          <td><span class="benchmark-pill">Blueprint</span></td>
+          <td>High-density multi-node diagram, memory architecture, execution topology</td>
+          <td>3 runs</td>
+        </tr>
+        <tr>
+          <td><strong>Halloway Instruments HX-4</strong></td>
+          <td><span class="benchmark-pill">Field Manual</span></td>
+          <td>Environmental sensor field manual, calibration chart, sensor readings</td>
+          <td>2 runs</td>
+        </tr>
+        <tr>
+          <td><strong>Aeroline R7 — Endurance Cycle Platform</strong></td>
+          <td><span class="benchmark-pill">Blueprint</span></td>
+          <td>Endurance engineering spec sheet, frame stress diagrams, torque tolerances</td>
+          <td>1 run</td>
+        </tr>
+        <tr>
+          <td><strong>Northline Waterworks</strong></td>
+          <td><span class="benchmark-pill">Blueprint</span></td>
+          <td>Regional water authority engineering sheet, pipeline pressure monitors</td>
+          <td>1 run</td>
+        </tr>
+        <tr>
+          <td><strong>Analog Cinema Club</strong></td>
+          <td><span class="benchmark-pill">Solari</span></td>
+          <td>Repertory theater 35mm schedule, screening room split-flap board</td>
+          <td>2 runs</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Section 03: Models -->
+<section class="benchmark-section" id="models" aria-labelledby="models-heading">
+  <div class="benchmark-section__head">
+    <p class="eyebrow">DIMENSION 03 / EVALUATED MODELS</p>
+    <h2 id="models-heading">Six leading LLMs on the test bench.</h2>
+    <p class="benchmark-section__sub">Scoreboard of model performance across 32 runs, measured on 6 independent grading dimensions.</p>
+  </div>
+  <div class="benchmark-prompt-table-wrap">
+    <table class="benchmark-data-table">
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Outputs</th>
+          <th>Overall Score</th>
+          <th>Responsive (10)</th>
+          <th>Design (20)</th>
+          <th>Key Observation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Grok 4.6</strong></td>
+          <td>4</td>
+          <td><strong>93.4</strong></td>
+          <td>7.5 / 10</td>
+          <td>17.9 / 20</td>
+          <td>Highest consistency; tightest adherence to negative constraints and typography.</td>
+        </tr>
+        <tr>
+          <td><strong>GPT-5.6 Sol</strong></td>
+          <td>11</td>
+          <td><strong>93.0</strong></td>
+          <td>7.9 / 10</td>
+          <td>17.3 / 20</td>
+          <td>Strongest responsive behavior; excellent split-flap and table translations.</td>
+        </tr>
+        <tr>
+          <td><strong>Gemini 3.7 Flash</strong></td>
+          <td>10</td>
+          <td><strong>90.4</strong></td>
+          <td>6.0 / 10</td>
+          <td>17.2 / 20</td>
+          <td>High design polish and prompt fidelity; occasional mobile viewport overflow.</td>
+        </tr>
+        <tr>
+          <td><strong>MiMo V2.5</strong></td>
+          <td>2</td>
+          <td><strong>84.6</strong></td>
+          <td>5.7 / 10</td>
+          <td>14.5 / 20</td>
+          <td>Solid visual styling; missed a subset of explicit table requirements.</td>
+        </tr>
+        <tr>
+          <td><strong>Sonnet 4.6 Thinking</strong></td>
+          <td>3</td>
+          <td><strong>84.0</strong></td>
+          <td>3.2 / 10</td>
+          <td>15.3 / 20</td>
+          <td>Strong desktop layouts, but severe mobile responsive failure (fixed widths).</td>
+        </tr>
+        <tr>
+          <td><strong>Kimi K2.6</strong></td>
+          <td>2</td>
+          <td><strong>82.4</strong></td>
+          <td>2.6 / 10</td>
+          <td>15.0 / 20</td>
+          <td>Creative layouts, but widespread horizontal scrolling on screens under 1024px.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Section 04: Evidence & Rubric -->
+<section class="benchmark-section" id="methodology" aria-labelledby="methodology-heading">
+  <div class="benchmark-section__head">
+    <p class="eyebrow">DIMENSION 04 / EVIDENCE &amp; RUBRIC</p>
+    <h2 id="methodology-heading">100 points, 6 dimensions, 64 review frames.</h2>
+    <p class="benchmark-section__sub">Every score is backed by full-resolution desktop (1440px) and mobile (375px) WebP screenshots, rubric deductions, and live source code.</p>
+  </div>
+  <div class="benchmark-rubric-grid">
+    <div class="benchmark-rubric-item">
+      <div class="benchmark-rubric-item__head">
+        <span>01</span><strong>Skill Fidelity</strong><b>25 PTS</b>
+      </div>
+      <p>Visual language, layout grammar, typography, components, prohibited patterns, and distinctiveness.</p>
+    </div>
+    <div class="benchmark-rubric-item">
+      <div class="benchmark-rubric-item__head">
+        <span>02</span><strong>Prompt Fidelity</strong><b>25 PTS</b>
+      </div>
+      <p>Explicit requirement coverage tied back to the test prompt and domain data points.</p>
+    </div>
+    <div class="benchmark-rubric-item">
+      <div class="benchmark-rubric-item__head">
+        <span>03</span><strong>Design Quality</strong><b>20 PTS</b>
+      </div>
+      <p>Hierarchy, composition, spacing, readability, rhythm, polish, coherence, and intentionality.</p>
+    </div>
+    <div class="benchmark-rubric-item">
+      <div class="benchmark-rubric-item__head">
+        <span>04</span><strong>Technical Quality</strong><b>15 PTS</b>
+      </div>
+      <p>Semantics, accessibility basics, asset health, runtime failures, and code weight.</p>
+    </div>
+    <div class="benchmark-rubric-item">
+      <div class="benchmark-rubric-item__head">
+        <span>05</span><strong>Responsive Quality</strong><b>10 PTS</b>
+      </div>
+      <p>Rendered behavior at 375, 430, 768, 1024, 1440, and 1920 pixels without horizontal overflow.</p>
+    </div>
+    <div class="benchmark-rubric-item">
+      <div class="benchmark-rubric-item__head">
+        <span>06</span><strong>Originality</strong><b>5 PTS</b>
+      </div>
+      <p>The artifact-versus-template test: did this website feel deliberately designed rather than generic?</p>
+    </div>
+  </div>
+</section>
+
+<!-- Section 05: Output Records Grid -->
+<section class="benchmark-section" id="records" aria-labelledby="records-heading">
+  <div class="benchmark-section__head">
+    <p class="eyebrow">DIMENSION 05 / OUTPUT RECORDS</p>
+    <h2 id="records-heading">All 32 Benchmark Output Records</h2>
+    <p class="benchmark-section__sub">Click any record card to inspect its full evidence page, desktop &amp; mobile review frames, sub-score breakdown, and archived HTML source.</p>
+  </div>
+
+  <div class="grid" aria-label="All benchmark records">
+    <article class="card"><a href="records/b14c24587b.html"><img src="images/desktop/b14c24587b.webp" alt="Desktop review frame for RELAY — AI Deployment Handbook" loading="lazy"><div><p>grok-4.6 · Field Manual</p><h2>RELAY — AI Deployment Handbook</h2><strong>97<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
+    <article class="card"><a href="records/918cf65fd6.html"><img src="images/desktop/918cf65fd6.webp" alt="Desktop review frame for Municipal Trail Operations" loading="lazy"><div><p>gpt-5.6-sol · Field Manual</p><h2>Municipal Trail Operations</h2><strong>96.5<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
+    <article class="card"><a href="records/bad37c7212.html"><img src="images/desktop/bad37c7212.webp" alt="Desktop review frame for NORTHSTAR OBSERVATORY — NS-TEL-OPS-014 — Telescope Operations Sheet" loading="lazy"><div><p>grok-4.6 · Field Manual</p><h2>NORTHSTAR OBSERVATORY — NS-TEL-OPS-014 — Telescope Operations Sheet</h2><strong>95.3<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
+    <article class="card"><a href="records/3a49d453e8.html"><img src="images/desktop/3a49d453e8.webp" alt="Desktop review frame for Municipal League Baseball — 2026 Season" loading="lazy"><div><p>gpt-5.6-sol · Solari</p><h2>Municipal League Baseball — 2026 Season</h2><strong>95<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
+    <article class="card"><a href="records/c71572624c.html"><img src="images/desktop/c71572624c.webp" alt="Desktop review frame for RELAY — AI Agent Deployment &amp; Operations" loading="lazy"><div><p>gpt-5.6-sol · Field Manual</p><h2>RELAY — AI Agent Deployment &amp; Operations</h2><strong>95<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
+    <article class="card"><a href="records/d593172b12.html"><img src="images/desktop/d593172b12.webp" alt="Desktop review frame for NIGHT SHIFT 91.3 FM" loading="lazy"><div><p>gpt-5.6-sol · Solari</p><h2>NIGHT SHIFT 91.3 FM</h2><strong>94<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
+    <article class="card"><a href="records/a1b362a689.html"><img src="images/desktop/a1b362a689.webp" alt="Desktop review frame for Terminal 17 — Regional Freight Exchange" loading="lazy"><div><p>gpt-5.6-sol · Solari</p><h2>Terminal 17 — Regional Freight Exchange</h2><strong>93.8<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
+    <article class="card"><a href="records/e14eb0d4ea.html"><img src="images/desktop/e14eb0d4ea.webp" alt="Desktop review frame for ATLAS — Distributed Intelligence Architecture" loading="lazy"><div><p>gpt-5.6-sol · Blueprint</p><h2>ATLAS — Distributed Intelligence Architecture</h2><strong>93.6<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
+    <article class="card"><a href="records/2dcb583384.html"><img src="images/desktop/2dcb583384.webp" alt="Desktop review frame for TERMINAL 17 — Regional Freight Exchange" loading="lazy"><div><p>gemini-3.7-flash · Solari</p><h2>TERMINAL 17 — Regional Freight Exchange</h2><strong>93.5<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
+    <article class="card"><a href="records/1aea8d9a0e.html"><img src="images/desktop/1aea8d9a0e.webp" alt="Desktop review frame for TERMINAL 17 — Regional Freight Exchange" loading="lazy"><div><p>grok-4.6 · Solari</p><h2>TERMINAL 17 — Regional Freight Exchange</h2><strong>93.5<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
+    <article class="card"><a href="records/49f25fde18.html"><img src="images/desktop/49f25fde18.webp" alt="Desktop review frame for TERMINAL 17 — Regional Freight Exchange" loading="lazy"><div><p>gpt-5.6-sol · Solari</p><h2>TERMINAL 17 — Regional Freight Exchange</h2><strong>92.5<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
+    <article class="card"><a href="records/ded79f6ea9.html"><img src="images/desktop/ded79f6ea9.webp" alt="Desktop review frame for AEROLINE R7 — Endurance Platform" loading="lazy"><div><p>gpt-5.6-sol · Blueprint</p><h2>AEROLINE R7 — Endurance Platform</h2><strong>92<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
+    <article class="card"><a href="records/f2224c43d0.html"><img src="images/desktop/f2224c43d0.webp" alt="Desktop review frame for MUNICIPAL TRAIL OPERATIONS — Operating Handbook &amp; Field Status" loading="lazy"><div><p>gemini-3.7-flash · Field Manual</p><h2>MUNICIPAL TRAIL OPERATIONS — Operating Handbook &amp; Field Status</h2><strong>91.5<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
+    <article class="card"><a href="records/b0973ca1b7.html"><img src="images/desktop/b0973ca1b7.webp" alt="Desktop review frame for ATLAS — Distributed Intelligence Architecture" loading="lazy"><div><p>gemini-3.7-flash · Blueprint</p><h2>ATLAS — Distributed Intelligence Architecture</h2><strong>91<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
+    <article class="card"><a href="records/0250fde051.html"><img src="images/desktop/0250fde051.webp" alt="Desktop review frame for RELAY — AI Agent Deployment &amp; Operations Platform" loading="lazy"><div><p>gemini-3.7-flash · Field Manual</p><h2>RELAY — AI Agent Deployment &amp; Operations Platform</h2><strong>91<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
+    <article class="card"><a href="records/18b7c892b1.html"><img src="images/desktop/18b7c892b1.webp" alt="Desktop review frame for Analog Cinema Club" loading="lazy"><div><p>gpt-5.6-sol · Solari</p><h2>Analog Cinema Club</h2><strong>90.6<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
+    <article class="card"><a href="records/16470def5d.html"><img src="images/desktop/16470def5d.webp" alt="Desktop review frame for NORTHSTAR OBSERVATORY — Telescope Operations &amp; Field Manual" loading="lazy"><div><p>gemini-3.7-flash · Field Manual</p><h2>NORTHSTAR OBSERVATORY — Telescope Operations &amp; Field Manual</h2><strong>90.5<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
+    <article class="card"><a href="records/36ae0633d4.html"><img src="images/desktop/36ae0633d4.webp" alt="Desktop review frame for Municipal League Baseball — Civic Scoreboard &amp; League Desk" loading="lazy"><div><p>gemini-3.7-flash · Solari</p><h2>Municipal League Baseball — Civic Scoreboard &amp; League Desk</h2><strong>90.3<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
+    <article class="card"><a href="records/7e41999fcf.html"><img src="images/desktop/7e41999fcf.webp" alt="Desktop review frame for ATLAS — Distributed Intelligence Architecture" loading="lazy"><div><p>gpt-5.6-sol · Blueprint</p><h2>ATLAS — Distributed Intelligence Architecture</h2><strong>90<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
+    <article class="card"><a href="records/3b56359e69.html"><img src="images/desktop/3b56359e69.webp" alt="Desktop review frame for HALLOWAY INSTRUMENTS // HX-4 Field Monitor Technical Manual" loading="lazy"><div><p>gemini-3.7-flash · Field Manual</p><h2>HALLOWAY INSTRUMENTS // HX-4 Field Monitor Technical Manual</h2><strong>90<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
+    <article class="card"><a href="records/720bdd4e98.html"><img src="images/desktop/720bdd4e98.webp" alt="Desktop review frame for NORTHLINE WATERWORKS — Regional Water Authority / Engineering &amp; Public Information Sheet" loading="lazy"><div><p>gemini-3.7-flash · Blueprint</p><h2>NORTHLINE WATERWORKS — Regional Water Authority / Engineering &amp; Public Information Sheet</h2><strong>90<small> / 100</small></strong><span>EXCELLENT</span></div></a></article>
+    <article class="card"><a href="records/fb38689c34.html"><img src="images/desktop/fb38689c34.webp" alt="Desktop review frame for Municipal League Baseball" loading="lazy"><div><p>gpt-5.6-sol · Solari</p><h2>Municipal League Baseball</h2><strong>89.8<small> / 100</small></strong><span>STRONG</span></div></a></article>
+    <article class="card"><a href="records/ff48c22f65.html"><img src="images/desktop/ff48c22f65.webp" alt="Desktop review frame for HALLOWAY INSTRUMENTS — HX-4 Environmental Field Monitor" loading="lazy"><div><p>gemini-3.7-flash · Field Manual</p><h2>HALLOWAY INSTRUMENTS — HX-4 Environmental Field Monitor</h2><strong>88<small> / 100</small></strong><span>STRONG</span></div></a></article>
+    <article class="card"><a href="records/144258e9a2.html"><img src="images/desktop/144258e9a2.webp" alt="Desktop review frame for RELAY — AI Agent Deployment &amp; Operations Handbook" loading="lazy"><div><p>gemini-3.7-flash · Field Manual</p><h2>RELAY — AI Agent Deployment &amp; Operations Handbook</h2><strong>88<small> / 100</small></strong><span>STRONG</span></div></a></article>
+    <article class="card"><a href="records/aa1a286acb.html"><img src="images/desktop/aa1a286acb.webp" alt="Desktop review frame for Municipal League Baseball — Humboldt, Tennessee" loading="lazy"><div><p>grok-4.6 · Solari</p><h2>Municipal League Baseball — Humboldt, Tennessee</h2><strong>87.8<small> / 100</small></strong><span>STRONG</span></div></a></article>
+    <article class="card"><a href="records/8e1c97dc55.html"><img src="images/desktop/8e1c97dc55.webp" alt="Desktop review frame for NIGHT SHIFT — 91.3 FM" loading="lazy"><div><p>mimo-v2.5 · Solari</p><h2>NIGHT SHIFT — 91.3 FM</h2><strong>87.3<small> / 100</small></strong><span>STRONG</span></div></a></article>
+    <article class="card"><a href="records/655ff6ee2a.html"><img src="images/desktop/655ff6ee2a.webp" alt="Desktop review frame for NIGHT SHIFT 91.3 FM" loading="lazy"><div><p>kimi-k2.6 · Solari</p><h2>NIGHT SHIFT 91.3 FM</h2><strong>85.8<small> / 100</small></strong><span>STRONG</span></div></a></article>
+    <article class="card"><a href="records/d599cdfc71.html"><img src="images/desktop/d599cdfc71.webp" alt="Desktop review frame for RIDGELINE TRAIL CONSERVANCY — SERIES NPS-5 / SHEET NPS-01" loading="lazy"><div><p>sonnet-4.6-thinking · Field Manual</p><h2>RIDGELINE TRAIL CONSERVANCY — SERIES NPS-5 / SHEET NPS-01</h2><strong>85.7<small> / 100</small></strong><span>STRONG · provisional</span></div></a></article>
+    <article class="card"><a href="records/dcf7be1796.html"><img src="images/desktop/dcf7be1796.webp" alt="Desktop review frame for MUNICIPAL LEAGUE BASEBALL — Civic Baseball System" loading="lazy"><div><p>sonnet-4.6-thinking · Solari</p><h2>MUNICIPAL LEAGUE BASEBALL — Civic Baseball System</h2><strong>83.8<small> / 100</small></strong><span>STRONG</span></div></a></article>
+    <article class="card"><a href="records/4e95b35e74.html"><img src="images/desktop/4e95b35e74.webp" alt="Desktop review frame for NORTHSTAR OBSERVATORY — Telescope Operations" loading="lazy"><div><p>sonnet-4.6-thinking · Field Manual</p><h2>NORTHSTAR OBSERVATORY — Telescope Operations</h2><strong>82.6<small> / 100</small></strong><span>STRONG</span></div></a></article>
+    <article class="card"><a href="records/9d29d090b2.html"><img src="images/desktop/9d29d090b2.webp" alt="Desktop review frame for MUNICIPAL LEAGUE BASEBALL" loading="lazy"><div><p>mimo-v2.5 · Solari</p><h2>MUNICIPAL LEAGUE BASEBALL</h2><strong>81.8<small> / 100</small></strong><span>STRONG</span></div></a></article>
+    <article class="card"><a href="records/53a4416d3e.html"><img src="images/desktop/53a4416d3e.webp" alt="Desktop review frame for ANALOG CINEMA CLUB" loading="lazy"><div><p>kimi-k2.6 · Solari</p><h2>ANALOG CINEMA CLUB</h2><strong>79.1<small> / 100</small></strong><span>COMPETENT</span></div></a></article>
+  </div>
 </section>
 </main>
 <footer>

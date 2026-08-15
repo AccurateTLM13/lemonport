@@ -23,6 +23,7 @@ This repository is a static public site plus a local Studio tool. Treat `LEMONTE
 - Use the canonical Studio statuses: `Draft`, `Ready`, `Published`, `Hidden`, `Archived`, and `Deleted`.
 - Keep Memetic Warfare game data consistent with referenced gallery artifact IDs.
 - Strictly convert all new images, screenshots, review frames, and media uploads to WebP (`.webp`) format with high quality (`-quality 85` / `webp:method=6`) before committing or saving to disk to maintain minimal storage footprint and maximum performance.
+- Always follow a Progressive Enhancement & SEO-First mindset: render core catalog data, tables, and explanations in static semantic HTML with heading hierarchy and Schema.org metadata so search crawlers index content directly. Use semantic `<a href="...">` links with deep anchors (`#skills`, `#models`, `#prompts`, etc.) instead of `<button>` modals to preserve internal link equity, and layer JS interactions purely as progressive enhancement.
 - Check for existing user changes before editing files.
 - Treat page-specific behavior requests as applying to that page's main content by default. Header, sidebar, navigation, mobile chrome, drawers, and footer are shared/global chrome and should only be changed when the user explicitly asks for a global or navigation-level change.
 

@@ -100,8 +100,46 @@
               <p>A polished screenshot could hide weak prompt coverage. A faithful design system could still produce a bad website. A beautiful desktop layout could quietly become a horizontal scrolling incident at 375 pixels.</p>
               <p>So I added the evaluation layer.</p>
             </div>
-            <div class="benchmark-equation" aria-label="Design skill times prompt times model produces an output, which is then evaluated">
-              <span>DESIGN SKILL</span><b>&times;</b><span>PROMPT</span><b>&times;</b><span>MODEL</span><b>&rarr;</b><span>OUTPUT</span><b>&rarr;</b><strong>EVIDENCE</strong>
+            <div class="benchmark-equation-container">
+              <div class="benchmark-equation" aria-label="Design skill times prompt times model produces an output, which is then evaluated">
+                <a class="benchmark-equation__item" href="/benchmark/#skills" data-eq="skills" title="Inspect Design Skills in Benchmark Archive">
+                  <span class="benchmark-equation__title">DESIGN SKILL</span>
+                  <span class="benchmark-equation__badge">3 SYSTEMS</span>
+                </a>
+                <b class="benchmark-equation__op">&times;</b>
+                <a class="benchmark-equation__item" href="/benchmark/#prompts" data-eq="prompts" title="Inspect Test Prompts in Benchmark Archive">
+                  <span class="benchmark-equation__title">PROMPT</span>
+                  <span class="benchmark-equation__badge">11 SCENARIOS</span>
+                </a>
+                <b class="benchmark-equation__op">&times;</b>
+                <a class="benchmark-equation__item" href="/benchmark/#models" data-eq="models" title="Inspect Evaluated Models in Benchmark Archive">
+                  <span class="benchmark-equation__title">MODEL</span>
+                  <span class="benchmark-equation__badge">6 MODELS</span>
+                </a>
+                <b class="benchmark-equation__op">&rarr;</b>
+                <a class="benchmark-equation__item" href="/benchmark/#records" data-eq="records" title="Browse 32 Generated Website Outputs">
+                  <span class="benchmark-equation__title">OUTPUT</span>
+                  <span class="benchmark-equation__badge">32 SITES</span>
+                </a>
+                <b class="benchmark-equation__op">&rarr;</b>
+                <a class="benchmark-equation__item benchmark-equation__item--evidence" href="/benchmark/#methodology" data-eq="evidence" title="Inspect Rubrics and Evidence Archive">
+                  <span class="benchmark-equation__title">EVIDENCE</span>
+                  <span class="benchmark-equation__badge">64 FRAMES</span>
+                </a>
+              </div>
+
+              <div class="benchmark-equation-drawer" id="equation-drawer" hidden>
+                <div class="benchmark-equation-drawer__head">
+                  <span class="benchmark-equation-drawer__eyebrow" id="eq-drawer-eyebrow">EQUATION COMPONENT</span>
+                  <button type="button" class="benchmark-equation-drawer__close" id="eq-drawer-close" aria-label="Close component details">&times;</button>
+                </div>
+                <h3 class="benchmark-equation-drawer__title" id="eq-drawer-title"></h3>
+                <p class="benchmark-equation-drawer__desc" id="eq-drawer-desc"></p>
+                <div class="benchmark-equation-drawer__meta" id="eq-drawer-meta"></div>
+                <div class="benchmark-equation-drawer__actions">
+                  <a class="benchmark-action-btn benchmark-action-btn--primary" id="eq-drawer-cta" href="/benchmark/">Open in Benchmark Archive &rarr;</a>
+                </div>
+              </div>
             </div>
           </section>
 

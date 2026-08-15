@@ -103,28 +103,169 @@
   align-items: end;
 }
 
+.benchmark-equation-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .benchmark-equation {
   display: grid;
   grid-template-columns: 1fr auto;
   border-top: 1px solid var(--op-border-bright);
-  font: 700 clamp(14px, 2.4vw, 25px)/1 var(--op-font-mono);
+  font: 700 clamp(14px, 2.4vw, 24px)/1 var(--op-font-mono);
   letter-spacing: -0.03em;
 }
 
-.benchmark-equation span,
-.benchmark-equation strong,
-.benchmark-equation b {
-  padding: 13px 0;
+.benchmark-equation__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 12px 13px 0;
   border-bottom: 1px solid var(--op-border);
+  color: var(--op-text);
+  text-decoration: none;
+  transition: color 140ms ease, background-color 140ms ease, padding-left 140ms ease;
+  cursor: pointer;
 }
 
-.benchmark-equation b {
+.benchmark-equation__item:hover,
+.benchmark-equation__item:focus-visible {
+  color: var(--op-yellow-bright);
+  background: var(--op-surface-2);
+  padding-left: 8px;
+  text-decoration: none;
+}
+
+.benchmark-equation__item.is-active {
+  background: var(--op-surface-2);
+  color: var(--op-yellow);
+  border-bottom-color: var(--op-yellow);
+  padding-left: 8px;
+}
+
+.benchmark-equation__item--evidence .benchmark-equation__title {
+  color: var(--op-yellow);
+}
+
+.benchmark-equation__item--evidence:hover .benchmark-equation__title {
+  color: var(--op-yellow-bright);
+}
+
+.benchmark-equation__badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 3px 6px;
+  border: 1px solid var(--op-border-bright);
+  border-radius: 2px;
+  background: var(--op-surface);
+  color: var(--op-text-dim);
+  text-transform: uppercase;
+}
+
+.benchmark-equation__item:hover .benchmark-equation__badge,
+.benchmark-equation__item.is-active .benchmark-equation__badge {
+  border-color: var(--op-yellow);
+  color: var(--op-yellow);
+}
+
+.benchmark-equation__op {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 8px;
+  border-bottom: 1px solid var(--op-border);
   color: var(--op-text-muted);
   font-weight: 400;
 }
 
-.benchmark-equation strong {
+/* Equation Drawer */
+.benchmark-equation-drawer {
+  padding: 20px 24px;
+  border: 1px solid var(--op-yellow);
+  background: var(--op-surface-2);
+  animation: op-drawer-fade 200ms ease;
+}
+
+@keyframes op-drawer-fade {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.benchmark-equation-drawer__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.benchmark-equation-drawer__eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: var(--op-yellow);
+}
+
+.benchmark-equation-drawer__close {
+  border: 1px solid var(--op-border-bright);
+  background: var(--op-surface);
+  color: var(--op-text);
+  font-size: 16px;
+  line-height: 1;
+  padding: 2px 8px;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.benchmark-equation-drawer__close:hover {
+  border-color: var(--op-yellow);
+  color: var(--op-yellow);
+}
+
+.benchmark-equation-drawer__title {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--op-text);
+}
+
+.benchmark-equation-drawer__desc {
+  margin: 0 0 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--op-text-dim);
+}
+
+.benchmark-equation-drawer__meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+  padding: 12px 0;
+  margin-bottom: 16px;
+  border-top: 1px solid var(--op-border);
+  border-bottom: 1px solid var(--op-border);
+  font-size: 11px;
+}
+
+.benchmark-drawer-stat strong {
+  display: block;
+  font-size: 16px;
+  color: var(--op-text);
+}
+
+.benchmark-drawer-stat span {
+  color: var(--op-text-dim);
+  text-transform: uppercase;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+
+.benchmark-equation-drawer__actions {
+  display: flex;
+  gap: 12px;
 }
 
 .benchmark-section-heading {
