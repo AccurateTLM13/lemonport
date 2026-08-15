@@ -18,6 +18,7 @@ const { contentFile: lemonteedFmFile, validateLemonteedFm, buildLemonteedFm } = 
 const { resolvePathWithinRoot } = require("./security-utils");
 const { galleryWidths, statuses } = require("./site-config");
 const { loadSeo, saveSeoFile, buildSeo } = require("./build-seo");
+const { generateOgImage } = require("./generate-og-images");
 const { contentFile: junkDrawerFile, loadJunkDrawer, validateExternalTools, buildJunkDrawer, slugify: junkDrawerSlugify } = require("./build-junk-drawer");
 const { collectLemmyHealth, normalizeLimit } = require("./lemmy-health");
 const { executeLemmyAction } = require("./lemmy-actions");
@@ -1896,6 +1897,22 @@ async function route(request, response) {
         });
       } finally {
         if (fs.existsSync(tempFile)) fs.unlinkSync(tempFile);
+      }
+      return;
+    }
+
+    // POST /api/seo/generate-og — auto-generate a branded OG image card for a page
+    if (request.method === "POST" && url.pathname === "/api/seo/generate-og") {
+      const body = await readJsonBody(request);
+      if (!body.key) {
+        sendJson(response, 400, { error: "page key required." });
+        return;
+      }
+      try {
+        const result = generateOgImage(body.key, body);
+        sendJson(response, 200, result);
+      } catch (err) {
+        sendJson(response, 500, { error: `Failed to generate OG image: ${err.message}` });
       }
       return;
     }

@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RELAY — AI Agent Deployment & Operations Platform</title>
+    
+    <!-- Google Fonts: Barlow Condensed (Display), IBM Plex Sans (Body), IBM Plex Mono (Technical/Metadata) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS Framework -->
+    
+
+    <style>
+        :root {
+            --paper:        #e7e4d8;
+            --paper-raised: #f0ede3;
+            --paper-overlay:#dfdcce;
+            --ink:          #1d1d1a;
+            --ink-soft:     #4c4c46;
+            --ink-muted:    #77766e;
+            --rule:         #9d9a8e;
+            --rule-strong:  #45453f;
+
+            --revision:     #a54532;
+            --warning:      #c18a28;
+            --verified:     #4f7455;
+        }
+
+        body {
+            background-color: var(--paper);
+            color: var(--ink);
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .font-display {
+            font-family: 'Barlow Condensed', sans-serif;
+            letter-spacing: 0.02em;
+        }
+
+        .font-mono {
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        /* Border utility colors based on variables */
+        .border-rule { border-color: var(--rule); }
+        .border-rule-strong { border-color: var(--rule-strong); }
+
+        /* Document Rule System */
+        .rule-top { border-top: 1px solid var(--rule); }
+        .rule-bottom { border-bottom: 1px solid var(--rule); }
+        .rule-left { border-left: 1px solid var(--rule); }
+        .rule-right { border-right: 1px solid var(--rule); }
+
+        /* Command Plate Buttons (Flat, explicit, non-floating) */
+        .cmd-plate {
+            background-color: var(--paper-raised);
+            border: 1px solid var(--rule-strong);
+            color: var(--ink);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            padding: 0.5rem 0.875rem;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            transition: background-color 100ms linear, border-color 100ms linear;
+            cursor: pointer;
+            border-radius: 0px;
+            user-select: none;
+        }
+
+        .cmd-plate:hover {
+            background-color: var(--paper-overlay);
+            border-color: var(--ink);
+        }
+
+        .cmd-plate:active {
+            background-color: var(--ink);
+            color: var(--paper);
+        }
+
+        .cmd-plate-primary {
+            background-color: var(--ink);
+            color: var(--paper);
+            border-color: var(--ink);
+        }
+
+        .cmd-plate-primary:hover {
+            background-color: var(--ink-soft);
+            color: var(--paper);
+        }
+
+        /* Annotation Highlight */
+        .annotation-target {
+            cursor: pointer;
+            border-bottom: 1.5px dashed var(--revision);
+            transition: background-color 120ms linear;
+        }
+
+        .annotation-target:hover {
+            background-color: rgba(165, 69, 50, 0.08);
+        }
+
+        /* Custom Scrollbar for document tables */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--paper);
+            border-left: 1px solid var(--rule);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--rule-strong);
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-24"><div style="position:fixed;right:12px;bottom:12px;z-index:2147483647;padding:8px 10px;background:#111;color:#fff;font:12px/1.3 monospace;border:1px solid #777">ARCHIVED SOURCE · SCRIPTS AND NETWORK DISABLED</div>
+
+    <!-- MASTER DOCUMENT HEADER -->
+    <header class="w-full rule-bottom bg-[var(--paper)] sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="py-3 flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-[var(--ink-soft)]">
+                <div class="flex items-center gap-4 flex-wrap">
+                    <span class="font-display text-xl font-bold tracking-wider text-[var(--ink)] uppercase">RELAY</span>
+                    <span class="hidden sm:inline text-[var(--rule)]">/</span>
+                    <span class="hidden sm:inline tracking-wider">FIELD MANUAL UI/UX v2.7</span>
+                    <span class="text-[var(--rule)]">/</span>
+                    <span class="text-[var(--ink)] font-semibold">DOC-ID: RLY-OPERATIONAL-SPEC-2026</span>
+                </div>
+                <div class="flex items-center gap-6 text-xs">
+                    <div>
+                        <span class="text-[var(--ink-muted)]">SYSTEM TIME:</span>
+                        <span id="sys-clock" class="font-semibold text-[var(--ink)]">14:32:00 UTC</span>
+                    </div>
+                    <div>
+                        <span class="text-[var(--ink-muted)]">STATUS:</span>
+                        <span class="text-[var(--verified)] font-semibold">● OPERATIONAL</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Index Navigation Bar -->
+            <nav class="rule-top py-2 overflow-x-auto whitespace-nowrap scrollbar-none font-mono text-xs">
+                <div class="flex items-center space-x-6 text-[var(--ink-soft)]">
+                    <a href="#sec-01" class="hover:text-[var(--ink)] transition-colors"><span class="text-[var(--revision)] font-semibold">01</span> / DEPLOYMENT RECORD</a>
+                    <a href="#sec-02" class="hover:text-[var(--ink)] transition-colors"><span class="text-[var(--revision)] font-semibold">02</span> / DEPLOYMENT PROCEDURE</a>
+                    <a href="#sec-03" class="hover:text-[var(--ink)] transition-colors"><span class="text-[var(--revision)] font-semibold">03</span> / SYSTEM SPECIFICATION</a>
+                    <a href="#sec-04" class="hover:text-[var(--ink)] transition-colors"><span class="text-[var(--revision)] font-semibold">04</span> / AGENT RECORDS</a>
+                    <a href="#sec-05" class="hover:text-[var(--ink)] transition-colors"><span class="text-[var(--revision)] font-semibold">05</span> / CHANGE RECORD</a>
+                    <a href="#sec-06" class="hover:text-[var(--ink)] transition-colors"><span class="text-[var(--revision)] font-semibold">06</span> / ANNOTATIONS</a>
+                    <a href="#sec-07" class="hover:text-[var(--ink)] transition-colors"><span class="text-[var(--revision)] font-semibold">07</span> / FAILURE PROCEDURE</a>
+                    <a href="#sec-08" class="hover:text-[var(--ink)] transition-colors"><span class="text-[var(--revision)] font-semibold">08</span> / PRODUCT SPEC</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN MANUAL BODY CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-16">
+
+        <!-- SECTION 01 / DEPLOYMENT RECORD -->
+        <section id="sec-01" class="scroll-mt-24">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- INDEX COLUMN -->
+                <div class="lg:col-span-2 font-mono border-b lg:border-b-0 lg:border-r border-rule pb-4 lg:pb-0 pr-4">
+                    <div class="text-3xl font-display font-bold text-[var(--ink)]">01</div>
+                    <div class="text-xs uppercase tracking-wider text-[var(--ink-muted)] mt-1">RECORD</div>
+                    <div class="text-xs font-semibold uppercase text-[var(--ink)] mt-1">DEPLOYMENT STATE</div>
+                </div>
+
+                <!-- CONTENT COLUMN -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div>
+                        <h2 class="font-display text-2xl font-bold uppercase tracking-wide text-[var(--ink)]">
+                            01 / DEPLOYMENT RECORD
+                        </h2>
+                        <p class="text-sm text-[var(--ink-soft)] mt-1">
+                            Current operational status and verified configuration snapshot for active deployment target.
+                        </p>
+                    </div>
+
+                    <!-- TECHNICAL SPECIFICATION PLATE -->
+                    <div class="bg-[var(--paper-raised)] border border-rule-strong p-6 font-mono text-xs space-y-4 relative">
+                        <div class="flex justify-between items-center border-b border-rule pb-3">
+                            <span class="text-[var(--ink-muted)]">RECORD IDENTIFIER: <strong class="text-[var(--ink)]" id="rec-id-val">REC-2026-0814-04</strong></span>
+                            <span class="px-2 py-0.5 bg-[var(--verified)] text-white font-semibold text-[10px] tracking-widest uppercase" id="rec-status-badge">VERIFIED</span>
+                        </div>
+
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 pt-2">
+                            <div>
+                                <div class="text-[var(--ink-muted)] text-[10px] uppercase tracking-wider mb-1">AGENT</div>
+                                <div class="text-lg font-bold text-[var(--ink)]" id="rec-agent-name">Research-04</div>
+                            </div>
+                            <div>
+                                <div class="text-[var(--ink-muted)] text-[10px] uppercase tracking-wider mb-1">BUILD</div>
+                                <div class="text-base font-semibold text-[var(--ink)]" id="rec-build-id">RLY-1842</div>
+                            </div>
+                            <div>
+                                <div class="text-[var(--ink-muted)] text-[10px] uppercase tracking-wider mb-1">ENVIRONMENT</div>
+                                <div class="text-base font-semibold text-[var(--ink)]" id="rec-env-val">PRODUCTION</div>
+                            </div>
+                            <div>
+                                <div class="text-[var(--ink-muted)] text-[10px] uppercase tracking-wider mb-1">STATE</div>
+                                <div class="text-base font-semibold text-[var(--verified)]" id="rec-state-val">VERIFIED</div>
+                            </div>
+                            <div>
+                                <div class="text-[var(--ink-muted)] text-[10px] uppercase tracking-wider mb-1">DEPLOYED</div>
+                                <div class="text-base font-semibold text-[var(--ink)]" id="rec-time-val">14:32:00</div>
+                            </div>
+                            <div>
+                                <div class="text-[var(--ink-muted)] text-[10px] uppercase tracking-wider mb-1">REVISION</div>
+                                <div class="text-base font-semibold text-[var(--revision)]" id="rec-rev-val">REV 07</div>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-rule pt-3 flex flex-wrap justify-between items-center text-[11px] text-[var(--ink-soft)]">
+                            <div>HASH: <span class="text-[var(--ink)] font-mono">e8f4a299c10472b83d91</span></div>
+                            <div>SIGNATURE: <span class="text-[var(--ink)] font-mono">ED25519-SECOP-OK</span></div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-3">
+                        <button class="cmd-plate">
+                            <span>RE-INSPECT SPECIFICATION</span>
+                            <span>[REF 01]</span>
+                        </button>
+                        <button class="cmd-plate">
+                            <span>SHOW DEPLOYMENT RULES</span>
+                            <span>[NOTE A]</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ANNOTATION MARGIN -->
+                <div class="lg:col-span-3 font-mono text-xs border-l border-rule pl-4 space-y-4">
+                    <div class="text-[var(--revision)] font-semibold tracking-wider text-[11px]">MARGIN ANNOTATION</div>
+                    
+                    <div id="note-a-margin" class="p-3 bg-[var(--paper-raised)] border-l-2 border-[var(--revision)] space-y-1">
+                        <div class="font-bold text-[var(--ink)]">NOTE A / DEPLOYMENT REQUIREMENT</div>
+                        <p class="text-[var(--ink-soft)] text-[11px] leading-snug">
+                            Production agents require evaluation approval before deployment. Verification signatures expire after 24 hours.
+                        </p>
+                        <div class="text-[10px] text-[var(--ink-muted)] pt-1">SEC-POLICY 4.2B • REV 07</div>
+                    </div>
+
+                    <div class="p-3 border border-rule text-[11px] text-[var(--ink-soft)] space-y-1">
+                        <div class="font-semibold text-[var(--ink)]">VERIFICATION METHOD</div>
+                        <p>Deterministic evaluation harness against 150 gold-standard task vectors before production promotion.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 02 / DEPLOYMENT PROCEDURE -->
+        <section id="sec-02" class="scroll-mt-24 rule-top pt-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- INDEX COLUMN -->
+                <div class="lg:col-span-2 font-mono border-b lg:border-b-0 lg:border-r border-rule pb-4 lg:pb-0 pr-4">
+                    <div class="text-3xl font-display font-bold text-[var(--ink)]">02</div>
+                    <div class="text-xs uppercase tracking-wider text-[var(--ink-muted)] mt-1">PROCEDURE</div>
+                    <div class="text-xs font-semibold uppercase text-[var(--ink)] mt-1">VERIFICATION STEPS</div>
+                </div>
+
+                <!-- CONTENT COLUMN -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="flex justify-between items-end flex-wrap gap-4">
+                        <div>
+                            <h2 class="font-display text-2xl font-bold uppercase tracking-wide text-[var(--ink)]">
+                                02 / DEPLOYMENT PROCEDURE
+                            </h2>
+                            <p class="text-sm text-[var(--ink-soft)] mt-1">
+                                Complete sequential verification procedure to transition agent build to verified deployment state.
+                            </p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button id="btn-run-proc" class="cmd-plate cmd-plate-primary">
+                                <span>EXECUTE PROCEDURE</span>
+                                <span class="text-[10px]">▶ RUN</span>
+                            </button>
+                            <button class="cmd-plate">
+                                <span>RESET</span>
+                                <span class="text-[10px]">↺</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- PROCEDURE SEQUENCE LIST -->
+                    <div class="border border-rule-strong bg-[var(--paper-raised)] divide-y divide-rule font-mono text-xs">
+                        
+                        <!-- STEP 01 -->
+                        <div id="step-row-1" class="p-4 flex items-center justify-between transition-colors">
+                            <div class="flex items-center space-x-4">
+                                <button class="w-6 h-6 border border-rule-strong bg-[var(--paper)] flex items-center justify-center font-bold text-sm text-[var(--ink)] hover:bg-[var(--paper-overlay)]">
+                                    <span id="check-1">✓</span>
+                                </button>
+                                <div>
+                                    <span class="font-bold text-[var(--ink)]">01</span>
+                                    <span class="ml-2 uppercase tracking-wide text-[var(--ink)] font-semibold">VALIDATE CONFIG</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span id="status-1" class="text-[var(--verified)] font-semibold">COMPLETE</span>
+                                <span id="time-1" class="text-[var(--ink-muted)] text-[11px] block sm:inline sm:ml-3">14:31:02</span>
+                            </div>
+                        </div>
+
+                        <!-- STEP 02 -->
+                        <div id="step-row-2" class="p-4 flex items-center justify-between transition-colors">
+                            <div class="flex items-center space-x-4">
+                                <button class="w-6 h-6 border border-rule-strong bg-[var(--paper)] flex items-center justify-center font-bold text-sm text-[var(--ink)] hover:bg-[var(--paper-overlay)]">
+                                    <span id="check-2">✓</span>
+                                </button>
+                                <div>
+                                    <span class="font-bold text-[var(--ink)]">02</span>
+                                    <span class="ml-2 uppercase tracking-wide text-[var(--ink)] font-semibold">RESOLVE TOOLS</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span id="status-2" class="text-[var(--verified)] font-semibold">COMPLETE</span>
+                                <span id="time-2" class="text-[var(--ink-muted)] text-[11px] block sm:inline sm:ml-3">14:31:18</span>
+                            </div>
+                        </div>
+
+                        <!-- STEP 03 -->
+                        <div id="step-row-3" class="p-4 flex items-center justify-between transition-colors">
+                            <div class="flex items-center space-x-4">
+                                <button class="w-6 h-6 border border-rule-strong bg-[var(--paper)] flex items-center justify-center font-bold text-sm text-[var(--ink)] hover:bg-[var(--paper-overlay)]">
+                                    <span id="check-3">✓</span>
+                                </button>
+                                <div>
+                                    <span class="font-bold text-[var(--ink)]">03</span>
+                                    <span class="ml-2 uppercase tracking-wide text-[var(--ink)] font-semibold">RUN EVALUATION</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span id="status-3" class="text-[var(--verified)] font-semibold">COMPLETE</span>
+                                <span id="time-3" class="text-[var(--ink-muted)] text-[11px] block sm:inline sm:ml-3">14:31:45</span>
+                            </div>
+                        </div>
+
+                        <!-- STEP 04 -->
+                        <div id="step-row-4" class="p-4 flex items-center justify-between transition-colors">
+                            <div class="flex items-center space-x-4">
+                                <button class="w-6 h-6 border border-rule-strong bg-[var(--paper)] flex items-center justify-center font-bold text-sm text-[var(--ink)] hover:bg-[var(--paper-overlay)]">
+                                    <span id="check-4">✓</span>
+                                </button>
+                                <div>
+                                    <span class="font-bold text-[var(--ink)]">04</span>
+                                    <span class="ml-2 uppercase tracking-wide text-[var(--ink)] font-semibold">VERIFY PERMISSIONS</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span id="status-4" class="text-[var(--verified)] font-semibold">COMPLETE</span>
+                                <span id="time-4" class="text-[var(--ink-muted)] text-[11px] block sm:inline sm:ml-3">14:31:58</span>
+                            </div>
+                        </div>
+
+                        <!-- STEP 05 -->
+                        <div id="step-row-5" class="p-4 flex items-center justify-between transition-colors">
+                            <div class="flex items-center space-x-4">
+                                <button class="w-6 h-6 border border-rule-strong bg-[var(--paper)] flex items-center justify-center font-bold text-sm text-[var(--ink)] hover:bg-[var(--paper-overlay)]">
+                                    <span id="check-5">✓</span>
+                                </button>
+                                <div>
+                                    <span class="font-bold text-[var(--ink)]">05</span>
+                                    <span class="ml-2 uppercase tracking-wide text-[var(--ink)] font-semibold">DEPLOY</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span id="status-5" class="text-[var(--verified)] font-semibold">COMPLETE</span>
+                                <span id="time-5" class="text-[var(--ink-muted)] text-[11px] block sm:inline sm:ml-3">14:32:00</span>
+                            </div>
+                        </div>
+
+                        <!-- STEP 06 -->
+                        <div id="step-row-6" class="p-4 flex items-center justify-between transition-colors">
+                            <div class="flex items-center space-x-4">
+                                <button class="w-6 h-6 border border-rule-strong bg-[var(--paper)] flex items-center justify-center font-bold text-sm text-[var(--ink)] hover:bg-[var(--paper-overlay)]">
+                                    <span id="check-6">✓</span>
+                                </button>
+                                <div>
+                                    <span class="font-bold text-[var(--ink)]">06</span>
+                                    <span class="ml-2 uppercase tracking-wide text-[var(--ink)] font-semibold">OBSERVE</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span id="status-6" class="text-[var(--verified)] font-semibold">COMPLETE</span>
+                                <span id="time-6" class="text-[var(--ink-muted)] text-[11px] block sm:inline sm:ml-3">14:32:15</span>
+                            </div>
+                        </div>
+
+                        <!-- STEP 07 -->
+                        <div id="step-row-7" class="p-4 flex items-center justify-between transition-colors">
+                            <div class="flex items-center space-x-4">
+                                <button class="w-6 h-6 border border-rule-strong bg-[var(--paper)] flex items-center justify-center font-bold text-sm text-[var(--ink)] hover:bg-[var(--paper-overlay)]">
+                                    <span id="check-7">✓</span>
+                                </button>
+                                <div>
+                                    <span class="font-bold text-[var(--ink)]">07</span>
+                                    <span class="ml-2 uppercase tracking-wide text-[var(--ink)] font-semibold">SIGN OFF</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span id="status-7" class="text-[var(--verified)] font-semibold">COMPLETE</span>
+                                <span id="time-7" class="text-[var(--ink-muted)] text-[11px] block sm:inline sm:ml-3">14:32:30</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- REAL-TIME EXECUTION AUDIT LOG -->
+                    <div class="p-4 bg-[var(--paper)] border border-rule font-mono text-xs space-y-2">
+                        <div class="flex justify-between text-[var(--ink-muted)] text-[10px] border-b border-rule pb-1">
+                            <span>PROCEDURAL EXECUTION LOG</span>
+                            <span id="log-count">7 / 7 STAGES COMPLETED</span>
+                        </div>
+                        <div id="procedure-log" class="text-[var(--ink-soft)] space-y-1 max-h-32 overflow-y-auto leading-tight text-[11px]">
+                            <div>[14:31:02] STAGE 01 OK: Configuration schema validated against target cluster.</div>
+                            <div>[14:31:18] STAGE 02 OK: 7 tool interfaces bound with SHA-256 signatures.</div>
+                            <div>[14:31:45] STAGE 03 OK: Benchmark evaluation pass rate: 96.4% (Threshold: 94.0%).</div>
+                            <div>[14:31:58] STAGE 04 OK: Permission scope verified. Access token issued.</div>
+                            <div>[14:32:00] STAGE 05 OK: Immutable deployment container deployed to prod-us-east-1a.</div>
+                            <div>[14:32:15] STAGE 06 OK: Telemetry streams connected. Zero initial memory leaks.</div>
+                            <div>[14:32:30] STAGE 07 OK: Procedural sign-off recorded. Signature ED25519-VERIFIED.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ANNOTATION MARGIN -->
+                <div class="lg:col-span-3 font-mono text-xs border-l border-rule pl-4 space-y-4">
+                    <div class="text-[var(--revision)] font-semibold tracking-wider text-[11px]">MARGIN ANNOTATION</div>
+
+                    <div class="p-3 bg-[var(--paper-raised)] border-l-2 border-[var(--warning)] space-y-1">
+                        <div class="font-bold text-[var(--ink)]">CAUTION / STEP DEPENDENCY</div>
+                        <p class="text-[var(--ink-soft)] text-[11px] leading-snug">
+                            Skipping Stage 03 (Evaluation) or Stage 04 (Permissions) revokes production signature and flags revision for manual audit.
+                        </p>
+                    </div>
+
+                    <div class="p-3 border border-rule text-[11px] text-[var(--ink-soft)] space-y-2">
+                        <div class="font-semibold text-[var(--ink)]">COMPLETION LOGIC</div>
+                        <p>Each stage receives a deterministic execution hash timestamped at moment of completion. Re-running invalidates prior signatures.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 03 / SYSTEM SPECIFICATION -->
+        <section id="sec-03" class="scroll-mt-24 rule-top pt-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- INDEX COLUMN -->
+                <div class="lg:col-span-2 font-mono border-b lg:border-b-0 lg:border-r border-rule pb-4 lg:pb-0 pr-4">
+                    <div class="text-3xl font-display font-bold text-[var(--ink)]">03</div>
+                    <div class="text-xs uppercase tracking-wider text-[var(--ink-muted)] mt-1">SPECIFICATION</div>
+                    <div class="text-xs font-semibold uppercase text-[var(--ink)] mt-1">SYSTEM PARAMETERS</div>
+                </div>
+
+                <!-- CONTENT COLUMN -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div>
+                        <h2 class="font-display text-2xl font-bold uppercase tracking-wide text-[var(--ink)]">
+                            03 / SYSTEM SPECIFICATION
+                        </h2>
+                        <p class="text-sm text-[var(--ink-soft)] mt-1">
+                            Technical hardware, model, and tool constraints governing current agent execution scope.
+                        </p>
+                    </div>
+
+                    <!-- SPECIFICATION TABLE -->
+                    <div class="border border-rule-strong bg-[var(--paper-raised)] font-mono text-xs">
+                        <div class="bg-[var(--paper-overlay)] p-3 border-b border-rule-strong flex justify-between items-center font-bold">
+                            <span>PARAMETER FIELD</span>
+                            <span>SPECIFICATION VALUE</span>
+                            <span class="hidden sm:inline">TOLERANCE / SCOPE</span>
+                        </div>
+
+                        <div class="divide-y divide-rule">
+                            <div class="p-3 flex justify-between items-center">
+                                <span class="text-[var(--ink-muted)] font-semibold">MODEL</span>
+                                <span class="text-[var(--ink)] font-bold" id="spec-model">Claude 3.5 Sonnet / High Precision</span>
+                                <span class="text-[var(--ink-soft)] text-[11px] hidden sm:inline">Temp 0.1 / Deterministic</span>
+                            </div>
+
+                            <div class="p-3 flex justify-between items-center">
+                                <span class="text-[var(--ink-muted)] font-semibold">CONTEXT</span>
+                                <span class="text-[var(--ink)] font-bold" id="spec-context">128,000 Tokens</span>
+                                <span class="text-[var(--ink-soft)] text-[11px] hidden sm:inline">Max Window / Strict Prune</span>
+                            </div>
+
+                            <div class="p-3 flex justify-between items-center">
+                                <span class="text-[var(--ink-muted)] font-semibold">TOOLS</span>
+                                <span class="text-[var(--ink)] font-bold" id="spec-tools">7 Active Connectors</span>
+                                <span class="text-[var(--ink-soft)] text-[11px] hidden sm:inline">Read-Only SQL, Web, S3</span>
+                            </div>
+
+                            <div class="p-3 flex justify-between items-center">
+                                <span class="text-[var(--ink-muted)] font-semibold">MEMORY</span>
+                                <span class="text-[var(--ink)] font-bold" id="spec-memory">Persistent Episodic (Redis)</span>
+                                <span class="text-[var(--ink-soft)] text-[11px] hidden sm:inline">Isolated Vector Store</span>
+                            </div>
+
+                            <div class="p-3 flex justify-between items-center">
+                                <span class="text-[var(--ink-muted)] font-semibold">TIMEOUT</span>
+                                <span class="text-[var(--ink)] font-bold" id="spec-timeout">45.0 Seconds</span>
+                                <span class="text-[var(--ink-soft)] text-[11px] hidden sm:inline">Hard Limit per Turn</span>
+                            </div>
+
+                            <div class="p-3 flex justify-between items-center">
+                                <span class="text-[var(--ink-muted)] font-semibold">REGION</span>
+                                <span class="text-[var(--ink)] font-bold" id="spec-region">us-east-1a (VPC Private)</span>
+                                <span class="text-[var(--ink-soft)] text-[11px] hidden sm:inline">Multi-AZ Subnet</span>
+                            </div>
+
+                            <div class="p-3 flex justify-between items-center">
+                                <span class="text-[var(--ink-muted)] font-semibold">VERSION</span>
+                                <span class="text-[var(--ink)] font-bold" id="spec-version">RLY-v2.4.1-release</span>
+                                <span class="text-[var(--revision)] text-[11px] font-bold hidden sm:inline">REV 07 CURRENT</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SPECIFICATION NOTES -->
+                    <div class="p-4 border border-rule text-xs text-[var(--ink-soft)] space-y-1">
+                        <span class="font-mono font-bold text-[var(--ink)]">OPERATIONAL BOUNDS:</span>
+                        <p>All agent operations execute inside ephemeral gVisor sandboxes with strict network egress white-listing. Non-whitelisted endpoints cause immediate execution termination and record a diagnostic alert in Section 07.</p>
+                    </div>
+                </div>
+
+                <!-- ANNOTATION MARGIN -->
+                <div class="lg:col-span-3 font-mono text-xs border-l border-rule pl-4 space-y-4">
+                    <div class="text-[var(--revision)] font-semibold tracking-wider text-[11px]">MARGIN ANNOTATION</div>
+
+                    <div class="p-3 bg-[var(--paper-raised)] border-l-2 border-[var(--ink-strong)] space-y-1">
+                        <div class="font-bold text-[var(--ink)]">REF 03.1 / MEMORY POLICY</div>
+                        <p class="text-[var(--ink-soft)] text-[11px] leading-snug">
+                            Episodic memory caches are automatically flushed upon version bump (e.g. REV 06 → REV 07) to prevent hallucination carryover.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 04 / AGENT RECORDS -->
+        <section id="sec-04" class="scroll-mt-24 rule-top pt-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- INDEX COLUMN -->
+                <div class="lg:col-span-2 font-mono border-b lg:border-b-0 lg:border-r border-rule pb-4 lg:pb-0 pr-4">
+                    <div class="text-3xl font-display font-bold text-[var(--ink)]">04</div>
+                    <div class="text-xs uppercase tracking-wider text-[var(--ink-muted)] mt-1">RECORDS</div>
+                    <div class="text-xs font-semibold uppercase text-[var(--ink)] mt-1">AGENT INDEX</div>
+                </div>
+
+                <!-- CONTENT COLUMN -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div>
+                        <h2 class="font-display text-2xl font-bold uppercase tracking-wide text-[var(--ink)]">
+                            04 / AGENT RECORDS
+                        </h2>
+                        <p class="text-sm text-[var(--ink-soft)] mt-1">
+                            Registered operational agents across target environments. Select a record to inspect live specification and change log.
+                        </p>
+                    </div>
+
+                    <!-- STRUCTURED AGENT TABLE -->
+                    <div class="border border-rule-strong bg-[var(--paper-raised)] overflow-x-auto font-mono text-xs">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-[var(--paper-overlay)] border-b border-rule-strong text-[var(--ink)] font-bold">
+                                    <th class="p-3">AGENT</th>
+                                    <th class="p-3">REV</th>
+                                    <th class="p-3">TASK FUNCTION</th>
+                                    <th class="p-3">ENV</th>
+                                    <th class="p-3">STATE</th>
+                                    <th class="p-3 text-right">UPDATED</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-rule">
+                                
+                                <tr class="hover:bg-[var(--paper-overlay)] cursor-pointer bg-[var(--paper)]">
+                                    <td class="p-3 font-bold text-[var(--ink)] flex items-center gap-2">
+                                        <span class="text-[var(--revision)]">▶</span> Research-04
+                                    </td>
+                                    <td class="p-3 text-[var(--revision)] font-semibold">REV 07</td>
+                                    <td class="p-3 text-[var(--ink-soft)]">Literature Synthesis & Extraction</td>
+                                    <td class="p-3 font-semibold text-[var(--ink)]">PROD</td>
+                                    <td class="p-3 text-[var(--verified)] font-bold">VERIFIED</td>
+                                    <td class="p-3 text-right text-[var(--ink-muted)]">14:32:00</td>
+                                </tr>
+
+                                <tr class="hover:bg-[var(--paper-overlay)] cursor-pointer">
+                                    <td class="p-3 font-bold text-[var(--ink)] flex items-center gap-2">
+                                        <span>▷</span> CodeAuditor-01
+                                    </td>
+                                    <td class="p-3 font-semibold text-[var(--ink-muted)]">REV 04</td>
+                                    <td class="p-3 text-[var(--ink-soft)]">PR Static Analysis & Vulnerability Scan</td>
+                                    <td class="p-3 font-semibold text-[var(--ink)]">PROD</td>
+                                    <td class="p-3 text-[var(--verified)] font-bold">ACTIVE</td>
+                                    <td class="p-3 text-right text-[var(--ink-muted)]">12:10:45</td>
+                                </tr>
+
+                                <tr class="hover:bg-[var(--paper-overlay)] cursor-pointer">
+                                    <td class="p-3 font-bold text-[var(--ink)] flex items-center gap-2">
+                                        <span>▷</span> DataPipeline-02
+                                    </td>
+                                    <td class="p-3 font-semibold text-[var(--ink-muted)]">REV 09</td>
+                                    <td class="p-3 text-[var(--ink-soft)]">ETL Schema Drift Anomaly Detection</td>
+                                    <td class="p-3 font-semibold text-[var(--ink-muted)]">STAGING</td>
+                                    <td class="p-3 text-[var(--warning)] font-bold">TESTING</td>
+                                    <td class="p-3 text-right text-[var(--ink-muted)]">10:45:12</td>
+                                </tr>
+
+                                <tr class="hover:bg-[var(--paper-overlay)] cursor-pointer">
+                                    <td class="p-3 font-bold text-[var(--ink)] flex items-center gap-2">
+                                        <span>▷</span> Compliance-03
+                                    </td>
+                                    <td class="p-3 font-semibold text-[var(--ink-muted)]">REV 02</td>
+                                    <td class="p-3 text-[var(--ink-soft)]">SOC2 Policy Enforcement & Audit</td>
+                                    <td class="p-3 font-semibold text-[var(--ink)]">PROD</td>
+                                    <td class="p-3 text-[var(--verified)] font-bold">VERIFIED</td>
+                                    <td class="p-3 text-right text-[var(--ink-muted)]">YESTERDAY</td>
+                                </tr>
+
+                                <tr class="hover:bg-[var(--paper-overlay)] cursor-pointer">
+                                    <td class="p-3 font-bold text-[var(--ink)] flex items-center gap-2">
+                                        <span>▷</span> SupportAgent-09
+                                    </td>
+                                    <td class="p-3 font-semibold text-[var(--ink-muted)]">REV 06</td>
+                                    <td class="p-3 text-[var(--ink-soft)]">Tier-2 Incident Triaging & Escalation</td>
+                                    <td class="p-3 font-semibold text-[var(--ink-muted)]">DEV</td>
+                                    <td class="p-3 text-[var(--revision)] font-bold">REVISED</td>
+                                    <td class="p-3 text-right text-[var(--ink-muted)]">YESTERDAY</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ANNOTATION MARGIN -->
+                <div class="lg:col-span-3 font-mono text-xs border-l border-rule pl-4 space-y-4">
+                    <div class="text-[var(--revision)] font-semibold tracking-wider text-[11px]">MARGIN ANNOTATION</div>
+
+                    <div class="p-3 border border-rule text-[11px] text-[var(--ink-soft)] space-y-1">
+                        <div class="font-semibold text-[var(--ink)]">REGISTRY SCOPE</div>
+                        <p>5 active agents registered in cluster <strong class="text-[var(--ink)]">US-EAST-01</strong>. All revision histories cryptographically anchored.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 05 / CHANGE RECORD -->
+        <section id="sec-05" class="scroll-mt-24 rule-top pt-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- INDEX COLUMN -->
+                <div class="lg:col-span-2 font-mono border-b lg:border-b-0 lg:border-r border-rule pb-4 lg:pb-0 pr-4">
+                    <div class="text-3xl font-display font-bold text-[var(--ink)]">05</div>
+                    <div class="text-xs uppercase tracking-wider text-[var(--ink-muted)] mt-1">HISTORY</div>
+                    <div class="text-xs font-semibold uppercase text-[var(--ink)] mt-1">CHANGE RECORD</div>
+                </div>
+
+                <!-- CONTENT COLUMN -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div>
+                        <h2 class="font-display text-2xl font-bold uppercase tracking-wide text-[var(--ink)]">
+                            05 / CHANGE RECORD
+                        </h2>
+                        <p class="text-sm text-[var(--ink-soft)] mt-1">
+                            First-class audit history detailing procedural modifications and state sign-offs for agent <strong class="text-[var(--ink)] font-mono" id="change-agent-title">Research-04</strong>.
+                        </p>
+                    </div>
+
+                    <!-- REVISION TIMELINE BLOCKS -->
+                    <div class="space-y-4 font-mono text-xs">
+                        
+                        <!-- REV 07 -->
+                        <div class="border-l-2 border-[var(--revision)] bg-[var(--paper-raised)] p-4 space-y-2 border-r border-t border-b border-rule">
+                            <div class="flex justify-between items-center flex-wrap gap-2">
+                                <div class="flex items-center space-x-2">
+                                    <span class="px-2 py-0.5 bg-[var(--revision)] text-white font-bold text-[10px]">REV 07</span>
+                                    <span class="font-bold text-[var(--ink)]">Production deployment verified.</span>
+                                </div>
+                                <span class="text-[var(--ink-muted)] text-[11px]">14:32:00 UTC</span>
+                            </div>
+                            <p class="text-[var(--ink-soft)] text-[12px] font-sans">
+                                Final verification sign-off completed. Production container promoted to cluster node `prod-us-east-1a` following zero-error benchmark evaluation run.
+                            </p>
+                            <div class="text-[10px] text-[var(--ink-muted)] border-t border-rule pt-2 flex justify-between">
+                                <span>AUTHOR: SecOps & Model Safety Lead</span>
+                                <span>HASH: 99a12c8e04</span>
+                            </div>
+                        </div>
+
+                        <!-- REV 06 -->
+                        <div class="border-l-2 border-[var(--rule-strong)] bg-[var(--paper)] p-4 space-y-2 border-r border-t border-b border-rule">
+                            <div class="flex justify-between items-center flex-wrap gap-2">
+                                <div class="flex items-center space-x-2">
+                                    <span class="px-2 py-0.5 border border-rule-strong font-bold text-[10px] text-[var(--ink)]">REV 06</span>
+                                    <span class="font-bold text-[var(--ink)]">Evaluation threshold updated.</span>
+                                </div>
+                                <span class="text-[var(--ink-muted)] text-[11px]">11:15:22 UTC</span>
+                            </div>
+                            <p class="text-[var(--ink-soft)] text-[12px] font-sans">
+                                Raised mandatory benchmark evaluation pass mark from 88.0% to 94.0% for all agents processing production user data vectors.
+                            </p>
+                            <div class="text-[10px] text-[var(--ink-muted)] border-t border-rule pt-2 flex justify-between">
+                                <span>AUTHOR: AI Safety Engineering</span>
+                                <span>HASH: 44b78e12d3</span>
+                            </div>
+                        </div>
+
+                        <!-- REV 05 -->
+                        <div class="border-l-2 border-[var(--rule-strong)] bg-[var(--paper)] p-4 space-y-2 border-r border-t border-b border-rule">
+                            <div class="flex justify-between items-center flex-wrap gap-2">
+                                <div class="flex items-center space-x-2">
+                                    <span class="px-2 py-0.5 border border-rule-strong font-bold text-[10px] text-[var(--ink)]">REV 05</span>
+                                    <span class="font-bold text-[var(--ink)]">Tool permissions changed.</span>
+                                </div>
+                                <span class="text-[var(--ink-muted)] text-[11px]">YESTERDAY 09:40 UTC</span>
+                            </div>
+                            <p class="text-[var(--ink-soft)] text-[12px] font-sans">
+                                Restricted SQL connector permissions from read-write to read-only replica. Removed raw shell execution capability.
+                            </p>
+                            <div class="text-[10px] text-[var(--ink-muted)] border-t border-rule pt-2 flex justify-between">
+                                <span>AUTHOR: Infrastructure Team</span>
+                                <span>HASH: 11c0903f71</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ANNOTATION MARGIN -->
+                <div class="lg:col-span-3 font-mono text-xs border-l border-rule pl-4 space-y-4">
+                    <div class="text-[var(--revision)] font-semibold tracking-wider text-[11px]">MARGIN ANNOTATION</div>
+
+                    <div class="p-3 bg-[var(--paper-raised)] border-l-2 border-[var(--revision)] space-y-1">
+                        <div class="font-bold text-[var(--ink)]">IMMUTABLE LOG</div>
+                        <p class="text-[var(--ink-soft)] text-[11px] leading-snug">
+                            All change records are cryptographically appended to the system ledger. Reverting a change generates a new revision (REV 08) rather than erasing history.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 06 / ANNOTATION -->
+        <section id="sec-06" class="scroll-mt-24 rule-top pt-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- INDEX COLUMN -->
+                <div class="lg:col-span-2 font-mono border-b lg:border-b-0 lg:border-r border-rule pb-4 lg:pb-0 pr-4">
+                    <div class="text-3xl font-display font-bold text-[var(--ink)]">06</div>
+                    <div class="text-xs uppercase tracking-wider text-[var(--ink-muted)] mt-1">NOTES</div>
+                    <div class="text-xs font-semibold uppercase text-[var(--ink)] mt-1">ANNOTATIONS</div>
+                </div>
+
+                <!-- CONTENT COLUMN -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div>
+                        <h2 class="font-display text-2xl font-bold uppercase tracking-wide text-[var(--ink)]">
+                            06 / ANNOTATION
+                        </h2>
+                        <p class="text-sm text-[var(--ink-soft)] mt-1">
+                            Document annotations act as formal operational notes tethered directly to procedures and specifications.
+                        </p>
+                    </div>
+
+                    <!-- INTERACTIVE ANNOTATION TRIGGER LIST -->
+                    <div class="p-6 border border-rule-strong bg-[var(--paper-raised)] space-y-6">
+                        <p class="text-sm text-[var(--ink)]">
+                            Hover or click any annotation mark below to reveal its formal technical annotation in the document margin:
+                        </p>
+
+                        <div class="space-y-4 font-mono text-xs">
+                            <div class="p-3 border border-rule bg-[var(--paper)] flex justify-between items-center">
+                                <div>
+                                    <span class="annotation-target font-bold text-[var(--revision)]">
+                                        [NOTE A] EVALUATION APPROVAL RULE
+                                    </span>
+                                    <span class="text-[var(--ink-soft)] block text-[11px] mt-0.5">Mandatory gate prior to production container deployment.</span>
+                                </div>
+                                <button class="cmd-plate text-[10px]">INSPECT</button>
+                            </div>
+
+                            <div class="p-3 border border-rule bg-[var(--paper)] flex justify-between items-center">
+                                <div>
+                                    <span class="annotation-target font-bold text-[var(--revision)]">
+                                        [NOTE B] TOOL CONNECTOR SIGNATURES
+                                    </span>
+                                    <span class="text-[var(--ink-soft)] block text-[11px] mt-0.5">Cryptographic validation of tool RPC endpoints.</span>
+                                </div>
+                                <button class="cmd-plate text-[10px]">INSPECT</button>
+                            </div>
+
+                            <div class="p-3 border border-rule bg-[var(--paper)] flex justify-between items-center">
+                                <div>
+                                    <span class="annotation-target font-bold text-[var(--revision)]">
+                                        [NOTE C] AUTOMATIC LATENCY ROLLBACK
+                                    </span>
+                                    <span class="text-[var(--ink-soft)] block text-[11px] mt-0.5">Circuit breaker rules for degraded inference nodes.</span>
+                                </div>
+                                <button class="cmd-plate text-[10px]">INSPECT</button>
+                            </div>
+                        </div>
+
+                        <!-- DISPLAYED ANNOTATION DETAIL BOX -->
+                        <div id="annotation-detail-box" class="p-4 bg-[var(--paper)] border-l-4 border-[var(--revision)] border-r border-t border-b border-rule font-mono text-xs space-y-2">
+                            <div class="font-bold text-[var(--ink)] flex justify-between">
+                                <span id="ann-detail-title">NOTE A / PRODUCTION EVALUATION APPROVAL</span>
+                                <span class="text-[var(--revision)]">STATE: ACTIVE REQUIREMENT</span>
+                            </div>
+                            <p id="ann-detail-body" class="text-[var(--ink-soft)] text-[12px] font-sans leading-normal">
+                                Production agents require evaluation approval before deployment. Every benchmark suite must verify deterministic token safety, context retention under pressure, and tool authorization constraints before the signature is issued.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ANNOTATION MARGIN -->
+                <div class="lg:col-span-3 font-mono text-xs border-l border-rule pl-4 space-y-4">
+                    <div class="text-[var(--revision)] font-semibold tracking-wider text-[11px]">MARGIN ANNOTATION</div>
+
+                    <div id="note-a-panel" class="p-3 bg-[var(--paper-raised)] border-l-2 border-[var(--revision)] space-y-1">
+                        <div class="font-bold text-[var(--ink)]">NOTE A</div>
+                        <p class="text-[var(--ink-soft)] text-[11px] leading-snug">
+                            Production agents require evaluation approval before deployment.
+                        </p>
+                    </div>
+
+                    <div id="note-b-panel" class="p-3 bg-[var(--paper-raised)] border-l-2 border-[var(--ink-strong)] space-y-1">
+                        <div class="font-bold text-[var(--ink)]">NOTE B</div>
+                        <p class="text-[var(--ink-soft)] text-[11px] leading-snug">
+                            Tool resolution verifies ED25519 signatures of connected microservice RPC interfaces during Stage 02.
+                        </p>
+                    </div>
+
+                    <div id="note-c-panel" class="p-3 bg-[var(--paper-raised)] border-l-2 border-[var(--warning)] space-y-1">
+                        <div class="font-bold text-[var(--ink)]">NOTE C</div>
+                        <p class="text-[var(--ink-soft)] text-[11px] leading-snug">
+                            3 consecutive tool timeouts (>45.0s) trigger automatic container eviction and fallback to REV 06.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 07 / FAILURE PROCEDURE -->
+        <section id="sec-07" class="scroll-mt-24 rule-top pt-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- INDEX COLUMN -->
+                <div class="lg:col-span-2 font-mono border-b lg:border-b-0 lg:border-r border-rule pb-4 lg:pb-0 pr-4">
+                    <div class="text-3xl font-display font-bold text-[var(--ink)]">07</div>
+                    <div class="text-xs uppercase tracking-wider text-[var(--warning)] mt-1">DIAGNOSTIC</div>
+                    <div class="text-xs font-semibold uppercase text-[var(--ink)] mt-1">FAILURE PROCEDURE</div>
+                </div>
+
+                <!-- CONTENT COLUMN -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div>
+                        <h2 class="font-display text-2xl font-bold uppercase tracking-wide text-[var(--ink)]">
+                            07 / FAILURE PROCEDURE
+                        </h2>
+                        <p class="text-sm text-[var(--ink-soft)] mt-1">
+                            Standard operating procedure for diagnosing and resolving tool execution or permission anomalies.
+                        </p>
+                    </div>
+
+                    <!-- DIAGNOSTIC PLATE -->
+                    <div class="border border-rule-strong bg-[var(--paper-raised)] p-6 font-mono text-xs space-y-6">
+                        
+                        <!-- SYMPTOM & CAUSE -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4 border-b border-rule">
+                            <div class="p-3 bg-[var(--paper)] border-l-2 border-[var(--warning)] space-y-1">
+                                <div class="text-[var(--ink-muted)] text-[10px] uppercase font-bold">SYMPTOM</div>
+                                <div class="text-sm font-bold text-[var(--ink)]">Tool execution unavailable.</div>
+                                <p class="text-[var(--ink-soft)] text-[11px] font-sans">Agent returns 403 Access Denied or null response on tool invocation.</p>
+                            </div>
+
+                            <div class="p-3 bg-[var(--paper)] border-l-2 border-[var(--warning)] space-y-1">
+                                <div class="text-[var(--ink-muted)] text-[10px] uppercase font-bold">POSSIBLE CAUSE</div>
+                                <div class="text-sm font-bold text-[var(--ink)]">Permission scope incomplete.</div>
+                                <p class="text-[var(--ink-soft)] text-[11px] font-sans">Required OAuth token or database view permission missing in agent scope manifest.</p>
+                            </div>
+                        </div>
+
+                        <!-- DIAGNOSTIC STEPS -->
+                        <div class="space-y-3">
+                            <div class="font-bold text-[var(--ink)] text-sm">RECOVERY PROCEDURE STEPS:</div>
+
+                            <div class="space-y-2">
+                                <div id="diag-step-1" class="p-3 border border-rule bg-[var(--paper)] flex items-center justify-between">
+                                    <div class="flex items-center space-x-3">
+                                        <span class="font-bold text-[var(--ink)]">01</span>
+                                        <span class="font-semibold text-[var(--ink)]">inspect configuration</span>
+                                    </div>
+                                    <button class="cmd-plate text-[10px]">
+                                        <span id="diag-btn-1">RUN INSPECTION</span>
+                                    </button>
+                                </div>
+
+                                <div id="diag-step-2" class="p-3 border border-rule bg-[var(--paper)] flex items-center justify-between opacity-60">
+                                    <div class="flex items-center space-x-3">
+                                        <span class="font-bold text-[var(--ink)]">02</span>
+                                        <span class="font-semibold text-[var(--ink)]">verify connector</span>
+                                    </div>
+                                    <button id="btn-diag-2" disabled class="cmd-plate text-[10px] opacity-50 cursor-not-allowed">
+                                        <span id="diag-btn-2">VERIFY</span>
+                                    </button>
+                                </div>
+
+                                <div id="diag-step-3" class="p-3 border border-rule bg-[var(--paper)] flex items-center justify-between opacity-60">
+                                    <div class="flex items-center space-x-3">
+                                        <span class="font-bold text-[var(--ink)]">03</span>
+                                        <span class="font-semibold text-[var(--ink)]">rerun validation</span>
+                                    </div>
+                                    <button id="btn-diag-3" disabled class="cmd-plate text-[10px] opacity-50 cursor-not-allowed">
+                                        <span id="diag-btn-3">VALIDATE</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DIAGNOSTIC CONSOLE OUTPUT -->
+                        <div class="p-3 bg-[var(--paper)] border border-rule text-[11px] space-y-1 font-mono">
+                            <div class="text-[var(--ink-muted)] border-b border-rule pb-1 flex justify-between">
+                                <span>DIAGNOSTIC TELEMETRY OUTPUT</span>
+                                <span id="diag-status-text">STATUS: IDLE</span>
+                            </div>
+                            <div id="diag-console" class="text-[var(--ink-soft)] space-y-1 py-1">
+                                <div>Ready for manual diagnostic sequence. Click "01 inspect configuration" to begin.</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ANNOTATION MARGIN -->
+                <div class="lg:col-span-3 font-mono text-xs border-l border-rule pl-4 space-y-4">
+                    <div class="text-[var(--revision)] font-semibold tracking-wider text-[11px]">MARGIN ANNOTATION</div>
+
+                    <div class="p-3 bg-[var(--paper-raised)] border-l-2 border-[var(--warning)] space-y-1">
+                        <div class="font-bold text-[var(--ink)]">DIAGNOSTIC PROTOCOL</div>
+                        <p class="text-[var(--ink-soft)] text-[11px] leading-snug">
+                            If diagnostic validation fails twice, automatic escalation notifies the SecOps team and temporarily drops agent state to <strong class="text-[var(--revision)]">REVISED</strong>.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 08 / PRODUCT EXPLANATION -->
+        <section id="sec-08" class="scroll-mt-24 rule-top pt-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- INDEX COLUMN -->
+                <div class="lg:col-span-2 font-mono border-b lg:border-b-0 lg:border-r border-rule pb-4 lg:pb-0 pr-4">
+                    <div class="text-3xl font-display font-bold text-[var(--ink)]">08</div>
+                    <div class="text-xs uppercase tracking-wider text-[var(--ink-muted)] mt-1">SPECIFICATION</div>
+                    <div class="text-xs font-semibold uppercase text-[var(--ink)] mt-1">PRODUCT SPEC</div>
+                </div>
+
+                <!-- CONTENT COLUMN -->
+                <div class="lg:col-span-7 space-y-8">
+                    <div>
+                        <h2 class="font-display text-2xl font-bold uppercase tracking-wide text-[var(--ink)]">
+                            08 / PRODUCT SPECIFICATION & PHILOSOPHY
+                        </h2>
+                        <p class="text-sm text-[var(--ink-soft)] mt-1">
+                            Software operations documented with the discipline of a technical field manual.
+                        </p>
+                    </div>
+
+                    <!-- ARCHITECTURE FIGURE DIAGRAM -->
+                    <div class="border border-rule-strong bg-[var(--paper-raised)] p-6 space-y-4">
+                        <div class="font-mono text-xs font-bold text-[var(--ink)] flex justify-between items-center border-b border-rule pb-2">
+                            <span>FIG. 01 / RELAY DEPLOYMENT PIPELINE ARCHITECTURE</span>
+                            <span class="text-[var(--ink-muted)]">SYSTEM SCHEMATIC</span>
+                        </div>
+
+                        <!-- TECHNICAL LINE SVG DIAGRAM -->
+                        <div class="w-full overflow-x-auto py-2">
+                            <svg viewBox="0 0 680 180" class="w-full min-w-[500px] font-mono text-[10px] text-[var(--ink)]">
+                                <!-- Background grid marks -->
+                                <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#9d9a8e" stroke-width="0.3" opacity="0.4"/>
+                                </pattern>
+                                <rect width="680" height="180" fill="url(#grid)" />
+
+                                <!-- Box 1: AGENT MANIFEST -->
+                                <rect x="20" y="50" width="120" height="80" fill="#f0ede3" stroke="#45453f" stroke-width="1.5"/>
+                                <text x="30" y="75" font-weight="bold" fill="#1d1d1a">01 / MANIFEST</text>
+                                <text x="30" y="95" fill="#4c4c46">Model Config</text>
+                                <text x="30" y="110" fill="#4c4c46">Tool Map</text>
+
+                                <!-- Arrow 1 to 2 -->
+                                <line x1="140" y1="90" x2="190" y2="90" stroke="#45453f" stroke-width="1.5" stroke-dasharray="4 2"/>
+                                <polygon points="190,87 197,90 190,93" fill="#45453f"/>
+
+                                <!-- Box 2: EVALUATION HARNESS -->
+                                <rect x="200" y="50" width="130" height="80" fill="#f0ede3" stroke="#45453f" stroke-width="1.5"/>
+                                <text x="210" y="75" font-weight="bold" fill="#1d1d1a">02 / EVAL GATE</text>
+                                <text x="210" y="95" fill="#4c4c46">150 Benchmarks</text>
+                                <text x="210" y="110" fill="#a54532" font-weight="bold">> 94% Pass</text>
+
+                                <!-- Arrow 2 to 3 -->
+                                <line x1="330" y1="90" x2="380" y2="90" stroke="#45453f" stroke-width="1.5"/>
+                                <polygon points="380,87 387,90 380,93" fill="#45453f"/>
+
+                                <!-- Box 3: PERMISSION SCOPE -->
+                                <rect x="390" y="50" width="120" height="80" fill="#f0ede3" stroke="#45453f" stroke-width="1.5"/>
+                                <text x="400" y="75" font-weight="bold" fill="#1d1d1a">03 / PERMISSIONS</text>
+                                <text x="400" y="95" fill="#4c4c46">ED25519 Sign</text>
+                                <text x="400" y="110" fill="#4c4c46">OAuth Scopes</text>
+
+                                <!-- Arrow 3 to 4 -->
+                                <line x1="510" y1="90" x2="550" y2="90" stroke="#45453f" stroke-width="1.5"/>
+                                <polygon points="550,87 557,90 550,93" fill="#45453f"/>
+
+                                <!-- Box 4: PROD CONTAINER -->
+                                <rect x="560" y="50" width="100" height="80" fill="#1d1d1a" stroke="#1d1d1a" stroke-width="1.5"/>
+                                <text x="570" y="75" font-weight="bold" fill="#e7e4d8">04 / PROD</text>
+                                <text x="570" y="95" fill="#e7e4d8">gVisor Sandbox</text>
+                                <text x="570" y="110" fill="#4f7455" font-weight="bold">VERIFIED</text>
+                            </svg>
+                        </div>
+
+                        <div class="font-mono text-[11px] text-[var(--ink-soft)] border-t border-rule pt-2 flex justify-between">
+                            <span>FIG. 01 — CALLOUT MAP: [01 MANIFEST] → [02 EVAL GATE] → [03 PERMISSIONS] → [04 PROD]</span>
+                            <span>REV 07</span>
+                        </div>
+                    </div>
+
+                    <!-- CONVENTIONAL PROSE EXPLANATION -->
+                    <div class="space-y-4 text-sm text-[var(--ink)] leading-relaxed font-sans">
+                        <p class="font-semibold text-base text-[var(--ink)]">
+                            Modern AI agent infrastructure has outgrown informal scripts, chat-based launchers, and unverified SaaS dashboards.
+                        </p>
+                        
+                        <p>
+                            Deploying autonomous models with access to production databases, internal APIs, and customer interfaces is an operational event. RELAY approaches agent lifecycle management with the rigorous procedural framework of a technical manual: every configuration is specified explicitly, every deployment must complete a signed 7-stage verification procedure, and every change leaves an immutable record.
+                        </p>
+
+                        <div class="p-4 bg-[var(--paper-raised)] border-l-2 border-[var(--ink-strong)] border-r border-t border-b border-rule font-mono text-xs space-y-2 my-4">
+                            <div class="font-bold text-[var(--ink)] uppercase">THE CORE PRINCIPLES OF RELAY:</div>
+                            <ul class="list-disc list-inside space-y-1 text-[var(--ink-soft)] text-[12px]">
+                                <li><strong class="text-[var(--ink)]">Declarative Specs:</strong> Model, memory, timeout, and tool bindings declared in machine-auditable spec sheets.</li>
+                                <li><strong class="text-[var(--ink)]">Deterministic Gates:</strong> Automated evaluations required before production container promotion.</li>
+                                <li><strong class="text-[var(--ink)]">Explicit State:</strong> No ambiguous glowing status dots; every state is marked, timestamped, and signed.</li>
+                                <li><strong class="text-[var(--ink)]">Structured Diagnostics:</strong> Turn failures into step-by-step recovery procedures rather than obscure error toasts.</li>
+                            </ul>
+                        </div>
+
+                        <p>
+                            By establishing software operations as a field manual, engineering teams gain complete auditability over what an agent is allowed to do, why its configuration was changed, and who signed off on its deployment.
+                        </p>
+                    </div>
+
+                    <!-- DOCUMENT CONTROL COMMAND BAR -->
+                    <div class="pt-4 border-t border-rule flex flex-wrap gap-4 justify-between items-center font-mono text-xs">
+                        <div class="text-[var(--ink-muted)]">
+                            DOCUMENT SPECIFICATION COMPLETE • RELAY PLATFORM v2.7
+                        </div>
+                        <div class="flex gap-3">
+                            <button class="cmd-plate">
+                                <span>PRINT DOCUMENT</span>
+                                <span>[⌘P]</span>
+                            </button>
+                            <a href="#sec-01" class="cmd-plate cmd-plate-primary">
+                                <span>RETURN TO TOP</span>
+                                <span>▲</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ANNOTATION MARGIN -->
+                <div class="lg:col-span-3 font-mono text-xs border-l border-rule pl-4 space-y-4">
+                    <div class="text-[var(--revision)] font-semibold tracking-wider text-[11px]">MARGIN ANNOTATION</div>
+
+                    <div class="p-3 bg-[var(--paper-raised)] border-l-2 border-[var(--revision)] space-y-1">
+                        <div class="font-bold text-[var(--ink)]">DOCUMENTATION RULE</div>
+                        <p class="text-[var(--ink-soft)] text-[11px] leading-snug">
+                            "Software operations documented with the discipline of a technical field manual."
+                        </p>
+                    </div>
+
+                    <div class="p-3 border border-rule text-[11px] text-[var(--ink-soft)] space-y-1">
+                        <div class="font-semibold text-[var(--ink)]">SYSTEM ARCHITECTURE</div>
+                        <p>RELAY Core engine runs on Rust/gVisor infrastructure providing sub-millisecond permission checks and zero-trust tool proxies.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    
+</body>
+</html>

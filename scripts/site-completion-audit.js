@@ -82,6 +82,27 @@ try {
   /* continue without operator-log posts */
 }
 
+/* Dynamically add benchmark pages */
+try {
+  const benchDir = path.join(root, "benchmark");
+  if (fs.existsSync(benchDir)) {
+    const benchIndex = path.join(benchDir, "index.html");
+    if (fs.existsSync(benchIndex)) {
+      PUBLIC_HTML_GLOBS.push("benchmark/index.html");
+    }
+    const benchRecordsDir = path.join(benchDir, "records");
+    if (fs.existsSync(benchRecordsDir)) {
+      fs.readdirSync(benchRecordsDir)
+        .filter((f) => f.endsWith(".html"))
+        .forEach((f) => {
+          PUBLIC_HTML_GLOBS.push(`benchmark/records/${f}`);
+        });
+    }
+  }
+} catch {
+  /* continue without benchmark pages */
+}
+
 const findings = {
   critical: [],
   high: [],

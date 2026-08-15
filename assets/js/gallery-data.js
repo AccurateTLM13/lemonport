@@ -27,7 +27,8 @@ const galleryItems = [
     "related": [
       "vrg-001",
       "vrg-002",
-      "vrg-023"
+      "vrg-022",
+      "vrg-021"
     ],
     "featured": false,
     "curation": {
@@ -78,7 +79,11 @@ const galleryItems = [
     "toolsUsed": [
       "ChatGPT Images 2.0"
     ],
-    "related": [],
+    "related": [
+      "vrg-023",
+      "vrg-021",
+      "vrg-001"
+    ],
     "featured": false,
     "curation": {
       "homepage": false,
@@ -129,9 +134,9 @@ const galleryItems = [
       "ChatGPT Images 2.0"
     ],
     "related": [
-      "vrg-023",
-      "vrg-002",
-      "vrg-001"
+      "vrg-022",
+      "vrg-004",
+      "vrg-005"
     ],
     "featured": true,
     "curation": {

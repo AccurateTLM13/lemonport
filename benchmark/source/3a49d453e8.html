@@ -1,0 +1,1123 @@
+<!doctype html>
+<html lang="en">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#123c2f" />
+  <title>Municipal League Baseball — 2026 Season</title>
+  <meta name="description" content="Municipal League Baseball — a fictional small-town league where Friday night baseball is a civic institution." />
+
+  <!-- Required Google Fonts per the supplied Solari design system: Space Grotesk 500/700 + Space Mono 400/700. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --paper: #f0eadb;
+      --paper-deep: #e4dcc9;
+      --ink: #171914;
+      --muted: #696a60;
+      --civic-green: #123c2f;
+      --civic-green-dark: #0b2a21;
+      --paint-red: #9a332a;
+      --line: #b7ad97;
+      --line-dark: #8d836f;
+
+      --board-bg: #0d0d0d;
+      --cell-bg: #161616;
+      --cell-edge: #232323;
+      --seam: rgba(0, 0, 0, 0.72);
+      --flap-text: #f4ede1;
+      --flap-text-dim: rgba(244, 237, 225, 0.35);
+      --label: rgba(244, 237, 225, 0.48);
+      --status-good: #6fae6f;
+      --status-warn: #e8a33d;
+      --status-bad: #c25b4a;
+      --status-neutral: #d2c6b0;
+
+      --mono: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      --grotesk: "Space Grotesk", Arial, sans-serif;
+      --serif: "Libre Caslon Text", Georgia, serif;
+      --flip-display: 330ms;
+      --flip-standard: 240ms;
+      --flip-micro: 170ms;
+      --snap: cubic-bezier(0.55, 0, 1, 0.45);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--mono);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    button, input { font: inherit; }
+    a { color: inherit; }
+    button { color: inherit; }
+    ::selection { background: var(--civic-green); color: var(--paper); }
+
+    .site-shell { overflow: clip; }
+
+    /* --- Civic masthead --- */
+    .masthead {
+      background: var(--civic-green);
+      color: var(--paper);
+      border-bottom: 5px solid var(--civic-green-dark);
+    }
+    .masthead-top {
+      max-width: 1520px;
+      margin: 0 auto;
+      min-height: 114px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) auto;
+      align-items: end;
+      gap: 32px;
+      padding: 24px 34px 18px;
+    }
+    .league-kicker {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      opacity: .72;
+    }
+    .league-kicker::before,
+    .league-kicker::after {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: currentColor;
+      opacity: .45;
+    }
+    .league-title {
+      margin: 0;
+      font: 700 clamp(26px, 4vw, 58px)/.95 var(--grotesk);
+      letter-spacing: -.05em;
+      text-transform: uppercase;
+    }
+    .league-subline {
+      margin-top: 9px;
+      max-width: 640px;
+      color: rgba(240, 234, 219, .68);
+      font-size: 11px;
+      line-height: 1.55;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .masthead-stamp {
+      align-self: stretch;
+      min-width: 300px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(120px, 1fr));
+      border: 1px solid rgba(240,234,219,.28);
+    }
+    .stamp-cell {
+      padding: 13px 15px;
+      border-right: 1px solid rgba(240,234,219,.18);
+      border-bottom: 1px solid rgba(240,234,219,.18);
+    }
+    .stamp-cell:nth-child(2n) { border-right: 0; }
+    .stamp-cell:nth-last-child(-n+2) { border-bottom: 0; }
+    .stamp-label {
+      display: block;
+      font-size: 8px;
+      letter-spacing: .14em;
+      opacity: .5;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+    .stamp-value {
+      display: block;
+      font: 700 11px/1.35 var(--mono);
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .masthead-nav-wrap {
+      border-top: 1px solid rgba(240,234,219,.16);
+      background: var(--civic-green-dark);
+    }
+    .masthead-nav {
+      max-width: 1520px;
+      margin: 0 auto;
+      padding: 0 34px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .masthead-nav::-webkit-scrollbar { display: none; }
+    .nav-flap-btn {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      padding: 11px 10px 12px;
+      cursor: pointer;
+      opacity: .68;
+      transition: opacity 120ms linear;
+      flex: 0 0 auto;
+    }
+    .nav-flap-btn:hover,
+    .nav-flap-btn.is-active { opacity: 1; }
+    .nav-flap-btn.is-active::after {
+      content: "";
+      display: block;
+      height: 3px;
+      margin-top: 7px;
+      background: var(--paper);
+    }
+
+    .main { max-width: 1520px; margin: 0 auto; padding: 0 34px 54px; }
+    .section { padding: 54px 0; border-bottom: 1px solid var(--line); }
+    .section:last-child { border-bottom: 0; }
+    .section-heading-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: end;
+      margin-bottom: 20px;
+    }
+    .section-eyebrow {
+      font-size: 9px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+    .section-title {
+      margin: 0;
+      font: 700 clamp(24px, 3vw, 42px)/.98 var(--grotesk);
+      text-transform: uppercase;
+      letter-spacing: -.04em;
+    }
+    .section-note {
+      color: var(--muted);
+      font-size: 9px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      text-align: right;
+    }
+
+    /* --- Reusable split flap primitive --- */
+    .flap-string {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--flap-gap, 4px);
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+    .flap-cell {
+      --cw: 28px;
+      --ch: 38px;
+      --fs: 22px;
+      --radius: 2px;
+      --duration: var(--flip-standard);
+      position: relative;
+      width: var(--cw);
+      height: var(--ch);
+      flex: 0 0 auto;
+      perspective: calc(var(--ch) * 8);
+      font-family: var(--grotesk);
+      font-weight: 700;
+      font-size: var(--fs);
+      line-height: var(--ch);
+      color: var(--flap-color, var(--flap-text));
+      background: var(--board-bg);
+      border: 1px solid var(--cell-edge);
+      border-radius: var(--radius);
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .flap-cell::after {
+      content: "";
+      position: absolute;
+      z-index: 9;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 1px;
+      background: var(--seam);
+      box-shadow: 0 1px rgba(255,255,255,.025);
+      pointer-events: none;
+    }
+    .flap-half {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      overflow: hidden;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      background: var(--cell-bg);
+      text-align: center;
+      transform-style: preserve-3d;
+    }
+    .flap-half.top { top: 0; }
+    .flap-half.bottom { bottom: 0; }
+    .flap-glyph {
+      position: absolute;
+      width: 100%;
+      height: var(--ch);
+      left: 0;
+      text-align: center;
+      text-transform: uppercase;
+      font: inherit;
+      color: inherit;
+      letter-spacing: -.035em;
+    }
+    .top .flap-glyph { top: 0; }
+    .bottom .flap-glyph { bottom: 0; }
+    .flap-static-top { z-index: 1; }
+    .flap-static-bottom { z-index: 1; }
+    .flap-fold-top {
+      z-index: 4;
+      transform-origin: center bottom;
+      transform: rotateX(0deg);
+    }
+    .flap-fold-bottom {
+      z-index: 3;
+      transform-origin: center top;
+      transform: rotateX(90deg);
+    }
+    .flap-cell.phase-top .flap-fold-top {
+      animation: flapTop var(--half-duration, 165ms) var(--snap) forwards;
+    }
+    .flap-cell.phase-bottom .flap-fold-bottom {
+      animation: flapBottom var(--half-duration, 165ms) var(--snap) forwards;
+    }
+    @keyframes flapTop {
+      from { transform: rotateX(0deg); }
+      to { transform: rotateX(-90deg); }
+    }
+    @keyframes flapBottom {
+      from { transform: rotateX(90deg); }
+      to { transform: rotateX(0deg); }
+    }
+
+    .flap-display .flap-cell {
+      --cw: clamp(38px, 4.35vw, 74px);
+      --ch: clamp(54px, 6vw, 96px);
+      --fs: clamp(31px, 4.5vw, 66px);
+      --duration: var(--flip-display);
+      --radius: 2px;
+    }
+    .flap-display.compact .flap-cell {
+      --cw: clamp(32px, 3vw, 50px);
+      --ch: clamp(46px, 4.2vw, 68px);
+      --fs: clamp(26px, 3.1vw, 42px);
+    }
+    .flap-standard .flap-cell {
+      --cw: 24px;
+      --ch: 34px;
+      --fs: 19px;
+      --duration: var(--flip-standard);
+    }
+    .flap-standard.wide .flap-cell { --cw: 27px; }
+    /* Readable micro scale: still mechanically compact, but large enough for word labels. */
+    .flap-micro .flap-cell {
+      --cw: 17px;
+      --ch: 24px;
+      --fs: 13px;
+      --duration: var(--flip-micro);
+      --radius: 1px;
+      border-color: #303030;
+    }
+    .flap-micro { --flap-gap: 1px; }
+    .flap-status-good { --flap-color: var(--status-good); }
+    .flap-status-warn { --flap-color: var(--status-warn); }
+    .flap-status-bad { --flap-color: var(--status-bad); }
+    .flap-status-neutral { --flap-color: var(--status-neutral); }
+
+    /* --- Hero scoreboard --- */
+    .scoreboard-section { padding-top: 34px; }
+    .scoreboard-frame {
+      background: var(--board-bg);
+      color: var(--flap-text);
+      border: 8px solid var(--civic-green-dark);
+      outline: 1px solid #081d17;
+      position: relative;
+    }
+    .scoreboard-frame::before {
+      content: "FRIDAY NIGHT MUNICIPAL LEAGUE — CENTRAL SCOREBOARD";
+      display: block;
+      padding: 10px 16px;
+      border-bottom: 1px solid #2a2a2a;
+      color: var(--label);
+      font-size: 9px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .scoreboard-primary {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(320px, .65fr);
+      min-height: 460px;
+    }
+    .featured-game {
+      padding: clamp(22px, 3vw, 44px);
+      border-right: 1px solid #2b2b2b;
+      display: grid;
+      align-content: center;
+    }
+    .featured-game-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 26px;
+      color: var(--label);
+      font-size: 9px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .live-lamp {
+      display: inline-flex;
+      gap: 7px;
+      align-items: center;
+    }
+    .live-lamp i {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--status-good); display:block;
+    }
+    .score-line {
+      display: grid;
+      grid-template-columns: minmax(190px, 1fr) auto;
+      gap: clamp(16px, 3vw, 42px);
+      align-items: center;
+      padding: 15px 0;
+      border-top: 1px solid #242424;
+    }
+    .score-line:last-of-type { border-bottom: 1px solid #242424; }
+    .team-name-large {
+      font: 700 clamp(23px, 3vw, 47px)/.94 var(--grotesk);
+      letter-spacing: -.04em;
+      text-transform: uppercase;
+      max-width: 720px;
+    }
+    .team-sponsor {
+      display: block;
+      margin-top: 6px;
+      font: 400 9px/1.4 var(--mono);
+      color: var(--label);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .game-state-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 30px;
+      border-top: 1px solid #2b2b2b;
+      border-bottom: 1px solid #2b2b2b;
+    }
+    .state-block {
+      padding: 16px 16px 18px 0;
+      border-right: 1px solid #2b2b2b;
+      min-width: 0;
+    }
+    .state-block:not(:first-child) { padding-left: 16px; }
+    .state-block:last-child { border-right: 0; }
+    .state-label {
+      display: block;
+      color: var(--label);
+      font-size: 8px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .featured-sidebar { display: grid; grid-template-rows: auto 1fr auto; }
+    .game-clock {
+      padding: 24px;
+      border-bottom: 1px solid #2b2b2b;
+    }
+    .game-clock .label { color: var(--label); font-size: 8px; letter-spacing:.14em; text-transform:uppercase; margin-bottom:8px; }
+    .game-clock .time { font: 700 clamp(28px, 3vw, 42px)/1 var(--grotesk); letter-spacing: -.04em; }
+    .mini-games { padding: 6px 24px; }
+    .mini-game {
+      padding: 18px 0;
+      border-bottom: 1px solid #252525;
+    }
+    .mini-game:last-child { border-bottom: 0; }
+    .mini-game-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 12px;
+      color: var(--label);
+      font-size: 8px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .mini-team {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      margin: 7px 0;
+      font: 700 13px/1.2 var(--grotesk);
+      text-transform: uppercase;
+    }
+    .control-well {
+      padding: 18px 24px 24px;
+      border-top: 1px solid #2b2b2b;
+      background: #101010;
+    }
+    .advance-button {
+      appearance: none;
+      width: 100%;
+      border: 1px solid #464646;
+      background: #0d0d0d;
+      padding: 14px 12px;
+      color: var(--flap-text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      text-transform: uppercase;
+    }
+    .advance-button:hover { border-color: #6c6c6c; }
+    .advance-button:focus-visible { outline: 2px solid var(--status-warn); outline-offset: 3px; }
+    .button-hint { color: var(--label); font-size: 8px; letter-spacing: .12em; }
+
+    .board-footer {
+      border-top: 1px solid #292929;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 10px 16px;
+      color: var(--label);
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+
+    /* --- Around league table --- */
+    .league-board {
+      background: var(--board-bg);
+      border: 6px solid var(--civic-green-dark);
+      color: var(--flap-text);
+      overflow-x: auto;
+    }
+    .league-row {
+      min-width: 980px;
+      display: grid;
+      grid-template-columns: 80px minmax(220px, 1.15fr) minmax(220px, 1.15fr) 110px 220px;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 15px;
+      border-bottom: 1px solid #282828;
+    }
+    .league-row:last-child { border-bottom: 0; }
+    .league-row.head {
+      color: var(--label);
+      font-size: 8px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding-top: 10px;
+      padding-bottom: 8px;
+    }
+    .league-row .team-cell { font: 700 14px/1.2 var(--grotesk); text-transform: uppercase; }
+    .league-row .field-cell { color: var(--label); font-size: 10px; }
+    .league-row .time-cell { font-weight: 700; font-size: 12px; }
+
+    /* --- Standings --- */
+    .standings-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 34px; }
+    .division { min-width: 0; }
+    .division-title {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+      padding-bottom: 9px;
+      border-bottom: 3px solid var(--ink);
+    }
+    .division-title h3 { margin: 0; font: 700 20px/1 var(--grotesk); text-transform: uppercase; }
+    .division-title span { color: var(--muted); font-size: 8px; letter-spacing:.12em; text-transform: uppercase; }
+    .standings-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    .standings-table th,
+    .standings-table td {
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--line);
+      text-align: right;
+      vertical-align: middle;
+    }
+    .standings-table th {
+      color: var(--muted);
+      font-size: 8px;
+      letter-spacing:.11em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .standings-table th:first-child,
+    .standings-table td:first-child { text-align: left; width: 52%; }
+    .standings-table td:first-child {
+      font: 700 13px/1.2 var(--grotesk);
+      text-transform: uppercase;
+    }
+    .table-flap-wrap { display: flex; justify-content: flex-end; }
+    .table-flap-wrap .flap-cell { --cw: 20px; --ch: 28px; --fs: 15px; }
+    .streak { font-size: 10px; font-weight: 700; }
+
+    /* --- Leaders --- */
+    .leaders-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-top: 3px solid var(--ink);
+      border-bottom: 3px solid var(--ink);
+    }
+    .leader-stat {
+      padding: 28px 22px 26px;
+      border-right: 1px solid var(--line-dark);
+    }
+    .leader-stat:last-child { border-right: 0; }
+    .leader-label { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+    .leader-name { margin-top: 13px; font: 700 14px/1.25 var(--grotesk); text-transform: uppercase; }
+    .leader-team { margin-top: 4px; color: var(--muted); font-size: 8px; letter-spacing:.08em; text-transform: uppercase; }
+
+    /* --- Upcoming schedule --- */
+    .schedule-strip { border-top: 3px solid var(--ink); }
+    .schedule-day {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 26px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .schedule-date {
+      font: 700 21px/1 var(--grotesk);
+      text-transform: uppercase;
+      letter-spacing: -.02em;
+    }
+    .schedule-date span { display: block; margin-top: 5px; font: 400 8px/1.4 var(--mono); color: var(--muted); letter-spacing:.12em; }
+    .schedule-games { display: grid; gap: 8px; }
+    .schedule-game {
+      display: grid;
+      grid-template-columns: 84px minmax(0, 1fr) 164px;
+      gap: 16px;
+      align-items: center;
+      min-height: 38px;
+    }
+    .schedule-time { font-size: 10px; font-weight: 700; }
+    .schedule-matchup { font: 700 13px/1.25 var(--grotesk); text-transform: uppercase; }
+    .schedule-matchup small { color: var(--muted); font: 400 8px/1.4 var(--mono); display:block; margin-top: 3px; letter-spacing:.06em; }
+
+    /* --- Story --- */
+    .story-grid {
+      display: grid;
+      grid-template-columns: minmax(0, .75fr) minmax(420px, 1.25fr);
+      gap: clamp(38px, 7vw, 120px);
+      align-items: start;
+    }
+    .story-sign {
+      min-height: 420px;
+      background: var(--civic-green);
+      color: var(--paper);
+      padding: clamp(26px, 4vw, 54px);
+      border: 12px solid var(--paper-deep);
+      outline: 1px solid var(--civic-green-dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: sticky;
+      top: 22px;
+    }
+    .story-sign .small { font-size: 9px; letter-spacing: .17em; text-transform: uppercase; opacity: .64; }
+    .story-sign .big {
+      font: 700 clamp(44px, 6vw, 88px)/.83 var(--grotesk);
+      letter-spacing: -.06em;
+      text-transform: uppercase;
+      max-width: 520px;
+    }
+    .story-copy .dek {
+      margin: 0 0 32px;
+      font: 700 clamp(28px, 4vw, 58px)/1.02 var(--serif);
+      letter-spacing: -.035em;
+      max-width: 840px;
+    }
+    .story-columns {
+      column-count: 2;
+      column-gap: 42px;
+      column-rule: 1px solid var(--line);
+      font: 400 16px/1.72 var(--serif);
+    }
+    .story-columns p { margin: 0 0 1.25em; }
+    .story-columns p:first-child::first-letter {
+      float: left;
+      font: 700 54px/.75 var(--serif);
+      margin: 10px 8px 0 0;
+      color: var(--civic-green);
+    }
+    .pull-quote {
+      column-span: all;
+      border-top: 3px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      margin: 20px 0 26px;
+      padding: 18px 0;
+      font: 700 23px/1.25 var(--grotesk);
+      text-transform: uppercase;
+      letter-spacing: -.02em;
+    }
+
+    /* --- Teams --- */
+    .teams-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-top: 3px solid var(--ink);
+      border-left: 1px solid var(--line);
+    }
+    .team-identity {
+      min-height: 210px;
+      padding: 24px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+    .team-identity .number {
+      position: absolute;
+      top: 16px; right: 18px;
+      color: var(--line-dark);
+      font-size: 9px;
+      letter-spacing: .1em;
+    }
+    .team-wordmark {
+      font: 700 clamp(28px, 3vw, 48px)/.88 var(--grotesk);
+      letter-spacing: -.06em;
+      text-transform: uppercase;
+      max-width: 90%;
+    }
+    .team-wordmark em {
+      display: block;
+      font-style: normal;
+      font-size: .42em;
+      letter-spacing: .08em;
+      margin-bottom: 7px;
+    }
+    .team-details {
+      border-top: 1px solid var(--line-dark);
+      padding-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 8px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .team-identity:nth-child(2), .team-identity:nth-child(5) { background: var(--paper-deep); }
+    .team-identity:nth-child(3) .team-wordmark,
+    .team-identity:nth-child(6) .team-wordmark { color: var(--paint-red); }
+    .team-identity:nth-child(4) .team-wordmark { color: var(--civic-green); }
+
+    /* --- Footer --- */
+    .site-footer { background: var(--civic-green-dark); color: var(--paper); border-top: 6px solid var(--civic-green); }
+    .footer-inner { max-width: 1520px; margin: 0 auto; padding: 28px 34px; }
+    .footer-title { font: 700 24px/1 var(--grotesk); letter-spacing:-.04em; text-transform: uppercase; margin-bottom: 22px; }
+    .footer-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border: 1px solid rgba(240,234,219,.2); }
+    .footer-cell { padding: 14px 15px; border-right:1px solid rgba(240,234,219,.15); }
+    .footer-cell:last-child { border-right:0; }
+    .footer-cell b { display:block; margin-bottom:7px; font-size:8px; letter-spacing:.13em; text-transform:uppercase; opacity:.52; }
+    .footer-cell span { font-size:10px; line-height:1.45; text-transform: uppercase; }
+    .footer-bottom { display:flex; justify-content:space-between; gap:20px; margin-top:18px; color:rgba(240,234,219,.46); font-size:8px; letter-spacing:.1em; text-transform:uppercase; }
+
+    /* Responsive structure — keep tables/boards aligned instead of cardifying. */
+    @media (max-width: 1100px) {
+      .masthead-top { grid-template-columns: 1fr; align-items: start; }
+      .masthead-stamp { min-width: 0; max-width: 560px; }
+      .scoreboard-primary { grid-template-columns: 1fr; }
+      .featured-game { border-right: 0; border-bottom: 1px solid #2b2b2b; }
+      .featured-sidebar { grid-template-columns: 220px 1fr; grid-template-rows: auto auto; }
+      .game-clock { border-right: 1px solid #2b2b2b; border-bottom: 0; }
+      .control-well { grid-column: 1 / -1; }
+      .standings-grid { gap: 24px; }
+      .leaders-grid { grid-template-columns: repeat(2, 1fr); }
+      .leader-stat:nth-child(2) { border-right: 0; }
+      .leader-stat:nth-child(-n+2) { border-bottom: 1px solid var(--line-dark); }
+      .teams-grid { grid-template-columns: repeat(2, 1fr); }
+      .story-grid { grid-template-columns: 1fr; }
+      .story-sign { position: relative; top:0; min-height: 300px; }
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-cell { border-bottom:1px solid rgba(240,234,219,.15); }
+      .footer-cell:nth-child(2n) { border-right:0; }
+      .footer-cell:last-child { border-bottom:0; }
+    }
+    @media (max-width: 760px) {
+      .masthead-top, .masthead-nav, .main, .footer-inner { padding-left: 18px; padding-right: 18px; }
+      .masthead-top { padding-top: 19px; }
+      .masthead-stamp { grid-template-columns: 1fr 1fr; width:100%; }
+      .section { padding: 38px 0; }
+      .section-heading-row { grid-template-columns: 1fr; }
+      .section-note { text-align:left; }
+      .scoreboard-frame { border-width: 5px; }
+      .scoreboard-primary { min-height:0; }
+      .featured-game { padding: 22px 16px; }
+      .score-line { grid-template-columns: minmax(0,1fr) auto; gap: 10px; }
+      .team-name-large { font-size: clamp(20px, 7vw, 30px); }
+      .game-state-strip { grid-template-columns: 1fr 1fr; }
+      .state-block:nth-child(2) { border-right:0; }
+      .state-block:last-child { grid-column:1 / -1; border-top:1px solid #2b2b2b; }
+      .featured-sidebar { grid-template-columns: 1fr; }
+      .game-clock { border-right:0; border-bottom:1px solid #2b2b2b; }
+      .mini-games { padding: 6px 16px; }
+      .control-well { padding:16px; }
+      .board-footer { flex-direction: column; gap:5px; }
+      .standings-grid { grid-template-columns: 1fr; }
+      .leaders-grid { grid-template-columns: 1fr 1fr; }
+      .leader-stat { padding:20px 12px; }
+      .schedule-day { grid-template-columns: 1fr; gap: 12px; }
+      .schedule-game { grid-template-columns: 70px minmax(0,1fr) 164px; gap:8px; }
+      .story-columns { column-count: 1; }
+      .teams-grid { grid-template-columns: 1fr; }
+      .team-identity { min-height: 175px; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-cell, .footer-cell:nth-child(2n) { border-right:0; border-bottom:1px solid rgba(240,234,219,.15); }
+      .footer-bottom { flex-direction:column; }
+    }
+    @media (max-width: 520px) {
+      .masthead-stamp { grid-template-columns: 1fr; }
+      .stamp-cell, .stamp-cell:nth-child(2n), .stamp-cell:nth-last-child(-n+2) { border-right:0; border-bottom:1px solid rgba(240,234,219,.18); }
+      .stamp-cell:last-child { border-bottom:0; }
+      .score-line { align-items:start; }
+      .flap-display .flap-cell { --cw: 33px; --ch: 48px; --fs: 27px; }
+      .flap-display.compact .flap-cell { --cw: 29px; --ch: 42px; --fs: 24px; }
+      .game-state-strip { grid-template-columns: 1fr; }
+      .state-block, .state-block:not(:first-child) { padding:14px 0; border-right:0; border-top:1px solid #2b2b2b; }
+      .state-block:first-child { border-top:0; }
+      .state-block:last-child { grid-column:auto; }
+      .leaders-grid { grid-template-columns: 1fr; }
+      .leader-stat, .leader-stat:nth-child(2) { border-right:0; border-bottom:1px solid var(--line-dark); }
+      .leader-stat:last-child { border-bottom:0; }
+      .schedule-game { grid-template-columns: 62px minmax(0,1fr); }
+      .schedule-game > :last-child { grid-column:1 / -1; justify-self:start; margin-left:70px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .flap-cell.phase-top .flap-fold-top,
+      .flap-cell.phase-bottom .flap-fold-bottom { animation: none !important; }
+    }
+  </style>
+</head>
+<body><div style="position:fixed;right:12px;bottom:12px;z-index:2147483647;padding:8px 10px;background:#111;color:#fff;font:12px/1.3 monospace;border:1px solid #777">ARCHIVED SOURCE · SCRIPTS AND NETWORK DISABLED</div>
+  <div class="site-shell">
+    <header class="masthead" id="top">
+      <div class="masthead-top">
+        <div>
+          <div class="league-kicker">Established 1952 · Municipal Parks Department</div>
+          <h1 class="league-title">Municipal League Baseball</h1>
+          <div class="league-subline">Six clubs. Three neighborhood fields. One Friday night ritual.</div>
+        </div>
+        <div class="masthead-stamp" aria-label="League status">
+          <div class="stamp-cell"><span class="stamp-label">Season</span><span class="stamp-value">2026 · Summer</span></div>
+          <div class="stamp-cell"><span class="stamp-label">Week</span><span class="stamp-value">14 of 18</span></div>
+          <div class="stamp-cell"><span class="stamp-label">Date</span><span class="stamp-value">Friday · Aug 14</span></div>
+          <div class="stamp-cell"><span class="stamp-label">Fields</span><span class="stamp-value">83°F · Dry · Open</span></div>
+        </div>
+      </div>
+      <div class="masthead-nav-wrap">
+        <nav class="masthead-nav" aria-label="Primary navigation">
+          <button class="nav-flap-btn is-active" data-target="scores" data-label="SCORES"><span class="flap-string flap-micro"></span></button>
+          <button class="nav-flap-btn" data-target="schedule" data-label="SCHEDULE"><span class="flap-string flap-micro"></span></button>
+          <button class="nav-flap-btn" data-target="standings" data-label="STANDINGS"><span class="flap-string flap-micro"></span></button>
+          <button class="nav-flap-btn" data-target="teams" data-label="TEAMS"><span class="flap-string flap-micro"></span></button>
+          <button class="nav-flap-btn" data-target="history" data-label="HISTORY"><span class="flap-string flap-micro"></span></button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="section scoreboard-section" id="scores">
+        <div class="section-heading-row">
+          <div>
+            <div class="section-eyebrow">Central Park · Friday Board</div>
+            <h2 class="section-title">Friday Night Scoreboard</h2>
+          </div>
+          <div class="section-note">Simulated live mode · restrained mechanical updates</div>
+        </div>
+
+        <div class="scoreboard-frame" aria-label="Friday Night Scoreboard">
+          <div class="scoreboard-primary">
+            <article class="featured-game">
+              <div class="featured-game-meta">
+                <span>Field 01 · Founders Field</span>
+                <span class="live-lamp"><i></i> scorekeeper feed active</span>
+              </div>
+
+              <div class="score-line">
+                <div class="team-name-large">Harris Hardware<span class="team-sponsor">Home · North Division</span></div>
+                <div class="flap-string flap-display" data-flap-id="game1-home" data-value="04" aria-label="Harris Hardware score 4"></div>
+              </div>
+              <div class="score-line">
+                <div class="team-name-large">Miller Electric<span class="team-sponsor">Away · North Division</span></div>
+                <div class="flap-string flap-display" data-flap-id="game1-away" data-value="03" aria-label="Miller Electric score 3"></div>
+              </div>
+
+              <div class="game-state-strip">
+                <div class="state-block">
+                  <span class="state-label">Inning</span>
+                  <div class="flap-string flap-display compact" data-flap-id="game1-inning" data-value="07"></div>
+                </div>
+                <div class="state-block">
+                  <span class="state-label">Outs</span>
+                  <div class="flap-string flap-display compact" data-flap-id="game1-outs" data-value="02"></div>
+                </div>
+                <div class="state-block">
+                  <span class="state-label">Status</span>
+                  <div class="flap-string flap-standard wide flap-status-good" data-flap-id="game1-status" data-value="LIVE"></div>
+                </div>
+              </div>
+            </article>
+
+            <aside class="featured-sidebar">
+              <div class="game-clock">
+                <div class="label">Scoreboard clock</div>
+                <div class="time" id="scoreboardClock">7:42:16 PM</div>
+              </div>
+              <div class="mini-games">
+                <div class="mini-game">
+                  <div class="mini-game-top"><span>Field 02 · Riverside</span><div class="flap-string flap-micro flap-status-neutral" data-flap-id="mini2-status" data-value="FINAL"></div></div>
+                  <div class="mini-team"><span>Carter Bank</span><div class="flap-string flap-standard" data-flap-id="mini2-home" data-value="06"></div></div>
+                  <div class="mini-team"><span>Wilson Feed</span><div class="flap-string flap-standard" data-flap-id="mini2-away" data-value="02"></div></div>
+                </div>
+                <div class="mini-game">
+                  <div class="mini-game-top"><span>Field 03 · Southside</span><div class="flap-string flap-micro flap-status-warn" data-flap-id="mini3-status" data-value="WARMUPS"></div></div>
+                  <div class="mini-team"><span>Thomas Auto</span><div class="flap-string flap-standard" data-flap-id="mini3-home" data-value="00"></div></div>
+                  <div class="mini-team"><span>Main Street Market</span><div class="flap-string flap-standard" data-flap-id="mini3-away" data-value="00"></div></div>
+                </div>
+              </div>
+              <div class="control-well">
+                <button class="advance-button" id="advanceGame" type="button">
+                  <span>Advance game</span>
+                  <span class="flap-string flap-micro" id="advanceControlFlap"></span>
+                  <span class="button-hint">Demo control</span>
+                </button>
+              </div>
+            </aside>
+          </div>
+          <div class="board-footer">
+            <span>Manual scorekeeping · municipal league office</span>
+            <span id="boardUpdated">Last board update 7:42:16 PM</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="around">
+        <div class="section-heading-row">
+          <div>
+            <div class="section-eyebrow">All active diamonds</div>
+            <h2 class="section-title">Around the League</h2>
+          </div>
+          <div class="section-note">Field · home · away · time · status</div>
+        </div>
+        <div class="league-board">
+          <div class="league-row head"><div>Field</div><div>Home</div><div>Away</div><div>Time</div><div>Status</div></div>
+          <div class="league-row">
+            <div class="field-cell">01 · FOUNDERS</div>
+            <div class="team-cell">Harris Hardware</div>
+            <div class="team-cell">Miller Electric</div>
+            <div class="time-cell">6:10 PM</div>
+            <div><div class="flap-string flap-standard wide flap-status-good" data-flap-id="around1-status" data-value="LIVE"></div></div>
+          </div>
+          <div class="league-row">
+            <div class="field-cell">02 · RIVERSIDE</div>
+            <div class="team-cell">Carter Bank</div>
+            <div class="team-cell">Wilson Feed &amp; Seed</div>
+            <div class="time-cell">6:30 PM</div>
+            <div><div class="flap-string flap-standard wide flap-status-neutral" data-flap-id="around2-status" data-value="FINAL"></div></div>
+          </div>
+          <div class="league-row">
+            <div class="field-cell">03 · SOUTHSIDE</div>
+            <div class="team-cell">Thomas Auto</div>
+            <div class="team-cell">Main Street Market</div>
+            <div class="time-cell">7:00 PM</div>
+            <div><div class="flap-string flap-standard wide flap-status-warn" data-flap-id="around3-status" data-value="WARMUPS"></div></div>
+          </div>
+          <div class="league-row">
+            <div class="field-cell">01 · FOUNDERS</div>
+            <div class="team-cell">Junior Civic Club</div>
+            <div class="team-cell">Benton Lumber</div>
+            <div class="time-cell">8:25 PM</div>
+            <div><div class="flap-string flap-standard wide flap-status-neutral" data-flap-id="around4-status" data-value="SCHEDULED"></div></div>
+          </div>
+          <div class="league-row">
+            <div class="field-cell">02 · RIVERSIDE</div>
+            <div class="team-cell">County Pharmacy</div>
+            <div class="team-cell">Dawson Tire</div>
+            <div class="time-cell">8:45 PM</div>
+            <div><div class="flap-string flap-standard wide flap-status-warn" data-flap-id="around5-status" data-value="DELAYED"></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="standings">
+        <div class="section-heading-row">
+          <div>
+            <div class="section-eyebrow">Through week 14</div>
+            <h2 class="section-title">Standings</h2>
+          </div>
+          <div class="section-note">Updated when simulated result posts</div>
+        </div>
+        <div class="standings-grid">
+          <div class="division">
+            <div class="division-title"><h3>North Division</h3><span>Founders Cup race</span></div>
+            <table class="standings-table">
+              <thead><tr><th>Team</th><th>W</th><th>L</th><th>GB</th><th>Streak</th></tr></thead>
+              <tbody>
+                <tr><td>Harris Hardware</td><td><div class="table-flap-wrap"><div class="flap-string flap-standard" data-flap-id="hh-w" data-value="11"></div></div></td><td><div class="table-flap-wrap"><div class="flap-string flap-standard" data-flap-id="hh-l" data-value="04"></div></div></td><td>—</td><td class="streak">W3</td></tr>
+                <tr><td>Miller Electric</td><td><div class="table-flap-wrap"><div class="flap-string flap-standard" data-flap-id="me-w" data-value="10"></div></div></td><td><div class="table-flap-wrap"><div class="flap-string flap-standard" data-flap-id="me-l" data-value="05"></div></div></td><td>1.0</td><td class="streak">L1</td></tr>
+                <tr><td>Carter Bank</td><td><div class="table-flap-wrap"><div class="flap-string flap-standard" data-flap-id="cb-w" data-value="08"></div></div></td><td><div class="table-flap-wrap"><div class="flap-string flap-standard" data-flap-id="cb-l" data-value="07"></div></div></td><td>3.0</td><td class="streak">W2</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="division">
+            <div class="division-title"><h3>South Division</h3><span>Three clubs within two</span></div>
+            <table class="standings-table">
+              <thead><tr><th>Team</th><th>W</th><th>L</th><th>GB</th><th>Streak</th></tr></thead>
+              <tbody>
+                <tr><td>Thomas Auto</td><td><div class="table-flap-wrap"><div class="flap-string flap-standard" data-flap-id="ta-w" data-value="09"></div></div></td><td><div class="table-flap-wrap"><div class="flap-string flap-standard" data-flap-id="ta-l" data-value="06"></div></div></td><td>—</td><td class="streak">W1</td></tr>
+                <tr><td>Main Street Market</td><td><div class="table-flap-wrap"><div class="flap-string flap-standard" data-flap-id="ms-w" data-value="08"></div></div></td><td><div class="table-flap-wrap"><div class="flap-string flap-standard" data-flap-id="ms-l" data-value="07"></div></div></td><td>1.0</td><td class="streak">L2</td></tr>
+                <tr><td>Wilson Feed &amp; Seed</td><td><div class="table-flap-wrap"><div class="flap-string flap-standard" data-flap-id="wf-w" data-value="07"></div></div></td><td><div class="table-flap-wrap"><div class="flap-string flap-standard" data-flap-id="wf-l" data-value="08"></div></div></td><td>2.0</td><td class="streak">L1</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="leaders">
+        <div class="section-heading-row">
+          <div>
+            <div class="section-eyebrow">Tonight's notebook</div>
+            <h2 class="section-title">Tonight's Leaders</h2>
+          </div>
+          <div class="section-note">Numbers carry the visual weight</div>
+        </div>
+        <div class="leaders-grid">
+          <div class="leader-stat">
+            <div class="leader-label">Hits</div>
+            <div class="flap-string flap-display compact" data-flap-id="leader-hits" data-value="04"></div>
+            <div class="leader-name">Evan Pruitt</div><div class="leader-team">Harris Hardware · SS</div>
+          </div>
+          <div class="leader-stat">
+            <div class="leader-label">Home Runs</div>
+            <div class="flap-string flap-display compact" data-flap-id="leader-hr" data-value="02"></div>
+            <div class="leader-name">Caleb Stone</div><div class="leader-team">Carter Bank · 1B</div>
+          </div>
+          <div class="leader-stat">
+            <div class="leader-label">ERA</div>
+            <div class="flap-string flap-display compact" data-flap-id="leader-era" data-value="1.8"></div>
+            <div class="leader-name">Noah Bell</div><div class="leader-team">Miller Electric · RHP</div>
+          </div>
+          <div class="leader-stat">
+            <div class="leader-label">Strikeouts</div>
+            <div class="flap-string flap-display compact" data-flap-id="leader-so" data-value="11"></div>
+            <div class="leader-name">Wade Mercer</div><div class="leader-team">Thomas Auto · RHP</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="schedule">
+        <div class="section-heading-row">
+          <div>
+            <div class="section-eyebrow">Municipal parks schedule desk</div>
+            <h2 class="section-title">Upcoming Games</h2>
+          </div>
+          <div class="section-note">Next five league dates</div>
+        </div>
+        <div class="schedule-strip">
+          <div class="schedule-day">
+            <div class="schedule-date">Sat · Aug 15<span>Community Saturday · Riverside Park</span></div>
+            <div class="schedule-games">
+              <div class="schedule-game"><div class="schedule-time">5:30 PM</div><div class="schedule-matchup">Wilson Feed &amp; Seed vs Carter Bank<small>Riverside Field 02</small></div><div class="flap-string flap-micro flap-status-neutral" data-flap-id="sched1" data-value="SCHEDULED"></div></div>
+              <div class="schedule-game"><div class="schedule-time">7:45 PM</div><div class="schedule-matchup">Main Street Market vs Thomas Auto<small>Riverside Field 02</small></div><div class="flap-string flap-micro flap-status-neutral" data-flap-id="sched2" data-value="SCHEDULED"></div></div>
+            </div>
+          </div>
+          <div class="schedule-day">
+            <div class="schedule-date">Tue · Aug 18<span>Weeknight makeup window</span></div>
+            <div class="schedule-games">
+              <div class="schedule-game"><div class="schedule-time">6:15 PM</div><div class="schedule-matchup">Miller Electric vs Harris Hardware<small>Founders Field 01</small></div><div class="flap-string flap-micro flap-status-neutral" data-flap-id="sched3" data-value="SCHEDULED"></div></div>
+            </div>
+          </div>
+          <div class="schedule-day">
+            <div class="schedule-date">Fri · Aug 21<span>Week 15 · Friday night league slate</span></div>
+            <div class="schedule-games">
+              <div class="schedule-game"><div class="schedule-time">6:10 PM</div><div class="schedule-matchup">Carter Bank vs Harris Hardware<small>Founders Field 01</small></div><div class="flap-string flap-micro flap-status-neutral" data-flap-id="sched4" data-value="SCHEDULED"></div></div>
+              <div class="schedule-game"><div class="schedule-time">6:30 PM</div><div class="schedule-matchup">Thomas Auto vs Wilson Feed &amp; Seed<small>Riverside Field 02</small></div><div class="flap-string flap-micro flap-status-neutral" data-flap-id="sched5" data-value="SCHEDULED"></div></div>
+              <div class="schedule-game"><div class="schedule-time">7:00 PM</div><div class="schedule-matchup">Miller Electric vs Main Street Market<small>Southside Field 03</small></div><div class="flap-string flap-micro flap-status-neutral" data-flap-id="sched6" data-value="SCHEDULED"></div></div>
+            </div>
+          </div>
+          <div class="schedule-day">
+            <div class="schedule-date">Sun · Aug 23<span>Rain date reserve</span></div>
+            <div class="schedule-games">
+              <div class="schedule-game"><div class="schedule-time">4:00 PM</div><div class="schedule-matchup">County Pharmacy vs Dawson Tire<small>Riverside Field 02</small></div><div class="flap-string flap-micro flap-status-warn" data-flap-id="sched7" data-value="POSTPONED"></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="history">
+        <div class="story-grid">
+          <div class="story-sign" aria-label="Painted municipal field sign">
+            <div class="small">Municipal Parks Department · Est. 1952</div>
+            <div class="big">After work,<br>the lights<br>come on.</div>
+            <div class="small">Three fields · Six clubs · Generations of scorebooks</div>
+          </div>
+          <article class="story-copy">
+            <div class="section-eyebrow">League story</div>
+            <h2 class="dek">The town does not gather around baseball because it is novel. It gathers because it has always been there.</h2>
+            <div class="story-columns">
+              <p>At five o'clock the hardware store shutters its loading door. The bank lobby empties. The feed store's last truck rolls out toward the county line. By six, the same names are lettered across cotton jerseys beneath the park lights.</p>
+              <p>Municipal League Baseball began with four local businesses, two borrowed diamonds and a scorekeeper who kept results in a black ledger at the Parks Department. The league outgrew the ledger, then the first field, then the first generation of players. It never outgrew Friday night.</p>
+              <div class="pull-quote">Nobody asks who owns the league. The answer has always been the town.</div>
+              <p>Families sit in the same sections of the same bleachers their parents did. Children chase foul balls against the fence. Former players line the rail and argue about bunts, weather, umpire zones and whether a 1987 Miller Electric club could hit today's pitching.</p>
+              <p>The sponsors are not corporate partners in the modern sense. They are the businesses people pass on the way home. Their owners coach, keep books, drag infields after rain and replace the bulbs above the old hand-painted concession signs. A team name is part uniform, part neighborhood address.</p>
+              <p>That is why the standings matter. They are discussed over breakfast, on shop floors and in church parking lots. Wins are small civic facts. Losses linger for a week. Every score gets carried forward into the next Friday, when the lights come on again.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="teams">
+        <div class="section-heading-row">
+          <div>
+            <div class="section-eyebrow">League clubs</div>
+            <h2 class="section-title">Teams</h2>
+          </div>
+          <div class="section-note">Typographic identities · local sponsors</div>
+        </div>
+        <div class="teams-grid">
+          <article class="team-identity"><span class="number">01 / NORTH</span><div class="team-wordmark"><em>Harris</em>Hardware</div><div class="team-details"><span>Founders Field</span><span>Forest green · cream</span></div></article>
+          <article class="team-identity"><span class="number">02 / NORTH</span><div class="team-wordmark"><em>Miller</em>Electric</div><div class="team-details"><span>Founders Field</span><span>Black · ivory</span></div></article>
+          <article class="team-identity"><span class="number">03 / NORTH</span><div class="team-wordmark"><em>Carter</em>Bank</div><div class="team-details"><span>Riverside Field</span><span>Brick · cream</span></div></article>
+          <article class="team-identity"><span class="number">04 / SOUTH</span><div class="team-wordmark"><em>Wilson</em>Feed &amp; Seed</div><div class="team-details"><span>Riverside Field</span><span>Green · tan</span></div></article>
+          <article class="team-identity"><span class="number">05 / SOUTH</span><div class="team-wordmark"><em>Thomas</em>Auto</div><div class="team-details"><span>Southside Field</span><span>Navy · cream</span></div></article>
+          <article class="team-identity"><span class="number">06 / SOUTH</span><div class="team-wordmark"><em>Main Street</em>Market</div><div class="team-details"><span>Southside Field</span><span>Red · parchment</span></div></article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-title">Municipal League Baseball</div>
+        <div class="footer-grid">
+          <div class="footer-cell"><b>League Season</b><span>2026 Summer · Week 14</span></div>
+          <div class="footer-cell"><b>Commissioner Office</b><span>Municipal Hall · Parks Room 204</span></div>
+          <div class="footer-cell"><b>Field Status</b><span>All municipal fields open</span></div>
+          <div class="footer-cell"><b>Last Scoreboard Update</b><span id="footerUpdated">7:42:16 PM</span></div>
+          <div class="footer-cell"><b>Next First Pitch</b><span>Saturday · 5:30 PM · Riverside</span></div>
+        </div>
+        <div class="footer-bottom"><span>Fictional league website · Solari mechanical sports showcase</span><span>Scorebook system MLB–26 / civic parks network</span></div>
+      </div>
+    </footer>
+  </div>
+
+  
+</body>
+</html>

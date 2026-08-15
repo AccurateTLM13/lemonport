@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RIDGELINE TRAIL CONSERVANCY — SERIES NPS-5 / SHEET NPS-01</title>
+  <meta name="description" content="Ridgeline Trail Conservancy manages 47 miles of backcountry trail across the Northern Territory Management Area. Trail conditions, conservation projects, and field operations.">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=IBM+Plex+Mono:wght@400;700&family=Libre+Baskerville:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --paper:        #f4efe3;
+      --brown:        #c49060;
+      --brown-idx:    #a06830;
+      --blue:         #4a8eb8;
+      --green:        #8aab82;
+      --black:        #1c1a18;
+      --red:          #c84b2a;
+      --grid-blue:    rgba(74,142,184,0.13);
+      --rule:         rgba(28,26,24,0.18);
+      --row-tint:     rgba(196,144,96,0.055);
+    }
+
+    html { background: var(--paper); color: var(--black); scroll-behavior: smooth; }
+    body { font-family: 'IBM Plex Mono', monospace; min-height: 100vh; position: relative; }
+
+    /* UTM coordinate grid — always present */
+    body::before {
+      content: '';
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background-image:
+        linear-gradient(var(--grid-blue) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-blue) 1px, transparent 1px);
+      background-size: 88px 88px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav, header, main, footer, section, aside, .content { position: relative; z-index: 1; }
+
+    /* ── MARGINALIA NAV RAIL ─────────────────────────────────── */
+    nav.map-nav {
+      background: var(--paper);
+      border-bottom: 2px solid var(--black);
+      height: 46px;
+      display: flex; align-items: center;
+      padding: 0 40px;
+      position: sticky; top: 0; z-index: 100;
+      gap: 0;
+    }
+    .nav-meta-left {
+      font-size: 8.5px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(28,26,24,0.42); white-space: nowrap;
+    }
+    .nav-links { display: flex; margin: 0 auto; }
+    .nav-link {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--black); text-decoration: none;
+      padding: 0 22px; height: 46px;
+      display: flex; align-items: center;
+      border-right: 1px solid var(--rule); cursor: pointer;
+      transition: color 0.15s; white-space: nowrap;
+    }
+    .nav-link:first-child { border-left: 1px solid var(--rule); }
+    .nav-link.active { color: var(--red); }
+    .nav-link.active::before { content: '▶ '; font-size: 8px; margin-right: 4px; }
+    .nav-link:hover { color: var(--brown-idx); }
+    .nav-meta-right {
+      font-size: 8.5px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(28,26,24,0.42); white-space: nowrap;
+    }
+
+    /* ── MAIN CONTAINER ──────────────────────────────────────── */
+    main { max-width: 1200px; margin: 0 auto; padding: 0 40px 80px; }
+
+    /* ── SHEET TITLE BLOCK ───────────────────────────────────── */
+    .sheet-title {
+      padding: 52px 0 44px;
+      border-bottom: 2px solid var(--black);
+      display: grid;
+      grid-template-columns: 1fr 460px;
+      gap: 48px;
+      align-items: end;
+    }
+    .title-left {}
+    .sheet-series {
+      font-size: 8.5px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(28,26,24,0.4); margin-bottom: 14px;
+    }
+    h1.sheet-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 62px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+      line-height: 0.92; color: var(--black); margin-bottom: 10px;
+    }
+    .sheet-subtitle {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(28,26,24,0.55); margin-bottom: 24px;
+    }
+    .bm-primary {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--brown-idx);
+    }
+    .bm-primary .bm-sym { font-size: 15px; }
+
+    /* Contour SVG area (right side of title) */
+    .title-contours { position: relative; }
+    .contour-figure-label {
+      font-size: 8.5px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(28,26,24,0.35); margin-bottom: 6px;
+    }
+    .title-stats {
+      margin-top: 16px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; border: 1px solid var(--rule);
+    }
+    .stat-cell {
+      padding: 14px 16px; border: none;
+      background: var(--paper);
+    }
+    .stat-cell:nth-child(odd) { border-right: 1px solid var(--rule); }
+    .stat-cell:nth-child(1), .stat-cell:nth-child(2) { border-bottom: 1px solid var(--rule); }
+    .stat-label { font-size: 8.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(28,26,24,0.45); margin-bottom: 4px; }
+    .stat-value { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 700; letter-spacing: 0.04em; color: var(--black); }
+    .stat-unit { font-size: 9px; color: rgba(28,26,24,0.45); margin-left: 3px; }
+
+    /* ── INDEX CONTOUR DIVIDER ───────────────────────────────── */
+    .index-contour {
+      display: flex; align-items: center; gap: 0;
+      margin: 52px 0 28px;
+    }
+    .ic-line {
+      flex: 1; height: 1.5px;
+      background: linear-gradient(90deg, transparent 0%, var(--brown-idx) 8%, var(--brown-idx) 92%, transparent 100%);
+    }
+    .ic-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--brown-idx); padding: 0 16px; white-space: nowrap;
+    }
+    .ic-elev {
+      font-size: 8.5px; letter-spacing: 0.1em; color: var(--brown-idx);
+      padding: 0 12px 0 0; white-space: nowrap;
+    }
+
+    /* ── SURVEY SCHEDULE TABLE ───────────────────────────────── */
+    .schedule-wrap { border: 1px solid rgba(28,26,24,0.2); }
+    .survey-table { width: 100%; border-collapse: collapse; }
+    .survey-table thead th {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+      color: rgba(28,26,24,0.55); padding: 10px 14px; text-align: left;
+      border-bottom: 1.5px solid var(--black); background: var(--paper);
+    }
+    .survey-table thead th.th-right { text-align: right; }
+    .survey-table tbody tr:nth-child(odd) { background: var(--row-tint); }
+    .survey-table tbody tr:hover { background: rgba(196,144,96,0.13); }
+    .survey-table tbody td {
+      font-size: 11px; padding: 13px 14px;
+      border-bottom: 1px solid rgba(28,26,24,0.08);
+      vertical-align: middle;
+    }
+    .td-ref { color: var(--blue); font-size: 9px; font-weight: 700; letter-spacing: 0.08em; white-space: nowrap; }
+    .td-name { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+    .td-mono { color: rgba(28,26,24,0.75); }
+    .td-right { text-align: right; }
+    .td-status { font-size: 9.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+    .s-open     { color: var(--black); }
+    .s-hazard   { color: var(--red); }
+    .s-closed   { color: rgba(28,26,24,0.38); }
+    .s-pending  { color: var(--brown-idx); }
+    .s-open::before   { content: '· '; }
+    .s-hazard::before { content: '✕ '; }
+    .s-closed::before { content: '✕ '; }
+    .s-pending::before{ content: '△ '; }
+
+    /* ── ELEVATION PROFILE ───────────────────────────────────── */
+    .profile-wrap {
+      border: 1px solid rgba(28,26,24,0.22);
+      padding: 28px 32px 24px;
+      position: relative;
+    }
+    .profile-fig {
+      font-size: 8.5px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(28,26,24,0.38); margin-bottom: 4px;
+    }
+    h2.profile-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--black); margin-bottom: 20px;
+    }
+    .profile-svg { width: 100%; display: block; }
+    .profile-meta {
+      display: flex; gap: 40px; margin-top: 14px; flex-wrap: wrap;
+      border-top: 1px solid var(--rule); padding-top: 12px;
+    }
+    .pm-item { }
+    .pm-label { font-size: 8.5px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(28,26,24,0.45); margin-bottom: 2px; }
+    .pm-val { font-size: 13px; font-weight: 700; color: var(--black); }
+
+    /* ── ANNOTATION GRID ─────────────────────────────────────── */
+    .annotation-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border: 1px solid rgba(28,26,24,0.22);
+    }
+    .ann-box {
+      padding: 22px 20px 18px;
+      border-right: 1px solid rgba(28,26,24,0.22);
+      border-bottom: none;
+      background: var(--paper);
+      position: relative;
+    }
+    .ann-box:last-child { border-right: none; }
+    .ann-ref { font-size: 8.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 7px; }
+    h3.ann-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+      color: var(--black); margin-bottom: 10px; padding-bottom: 10px;
+      border-bottom: 1px solid rgba(28,26,24,0.14);
+    }
+    .ann-data { font-size: 10px; line-height: 2; }
+    .ann-field { color: rgba(28,26,24,0.48); }
+    .ann-val { color: var(--black); font-weight: 700; margin-left: 4px; }
+    .ann-status-row { margin-top: 10px; }
+    .ann-grid-ref {
+      font-size: 8px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(28,26,24,0.28); margin-top: 14px; border-top: 1px solid rgba(28,26,24,0.08);
+      padding-top: 8px;
+    }
+
+    /* Second annotation row — conservation projects */
+    .project-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0; border: 1px solid rgba(28,26,24,0.22);
+      margin-top: 0;
+    }
+    .proj-box {
+      padding: 24px 24px 20px;
+      border-right: 1px solid rgba(28,26,24,0.22);
+      border-bottom: none;
+      background: var(--paper);
+    }
+    .proj-box:last-child { border-right: none; }
+    .proj-ref { font-size: 8.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brown-idx); margin-bottom: 7px; }
+    h3.proj-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+      color: var(--black); margin-bottom: 8px;
+    }
+    .proj-desc { font-family: 'Libre Baskerville', serif; font-size: 12.5px; line-height: 1.75; color: rgba(28,26,24,0.78); margin-bottom: 14px; }
+    .proj-meta { font-size: 10px; line-height: 2; }
+    .proj-progress {
+      margin-top: 14px;
+    }
+    .prog-label { font-size: 8.5px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(28,26,24,0.45); margin-bottom: 6px; }
+    /* Scale-bar style progress */
+    .scale-progress {
+      position: relative; height: 6px; background: rgba(28,26,24,0.1);
+    }
+    .scale-progress-fill {
+      position: absolute; top: 0; left: 0; height: 100%; background: var(--brown-idx);
+    }
+    .scale-markers {
+      display: flex; justify-content: space-between;
+      font-size: 7.5px; letter-spacing: 0.08em; color: rgba(28,26,24,0.4);
+      margin-top: 3px;
+    }
+    .proj-grid-ref { font-size: 8px; color: rgba(28,26,24,0.28); margin-top: 12px; letter-spacing: 0.08em; }
+
+    /* ── FIELD NOTES ─────────────────────────────────────────── */
+    .field-notes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .field-note {
+      border-left: 2px solid var(--brown-idx);
+      padding: 18px 22px;
+      border-bottom: 1px solid rgba(28,26,24,0.1);
+      border-right: 1px solid rgba(28,26,24,0.1);
+    }
+    .field-note:nth-child(even) { border-right: none; }
+    .fn-ref { font-size: 8.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brown-idx); margin-bottom: 6px; }
+    .fn-text { font-family: 'Libre Baskerville', serif; font-size: 13px; line-height: 1.75; color: var(--black); }
+    .fn-sig { font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(28,26,24,0.4); margin-top: 10px; }
+    .fn-rev { color: var(--brown-idx); margin-left: 8px; }
+
+    /* ── ABOUT / EDITORIAL ───────────────────────────────────── */
+    .about-layout { display: grid; grid-template-columns: 1fr 340px; gap: 60px; align-items: start; }
+    .about-copy { font-family: 'Libre Baskerville', serif; font-size: 14px; line-height: 1.88; color: rgba(28,26,24,0.82); }
+    .about-copy p + p { margin-top: 18px; }
+    .about-aside {}
+    .about-aside-label { font-size: 8.5px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(28,26,24,0.42); border-bottom: 1px solid var(--rule); padding-bottom: 8px; margin-bottom: 14px; }
+    .key-value { display: flex; justify-content: space-between; align-items: baseline; padding: 9px 0; border-bottom: 1px solid rgba(28,26,24,0.07); font-size: 10px; }
+    .kv-label { color: rgba(28,26,24,0.48); letter-spacing: 0.08em; text-transform: uppercase; }
+    .kv-val { font-weight: 700; color: var(--black); text-align: right; }
+
+    /* ── LEGEND SECTION ──────────────────────────────────────── */
+    .legend-wrap {
+      border: 1px solid rgba(28,26,24,0.22);
+      padding: 28px 32px;
+    }
+    .legend-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--black); margin-bottom: 20px; padding-bottom: 10px;
+      border-bottom: 1.5px solid var(--black);
+    }
+    .legend-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+    .legend-group {}
+    .legend-group-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(28,26,24,0.4); border-bottom: 1px solid var(--rule);
+      padding-bottom: 6px; margin-bottom: 10px;
+    }
+    .legend-item { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
+    .legend-sym {
+      width: 28px; flex-shrink: 0; text-align: center;
+      font-size: 12px; color: var(--black);
+    }
+    .legend-sym.blue { color: var(--blue); }
+    .legend-sym.brown { color: var(--brown-idx); }
+    .legend-sym.red { color: var(--red); }
+    .legend-sym.dim { color: rgba(28,26,24,0.35); }
+    .legend-line {
+      width: 28px; flex-shrink: 0; height: 10px;
+      display: flex; align-items: center;
+    }
+    .legend-desc { font-size: 10px; color: rgba(28,26,24,0.75); line-height: 1.3; }
+    .legend-line-svg { width: 28px; height: 2px; }
+
+    /* ── FOOTER MARGINALIA ───────────────────────────────────── */
+    footer.map-footer {
+      border-top: 2px solid var(--black);
+      padding: 20px 40px;
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px; align-items: center;
+      max-width: 1200px; margin: 0 auto;
+      position: relative; z-index: 1;
+    }
+    .footer-scale { }
+    .scale-bar-label { font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(28,26,24,0.42); margin-bottom: 4px; }
+    .scale-bar-svg { display: block; }
+    .footer-datum { font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(28,26,24,0.42); line-height: 1.8; }
+    .footer-sheet {
+      text-align: right;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--black); line-height: 1.5;
+    }
+    .footer-sheet .footer-sheet-sub { font-size: 9px; font-weight: 400; color: rgba(28,26,24,0.42); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav.map-nav { padding: 0 20px; }
+      main { padding: 0 20px 60px; }
+      .sheet-title { grid-template-columns: 1fr; gap: 28px; }
+      h1.sheet-name { font-size: 40px; }
+      .annotation-grid { grid-template-columns: 1fr; }
+      .ann-box { border-right: none; border-bottom: 1px solid rgba(28,26,24,0.22); }
+      .project-grid { grid-template-columns: 1fr; }
+      .proj-box { border-right: none; border-bottom: 1px solid rgba(28,26,24,0.22); }
+      .legend-cols { grid-template-columns: 1fr 1fr; }
+      .about-layout { grid-template-columns: 1fr; }
+      footer.map-footer { grid-template-columns: 1fr; gap: 16px; padding: 20px; }
+      .footer-sheet { text-align: left; }
+      .field-notes-grid { grid-template-columns: 1fr; }
+      .field-note:nth-child(even) { border-right: none; }
+    }
+  </style>
+</head>
+<body><div style="position:fixed;right:12px;bottom:12px;z-index:2147483647;padding:8px 10px;background:#111;color:#fff;font:12px/1.3 monospace;border:1px solid #777">ARCHIVED SOURCE · SCRIPTS AND NETWORK DISABLED</div>
+
+<!-- MARGINALIA NAV RAIL -->
+<nav class="map-nav">
+  <div class="nav-meta-left">SERIES NPS-5 &nbsp;|&nbsp; SHEET NPS-01 &nbsp;|&nbsp; GRID 14S TM</div>
+  <div class="nav-links">
+    <a class="nav-link active" href="#conditions" id="nl-cond">CONDITIONS</a>
+    <a class="nav-link" href="#trails" id="nl-trails">TRAILS</a>
+    <a class="nav-link" href="#projects" id="nl-proj">PROJECTS</a>
+    <a class="nav-link" href="#field-notes" id="nl-notes">FIELD NOTES</a>
+    <a class="nav-link" href="#legend" id="nl-leg">LEGEND</a>
+  </div>
+  <div class="nav-meta-right">NAD83 &nbsp;|&nbsp; ED 2026-08</div>
+</nav>
+
+<main>
+
+  <!-- ── SHEET TITLE BLOCK ──────────────────────────────────── -->
+  <header class="sheet-title">
+    <div class="title-left">
+      <div class="sheet-series">RIDGELINE CONSERVANCY &nbsp;/&nbsp; NORTHERN TERRITORY MANAGEMENT AREA &nbsp;/&nbsp; EST. 1987</div>
+      <h1 class="sheet-name">RIDGELINE<br>TRAIL<br>CONSERVANCY</h1>
+      <div class="sheet-subtitle">Northern Territory Management Area</div>
+      <div class="bm-primary"><span class="bm-sym">▲</span> BM 4,218&thinsp;FT &nbsp;&mdash;&nbsp; RIDGELINE PEAK SUMMIT STATION</div>
+    </div>
+
+    <div class="title-contours">
+      <div class="contour-figure-label">FIG. 01 / RIDGELINE SUMMIT — TERRAIN CROSS-SECTION</div>
+      <!-- Topographic contour SVG -->
+      <svg viewBox="0 0 460 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;margin-bottom:0;">
+        <!-- Vegetation fill -->
+        <path d="M0,220 L0,190 Q50,185 80,175 Q110,165 140,148 Q170,132 200,118 Q230,105 255,100 Q280,96 300,98 Q320,100 340,108 Q360,118 390,130 Q420,145 460,155 L460,220 Z" fill="rgba(138,171,130,0.18)"/>
+        <!-- Supplementary contours -->
+        <path d="M0,205 Q60,200 100,192 Q140,184 175,170 Q210,156 240,145 Q265,136 290,134 Q310,133 330,138 Q360,146 400,158 Q430,167 460,172" stroke="#c49060" stroke-width="0.5" fill="none" opacity="0.5"/>
+        <path d="M0,198 Q55,193 95,184 Q135,175 168,162 Q202,149 232,138 Q258,128 283,126 Q305,124 327,130 Q358,139 398,152 Q428,162 460,166" stroke="#c49060" stroke-width="0.5" fill="none" opacity="0.5"/>
+        <path d="M0,190 Q50,185 90,175 Q130,165 162,152 Q196,139 226,128 Q252,118 278,116 Q302,115 325,122 Q357,132 396,146 Q426,156 460,160" stroke="#c49060" stroke-width="0.75" fill="none" opacity="0.6"/>
+        <!-- Intermediate contours -->
+        <path d="M0,180 Q48,175 88,164 Q128,153 160,140 Q194,127 224,116 Q250,107 276,105 Q300,104 323,112 Q356,124 394,139 Q424,150 460,154" stroke="#c49060" stroke-width="0.75" fill="none"/>
+        <path d="M0,170 Q45,165 85,153 Q126,141 158,128 Q192,115 222,104 Q248,94 274,92 Q299,91 322,100 Q355,114 392,130 Q422,142 460,147" stroke="#c49060" stroke-width="0.75" fill="none" opacity="0.7"/>
+        <path d="M10,158 Q50,153 90,141 Q130,129 162,116 Q196,103 226,92 Q252,83 278,81 Q304,80 328,90 Q360,104 396,121 Q424,133 460,138" stroke="#c49060" stroke-width="0.75" fill="none" opacity="0.6"/>
+        <!-- Index contours -->
+        <path d="M30,148 Q65,143 100,131 Q135,119 165,106 Q198,93 228,83 Q255,74 282,72 Q308,71 333,81 Q365,95 400,113 Q428,125 460,130" stroke="#a06830" stroke-width="1.5" fill="none"/>
+        <text x="158" y="101" font-family="'IBM Plex Mono',monospace" font-size="7" fill="#a06830" transform="rotate(-8,158,101)">3800</text>
+        <path d="M55,132 Q85,127 115,116 Q148,104 178,92 Q210,80 240,70 Q268,62 296,61 Q323,61 349,71 Q380,85 412,103 Q438,116 460,122" stroke="#a06830" stroke-width="1.5" fill="none"/>
+        <text x="230" y="64" font-family="'IBM Plex Mono',monospace" font-size="7" fill="#a06830" transform="rotate(-9,230,64)">4000</text>
+        <path d="M95,115 Q122,110 148,100 Q178,89 208,79 Q238,69 265,62 Q292,56 318,59 Q345,64 372,76 Q398,90 425,105 Q443,114 460,118" stroke="#a06830" stroke-width="1.5" fill="none"/>
+        <text x="254" y="56" font-family="'IBM Plex Mono',monospace" font-size="7" fill="#a06830" transform="rotate(-6,254,56)">4200</text>
+        <!-- Summit marker -->
+        <circle cx="255" cy="44" r="3" fill="none" stroke="#a06830" stroke-width="1.5"/>
+        <line x1="255" y1="41" x2="255" y2="28" stroke="#a06830" stroke-width="1"/>
+        <text x="260" y="26" font-family="'IBM Plex Mono',monospace" font-size="7.5" fill="#a06830" font-weight="700">BM ▲ 4218</text>
+        <!-- Stream / water feature -->
+        <path d="M180,220 Q188,200 192,182 Q196,164 200,148 Q204,132 208,116 Q212,104 218,96" stroke="#4a8eb8" stroke-width="1" fill="none" stroke-dasharray="3,2" opacity="0.7"/>
+        <text x="182" y="195" font-family="'IBM Plex Mono',monospace" font-size="6.5" fill="#4a8eb8" opacity="0.8" transform="rotate(-75,182,195)">N FORK CREEK</text>
+        <!-- Trail line -->
+        <path d="M60,220 Q75,200 90,182 Q105,165 118,150 Q132,136 148,122 Q166,108 185,97 Q205,88 228,80 Q250,73 268,70 Q285,67 300,70" stroke="#1c1a18" stroke-width="1.5" fill="none" stroke-dasharray="6,3"/>
+        <text x="90" y="196" font-family="'IBM Plex Mono',monospace" font-size="6.5" fill="#1c1a18" opacity="0.6" transform="rotate(-52,90,196)">SUMMIT TRAIL</text>
+        <!-- North arrow -->
+        <g transform="translate(428,18)">
+          <line x1="0" y1="22" x2="0" y2="0" stroke="#1c1a18" stroke-width="1.2"/>
+          <polygon points="0,-4 -4,6 0,2 4,6" fill="#1c1a18"/>
+          <text x="0" y="32" font-family="'IBM Plex Mono',monospace" font-size="7" fill="#1c1a18" text-anchor="middle">N</text>
+        </g>
+        <!-- Grid lines over SVG -->
+        <line x1="88" y1="0" x2="88" y2="220" stroke="rgba(74,142,184,0.15)" stroke-width="0.5"/>
+        <line x1="176" y1="0" x2="176" y2="220" stroke="rgba(74,142,184,0.15)" stroke-width="0.5"/>
+        <line x1="264" y1="0" x2="264" y2="220" stroke="rgba(74,142,184,0.15)" stroke-width="0.5"/>
+        <line x1="352" y1="0" x2="352" y2="220" stroke="rgba(74,142,184,0.15)" stroke-width="0.5"/>
+        <line x1="0" y1="73" x2="460" y2="73" stroke="rgba(74,142,184,0.15)" stroke-width="0.5"/>
+        <line x1="0" y1="146" x2="460" y2="146" stroke="rgba(74,142,184,0.15)" stroke-width="0.5"/>
+        <!-- Grid refs at margin -->
+        <text x="82" y="218" font-family="'IBM Plex Mono',monospace" font-size="5.5" fill="rgba(74,142,184,0.7)">4820</text>
+        <text x="170" y="218" font-family="'IBM Plex Mono',monospace" font-size="5.5" fill="rgba(74,142,184,0.7)">4821</text>
+        <text x="258" y="218" font-family="'IBM Plex Mono',monospace" font-size="5.5" fill="rgba(74,142,184,0.7)">4822</text>
+      </svg>
+
+      <div class="title-stats">
+        <div class="stat-cell">
+          <div class="stat-label">Total Trail Miles</div>
+          <div class="stat-value">47.3<span class="stat-unit">mi</span></div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-label">Managed Acreage</div>
+          <div class="stat-value">12,400<span class="stat-unit">ac</span></div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-label">Trails Open</div>
+          <div class="stat-value">9<span class="stat-unit"> of 12</span></div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-label">Last Field Survey</div>
+          <div class="stat-value" style="font-size:20px;">AUG 12</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── 01 / TRAIL CONDITIONS ─────────────────────────────── -->
+  <section id="conditions">
+    <div class="index-contour">
+      <div class="ic-line"></div>
+      <div class="ic-label">01 &nbsp;/&nbsp; TRAIL CONDITIONS</div>
+      <div class="ic-elev">— AUG 2026</div>
+      <div class="ic-line"></div>
+    </div>
+
+    <div class="schedule-wrap">
+      <table class="survey-table">
+        <thead>
+          <tr>
+            <th>REF</th>
+            <th>TRAIL NAME</th>
+            <th>DIST</th>
+            <th>ELEV GAIN</th>
+            <th>SURFACE</th>
+            <th>DIFFICULTY</th>
+            <th class="th-right">STATUS &nbsp; ▲ REV 08</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-ref">T01 · 14S</td>
+            <td class="td-name">RIDGELINE LOOP</td>
+            <td class="td-mono">4.2 mi</td>
+            <td class="td-mono">+820 ft</td>
+            <td class="td-mono">PACKED DIRT</td>
+            <td class="td-mono">MODERATE</td>
+            <td class="td-status s-open td-right">OPEN</td>
+          </tr>
+          <tr>
+            <td class="td-ref">T02 · 14S</td>
+            <td class="td-name">SUMMIT TRAIL</td>
+            <td class="td-mono">6.8 mi</td>
+            <td class="td-mono">+1,240 ft</td>
+            <td class="td-mono">ROCKY / SCREE</td>
+            <td class="td-mono">STRENUOUS</td>
+            <td class="td-status s-open td-right">OPEN</td>
+          </tr>
+          <tr>
+            <td class="td-ref">T03 · 14S</td>
+            <td class="td-name">NORTH FORK CREEK</td>
+            <td class="td-mono">3.1 mi</td>
+            <td class="td-mono">+380 ft</td>
+            <td class="td-mono">DIRT / WET</td>
+            <td class="td-mono">EASY</td>
+            <td class="td-status s-hazard td-right">HAZARD</td>
+          </tr>
+          <tr>
+            <td class="td-ref">T04 · 14S</td>
+            <td class="td-name">MEADOW TRAVERSE</td>
+            <td class="td-mono">2.4 mi</td>
+            <td class="td-mono">+120 ft</td>
+            <td class="td-mono">GRAVEL / FIRM</td>
+            <td class="td-mono">EASY</td>
+            <td class="td-status s-open td-right">OPEN</td>
+          </tr>
+          <tr>
+            <td class="td-ref">T05 · 14S</td>
+            <td class="td-name">EAST RIDGELINE</td>
+            <td class="td-mono">5.6 mi</td>
+            <td class="td-mono">+960 ft</td>
+            <td class="td-mono">ROCKY</td>
+            <td class="td-mono">STRENUOUS</td>
+            <td class="td-status s-open td-right">OPEN</td>
+          </tr>
+          <tr>
+            <td class="td-ref">T06 · 14S</td>
+            <td class="td-name">PINE HOLLOW LOOP</td>
+            <td class="td-mono">1.8 mi</td>
+            <td class="td-mono">+90 ft</td>
+            <td class="td-mono">PACKED DIRT</td>
+            <td class="td-mono">EASY</td>
+            <td class="td-status s-pending td-right">SURVEY PENDING</td>
+          </tr>
+          <tr>
+            <td class="td-ref">T07 · 14S</td>
+            <td class="td-name">BOULDER FIELD ROUTE</td>
+            <td class="td-mono">2.9 mi</td>
+            <td class="td-mono">+440 ft</td>
+            <td class="td-mono">ROCK / TALUS</td>
+            <td class="td-mono">DIFFICULT</td>
+            <td class="td-status s-closed td-right">CLOSED</td>
+          </tr>
+          <tr>
+            <td class="td-ref">T08 · 14S</td>
+            <td class="td-name">LOWER MEADOW PATH</td>
+            <td class="td-mono">1.2 mi</td>
+            <td class="td-mono">+40 ft</td>
+            <td class="td-mono">MOWN GRASS</td>
+            <td class="td-mono">EASY</td>
+            <td class="td-status s-open td-right">OPEN</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── 02 / ELEVATION PROFILE ─────────────────────────────── -->
+  <section>
+    <div class="index-contour">
+      <div class="ic-line"></div>
+      <div class="ic-label">02 &nbsp;/&nbsp; FEATURED TRAIL — ELEVATION PROFILE</div>
+      <div class="ic-line"></div>
+    </div>
+
+    <div class="profile-wrap">
+      <div class="profile-fig">FIG. 02 / SUMMIT TRAIL — CROSS-SECTION / SOUTH TRAILHEAD TO RIDGELINE PEAK</div>
+      <h2 class="profile-title">SUMMIT TRAIL &nbsp;&mdash;&nbsp; ELEVATION PROFILE</h2>
+
+      <svg class="profile-svg" viewBox="0 0 1120 180" xmlns="http://www.w3.org/2000/svg" style="height:180px;">
+        <!-- Y-axis labels -->
+        <text x="0" y="16" font-family="'IBM Plex Mono',monospace" font-size="9" fill="rgba(28,26,24,0.42)">4400</text>
+        <text x="0" y="56" font-family="'IBM Plex Mono',monospace" font-size="9" fill="rgba(28,26,24,0.42)">4200</text>
+        <text x="0" y="96" font-family="'IBM Plex Mono',monospace" font-size="9" fill="rgba(28,26,24,0.42)">4000</text>
+        <text x="0" y="136" font-family="'IBM Plex Mono',monospace" font-size="9" fill="rgba(28,26,24,0.42)">3800</text>
+        <text x="0" y="166" font-family="'IBM Plex Mono',monospace" font-size="9" fill="rgba(28,26,24,0.42)">3600</text>
+        <!-- Horizontal guide lines -->
+        <line x1="48" y1="12" x2="1120" y2="12" stroke="rgba(196,144,96,0.2)" stroke-width="0.5"/>
+        <line x1="48" y1="52" x2="1120" y2="52" stroke="rgba(196,144,96,0.2)" stroke-width="0.5"/>
+        <line x1="48" y1="92" x2="1120" y2="92" stroke="rgba(196,144,96,0.2)" stroke-width="0.5"/>
+        <line x1="48" y1="132" x2="1120" y2="132" stroke="rgba(196,144,96,0.2)" stroke-width="0.5"/>
+        <line x1="48" y1="162" x2="1120" y2="162" stroke="rgba(196,144,96,0.35)" stroke-width="1"/>
+        <!-- Profile fill area -->
+        <path d="M48,162 L48,148 Q100,146 160,142 Q220,138 280,132 Q340,126 400,115 Q460,104 520,90 Q570,78 610,64 Q640,52 660,38 Q680,24 700,18 Q720,16 740,20 Q760,26 780,34 Q810,46 850,60 Q890,74 940,90 Q980,103 1020,115 Q1060,126 1120,135 L1120,162 Z"
+              fill="rgba(196,144,96,0.13)" stroke="none"/>
+        <!-- Profile line -->
+        <path d="M48,148 Q100,146 160,142 Q220,138 280,132 Q340,126 400,115 Q460,104 520,90 Q570,78 610,64 Q640,52 660,38 Q680,24 700,18 Q720,16 740,20 Q760,26 780,34 Q810,46 850,60 Q890,74 940,90 Q980,103 1020,115 Q1060,126 1120,135"
+              stroke="#a06830" stroke-width="1.75" fill="none"/>
+        <!-- Spot height markers -->
+        <circle cx="48" cy="148" r="3" fill="#a06830"/>
+        <line x1="48" y1="145" x2="48" y2="132" stroke="#a06830" stroke-width="0.75"/>
+        <text x="50" y="129" font-family="'IBM Plex Mono',monospace" font-size="8" fill="#a06830">· 3,240ft</text>
+        <text x="26" y="174" font-family="'IBM Plex Mono',monospace" font-size="8" fill="rgba(28,26,24,0.42)">START</text>
+
+        <circle cx="400" cy="115" r="2.5" fill="#c49060"/>
+        <line x1="400" y1="112" x2="400" y2="100" stroke="#c49060" stroke-width="0.75"/>
+        <text x="402" y="98" font-family="'IBM Plex Mono',monospace" font-size="8" fill="#c49060">· 3,860ft</text>
+
+        <circle cx="700" cy="18" r="3.5" fill="#a06830"/>
+        <line x1="700" y1="15" x2="700" y2="5" stroke="#a06830" stroke-width="0.75"/>
+        <text x="660" y="4" font-family="'IBM Plex Mono',monospace" font-size="8.5" fill="#a06830" font-weight="700">▲ BM 4,480ft SUMMIT</text>
+
+        <circle cx="940" cy="90" r="2.5" fill="#c49060"/>
+        <line x1="940" y1="87" x2="940" y2="76" stroke="#c49060" stroke-width="0.75"/>
+        <text x="894" y="74" font-family="'IBM Plex Mono',monospace" font-size="8" fill="#c49060">· 4,020ft</text>
+
+        <circle cx="1120" cy="135" r="3" fill="#a06830"/>
+        <text x="1060" y="174" font-family="'IBM Plex Mono',monospace" font-size="8" fill="rgba(28,26,24,0.42)">TRAILHEAD N</text>
+
+        <!-- X-axis scale bar -->
+        <line x1="48" y1="170" x2="1120" y2="170" stroke="rgba(28,26,24,0.25)" stroke-width="1"/>
+        <line x1="48" y1="166" x2="48" y2="174" stroke="rgba(28,26,24,0.4)" stroke-width="1"/>
+        <line x1="314" y1="166" x2="314" y2="174" stroke="rgba(28,26,24,0.25)" stroke-width="0.75"/>
+        <line x1="584" y1="166" x2="584" y2="174" stroke="rgba(28,26,24,0.25)" stroke-width="0.75"/>
+        <line x1="850" y1="166" x2="850" y2="174" stroke="rgba(28,26,24,0.25)" stroke-width="0.75"/>
+        <line x1="1120" y1="166" x2="1120" y2="174" stroke="rgba(28,26,24,0.4)" stroke-width="1"/>
+        <text x="42" y="178" font-family="'IBM Plex Mono',monospace" font-size="7.5" fill="rgba(28,26,24,0.42)">0</text>
+        <text x="296" y="178" font-family="'IBM Plex Mono',monospace" font-size="7.5" fill="rgba(28,26,24,0.42)">2 mi</text>
+        <text x="568" y="178" font-family="'IBM Plex Mono',monospace" font-size="7.5" fill="rgba(28,26,24,0.42)">4 mi</text>
+        <text x="834" y="178" font-family="'IBM Plex Mono',monospace" font-size="7.5" fill="rgba(28,26,24,0.42)">6 mi</text>
+        <text x="1102" y="178" font-family="'IBM Plex Mono',monospace" font-size="7.5" fill="rgba(28,26,24,0.42)">6.8</text>
+      </svg>
+
+      <div class="profile-meta">
+        <div class="pm-item"><div class="pm-label">Total Distance</div><div class="pm-val">6.8 mi</div></div>
+        <div class="pm-item"><div class="pm-label">Elevation Gain</div><div class="pm-val">+1,240 ft</div></div>
+        <div class="pm-item"><div class="pm-label">Trailhead Elev.</div><div class="pm-val">3,240 ft</div></div>
+        <div class="pm-item"><div class="pm-label">Summit Elev.</div><div class="pm-val">4,480 ft</div></div>
+        <div class="pm-item"><div class="pm-label">Surface</div><div class="pm-val">ROCKY / SCREE</div></div>
+        <div class="pm-item"><div class="pm-label">Last Surveyed</div><div class="pm-val">AUG 12, 2026</div></div>
+        <div class="pm-item"><div class="pm-label">Grid Ref</div><div class="pm-val" style="color:var(--blue);font-size:11px;">14S TM 4822 7614</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 03 / TRAIL NETWORK ─────────────────────────────────── -->
+  <section id="trails">
+    <div class="index-contour">
+      <div class="ic-line"></div>
+      <div class="ic-label">03 &nbsp;/&nbsp; TRAIL NETWORK</div>
+      <div class="ic-line"></div>
+    </div>
+
+    <div class="annotation-grid">
+      <div class="ann-box">
+        <div class="ann-ref">FEATURE T01 &nbsp;·&nbsp; 14S TM 4820 7612</div>
+        <h3 class="ann-name">RIDGELINE LOOP</h3>
+        <div class="ann-data">
+          <div><span class="ann-field">DISTANCE</span><span class="ann-val">4.2 mi</span></div>
+          <div><span class="ann-field">ELEV GAIN</span><span class="ann-val">+820 ft</span></div>
+          <div><span class="ann-field">SURFACE</span><span class="ann-val">PACKED DIRT</span></div>
+          <div><span class="ann-field">DIFFICULTY</span><span class="ann-val">MODERATE</span></div>
+          <div><span class="ann-field">LOOP TYPE</span><span class="ann-val">LOOP</span></div>
+          <div class="ann-status-row"><span class="td-status s-open">· OPEN — ▲ REV 08</span></div>
+        </div>
+        <div class="ann-grid-ref">GRID REF: 14S TM 4820 7612 &nbsp;/&nbsp; DATUM: NAD83</div>
+      </div>
+      <div class="ann-box">
+        <div class="ann-ref">FEATURE T02 &nbsp;·&nbsp; 14S TM 4822 7614</div>
+        <h3 class="ann-name">SUMMIT TRAIL</h3>
+        <div class="ann-data">
+          <div><span class="ann-field">DISTANCE</span><span class="ann-val">6.8 mi</span></div>
+          <div><span class="ann-field">ELEV GAIN</span><span class="ann-val">+1,240 ft</span></div>
+          <div><span class="ann-field">SURFACE</span><span class="ann-val">ROCKY / SCREE</span></div>
+          <div><span class="ann-field">DIFFICULTY</span><span class="ann-val">STRENUOUS</span></div>
+          <div><span class="ann-field">LOOP TYPE</span><span class="ann-val">OUT-AND-BACK</span></div>
+          <div class="ann-status-row"><span class="td-status s-open">· OPEN — ▲ REV 07</span></div>
+        </div>
+        <div class="ann-grid-ref">GRID REF: 14S TM 4822 7614 &nbsp;/&nbsp; DATUM: NAD83</div>
+      </div>
+      <div class="ann-box">
+        <div class="ann-ref">FEATURE T03 &nbsp;·&nbsp; 14S TM 4819 7616</div>
+        <h3 class="ann-name">NORTH FORK CREEK</h3>
+        <div class="ann-data">
+          <div><span class="ann-field">DISTANCE</span><span class="ann-val">3.1 mi</span></div>
+          <div><span class="ann-field">ELEV GAIN</span><span class="ann-val">+380 ft</span></div>
+          <div><span class="ann-field">SURFACE</span><span class="ann-val">DIRT / WET</span></div>
+          <div><span class="ann-field">DIFFICULTY</span><span class="ann-val">EASY</span></div>
+          <div><span class="ann-field">LOOP TYPE</span><span class="ann-val">OUT-AND-BACK</span></div>
+          <div class="ann-status-row"><span class="td-status s-hazard">✕ HAZARD — EROSION AT MI 1.4</span></div>
+        </div>
+        <div class="ann-grid-ref">GRID REF: 14S TM 4819 7616 &nbsp;/&nbsp; DATUM: NAD83</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 04 / CONSERVATION PROJECTS ─────────────────────────── -->
+  <section id="projects">
+    <div class="index-contour">
+      <div class="ic-line"></div>
+      <div class="ic-label">04 &nbsp;/&nbsp; CONSERVATION PROJECTS</div>
+      <div class="ic-line"></div>
+    </div>
+
+    <div class="project-grid">
+      <div class="proj-box">
+        <div class="proj-ref">PROJECT C-04 &nbsp;·&nbsp; ACTIVE &nbsp;·&nbsp; ▲ REV 11</div>
+        <h3 class="proj-name">NORTH FORK EROSION REPAIR</h3>
+        <div class="proj-desc">Tread reconstruction along the 0.6-mile eroded segment at creek crossing, Mile 1.4. Includes cribwall installation, native revegetation, and rerouted drainage swale to redirect surface runoff away from the tread corridor.</div>
+        <div class="proj-meta">
+          <div class="key-value" style="padding:6px 0;border-bottom:1px solid rgba(28,26,24,0.07);">
+            <span class="kv-label">STATUS</span><span class="kv-val" style="color:var(--brown-idx);">△ ACTIVE — PHASE 2 OF 3</span>
+          </div>
+          <div class="key-value" style="padding:6px 0;border-bottom:1px solid rgba(28,26,24,0.07);">
+            <span class="kv-label">CREW</span><span class="kv-val">UNIT 04-B / 6 PERSONNEL</span>
+          </div>
+          <div class="key-value" style="padding:6px 0;">
+            <span class="kv-label">ESTIMATED COMPLETE</span><span class="kv-val">SEP 30, 2026</span>
+          </div>
+        </div>
+        <div class="proj-progress">
+          <div class="prog-label">COMPLETION — SCALE BAR</div>
+          <div class="scale-progress"><div class="scale-progress-fill" style="width:62%;"></div></div>
+          <div class="scale-markers"><span>0</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div>
+        </div>
+        <div class="proj-grid-ref">GRID REF: 14S TM 4819 7617 &nbsp;/&nbsp; LENGTH: 0.6 mi</div>
+      </div>
+      <div class="proj-box">
+        <div class="proj-ref">PROJECT C-07 &nbsp;·&nbsp; SURVEY PENDING &nbsp;·&nbsp; ▲ REV 03</div>
+        <h3 class="proj-name">BOULDER FIELD ROUTE ASSESSMENT</h3>
+        <div class="proj-desc">Full condition survey of the Boulder Field Route (T07), closed since June after a talus slide partially buried 200 feet of tread in the upper section. Survey will determine feasibility of reconstruction versus reroute through the adjacent drainage corridor.</div>
+        <div class="proj-meta">
+          <div class="key-value" style="padding:6px 0;border-bottom:1px solid rgba(28,26,24,0.07);">
+            <span class="kv-label">STATUS</span><span class="kv-val" style="color:var(--brown-idx);">△ SURVEY PENDING</span>
+          </div>
+          <div class="key-value" style="padding:6px 0;border-bottom:1px solid rgba(28,26,24,0.07);">
+            <span class="kv-label">SURVEY DATE</span><span class="kv-val">AUG 22, 2026</span>
+          </div>
+          <div class="key-value" style="padding:6px 0;">
+            <span class="kv-label">SECTION LENGTH</span><span class="kv-val">2.9 mi TOTAL</span>
+          </div>
+        </div>
+        <div class="proj-progress">
+          <div class="prog-label">COMPLETION — SCALE BAR</div>
+          <div class="scale-progress"><div class="scale-progress-fill" style="width:18%;"></div></div>
+          <div class="scale-markers"><span>0</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div>
+        </div>
+        <div class="proj-grid-ref">GRID REF: 14S TM 4823 7618 &nbsp;/&nbsp; LENGTH: 0.2 mi AFFECTED</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 05 / FIELD NOTES ───────────────────────────────────── -->
+  <section id="field-notes">
+    <div class="index-contour">
+      <div class="ic-line"></div>
+      <div class="ic-label">05 &nbsp;/&nbsp; FIELD NOTES</div>
+      <div class="ic-line"></div>
+    </div>
+
+    <div class="field-notes-grid">
+      <div class="field-note">
+        <div class="fn-ref">NOTE A &nbsp;·&nbsp; T03 / NORTH FORK CREEK &nbsp;·&nbsp; MI 1.4</div>
+        <div class="fn-text">Erosion cut has widened approximately 18 inches since the May survey. Trail tread now exposed to active undercutting on the creek-side edge. Recommend closing the section to foot traffic until cribwall phase is complete. A temporary bypass flagged along the upper bench appears stable; recommend formal survey for potential reroute consideration.</div>
+        <div class="fn-sig">J. ALCOTT &nbsp;&mdash;&nbsp; CREW LEAD, UNIT 04-B <span class="fn-rev">▲ REV 11 / AUG 12, 2026</span></div>
+      </div>
+      <div class="field-note">
+        <div class="fn-ref">NOTE B &nbsp;·&nbsp; T02 / SUMMIT TRAIL &nbsp;·&nbsp; MI 4.8&ndash;5.1</div>
+        <div class="fn-text">Upper scree section shows heavy boot traffic displacement since last grading. Cairns at the mi 5.0 junction have been knocked over — likely wind event based on pattern. Replaced and documented. Water bar at mi 4.8 is functioning correctly; no erosion downslope. Recommend seasonal inspection after each storm cycle during fall.</div>
+        <div class="fn-sig">M. REYES &nbsp;&mdash;&nbsp; FIELD INSPECTOR <span class="fn-rev">▲ REV 07 / AUG 08, 2026</span></div>
+      </div>
+      <div class="field-note">
+        <div class="fn-ref">NOTE C &nbsp;·&nbsp; T06 / PINE HOLLOW LOOP &nbsp;·&nbsp; FULL SECTION</div>
+        <div class="fn-text">Trail has not been formally surveyed since April. Dense vegetation growth has narrowed the tread to under 24 inches in the middle 0.8-mile section. Bridge at mi 1.1 is stable; no rot observed in stringers. Recommend holding status at Survey Pending until full clearance crew availability in late August. Do not open without surveyor sign-off.</div>
+        <div class="fn-sig">J. ALCOTT &nbsp;&mdash;&nbsp; CREW LEAD, UNIT 04-B <span class="fn-rev">▲ REV 03 / AUG 05, 2026</span></div>
+      </div>
+      <div class="field-note">
+        <div class="fn-ref">NOTE D &nbsp;·&nbsp; T01 / RIDGELINE LOOP &nbsp;·&nbsp; TRAILHEAD</div>
+        <div class="fn-text">Signage at the south trailhead junction was vandalized and has been replaced with standard NPS-5 series markers. New post and panel installed per Series spec. Parking area gravel surface showing moderate rutting from summer use; low priority for this season. Trail register box replaced with waterproof unit — previous unit was compromised by moisture.</div>
+        <div class="fn-sig">K. FONTAINE &nbsp;&mdash;&nbsp; TRAIL COORDINATOR <span class="fn-rev">▲ REV 08 / AUG 14, 2026</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 06 / ABOUT ─────────────────────────────────────────── -->
+  <section>
+    <div class="index-contour">
+      <div class="ic-line"></div>
+      <div class="ic-label">06 &nbsp;/&nbsp; ABOUT THE CONSERVANCY</div>
+      <div class="ic-line"></div>
+    </div>
+
+    <div class="about-layout">
+      <div class="about-copy">
+        <p>Ridgeline Trail Conservancy was established in 1987 by a coalition of backcountry users, land managers, and municipal planners who recognized that the trail network crossing the Northern Territory Management Area had no formal stewardship organization. What began with twelve volunteers and a single maintained corridor has expanded to cover 47.3 miles of trail across 12,400 acres of managed land.</p>
+        <p>The Conservancy's field methodology follows the survey documentation standard established in coordination with the National Park Service and adapted for this terrain class. Every trail in the network is assigned a survey reference, a revision history, and a dated field log. Nothing is managed on the basis of memory or informal knowledge — the sheet is the record, and the record must be complete.</p>
+        <p>Crews operate on a volunteer basis, supported by an annual land stewardship grant from the state Department of Natural Resources and individual donor contributions. The Conservancy employs one full-time Trail Coordinator and two seasonal Field Inspectors during the survey season, which runs from May through October. All field notes, condition surveys, and project records are maintained in the public documentation archive and referenced on this sheet.</p>
+      </div>
+      <div class="about-aside">
+        <div class="about-aside-label">OPERATIONAL REFERENCE</div>
+        <div class="key-value"><span class="kv-label">ESTABLISHED</span><span class="kv-val">1987</span></div>
+        <div class="key-value"><span class="kv-label">INCORPORATED</span><span class="kv-val">1991</span></div>
+        <div class="key-value"><span class="kv-label">TOTAL TRAILS</span><span class="kv-val">12 SEGMENTS</span></div>
+        <div class="key-value"><span class="kv-label">MANAGED MILES</span><span class="kv-val">47.3 mi</span></div>
+        <div class="key-value"><span class="kv-label">MANAGED AREA</span><span class="kv-val">12,400 ac</span></div>
+        <div class="key-value"><span class="kv-label">SURVEY SEASON</span><span class="kv-val">MAY – OCT</span></div>
+        <div class="key-value"><span class="kv-label">DATUM</span><span class="kv-val">NAD83</span></div>
+        <div class="key-value"><span class="kv-label">PROJECTION</span><span class="kv-val">UTM ZONE 14N</span></div>
+        <div class="key-value"><span class="kv-label">SERIES</span><span class="kv-val">NPS-5</span></div>
+        <div class="key-value"><span class="kv-label">SHEET</span><span class="kv-val">NPS-01</span></div>
+        <div class="key-value"><span class="kv-label">EDITION</span><span class="kv-val">2026 / REV 11</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── LEGEND ─────────────────────────────────────────────── -->
+  <section id="legend">
+    <div class="index-contour">
+      <div class="ic-line"></div>
+      <div class="ic-label">LEGEND &nbsp;/&nbsp; MAP KEY</div>
+      <div class="ic-line"></div>
+    </div>
+
+    <div class="legend-wrap">
+      <div class="legend-title">MAP SYMBOLS — NPS-5 SERIES / RIDGELINE MANAGEMENT AREA</div>
+      <div class="legend-cols">
+        <div class="legend-group">
+          <div class="legend-group-label">Survey Markers</div>
+          <div class="legend-item"><div class="legend-sym brown">▲</div><div class="legend-desc">Benchmark — certified elevation, primary reference</div></div>
+          <div class="legend-item"><div class="legend-sym">·</div><div class="legend-desc">Spot height — surveyed, uncertified elevation</div></div>
+          <div class="legend-item"><div class="legend-sym">△</div><div class="legend-desc">Triangulation station — control point, project origin</div></div>
+          <div class="legend-item"><div class="legend-sym red">✕</div><div class="legend-desc">Hazard / closure — inaccessible or dangerous</div></div>
+          <div class="legend-item"><div class="legend-sym">▶</div><div class="legend-desc">Active selection — current navigation item</div></div>
+        </div>
+        <div class="legend-group">
+          <div class="legend-group-label">Contour Lines</div>
+          <div class="legend-item">
+            <svg class="legend-line-svg" width="28" height="2" viewBox="0 0 28 2"><line x1="0" y1="1" x2="28" y2="1" stroke="#a06830" stroke-width="1.5"/></svg>
+            <div class="legend-desc">Index contour — primary hierarchy level</div>
+          </div>
+          <div class="legend-item">
+            <svg class="legend-line-svg" width="28" height="2" viewBox="0 0 28 2"><line x1="0" y1="1" x2="28" y2="1" stroke="#c49060" stroke-width="0.75"/></svg>
+            <div class="legend-desc">Intermediate contour — secondary level</div>
+          </div>
+          <div class="legend-item">
+            <svg class="legend-line-svg" width="28" height="2" viewBox="0 0 28 2"><line x1="0" y1="1" x2="28" y2="1" stroke="#c49060" stroke-width="0.5" stroke-dasharray="3,2"/></svg>
+            <div class="legend-desc">Supplementary contour — tertiary / approximate</div>
+          </div>
+          <div class="legend-item">
+            <svg class="legend-line-svg" width="28" height="10" viewBox="0 0 28 10"><rect x="0" y="2" width="28" height="6" fill="rgba(138,171,130,0.35)"/></svg>
+            <div class="legend-desc">Vegetation / forested area fill</div>
+          </div>
+        </div>
+        <div class="legend-group">
+          <div class="legend-group-label">Trail Status</div>
+          <div class="legend-item"><div class="legend-sym" style="font-size:9px;letter-spacing:0.06em;">· OPEN</div><div class="legend-desc">Trail open to foot traffic</div></div>
+          <div class="legend-item"><div class="legend-sym red" style="font-size:9px;letter-spacing:0.06em;">✕ HAZARD</div><div class="legend-desc">Hazard present — use caution or avoid</div></div>
+          <div class="legend-item"><div class="legend-sym dim" style="font-size:9px;letter-spacing:0.06em;">✕ CLOSED</div><div class="legend-desc">Trail closed — do not enter</div></div>
+          <div class="legend-item"><div class="legend-sym brown" style="font-size:9px;letter-spacing:0.06em;">△ PENDING</div><div class="legend-desc">Survey pending — status unverified</div></div>
+          <div class="legend-item">
+            <svg class="legend-line-svg" width="28" height="2" viewBox="0 0 28 2"><line x1="0" y1="1" x2="28" y2="1" stroke="#1c1a18" stroke-width="1.5" stroke-dasharray="6,3"/></svg>
+            <div class="legend-desc">Trail centerline — maintained</div>
+          </div>
+        </div>
+        <div class="legend-group">
+          <div class="legend-group-label">Water / Grid</div>
+          <div class="legend-item">
+            <svg class="legend-line-svg" width="28" height="2" viewBox="0 0 28 2"><line x1="0" y1="1" x2="28" y2="1" stroke="#4a8eb8" stroke-width="1" stroke-dasharray="3,2"/></svg>
+            <div class="legend-desc">Stream / intermittent water feature</div>
+          </div>
+          <div class="legend-item">
+            <svg width="28" height="10" viewBox="0 0 28 10"><rect x="2" y="1" width="24" height="8" fill="rgba(74,142,184,0.2)" stroke="#4a8eb8" stroke-width="0.75"/></svg>
+            <div class="legend-desc">Lake / pond / reservoir</div>
+          </div>
+          <div class="legend-item">
+            <svg width="28" height="10" viewBox="0 0 28 10"><line x1="14" y1="0" x2="14" y2="10" stroke="rgba(74,142,184,0.4)" stroke-width="0.75"/><line x1="0" y1="5" x2="28" y2="5" stroke="rgba(74,142,184,0.4)" stroke-width="0.75"/></svg>
+            <div class="legend-desc">UTM coordinate grid — NAD83</div>
+          </div>
+          <div class="legend-item"><div class="legend-sym blue" style="font-size:9px;">14S TM</div><div class="legend-desc">Grid zone designation — zone / band</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER MARGINALIA -->
+<footer class="map-footer">
+  <div class="footer-scale">
+    <div class="scale-bar-label">SCALE &nbsp;1 : 24,000</div>
+    <svg class="scale-bar-svg" width="240" height="24" viewBox="0 0 240 24">
+      <rect x="0" y="8" width="60" height="8" fill="#1c1a18"/>
+      <rect x="60" y="8" width="60" height="8" fill="var(--paper)" stroke="#1c1a18" stroke-width="0.75"/>
+      <rect x="120" y="8" width="60" height="8" fill="#1c1a18"/>
+      <rect x="180" y="8" width="60" height="8" fill="var(--paper)" stroke="#1c1a18" stroke-width="0.75"/>
+      <line x1="0" y1="6" x2="0" y2="18" stroke="#1c1a18" stroke-width="1"/>
+      <line x1="60" y1="6" x2="60" y2="18" stroke="#1c1a18" stroke-width="0.75"/>
+      <line x1="120" y1="6" x2="120" y2="18" stroke="#1c1a18" stroke-width="0.75"/>
+      <line x1="180" y1="6" x2="180" y2="18" stroke="#1c1a18" stroke-width="0.75"/>
+      <line x1="240" y1="6" x2="240" y2="18" stroke="#1c1a18" stroke-width="1"/>
+      <text x="0" y="22" font-family="'IBM Plex Mono',monospace" font-size="7.5" fill="rgba(28,26,24,0.5)">0</text>
+      <text x="50" y="22" font-family="'IBM Plex Mono',monospace" font-size="7.5" fill="rgba(28,26,24,0.5)">0.5 mi</text>
+      <text x="112" y="22" font-family="'IBM Plex Mono',monospace" font-size="7.5" fill="rgba(28,26,24,0.5)">1 mi</text>
+      <text x="224" y="22" font-family="'IBM Plex Mono',monospace" font-size="7.5" fill="rgba(28,26,24,0.5)">2 mi</text>
+    </svg>
+  </div>
+  <div class="footer-datum">
+    DATUM: NAD83<br>
+    PROJECTION: UTM ZONE 14N<br>
+    CONTOUR INTERVAL: 200 FT<br>
+    GRID: 1,000-METER UTM
+  </div>
+  <div class="footer-sheet">
+    RIDGELINE TRAIL CONSERVANCY<br>
+    <span class="footer-sheet-sub">SERIES NPS-5 &nbsp;/&nbsp; SHEET NPS-01 &nbsp;/&nbsp; EDITION 2026 &nbsp;/&nbsp; REV 11</span><br>
+    <span class="footer-sheet-sub">NORTHERN TERRITORY MANAGEMENT AREA &nbsp;/&nbsp; AUG 2026</span>
+  </div>
+</footer>
+
+
+</body>
+</html>

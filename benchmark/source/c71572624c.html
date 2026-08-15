@@ -1,0 +1,2564 @@
+<!doctype html>
+<html lang="en">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f1efe7" />
+
+  <title>RELAY — AI Agent Deployment & Operations</title>
+  <meta
+    name="description"
+    content="RELAY is a fictional deployment and operations platform for AI agents, designed around procedure, verification, records, and revision."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    /* =========================================================
+       RELAY / FIELD MANUAL SYSTEM
+       ========================================================= */
+
+    :root {
+      --paper: #f1efe7;
+      --paper-raised: #f7f5ee;
+      --paper-deep: #e8e5db;
+
+      --ink: #171a18;
+      --ink-soft: #575b56;
+      --ink-faint: #7b7e78;
+
+      --line: #b9b6aa;
+      --line-light: #d5d1c6;
+      --line-strong: #30332f;
+
+      --accent: #2455d6;
+      --accent-dark: #173da1;
+      --accent-faint: rgba(36, 85, 214, 0.08);
+
+      --warning: #99631c;
+      --failure: #a34338;
+
+      --sans: "IBM Plex Sans", system-ui, sans-serif;
+      --condensed: "IBM Plex Sans Condensed", "Arial Narrow", sans-serif;
+      --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+      --max-width: 1480px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--paper);
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body,
+    button,
+    input {
+      font-variant-numeric: tabular-nums;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      color: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    ::selection {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    .skip-link {
+      position: fixed;
+      z-index: 999;
+      left: 16px;
+      top: 16px;
+      padding: 10px 14px;
+      transform: translateY(-160%);
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .shell {
+      width: min(calc(100% - 48px), var(--max-width));
+      margin-inline: auto;
+    }
+
+    .mono,
+    .eyebrow,
+    .document-meta,
+    .section-number,
+    .section-ref,
+    .field-label,
+    .record-label,
+    .record-value,
+    .state-mark,
+    .procedure-status,
+    .procedure-time,
+    .table-wrap th,
+    .revision-code,
+    .note-ref,
+    .failure-label,
+    .footer-meta,
+    .command,
+    .page-index {
+      font-family: var(--mono);
+    }
+
+    .eyebrow,
+    .field-label,
+    .record-label,
+    .procedure-status,
+    .table-wrap th,
+    .failure-label,
+    .note-ref {
+      text-transform: uppercase;
+      letter-spacing: 0.105em;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
+
+    .site-header {
+      position: sticky;
+      z-index: 40;
+      top: 0;
+      border-bottom: 1px solid var(--line-strong);
+      background: rgba(241, 239, 231, 0.96);
+      backdrop-filter: blur(10px);
+    }
+
+    .header-inner {
+      min-height: 72px;
+      display: grid;
+      grid-template-columns: 200px minmax(0, 1fr) auto;
+      align-items: stretch;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-right: 1px solid var(--line);
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 22px;
+      height: 22px;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .brand-mark::before,
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      border: 2px solid currentColor;
+    }
+
+    .brand-mark::after {
+      inset: 8px 0 8px 0;
+      border-width: 1px 0 0;
+      border-color: var(--accent);
+    }
+
+    .brand-name {
+      font-family: var(--condensed);
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: stretch;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .site-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-link {
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      white-space: nowrap;
+      color: var(--ink-soft);
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: -1px;
+      height: 2px;
+      transform: scaleX(0);
+      transform-origin: left;
+      background: var(--accent);
+      transition: transform 160ms var(--ease);
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--ink);
+    }
+
+    .nav-link.active::after {
+      transform: scaleX(1);
+    }
+
+    .header-state {
+      display: grid;
+      place-items: center;
+      min-width: 176px;
+      padding: 0 18px;
+      border-left: 1px solid var(--line);
+      font-family: var(--mono);
+      font-size: 10px;
+      line-height: 1.5;
+      letter-spacing: 0.08em;
+      text-align: right;
+      text-transform: uppercase;
+    }
+
+    .header-state strong {
+      display: block;
+      color: var(--accent);
+    }
+
+    /* =========================================================
+       SHARED SECTION SYSTEM
+       ========================================================= */
+
+    .manual-section {
+      scroll-margin-top: 90px;
+      border-top: 1px solid var(--line-strong);
+    }
+
+    .manual-section:first-child {
+      border-top: 0;
+    }
+
+    .section-frame {
+      display: grid;
+      grid-template-columns: 104px minmax(0, 1fr);
+    }
+
+    .section-index {
+      padding: 48px 24px 48px 0;
+      border-right: 1px solid var(--line);
+    }
+
+    .section-number {
+      display: block;
+      color: var(--accent);
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .section-ref {
+      display: block;
+      margin-top: 10px;
+      color: var(--ink-faint);
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+
+    .section-content {
+      min-width: 0;
+      padding: 48px 0 88px 48px;
+    }
+
+    .section-heading-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, 360px);
+      gap: 48px;
+      align-items: start;
+      margin-bottom: 46px;
+    }
+
+    .section-heading {
+      margin: 0;
+      font-family: var(--condensed);
+      font-size: clamp(38px, 5vw, 62px);
+      font-weight: 500;
+      line-height: 0.96;
+      letter-spacing: -0.025em;
+      text-transform: uppercase;
+      text-wrap: balance;
+    }
+
+    .section-description {
+      max-width: 480px;
+      margin: 4px 0 0;
+      color: var(--ink-soft);
+      font-size: 15px;
+      line-height: 1.65;
+      text-wrap: pretty;
+    }
+
+    .command {
+      min-height: 42px;
+      padding: 10px 14px;
+      border: 1px solid var(--line-strong);
+      border-radius: 0;
+      background: transparent;
+      cursor: pointer;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition:
+        background 140ms ease,
+        color 140ms ease,
+        border-color 140ms ease;
+    }
+
+    .command:hover:not(:disabled) {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: white;
+    }
+
+    .command:disabled {
+      cursor: default;
+      color: var(--ink-faint);
+    }
+
+    .command.secondary {
+      border-color: var(--line);
+    }
+
+    /* =========================================================
+       HERO / DEPLOYMENT RECORD
+       ========================================================= */
+
+    .hero {
+      padding-top: 0;
+    }
+
+    .hero .section-content {
+      padding-top: 34px;
+    }
+
+    .document-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: clamp(58px, 9vw, 118px);
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .document-meta {
+      color: var(--ink-soft);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 24px;
+      align-items: end;
+    }
+
+    .hero-copy {
+      grid-column: 1 / span 9;
+    }
+
+    .hero-side {
+      grid-column: 10 / -1;
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-left: 24px;
+      border-left: 1px solid var(--line);
+    }
+
+    .hero-kicker {
+      margin: 0 0 20px;
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      max-width: 1050px;
+      margin: 0;
+      font-family: var(--condensed);
+      font-size: clamp(62px, 8.2vw, 124px);
+      font-weight: 500;
+      line-height: 0.82;
+      letter-spacing: -0.045em;
+      text-transform: uppercase;
+      text-wrap: balance;
+    }
+
+    .hero-intro {
+      max-width: 690px;
+      margin: 34px 0 0;
+      color: var(--ink-soft);
+      font-size: clamp(17px, 1.7vw, 21px);
+      line-height: 1.58;
+      text-wrap: pretty;
+    }
+
+    .hero-note {
+      max-width: 240px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .hero-note::before {
+      content: "FIELD PRINCIPLE";
+      display: block;
+      margin-bottom: 14px;
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+    }
+
+    .record-sheet {
+      margin-top: 80px;
+      border-top: 3px solid var(--ink);
+      border-bottom: 1px solid var(--line-strong);
+      background: var(--paper-raised);
+    }
+
+    .record-sheet-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+      min-height: 54px;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .record-sheet-title {
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .record-reference {
+      color: var(--ink-faint);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+    }
+
+    .record-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .record-field {
+      min-height: 118px;
+      padding: 18px 16px 22px;
+      border-right: 1px solid var(--line);
+    }
+
+    .record-field:last-child {
+      border-right: 0;
+    }
+
+    .record-label {
+      display: block;
+      color: var(--ink-faint);
+    }
+
+    .record-value {
+      display: block;
+      margin-top: 28px;
+      font-size: clamp(17px, 1.7vw, 23px);
+      font-weight: 600;
+      line-height: 1.15;
+      overflow-wrap: anywhere;
+    }
+
+    .state-mark {
+      display: inline-block;
+      padding: 4px 7px;
+      border: 1px solid var(--accent);
+      color: var(--accent-dark);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    .record-footer {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      border-top: 1px solid var(--line);
+    }
+
+    .record-footer > div {
+      min-height: 62px;
+      padding: 13px 16px;
+      border-right: 1px solid var(--line);
+      font-family: var(--mono);
+      font-size: 10px;
+      line-height: 1.65;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .record-footer > div:last-child {
+      border-right: 0;
+    }
+
+    /* =========================================================
+       DEPLOYMENT PROCEDURE
+       ========================================================= */
+
+    .procedure-control {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 32px;
+      align-items: end;
+      margin-bottom: 28px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    .procedure-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px 28px;
+      color: var(--ink-soft);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .procedure-summary strong {
+      color: var(--ink);
+    }
+
+    .procedure-meter {
+      position: relative;
+      height: 18px;
+      margin-bottom: 32px;
+      border-top: 1px solid var(--line);
+    }
+
+    .procedure-meter::before,
+    .procedure-meter::after {
+      content: "";
+      position: absolute;
+      top: -5px;
+      width: 1px;
+      height: 10px;
+      background: var(--line-strong);
+    }
+
+    .procedure-meter::before {
+      left: 0;
+    }
+
+    .procedure-meter::after {
+      right: 0;
+    }
+
+    .procedure-meter-fill {
+      position: absolute;
+      top: -1px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 300ms var(--ease);
+    }
+
+    .procedure-meter-labels {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 8px;
+      color: var(--ink-faint);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.06em;
+    }
+
+    .procedure-list {
+      border-top: 1px solid var(--line-strong);
+    }
+
+    .procedure-row {
+      position: relative;
+      display: grid;
+      grid-template-columns: 72px minmax(220px, 1.2fr) 150px 150px 130px;
+      min-height: 82px;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .procedure-row::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .procedure-row.complete::after {
+      width: 100%;
+      transition: width 420ms var(--ease);
+    }
+
+    .procedure-row.ready {
+      background: var(--accent-faint);
+    }
+
+    .procedure-row.complete {
+      color: var(--ink);
+    }
+
+    .procedure-row.locked {
+      color: var(--ink-faint);
+    }
+
+    .stage-number {
+      padding-left: 14px;
+      color: var(--ink-faint);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .complete .stage-number {
+      color: var(--accent);
+    }
+
+    .stage-name {
+      padding: 18px 14px;
+      border-left: 1px solid var(--line-light);
+      font-family: var(--condensed);
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .procedure-status,
+    .procedure-time,
+    .stage-control {
+      min-height: 100%;
+      display: flex;
+      align-items: center;
+      padding: 14px;
+      border-left: 1px solid var(--line-light);
+    }
+
+    .procedure-status {
+      color: var(--ink-soft);
+    }
+
+    .procedure-time {
+      color: var(--ink-soft);
+      font-size: 11px;
+    }
+
+    .complete .procedure-status,
+    .complete .procedure-time {
+      color: var(--accent-dark);
+    }
+
+    .stage-control .command {
+      width: 100%;
+    }
+
+    .procedure-signoff {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 30px;
+      align-items: center;
+      min-height: 98px;
+      padding: 18px 0;
+      border-bottom: 3px solid var(--ink);
+    }
+
+    .signoff-state {
+      margin: 0;
+      font-family: var(--condensed);
+      font-size: 26px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .signoff-meta {
+      color: var(--ink-soft);
+      font-family: var(--mono);
+      font-size: 10px;
+      line-height: 1.65;
+      letter-spacing: 0.06em;
+      text-align: right;
+      text-transform: uppercase;
+    }
+
+    /* =========================================================
+       SYSTEM SPECIFICATION
+       ========================================================= */
+
+    .spec-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(260px, 0.75fr);
+      gap: 56px;
+    }
+
+    .spec-sheet {
+      border-top: 3px solid var(--ink);
+    }
+
+    .spec-row {
+      display: grid;
+      grid-template-columns: minmax(180px, 0.7fr) minmax(0, 1.5fr) 130px;
+      min-height: 72px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .spec-row > * {
+      display: flex;
+      align-items: center;
+      padding: 13px 16px;
+    }
+
+    .spec-row .field-label {
+      color: var(--ink-soft);
+    }
+
+    .spec-value {
+      border-left: 1px solid var(--line-light);
+      font-family: var(--mono);
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .spec-ref {
+      justify-content: flex-end;
+      border-left: 1px solid var(--line-light);
+      color: var(--ink-faint);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.06em;
+    }
+
+    .spec-side {
+      border-top: 3px solid var(--accent);
+    }
+
+    .spec-side-block {
+      padding: 18px 0 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .spec-side-block p {
+      margin: 10px 0 0;
+      color: var(--ink-soft);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .spec-side-value {
+      display: block;
+      margin-top: 13px;
+      font-family: var(--mono);
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    /* =========================================================
+       AGENT RECORDS
+       ========================================================= */
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border-top: 3px solid var(--ink);
+    }
+
+    table {
+      width: 100%;
+      min-width: 900px;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 16px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .table-wrap th {
+      color: var(--ink-soft);
+      font-size: 10px;
+    }
+
+    td {
+      font-size: 14px;
+    }
+
+    td:first-child,
+    td:nth-child(2),
+    td:nth-child(4),
+    td:nth-child(5),
+    td:last-child {
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    tbody tr:hover {
+      background: rgba(23, 26, 24, 0.025);
+    }
+
+    .table-state {
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .table-state.verified {
+      color: var(--accent-dark);
+    }
+
+    .table-state.review {
+      color: var(--warning);
+    }
+
+    .table-state.failed {
+      color: var(--failure);
+    }
+
+    .table-caption {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 12px 0;
+      color: var(--ink-faint);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    /* =========================================================
+       CHANGE RECORD
+       ========================================================= */
+
+    .revision-ledger {
+      border-top: 3px solid var(--ink);
+    }
+
+    .revision-entry {
+      position: relative;
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr) 220px;
+      min-height: 144px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .revision-entry.current::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 3px;
+      background: var(--accent);
+    }
+
+    .revision-code,
+    .revision-copy,
+    .revision-meta {
+      padding: 22px 18px;
+    }
+
+    .revision-copy,
+    .revision-meta {
+      border-left: 1px solid var(--line-light);
+    }
+
+    .revision-code {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    .revision-code span {
+      display: block;
+      margin-top: 12px;
+      color: var(--ink-faint);
+      font-size: 9px;
+      font-weight: 500;
+    }
+
+    .revision-copy h3 {
+      margin: 0;
+      font-family: var(--condensed);
+      font-size: 26px;
+      font-weight: 500;
+    }
+
+    .revision-copy p {
+      max-width: 650px;
+      margin: 10px 0 0;
+      color: var(--ink-soft);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .revision-meta {
+      color: var(--ink-soft);
+      font-family: var(--mono);
+      font-size: 10px;
+      line-height: 1.8;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .revision-meta strong {
+      color: var(--ink);
+    }
+
+    /* =========================================================
+       ANNOTATION
+       ========================================================= */
+
+    .annotation-document {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(290px, 0.65fr);
+      gap: 72px;
+      align-items: start;
+      border-top: 3px solid var(--ink);
+      padding-top: 30px;
+    }
+
+    .annotation-source {
+      max-width: 720px;
+    }
+
+    .annotation-source p {
+      margin: 0 0 24px;
+      color: var(--ink-soft);
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .annotation-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      min-height: 46px;
+      padding: 0;
+      border: 0;
+      border-bottom: 1px solid var(--ink);
+      background: transparent;
+      cursor: pointer;
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-align: left;
+      text-transform: uppercase;
+    }
+
+    .annotation-trigger-mark {
+      color: var(--accent);
+      font-size: 16px;
+    }
+
+    .annotation-rail {
+      position: relative;
+      min-height: 160px;
+      padding-left: 30px;
+      border-left: 1px solid var(--line);
+    }
+
+    .annotation-note {
+      position: relative;
+      padding-top: 16px;
+      border-top: 2px solid var(--accent);
+      animation: annotationReveal 240ms var(--ease);
+    }
+
+    .annotation-note::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: 100%;
+      width: 30px;
+      height: 1px;
+      background: var(--accent);
+      transform-origin: right;
+      animation: drawAnnotationLine 240ms var(--ease);
+    }
+
+    .annotation-note p {
+      margin: 16px 0 0;
+      font-family: var(--condensed);
+      font-size: 24px;
+      line-height: 1.25;
+    }
+
+    .annotation-note-meta {
+      margin-top: 26px;
+      color: var(--ink-faint);
+      font-family: var(--mono);
+      font-size: 9px;
+      line-height: 1.7;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    @keyframes annotationReveal {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes drawAnnotationLine {
+      from {
+        transform: scaleX(0);
+      }
+
+      to {
+        transform: scaleX(1);
+      }
+    }
+
+    /* =========================================================
+       FAILURE PROCEDURE
+       ========================================================= */
+
+    .failure-record {
+      border-top: 3px solid var(--failure);
+    }
+
+    .failure-field {
+      display: grid;
+      grid-template-columns: 210px minmax(0, 1fr);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .failure-label,
+    .failure-value {
+      padding: 18px;
+    }
+
+    .failure-label {
+      color: var(--ink-faint);
+    }
+
+    .failure-value {
+      border-left: 1px solid var(--line-light);
+      font-family: var(--condensed);
+      font-size: 23px;
+    }
+
+    .failure-procedure {
+      display: grid;
+      grid-template-columns: 210px minmax(0, 1fr);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .failure-steps {
+      border-left: 1px solid var(--line-light);
+    }
+
+    .failure-step {
+      display: grid;
+      grid-template-columns: 66px minmax(0, 1fr);
+      min-height: 60px;
+      border-bottom: 1px solid var(--line-light);
+    }
+
+    .failure-step:last-child {
+      border-bottom: 0;
+    }
+
+    .failure-step-number,
+    .failure-step-copy {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+    }
+
+    .failure-step-number {
+      color: var(--failure);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .failure-step-copy {
+      border-left: 1px solid var(--line-light);
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .failure-resolution {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      align-items: center;
+      padding: 18px 0;
+    }
+
+    .failure-state {
+      color: var(--failure);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .failure-state.resolved {
+      color: var(--accent-dark);
+    }
+
+    /* =========================================================
+       PRODUCT EXPLANATION
+       ========================================================= */
+
+    .prose-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+      gap: clamp(56px, 8vw, 130px);
+      border-top: 3px solid var(--ink);
+      padding-top: 46px;
+    }
+
+    .prose-main {
+      max-width: 800px;
+    }
+
+    .prose-main h3 {
+      margin: 0 0 24px;
+      font-family: var(--condensed);
+      font-size: clamp(34px, 4vw, 54px);
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .prose-main p {
+      margin: 0 0 24px;
+      color: #30332f;
+      font-size: 18px;
+      line-height: 1.75;
+      text-wrap: pretty;
+    }
+
+    .prose-side {
+      align-self: start;
+    }
+
+    .prose-side-block {
+      padding: 18px 0 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .prose-side-block:first-child {
+      border-top: 1px solid var(--line);
+    }
+
+    .prose-side-block strong {
+      display: block;
+      margin-top: 7px;
+      font-family: var(--condensed);
+      font-size: 24px;
+      font-weight: 500;
+    }
+
+    .prose-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 34px;
+    }
+
+    .prose-actions a {
+      text-decoration: none;
+    }
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+
+    .site-footer {
+      border-top: 1px solid var(--line-strong);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 104px minmax(0, 1fr);
+    }
+
+    .footer-index {
+      min-height: 210px;
+      padding-top: 34px;
+      border-right: 1px solid var(--line);
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: end;
+      min-height: 210px;
+      padding: 34px 0 40px 48px;
+    }
+
+    .footer-wordmark {
+      margin: 0;
+      font-family: var(--condensed);
+      font-size: clamp(58px, 9vw, 132px);
+      font-weight: 500;
+      line-height: 0.75;
+      letter-spacing: -0.04em;
+    }
+
+    .footer-meta {
+      max-width: 310px;
+      color: var(--ink-faint);
+      font-size: 9px;
+      line-height: 1.8;
+      letter-spacing: 0.07em;
+      text-align: right;
+      text-transform: uppercase;
+    }
+
+    /* =========================================================
+       ACCESSIBILITY LIVE REGION
+       ========================================================= */
+
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+
+    @media (max-width: 1120px) {
+      .header-inner {
+        grid-template-columns: 170px minmax(0, 1fr);
+      }
+
+      .header-state {
+        display: none;
+      }
+
+      .hero-copy {
+        grid-column: 1 / span 8;
+      }
+
+      .hero-side {
+        grid-column: 9 / -1;
+      }
+
+      .record-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .record-field:nth-child(3) {
+        border-right: 0;
+      }
+
+      .record-field:nth-child(-n + 3) {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .procedure-row {
+        grid-template-columns: 62px minmax(220px, 1fr) 125px 125px 110px;
+      }
+
+      .revision-entry {
+        grid-template-columns: 120px minmax(0, 1fr) 190px;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .shell {
+        width: min(calc(100% - 28px), var(--max-width));
+      }
+
+      .site-header {
+        position: relative;
+      }
+
+      .header-inner {
+        min-height: auto;
+        grid-template-columns: 1fr;
+      }
+
+      .brand {
+        min-height: 64px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .site-nav {
+        min-height: 48px;
+      }
+
+      .nav-link {
+        padding: 0 13px;
+      }
+
+      .nav-link::after {
+        left: 13px;
+        right: 13px;
+      }
+
+      .section-frame,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-index {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 26px 0 14px;
+        border-right: 0;
+      }
+
+      .section-ref {
+        margin: 0;
+        writing-mode: horizontal-tb;
+        transform: none;
+      }
+
+      .section-content {
+        padding: 24px 0 70px;
+      }
+
+      .section-heading-row {
+        grid-template-columns: 1fr;
+        gap: 22px;
+      }
+
+      .hero .section-content {
+        padding-top: 22px;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy,
+      .hero-side {
+        grid-column: auto;
+      }
+
+      .hero-side {
+        margin-top: 42px;
+        padding: 20px 0 0;
+        border-top: 1px solid var(--line);
+        border-left: 0;
+      }
+
+      .hero-note {
+        max-width: 550px;
+      }
+
+      .document-line {
+        margin-bottom: 58px;
+      }
+
+      .record-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .record-field {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .record-field:nth-child(odd) {
+        border-right: 1px solid var(--line);
+      }
+
+      .record-field:nth-child(even) {
+        border-right: 0;
+      }
+
+      .record-field:nth-last-child(-n + 2) {
+        border-bottom: 0;
+      }
+
+      .record-footer {
+        grid-template-columns: 1fr;
+      }
+
+      .record-footer > div {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .record-footer > div:last-child {
+        border-bottom: 0;
+      }
+
+      .procedure-row {
+        grid-template-columns: 54px minmax(0, 1fr) 110px;
+        padding-bottom: 52px;
+      }
+
+      .procedure-status {
+        border-left: 1px solid var(--line-light);
+      }
+
+      .procedure-time {
+        position: absolute;
+        left: 54px;
+        right: 128px;
+        bottom: 0;
+        min-height: 52px;
+        border-top: 1px solid var(--line-light);
+        border-left: 1px solid var(--line-light);
+      }
+
+      .stage-control {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 128px;
+        min-height: 52px;
+        border-top: 1px solid var(--line-light);
+      }
+
+      .spec-layout,
+      .annotation-document,
+      .prose-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .spec-layout,
+      .annotation-document {
+        gap: 44px;
+      }
+
+      .revision-entry {
+        grid-template-columns: 110px minmax(0, 1fr);
+      }
+
+      .revision-meta {
+        grid-column: 1 / -1;
+        border-top: 1px solid var(--line-light);
+        border-left: 0;
+      }
+
+      .failure-field,
+      .failure-procedure {
+        grid-template-columns: 160px minmax(0, 1fr);
+      }
+
+      .annotation-rail {
+        min-height: 0;
+      }
+
+      .footer-index {
+        min-height: auto;
+        padding: 28px 0 0;
+        border-right: 0;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        padding: 36px 0 40px;
+      }
+
+      .footer-meta {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 580px) {
+      .section-content {
+        padding-bottom: 58px;
+      }
+
+      .document-line {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 7px;
+      }
+
+      .hero-title {
+        font-size: clamp(56px, 18vw, 84px);
+      }
+
+      .record-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .record-field,
+      .record-field:nth-child(odd),
+      .record-field:nth-child(even),
+      .record-field:nth-last-child(-n + 2) {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .record-field:last-child {
+        border-bottom: 0;
+      }
+
+      .record-sheet-head {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .procedure-control {
+        grid-template-columns: 1fr;
+      }
+
+      .procedure-row {
+        grid-template-columns: 48px minmax(0, 1fr);
+        padding-bottom: 104px;
+      }
+
+      .procedure-status {
+        position: absolute;
+        left: 48px;
+        right: 0;
+        bottom: 52px;
+        min-height: 52px;
+        border-top: 1px solid var(--line-light);
+      }
+
+      .procedure-time {
+        left: 48px;
+        right: 120px;
+      }
+
+      .stage-control {
+        width: 120px;
+      }
+
+      .procedure-signoff {
+        grid-template-columns: 1fr;
+      }
+
+      .signoff-meta {
+        text-align: left;
+      }
+
+      .spec-row {
+        grid-template-columns: 118px minmax(0, 1fr);
+      }
+
+      .spec-ref {
+        display: none;
+      }
+
+      .revision-entry {
+        grid-template-columns: 1fr;
+      }
+
+      .revision-copy,
+      .revision-meta {
+        border-left: 0;
+        border-top: 1px solid var(--line-light);
+      }
+
+      .failure-field,
+      .failure-procedure {
+        grid-template-columns: 1fr;
+      }
+
+      .failure-value,
+      .failure-steps {
+        border-top: 1px solid var(--line-light);
+        border-left: 0;
+      }
+
+      .failure-resolution {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .failure-resolution .command {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body><div style="position:fixed;right:12px;bottom:12px;z-index:2147483647;padding:8px 10px;background:#111;color:#fff;font:12px/1.3 monospace;border:1px solid #777">ARCHIVED SOURCE · SCRIPTS AND NETWORK DISABLED</div>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- =======================================================
+       HEADER
+       ======================================================= -->
+
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="#deployment-record" aria-label="Relay home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">RELAY</span>
+      </a>
+
+      <nav class="site-nav" aria-label="Manual sections">
+        <a class="nav-link active" href="#deployment-record">01 Record</a>
+        <a class="nav-link" href="#procedure">02 Procedure</a>
+        <a class="nav-link" href="#specification">03 Specification</a>
+        <a class="nav-link" href="#agent-records">04 Agents</a>
+        <a class="nav-link" href="#change-record">05 Changes</a>
+        <a class="nav-link" href="#failure">07 Failure</a>
+      </nav>
+
+      <div class="header-state">
+        Service / available
+        <strong>Production connected</strong>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- =====================================================
+         01 / DEPLOYMENT RECORD
+         ===================================================== -->
+
+    <section
+      class="manual-section hero"
+      id="deployment-record"
+      data-nav="deployment-record"
+    >
+      <div class="shell section-frame">
+        <aside class="section-index" aria-hidden="true">
+          <span class="section-number">01</span>
+          <span class="section-ref">DEPLOYMENT RECORD / RLY-1842</span>
+        </aside>
+
+        <div class="section-content">
+          <div class="document-line">
+            <span class="document-meta">
+              RELAY / AI AGENT OPERATIONS MANUAL
+            </span>
+            <span class="document-meta">
+              DOC RLY-FM-02 · ISSUE 07 · PRODUCTION
+            </span>
+          </div>
+
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <p class="hero-kicker">
+                Deployment is a recorded procedure.
+              </p>
+
+              <h1 class="hero-title">
+                Ship agents with a record you can sign.
+              </h1>
+
+              <p class="hero-intro">
+                Relay gives teams a controlled path from agent configuration
+                to production deployment. Every evaluation, permission change,
+                deployment action, observation, and approval becomes part of
+                the operating record.
+              </p>
+            </div>
+
+            <aside class="hero-side">
+              <p class="hero-note">
+                Software changes quickly. Operational confidence comes from
+                knowing exactly what was checked, what changed, who approved
+                it, and which revision is running now.
+              </p>
+            </aside>
+          </div>
+
+          <article class="record-sheet" aria-labelledby="record-title">
+            <header class="record-sheet-head">
+              <h2 class="record-sheet-title" id="record-title">
+                01 / Deployment record
+              </h2>
+
+              <span class="record-reference">
+                REC / PRD / 2026-08-14 / 1842
+              </span>
+            </header>
+
+            <div class="record-grid">
+              <div class="record-field">
+                <span class="record-label">Agent</span>
+                <span class="record-value">Research-04</span>
+              </div>
+
+              <div class="record-field">
+                <span class="record-label">Build</span>
+                <span class="record-value">RLY-1842</span>
+              </div>
+
+              <div class="record-field">
+                <span class="record-label">Environment</span>
+                <span class="record-value">PRODUCTION</span>
+              </div>
+
+              <div class="record-field">
+                <span class="record-label">State</span>
+                <span class="record-value">
+                  <span class="state-mark">VERIFIED</span>
+                </span>
+              </div>
+
+              <div class="record-field">
+                <span class="record-label">Deployed</span>
+                <span class="record-value">14:32</span>
+              </div>
+
+              <div class="record-field">
+                <span class="record-label">Rev</span>
+                <span class="record-value">07</span>
+              </div>
+            </div>
+
+            <footer class="record-footer">
+              <div>
+                Verification basis<br>
+                Eval / permissions / observation complete
+              </div>
+
+              <div>
+                Release authority<br>
+                Operator / N. Chen
+              </div>
+
+              <div>
+                Runtime reference<br>
+                PRD-USC-04
+              </div>
+            </footer>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         02 / DEPLOYMENT PROCEDURE
+         ===================================================== -->
+
+    <section
+      class="manual-section"
+      id="procedure"
+      data-nav="procedure"
+    >
+      <div class="shell section-frame">
+        <aside class="section-index" aria-hidden="true">
+          <span class="section-number">02</span>
+          <span class="section-ref">DEPLOYMENT PROCEDURE / SEQUENCE 07</span>
+        </aside>
+
+        <div class="section-content">
+          <div class="section-heading-row">
+            <div>
+              <p class="eyebrow">Operational sequence</p>
+              <h2 class="section-heading">Deployment procedure</h2>
+            </div>
+
+            <p class="section-description">
+              Complete the release sequence in order. Relay records the state
+              and local timestamp for every stage. A deployment is not signed
+              off until all seven stages are present in the record.
+            </p>
+          </div>
+
+          <div class="procedure-control">
+            <div class="procedure-summary">
+              <span>
+                Record <strong id="procedure-count">00 / 07</strong>
+              </span>
+
+              <span>
+                State <strong id="procedure-state">OPEN</strong>
+              </span>
+
+              <span>
+                Ref <strong>PROC-RLY-1842-A</strong>
+              </span>
+            </div>
+
+            <button
+              class="command secondary"
+              type="button"
+              id="reset-procedure"
+            >
+              [ Clear record ]
+            </button>
+          </div>
+
+          <div
+            class="procedure-meter"
+            aria-hidden="true"
+          >
+            <div
+              class="procedure-meter-fill"
+              id="procedure-meter-fill"
+            ></div>
+
+            <div class="procedure-meter-labels">
+              <span>00 / START</span>
+              <span>07 / SIGN OFF</span>
+            </div>
+          </div>
+
+          <div
+            class="procedure-list"
+            id="procedure-list"
+            aria-label="Deployment procedure"
+          ></div>
+
+          <div class="procedure-signoff">
+            <p class="signoff-state" id="signoff-state">
+              Procedure open — validation required.
+            </p>
+
+            <div class="signoff-meta" id="signoff-meta">
+              Completion record<br>
+              Awaiting stage 01
+            </div>
+          </div>
+
+          <div
+            class="sr-only"
+            id="procedure-live"
+            aria-live="polite"
+          ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         03 / SYSTEM SPECIFICATION
+         ===================================================== -->
+
+    <section
+      class="manual-section"
+      id="specification"
+      data-nav="specification"
+    >
+      <div class="shell section-frame">
+        <aside class="section-index" aria-hidden="true">
+          <span class="section-number">03</span>
+          <span class="section-ref">SYSTEM SPECIFICATION / EFFECTIVE REV 07</span>
+        </aside>
+
+        <div class="section-content">
+          <div class="section-heading-row">
+            <div>
+              <p class="eyebrow">Effective configuration</p>
+              <h2 class="section-heading">System specification</h2>
+            </div>
+
+            <p class="section-description">
+              The running agent is described as a specification, not a set of
+              dashboard metrics. Values shown here are the effective production
+              configuration attached to revision 07.
+            </p>
+          </div>
+
+          <div class="spec-layout">
+            <div class="spec-sheet" aria-label="Agent system specification">
+              <div class="spec-row">
+                <span class="field-label">Model</span>
+                <span class="spec-value">ASTER-4.2 / REASONING</span>
+                <span class="spec-ref">CFG-01</span>
+              </div>
+
+              <div class="spec-row">
+                <span class="field-label">Context</span>
+                <span class="spec-value">200,000 TOKENS</span>
+                <span class="spec-ref">CFG-02</span>
+              </div>
+
+              <div class="spec-row">
+                <span class="field-label">Tools</span>
+                <span class="spec-value">12 APPROVED / 12 RESOLVED</span>
+                <span class="spec-ref">CFG-03</span>
+              </div>
+
+              <div class="spec-row">
+                <span class="field-label">Memory</span>
+                <span class="spec-value">PROJECT + RUN SCOPED</span>
+                <span class="spec-ref">CFG-04</span>
+              </div>
+
+              <div class="spec-row">
+                <span class="field-label">Timeout</span>
+                <span class="spec-value">240 SECONDS</span>
+                <span class="spec-ref">CFG-05</span>
+              </div>
+
+              <div class="spec-row">
+                <span class="field-label">Region</span>
+                <span class="spec-value">US-CENTRAL-1</span>
+                <span class="spec-ref">CFG-06</span>
+              </div>
+
+              <div class="spec-row">
+                <span class="field-label">Version</span>
+                <span class="spec-value">AGENT / 7.4.1</span>
+                <span class="spec-ref">CFG-07</span>
+              </div>
+            </div>
+
+            <aside class="spec-side">
+              <div class="spec-side-block">
+                <span class="field-label">Configuration state</span>
+                <strong class="spec-side-value">APPROVED</strong>
+
+                <p>
+                  Current configuration matches the deployment record and the
+                  permissions evaluated for build RLY-1842.
+                </p>
+              </div>
+
+              <div class="spec-side-block">
+                <span class="field-label">Evaluation reference</span>
+                <strong class="spec-side-value">EVAL-8921</strong>
+
+                <p>
+                  Required production threshold: 0.92. Recorded result: 0.947.
+                </p>
+              </div>
+
+              <div class="spec-side-block">
+                <span class="field-label">Permission profile</span>
+                <strong class="spec-side-value">PERM-RSCH-12</strong>
+
+                <p>
+                  External write actions require explicit tool scope and
+                  environment approval.
+                </p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         04 / AGENT RECORDS
+         ===================================================== -->
+
+    <section
+      class="manual-section"
+      id="agent-records"
+      data-nav="agent-records"
+    >
+      <div class="shell section-frame">
+        <aside class="section-index" aria-hidden="true">
+          <span class="section-number">04</span>
+          <span class="section-ref">AGENT RECORD SCHEDULE / PRODUCTION</span>
+        </aside>
+
+        <div class="section-content">
+          <div class="section-heading-row">
+            <div>
+              <p class="eyebrow">Operational inventory</p>
+              <h2 class="section-heading">Agent records</h2>
+            </div>
+
+            <p class="section-description">
+              A structured record of currently managed agents and their latest
+              effective revisions. States are explicit and dated so operational
+              history does not disappear behind a generic status screen.
+            </p>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Agent</th>
+                  <th scope="col">Rev</th>
+                  <th scope="col">Task</th>
+                  <th scope="col">Env</th>
+                  <th scope="col">State</th>
+                  <th scope="col">Updated</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>Research-04</td>
+                  <td>07</td>
+                  <td>Source synthesis and research</td>
+                  <td>PROD</td>
+                  <td class="table-state verified">VERIFIED</td>
+                  <td>14:32</td>
+                </tr>
+
+                <tr>
+                  <td>Support-12</td>
+                  <td>18</td>
+                  <td>Customer issue triage</td>
+                  <td>PROD</td>
+                  <td class="table-state verified">VERIFIED</td>
+                  <td>13:48</td>
+                </tr>
+
+                <tr>
+                  <td>Review-02</td>
+                  <td>04</td>
+                  <td>Policy and output review</td>
+                  <td>STAGE</td>
+                  <td class="table-state review">IN REVIEW</td>
+                  <td>12:16</td>
+                </tr>
+
+                <tr>
+                  <td>Catalog-09</td>
+                  <td>11</td>
+                  <td>Product normalization</td>
+                  <td>PROD</td>
+                  <td class="table-state verified">VERIFIED</td>
+                  <td>11:54</td>
+                </tr>
+
+                <tr>
+                  <td>Ops-06</td>
+                  <td>03</td>
+                  <td>Deployment observation</td>
+                  <td>PROD</td>
+                  <td class="table-state failed">ATTENTION</td>
+                  <td>10:40</td>
+                </tr>
+
+                <tr>
+                  <td>Draft-21</td>
+                  <td>02</td>
+                  <td>Document preparation</td>
+                  <td>DEV</td>
+                  <td class="table-state">VALIDATING</td>
+                  <td>09:28</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-caption">
+            <span>Schedule / AGT-PRD-08</span>
+            <span>6 records shown / order by updated</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         05 / CHANGE RECORD
+         ===================================================== -->
+
+    <section
+      class="manual-section"
+      id="change-record"
+      data-nav="change-record"
+    >
+      <div class="shell section-frame">
+        <aside class="section-index" aria-hidden="true">
+          <span class="section-number">05</span>
+          <span class="section-ref">REVISION HISTORY / RESEARCH-04</span>
+        </aside>
+
+        <div class="section-content">
+          <div class="section-heading-row">
+            <div>
+              <p class="eyebrow">Revision lineage</p>
+              <h2 class="section-heading">Change record</h2>
+            </div>
+
+            <p class="section-description">
+              Production state is inseparable from revision history. Relay
+              preserves what changed, the approval basis, and which revision
+              superseded the previous operating state.
+            </p>
+          </div>
+
+          <div class="revision-ledger">
+            <article class="revision-entry">
+              <div class="revision-code">
+                REV 05
+                <span>SUPERSEDED</span>
+              </div>
+
+              <div class="revision-copy">
+                <h3>Tool permissions changed.</h3>
+
+                <p>
+                  Write scope for the document connector was narrowed to the
+                  research workspace. External publishing remained disabled.
+                </p>
+              </div>
+
+              <div class="revision-meta">
+                Recorded / 09:14<br>
+                Approved / M. Ortiz<br>
+                Ref / PERM-1178<br>
+                <strong>State / superseded</strong>
+              </div>
+            </article>
+
+            <article class="revision-entry">
+              <div class="revision-code">
+                REV 06
+                <span>SUPERSEDED</span>
+              </div>
+
+              <div class="revision-copy">
+                <h3>Evaluation threshold updated.</h3>
+
+                <p>
+                  Production acceptance threshold increased from 0.90 to 0.92
+                  following evaluation-set revision EVAL-8921.
+                </p>
+              </div>
+
+              <div class="revision-meta">
+                Recorded / 11:06<br>
+                Approved / N. Chen<br>
+                Ref / EVAL-8921<br>
+                <strong>State / superseded</strong>
+              </div>
+            </article>
+
+            <article class="revision-entry current">
+              <div class="revision-code">
+                REV 07
+                <span>CURRENT</span>
+              </div>
+
+              <div class="revision-copy">
+                <h3>Production deployment verified.</h3>
+
+                <p>
+                  Configuration, tools, evaluation, permissions, deployment,
+                  initial observation, and operator sign-off completed for build
+                  RLY-1842.
+                </p>
+              </div>
+
+              <div class="revision-meta">
+                Recorded / 14:32<br>
+                Approved / N. Chen<br>
+                Ref / RLY-1842<br>
+                <strong>State / effective</strong>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         06 / ANNOTATION
+         ===================================================== -->
+
+    <section
+      class="manual-section"
+      id="annotation"
+      data-nav="annotation"
+    >
+      <div class="shell section-frame">
+        <aside class="section-index" aria-hidden="true">
+          <span class="section-number">06</span>
+          <span class="section-ref">DOCUMENT ANNOTATION / NOTE A</span>
+        </aside>
+
+        <div class="section-content">
+          <div class="section-heading-row">
+            <div>
+              <p class="eyebrow">Supporting instruction</p>
+              <h2 class="section-heading">Annotation</h2>
+            </div>
+
+            <p class="section-description">
+              Supporting guidance belongs to the document, not in a floating
+              tooltip. Reveal the annotation to attach its note directly to the
+              operating context.
+            </p>
+          </div>
+
+          <div class="annotation-document">
+            <div class="annotation-source">
+              <p>
+                Production deployment requires a valid environment,
+                resolved tools, approved permissions, and a recorded
+                evaluation result.
+              </p>
+
+              <button
+                class="annotation-trigger"
+                id="annotation-trigger"
+                type="button"
+                aria-expanded="false"
+                aria-controls="annotation-note"
+              >
+                <span class="annotation-trigger-mark" aria-hidden="true">A</span>
+                Reveal Note A / approval requirement
+              </button>
+            </div>
+
+            <aside class="annotation-rail">
+              <div
+                class="annotation-note"
+                id="annotation-note"
+                hidden
+              >
+                <span class="note-ref">NOTE A / PRODUCTION GATE</span>
+
+                <p>
+                  Production agents require evaluation approval before
+                  deployment.
+                </p>
+
+                <div class="annotation-note-meta">
+                  Applies to / production environments<br>
+                  Reference / POL-EVAL-03<br>
+                  Classification / required
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         07 / FAILURE PROCEDURE
+         ===================================================== -->
+
+    <section
+      class="manual-section"
+      id="failure"
+      data-nav="failure"
+    >
+      <div class="shell section-frame">
+        <aside class="section-index" aria-hidden="true">
+          <span class="section-number">07</span>
+          <span class="section-ref">FAILURE PROCEDURE / TOOL EXECUTION</span>
+        </aside>
+
+        <div class="section-content">
+          <div class="section-heading-row">
+            <div>
+              <p class="eyebrow">Diagnostic procedure</p>
+              <h2 class="section-heading">Failure procedure</h2>
+            </div>
+
+            <p class="section-description">
+              Failures are written as actionable operational records: observed
+              symptom, probable cause, and the next controlled procedure.
+            </p>
+          </div>
+
+          <div class="failure-record">
+            <div class="failure-field">
+              <div class="failure-label">Symptom</div>
+
+              <div class="failure-value">
+                Tool execution unavailable.
+              </div>
+            </div>
+
+            <div class="failure-field">
+              <div class="failure-label">Possible cause</div>
+
+              <div class="failure-value">
+                Permission scope incomplete.
+              </div>
+            </div>
+
+            <div class="failure-procedure">
+              <div class="failure-label">Procedure</div>
+
+              <div class="failure-steps">
+                <div class="failure-step">
+                  <div class="failure-step-number">01</div>
+                  <div class="failure-step-copy">Inspect configuration</div>
+                </div>
+
+                <div class="failure-step">
+                  <div class="failure-step-number">02</div>
+                  <div class="failure-step-copy">Verify connector</div>
+                </div>
+
+                <div class="failure-step">
+                  <div class="failure-step-number">03</div>
+                  <div class="failure-step-copy">Rerun validation</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="failure-resolution">
+            <div>
+              <div class="failure-state" id="failure-state">
+                State / unresolved
+              </div>
+
+              <div
+                class="procedure-time"
+                id="failure-time"
+                style="border:0;padding:7px 0 0;min-height:0;"
+              >
+                No resolution recorded
+              </div>
+            </div>
+
+            <button
+              class="command"
+              id="resolve-failure"
+              type="button"
+            >
+              [ Mark resolved ]
+            </button>
+          </div>
+
+          <div
+            class="sr-only"
+            id="failure-live"
+            aria-live="polite"
+          ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         08 / PRODUCT EXPLANATION
+         ===================================================== -->
+
+    <section
+      class="manual-section"
+      id="about"
+      data-nav="about"
+    >
+      <div class="shell section-frame">
+        <aside class="section-index" aria-hidden="true">
+          <span class="section-number">08</span>
+          <span class="section-ref">PRODUCT EXPLANATION / RELAY</span>
+        </aside>
+
+        <div class="section-content">
+          <div class="section-heading-row">
+            <div>
+              <p class="eyebrow">What Relay does</p>
+              <h2 class="section-heading">Operational software for AI agents</h2>
+            </div>
+
+            <p class="section-description">
+              The interface uses manual logic where that logic helps. The
+              product itself can still be explained in ordinary language.
+            </p>
+          </div>
+
+          <div class="prose-layout">
+            <article class="prose-main">
+              <h3>
+                Deployments should leave evidence behind.
+              </h3>
+
+              <p>
+                Relay is a deployment and operations platform for teams running
+                AI agents in real environments. It brings configuration,
+                evaluations, tool permissions, release procedures, production
+                observation, and revision history into one controlled workflow.
+              </p>
+
+              <p>
+                Instead of reducing an agent to a green dot on a dashboard,
+                Relay shows the operating record around it. Teams can see which
+                configuration was evaluated, which permissions were approved,
+                which build was deployed, what changed between revisions, and
+                whether the release was actually verified.
+              </p>
+
+              <p>
+                That makes Relay useful after deployment too. When an agent
+                fails, behaves differently, or needs to be changed, operators
+                have a documented starting point rather than reconstructing the
+                release from chat threads, logs, configuration files, and
+                memory.
+              </p>
+
+              <div class="prose-actions">
+                <a class="command" href="#procedure">
+                  [ Run deployment procedure ]
+                </a>
+
+                <a class="command secondary" href="#change-record">
+                  [ Review revision history ]
+                </a>
+              </div>
+            </article>
+
+            <aside class="prose-side">
+              <div class="prose-side-block">
+                <span class="field-label">Built around</span>
+                <strong>Procedure</strong>
+              </div>
+
+              <div class="prose-side-block">
+                <span class="field-label">Records</span>
+                <strong>Persistent</strong>
+              </div>
+
+              <div class="prose-side-block">
+                <span class="field-label">Changes</span>
+                <strong>Revisioned</strong>
+              </div>
+
+              <div class="prose-side-block">
+                <span class="field-label">Production state</span>
+                <strong>Verified</strong>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =======================================================
+       FOOTER
+       ======================================================= -->
+
+  <footer class="site-footer">
+    <div class="shell footer-grid">
+      <div class="footer-index">
+        END / FM-02
+      </div>
+
+      <div class="footer-content">
+        <p class="footer-wordmark">RELAY</p>
+
+        <div class="footer-meta">
+          Fictional product demonstration<br>
+          Agent deployment + operations<br>
+          Manual issue / 07<br>
+          Document class / public
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  
+</body>
+</html>

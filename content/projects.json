@@ -24,7 +24,8 @@
     "related": [
       "vrg-001",
       "vrg-002",
-      "vrg-023"
+      "vrg-022",
+      "vrg-021"
     ],
     "image": "/images/vrg-cards/dario.webp",
     "thumbnail": "/images/vrg-cards/dario-320.webp",
@@ -50,7 +51,7 @@
     "status": "Published",
     "visible": true,
     "createdAt": "2026-07-19T00:27:10.201Z",
-    "updatedAt": "2026-07-19T00:41:49.230Z",
+    "updatedAt": "2026-08-12T03:06:28.854Z",
     "curation": {
       "homepage": false,
       "featuredRank": 0,
@@ -79,7 +80,11 @@
     "toolsUsed": [
       "ChatGPT Images 2.0"
     ],
-    "related": [],
+    "related": [
+      "vrg-023",
+      "vrg-021",
+      "vrg-001"
+    ],
     "image": "/images/vrg-cards/samaltman.webp",
     "thumbnail": "/images/vrg-cards/samaltman-320.webp",
     "alt": "Sam Altman founder series concept card from the Lemonteed VRG Cards archive.",
@@ -104,7 +109,7 @@
     "status": "Published",
     "visible": true,
     "createdAt": "2026-07-19T00:27:09.504Z",
-    "updatedAt": "2026-07-19T00:44:21.854Z",
+    "updatedAt": "2026-08-12T03:06:43.526Z",
     "curation": {
       "homepage": false,
       "featuredRank": 0,
@@ -134,9 +139,9 @@
       "ChatGPT Images 2.0"
     ],
     "related": [
-      "vrg-023",
-      "vrg-002",
-      "vrg-001"
+      "vrg-022",
+      "vrg-004",
+      "vrg-005"
     ],
     "image": "/images/vrg-cards/steve-jobs.webp",
     "thumbnail": "/images/vrg-cards/steve-jobs-320.webp",
@@ -162,7 +167,7 @@
     "status": "Published",
     "visible": true,
     "createdAt": "2026-07-19T00:27:08.956Z",
-    "updatedAt": "2026-07-19T00:44:08.541Z",
+    "updatedAt": "2026-08-12T03:06:56.157Z",
     "curation": {
       "homepage": true,
       "featuredRank": 0,

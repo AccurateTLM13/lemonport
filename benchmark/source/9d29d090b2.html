@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MUNICIPAL LEAGUE BASEBALL</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--board-bg:#0d0d0d;--cell-bg:#161616;--seam:rgba(0,0,0,0.55);
+--flap-text:#f4ede1;--flap-text-dim:rgba(244,237,225,0.35);
+--label:rgba(244,237,225,0.45);--accent:#e8a33d;
+--status-good:#6fae6f;--status-warn:#e8a33d;--status-bad:#c25b4a;
+}
+html{font-size:16px}
+body{background:#080808;color:var(--flap-text);font-family:'Space Mono',monospace;min-height:100vh;overflow-x:hidden}
+.container{max-width:1200px;margin:0 auto;padding:24px 20px}
+
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid rgba(244,237,225,0.08);margin-bottom:32px}
+nav .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--flap-text)}
+nav .links{display:flex;gap:24px}
+nav .links a{color:var(--label);text-decoration:none;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;position:relative}
+nav .links a.active{color:var(--flap-text)}
+nav .links a.active::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--accent)}
+
+/* FLAP CELL */
+.flap{display:inline-flex;flex-direction:column;position:relative;background:var(--cell-bg);border-radius:2px;overflow:hidden;perspective:200px}
+.flap .half{display:flex;align-items:center;justify-content:center;overflow:hidden;font-family:'Space Grotesk',sans-serif;font-weight:700;text-transform:uppercase;line-height:1}
+.flap .top{height:50%;align-items:flex-end;border-bottom:1px solid var(--seam)}
+.flap .bottom{height:50%;align-items:flex-start}
+.flap .top .glyph,.flap .bottom .glyph{position:absolute;left:0;right:0;text-align:center}
+.flap .top .glyph{bottom:0}
+.flap .bottom .glyph{top:0}
+.flap .top .glyph span,.flap .bottom .glyph span{display:block}
+
+/* SCALES */
+.flap.display{width:48px;height:72px;font-size:42px}
+.flap.display .glyph span{height:72px;line-height:72px}
+.flap.standard{width:28px;height:40px;font-size:24px}
+.flap.standard .glyph span{height:40px;line-height:40px}
+.flap.micro{width:18px;height:26px;font-size:16px}
+.flap.micro .glyph span{height:26px;line-height:26px}
+
+/* FLIP ANIMATION */
+.flap.flipping .top{animation:flipTop .3s cubic-bezier(0.55,0,1,0.45) forwards}
+@keyframes flipTop{0%{transform:rotateX(0)}100%{transform:rotateX(-90deg)}}
+.flap .bottom.next{animation:flipBottom .3s cubic-bezier(0.55,0,1,0.45) .15s forwards}
+@keyframes flipBottom{0%{transform:rotateX(90deg);opacity:0}100%{transform:rotateX(0);opacity:1}}
+
+/* SECTION LABELS */
+.section-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--label);margin-bottom:12px}
+.section-label span{color:var(--accent)}
+
+/* BOARD */
+.board{background:var(--board-bg);border:1px solid rgba(244,237,225,0.06);border-radius:3px;padding:20px;margin-bottom:24px}
+.board-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.board-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--flap-text)}
+.board-meta{font-size:10px;color:var(--label)}
+
+/* SCOREBOARD */
+.scoreboard{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:900px){.scoreboard{grid-template-columns:1fr}}
+.game-card{background:rgba(244,237,225,0.02);border:1px solid rgba(244,237,225,0.04);border-radius:2px;padding:16px}
+.game-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.field-label{font-size:9px;letter-spacing:2px;color:var(--label);text-transform:uppercase}
+.game-status{display:flex;gap:2px}
+.game-status .glyph{font-size:10px;padding:2px 8px;background:var(--cell-bg);border-radius:2px;font-family:'Space Mono',monospace;letter-spacing:1px;text-transform:uppercase}
+.game-status .glyph.live{color:var(--status-good)}
+.game-status .glyph.warmups{color:var(--accent)}
+.game-status .glyph.scheduled{color:var(--label)}
+.game-status .glyph.final{color:var(--status-bad)}
+
+.team-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(244,237,225,0.04)}
+.team-row:last-child{border-bottom:none}
+.team-name{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:13px;letter-spacing:0.5px}
+.team-score{display:flex;gap:3px}
+.game-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(244,237,225,0.04)}
+.meta-item{display:flex;justify-content:space-between;font-size:10px}
+.meta-item .label{color:var(--label);text-transform:uppercase;letter-spacing:1px}
+
+/* STANDINGS */
+.standings-table{width:100%;border-collapse:collapse}
+.standings-table th{text-align:left;font-size:9px;letter-spacing:2px;color:var(--label);text-transform:uppercase;padding:8px 12px;border-bottom:1px solid rgba(244,237,225,0.08)}
+.standings-table td{padding:10px 12px;font-size:12px;border-bottom:1px solid rgba(244,237,225,0.04)}
+.standings-table tr:hover{background:rgba(244,237,225,0.02)}
+.team-cell{font-family:'Space Grotesk',sans-serif;font-weight:500}
+.stat-cell{text-align:center}
+
+/* SCHEDULE */
+.schedule-grid{display:grid;gap:1px;background:rgba(244,237,225,0.04)}
+.schedule-row{display:grid;grid-template-columns:80px 100px 1fr 1fr 80px 80px;gap:1px;align-items:center}
+.schedule-row.header{background:rgba(244,237,225,0.03)}
+.schedule-cell{padding:10px 12px;font-size:12px}
+.schedule-cell.date{font-family:'Space Mono',monospace;color:var(--label);font-size:11px}
+
+/* FIELD STATUS */
+.field-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:768px){.field-grid{grid-template-columns:repeat(2,1fr)}}
+.field-item{text-align:center;padding:16px;background:rgba(244,237,225,0.02);border:1px solid rgba(244,237,225,0.04);border-radius:2px}
+.field-item .number{font-size:9px;letter-spacing:2px;color:var(--label);text-transform:uppercase;margin-bottom:8px}
+.field-item .status{display:flex;justify-content:center;gap:2px}
+
+/* STORY */
+.story{padding:40px 0;border-top:1px solid rgba(244,237,225,0.06);margin-top:24px}
+.story h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:28px;margin-bottom:20px;line-height:1.3}
+.story p{color:rgba(244,237,225,0.7);line-height:1.8;font-size:14px;max-width:640px}
+
+/* TEAMS */
+.teams-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:900px){.teams-grid{grid-template-columns:repeat(2,1fr)}}
+.team-card{padding:16px;background:rgba(244,237,225,0.02);border:1px solid rgba(244,237,225,0.04);border-radius:2px}
+.team-card h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;margin-bottom:12px;letter-spacing:0.5px}
+.team-card .detail{font-size:11px;color:var(--label);margin-bottom:4px}
+.team-card .detail span{color:var(--flap-text)}
+
+/* DEMO CONTROL */
+.demo-control{display:flex;align-items:center;gap:16px;padding:16px 20px;background:var(--board-bg);border:1px solid rgba(244,237,225,0.06);border-radius:3px;margin-top:24px}
+.demo-btn{background:transparent;border:1px solid rgba(244,237,225,0.15);color:var(--flap-text);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:10px 20px;cursor:pointer;transition:border-color .2s}
+.demo-btn:hover{border-color:var(--accent)}
+.demo-label{font-size:10px;color:var(--label);letter-spacing:1px;text-transform:uppercase}
+
+/* COLUMNS */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:768px){.cols{grid-template-columns:1fr}}
+
+/* REDUCED MOTION */
+@media(prefers-reduced-motion:reduce){
+.flap.flipping .top,.flap .bottom.next{animation:none}
+.flap .bottom.next{opacity:1;transform:rotateX(0)}
+}
+</style>
+</head>
+<body><div style="position:fixed;right:12px;bottom:12px;z-index:2147483647;padding:8px 10px;background:#111;color:#fff;font:12px/1.3 monospace;border:1px solid #777">ARCHIVED SOURCE · SCRIPTS AND NETWORK DISABLED</div>
+<div class="container">
+<nav>
+<div class="logo">MUNICIPAL LEAGUE</div>
+<div class="links">
+<a class="active">SCOREBOARD</a>
+<a>STANDINGS</a>
+<a>SCHEDULE</a>
+<a>TEAMS</a>
+<a>ABOUT</a>
+</div>
+</nav>
+
+<div class="section-label"><span>A-01</span> / FRIDAY NIGHT SCOREBOARD</div>
+<div class="board">
+<div class="board-header">
+<div class="board-title">LIVE GAMES</div>
+<div class="board-meta">FRIDAY, AUG 14 — WEEK 12</div>
+</div>
+<div class="scoreboard" id="scoreboard">
+<div class="game-card">
+<div class="game-header">
+<span class="field-label">FIELD 01</span>
+<div class="game-status"><span class="glyph live">LIVE</span></div>
+</div>
+<div class="team-row">
+<span class="team-name">HARRIS HARDWARE</span>
+<div class="team-score"><span class="flap standard"><span class="half top"><span class="glyph"><span>0</span></span></span><span class="half bottom"><span class="glyph"><span>0</span></span></span></span><span class="flap standard"><span class="half top"><span class="glyph"><span>4</span></span></span><span class="half bottom"><span class="glyph"><span>4</span></span></span></span></div>
+</div>
+<div class="team-row">
+<span class="team-name">MILLER ELECTRIC</span>
+<div class="team-score"><span class="flap standard"><span class="half top"><span class="glyph"><span>0</span></span></span><span class="half bottom"><span class="glyph"><span>0</span></span></span></span><span class="flap standard"><span class="half top"><span class="glyph"><span>3</span></span></span><span class="half bottom"><span class="glyph"><span>3</span></span></span></span></div>
+</div>
+<div class="game-meta">
+<div class="meta-item"><span class="label">INNING</span><span class="flap micro"><span class="half top"><span class="glyph"><span>07</span></span></span><span class="half bottom"><span class="glyph"><span>07</span></span></span></span></div>
+<div class="meta-item"><span class="label">OUTS</span><span class="flap micro"><span class="half top"><span class="glyph"><span>02</span></span></span><span class="half bottom"><span class="glyph"><span>02</span></span></span></span></div>
+</div>
+</div>
+<div class="game-card">
+<div class="game-header">
+<span class="field-label">FIELD 02</span>
+<div class="game-status"><span class="glyph warmups">WARMUPS</span></div>
+</div>
+<div class="team-row">
+<span class="team-name">CARTER BANK</span>
+<div class="team-score"><span class="flap standard"><span class="half top"><span class="glyph"><span>0</span></span></span><span class="half bottom"><span class="glyph"><span>0</span></span></span></span><span class="flap standard"><span class="half top"><span class="glyph"><span>0</span></span></span><span class="half bottom"><span class="glyph"><span>0</span></span></span></span></div>
+</div>
+<div class="team-row">
+<span class="team-name">WILSON FEED</span>
+<div class="team-score"><span class="flap standard"><span class="half top"><span class="glyph"><span>0</span></span></span><span class="half bottom"><span class="glyph"><span>0</span></span></span></span><span class="flap standard"><span class="half top"><span class="glyph"><span>0</span></span></span><span class="half bottom"><span class="glyph"><span>0</span></span></span></span></div>
+</div>
+<div class="game-meta">
+<div class="meta-item"><span class="label">FIRST PITCH</span><span class="flap micro"><span class="half top"><span class="glyph"><span>6:30</span></span></span><span class="half bottom"><span class="glyph"><span>6:30</span></span></span></span></div>
+<div class="meta-item"><span class="label">STATUS</span><span style="font-size:11px;color:var(--accent)">WARMING UP</span></div>
+</div>
+</div>
+<div class="game-card">
+<div class="game-header">
+<span class="field-label">FIELD 03</span>
+<div class="game-status"><span class="glyph scheduled">SCHEDULED</span></div>
+</div>
+<div class="team-row">
+<span class="team-name">THOMAS AUTO</span>
+<div class="team-score"><span class="flap standard"><span class="half top"><span class="glyph"><span>0</span></span></span><span class="half bottom"><span class="glyph"><span>0</span></span></span></span><span class="flap standard"><span class="half top"><span class="glyph"><span>0</span></span></span><span class="half bottom"><span class="glyph"><span>0</span></span></span></span></div>
+</div>
+<div class="team-row">
+<span class="team-name">MAIN STREET MKT</span>
+<div class="team-score"><span class="flap standard"><span class="half top"><span class="glyph"><span>0</span></span></span><span class="half bottom"><span class="glyph"><span>0</span></span></span></span><span class="flap standard"><span class="half top"><span class="glyph"><span>0</span></span></span><span class="half bottom"><span class="glyph"><span>0</span></span></span></span></div>
+</div>
+<div class="game-meta">
+<div class="meta-item"><span class="label">FIRST PITCH</span><span class="flap micro"><span class="half top"><span class="glyph"><span>7:00</span></span></span><span class="half bottom"><span class="glyph"><span>7:00</span></span></span></span></div>
+<div class="meta-item"><span class="label">STATUS</span><span style="font-size:11px;color:var(--label)">ON DECK</span></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="section-label"><span>B-01</span> / STANDINGS</div>
+<div class="board">
+<div class="board-header">
+<div class="board-title">EAST DIVISION</div>
+</div>
+<table class="standings-table">
+<thead>
+<tr><th>TEAM</th><th style="text-align:center">W</th><th style="text-align:center">L</th><th style="text-align:center">GB</th><th style="text-align:center">STREAK</th></tr>
+</thead>
+<tbody>
+<tr><td class="team-cell">HARRIS HARDWARE</td><td class="stat-cell">18</td><td class="stat-cell">7</td><td class="stat-cell">—</td><td class="stat-cell"><span style="color:var(--status-good)">W4</span></td></tr>
+<tr><td class="team-cell">CARTER BANK</td><td class="stat-cell">16</td><td class="stat-cell">9</td><td class="stat-cell">2</td><td class="stat-cell"><span style="color:var(--status-good)">W2</span></td></tr>
+<tr><td class="team-cell">THOMAS AUTO</td><td class="stat-cell">14</td><td class="stat-cell">11</td><td class="stat-cell">4</td><td class="stat-cell"><span style="color:var(--status-bad)">L1</span></td></tr>
+<tr><td class="team-cell">BENTON SUPPLY</td><td class="stat-cell">10</td><td class="stat-cell">15</td><td class="stat-cell">8</td><td class="stat-cell"><span style="color:var(--status-bad)">L3</span></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="board" style="margin-top:-16px">
+<div class="board-header">
+<div class="board-title">WEST DIVISION</div>
+</div>
+<table class="standings-table">
+<thead>
+<tr><th>TEAM</th><th style="text-align:center">W</th><th style="text-align:center">L</th><th style="text-align:center">GB</th><th style="text-align:center">STREAK</th></tr>
+</thead>
+<tbody>
+<tr><td class="team-cell">MILLER ELECTRIC</td><td class="stat-cell">17</td><td class="stat-cell">8</td><td class="stat-cell">—</td><td class="stat-cell"><span style="color:var(--status-good)">W3</span></td></tr>
+<tr><td class="team-cell">WILSON FEED</td><td class="stat-cell">15</td><td class="stat-cell">10</td><td class="stat-cell">2</td><td class="stat-cell"><span style="color:var(--status-good)">W1</span></td></tr>
+<tr><td class="team-cell">MAIN STREET MKT</td><td class="stat-cell">12</td><td class="stat-cell">13</td><td class="stat-cell">5</td><td class="stat-cell"><span style="color:var(--status-bad)">L2</span></td></tr>
+<tr><td class="team-cell">PARKER DRUG</td><td class="stat-cell">8</td><td class="stat-cell">17</td><td class="stat-cell">9</td><td class="stat-cell"><span style="color:var(--status-bad)">L5</span></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="demo-control">
+<button class="demo-btn">ADVANCE GAME</button>
+<div class="demo-label">Demonstration control — simulates game progression</div>
+</div>
+
+<div class="cols" style="margin-top:24px">
+<div>
+<div class="section-label"><span>C-01</span> / UPCOMING SCHEDULE</div>
+<div class="board">
+<div class="schedule-grid">
+<div class="schedule-row header">
+<div class="schedule-cell date">DATE</div>
+<div class="schedule-cell">FIELD</div>
+<div class="schedule-cell">HOME</div>
+<div class="schedule-cell">AWAY</div>
+<div class="schedule-cell">PITCH</div>
+<div class="schedule-cell">STATE</div>
+</div>
+<div class="schedule-row">
+<div class="schedule-cell date">AUG 16</div>
+<div class="schedule-cell">01</div>
+<div class="schedule-cell" style="font-family:'Space Grotesk',sans-serif;font-weight:500">HARRIS HARDWARE</div>
+<div class="schedule-cell" style="font-family:'Space Grotesk',sans-serif;font-weight:500">CARTER BANK</div>
+<div class="schedule-cell">7:00 PM</div>
+<div class="schedule-cell"><span style="color:var(--label)">SCHEDULED</span></div>
+</div>
+<div class="schedule-row" style="background:rgba(244,237,225,0.02)">
+<div class="schedule-cell date">AUG 16</div>
+<div class="schedule-cell">02</div>
+<div class="schedule-cell" style="font-family:'Space Grotesk',sans-serif;font-weight:500">MILLER ELECTRIC</div>
+<div class="schedule-cell" style="font-family:'Space Grotesk',sans-serif;font-weight:500">THOMAS AUTO</div>
+<div class="schedule-cell">7:00 PM</div>
+<div class="schedule-cell"><span style="color:var(--label)">SCHEDULED</span></div>
+</div>
+<div class="schedule-row">
+<div class="schedule-cell date">AUG 18</div>
+<div class="schedule-cell">01</div>
+<div class="schedule-cell" style="font-family:'Space Grotesk',sans-serif;font-weight:500">WILSON FEED</div>
+<div class="schedule-cell" style="font-family:'Space Grotesk',sans-serif;font-weight:500">BENTON SUPPLY</div>
+<div class="schedule-cell">6:30 PM</div>
+<div class="schedule-cell"><span style="color:var(--label)">SCHEDULED</span></div>
+</div>
+</div>
+</div>
+</div>
+<div>
+<div class="section-label"><span>C-02</span> / FIELD STATUS</div>
+<div class="board">
+<div class="field-grid">
+<div class="field-item">
+<div class="number">FIELD 01</div>
+<div class="status"><span class="flap micro"><span class="half top"><span class="glyph"><span>OPEN</span></span></span><span class="half bottom"><span class="glyph"><span>OPEN</span></span></span></span></div>
+</div>
+<div class="field-item">
+<div class="number">FIELD 02</div>
+<div class="status"><span class="flap micro"><span class="half top"><span class="glyph"><span>OPEN</span></span></span><span class="half bottom"><span class="glyph"><span>OPEN</span></span></span></span></div>
+</div>
+<div class="field-item">
+<div class="number">FIELD 03</div>
+<div class="status"><span class="flap micro"><span class="half top"><span class="glyph"><span>RAIN</span></span></span><span class="half bottom"><span class="glyph"><span>HOLD</span></span></span></span></div>
+</div>
+<div class="field-item">
+<div class="number">FIELD 04</div>
+<div class="status"><span class="flap micro"><span class="half top"><span class="glyph"><span>MAINT</span></span></span><span class="half bottom"><span class="glyph"><span>ENCE</span></span></span></span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="section-label"><span>D-01</span> / LEAGUE STORY</div>
+<div class="story">
+<h2>After work, the lights come on.</h2>
+<p>The Municipal League has been part of this town for three generations. Local businesses sponsor teams. Families bring folding chairs to neighborhood fields. Volunteer grounds crews maintain the diamonds before Friday night games.</p>
+<p style="margin-top:12px">This is not professional baseball. It is something more honest — a civic institution built on community, competition, and the simple pleasure of watching the game under lights after a week of work.</p>
+</div>
+
+<div class="section-label" style="margin-top:32px"><span>D-02</span> / TEAMS</div>
+<div class="teams-grid">
+<div class="team-card">
+<h3>HARRIS HARDWARE</h3>
+<div class="detail">FOUNDED <span>1962</span></div>
+<div class="detail">HOME FIELD <span>MUNICIPAL #1</span></div>
+<div class="detail">SPONSOR <span>HARRIS HARDWARE CO.</span></div>
+<div class="detail">DIVISION <span>EAST</span></div>
+</div>
+<div class="team-card">
+<h3>MILLER ELECTRIC</h3>
+<div class="detail">FOUNDED <span>1978</span></div>
+<div class="detail">HOME FIELD <span>MEMORIAL PARK</span></div>
+<div class="detail">SPONSOR <span>MILLER ELECTRIC INC.</span></div>
+<div class="detail">DIVISION <span>WEST</span></div>
+</div>
+<div class="team-card">
+<h3>CARTER BANK</h3>
+<div class="detail">FOUNDED <span>1954</span></div>
+<div class="detail">HOME FIELD <span>CITY PARK #2</span></div>
+<div class="detail">SPONSOR <span>CARTER COMMUNITY BANK</span></div>
+<div class="detail">DIVISION <span>EAST</span></div>
+</div>
+<div class="team-card">
+<h3>WILSON FEED</h3>
+<div class="detail">FOUNDED <span>1971</span></div>
+<div class="detail">HOME FIELD <span>OAKDALE FIELD</span></div>
+<div class="detail">SPONSOR <span>WILSON FEED &amp; SEED</span></div>
+<div class="detail">DIVISION <span>WEST</span></div>
+</div>
+</div>
+</div>
+
+
+</body>
+</html>

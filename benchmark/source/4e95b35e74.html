@@ -1,0 +1,411 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NORTHSTAR OBSERVATORY — Telescope Operations</title>
+  <meta name="description" content="NORTHSTAR OBSERVATORY: a remote astronomical research facility. Instrument procedures, observation records, calibration information, and technical annotations.">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --board-bg:      #0d0d0d;
+      --cell-bg:       #161616;
+      --seam:          rgba(0,0,0,0.55);
+      --flap-text:     #f4ede1;
+      --flap-text-dim: rgba(244,237,225,0.35);
+      --label:         rgba(244,237,225,0.45);
+      --accent:        #e8a33d;
+      --status-good:   #6fae6f;
+      --status-warn:   #e8a33d;
+      --status-bad:    #c25b4a;
+      --housing:       #111111;
+      --border:        rgba(244,237,225,0.1);
+      --text-body:     rgba(244,237,225,0.75);
+      --text-dim:      rgba(244,237,225,0.35);
+    }
+    html { background: var(--board-bg); color: var(--flap-text); font-family: 'Space Mono', monospace; scroll-behavior: smooth; }
+    body { min-height: 100vh; }
+
+    /* FLAP CELL */
+    .flap-cell {
+      display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+      position: relative; background: var(--cell-bg); border-radius: 2px; perspective: 400px; user-select: none;
+    }
+    .flap-cell .half-top, .flap-cell .half-bottom {
+      display: flex; align-items: flex-end; justify-content: center;
+      width: 100%; height: 50%; overflow: hidden; position: relative;
+    }
+    .flap-cell .half-top { border-bottom: 1px solid var(--seam); }
+    .flap-cell .half-bottom { align-items: flex-start; }
+    .flap-cell .char {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700; text-transform: uppercase;
+      color: var(--flap-text); line-height: 1; display: block;
+    }
+    .flap-cell .half-top .char { transform: translateY(50%); }
+    .flap-cell .half-bottom .char { transform: translateY(-50%); }
+    .flap-cell .flip-panel {
+      position: absolute; top: 0; left: 0; width: 100%; height: 50%;
+      background: var(--cell-bg); transform-origin: bottom center; transform: rotateX(0deg);
+      display: flex; align-items: flex-end; justify-content: center; overflow: hidden;
+      backface-visibility: hidden; z-index: 10; border-radius: 2px 2px 0 0;
+    }
+    .flap-cell .flip-panel .char { transform: translateY(50%); }
+    .flap-cell.flipping .flip-panel { animation: flap-flip 0.18s cubic-bezier(0.55,0,1,0.45) forwards; }
+    @keyframes flap-flip { 0% { transform: rotateX(0deg); } 100% { transform: rotateX(-90deg); } }
+    .flap-cell .flip-panel-bottom {
+      position: absolute; bottom: 0; left: 0; width: 100%; height: 50%;
+      background: var(--cell-bg); transform-origin: top center; transform: rotateX(90deg);
+      display: flex; align-items: flex-start; justify-content: center; overflow: hidden;
+      backface-visibility: hidden; z-index: 9; border-radius: 0 0 2px 2px;
+    }
+    .flap-cell .flip-panel-bottom .char { transform: translateY(-50%); }
+    .flap-cell.flipping .flip-panel-bottom { animation: flap-reveal 0.18s cubic-bezier(0.55,0,1,0.45) forwards; animation-delay: 0.18s; }
+    @keyframes flap-reveal { 0% { transform: rotateX(90deg); } 100% { transform: rotateX(0deg); } }
+
+    .flap-display .flap-cell { width: 52px; height: 72px; margin: 0 2px; }
+    .flap-display .flap-cell .char { font-size: 48px; }
+    .flap-standard .flap-cell { width: 28px; height: 38px; margin: 0 1px; }
+    .flap-standard .flap-cell .char { font-size: 22px; }
+    .flap-micro .flap-cell { width: 16px; height: 22px; margin: 0 1px; }
+    .flap-micro .flap-cell .char { font-size: 13px; }
+
+    /* LAYOUT */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--housing); border-bottom: 1px solid var(--border);
+      padding: 0 48px; display: flex; align-items: center; gap: 32px; height: 52px;
+    }
+    .nav-brand { font-family: 'Space Mono', monospace; font-weight: 700; font-size: 11px; letter-spacing: 0.15em; color: var(--flap-text); text-transform: uppercase; }
+    .nav-links { display: flex; gap: 28px; margin-left: auto; }
+    .nav-link {
+      font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--label); text-decoration: none; cursor: pointer; transition: color 0.15s;
+      padding: 4px 0; border-bottom: 1px solid transparent;
+    }
+    .nav-link.active, .nav-link:hover { color: var(--flap-text); border-bottom-color: var(--accent); }
+    main { max-width: 1180px; margin: 0 auto; padding: 64px 48px; }
+    section { margin-bottom: 80px; }
+    .section-label {
+      font-size: 10px; letter-spacing: 0.2em; color: var(--label);
+      text-transform: uppercase; margin-bottom: 24px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .obs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); }
+    .obs-field { padding: 20px 24px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .obs-field:nth-child(even) { border-right: none; }
+    .obs-field:nth-last-child(-n+2) { border-bottom: none; }
+    .obs-field-label { font-size: 9px; letter-spacing: 0.2em; color: var(--label); text-transform: uppercase; margin-bottom: 8px; }
+    .obs-field-value { display: flex; align-items: center; flex-wrap: wrap; gap: 2px; }
+    .obs-ref { font-size: 10px; color: var(--label); margin-top: 4px; letter-spacing: 0.1em; }
+    .obs-ref a { color: var(--accent); text-decoration: none; }
+
+    .board-housing { background: var(--board-bg); border: 1px solid rgba(244,237,225,0.08); padding: 28px 32px; }
+    .spec-table { width: 100%; border-collapse: collapse; }
+    .spec-table tr { border-bottom: 1px solid var(--border); }
+    .spec-table tr:last-child { border-bottom: none; }
+    .spec-table td { padding: 12px 0; font-size: 11px; vertical-align: middle; }
+    .spec-table .field-id { color: var(--label); font-size: 9px; letter-spacing: 0.12em; width: 200px; text-transform: uppercase; }
+    .spec-table .field-val { color: var(--flap-text); font-weight: 700; font-size: 13px; text-align: right; }
+    .spec-table .field-unit { color: var(--label); font-size: 9px; padding-left: 10px; width: 80px; }
+
+    .procedure-list { list-style: none; }
+    .procedure-step {
+      display: flex; align-items: flex-start; gap: 20px;
+      padding: 16px 0; border-bottom: 1px solid var(--border); cursor: pointer;
+      transition: background 0.1s;
+    }
+    .procedure-step:hover { background: rgba(244,237,225,0.02); }
+    .procedure-step:last-child { border-bottom: none; }
+    .step-num { font-size: 9px; letter-spacing: 0.12em; color: var(--label); width: 24px; flex-shrink: 0; margin-top: 2px; }
+    .step-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--flap-text); }
+    .step-meta { font-size: 9px; color: var(--text-dim); margin-top: 3px; letter-spacing: 0.08em; }
+    .step-state { font-size: 9px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--label); transition: color 0.2s; white-space: nowrap; }
+    .step-state.done { color: var(--status-good); }
+
+    .figure-wrap { border: 1px solid var(--border); padding: 40px 32px 32px; position: relative; }
+    .figure-label { position: absolute; top: 12px; left: 16px; font-size: 9px; letter-spacing: 0.15em; color: var(--label); text-transform: uppercase; }
+    .figure-label span { color: var(--flap-text); }
+    .optical-path { display: flex; flex-direction: column; align-items: center; }
+    .opt-connector { width: 1px; height: 28px; background: rgba(244,237,225,0.15); margin: 0 auto; }
+    .opt-block { border: 1px solid rgba(244,237,225,0.2); padding: 10px 20px; text-align: center; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--flap-text); width: 300px; }
+
+    .record-table { width: 100%; border-collapse: collapse; }
+    .record-table th { font-size: 9px; letter-spacing: 0.15em; color: var(--label); text-transform: uppercase; padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+    .record-table td { font-size: 11px; padding: 12px 12px; vertical-align: middle; border-bottom: 1px solid rgba(244,237,225,0.05); color: var(--flap-text); }
+    .rec-state { font-size: 10px; font-weight: 700; }
+    .state-complete { color: var(--status-good); }
+    .state-active { color: var(--status-warn); }
+    .state-pending { color: var(--label); }
+    .rec-rev { color: var(--label); font-size: 9px; }
+
+    .annotation { border-left: 2px solid var(--accent); padding: 16px 20px; background: rgba(232,163,61,0.04); }
+    .annotation-ref { font-size: 9px; letter-spacing: 0.15em; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
+    .annotation-text { font-size: 12px; line-height: 1.7; color: var(--text-body); }
+    .annotation-sig { font-size: 9px; color: var(--label); margin-top: 10px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+    .notice { border: 1px solid rgba(194,91,74,0.4); padding: 16px 20px; background: rgba(194,91,74,0.04); }
+    .notice-tag { font-size: 9px; letter-spacing: 0.2em; color: var(--status-bad); text-transform: uppercase; margin-bottom: 6px; }
+    .notice-ref { font-size: 9px; color: var(--label); margin-bottom: 8px; letter-spacing: 0.1em; }
+    .notice-text { font-size: 11px; line-height: 1.7; color: var(--text-body); }
+
+    .about-copy { font-family: 'Space Mono', monospace; font-size: 12px; line-height: 1.9; color: var(--text-body); max-width: 640px; }
+    .about-copy p + p { margin-top: 20px; }
+
+    .demo-btn {
+      background: none; border: 1px solid var(--border); color: var(--flap-text);
+      font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.15em;
+      text-transform: uppercase; padding: 12px 24px; cursor: pointer; transition: border-color 0.2s, color 0.2s;
+    }
+    .demo-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 28px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 9px; letter-spacing: 0.12em; color: var(--label); text-transform: uppercase;
+      max-width: 1180px; margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      main { padding: 40px 20px; }
+      .obs-grid { grid-template-columns: 1fr; }
+      .obs-field { border-right: none; }
+      footer { flex-wrap: wrap; gap: 8px; padding: 20px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .flap-cell.flipping .flip-panel, .flap-cell.flipping .flip-panel-bottom { animation: none; }
+    }
+  </style>
+</head>
+<body><div style="position:fixed;right:12px;bottom:12px;z-index:2147483647;padding:8px 10px;background:#111;color:#fff;font:12px/1.3 monospace;border:1px solid #777">ARCHIVED SOURCE · SCRIPTS AND NETWORK DISABLED</div>
+
+<nav>
+  <div class="nav-brand">NORTHSTAR OBS&thinsp;/&thinsp;NSO-R1</div>
+  <div class="nav-links">
+    <a class="nav-link active" href="#observation">OBS</a>
+    <a class="nav-link" href="#instruments">INSTR</a>
+    <a class="nav-link" href="#procedure">PROC</a>
+    <a class="nav-link" href="#records">RECORDS</a>
+    <a class="nav-link" href="#about">ABOUT</a>
+  </div>
+</nav>
+
+<main>
+
+  <section id="observation">
+    <div class="section-label">01 / OBSERVATION WINDOW</div>
+    <div class="obs-grid">
+      <div class="obs-field">
+        <div class="obs-field-label">TARGET</div>
+        <div class="obs-field-value" id="target-board" style="display:flex;flex-wrap:nowrap;gap:2px;align-items:center;"></div>
+      </div>
+      <div class="obs-field">
+        <div class="obs-field-label">INSTRUMENT</div>
+        <div style="font-size:12px;letter-spacing:0.06em;color:var(--flap-text);line-height:1.4;">RITCHEY-CHR&Eacute;TIEN 1.8M</div>
+        <div style="font-size:9px;color:var(--label);margin-top:4px;letter-spacing:0.08em;">PRIMARY / F8.0</div>
+      </div>
+      <div class="obs-field">
+        <div class="obs-field-label">WINDOW</div>
+        <div style="font-size:14px;color:var(--flap-text);letter-spacing:0.06em;">22:42 &ndash; 01:16</div>
+      </div>
+      <div class="obs-field">
+        <div class="obs-field-label">STATE</div>
+        <div class="obs-field-value" id="obs-state-board" style="display:flex;flex-wrap:nowrap;gap:1px;align-items:center;"></div>
+      </div>
+      <div class="obs-field">
+        <div class="obs-field-label">FILTER</div>
+        <div style="font-size:12px;color:var(--flap-text);letter-spacing:0.06em;">H&alpha; / 6nm</div>
+      </div>
+      <div class="obs-field">
+        <div class="obs-field-label">REFERENCE</div>
+        <div class="obs-ref">SEE OBSERVATION / <a href="#records">26-0814-A</a></div>
+      </div>
+    </div>
+    <div style="margin-top:16px;">
+      <button class="demo-btn" id="advance-obs">ADVANCE OBSERVATION STATE</button>
+    </div>
+  </section>
+
+  <section id="instruments">
+    <div class="section-label">02 / INSTRUMENT STATUS</div>
+    <div class="board-housing">
+      <table class="spec-table">
+        <tbody>
+          <tr><td class="field-id">PRIMARY TEMP</td><td class="field-val">&minus;12.4</td><td class="field-unit">&deg;C</td></tr>
+          <tr><td class="field-id">MIRROR DELTA</td><td class="field-val">+0.3</td><td class="field-unit">&deg;C</td></tr>
+          <tr><td class="field-id">DOME HUMIDITY</td><td class="field-val">34</td><td class="field-unit">%</td></tr>
+          <tr><td class="field-id">WIND</td><td class="field-val">8</td><td class="field-unit">km/h</td></tr>
+          <tr><td class="field-id">TRACKING ERROR</td><td class="field-val">0.18</td><td class="field-unit">arcsec</td></tr>
+          <tr><td class="field-id">SEEING</td><td class="field-val">1.4</td><td class="field-unit">arcsec FWHM</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="procedure">
+    <div class="section-label">03 / ALIGNMENT PROCEDURE</div>
+    <ul class="procedure-list">
+      <li class="procedure-step">
+        <span class="step-num">01</span>
+        <div style="flex:1">
+          <div class="step-label">HOME MOUNT</div>
+          <div class="step-meta">Return azimuth and altitude encoders to reference position</div>
+        </div>
+        <div class="step-state" id="step-0">PENDING</div>
+      </li>
+      <li class="procedure-step">
+        <span class="step-num">02</span>
+        <div style="flex:1">
+          <div class="step-label">VERIFY ENCODERS</div>
+          <div class="step-meta">Confirm encoder counts within &plusmn;2 counts of zero</div>
+        </div>
+        <div class="step-state" id="step-1">PENDING</div>
+      </li>
+      <li class="procedure-step">
+        <span class="step-num">03</span>
+        <div style="flex:1">
+          <div class="step-label">ACQUIRE REFERENCE</div>
+          <div class="step-meta">Slew to HD 224427 &mdash; magnitude 4.2 / RA 23h 59m</div>
+        </div>
+        <div class="step-state" id="step-2">PENDING</div>
+      </li>
+      <li class="procedure-step">
+        <span class="step-num">04</span>
+        <div style="flex:1">
+          <div class="step-label">CORRECT OFFSET</div>
+          <div class="step-meta">Apply polar alignment correction via WCS fit</div>
+        </div>
+        <div class="step-state" id="step-3">PENDING</div>
+      </li>
+      <li class="procedure-step">
+        <span class="step-num">05</span>
+        <div style="flex:1">
+          <div class="step-label">VERIFY TRACK</div>
+          <div class="step-meta">Confirm tracking error &lt;0.5 arcsec over 300s interval</div>
+        </div>
+        <div class="step-state" id="step-4">PENDING</div>
+      </li>
+      <li class="procedure-step">
+        <span class="step-num">06</span>
+        <div style="flex:1">
+          <div class="step-label">RECORD SOLUTION</div>
+          <div class="step-meta">Log WCS solution and timestamp to observation record</div>
+        </div>
+        <div class="step-state" id="step-5">PENDING</div>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="section-label">04 / FIGURE 07 &mdash; OPTICAL PATH</div>
+    <div class="figure-wrap">
+      <div class="figure-label">FIG. 07 / <span>RC1.8 OPTICAL SYSTEM &mdash; SECTION</span></div>
+      <div class="optical-path" style="margin-top:16px;">
+        <div style="font-size:9px;letter-spacing:0.15em;color:var(--label);margin-bottom:4px;">INCOMING LIGHT</div>
+        <div class="opt-connector"></div>
+        <div style="display:flex;align-items:center;gap:0;width:100%;max-width:640px;">
+          <div class="opt-block" style="flex:1;">PRIMARY MIRROR / M1</div>
+          <div style="width:80px;height:1px;background:rgba(244,237,225,0.15);"></div>
+          <div style="font-size:9px;color:var(--label);white-space:nowrap;"><span style="color:var(--accent);">01</span> &empty;1800mm / ZERODUR</div>
+        </div>
+        <div class="opt-connector"></div>
+        <div style="display:flex;align-items:center;gap:0;width:100%;max-width:640px;">
+          <div class="opt-block" style="flex:1;">SECONDARY MIRROR / M2</div>
+          <div style="width:80px;height:1px;background:rgba(244,237,225,0.15);"></div>
+          <div style="font-size:9px;color:var(--label);white-space:nowrap;"><span style="color:var(--accent);">02</span> &empty;280mm / CONVEX HYPERBOLIC</div>
+        </div>
+        <div class="opt-connector"></div>
+        <div style="display:flex;align-items:center;gap:0;width:100%;max-width:640px;">
+          <div class="opt-block" style="flex:1;">CASSEGRAIN FOCUS</div>
+          <div style="width:80px;height:1px;background:rgba(244,237,225,0.15);"></div>
+          <div style="font-size:9px;color:var(--label);white-space:nowrap;"><span style="color:var(--accent);">03</span> F/8.0 / 14400mm EFL</div>
+        </div>
+        <div class="opt-connector"></div>
+        <div style="display:flex;align-items:center;gap:0;width:100%;max-width:640px;">
+          <div class="opt-block" style="flex:1;">FILTER WHEEL</div>
+          <div style="width:80px;height:1px;background:rgba(244,237,225,0.15);"></div>
+          <div style="font-size:9px;color:var(--label);white-space:nowrap;"><span style="color:var(--accent);">04</span> 8-POSITION / 50mm SLOTS</div>
+        </div>
+        <div class="opt-connector"></div>
+        <div style="display:flex;align-items:center;gap:0;width:100%;max-width:640px;">
+          <div class="opt-block" style="flex:1;">CCD DETECTOR</div>
+          <div style="width:80px;height:1px;background:rgba(244,237,225,0.15);"></div>
+          <div style="font-size:9px;color:var(--label);white-space:nowrap;"><span style="color:var(--accent);">05</span> 4096&times;4096 / 0.12 arcsec/px</div>
+        </div>
+      </div>
+      <div style="margin-top:28px;border-top:1px solid var(--border);padding-top:16px;display:grid;grid-template-columns:repeat(5,1fr);gap:12px;">
+        <div style="font-size:9px;color:var(--label);letter-spacing:0.1em;"><span style="color:var(--accent);">01</span><br>PRIMARY MIRROR</div>
+        <div style="font-size:9px;color:var(--label);letter-spacing:0.1em;"><span style="color:var(--accent);">02</span><br>SECONDARY MIRROR</div>
+        <div style="font-size:9px;color:var(--label);letter-spacing:0.1em;"><span style="color:var(--accent);">03</span><br>FOCAL PLANE</div>
+        <div style="font-size:9px;color:var(--label);letter-spacing:0.1em;"><span style="color:var(--accent);">04</span><br>FILTER WHEEL</div>
+        <div style="font-size:9px;color:var(--label);letter-spacing:0.1em;"><span style="color:var(--accent);">05</span><br>CCD DETECTOR</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="records">
+    <div class="section-label">05 / OBSERVATION RECORD</div>
+    <div class="board-housing" style="padding:0 16px;">
+      <table class="record-table">
+        <thead>
+          <tr>
+            <th>RECORD</th><th>TARGET</th><th>START</th><th>EXPOSURE</th><th>FILTER</th><th>STATE</th><th>REV</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>26-0814-A</td><td>NGC 7000</td><td>22:42</td><td>1800s</td><td>H&alpha;</td><td class="rec-state state-active">ACTIVE</td><td class="rec-rev">R01</td></tr>
+          <tr><td>26-0813-C</td><td>M42</td><td>23:10</td><td>600s</td><td>OIII</td><td class="rec-state state-complete">COMPLETE</td><td class="rec-rev">R03</td></tr>
+          <tr><td>26-0812-B</td><td>NGC 891</td><td>21:55</td><td>3600s</td><td>BVR</td><td class="rec-state state-complete">COMPLETE</td><td class="rec-rev">R02</td></tr>
+          <tr><td>26-0811-A</td><td>NGC 2392</td><td>22:08</td><td>1200s</td><td>SII</td><td class="rec-state state-complete">COMPLETE</td><td class="rec-rev">R04</td></tr>
+          <tr><td>26-0809-D</td><td>M57</td><td>22:30</td><td>900s</td><td>H&beta;</td><td class="rec-state state-pending">ARCHIVED</td><td class="rec-rev">R02</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">06 / FIELD NOTE</div>
+    <div class="annotation">
+      <div class="annotation-ref">NOTE A / OBS 26-0814-A / NGC 7000</div>
+      <div class="annotation-text">Seeing improved significantly after 23:00 local. H&alpha; exposures showing clear filament structure in the Cygnus Wall region &mdash; recommend increasing integration time for follow-up run. Guiding stable at 0.18 arcsec rms throughout. Schedule B-filter comparison set for next available window.</div>
+      <div class="annotation-sig">DR. K. VALLANCE &mdash; NSO STAFF ASTRONOMER &mdash; 26-0814 / 23:44 UT</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">07 / CALIBRATION NOTICE</div>
+    <div class="notice">
+      <div class="notice-tag">CAUTION</div>
+      <div class="notice-ref">04.2 / THERMAL TOLERANCE LIMIT</div>
+      <div class="notice-text">Calibration values are invalid after thermal differential between primary mirror and ambient air exceeds &plusmn;2.0&deg;C. If this condition is encountered, suspend science exposures, allow 30-minute thermal soak period, and re-run flat-field sequence before resuming. Do not apply archived calibration frames.</div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-label">08 / ABOUT THE FACILITY</div>
+    <div class="about-copy">
+      <p>Northstar Observatory operates from a high-altitude site at 2,840 meters above sea level, selected for exceptional atmospheric stability and low light pollution. The facility supports a dedicated research program in narrow-band nebular imaging and variable star monitoring.</p>
+      <p>The primary instrument, a 1.8-meter Ritchey-Chr&eacute;tien reflector, was commissioned in 2018 following a decade of optical development. The telescope operates robotically during approved observation windows, with remote oversight available from partnering institutions. All acquired data enters the public archive 12 months after collection.</p>
+      <p>NSO operates in partnership with four regional universities. Observing time is allocated by proposal on a semester basis. The facility's technical documentation, instrument calibration records, and observation logs are maintained as part of the operational record and are referenced throughout this interface.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div style="display:flex;gap:0;">
+    <span>NSO / SITE ELEV 2840M</span>
+    <span style="margin:0 12px;color:var(--border);">&middot;</span>
+    <span>LAT 38&deg;24'N LONG 106&deg;11'W</span>
+    <span style="margin:0 12px;color:var(--border);">&middot;</span>
+    <span>LAST SYNC AUG 2026</span>
+  </div>
+  <div>DOC REF NSO-R1 / REV 04</div>
+</footer>
+
+
+</body>
+</html>

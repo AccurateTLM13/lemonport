@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NORTHSTAR OBSERVATORY — Telescope Operations & Field Manual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-page: #0d1013;
+    --surface-panel: #13171c;
+    --surface-subtle: #191f25;
+    --text-primary: #e6ebf0;
+    --text-secondary: #9aa9b8;
+    --text-dim: #607080;
+    --border-strong: #2a333d;
+    --border-subtle: #1c242c;
+    --rule-accent: #3a4755;
+    --accent-blue: #4a88b8;
+    --accent-amber: #d49a42;
+    --mark-verified: #58a36d;
+    --notice-caution: #d49a42;
+    --notice-note: #4a88b8;
+    --font-heading: 'Barlow Condensed', sans-serif;
+    --font-body: 'IBM Plex Sans', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* DOCUMENT WRAPPER */
+  .manual-wrapper {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 24px 32px 64px 32px;
+  }
+
+  /* HEADER & MANUAL INDEX BAND */
+  header {
+    border-bottom: 2px solid var(--border-strong);
+    padding-bottom: 16px;
+    margin-bottom: 32px;
+  }
+
+  .header-masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  .manual-title {
+    font-family: var(--font-heading);
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-primary);
+  }
+
+  .manual-meta-block {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-secondary);
+    display: flex;
+    gap: 20px;
+  }
+
+  .manual-index-strip {
+    display: flex;
+    gap: 16px;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    flex-wrap: wrap;
+  }
+
+  .manual-index-strip a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .manual-index-strip a:hover {
+    color: var(--text-primary);
+    text-decoration: underline;
+  }
+
+  /* SECTION STRUCTURE */
+  section {
+    margin-bottom: 44px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .sec-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--rule-accent);
+    padding-bottom: 6px;
+  }
+
+  .sec-title {
+    font-family: var(--font-heading);
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .sec-code {
+    color: var(--accent-blue);
+  }
+
+  .sec-ref {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  /* 01 OBSERVATION WINDOW */
+  .window-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 24px;
+  }
+
+  .obs-window-card {
+    background: var(--surface-panel);
+    border: 1px solid var(--border-strong);
+    padding: 20px 24px;
+    border-left: 3px solid var(--accent-blue);
+  }
+
+  .obs-field-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    align-items: baseline;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+  .obs-field-row:last-child {
+    border-bottom: none;
+  }
+
+  .obs-label {
+    color: var(--text-dim);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 10.5px;
+  }
+
+  .obs-val {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .obs-val.ready {
+    color: var(--mark-verified);
+    font-weight: 700;
+  }
+
+  .obs-annotation-panel {
+    background: var(--surface-panel);
+    border: 1px solid var(--border-subtle);
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .annot-header {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 4px;
+  }
+
+  .annot-body {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .annot-meta {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--accent-blue);
+  }
+
+  /* 02 INSTRUMENT STATUS (TECHNICAL SPEC TABLE) */
+  .status-spec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+  }
+
+  .status-spec-box {
+    background: var(--surface-panel);
+    border: 1px solid var(--border-subtle);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .stat-name {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .stat-reading {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.1;
+  }
+
+  .stat-sub {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  /* 03 ALIGNMENT PROCEDURE (INTERACTIVE PROCEDURAL SEQUENCE) */
+  .procedure-block {
+    background: var(--surface-panel);
+    border: 1px solid var(--border-strong);
+    padding: 20px 24px;
+  }
+
+  .proc-instruction {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+  }
+
+  .proc-step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .proc-step-row {
+    display: grid;
+    grid-template-columns: 44px 1.4fr 2fr 130px 90px;
+    align-items: center;
+    gap: 16px;
+    background: var(--surface-subtle);
+    border: 1px solid var(--border-subtle);
+    padding: 10px 16px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .proc-step-row:hover {
+    border-color: var(--rule-accent);
+  }
+
+  .proc-step-row.verified {
+    border-left: 3px solid var(--mark-verified);
+    background: #141b17;
+  }
+
+  .step-num {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--accent-blue);
+  }
+
+  .step-label {
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .step-desc {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .step-mark {
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+  .proc-step-row.verified .step-mark {
+    color: var(--mark-verified);
+  }
+
+  .step-btn {
+    background: var(--surface-panel);
+    border: 1px solid var(--border-strong);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    padding: 5px 8px;
+    cursor: pointer;
+    border-radius: 2px;
+    text-align: center;
+  }
+  .step-btn:hover {
+    border-color: var(--accent-blue);
+  }
+
+  /* 04 FIGURE 07 — OPTICAL PATH */
+  .diagram-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+  }
+
+  .diagram-frame {
+    background: var(--surface-panel);
+    border: 1px solid var(--border-strong);
+    padding: 16px;
+  }
+
+  .fig-svg-wrap {
+    height: 260px;
+    background: #090c0f;
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .diagram-annotations {
+    background: var(--surface-panel);
+    border: 1px solid var(--border-subtle);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 11.5px;
+  }
+
+  .annot-list-item {
+    padding-left: 10px;
+    border-left: 2px solid var(--accent-blue);
+    line-height: 1.4;
+  }
+
+  .annot-list-item strong {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--text-primary);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* 05 OBSERVATION RECORD TABLE */
+  .record-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border-strong);
+    background: var(--surface-panel);
+  }
+
+  .obs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-align: left;
+  }
+
+  .obs-table th {
+    background: var(--surface-subtle);
+    padding: 10px 14px;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--border-strong);
+  }
+
+  .obs-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .obs-table tr:hover td {
+    background: rgba(74, 136, 184, 0.05);
+  }
+
+  /* 06 FIELD NOTE & 07 CALIBRATION NOTICE */
+  .notes-caution-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .field-note-card {
+    background: var(--surface-panel);
+    border: 1px solid var(--border-subtle);
+    padding: 20px 24px;
+  }
+
+  .note-marker-head {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 4px;
+  }
+
+  .field-note-text {
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  .field-note-sig {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--accent-blue);
+  }
+
+  /* 07 CALIBRATION NOTICE */
+  .caution-box {
+    background: rgba(212, 154, 66, 0.04);
+    border: 1px solid var(--notice-caution);
+    padding: 20px 24px;
+  }
+
+  .caution-head {
+    font-family: var(--font-heading);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--notice-caution);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .caution-text {
+    font-size: 12.5px;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+
+  /* 08 ABOUT THE FACILITY */
+  .editorial-copy-block {
+    max-width: 860px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.75;
+  }
+
+  .editorial-copy-block p {
+    margin-bottom: 16px;
+  }
+
+  /* FOOTER */
+  footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-strong);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  @media (max-width: 900px) {
+    .window-grid, .diagram-layout, .notes-caution-grid {
+      grid-template-columns: 1fr;
+    }
+    .proc-step-row {
+      grid-template-columns: 30px 1fr 90px;
+    }
+    .step-desc {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body><div style="position:fixed;right:12px;bottom:12px;z-index:2147483647;padding:8px 10px;background:#111;color:#fff;font:12px/1.3 monospace;border:1px solid #777">ARCHIVED SOURCE · SCRIPTS AND NETWORK DISABLED</div>
+
+<div class="manual-wrapper">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-masthead">
+      <div class="manual-title">NORTHSTAR OBSERVATORY • OPERATIONS MANUAL</div>
+      <div class="manual-meta-block">
+        <span>LAT: 34.744°N</span>
+        <span>ELEV: 2,780M</span>
+        <span>INSTRUMENT: RC-1.8M</span>
+      </div>
+    </div>
+
+    <div class="manual-index-strip">
+      <a href="#obs-window">01 WINDOW</a>
+      <span>•</span>
+      <a href="#instrument-status">02 STATUS</a>
+      <span>•</span>
+      <a href="#alignment-proc">03 ALIGNMENT</a>
+      <span>•</span>
+      <a href="#optical-path">04 OPTICAL FIG</a>
+      <span>•</span>
+      <a href="#obs-record">05 RECORDS</a>
+      <span>•</span>
+      <a href="#notes-notices">06 NOTES & NOTICES</a>
+      <span>•</span>
+      <a href="#about-facility">07 FACILITY</a>
+    </div>
+  </header>
+
+  <!-- 01 OBSERVATION WINDOW -->
+  <section id="obs-window">
+    <div class="sec-header">
+      <div class="sec-title">
+        <span class="sec-code">01 /</span> OBSERVATION WINDOW & TARGET SCHEDULE
+      </div>
+      <div class="sec-ref">SCHEDULE REF: 26-0814-A</div>
+    </div>
+
+    <div class="window-grid">
+      <div class="obs-window-card">
+        <div class="obs-field-row">
+          <span class="obs-label">TARGET</span>
+          <span class="obs-val">NGC 7000 (NORTH AMERICA NEBULA)</span>
+        </div>
+        <div class="obs-field-row">
+          <span class="obs-label">COORDINATES</span>
+          <span class="obs-val">RA 20h 58m 47s • DEC +44° 19′ 48″</span>
+        </div>
+        <div class="obs-field-row">
+          <span class="obs-label">INSTRUMENT</span>
+          <span class="obs-val">RITCHEY-CHRÉTIEN 1.8M f/8</span>
+        </div>
+        <div class="obs-field-row">
+          <span class="obs-label">DETECTOR</span>
+          <span class="obs-val">CRYOGENIC 4K×4K BACK-ILLUMINATED CCD</span>
+        </div>
+        <div class="obs-field-row">
+          <span class="obs-label">WINDOW</span>
+          <span class="obs-val">22:42 UTC – 01:16 UTC (AIRMASS &lt; 1.35)</span>
+        </div>
+        <div class="obs-field-row">
+          <span class="obs-label">SUBSYSTEM STATE</span>
+          <span class="obs-val ready">READY FOR ACQUISITION</span>
+        </div>
+      </div>
+
+      <div class="obs-annotation-panel">
+        <div>
+          <div class="annot-header">OBSERVATION DIRECTIVE</div>
+          <div class="annot-body">
+            Target approaches culmination at 23:54 UTC. High-cadence H-alpha (656.3nm) and [O III] (500.7nm) narrowband filter cycle scheduled across 1800s continuous integration blocks.
+          </div>
+        </div>
+        <div class="annot-meta">
+          OPERATIONAL LOG REFERENCE: OBS-26-0814-A
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 INSTRUMENT STATUS -->
+  <section id="instrument-status">
+    <div class="sec-header">
+      <div class="sec-title">
+        <span class="sec-code">02 /</span> INSTRUMENT TELEMETRY & ENVIRONMENTAL SENSING
+      </div>
+      <div class="sec-ref">AUTOSCAN CADENCE: 5 SEC</div>
+    </div>
+
+    <div class="status-spec-grid">
+      <div class="status-spec-box">
+        <div class="stat-name">PRIMARY MIRROR TEMP</div>
+        <div class="stat-reading">+4.2°C</div>
+        <div class="stat-sub">SETPOINT: +4.0°C</div>
+      </div>
+
+      <div class="status-spec-box">
+        <div class="stat-name">MIRROR / AIR DELTA</div>
+        <div class="stat-reading">0.18°C</div>
+        <div class="stat-sub">TOLERANCE &lt; 0.50°C</div>
+      </div>
+
+      <div class="status-spec-box">
+        <div class="stat-name">DOME HUMIDITY</div>
+        <div class="stat-reading">22.4%</div>
+        <div class="stat-sub">DEWPOINT -14.8°C</div>
+      </div>
+
+      <div class="status-spec-box">
+        <div class="stat-name">GUST / WIND VECTOR</div>
+        <div class="stat-reading">4.8 KT</div>
+        <div class="stat-sub">WNW 292° (CALM)</div>
+      </div>
+
+      <div class="status-spec-box">
+        <div class="stat-name">TRACKING RMS ERROR</div>
+        <div class="stat-reading">0.042″</div>
+        <div class="stat-sub">GUIDE STAR: TYC 3168</div>
+      </div>
+
+      <div class="status-spec-box">
+        <div class="stat-name">DIMM SEEING (FWHM)</div>
+        <div class="stat-reading">0.68″</div>
+        <div class="stat-sub">EXCELLENT ATMOSPHERE</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 ALIGNMENT PROCEDURE -->
+  <section id="alignment-proc">
+    <div class="sec-header">
+      <div class="sec-title">
+        <span class="sec-code">03 /</span> TELESCOPE ALIGNMENT & POINTING VERIFICATION
+      </div>
+      <div class="sec-ref">SOP-OPT-082 • INTERACTIVE CHECKLIST</div>
+    </div>
+
+    <div class="procedure-block">
+      <div class="proc-instruction">
+        Execute sequence prior to target acquisition. Click any step to record verification or update operator completion state.
+      </div>
+
+      <div class="proc-step-list">
+        <div class="proc-step-row verified" data-step="1">
+          <div class="step-num">01</div>
+          <div class="step-label">HOME MOUNT</div>
+          <div class="step-desc">Initialize absolute optical encoders on right ascension and declination worm gear drives.</div>
+          <div class="step-mark">[VERIFIED 22:15]</div>
+          <button class="step-btn">TOGGLE</button>
+        </div>
+
+        <div class="proc-step-row verified" data-step="2">
+          <div class="step-num">02</div>
+          <div class="step-label">VERIFY ENCODERS</div>
+          <div class="step-desc">Confirm 26-bit Heidenhain rotary encoder index pulse parity across both axes.</div>
+          <div class="step-mark">[VERIFIED 22:18]</div>
+          <button class="step-btn">TOGGLE</button>
+        </div>
+
+        <div class="proc-step-row verified" data-step="3">
+          <div class="step-num">03</div>
+          <div class="step-label">ACQUIRE REFERENCE</div>
+          <div class="step-desc">Slew to bright primary astrometric reference star (Vega / Alpha Lyrae).</div>
+          <div class="step-mark">[VERIFIED 22:22]</div>
+          <button class="step-btn">TOGGLE</button>
+        </div>
+
+        <div class="proc-step-row" data-step="4">
+          <div class="step-num">04</div>
+          <div class="step-label">CORRECT OFFSET</div>
+          <div class="step-desc">Centroid reference star on wavefront sensor and update pointing model coefficients.</div>
+          <div class="step-mark">[PENDING]</div>
+          <button class="step-btn">TOGGLE</button>
+        </div>
+
+        <div class="proc-step-row" data-step="5">
+          <div class="step-num">05</div>
+          <div class="step-label">VERIFY TRACK</div>
+          <div class="step-desc">Engage secondary mirror tip-tilt fast steering mirror autoguider feedback loop.</div>
+          <div class="step-mark">[PENDING]</div>
+          <button class="step-btn">TOGGLE</button>
+        </div>
+
+        <div class="proc-step-row" data-step="6">
+          <div class="step-num">06</div>
+          <div class="step-label">RECORD SOLUTION</div>
+          <div class="step-desc">Commit 12-term pointing model residual correction to observatory telemetry database.</div>
+          <div class="step-mark">[PENDING]</div>
+          <button class="step-btn">TOGGLE</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 FIGURE 07 — OPTICAL PATH -->
+  <section id="optical-path">
+    <div class="sec-header">
+      <div class="sec-title">
+        <span class="sec-code">04 /</span> FIG. 07 — RITCHEY-CHRÉTIEN OPTICAL PATH SCHEMATIC
+      </div>
+      <div class="sec-ref">OPTICAL ASSEMBLY DWG 1.8M-RC</div>
+    </div>
+
+    <div class="diagram-layout">
+      <div class="diagram-frame">
+        <div class="fig-svg-wrap">
+          <svg viewBox="0 0 540 220" fill="none" style="width:100%; height:100%;" xmlns="http://www.w3.org/2000/svg">
+            <!-- Optical Axis -->
+            <line x1="20" y1="110" x2="520" y2="110" stroke="#3a4755" stroke-width="1" stroke-dasharray="4,4"/>
+            
+            <!-- Primary Mirror (Hyperbolic concave with central hole) -->
+            <path d="M 40 40 Q 60 110 40 85" stroke="#e6ebf0" stroke-width="3" fill="none"/>
+            <path d="M 40 135 Q 60 110 40 180" stroke="#e6ebf0" stroke-width="3" fill="none"/>
+            <!-- Primary mirror label -->
+            <text x="35" y="30" font-family="'IBM Plex Mono'" font-size="9" fill="#9aa9b8">[1] PRIMARY MIRROR 1.8M</text>
+
+            <!-- Secondary Mirror (Hyperbolic convex) -->
+            <path d="M 420 80 Q 405 110 420 140" stroke="#e6ebf0" stroke-width="3" fill="none"/>
+            <text x="420" y="70" font-family="'IBM Plex Mono'" font-size="9" fill="#9aa9b8">[2] SECONDARY M2</text>
+
+            <!-- Light Ray Cones -->
+            <!-- Inflow rays -->
+            <line x1="480" y1="50" x2="48" y2="50" stroke="#4a88b8" stroke-width="1.2" stroke-dasharray="2,2"/>
+            <line x1="480" y1="170" x2="48" y2="170" stroke="#4a88b8" stroke-width="1.2" stroke-dasharray="2,2"/>
+            
+            <!-- Reflection to secondary -->
+            <line x1="48" y1="50" x2="415" y2="95" stroke="#4a88b8" stroke-width="1.2"/>
+            <line x1="48" y1="170" x2="415" y2="125" stroke="#4a88b8" stroke-width="1.2"/>
+
+            <!-- Reflection through central bore to focal plane -->
+            <line x1="415" y1="95" x2="10" y2="110" stroke="#4a88b8" stroke-width="1.5"/>
+            <line x1="415" y1="125" x2="10" y2="110" stroke="#4a88b8" stroke-width="1.5"/>
+
+            <!-- Instrument focal cluster -->
+            <rect x="5" y="90" width="12" height="40" fill="#2a333d" stroke="#e6ebf0" stroke-width="1"/>
+            <text x="10" y="145" font-family="'IBM Plex Mono'" font-size="9" fill="#9aa9b8">[3] CASSEGRAIN FOCI</text>
+
+            <!-- Spider Vane Callout -->
+            <line x1="420" y1="20" x2="420" y2="80" stroke="#3a4755" stroke-width="1.5"/>
+            <line x1="420" y1="140" x2="420" y2="200" stroke="#3a4755" stroke-width="1.5"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="diagram-annotations">
+        <div class="annot-list-item">
+          <strong>[1] PRIMARY MIRROR M1 (1.80M)</strong>
+          Zerodur low-expansion ceramic glass coated with enhanced aluminum (91% broadband reflectance).
+        </div>
+        <div class="annot-list-item">
+          <strong>[2] SECONDARY MIRROR M2 (0.42M)</strong>
+          Piezo-actuated 5-axis hexapod mount providing active collimation and tip-tilt tracking stabilization.
+        </div>
+        <div class="annot-list-item">
+          <strong>[3] CASSEGRAIN FOCAL PLANE</strong>
+          f/8 optical focal ratio producing unvignetted 45-arcminute field of view corrected for coma and astigmatism.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 OBSERVATION RECORD -->
+  <section id="obs-record">
+    <div class="sec-header">
+      <div class="sec-title">
+        <span class="sec-code">05 /</span> OBSERVATION LOG & EXPOSURE RECORD
+      </div>
+      <div class="sec-ref">LOG RUN: NIGHT 26-0814</div>
+    </div>
+
+    <div class="record-table-wrap">
+      <table class="obs-table">
+        <thead>
+          <tr>
+            <th>RECORD ID</th>
+            <th>TARGET</th>
+            <th>UTC START</th>
+            <th>EXPOSURE</th>
+            <th>FILTER</th>
+            <th>STATE</th>
+            <th>REV</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>OBS-88401</strong></td>
+            <td>NGC 6960 (VEIL NEBULA)</td>
+            <td>20:45:10</td>
+            <td>1200 S</td>
+            <td>[O III] 500.7nm</td>
+            <td style="color:var(--mark-verified);">VERIFIED</td>
+            <td>01</td>
+          </tr>
+          <tr>
+            <td><strong>OBS-88402</strong></td>
+            <td>NGC 6992 (EASTERN VEIL)</td>
+            <td>21:10:44</td>
+            <td>1200 S</td>
+            <td>H-ALPHA 656.3nm</td>
+            <td style="color:var(--mark-verified);">VERIFIED</td>
+            <td>01</td>
+          </tr>
+          <tr>
+            <td><strong>OBS-88403</strong></td>
+            <td>NGC 7000 (CYGNUS WALL)</td>
+            <td>22:42:00</td>
+            <td>1800 S</td>
+            <td>H-ALPHA 656.3nm</td>
+            <td style="color:var(--accent-blue);">ACQUIRING</td>
+            <td>02</td>
+          </tr>
+          <tr>
+            <td><strong>OBS-88404</strong></td>
+            <td>IC 5070 (PELICAN NEBULA)</td>
+            <td>01:25:00</td>
+            <td>1800 S</td>
+            <td>[S II] 672.4nm</td>
+            <td style="color:var(--text-dim);">SCHEDULED</td>
+            <td>00</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 06 FIELD NOTE & 07 CALIBRATION NOTICE -->
+  <section id="notes-notices">
+    <div class="sec-header">
+      <div class="sec-title">
+        <span class="sec-code">06 & 07 /</span> OPERATOR FIELD NOTES & CALIBRATION NOTICE
+      </div>
+      <div class="sec-ref">ANNOTATION ATTACHMENT: OBS-88403</div>
+    </div>
+
+    <div class="notes-caution-grid">
+      <!-- 06 FIELD NOTE -->
+      <div class="field-note-card">
+        <div class="note-marker-head">
+          <span>ASTRONOMER ANNOTATION • ATTACHED TO OBS-88403</span>
+          <span>REV 02.1</span>
+        </div>
+        <div class="field-note-text">
+          "Ambient air temperature dropped 1.8°C over the past 90 minutes. Primary mirror cooling fans engaged at 40% duty cycle to maintain thermal equilibrium within the required 0.2°C boundary. DIMM seeing stabilized at 0.68″ FWHM with negligible high-altitude wind shear."
+        </div>
+        <div class="field-note-sig">
+          — DR. E. VANCE, LEAD OBSERVING ASTRONOMER • 22:38 UTC
+        </div>
+      </div>
+
+      <!-- 07 CALIBRATION NOTICE -->
+      <div class="caution-box">
+        <div class="caution-head">
+          <span>▲ CAUTION / 04.2 — THERMAL OFFSET DIRECTIVE</span>
+        </div>
+        <div class="caution-text">
+          Instrument calibration values and flat-field sensor matrices become invalid if the primary mirror thermal differential exceeds 0.50°C relative to dome ambient air. If differential exceeds 0.75°C, suspend active exposure queue and initiate thermal stabilization loop.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 ABOUT THE FACILITY -->
+  <section id="about-facility" style="border-bottom:none; margin-bottom:0; padding-bottom:0;">
+    <div class="sec-header">
+      <div class="sec-title">
+        <span class="sec-code">08 /</span> ABOUT NORTHSTAR OBSERVATORY & RESEARCH PROGRAM
+      </div>
+      <div class="sec-ref">INSTITUTIONAL OVERVIEW</div>
+    </div>
+
+    <div class="editorial-copy-block">
+      <p>
+        Situated at an altitude of 2,780 meters on the high-desert plateau of the Blackwood Range, Northstar Observatory is a premier astronomical research facility dedicated to high-resolution narrowband spectroscopy, stellar astrophysics, and deep-sky imaging. The observatory experiences over 260 photometric nights annually, characterized by exceptionally dry air, laminar atmospheric airflow, and minimal light pollution.
+      </p>
+      <p>
+        The centerpiece 1.8-meter Ritchey-Chrétien telescope combines state-of-the-art Zerodur optics with an active hexapod secondary mirror and cryogenic CCD detection system. Operational procedures and instrument telemetry are documented continuously to ensure repeatable scientific measurement across long-baseline observation campaigns.
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      © 2026 NORTHSTAR OBSERVATORY RESEARCH CONSORTIUM • ALL RIGHTS RESERVED
+    </div>
+    <div>
+      FIELD MANUAL UI/UX SPECIFICATION • DOC ID: NSO-MAN-2026-V8
+    </div>
+  </footer>
+
+</div>
+
+
+
+</body>
+</html>

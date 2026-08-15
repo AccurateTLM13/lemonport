@@ -13,22 +13,22 @@
     <meta property="og:description" content="Active builds, shipped tools, and experiments in progress across the Lemonteed universe.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://lemonteed.com/studio-lab/">
-    <meta property="og:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
-    <meta property="og:image:secure_url" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+    <meta property="og:image" content="https://lemonteed.com/images/og/studio-lab.webp">
+    <meta property="og:image:secure_url" content="https://lemonteed.com/images/og/studio-lab.webp">
     <meta property="og:image:type" content="image/webp">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Studio Lab | Lemonteed">
     <meta name="twitter:description" content="Active builds, shipped tools, and experiments in progress across the Lemonteed universe.">
-    <meta name="twitter:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+    <meta name="twitter:image" content="https://lemonteed.com/images/og/studio-lab.webp">
     <link rel="icon" href="/images/favicons/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
     <link rel="manifest" href="/site.webmanifest">
-    <link rel="stylesheet" href="/assets/css/style.css?v=10">
-    <link rel="stylesheet" href="/assets/css/lemmy.css?v=2">
+    <link rel="stylesheet" href="/assets/css/style.css?v=12">
+    <link rel="stylesheet" href="/assets/css/lemmy.css?v=3">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -47,19 +47,34 @@
     <script src="/assets/js/lemmy-data.js?v=2" defer></script>
     <script src="/assets/js/lemmy.js?v=2" defer></script>
   </head>
-  <body class="studio-lab-page" data-lemmy-zone="studio-lab">
+  <body class="studio-lab-page" data-lemmy-zone="studio-lab" data-lemmy-suppress-trigger="1">
     <a class="skip-link" href="#studio-lab-content">Skip to projects</a>
     <div class="site-shell">
       <aside class="sidebar" aria-label="Site navigation">
-        <div class="sidebar__top">
+        <div class="sidebar__brand-block">
           <a class="brand" href="/" aria-label="Lemonteed home">
             <img class="brand__logo" src="/images/lemonteedlogo-250.webp" srcset="/images/lemonteedlogo-250.webp 250w, /images/lemonteedlogo-456.webp 456w" sizes="160px" width="456" height="96" alt="Lemonteed">
           </a>
-          <a class="info-link" href="/archive/">+ ARCHIVE</a>
-          <a class="random-artifact" href="/archive/?random=1">SUMMON RANDOM ARTIFACT</a>
         </div>
-        <nav class="category-nav" aria-label="Portfolio categories">
-          <span class="nav-label">Categories</span>
+
+        <nav class="sidebar__group" aria-label="Lemonteed workbench">
+          <span class="sidebar__group-label">Workbench</span>
+          <a class="sidebar__nav-item is-active" href="/studio-lab/" aria-current="page">
+            <span class="sidebar__nav-tick" aria-hidden="true">&bull;</span>
+            Studio Lab
+          </a>
+          <a class="sidebar__nav-item" href="/operator-log/">
+            <span class="sidebar__nav-icon" aria-hidden="true">&nearr;</span>
+            Operator's Log
+          </a>
+          <a class="sidebar__nav-item" href="/benchmark/">
+            <span class="sidebar__nav-icon" aria-hidden="true">&nearr;</span>
+            Design Benchmark
+          </a>
+        </nav>
+
+        <nav class="sidebar__group" aria-label="Portfolio categories">
+          <span class="sidebar__group-label">Filters</span>
           <a class="category-link" href="/archive/" data-category-link="all">All</a>
           <a class="category-link" href="/vrg-cards/" data-category-link="vrg-cards">VRG Cards</a>
           <a class="category-link" href="/what-if/" data-category-link="what-if">What If</a>
@@ -67,133 +82,318 @@
           <a class="category-link" href="/memetic-warfare/">Memetic Warfare</a>
           <a class="category-link" href="/lemonteed-fm/">Lemonteed FM</a>
         </nav>
-        <a href="/junk-drawer/" class="junk-drawer-module" aria-label="Open Junk Drawer">
-          <div class="junk-drawer-module__face">
-            <div class="junk-drawer-module__handle"></div>
-            <span class="junk-drawer-module__label">Junk Drawer</span>
-          </div>
-        </a>
-        <nav class="sidebar__utility-nav" aria-label="Lemonteed workbench">
-          <p class="sidebar__utility-label">Workbench</p>
-          <a class="sidebar__utility-link sidebar__utility-link--primary is-active" href="/studio-lab/" aria-current="page">Studio Lab</a>
-          <a class="sidebar__utility-link" href="/operator-log/">Operator's Log</a>
-        </nav>
+
+        <div class="sidebar__group" aria-label="Archive & Experiments">
+          <span class="sidebar__group-label">Experiments</span>
+          <a class="random-artifact" href="/archive/?random=1" title="Summon a random artifact from the archive" id="random-artifact-btn">
+            <span class="random-artifact__label">SUMMON RANDOM ARTIFACT</span>
+            <span class="random-artifact__id" aria-hidden="true" id="random-artifact-id">RND-???</span>
+          </a>
+          <a href="/junk-drawer/" class="junk-drawer-module" aria-label="Open Junk Drawer">
+            <div class="junk-drawer-module__face">
+              <div class="junk-drawer-module__handle"></div>
+              <span class="junk-drawer-module__label">Junk Drawer</span>
+            </div>
+          </a>
+          <a class="sidebar__archive-link" href="/archive/">+ ARCHIVE INDEX</a>
+        </div>
       </aside>
 
       <main class="content" id="studio-lab-content">
         <header class="studio-lab-header">
-          <p class="studio-lab-kicker">Build Bench / Latest Log</p>
+          <div class="studio-lab-header__meta">
+            <span class="studio-lab-header__tag">[ WORKSHOP / LAB BENCH ]</span>
+            <span class="studio-lab-header__date">AUG 2026</span>
+          </div>
           <h1>Studio Lab</h1>
-          <p class="studio-lab-lede">The latest build notes, with the project state still attached. Read what moved, then open the thing when it is ready.</p>
+          <p class="studio-lab-lede">Active builds, shipped tools, and experiments in progress across the Lemonteed universe. Read what moved, then open the thing when it is ready.</p>
         </header>
 
         <section class="studio-lab-feed" aria-labelledby="studio-lab-feed-title">
           <header class="studio-lab-section-header">
-            <div>
-              <p class="studio-lab-section-label">Operator's Log / Recent entries</p>
-              <h2 id="studio-lab-feed-title">Latest build notes</h2>
+            <div class="studio-lab-section-header__titles">
+              <h2 id="studio-lab-feed-title">Latest Builds</h2>
+              <p class="studio-lab-section-sub">Detailed logs, architectural notes, and feature progress from active projects.</p>
             </div>
-            <a class="studio-lab-section-link" href="/operator-log/">Open the full log &rarr;</a>
+            <a class="lemon-cta-btn lemon-cta-btn--ghost-dark" href="/operator-log/">Open full log &rarr;</a>
           </header>
 
           <div class="studio-lab-log-list">
-            <article class="studio-log-entry studio-log-entry--featured">
-              <div class="studio-log-entry__meta">
-                <span class="studio-status studio-status--progress">Update 02</span>
-                <time datetime="2026-08-02">August 2, 2026</time>
-                <span>Localhost Watchdog</span>
+            <!-- Entry 005 (Featured) -->
+            <article class="studio-build-entry studio-build-entry--featured" data-project="design-skill-benchmark">
+              <div class="studio-build-entry__rail">
+                <span class="studio-build-entry__num">
+                  <span class="entry-num-mark" aria-hidden="true"></span>
+                  #005
+                </span>
+                <span class="studio-status studio-status--build">BASELINE 001</span>
               </div>
-              <h3><a href="/operator-log/localhost-watchdog-update-02/">Update 02 — Localhost Watchdog Can Manage Servers Now</a></h3>
-              <p>Localhost Watchdog moves from inspection into guarded management with evidence-based stop, start, restart, adoption, and a Windows tray companion.</p>
-              <div class="studio-log-entry__links">
-                <a class="studio-log-entry__link" href="/operator-log/localhost-watchdog-update-02/">Read the update &rarr;</a>
-                <a class="studio-log-entry__link studio-log-entry__link--muted" href="/operator-log/building-localhost-watchdog/">Read the introduction</a>
+              <div class="studio-build-entry__main">
+                <div class="studio-build-entry__header">
+                  <span class="project-tag">DESIGN SKILL BENCHMARK LAB</span>
+                  <time datetime="2026-08-14" class="studio-build-entry__date">AUG 14, 2026</time>
+                </div>
+                <h3 class="studio-build-entry__title">
+                  <a href="/operator-log/design-skill-benchmark/">I Built a Test Bench for Website Design Skills</a>
+                </h3>
+                <p class="studio-build-entry__desc">
+                  Thirty-two generated websites, six models, three design systems, and a grading layer built to separate skill fidelity from attractive screenshots.
+                </p>
+                <div class="studio-build-artifact studio-build-artifact--report" aria-hidden="true">
+                  <div class="artifact-report__row"><span class="artifact-report__label">OUTPUTS</span><span class="artifact-report__bar artifact-report__bar--ok" style="width:80%"></span><span class="artifact-report__val">32</span></div>
+                  <div class="artifact-report__row"><span class="artifact-report__label">MODELS</span><span class="artifact-report__bar artifact-report__bar--warn" style="width:42%"></span><span class="artifact-report__val">06</span></div>
+                  <div class="artifact-report__row"><span class="artifact-report__label">SKILLS</span><span class="artifact-report__bar artifact-report__bar--ok" style="width:24%"></span><span class="artifact-report__val">03</span></div>
+                  <div class="artifact-report__row"><span class="artifact-report__label">VIEWPORTS</span><span class="artifact-report__bar artifact-report__bar--warn" style="width:42%"></span><span class="artifact-report__val">06</span></div>
+                  <span class="artifact-report__tag">assistant-reviewed / baseline recorded</span>
+                </div>
+                <div class="studio-build-entry__actions">
+                  <a class="lemon-cta-btn lemon-cta-btn--primary" href="/operator-log/design-skill-benchmark/">Read the case study &rarr;</a>
+                  <a class="lemon-cta-btn lemon-cta-btn--secondary" href="/benchmark/">Browse 32 Records &rarr;</a>
+                  <a class="lemon-cta-btn lemon-cta-btn--secondary" href="/operator-log/design-skill-benchmark/data/baseline.csv" download>Download CSV</a>
+                </div>
               </div>
             </article>
 
-            <article class="studio-log-entry">
-              <div class="studio-log-entry__meta">
-                <span class="studio-status studio-status--shipped">Build log</span>
-                <time datetime="2026-06-20">June 20, 2026</time>
-                <span>Lighthouse Handoff</span>
+            <!-- Entry 004 -->
+            <article class="studio-build-entry" data-project="watchdog">
+              <div class="studio-build-entry__rail">
+                <span class="studio-build-entry__num">
+                  <span class="entry-num-mark" aria-hidden="true"></span>
+                  #004
+                </span>
+                <span class="studio-status studio-status--update">UPDATE 02</span>
               </div>
-              <h3><a href="/operator-log/building-lighthouse-handoff/">Building Lighthouse Handoff: Turning PageSpeed Reports Into Agent-Ready Work</a></h3>
-              <p>A Chrome extension and local companion that turns PageSpeed Insights into structured Markdown with confidence thresholds, fixed recommendation ordering, multi-run median testing, and variance analysis.</p>
-              <a class="studio-log-entry__link" href="/operator-log/building-lighthouse-handoff/">Read the entry &rarr;</a>
+              <div class="studio-build-entry__main">
+                <div class="studio-build-entry__header">
+                  <span class="project-tag project-tag--watchdog">LOCAL HOST WATCHDOG</span>
+                  <time datetime="2026-08-02" class="studio-build-entry__date">AUG 02, 2026</time>
+                </div>
+                <h3 class="studio-build-entry__title">
+                  <a href="/operator-log/localhost-watchdog-update-02/">Update 02 &mdash; Localhost Watchdog Can Manage Servers Now</a>
+                </h3>
+                <p class="studio-build-entry__desc">
+                  Localhost Watchdog moves from inspection into guarded management with evidence-based stop, start, restart, adoption, and a Windows tray companion.
+                </p>
+                <!-- Terminal artifact fragment -->
+                <div class="studio-build-artifact studio-build-artifact--terminal" aria-hidden="true">
+                  <div class="artifact-terminal__bar">
+                    <span class="artifact-terminal__dot"></span><span class="artifact-terminal__dot"></span><span class="artifact-terminal__dot"></span>
+                    <span class="artifact-terminal__title">watchdog.js &mdash; port scan</span>
+                  </div>
+                  <pre class="artifact-terminal__body"><span class="t-dim">$ </span><span class="t-cmd">node watchdog.js --scan</span>
+<span class="t-dim">[SCAN]  </span>Port 3000 <span class="t-ok">&rarr; ACTIVE</span>  node  PID 18442
+<span class="t-dim">[SCAN]  </span>Port 5173 <span class="t-ok">&rarr; ACTIVE</span>  node  PID 9821
+<span class="t-dim">[SCAN]  </span>Port 8080 <span class="t-warn">&rarr; STALE </span>  No response (408)
+<span class="t-dim">[GATE]  </span>Confidence: <span class="t-ok">0.92</span> &mdash; proceeding
+<span class="t-dim">[STOP]  </span>PID 8080 <span class="t-ok">&rarr; STOPPED</span>  (dry-run verified)</pre>
+                </div>
+                <div class="studio-build-entry__actions">
+                  <a class="lemon-cta-btn lemon-cta-btn--primary" href="/operator-log/localhost-watchdog-update-02/">Read the update &rarr;</a>
+                  <a class="lemon-cta-btn lemon-cta-btn--secondary" href="/operator-log/building-localhost-watchdog/">Read introduction</a>
+                </div>
+              </div>
             </article>
 
-            <article class="studio-log-entry">
-              <div class="studio-log-entry__meta">
-                <span class="studio-status studio-status--progress">Build log</span>
-                <time datetime="2026-06-19">June 19, 2026</time>
-                <span>Locailly</span>
+            <!-- Entry 003 -->
+            <article class="studio-build-entry" data-project="lighthouse">
+              <div class="studio-build-entry__rail">
+                <span class="studio-build-entry__num">#003</span>
+                <span class="studio-status studio-status--build">BUILD LOG</span>
               </div>
-              <h3><a href="/operator-log/building-locailly/">Building Locailly: A Local AI Orchestration System</a></h3>
-              <p>An experiment in local AI orchestration — a Local Brain, Task Tracks, AI Pit Crew, capability routing, and optional NearbyNodes working together so one person can operate like a coordinated team using small local models.</p>
-              <a class="studio-log-entry__link" href="/operator-log/building-locailly/">Read the entry &rarr;</a>
+              <div class="studio-build-entry__main">
+                <div class="studio-build-entry__header">
+                  <span class="project-tag project-tag--lighthouse">LIGHTHOUSE HANDOFF</span>
+                  <time datetime="2026-06-20" class="studio-build-entry__date">JUN 20, 2026</time>
+                </div>
+                <h3 class="studio-build-entry__title">
+                  <a href="/operator-log/building-lighthouse-handoff/">Building Lighthouse Handoff: Turning PageSpeed Reports Into Agent-Ready Work</a>
+                </h3>
+                <p class="studio-build-entry__desc">
+                  A Chrome extension and local companion that turns PageSpeed Insights into structured Markdown with confidence thresholds, fixed recommendation ordering, multi-run median testing, and variance analysis.
+                </p>
+                <!-- Compact report snippet -->
+                <div class="studio-build-artifact studio-build-artifact--report" aria-hidden="true">
+                  <div class="artifact-report__row"><span class="artifact-report__label">FCP</span><span class="artifact-report__bar artifact-report__bar--warn" style="width:62%"></span><span class="artifact-report__val">2.8s</span></div>
+                  <div class="artifact-report__row"><span class="artifact-report__label">LCP</span><span class="artifact-report__bar artifact-report__bar--fail" style="width:78%"></span><span class="artifact-report__val">4.1s</span></div>
+                  <div class="artifact-report__row"><span class="artifact-report__label">CLS</span><span class="artifact-report__bar artifact-report__bar--ok" style="width:18%"></span><span class="artifact-report__val">0.04</span></div>
+                  <div class="artifact-report__row"><span class="artifact-report__label">TBT</span><span class="artifact-report__bar artifact-report__bar--warn" style="width:54%"></span><span class="artifact-report__val">480ms</span></div>
+                  <span class="artifact-report__tag">median / 3 runs</span>
+                </div>
+                <div class="studio-build-entry__actions">
+                  <a class="lemon-cta-btn lemon-cta-btn--primary" href="/operator-log/building-lighthouse-handoff/">Read the entry &rarr;</a>
+                </div>
+              </div>
             </article>
 
-            <article class="studio-log-entry">
-              <div class="studio-log-entry__meta">
-                <span class="studio-status studio-status--progress">Build log</span>
-                <time datetime="2026-06-18">June 18, 2026</time>
-                <span>Localhost Watchdog</span>
+            <!-- Entry 002 -->
+            <article class="studio-build-entry" data-project="locailly">
+              <div class="studio-build-entry__rail">
+                <span class="studio-build-entry__num">#002</span>
+                <span class="studio-status studio-status--build">BUILD LOG</span>
               </div>
-              <h3><a href="/operator-log/building-localhost-watchdog/">Building Localhost Watchdog: A Safe Way to Manage Local Development Servers</a></h3>
-              <p>A Windows-first local server scanner, classifier, and process manager with dry runs, confidence gates, PID/port revalidation, test-first execution, and no destructive action without confirmation.</p>
-              <a class="studio-log-entry__link" href="/operator-log/building-localhost-watchdog/">Read the entry &rarr;</a>
+              <div class="studio-build-entry__main">
+                <div class="studio-build-entry__header">
+                  <span class="project-tag project-tag--locailly">LOCAILLY</span>
+                  <time datetime="2026-06-19" class="studio-build-entry__date">JUN 19, 2026</time>
+                </div>
+                <h3 class="studio-build-entry__title">
+                  <a href="/operator-log/building-locailly/">Building Locailly: A Local AI Orchestration System</a>
+                </h3>
+                <p class="studio-build-entry__desc">
+                  An experiment in local AI orchestration &mdash; a Local Brain, Task Tracks, AI Pit Crew, capability routing, and optional NearbyNodes working together so one person can operate like a coordinated team using small local models.
+                </p>
+                <div class="studio-build-entry__actions">
+                  <a class="lemon-cta-btn lemon-cta-btn--primary" href="/operator-log/building-locailly/">Read the entry &rarr;</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Entry 001 -->
+            <article class="studio-build-entry studio-build-entry--compact" data-project="watchdog">
+              <div class="studio-build-entry__rail">
+                <span class="studio-build-entry__num">#001</span>
+                <span class="studio-status studio-status--build">BUILD LOG</span>
+              </div>
+              <div class="studio-build-entry__main">
+                <div class="studio-build-entry__header">
+                  <span class="project-tag project-tag--watchdog">LOCAL HOST WATCHDOG</span>
+                  <time datetime="2026-06-18" class="studio-build-entry__date">JUN 18, 2026</time>
+                </div>
+                <h3 class="studio-build-entry__title">
+                  <a href="/operator-log/building-localhost-watchdog/">Building Localhost Watchdog: A Safe Way to Manage Local Development Servers</a>
+                </h3>
+                <p class="studio-build-entry__desc studio-build-entry__desc--brief">
+                  Windows-first port scanner and process manager with dry runs, confidence gates, PID revalidation, and no destructive action without confirmation.
+                </p>
+                <div class="studio-build-entry__actions">
+                  <a class="lemon-cta-btn lemon-cta-btn--primary" href="/operator-log/building-localhost-watchdog/">Read the entry &rarr;</a>
+                </div>
+              </div>
             </article>
           </div>
         </section>
 
         <section class="studio-lab-status" aria-labelledby="studio-lab-status-title">
+          <div class="studio-register-bridge" aria-hidden="true">
+            <span class="studio-register-bridge__label">ACTIVE BENCH &rarr; REGISTER</span>
+            <span class="studio-register-bridge__rule"></span>
+          </div>
           <header class="studio-lab-section-header">
-            <div>
-              <p class="studio-lab-section-label">Project register / Current state</p>
-              <h2 id="studio-lab-status-title">What is still on the bench</h2>
+            <div class="studio-lab-section-header__titles">
+              <h2 id="studio-lab-status-title">Project Register</h2>
+              <p class="studio-lab-section-sub">Current state of all experiments, shipped tools, and bench projects.</p>
             </div>
-            <a class="studio-lab-section-link" href="/archive/">Browse the visual archive &rarr;</a>
+            <a class="lemon-cta-btn lemon-cta-btn--ghost-light" href="/archive/">Browse visual archive &rarr;</a>
           </header>
 
-          <ul class="studio-lab-status-list">
-            <li>
-              <span class="studio-status studio-status--shipped">Shipped</span>
-              <a class="studio-lab-status__name" href="/lighthouse-handoff/">Lighthouse Handoff</a>
-              <span class="studio-lab-status__note">PageSpeed reports into agent-ready Markdown.</span>
-            </li>
-            <li>
-              <span class="studio-status studio-status--shipped">Shipped</span>
-              <a class="studio-lab-status__name" href="/lemonteed-fm/">Lemonteed FM</a>
-              <span class="studio-lab-status__note">Static music discovery booth with requests and Piet mode.</span>
-            </li>
-            <li>
-              <span class="studio-status studio-status--shipped">Shipped</span>
-              <a class="studio-lab-status__name" href="/junk-drawer/">Browser Utilities</a>
-              <span class="studio-lab-status__note">Local image tools and Lemon DOM.</span>
-            </li>
-            <li>
-              <span class="studio-status studio-status--shipped">Shipped</span>
-              <a class="studio-lab-status__name" href="/memetic-warfare/">Memetic Warfare</a>
-              <span class="studio-lab-status__note">Ancient tech loadout builder tied to the visual archive.</span>
-            </li>
-            <li>
-              <span class="studio-status studio-status--archived">Archived</span>
-              <span class="studio-lab-status__name">The $100 Cloud Flip</span>
-              <span class="studio-lab-status__note">Paused while a better experiment shape comes together.</span>
-            </li>
-            <li>
-              <span class="studio-status studio-status--archived">Archived</span>
-              <span class="studio-lab-status__name">Million Dollar Receipt</span>
-              <span class="studio-lab-status__note">Paused while a better launch shape comes together.</span>
-            </li>
-            <li>
-              <span class="studio-status studio-status--planned">Later</span>
-              <span class="studio-lab-status__name">Bench Radio</span>
-              <span class="studio-lab-status__note">A future radio for browsing active builds.</span>
-            </li>
-          </ul>
+          <div class="studio-project-register" role="table" aria-label="Project status register">
+            <div class="studio-project-register__header" role="row" aria-hidden="true">
+              <span role="columnheader">ID</span>
+              <span role="columnheader">STATUS</span>
+              <span role="columnheader">PROJECT NAME</span>
+              <span role="columnheader">SPECIFICATION / SCOPE</span>
+            </div>
+
+            <div class="studio-project-register__row" role="row" data-project="design-skill-benchmark">
+              <span class="studio-project-register__code" role="cell">REG-008</span>
+              <span role="cell"><span class="studio-status studio-status--shipped">SHIPPED</span></span>
+              <span role="cell"><a class="studio-project-register__name" href="/operator-log/design-skill-benchmark/">Design Skill Benchmark Lab</a></span>
+              <span class="studio-project-register__note" role="cell">Evidence-backed grading for design skills, prompts, models, responsive behavior, and visual quality. <a href="/benchmark/">Browse 32-record archive &rarr;</a></span>
+            </div>
+
+            <div class="studio-project-register__row" role="row" data-project="lighthouse">
+              <span class="studio-project-register__code" role="cell">REG-007</span>
+              <span role="cell"><span class="studio-status studio-status--shipped">SHIPPED</span></span>
+              <span role="cell"><a class="studio-project-register__name" href="/lighthouse-handoff/">Lighthouse Handoff</a></span>
+              <span class="studio-project-register__note" role="cell">PageSpeed Insights reports auto-formatted into structured agent-ready Markdown.</span>
+            </div>
+
+            <div class="studio-project-register__row" role="row">
+              <span class="studio-project-register__code" role="cell">REG-006</span>
+              <span role="cell"><span class="studio-status studio-status--shipped">SHIPPED</span></span>
+              <span role="cell"><a class="studio-project-register__name" href="/lemonteed-fm/">Lemonteed FM</a></span>
+              <span class="studio-project-register__note" role="cell">Static music discovery booth with track requests and automated Piet mode cycling.</span>
+            </div>
+
+            <div class="studio-project-register__row" role="row">
+              <span class="studio-project-register__code" role="cell">REG-005</span>
+              <span role="cell"><span class="studio-status studio-status--shipped">SHIPPED</span></span>
+              <span role="cell"><a class="studio-project-register__name" href="/junk-drawer/">Browser Utilities</a></span>
+              <span class="studio-project-register__note" role="cell">Local client-side tools: image converter, compressor, list mechanic, and Lemon DOM.</span>
+            </div>
+
+            <div class="studio-project-register__row" role="row">
+              <span class="studio-project-register__code" role="cell">REG-004</span>
+              <span role="cell"><span class="studio-status studio-status--shipped">SHIPPED</span></span>
+              <span role="cell"><a class="studio-project-register__name" href="/memetic-warfare/">Memetic Warfare</a></span>
+              <span class="studio-project-register__note" role="cell">Ancient tech loadout builder and interactive game tied to visual archive.</span>
+            </div>
+
+            <div class="studio-project-register__row" role="row" data-project="watchdog">
+              <span class="studio-project-register__code" role="cell">REG-003</span>
+              <span role="cell"><span class="studio-status studio-status--archived">ARCHIVED</span></span>
+              <span role="cell"><span class="studio-project-register__name studio-project-register__name--inactive">The $100 Cloud Flip</span></span>
+              <span class="studio-project-register__note" role="cell">Paused experiment while a better market automation shape comes together.</span>
+            </div>
+
+            <div class="studio-project-register__row" role="row">
+              <span class="studio-project-register__code" role="cell">REG-002</span>
+              <span role="cell"><span class="studio-status studio-status--archived">ARCHIVED</span></span>
+              <span role="cell"><span class="studio-project-register__name studio-project-register__name--inactive">Million Dollar Receipt</span></span>
+              <span class="studio-project-register__note" role="cell">Public launch paused while a better rollout shape is planned.</span>
+            </div>
+
+            <div class="studio-project-register__row" role="row">
+              <span class="studio-project-register__code" role="cell">REG-001</span>
+              <span role="cell"><span class="studio-status studio-status--planned">LATER</span></span>
+              <span role="cell"><span class="studio-project-register__name studio-project-register__name--inactive">Bench Radio</span></span>
+              <span class="studio-project-register__note" role="cell">Embedded background radio streaming Lemonteed FM while browsing active builds.</span>
+            </div>
+          </div>
         </section>
+
+        <!-- Lemmy Mascot Host Station -->
+        <div class="studio-lab-host-station">
+          <div class="studio-lab-host-station__avatar">
+            <img src="/images/lemmy/poses/working.webp" alt="Lemmy working at the lab bench" width="100" height="100" loading="lazy">
+          </div>
+          <div class="studio-lab-host-station__body">
+            <div class="studio-lab-host-station__eyebrow">LAB OPERATOR &bull; LEMMY</div>
+            <p class="studio-lab-host-station__quote">&ldquo;The lab bench is sorted and the builds are fresh. Want to see something random or grab a browser utility?&rdquo;</p>
+            <div class="studio-lab-host-station__actions">
+              <a class="lemon-cta-btn lemon-cta-btn--station-primary" href="/archive/?random=1">Summon Random Artifact &rarr;</a>
+              <a class="lemon-cta-btn lemon-cta-btn--station-secondary" href="/junk-drawer/">Open Junk Drawer &rarr;</a>
+            </div>
+          </div>
+        </div>
       </main>
     </div>
+    <script>
+    (function() {
+      // RND-??? shuffler for Summon Random Artifact
+      var btn = document.getElementById('random-artifact-btn');
+      var idEl = document.getElementById('random-artifact-id');
+      if (!btn || !idEl) return;
+      var totalArtifacts = 80;
+      var shuffleInterval = null;
+      btn.addEventListener('mouseenter', function() {
+        var count = 0;
+        shuffleInterval = setInterval(function() {
+          var n = Math.floor(Math.random() * totalArtifacts) + 1;
+          idEl.textContent = 'RND-' + String(n).padStart(3, '0');
+          count++;
+          if (count >= 12) {
+            clearInterval(shuffleInterval);
+          }
+        }, 60);
+      });
+      btn.addEventListener('mouseleave', function() {
+        clearInterval(shuffleInterval);
+        idEl.textContent = 'RND-???';
+      });
+      // Suppress floating Lemmy trigger on Studio Lab
+      document.body.setAttribute('data-lemmy-suppress-trigger', '1');
+    })();
+    </script>
   </body>
 </html>

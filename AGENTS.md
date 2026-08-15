@@ -2,6 +2,8 @@
 
 See `AGENT_RULES.md` for repository-level agent guidelines (do/don't rules, content change checklist, generated file policy).
 
+See `lemonteed-brand-system.md` for the core brand concept, voice & tone, color roles, typography, component standards (pills, cards, buttons), mascot rules, and incremental page migration guidelines.
+
 See `LEMONTEED_ENGINE.md` for architecture overview, build pipeline, and image pipeline details.
 
 See `STUDIO.md` for Studio features and local start instructions.
@@ -60,7 +62,6 @@ npx wrangler dev --local --port 8788 --config mdr-api/wrangler.toml
 | `node scripts/check.js` | Run standard validation, site audit, and media health checks |
 | `node scripts/site-completion-audit.js` | Multi-track site completion + SEO readiness audit |
 | `node scripts/build-gallery.js` | Rebuild generated gallery data files |
-| `node scripts/media-health.js` | Report missing/unused image files |
 | `node scripts/generate-image-variants.js` | Regenerate responsive image variants |
 | `node scripts/build-live-experiment.js` | Rebuild live experiment data |
 | `node scripts/build-lemonteed-fm.js` | Rebuild Lemonteed FM data |
@@ -68,8 +69,9 @@ npx wrangler dev --local --port 8788 --config mdr-api/wrangler.toml
 | `node scripts/build-mdr-stats.js` | Rebuild Million Dollar Receipt stats |
 | `node scripts/build-artifact-pages.js` | Generate static pages for all published artifacts + update sitemap |
 | `node scripts/build-junk-drawer.js` | Rebuild external Junk Drawer cards |
+| `node scripts/generate-og-images.js` | Generate psychology-driven branded 1200×630 WebP OG cards |
+| `node scripts/build-seo.js` | Sync SEO metadata and patch HTML files in place |
 | `node scripts/promote-operator-mutation.js` | Promote active operator log phase |
-| `node scripts/install-mdr-assets.js` | Install responsive assets for MDR |
 | `node --experimental-sqlite mdr-api/server.js` | Start the Million Dollar Receipt SQLite API backend |
 
 ### Notes
@@ -78,6 +80,7 @@ npx wrangler dev --local --port 8788 --config mdr-api/wrangler.toml
 - There are no automated test suites. Validate changes with `node scripts/content-validation.js`, `node scripts/site-completion-audit.js`, and the Studio validation API (`GET /api/validation`).
 - There is no linter configured. Code style is vanilla JavaScript following existing patterns in the repo.
 - The public site is purely static HTML/CSS/JS. Do not introduce frameworks or build tools for the public output.
+- **Mandatory WebP Format Standard**: All content images, review frames, screenshots, and figures across the repository must strictly be `.webp` format with high visual fidelity (`quality: 85`). Storing raw `.png` or `.jpg` raster files on the site is strictly prohibited (standard browser favicons under `images/favicons/` excepted).
 
 ## Documentation updates & progress tracking
 
@@ -90,6 +93,23 @@ To support concurrent work streams and seamless handoffs between agent runs:
   This allows anyone (the owner or a subsequent agent) to pick up right where the previous session ended.
 
 ## Active Projects & Feature Progress
+
+### Psychology-Driven Automated OG Image Generator
+
+* **Status: Completed & Integrated Locally**
+  * **Completed:** Created [`scripts/generate-og-images.js`](file:///c:/Users/JP/Desktop/portfol/scripts/generate-og-images.js) supporting CLI batch (`--all`) and single-page (`--page=<key>`) generation using Node.js standard modules and ImageMagick (`magick`). Implemented four psychology-grounded archetypes (`workbench`, `operator-log`, `zone-atlas`, `minimal-punch`) with 3-tier visual hierarchy, pattern interruption, concrete screenshot/terminal/pose anchors, and outlined brand pills. Generated dedicated 1200×630 WebP preview cards for all 17 registered pages in `content/seo.json` and synchronized HTML `<meta>` tags across the site via `scripts/build-seo.js`.
+  * **Studio CMS Integration:** Added `POST /api/seo/generate-og` endpoint to `scripts/studio-server.js` and wired up a 1-click `✨ Auto-Generate Card` button and responsive live preview in the Studio SEO Manager workspace (`studio/index.html` & `studio/studio.js`).
+  * **Codebase State:** All 17 pages have distinct, high-fidelity WebP OG images in `images/og/`. Zero missing referenced images; validation passes cleanly.
+  * **Next steps:** Ready for use in ongoing workflow or additional page rollouts.
+
+### Design Skill Benchmark Case Study & Evidence Archive
+
+* **Status: Completed & Integrated Locally; not deployed**
+  * **Completed:** Integrated `/benchmark/` and its 32 record pages into the public site and Operator Log case study (`/operator-log/design-skill-benchmark/`). Added prominent hero CTA, Section 01 callouts, Section 04 review frame callout, and wired every output card in the blog post's interactive table directly to its full evidence record page (`/benchmark/records/<hash>.html`) and live source (`/benchmark/source/<hash>.html`).
+  * **SEO & Meta:** Added canonical URLs, Open Graph tags (with desktop review frames per record), Twitter cards, Google Analytics (`analytics.js`), favicons, and schema.org JSON-LD structured data (`Dataset` + `CollectionPage` on archive root, `TechArticle` on all 32 records). Added breadcrumb navigation trails and Lemonteed header/footer nav to `benchmark/index.html` and all records. Registered `benchmark` in `content/seo.json` and `scripts/build-seo.js`.
+  * **Discoverability & Sitemaps:** Added Design Benchmark to the **Workbench** section of the global sidebar across `studio-lab/`, `archive/`, `vrg-cards/`, `what-if/`, `misc-gens/`, `memetic-warfare/`, `junk-drawer/`, `lighthouse-handoff/`, and `lemonteed-fm/`. Added direct archive CTA in Studio Lab featured entry `#005` and register item `REG-008`, updated Operator's Log entry card, and added Lemmy destination/message support. Extended `scripts/build-artifact-pages.js` to automatically index `/benchmark/`, all 32 record URLs in `sitemap.xml` (118 total generated URLs), and all 64 desktop/mobile review frames in `image-sitemap.xml`.
+  * **Codebase State:** The evaluator remains local in the separate `website-design-skills` workspace. Lemonteed contains a fully integrated, accessible static evidence snapshot and benchmark archive. All standard validation and checks pass with zero missing referenced images.
+  * **Next steps:** Compare Baseline 001 against owner grades when available; do not deploy without explicit approval.
 
 ### Operator Log: Localhost Watchdog Update 02
 
@@ -159,6 +179,33 @@ To support concurrent work streams and seamless handoffs between agent runs:
 * **Completed:**
   * **`templates/artifact-page.html`:** HTML template for individual artifact pages with breadcrumbs, full-res responsive image, artifact record panel (category, series, date, description, origin, danger level, tags, tools), related artifact `<a>` links, prev/next/random navigation, and JSON-LD `CreativeWork` structured data.
   * **`scripts/build-artifact-pages.js`:** Build script that reads `content/projects.json` and generates `artifacts/<slug>/index.html` for every published artifact. Also updates `sitemap.xml` with artifact entries and generates `image-sitemap.xml` with image metadata. Supports `--dry-run` and `--clean` flags.
+  * **Live Experiment archived:** Matches MDR treatment — `noindex`, `robots.txt` disallow, removed from sitemap and public navigation. Studio Lab lists it as archived.
+  * **Sitemap:** Added `/studio-lab/`, junk-drawer routes, `/lighthouse-handoff/`, and `/free-source/`.
+  * **Junk Drawer Card Visuals:** Replaced CSS/span-based visual card placeholders in `/junk-drawer/` with correlating WebP screenshot/interface images from `/images/junk/` and added responsive CSS styles in `assets/css/junk-drawer.css` to frame the thumbnails.
+* **Next steps:**
+  * **Bench Radio (later):** Clickable radio on Studio Lab that streams Lemonteed FM while browsing projects.
+
+### External Junk Drawer Tools (Completed)
+
+* **Completed:** Added the `content/junk-drawer.json` source of truth, public-card builder, and local Studio/API wiring for external tools with name, description, URL, WebP image uploads, and affiliate disclosure.
+* **Codebase state:** Existing External Finds content is represented in the new source file. Studio save operations rebuild `junk-drawer/index.html`; invalid API payloads are rejected, full checks pass, and browser verification found no console errors.
+* **Next steps:** Add external tools through Studio as needed.
+
+### Studio SEO Manager (Completed)
+
+* **Completed:**
+  * **`content/seo.json`:** New source-of-truth file holding title, description, OG, and Twitter metadata for all 16 registered public static pages. Bootstrapped by scraping current values from the live HTML files.
+  * **`scripts/build-seo.js`:** Build script that reads `content/seo.json` and patches `<title>`, `<meta name="description">`, all `og:*` tags, `twitter:*` tags, and `<link rel="canonical">` in each page's HTML file in place. Backs up files before writing. Supports `--dry-run`. Can be imported as a module by the Studio server.
+  * **SEO Manager workspace in Studio:** New "SEO Manager" tab in the Studio nav. Page selector sidebar lists all 16 registered pages. Edit form includes: title tag (60-char counter), meta description (160-char counter), canonical URL, OG title, OG description, OG image path with live preview at 1200×630 aspect ratio, OG image upload (converts to WebP, crop-fits to 1200×630, stores in `images/og/`), OG width/height, Twitter title/description/image. Character counters turn yellow at 85% of limit and red when over. Save button writes `content/seo.json` and triggers `build-seo.js` to patch HTML immediately.
+  * **API routes added to `studio-server.js`:** `GET /api/seo`, `PATCH /api/seo`, `POST /api/seo/og-image`.
+* **Codebase State:** Fully implemented and validated. `content-validation.js` passes. `build-seo.js --dry-run` correctly identifies pages needing patching without touching files.
+* **Next steps:** None. The SEO manager is a complete, standalone tool.
+
+### Artifact Record System (Completed)
+
+* **Completed:**
+  * **`templates/artifact-page.html`:** HTML template for individual artifact pages with breadcrumbs, full-res responsive image, artifact record panel (category, series, date, description, origin, danger level, tags, tools), related artifact `<a>` links, prev/next/random navigation, and JSON-LD `CreativeWork` structured data.
+  * **`scripts/build-artifact-pages.js`:** Build script that reads `content/projects.json` and generates `artifacts/<slug>/index.html` for every published artifact. Also updates `sitemap.xml` with artifact entries and generates `image-sitemap.xml` with image metadata. Supports `--dry-run` and `--clean` flags.
   * **`assets/css/artifact-page.css`:** Standalone CSS for artifact pages matching the existing design system (Courier New monospace, #f4f2ea panel, #d7d3c8 dividers, #11100d dark buttons).
   * **Gallery card links:** `build-gallery.js` now injects `href: "/artifacts/<slug>/"` for all artifacts with a slug. Gallery cards render as `<a>` tags instead of `<button>` elements, making them crawlable.
   * **Related items as links:** Lightbox related-item buttons changed from `<button>` to `<a>` elements with real hrefs, with `preventDefault` for in-lightbox navigation.
@@ -168,3 +215,17 @@ To support concurrent work streams and seamless handoffs between agent runs:
   * **Audit inventory:** `site-completion-audit.js` now dynamically reads artifact pages from `content/projects.json` and operator-log post directories instead of relying on a hardcoded list. Added `free-source/index.html`.
 * **Codebase State:** All 80 artifact pages generated. `content-validation.js` passes. `media-health.js` reports 0 missing referenced images. Gallery data rebuilt with hrefs. Sitemap and image sitemap valid.
 * **Next steps:** None. To regenerate after adding/editing artifacts, run `node scripts/build-artifact-pages.js`.
+
+### Lemonteed Brand System Integration
+
+* **Status: Active / Incremental Rollout**
+* **Completed:**
+  * **Brand Document Integration:** Linked [`lemonteed-brand-system.md`](file:///c:/Users/JP/Desktop/portfol/lemonteed-brand-system.md) into [`AGENTS.md`](file:///c:/Users/JP/Desktop/portfol/AGENTS.md) and added non-negotiable brand rules into [`AGENT_RULES.md`](file:///c:/Users/JP/Desktop/portfol/AGENT_RULES.md).
+  * **Brand Audit Artifact:** Created comprehensive site audit report [`brand_audit_report.md`](file:///C:/Users/JP/.gemini/antigravity-ide/brain/3d14842d-4144-4bfa-b3f7-ca5bb3832ecc/brand_audit_report.md) detailing evidence of pages and components diverging from brand standards.
+  * **Standardized CSS:** Added `.page-header`, `.page-header__meta`, `.page-header__eyebrow`, `.page-header__title`, `.page-header__lede`, and `.lmtd-pill` / `.pill` outlined rectangle styles to `assets/css/style.css`.
+  * **What If Zone:** Updated [`what-if/index.html`](file:///c:/Users/JP/Desktop/portfol/what-if/index.html) with standardized page header and `[ ZONE 01 / WHAT IF WOODS ]` mono eyebrow label.
+  * **VRG Cards Zone:** Updated [`vrg-cards/index.html`](file:///c:/Users/JP/Desktop/portfol/vrg-cards/index.html) grid view and vault terminal header with `[ ZONE 05 / VRG VAULT ]` mono eyebrow labels; fixed dark theme background leakage on sidebar category links.
+  * **Junk Drawer District:** Updated [`junk-drawer/index.html`](file:///c:/Users/JP/Desktop/portfol/junk-drawer/index.html) with `[ DISTRICT 04 / JUNK DRAWER ]` mono eyebrow label, normalized `[ TOP OF THE PILE ]` and label decoder dt pills to outlined mono rectangle format, and fixed `lemmy.js` trigger null safety.
+  * **Lighthouse Handoff:** Integrated [`lighthouse-handoff/index.html`](file:///c:/Users/JP/Desktop/portfol/lighthouse-handoff/index.html) into the shared site shell and sidebar, added `[ FIELD REPORT / LIGHTHOUSE HANDOFF ]` mono eyebrow label, normalized status badge `[ AVAILABLE IN THE CHROME WEB STORE ]` to mono outlined rectangle pill, and styled dark sidebar theme integration.
+* **Codebase State:** What If, VRG Cards, Junk Drawer, and Lighthouse Handoff pages are updated and visually verified. Standard checks pass with zero missing referenced images.
+* **Next steps:** Incrementally migrate remaining zones (FreeSource, Memetic Warfare, FM Tower) as scheduled for work.

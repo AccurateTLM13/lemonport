@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d0d0d">
+<title>TERMINAL 17 — Regional Freight Exchange</title>
+<meta name="description" content="Terminal 17 is the Memphis regional freight exchange. Live dispatch, dock state, and load visibility on a mechanical operations board.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --board-bg: #0d0d0d;
+  --cell-bg: #161616;
+  --seam: rgba(0, 0, 0, 0.55);
+  --flap-text: #f4ede1;
+  --flap-text-dim: rgba(244, 237, 225, 0.35);
+  --label: rgba(244, 237, 225, 0.45);
+  --accent: #e8a33d;
+  --status-good: #6fae6f;
+  --status-warn: #e8a33d;
+  --status-bad: #c25b4a;
+  --paper: #d6cfc2;
+  --paper-2: #cdc6b8;
+  --paper-3: #c2bbad;
+  --ink: #161410;
+  --ink-soft: #3d3932;
+  --ink-faint: #6a655c;
+  --rule: #1c1914;
+  --rule-soft: rgba(22, 20, 16, 0.18);
+  --housing: #111111;
+  --cell-edge: #222222;
+  --mono: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --display: "Space Grotesk", system-ui, sans-serif;
+  --max: 1480px;
+  --ease-flap: cubic-bezier(0.55, 0, 1, 0.45);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--paper);
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(22, 20, 16, 0.015) 3px,
+      rgba(22, 20, 16, 0.015) 4px
+    ),
+    var(--paper);
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.55;
+  font-weight: 400;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.wrap {
+  width: min(calc(100% - 48px), var(--max));
+  margin: 0 auto;
+}
+
+.kicker,
+.col-label,
+.meta-kicker,
+.nav-text,
+.stamp,
+.field-label,
+.doc-label,
+.foot-kicker {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.site-head {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+}
+
+.head-row {
+  display: grid;
+  grid-template-columns: minmax(240px, 1.1fr) minmax(0, 1.4fr);
+  min-height: 92px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 22px 18px 0;
+  border-right: 1px solid var(--rule);
+}
+
+.brand-plate {
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--rule);
+  background: var(--board-bg);
+  color: var(--flap-text);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.06em;
+  position: relative;
+}
+
+.brand-plate::before,
+.brand-plate::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(244, 237, 225, 0.18);
+}
+
+.brand-plate::before {
+  top: 18px;
+}
+
+.brand-plate::after {
+  bottom: 18px;
+}
+
+.brand-name {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(22px, 2.2vw, 32px);
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.brand-sub {
+  margin-top: 7px;
+  color: var(--ink-faint);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.head-meta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.meta-cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 14px 16px;
+  border-right: 1px solid var(--rule-soft);
+  min-width: 0;
+}
+
+.meta-cell:last-child {
+  border-right: 0;
+}
+
+.meta-kicker {
+  color: var(--ink-faint);
+  margin-bottom: 6px;
+}
+
+.meta-val {
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.meta-val.is-live::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 8px;
+  background: var(--status-good);
+  vertical-align: 1px;
+}
+
+.nav-row {
+  display: flex;
+  align-items: stretch;
+  min-height: 44px;
+  border-top: 1px solid var(--rule);
+}
+
+.primary-nav {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 18px;
+  border: 0;
+  border-right: 1px solid var(--rule-soft);
+  background: transparent;
+  cursor: pointer;
+  color: var(--ink-faint);
+}
+
+.nav-btn:hover,
+.nav-btn.is-on {
+  color: var(--ink);
+}
+
+.nav-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.sim-slot {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  border-left: 1px solid var(--rule);
+  background: var(--board-bg);
+  padding: 0 8px;
+  min-width: 268px;
+}
+
+.sim-btn {
+  width: 100%;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 6px;
+}
+
+.sim-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -3px;
+}
+
+.sim-btn:disabled {
+  cursor: wait;
+}
+
+main {
+  display: block;
+}
+
+.hero {
+  padding: 42px 0 28px;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  gap: 36px;
+  align-items: end;
+  margin-bottom: 22px;
+}
+
+.hero h1 {
+  margin: 8px 0 0;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(42px, 6.6vw, 92px);
+  line-height: 0.88;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+}
+
+.hero h1 em {
+  display: block;
+  font-style: normal;
+  color: var(--ink-faint);
+}
+
+.hero-note {
+  margin: 0;
+  max-width: 420px;
+  color: var(--ink-soft);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.hero-note strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.board-shell {
+  background: var(--board-bg);
+  color: var(--flap-text);
+  border: 1px solid #2a2a2a;
+  padding: 16px 16px 12px;
+  position: relative;
+}
+
+.board-shell::before {
+  content: "T17 / MEM / DISPATCH";
+  position: absolute;
+  right: 16px;
+  top: -20px;
+  color: var(--ink-faint);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+}
+
+.board-chrome {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 2px 2px 12px;
+  border-bottom: 1px solid rgba(244, 237, 225, 0.12);
+  margin-bottom: 10px;
+}
+
+.board-title {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--flap-text);
+}
+
+.board-sync {
+  color: var(--label);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.board-scroll {
+  overflow-x: auto;
+  scrollbar-color: #3a3a3a #121212;
+}
+
+.board-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.board-scroll::-webkit-scrollbar-track {
+  background: #121212;
+}
+
+.board-scroll::-webkit-scrollbar-thumb {
+  background: #3a3a3a;
+}
+
+.dispatch {
+  min-width: 1180px;
+}
+
+.dispatch-head,
+.dispatch-row {
+  display: grid;
+  grid-template-columns: 132px minmax(340px, 1.4fr) 92px 168px minmax(280px, 0.9fr);
+  column-gap: 12px;
+  align-items: center;
+}
+
+.dispatch-head {
+  min-height: 30px;
+  padding-bottom: 6px;
+}
+
+.col-label {
+  color: var(--label);
+}
+
+.dispatch-row {
+  min-height: 78px;
+  padding: 6px 0;
+  border-top: 1px solid #1c1c1c;
+  cursor: pointer;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+}
+
+.dispatch-row:hover .field-slot {
+  outline: 1px solid rgba(244, 237, 225, 0.06);
+}
+
+.dispatch-row.is-sel {
+  outline: 1px solid rgba(232, 163, 61, 0.35);
+  outline-offset: 2px;
+}
+
+.dispatch-row:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.field-slot {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  min-height: 62px;
+}
+
+.metrics-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 12px;
+  border-top: 1px solid rgba(244, 237, 225, 0.12);
+  background: #101010;
+}
+
+.metric {
+  padding: 16px 14px 14px;
+  border-right: 1px solid rgba(244, 237, 225, 0.08);
+  min-height: 148px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.metric:last-child {
+  border-right: 0;
+}
+
+.metric-label {
+  color: var(--label);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.metric-note {
+  color: var(--flap-text-dim);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.flap-line {
+  display: inline-flex;
+  gap: 3px;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.flap-line.is-right {
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.flap-cell {
+  --fw: 26px;
+  --fh: 40px;
+  --fs: 22px;
+  --fd: 125ms;
+  position: relative;
+  width: var(--fw);
+  height: var(--fh);
+  flex: 0 0 var(--fw);
+  perspective: 260px;
+  perspective-origin: 50% 50%;
+  color: var(--flap-text);
+  font-family: var(--display);
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 1px;
+}
+
+.flap-cell.is-blank {
+  color: var(--flap-text-dim);
+}
+
+.flap-cell.status-good {
+  color: var(--status-good);
+}
+
+.flap-cell.status-warn {
+  color: var(--status-warn);
+}
+
+.flap-cell.status-bad {
+  color: var(--status-bad);
+}
+
+.flap-half {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
+  background: var(--cell-bg);
+  transform-style: preserve-3d;
+}
+
+.flap-static-top {
+  top: 0;
+  z-index: 1;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
+}
+
+.flap-static-bottom {
+  bottom: 0;
+  z-index: 1;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.45);
+}
+
+.flap-hinge-top {
+  top: 0;
+  z-index: 5;
+  transform-origin: 50% 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
+}
+
+.flap-hinge-bottom {
+  bottom: 0;
+  z-index: 4;
+  transform-origin: 50% 0%;
+  transform: rotateX(90deg);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.45);
+}
+
+.flap-glyph {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: var(--fh);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.flap-static-top .flap-glyph,
+.flap-hinge-top .flap-glyph {
+  top: 0;
+}
+
+.flap-static-bottom .flap-glyph,
+.flap-hinge-bottom .flap-glyph {
+  bottom: 0;
+}
+
+.flap-seam {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  margin-top: -0.5px;
+  background: var(--seam);
+  z-index: 8;
+  pointer-events: none;
+}
+
+.flap-cell.display {
+  --fw: 32px;
+  --fh: 58px;
+  --fs: 32px;
+  --fd: 150ms;
+}
+
+.flap-cell.standard {
+  --fw: 24px;
+  --fh: 38px;
+  --fs: 21px;
+  --fd: 125ms;
+}
+
+.flap-cell.micro {
+  --fw: 14px;
+  --fh: 18px;
+  --fs: 11px;
+  --fd: 90ms;
+}
+
+.flap-cell.metric {
+  --fw: clamp(40px, 4.6vw, 62px);
+  --fh: clamp(64px, 7.2vw, 92px);
+  --fs: clamp(36px, 4.8vw, 58px);
+  --fd: 165ms;
+}
+
+@keyframes flap-top-down {
+  from {
+    transform: rotateX(0deg);
+  }
+  to {
+    transform: rotateX(-90deg);
+  }
+}
+
+@keyframes flap-bottom-down {
+  from {
+    transform: rotateX(90deg);
+  }
+  to {
+    transform: rotateX(0deg);
+  }
+}
+
+.flap-cell.is-top .flap-hinge-top {
+  animation: flap-top-down var(--fd) var(--ease-flap) forwards;
+}
+
+.flap-cell.is-bot .flap-hinge-bottom {
+  animation: flap-bottom-down var(--fd) var(--ease-flap) forwards;
+}
+
+.flap-cell.is-top .flap-hinge-top .flap-glyph,
+.flap-cell.is-bot .flap-hinge-bottom .flap-glyph {
+  color: var(--flap-text-dim);
+}
+
+.section {
+  padding: 56px 0;
+  border-top: 1px solid var(--rule);
+}
+
+.section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+  gap: 28px;
+  align-items: end;
+  margin-bottom: 28px;
+}
+
+.section-head h2 {
+  margin: 8px 0 0;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(28px, 4vw, 52px);
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+
+.section-copy {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+
+.dock-shell {
+  background: var(--board-bg);
+  color: var(--flap-text);
+  border: 1px solid #2a2a2a;
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.dock-board {
+  min-width: 920px;
+}
+
+.dock-head,
+.dock-row {
+  display: grid;
+  grid-template-columns: 110px 160px minmax(220px, 1fr) minmax(240px, 0.9fr);
+  column-gap: 12px;
+  align-items: center;
+}
+
+.dock-head {
+  min-height: 30px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(244, 237, 225, 0.12);
+}
+
+.dock-row {
+  min-height: 64px;
+  padding: 7px 0;
+  border-bottom: 1px solid #1c1c1c;
+}
+
+.dock-row:last-child {
+  border-bottom: 0;
+}
+
+.network-frame {
+  border: 1px solid var(--rule);
+  background: var(--paper-2);
+}
+
+.network-head,
+.network-row {
+  display: grid;
+  grid-template-columns: 1.15fr 1.05fr 1.15fr 1fr 0.85fr;
+  min-width: 860px;
+  align-items: center;
+}
+
+.network-head {
+  min-height: 40px;
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper-3);
+}
+
+.network-head > span,
+.network-row > div {
+  padding: 0 16px;
+}
+
+.network-row {
+  min-height: 72px;
+  border-bottom: 1px solid var(--rule-soft);
+  background: var(--paper);
+}
+
+.network-row:last-child {
+  border-bottom: 0;
+}
+
+.city-name {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.network-scroll {
+  overflow-x: auto;
+}
+
+.lookup-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.42fr) minmax(0, 1.58fr);
+  border: 1px solid var(--rule);
+  min-height: 520px;
+}
+
+.lookup-panel {
+  padding: 24px 22px;
+  border-right: 1px solid var(--rule);
+  background: var(--paper-2);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.lookup-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  border: 1px solid var(--rule);
+  background: var(--board-bg);
+}
+
+.lookup-input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--flap-text);
+  padding: 14px 14px;
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  caret-color: var(--accent);
+}
+
+.lookup-input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.find-btn {
+  border: 0;
+  border-left: 1px solid #2a2a2a;
+  background: #1a1a1a;
+  color: var(--flap-text);
+  padding: 0 16px;
+  cursor: pointer;
+  min-width: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.find-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.lookup-help {
+  color: var(--ink-faint);
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.lookup-help code {
+  font-family: var(--mono);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.event-log {
+  margin-top: auto;
+  border-top: 1px solid var(--rule-soft);
+  padding-top: 14px;
+}
+
+.event-line {
+  color: var(--ink-soft);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.manifest {
+  background: var(--board-bg);
+  color: var(--flap-text);
+  padding: 22px 24px 26px;
+  overflow-x: auto;
+}
+
+.manifest-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: baseline;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(244, 237, 225, 0.12);
+  margin-bottom: 18px;
+}
+
+.manifest-title {
+  color: var(--label);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.manifest-id {
+  color: var(--flap-text-dim);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+}
+
+.manifest-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  min-width: 760px;
+}
+
+.doc-item {
+  border-top: 1px solid #242424;
+  padding: 12px 18px 14px 0;
+  min-height: 86px;
+}
+
+.doc-item:nth-child(odd) {
+  padding-right: 22px;
+}
+
+.doc-label {
+  color: var(--label);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.static-val {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--flap-text);
+  text-transform: uppercase;
+}
+
+.philosophy {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  gap: 64px;
+  align-items: start;
+}
+
+.philosophy h2 {
+  margin: 10px 0 0;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(36px, 5.4vw, 72px);
+  line-height: 0.92;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+  max-width: 920px;
+}
+
+.prose p {
+  margin: 0 0 18px;
+  color: var(--ink-soft);
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.prose strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.principles {
+  margin-top: 28px;
+  border-top: 1px solid var(--rule);
+}
+
+.principle {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.principle-no {
+  color: var(--ink-faint);
+  font-weight: 700;
+}
+
+.principle-title {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 12px;
+}
+
+.principle-copy {
+  margin-top: 4px;
+  color: var(--ink-soft);
+  font-size: 12px;
+}
+
+.directory {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border: 1px solid var(--rule);
+}
+
+.term-card {
+  padding: 22px 22px 18px;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper);
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.term-card:nth-child(2n) {
+  border-right: 0;
+}
+
+.term-card:nth-last-child(-n+2) {
+  border-bottom: 0;
+}
+
+.term-name {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  line-height: 0.95;
+}
+
+.term-code {
+  color: var(--ink-faint);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+}
+
+.term-board {
+  background: var(--board-bg);
+  color: var(--flap-text);
+  padding: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.term-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.term-row .doc-label {
+  margin: 0;
+}
+
+.site-foot {
+  border-top: 1px solid var(--rule);
+  padding: 0 0 28px;
+  background: var(--paper-3);
+}
+
+.foot-grid {
+  display: grid;
+  grid-template-columns: 1.6fr repeat(4, minmax(0, 1fr));
+  border-bottom: 1px solid var(--rule);
+}
+
+.foot-cell {
+  min-height: 120px;
+  padding: 20px 18px;
+  border-right: 1px solid var(--rule-soft);
+}
+
+.foot-cell:last-child {
+  border-right: 0;
+}
+
+.foot-brand {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: -0.04em;
+}
+
+.foot-sub {
+  margin-top: 8px;
+  color: var(--ink-faint);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.foot-kicker {
+  color: var(--ink-faint);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.foot-val {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.legal {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 0 0;
+  color: var(--ink-faint);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 1100px) {
+  .wrap {
+    width: min(calc(100% - 32px), var(--max));
+  }
+
+  .head-row {
+    grid-template-columns: 1fr;
+  }
+
+  .brand {
+    border-right: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .hero-grid,
+  .section-head,
+  .philosophy,
+  .lookup-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .metrics-strip {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .metric:nth-child(2) {
+    border-right: 0;
+  }
+
+  .metric:nth-child(-n+2) {
+    border-bottom: 1px solid rgba(244, 237, 225, 0.08);
+  }
+
+  .directory {
+    grid-template-columns: 1fr;
+  }
+
+  .term-card,
+  .term-card:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .term-card:nth-last-child(-n+2) {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .term-card:last-child {
+    border-bottom: 0;
+  }
+
+  .foot-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .foot-cell:nth-child(3) {
+    border-right: 0;
+  }
+
+  .foot-cell:nth-child(-n+3) {
+    border-bottom: 1px solid var(--rule-soft);
+  }
+
+  .lookup-panel {
+    border-right: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+}
+
+@media (max-width: 760px) {
+  .wrap {
+    width: min(calc(100% - 20px), var(--max));
+  }
+
+  .head-meta {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .meta-cell:nth-child(2),
+  .meta-cell:nth-child(4) {
+    border-right: 0;
+  }
+
+  .meta-cell:nth-child(-n+2) {
+    border-bottom: 1px solid var(--rule-soft);
+  }
+
+  .nav-row {
+    overflow-x: auto;
+  }
+
+  .primary-nav {
+    min-width: 560px;
+  }
+
+  .sim-slot {
+    min-width: 220px;
+  }
+
+  .hero {
+    padding-top: 28px;
+  }
+
+  .hero h1 {
+    font-size: clamp(40px, 14vw, 68px);
+  }
+
+  .board-shell,
+  .dock-shell {
+    margin-inline: -10px;
+    border-left: 0;
+    border-right: 0;
+    padding: 14px 12px;
+  }
+
+  .metrics-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .metric {
+    border-right: 0;
+    border-bottom: 1px solid rgba(244, 237, 225, 0.08);
+    min-height: 132px;
+  }
+
+  .metric:last-child {
+    border-bottom: 0;
+  }
+
+  .section {
+    padding: 40px 0;
+  }
+
+  .foot-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .foot-cell,
+  .foot-cell:nth-child(3) {
+    border-right: 1px solid var(--rule-soft);
+    border-bottom: 1px solid var(--rule-soft);
+  }
+
+  .foot-cell:nth-child(even) {
+    border-right: 0;
+  }
+
+  .foot-cell:first-child {
+    grid-column: 1 / -1;
+    border-right: 0;
+  }
+
+  .legal {
+    flex-direction: column;
+  }
+
+  .philosophy {
+    gap: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .flap-cell.is-top .flap-hinge-top,
+  .flap-cell.is-bot .flap-hinge-bottom {
+    animation: none !important;
+  }
+}
+</style>
+</head>
+<body><div style="position:fixed;right:12px;bottom:12px;z-index:2147483647;padding:8px 10px;background:#111;color:#fff;font:12px/1.3 monospace;border:1px solid #777">ARCHIVED SOURCE · SCRIPTS AND NETWORK DISABLED</div>
+<header class="site-head">
+  <div class="wrap">
+    <div class="head-row">
+      <a class="brand" href="#dispatch" aria-label="Terminal 17 home">
+        <span class="brand-plate" aria-hidden="true">17</span>
+        <span>
+          <span class="brand-name">TERMINAL 17</span>
+          <span class="brand-sub">Regional Freight Exchange</span>
+        </span>
+      </a>
+      <div class="head-meta" aria-label="Terminal system information">
+        <div class="meta-cell">
+          <span class="meta-kicker">Local Time</span>
+          <span class="meta-val" id="clockLocal">14:18:00</span>
+        </div>
+        <div class="meta-cell">
+          <span class="meta-kicker">System State</span>
+          <span class="meta-val is-live">RUNNING</span>
+        </div>
+        <div class="meta-cell">
+          <span class="meta-kicker">Board Sync</span>
+          <span class="meta-val" id="clockSync">14:18:00</span>
+        </div>
+        <div class="meta-cell">
+          <span class="meta-kicker">Terminal Code</span>
+          <span class="meta-val">T17-MEM-RX</span>
+        </div>
+      </div>
+    </div>
+    <div class="nav-row">
+      <nav class="primary-nav" aria-label="Primary">
+        <button class="nav-btn is-on" type="button" data-nav="dispatch">
+          <span data-nav-mark></span>
+          <span class="nav-text">DISPATCH</span>
+        </button>
+        <button class="nav-btn" type="button" data-nav="docks">
+          <span data-nav-mark></span>
+          <span class="nav-text">DOCKS</span>
+        </button>
+        <button class="nav-btn" type="button" data-nav="network">
+          <span data-nav-mark></span>
+          <span class="nav-text">NETWORK</span>
+        </button>
+        <button class="nav-btn" type="button" data-nav="lookup">
+          <span data-nav-mark></span>
+          <span class="nav-text">LOOKUP</span>
+        </button>
+        <button class="nav-btn" type="button" data-nav="about">
+          <span data-nav-mark></span>
+          <span class="nav-text">ABOUT</span>
+        </button>
+      </nav>
+      <div class="sim-slot">
+        <button class="sim-btn" id="simBtn" type="button" aria-label="Simulate dispatch">
+          <span id="simFlaps"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="dispatch">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <div class="kicker">Memphis Yard / Sector 04</div>
+          <h1>Live dispatch.<em>Every load on the board.</em></h1>
+        </div>
+        <p class="hero-note"><strong>TERMINAL 17</strong> is the Memphis hub of a six-city regional freight exchange. The board is the public face of the same mechanical system used on the dock floor: identifiers, doors, windows, and state, resolved one character at a time.</p>
+      </div>
+      <div class="board-shell" aria-label="Live dispatch board">
+        <div class="board-chrome">
+          <span class="board-title">Live Dispatch Board</span>
+          <span class="board-sync" id="boardStamp">SYSTEM ONLINE · SYNC 14:18</span>
+        </div>
+        <div class="board-scroll">
+          <div class="dispatch">
+            <div class="dispatch-head">
+              <span class="col-label">Load</span>
+              <span class="col-label">Destination</span>
+              <span class="col-label">Dock</span>
+              <span class="col-label">Departure</span>
+              <span class="col-label">Status</span>
+            </div>
+            <div id="dispatchRows"></div>
+          </div>
+        </div>
+        <div class="metrics-strip" aria-label="Terminal metrics">
+          <div class="metric">
+            <span class="metric-label">Active Loads</span>
+            <div class="flap-line is-right" id="metricActive"></div>
+            <span class="metric-note">On the exchange</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Docks Open</span>
+            <div class="flap-line is-right" id="metricDocks"></div>
+            <span class="metric-note">Of 18 assigned doors</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Inbound</span>
+            <div class="flap-line is-right" id="metricInbound"></div>
+            <span class="metric-note">Next ninety minutes</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Departed Today</span>
+            <div class="flap-line is-right" id="metricDeparted"></div>
+            <span class="metric-note">Since 00:00 local</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="docks">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Dock Operations</div>
+          <h2>Work at the door.</h2>
+        </div>
+        <p class="section-copy">A dock is open, holding, loading, or closing. Crew, load, and door have to agree before freight moves. State is local, physical, and visible to anyone standing at the board.</p>
+      </div>
+      <div class="dock-shell">
+        <div class="dock-board">
+          <div class="dock-head">
+            <span class="col-label">Dock</span>
+            <span class="col-label">Load</span>
+            <span class="col-label">Crew</span>
+            <span class="col-label">State</span>
+          </div>
+          <div id="dockRows"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="network">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Network Movement</div>
+          <h2>Six cities. One exchange.</h2>
+        </div>
+        <p class="section-copy">Regional freight does not travel as a mystery. Each lane names an origin, a transfer, a destination, a next departure, and the loads currently on that path.</p>
+      </div>
+      <div class="network-scroll">
+        <div class="network-frame" aria-label="Regional routing table">
+          <div class="network-head">
+            <span class="kicker">Origin</span>
+            <span class="kicker">Transfer</span>
+            <span class="kicker">Destination</span>
+            <span class="kicker">Next Departure</span>
+            <span class="kicker">Active Loads</span>
+          </div>
+          <div class="network-row">
+            <div class="city-name">Memphis</div>
+            <div class="city-name">Nashville</div>
+            <div class="city-name">Atlanta</div>
+            <div id="netDep0"></div>
+            <div id="netLoad0"></div>
+          </div>
+          <div class="network-row">
+            <div class="city-name">Memphis</div>
+            <div class="city-name">St. Louis</div>
+            <div class="city-name">Chicago</div>
+            <div id="netDep1"></div>
+            <div id="netLoad1"></div>
+          </div>
+          <div class="network-row">
+            <div class="city-name">Louisville</div>
+            <div class="city-name">Memphis</div>
+            <div class="city-name">Nashville</div>
+            <div id="netDep2"></div>
+            <div id="netLoad2"></div>
+          </div>
+          <div class="network-row">
+            <div class="city-name">Nashville</div>
+            <div class="city-name">Memphis</div>
+            <div class="city-name">St. Louis</div>
+            <div id="netDep3"></div>
+            <div id="netLoad3"></div>
+          </div>
+          <div class="network-row">
+            <div class="city-name">Chicago</div>
+            <div class="city-name">St. Louis</div>
+            <div class="city-name">Memphis</div>
+            <div id="netDep4"></div>
+            <div id="netLoad4"></div>
+          </div>
+          <div class="network-row">
+            <div class="city-name">Atlanta</div>
+            <div class="city-name">Nashville</div>
+            <div class="city-name">Louisville</div>
+            <div id="netDep5"></div>
+            <div id="netLoad5"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="lookup">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Freight Lookup</div>
+          <h2>Enter a load. Read the state.</h2>
+        </div>
+        <p class="section-copy">The lookup is a quiet clerk window. Type an identifier. The manifest fills through the same flap system used on the dispatch board. Unknown identifiers land as NOT FOUND.</p>
+      </div>
+      <div class="lookup-grid">
+        <div class="lookup-panel">
+          <form id="lookupForm">
+            <label class="field-label" for="lookupInput">Enter Load ID</label>
+            <div class="lookup-form">
+              <input class="lookup-input" id="lookupInput" name="load" value="F423" maxlength="5" autocomplete="off" spellcheck="false" aria-describedby="lookupHelp">
+              <button class="find-btn" type="submit" aria-label="Resolve load">
+                <span id="findFlaps"></span>
+              </button>
+            </div>
+          </form>
+          <p class="lookup-help" id="lookupHelp">Identifiers on this board run F419 through the current inbound series. Try <code>F423</code>, <code>F421</code>, or <code>F426</code>. A misspelled ID resolves to a flap state of NOT FOUND.</p>
+          <div class="event-log">
+            <span class="field-label">Last Dispatch Event</span>
+            <p class="event-line" id="eventLog">Board standing. Waiting for a logical move.</p>
+          </div>
+        </div>
+        <div class="manifest" aria-live="polite">
+          <div class="manifest-head">
+            <span class="manifest-title">Freight Manifest / Dispatch Document</span>
+            <span class="manifest-id" id="manifestStamp">T17-MEM · LOAD F423</span>
+          </div>
+          <div class="manifest-grid">
+            <div class="doc-item">
+              <span class="doc-label">Load ID</span>
+              <div id="detId"></div>
+            </div>
+            <div class="doc-item">
+              <span class="doc-label">Origin</span>
+              <div id="detOrigin"></div>
+            </div>
+            <div class="doc-item">
+              <span class="doc-label">Destination</span>
+              <div id="detDest"></div>
+            </div>
+            <div class="doc-item">
+              <span class="doc-label">Weight</span>
+              <div class="static-val" id="detWeight">16820 LB</div>
+            </div>
+            <div class="doc-item">
+              <span class="doc-label">Trailer</span>
+              <div class="static-val" id="detTrailer">TR-0841</div>
+            </div>
+            <div class="doc-item">
+              <span class="doc-label">Current Terminal</span>
+              <div id="detTerm"></div>
+            </div>
+            <div class="doc-item">
+              <span class="doc-label">Assigned Dock</span>
+              <div id="detDock"></div>
+            </div>
+            <div class="doc-item">
+              <span class="doc-label">Crew</span>
+              <div id="detCrew"></div>
+            </div>
+            <div class="doc-item">
+              <span class="doc-label">Arrived</span>
+              <div class="static-val" id="detArrived">13:55</div>
+            </div>
+            <div class="doc-item">
+              <span class="doc-label">Estimated Departure</span>
+              <div id="detDep"></div>
+            </div>
+            <div class="doc-item">
+              <span class="doc-label">Current State</span>
+              <div id="detState"></div>
+            </div>
+            <div class="doc-item">
+              <span class="doc-label">Record</span>
+              <div class="static-val" id="detRecord">VALID</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="wrap">
+      <div class="philosophy">
+        <div>
+          <div class="kicker">Operations Philosophy</div>
+          <h2>Freight doesn't disappear between departure and arrival.</h2>
+        </div>
+        <div class="prose">
+          <p><strong>A load is never an abstraction.</strong> Between the moment it leaves a shipper's dock and the moment it is signed for at destination, it occupies a door, a trailer, a crew, a window, and a lane. Terminal 17 exists to keep those facts in the same place, in the same order, for everyone who has to act on them.</p>
+          <p>Regional routing is the first discipline. Memphis sits at the center of a short-haul lattice — Nashville, St. Louis, Chicago, Atlanta, Louisville — so that long movement can be broken into windows a yard can actually keep. Transfer operations are not a black box. They are a named city, a next departure, and a count of active loads on that path.</p>
+          <p>Dock coordination is the second discipline. A door that is OPEN is ready to receive work. A door on HOLD is waiting for a reason that should be visible. LOADING, STAGED, CLOSING, and READY are not decorations. They are instructions to the people standing in the weather with a manifest in hand.</p>
+          <p>Load visibility is the third. Customers, receiving terminals, and yard crews should be able to read the same identifier and the same state. Dispatch discipline is the fourth: exceptions are named. DELAYED is not hidden inside a dashboard. It is a word on the board, landed mechanically, so that the next decision can be made without a meeting.</p>
+          <div class="principles">
+            <div class="principle">
+              <div class="principle-no">01</div>
+              <div>
+                <div class="principle-title">Regional routing</div>
+                <div class="principle-copy">Freight is sequenced by lane, transfer window, and destination capacity. The corridor is the product.</div>
+              </div>
+            </div>
+            <div class="principle">
+              <div class="principle-no">02</div>
+              <div>
+                <div class="principle-title">Dock coordination</div>
+                <div class="principle-copy">A load is actionable only when door, crew, and state agree. Empty doors stay empty on purpose.</div>
+              </div>
+            </div>
+            <div class="principle">
+              <div class="principle-no">03</div>
+              <div>
+                <div class="principle-title">Transfer operations</div>
+                <div class="principle-copy">A transfer is a named city and a clock, not a disappearing act between two computer systems.</div>
+              </div>
+            </div>
+            <div class="principle">
+              <div class="principle-no">04</div>
+              <div>
+                <div class="principle-title">Dispatch discipline</div>
+                <div class="principle-copy">Exceptions are written as state. If the board cannot say it, the yard cannot run it.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="directory">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Terminal Directory</div>
+          <h2>Four yards. Shared clock.</h2>
+        </div>
+        <p class="section-copy">Operating windows and linehaul times are posted as paperwork. Live dock counts and system state resolve on flaps because they change while the shift is underway.</p>
+      </div>
+      <div class="directory">
+        <article class="term-card">
+          <div>
+            <div class="term-code">Terminal Code T17</div>
+            <div class="term-name">Terminal 17 / Memphis</div>
+          </div>
+          <div class="static-val">Operating window 05:00–23:30</div>
+          <div class="term-board">
+            <div class="term-row">
+              <span class="doc-label">Active Docks</span>
+              <div id="t17docks"></div>
+            </div>
+            <div class="term-row">
+              <span class="doc-label">Next Linehaul</span>
+              <div id="t17haul"></div>
+            </div>
+            <div class="term-row">
+              <span class="doc-label">System State</span>
+              <div id="t17state"></div>
+            </div>
+          </div>
+        </article>
+        <article class="term-card">
+          <div>
+            <div class="term-code">Terminal Code T08</div>
+            <div class="term-name">Terminal 08 / Nashville</div>
+          </div>
+          <div class="static-val">Operating window 04:30–23:00</div>
+          <div class="term-board">
+            <div class="term-row">
+              <span class="doc-label">Active Docks</span>
+              <div id="t08docks"></div>
+            </div>
+            <div class="term-row">
+              <span class="doc-label">Next Linehaul</span>
+              <div id="t08haul"></div>
+            </div>
+            <div class="term-row">
+              <span class="doc-label">System State</span>
+              <div id="t08state"></div>
+            </div>
+          </div>
+        </article>
+        <article class="term-card">
+          <div>
+            <div class="term-code">Terminal Code T22</div>
+            <div class="term-name">Terminal 22 / St. Louis</div>
+          </div>
+          <div class="static-val">Operating window 05:15–23:45</div>
+          <div class="term-board">
+            <div class="term-row">
+              <span class="doc-label">Active Docks</span>
+              <div id="t22docks"></div>
+            </div>
+            <div class="term-row">
+              <span class="doc-label">Next Linehaul</span>
+              <div id="t22haul"></div>
+            </div>
+            <div class="term-row">
+              <span class="doc-label">System State</span>
+              <div id="t22state"></div>
+            </div>
+          </div>
+        </article>
+        <article class="term-card">
+          <div>
+            <div class="term-code">Terminal Code T31</div>
+            <div class="term-name">Terminal 31 / Atlanta</div>
+          </div>
+          <div class="static-val">Operating window 04:45–00:15</div>
+          <div class="term-board">
+            <div class="term-row">
+              <span class="doc-label">Active Docks</span>
+              <div id="t31docks"></div>
+            </div>
+            <div class="term-row">
+              <span class="doc-label">Next Linehaul</span>
+              <div id="t31haul"></div>
+            </div>
+            <div class="term-row">
+              <span class="doc-label">System State</span>
+              <div id="t31state"></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-cell">
+        <div class="foot-brand">TERMINAL 17</div>
+        <div class="foot-sub">Regional Freight Exchange · Memphis Yard</div>
+      </div>
+      <div class="foot-cell">
+        <span class="foot-kicker">Operating Region</span>
+        <div class="foot-val">Mid-South / Lower Midwest corridor. Memphis hub with Nashville, St. Louis, Chicago, Atlanta, and Louisville.</div>
+      </div>
+      <div class="foot-cell">
+        <span class="foot-kicker">Control Channel</span>
+        <div class="foot-val">RUNNING · Manifest channel clear · Spec T17-RX-2026</div>
+      </div>
+      <div class="foot-cell">
+        <span class="foot-kicker">Last Sync</span>
+        <div class="foot-val" id="footSync">14:18:00 LOCAL</div>
+      </div>
+      <div class="foot-cell">
+        <span class="foot-kicker">Public Desk</span>
+        <div class="foot-val">Yard office open with the first outbound. Board remains posted through last inbound.</div>
+      </div>
+    </div>
+    <div class="legal">
+      <span>Terminal 17 is a fictional demonstration property. No live freight is tracked by this interface.</span>
+      <span>T17-MEM-RX · Split-flap operations board</span>
+    </div>
+  </div>
+</footer>
+
+
+</body>
+</html>

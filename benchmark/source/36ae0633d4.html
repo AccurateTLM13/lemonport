@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Municipal League Baseball — Civic Scoreboard & League Desk</title>
+    
+    <!-- Google Fonts: Space Grotesk (Flap cells), Space Mono (System/Labels), Newsreader (Editorial Story) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Space+Grotesk:wght@500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    
+    
+
+    <style>
+        /* Base page styling */
+        body {
+            background-color: #0b0f0d;
+            color: #f2ebd9;
+            font-family: 'Space Mono', monospace;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(35, 61, 42, 0.25) 0%, transparent 75%),
+                linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.8));
+            background-attachment: fixed;
+        }
+
+        /* Weathered municipal sign border effect */
+        .municipal-border {
+            border: 2px solid #28332b;
+            box-shadow: inset 0 0 0 1px #0a0e0b, 0 4px 20px rgba(0,0,0,0.6);
+        }
+
+        .rivet-corner {
+            position: relative;
+        }
+        .rivet-corner::before, .rivet-corner::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #3a473e;
+            border-radius: 50%;
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.3), 0 1px 2px rgba(0,0,0,0.8);
+        }
+        .rivet-corner::before { top: 6px; left: 6px; }
+        .rivet-corner::after { top: 6px; right: 6px; }
+
+        /* ==========================================================================
+           SOLARI SPLIT-FLAP SYSTEM CSS (100% Mechanical Physics)
+           ========================================================================== */
+        
+        .flap-cell {
+            position: relative;
+            display: inline-block;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            perspective: 400px;
+            user-select: none;
+            vertical-align: middle;
+            background-color: #0a0d0b;
+            border-radius: 2px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.7);
+        }
+
+        /* Scale Dimensions */
+        .flap-cell.scale-display {
+            width: 44px;
+            height: 62px;
+            font-size: 42px;
+            margin: 0 2px;
+        }
+        .flap-cell.scale-standard {
+            width: 26px;
+            height: 38px;
+            font-size: 24px;
+            margin: 0 1.5px;
+        }
+        .flap-cell.scale-micro {
+            width: 16px;
+            height: 24px;
+            font-size: 15px;
+            margin: 0 1px;
+        }
+
+        /* Cell Housing */
+        .flap-housing {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #18201b;
+            border-radius: 2px;
+            overflow: hidden;
+            box-shadow: inset 0 0 6px rgba(0,0,0,0.9);
+            border: 1px solid #0d120f;
+        }
+
+        /* Seam Hairline */
+        .flap-seam {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(0, 0, 0, 0.85);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 10;
+            transform: translateY(-50%);
+        }
+
+        /* Top & Bottom Flap Halves */
+        .flap-half {
+            position: absolute;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 50%;
+            overflow: hidden;
+            background: #1a221e;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .flap-half.top {
+            top: 0;
+            transform-origin: bottom;
+            border-bottom: 1px solid rgba(0,0,0,0.5);
+        }
+
+        .flap-half.bottom {
+            bottom: 0;
+            transform-origin: top;
+            border-top: 1px solid rgba(255,255,255,0.03);
+        }
+
+        /* Internal Character Positioning */
+        .flap-char {
+            position: absolute;
+            left: 0;
+            right: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f2ebd9;
+            line-height: 1;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+            transition: color 0.1s ease;
+        }
+
+        .flap-half.top .flap-char {
+            top: 0;
+            height: 200%;
+        }
+
+        .flap-half.bottom .flap-char {
+            bottom: 0;
+            height: 200%;
+        }
+
+        /* Flap Mechanical Rotation States */
+        .flap-top-curr {
+            z-index: 3;
+            transform: rotateX(0deg);
+        }
+        .flap-top-next {
+            z-index: 2;
+        }
+        .flap-bottom-curr {
+            z-index: 2;
+        }
+        .flap-bottom-next {
+            z-index: 3;
+            transform: rotateX(90deg);
+        }
+
+        /* Flipping Active Animation Classes */
+        .flipping .flap-top-curr {
+            animation: flipTop 0.08s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+        }
+        .flipping .flap-bottom-next {
+            animation: flipBottom 0.08s cubic-bezier(0.55, 0, 1, 0.45) 0.04s forwards;
+        }
+
+        @keyframes flipTop {
+            0% { transform: rotateX(0deg); }
+            100% { transform: rotateX(-90deg); }
+        }
+
+        @keyframes flipBottom {
+            0% { transform: rotateX(90deg); }
+            100% { transform: rotateX(0deg); }
+        }
+
+        /* Status colors applied ONLY on landed text */
+        .flap-char.status-live { color: #5bb362 !important; }
+        .flap-char.status-warn { color: #e09b36 !important; }
+        .flap-char.status-bad { color: #cf4f3c !important; }
+        .flap-char.status-final { color: #819ba8 !important; }
+
+        /* Reduced motion fallback */
+        @media (prefers-reduced-motion: reduce) {
+            .flipping .flap-top-curr, .flipping .flap-bottom-next {
+                animation: none !important;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f0d;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e2822;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2d3b32;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-brass selection:text-board"><div style="position:fixed;right:12px;bottom:12px;z-index:2147483647;padding:8px 10px;background:#111;color:#fff;font:12px/1.3 monospace;border:1px solid #777">ARCHIVED SOURCE · SCRIPTS AND NETWORK DISABLED</div>
+
+    <!-- TOP CIVIC HEADER & MASTHEAD -->
+    <header class="border-b border-board-light bg-board/90 backdrop-blur sticky top-0 z-50">
+        <!-- Ticker / Civic Bar -->
+        <div class="max-w-7xl mx-auto px-4 py-1.5 flex flex-wrap justify-between items-center text-xs text-cream-dim border-b border-white/5 font-mono">
+            <div class="flex items-center gap-4">
+                <span class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-status-live animate-pulse"></span>
+                    <span>SEASON 88 • 2026</span>
+                </span>
+                <span class="hidden sm:inline text-white/20">|</span>
+                <span class="hidden sm:inline">WEEK 14 OF 18</span>
+                <span class="text-white/20">|</span>
+                <span id="current-date-display">FRIDAY, AUG 14</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="text-brass flex items-center gap-1">
+                    <svg class="w-3.5 h-3.5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <span>MUNICIPAL PARK: 74°F • CLEAR</span>
+                </span>
+                <span class="hidden md:inline text-white/20">|</span>
+                <span class="hidden md:inline text-cream-dim">FIELD STATUS: DRY & GAME READY</span>
+            </div>
+        </div>
+
+        <!-- Main League Masthead -->
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <!-- Civic Crest Emblem -->
+                <div class="w-10 h-10 rounded border border-brass/40 bg-field-green flex items-center justify-center text-brass font-bold text-lg shadow-inner">
+                    MLB
+                </div>
+                <div>
+                    <h1 class="font-grotesk text-2xl md:text-3xl font-bold tracking-wider text-cream flex items-center gap-2">
+                        MUNICIPAL LEAGUE BASEBALL
+                    </h1>
+                    <p class="text-xs text-brass font-mono tracking-widest uppercase">Civic Sports League • Founded 1938</p>
+                </div>
+            </div>
+
+            <!-- Navigation with Micro Split-Flap Active Indicator -->
+            <nav class="flex items-center gap-1 sm:gap-2 overflow-x-auto max-w-full pb-1 md:pb-0">
+                <button class="nav-btn active group px-3 py-1.5 rounded border border-white/10 hover:border-brass/50 bg-board-light text-xs font-mono transition flex items-center gap-2">
+                    <span class="nav-flap" data-flap-str="ON" data-scale="micro" data-length="2"></span>
+                    <span class="text-cream group-hover:text-brass transition">SCORES</span>
+                </button>
+                <button class="nav-btn group px-3 py-1.5 rounded border border-white/10 hover:border-brass/50 bg-board-light text-xs font-mono transition flex items-center gap-2">
+                    <span class="nav-flap" data-flap-str="--" data-scale="micro" data-length="2"></span>
+                    <span class="text-cream group-hover:text-brass transition">BOARD</span>
+                </button>
+                <button class="nav-btn group px-3 py-1.5 rounded border border-white/10 hover:border-brass/50 bg-board-light text-xs font-mono transition flex items-center gap-2">
+                    <span class="nav-flap" data-flap-str="--" data-scale="micro" data-length="2"></span>
+                    <span class="text-cream group-hover:text-brass transition">STANDINGS</span>
+                </button>
+                <button class="nav-btn group px-3 py-1.5 rounded border border-white/10 hover:border-brass/50 bg-board-light text-xs font-mono transition flex items-center gap-2">
+                    <span class="nav-flap" data-flap-str="--" data-scale="micro" data-length="2"></span>
+                    <span class="text-cream group-hover:text-brass transition">LEADERS</span>
+                </button>
+                <button class="nav-btn group px-3 py-1.5 rounded border border-white/10 hover:border-brass/50 bg-board-light text-xs font-mono transition flex items-center gap-2">
+                    <span class="nav-flap" data-flap-str="--" data-scale="micro" data-length="2"></span>
+                    <span class="text-cream group-hover:text-brass transition">TRADITION</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- SIMULATED LIVE CONTROLS INTERACTION BAR -->
+    <div class="bg-field-green/40 border-y border-brass/30 py-2.5 px-4 sticky top-[73px] z-40 backdrop-blur-md shadow-lg">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div class="flex items-center gap-3">
+                <span class="bg-brass/20 text-brass border border-brass/40 px-2 py-0.5 rounded font-mono font-bold flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-brass animate-ping"></span>
+                    SIMULATED LIVE ENGINE
+                </span>
+                <span class="hidden lg:inline text-cream-dim font-mono">
+                    Press <strong class="text-cream">ADVANCE GAME</strong> to trigger mechanical state flips across scoreboards & standings.
+                </span>
+            </div>
+
+            <div class="flex items-center gap-2 flex-wrap">
+                <button id="btn-advance" class="bg-brass hover:bg-brass/90 text-board font-bold font-mono px-4 py-1.5 rounded shadow flex items-center gap-2 transition active:scale-95 border border-amber-300/40">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    ADVANCE GAME
+                </button>
+
+                <button id="btn-autopitch" class="bg-board-light hover:bg-white/10 text-cream border border-white/20 font-mono px-3 py-1.5 rounded flex items-center gap-2 transition">
+                    <span id="autopitch-status-dot" class="w-2 h-2 rounded-full bg-gray-500"></span>
+                    <span>AUTO-PITCH: <span id="autopitch-txt">OFF</span></span>
+                </button>
+
+                <button class="bg-board-light hover:bg-white/10 text-cream-dim hover:text-cream border border-white/10 font-mono px-2.5 py-1.5 rounded transition" title="Reset night state">
+                    RESET
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 py-8 space-y-16 flex-grow w-full">
+
+        <!-- SECTION 1: FRIDAY NIGHT SCOREBOARD (HERO) -->
+        <section id="hero-scoreboard" class="space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b border-white/10 pb-3 gap-2">
+                <div>
+                    <span class="text-xs text-brass uppercase font-mono tracking-widest block">Main Municipal Diamond • Game of the Week</span>
+                    <h2 class="font-grotesk text-2xl md:text-3xl font-bold text-cream">FRIDAY NIGHT SCOREBOARD</h2>
+                </div>
+                <div class="text-xs text-cream-dim font-mono">
+                    UPDATED LIVE • MECHANICAL BOARD NO. 01
+                </div>
+            </div>
+
+            <!-- HERO MAIN GAME SCOREBOARD FRAME -->
+            <div class="bg-board border-4 border-board-light rounded-lg p-4 sm:p-6 municipal-border rivet-corner relative overflow-hidden shadow-2xl">
+                <!-- Top Stadium Signage Header -->
+                <div class="bg-field-green/60 border border-brass/30 rounded p-3 mb-6 flex flex-wrap justify-between items-center text-xs font-mono">
+                    <div class="flex items-center gap-2">
+                        <span class="text-brass font-bold">FIELD 01</span>
+                        <span class="text-white/20">•</span>
+                        <span class="text-cream">MUNICIPAL MEMORIAL PARK</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span>ATTENDANCE: 1,420</span>
+                        <span class="text-white/20">•</span>
+                        <span>HOME PLATE UMPIRE: C. MILLER</span>
+                    </div>
+                </div>
+
+                <!-- MAIN GAME FLAP LAYOUT GRID -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                    
+                    <!-- Team Names & Big Display Flap Scores (Lg-8) -->
+                    <div class="lg:col-span-8 space-y-4">
+                        <!-- Visitor Row -->
+                        <div class="bg-board-light/90 border border-white/5 p-3 rounded flex flex-wrap items-center justify-between gap-3">
+                            <div class="flex items-center gap-3 min-w-[200px]">
+                                <span class="text-xs text-brass font-mono uppercase bg-brass/10 px-2 py-1 rounded">AWAY</span>
+                                <div>
+                                    <div class="solari-flap font-bold text-cream" id="hero-away-name" data-flap-str="HARRIS HARDWARE" data-scale="standard" data-length="16"></div>
+                                    <div class="text-[11px] text-cream-dim font-mono mt-0.5">SPONSORED BY HARRIS LUMBER & SUPPLY</div>
+                                </div>
+                            </div>
+                            <!-- Display Scale Score Flap -->
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-mono text-cream-dim mr-2 hidden sm:inline">RUNS</span>
+                                <div class="solari-flap" id="hero-away-score" data-flap-str="04" data-scale="display" data-length="2"></div>
+                            </div>
+                        </div>
+
+                        <!-- Home Row -->
+                        <div class="bg-board-light/90 border border-white/5 p-3 rounded flex flex-wrap items-center justify-between gap-3">
+                            <div class="flex items-center gap-3 min-w-[200px]">
+                                <span class="text-xs text-brass font-mono uppercase bg-brass/10 px-2 py-1 rounded">HOME</span>
+                                <div>
+                                    <div class="solari-flap font-bold text-cream" id="hero-home-name" data-flap-str="MILLER ELECTRIC" data-scale="standard" data-length="16"></div>
+                                    <div class="text-[11px] text-cream-dim font-mono mt-0.5">SPONSORED BY MILLER ELECTRIC CO.</div>
+                                </div>
+                            </div>
+                            <!-- Display Scale Score Flap -->
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-mono text-cream-dim mr-2 hidden sm:inline">RUNS</span>
+                                <div class="solari-flap" id="hero-home-score" data-flap-str="03" data-scale="display" data-length="2"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Game Count & Status Dashboard (Lg-4) -->
+                    <div class="lg:col-span-4 bg-board-light/60 border border-white/10 rounded p-4 space-y-4">
+                        <div class="grid grid-cols-2 gap-3 text-center">
+                            <div class="bg-board p-2 rounded border border-white/5">
+                                <div class="text-[10px] text-cream-dim font-mono mb-1">INNING</div>
+                                <div class="solari-flap justify-center" id="hero-inning" data-flap-str="07" data-scale="display" data-length="2"></div>
+                            </div>
+                            <div class="bg-board p-2 rounded border border-white/5">
+                                <div class="text-[10px] text-cream-dim font-mono mb-1">OUTS</div>
+                                <div class="solari-flap justify-center" id="hero-outs" data-flap-str="02" data-scale="display" data-length="2"></div>
+                            </div>
+                        </div>
+
+                        <!-- Game State Flap Indicator -->
+                        <div class="bg-board p-2.5 rounded border border-white/5 flex items-center justify-between">
+                            <span class="text-xs text-cream-dim font-mono">STATUS</span>
+                            <div class="solari-flap" id="hero-status" data-flap-str="LIVE" data-scale="standard" data-length="8" data-status="live"></div>
+                        </div>
+
+                        <!-- Balls & Strikes Count Indicator -->
+                        <div class="flex items-center justify-between text-xs font-mono px-1">
+                            <span class="text-cream-dim">COUNT:</span>
+                            <div class="flex items-center gap-3">
+                                <span>BALLS: <strong class="text-brass" id="count-balls">2</strong></span>
+                                <span>STRIKES: <strong class="text-brass" id="count-strikes">1</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Play-by-play Flap Ticker -->
+                <div class="mt-6 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs font-mono">
+                    <div class="flex items-center gap-2">
+                        <span class="text-brass uppercase font-bold">LAST PLAY:</span>
+                        <div class="solari-flap" id="hero-lastplay" data-flap-str="FLY OUT TO RIGHT FIELD, 2 OUTS" data-scale="standard" data-length="30"></div>
+                    </div>
+                    <div class="text-cream-dim text-[11px]">
+                        PITCHER: D. VANCE (78 PITCHES)
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECONDARY GAMES GRID (OTHER FIELDS) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                <!-- Field 02 Game -->
+                <div class="bg-board border border-board-light p-4 rounded-lg municipal-border space-y-3">
+                    <div class="flex justify-between items-center text-xs font-mono border-b border-white/5 pb-2">
+                        <span class="text-brass font-bold">FIELD 02 • EAST DIAMOND</span>
+                        <div class="solari-flap" id="g2-status" data-flap-str="WARMUPS" data-scale="micro" data-length="8" data-status="warn"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <div class="solari-flap" id="g2-away" data-flap-str="CARTER BANK" data-scale="standard" data-length="14"></div>
+                            <div class="solari-flap" id="g2-away-score" data-flap-str="00" data-scale="standard" data-length="2"></div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="solari-flap" id="g2-home" data-flap-str="WILSON FEED" data-scale="standard" data-length="14"></div>
+                            <div class="solari-flap" id="g2-home-score" data-flap-str="00" data-scale="standard" data-length="2"></div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center text-[11px] text-cream-dim font-mono pt-1">
+                        <span>SCHEDULED: 6:30 PM</span>
+                        <span>FIRST PITCH IN 12 MIN</span>
+                    </div>
+                </div>
+
+                <!-- Field 03 Game -->
+                <div class="bg-board border border-board-light p-4 rounded-lg municipal-border space-y-3">
+                    <div class="flex justify-between items-center text-xs font-mono border-b border-white/5 pb-2">
+                        <span class="text-brass font-bold">FIELD 03 • WEST DIAMOND</span>
+                        <div class="solari-flap" id="g3-status" data-flap-str="SCHEDULED" data-scale="micro" data-length="9"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <div class="solari-flap" id="g3-away" data-flap-str="THOMAS AUTO" data-scale="standard" data-length="14"></div>
+                            <div class="solari-flap" id="g3-away-score" data-flap-str="00" data-scale="standard" data-length="2"></div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="solari-flap" id="g3-home" data-flap-str="MAIN ST MKT" data-scale="standard" data-length="14"></div>
+                            <div class="solari-flap" id="g3-home-score" data-flap-str="00" data-scale="standard" data-length="2"></div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center text-[11px] text-cream-dim font-mono pt-1">
+                        <span>SCHEDULED: 7:00 PM</span>
+                        <span>LIGHTS ON AT 6:45 PM</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: AROUND THE LEAGUE BOARD -->
+        <section id="around-league" class="space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b border-white/10 pb-3 gap-2">
+                <div>
+                    <span class="text-xs text-brass uppercase font-mono tracking-widest block">Complete Civic Schedule</span>
+                    <h2 class="font-grotesk text-2xl font-bold text-cream">AROUND THE LEAGUE</h2>
+                </div>
+                <div class="text-xs text-cream-dim font-mono">
+                    STAGGERED MECHANICAL REFRESH
+                </div>
+            </div>
+
+            <!-- STRUCTURED BOARD CONTAINER -->
+            <div class="bg-board border border-board-light rounded-lg p-4 municipal-border overflow-x-auto">
+                <table class="w-full text-left font-mono text-xs border-collapse min-w-[650px]">
+                    <thead>
+                        <tr class="border-b border-white/10 text-cream-dim">
+                            <th class="py-2 px-3">FIELD</th>
+                            <th class="py-2 px-3">VISITOR (AWAY)</th>
+                            <th class="py-2 px-3">HOME TEAM</th>
+                            <th class="py-2 px-3">SCORE</th>
+                            <th class="py-2 px-3">TIME/INN</th>
+                            <th class="py-2 px-3 text-right">STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-white/5">
+                        <tr class="hover:bg-white/[0.02]">
+                            <td class="py-3 px-3 font-bold text-brass">FIELD 01</td>
+                            <td class="py-3 px-3">
+                                <div class="solari-flap" id="board-r1-away" data-flap-str="HARRIS HARDWARE" data-scale="micro" data-length="15"></div>
+                            </td>
+                            <td class="py-3 px-3">
+                                <div class="solari-flap" id="board-r1-home" data-flap-str="MILLER ELECTRIC" data-scale="micro" data-length="15"></div>
+                            </td>
+                            <td class="py-3 px-3">
+                                <div class="solari-flap" id="board-r1-score" data-flap-str="04-03" data-scale="micro" data-length="5"></div>
+                            </td>
+                            <td class="py-3 px-3">
+                                <div class="solari-flap" id="board-r1-time" data-flap-str="TOP 7TH" data-scale="micro" data-length="8"></div>
+                            </td>
+                            <td class="py-3 px-3 text-right">
+                                <div class="solari-flap inline-block" id="board-r1-status" data-flap-str="LIVE" data-scale="micro" data-length="8" data-status="live"></div>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-white/[0.02]">
+                            <td class="py-3 px-3 font-bold text-brass">FIELD 02</td>
+                            <td class="py-3 px-3">
+                                <div class="solari-flap" id="board-r2-away" data-flap-str="CARTER BANK" data-scale="micro" data-length="15"></div>
+                            </td>
+                            <td class="py-3 px-3">
+                                <div class="solari-flap" id="board-r2-home" data-flap-str="WILSON FEED" data-scale="micro" data-length="15"></div>
+                            </td>
+                            <td class="py-3 px-3">
+                                <div class="solari-flap" id="board-r2-score" data-flap-str="00-00" data-scale="micro" data-length="5"></div>
+                            </td>
+                            <td class="py-3 px-3">
+                                <div class="solari-flap" id="board-r2-time" data-flap-str="6:30 PM" data-scale="micro" data-length="8"></div>
+                            </td>
+                            <td class="py-3 px-3 text-right">
+                                <div class="solari-flap inline-block" id="board-r2-status" data-flap-str="WARMUPS" data-scale="micro" data-length="8" data-status="warn"></div>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-white/[0.02]">
+                            <td class="py-3 px-3 font-bold text-brass">FIELD 03</td>
+                            <td class="py-3 px-3">
+                                <div class="solari-flap" id="board-r3-away" data-flap-str="THOMAS AUTO" data-scale="micro" data-length="15"></div>
+                            </td>
+                            <td class="py-3 px-3">
+                                <div class="solari-flap" id="board-r3-home" data-flap-str="MAIN ST MARKET" data-scale="micro" data-length="15"></div>
+                            </td>
+                            <td class="py-3 px-3">
+                                <div class="solari-flap" id="board-r3-score" data-flap-str="00-00" data-scale="micro" data-length="5"></div>
+                            </td>
+                            <td class="py-3 px-3">
+                                <div class="solari-flap" id="board-r3-time" data-flap-str="7:00 PM" data-scale="micro" data-length="8"></div>
+                            </td>
+                            <td class="py-3 px-3 text-right">
+                                <div class="solari-flap inline-block" id="board-r3-status" data-flap-str="SCHEDULED" data-scale="micro" data-length="9"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SECTION 3: CIVIC DIVISION STANDINGS -->
+        <section id="standings-section" class="space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b border-white/10 pb-3 gap-2">
+                <div>
+                    <span class="text-xs text-brass uppercase font-mono tracking-widest block">Official League Standings</span>
+                    <h2 class="font-grotesk text-2xl font-bold text-cream">CIVIC DIVISIONS</h2>
+                </div>
+                <div class="text-xs text-cream-dim font-mono">
+                    MECH-FLIP UPDATE ON GAME RESULTS
+                </div>
+            </div>
+
+            <!-- DIVISIONS GRID (PRECISE EDITORIAL TABLES) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                <!-- River Valley Division -->
+                <div class="bg-board border border-board-light rounded-lg p-4 municipal-border space-y-3">
+                    <div class="flex justify-between items-center border-b border-brass/30 pb-2">
+                        <h3 class="font-grotesk text-base font-bold text-brass tracking-wider">RIVER VALLEY DIVISION</h3>
+                        <span class="text-[11px] text-cream-dim font-mono">CONF. A</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left font-mono text-xs">
+                            <thead>
+                                <tr class="text-cream-dim border-b border-white/10">
+                                    <th class="py-1.5 px-2">TEAM</th>
+                                    <th class="py-1.5 px-2 text-center">W</th>
+                                    <th class="py-1.5 px-2 text-center">L</th>
+                                    <th class="py-1.5 px-2 text-center">GB</th>
+                                    <th class="py-1.5 px-2 text-right">STREAK</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-white/5">
+                                <tr>
+                                    <td class="py-2.5 px-2 font-bold text-cream">
+                                        <div class="solari-flap" id="st-rv1-name" data-flap-str="HARRIS HARDWARE" data-scale="micro" data-length="15"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-center">
+                                        <div class="solari-flap justify-center" id="st-rv1-w" data-flap-str="10" data-scale="micro" data-length="2"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-center">
+                                        <div class="solari-flap justify-center" id="st-rv1-l" data-flap-str="04" data-scale="micro" data-length="2"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-center">
+                                        <div class="solari-flap justify-center" id="st-rv1-gb" data-flap-str="--" data-scale="micro" data-length="2"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-right">
+                                        <div class="solari-flap justify-end" id="st-rv1-str" data-flap-str="W3" data-scale="micro" data-length="3"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2.5 px-2 font-bold text-cream">
+                                        <div class="solari-flap" id="st-rv2-name" data-flap-str="MILLER ELECTRIC" data-scale="micro" data-length="15"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-center">
+                                        <div class="solari-flap justify-center" id="st-rv2-w" data-flap-str="08" data-scale="micro" data-length="2"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-center">
+                                        <div class="solari-flap justify-center" id="st-rv2-l" data-flap-str="06" data-scale="micro" data-length="2"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-center">
+                                        <div class="solari-flap justify-center" id="st-rv2-gb" data-flap-str="2.0" data-scale="micro" data-length="3"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-right">
+                                        <div class="solari-flap justify-end" id="st-rv2-str" data-flap-str="L1" data-scale="micro" data-length="3"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2.5 px-2 font-bold text-cream">
+                                        <div class="solari-flap" id="st-rv3-name" data-flap-str="WILSON FEED" data-scale="micro" data-length="15"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-center">
+                                        <div class="solari-flap justify-center" id="st-rv3-w" data-flap-str="05" data-scale="micro" data-length="2"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-center">
+                                        <div class="solari-flap justify-center" id="st-rv3-l" data-flap-str="09" data-scale="micro" data-length="2"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-center">
+                                        <div class="solari-flap justify-center" id="st-rv3-gb" data-flap-str="5.0" data-scale="micro" data-length="3"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-right">
+                                        <div class="solari-flap justify-end" id="st-rv3-str" data-flap-str="L2" data-scale="micro" data-length="3"></div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Foundry District Division -->
+                <div class="bg-board border border-board-light rounded-lg p-4 municipal-border space-y-3">
+                    <div class="flex justify-between items-center border-b border-brass/30 pb-2">
+                        <h3 class="font-grotesk text-base font-bold text-brass tracking-wider">FOUNDRY DISTRICT DIVISION</h3>
+                        <span class="text-[11px] text-cream-dim font-mono">CONF. B</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left font-mono text-xs">
+                            <thead>
+                                <tr class="text-cream-dim border-b border-white/10">
+                                    <th class="py-1.5 px-2">TEAM</th>
+                                    <th class="py-1.5 px-2 text-center">W</th>
+                                    <th class="py-1.5 px-2 text-center">L</th>
+                                    <th class="py-1.5 px-2 text-center">GB</th>
+                                    <th class="py-1.5 px-2 text-right">STREAK</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-white/5">
+                                <tr>
+                                    <td class="py-2.5 px-2 font-bold text-cream">
+                                        <div class="solari-flap" id="st-fd1-name" data-flap-str="CARTER BANK" data-scale="micro" data-length="15"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-center">
+                                        <div class="solari-flap justify-center" id="st-fd1-w" data-flap-str="09" data-scale="micro" data-length="2"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-center">
+                                        <div class="solari-flap justify-center" id="st-fd1-l" data-flap-str="05" data-scale="micro" data-length="2"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-center">
+                                        <div class="solari-flap justify-center" id="st-fd1-gb" data-flap-str="--" data-scale="micro" data-length="2"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-right">
+                                        <div class="solari-flap justify-end" id="st-fd1-str" data-flap-str="W1" data-scale="micro" data-length="3"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2.5 px-2 font-bold text-cream">
+                                        <div class="solari-flap" id="st-fd2-name" data-flap-str="THOMAS AUTO" data-scale="micro" data-length="15"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-center">
+                                        <div class="solari-flap justify-center" id="st-fd2-w" data-flap-str="07" data-scale="micro" data-length="2"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-center">
+                                        <div class="solari-flap justify-center" id="st-fd2-l" data-flap-str="07" data-scale="micro" data-length="2"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-center">
+                                        <div class="solari-flap justify-center" id="st-fd2-gb" data-flap-str="2.0" data-scale="micro" data-length="3"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-right">
+                                        <div class="solari-flap justify-end" id="st-fd2-str" data-flap-str="W2" data-scale="micro" data-length="3"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2.5 px-2 font-bold text-cream">
+                                        <div class="solari-flap" id="st-fd3-name" data-flap-str="MAIN ST MARKET" data-scale="micro" data-length="15"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-center">
+                                        <div class="solari-flap justify-center" id="st-fd3-w" data-flap-str="03" data-scale="micro" data-length="2"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-center">
+                                        <div class="solari-flap justify-center" id="st-fd3-l" data-flap-str="11" data-scale="micro" data-length="2"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-center">
+                                        <div class="solari-flap justify-center" id="st-fd3-gb" data-flap-str="6.0" data-scale="micro" data-length="3"></div>
+                                    </td>
+                                    <td class="py-2.5 px-2 text-right">
+                                        <div class="solari-flap justify-end" id="st-fd3-str" data-flap-str="L4" data-scale="micro" data-length="3"></div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 4: TONIGHT'S LEADERS (DISPLAY SCALE NUMBERS) -->
+        <section id="leaders-section" class="space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b border-white/10 pb-3 gap-2">
+                <div>
+                    <span class="text-xs text-brass uppercase font-mono tracking-widest block">Individual Statistical Metrics</span>
+                    <h2 class="font-grotesk text-2xl font-bold text-cream">TONIGHT'S LEADERS</h2>
+                </div>
+                <div class="text-xs text-cream-dim font-mono">
+                    DISPLAY-SCALE NUMERIC FLAPS
+                </div>
+            </div>
+
+            <!-- 4 LEADER CARDS GRID -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                
+                <!-- Leader 1: HITS -->
+                <div class="bg-board border border-board-light rounded-lg p-4 municipal-border flex flex-col justify-between h-full space-y-4">
+                    <div class="text-xs text-brass font-mono uppercase tracking-wider font-bold">LEAGUE HITS</div>
+                    <div class="flex items-center justify-between">
+                        <div class="solari-flap" id="ldr-hits" data-flap-str="04" data-scale="display" data-length="2"></div>
+                        <span class="text-xs font-mono text-cream-dim">BASE HITS</span>
+                    </div>
+                    <div class="border-t border-white/5 pt-2 text-xs font-mono">
+                        <div class="text-cream font-bold">J. HENDERSON</div>
+                        <div class="text-cream-dim text-[11px]">HARRIS HARDWARE • .384 AVG</div>
+                    </div>
+                </div>
+
+                <!-- Leader 2: HOME RUNS -->
+                <div class="bg-board border border-board-light rounded-lg p-4 municipal-border flex flex-col justify-between h-full space-y-4">
+                    <div class="text-xs text-brass font-mono uppercase tracking-wider font-bold">HOME RUNS</div>
+                    <div class="flex items-center justify-between">
+                        <div class="solari-flap" id="ldr-hr" data-flap-str="02" data-scale="display" data-length="2"></div>
+                        <span class="text-xs font-mono text-cream-dim">TONIGHT</span>
+                    </div>
+                    <div class="border-t border-white/5 pt-2 text-xs font-mono">
+                        <div class="text-cream font-bold">M. O'CONNOR</div>
+                        <div class="text-cream-dim text-[11px]">MILLER ELECTRIC • 12 HR SEASON</div>
+                    </div>
+                </div>
+
+                <!-- Leader 3: ERA -->
+                <div class="bg-board border border-board-light rounded-lg p-4 municipal-border flex flex-col justify-between h-full space-y-4">
+                    <div class="text-xs text-brass font-mono uppercase tracking-wider font-bold">EARNED RUN AVG</div>
+                    <div class="flex items-center justify-between">
+                        <div class="solari-flap" id="ldr-era" data-flap-str="1.42" data-scale="display" data-length="4"></div>
+                        <span class="text-xs font-mono text-cream-dim">ERA</span>
+                    </div>
+                    <div class="border-t border-white/5 pt-2 text-xs font-mono">
+                        <div class="text-cream font-bold">D. VANCE</div>
+                        <div class="text-cream-dim text-[11px]">CARTER BANK • 68.0 IP</div>
+                    </div>
+                </div>
+
+                <!-- Leader 4: STRIKEOUTS -->
+                <div class="bg-board border border-board-light rounded-lg p-4 municipal-border flex flex-col justify-between h-full space-y-4">
+                    <div class="text-xs text-brass font-mono uppercase tracking-wider font-bold">STRIKEOUTS</div>
+                    <div class="flex items-center justify-between">
+                        <div class="solari-flap" id="ldr-so" data-flap-str="11" data-scale="display" data-length="2"></div>
+                        <span class="text-xs font-mono text-cream-dim">K'S TONIGHT</span>
+                    </div>
+                    <div class="border-t border-white/5 pt-2 text-xs font-mono">
+                        <div class="text-cream font-bold">R. BRADLEY</div>
+                        <div class="text-cream-dim text-[11px]">THOMAS AUTO • 94 SEASON K'S</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 5: UPCOMING GAMES CALENDAR -->
+        <section class="space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b border-white/10 pb-3 gap-2">
+                <div>
+                    <span class="text-xs text-brass uppercase font-mono tracking-widest block">Municipal Slate</span>
+                    <h2 class="font-grotesk text-2xl font-bold text-cream">UPCOMING GAMES SCHEDULE</h2>
+                </div>
+                <div class="text-xs text-cream-dim font-mono">
+                    WEEK 14 MATCHUPS
+                </div>
+            </div>
+
+            <!-- SCHEDULE GRID -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Saturday -->
+                <div class="bg-board border border-board-light rounded-lg p-4 municipal-border space-y-3">
+                    <div class="text-xs font-mono font-bold text-brass border-b border-white/10 pb-2 flex justify-between">
+                        <span>SATURDAY, AUG 15</span>
+                        <span>WEEKEND SLATE</span>
+                    </div>
+                    <div class="space-y-2.5">
+                        <div class="flex justify-between items-center text-xs font-mono">
+                            <div>
+                                <div class="text-cream font-bold">WILSON FEED vs HARRIS HW</div>
+                                <div class="text-cream-dim text-[11px]">FIELD 01 • 2:00 PM</div>
+                            </div>
+                            <div class="solari-flap" data-flap-str="SCHEDULED" data-scale="micro" data-length="9"></div>
+                        </div>
+                        <div class="flex justify-between items-center text-xs font-mono">
+                            <div>
+                                <div class="text-cream font-bold">MAIN ST MKT vs CARTER BANK</div>
+                                <div class="text-cream-dim text-[11px]">FIELD 02 • 4:30 PM</div>
+                            </div>
+                            <div class="solari-flap" data-flap-str="SCHEDULED" data-scale="micro" data-length="9"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sunday -->
+                <div class="bg-board border border-board-light rounded-lg p-4 municipal-border space-y-3">
+                    <div class="text-xs font-mono font-bold text-brass border-b border-white/10 pb-2 flex justify-between">
+                        <span>SUNDAY, AUG 16</span>
+                        <span>TWIN BILL</span>
+                    </div>
+                    <div class="space-y-2.5">
+                        <div class="flex justify-between items-center text-xs font-mono">
+                            <div>
+                                <div class="text-cream font-bold">THOMAS AUTO vs MILLER ELEC</div>
+                                <div class="text-cream-dim text-[11px]">FIELD 01 • 1:00 PM</div>
+                            </div>
+                            <div class="solari-flap" data-flap-str="SCHEDULED" data-scale="micro" data-length="9"></div>
+                        </div>
+                        <div class="flex justify-between items-center text-xs font-mono">
+                            <div>
+                                <div class="text-cream font-bold">CIVIC ALL-STAR WARMUPS</div>
+                                <div class="text-cream-dim text-[11px]">FIELD 01 • 5:00 PM</div>
+                            </div>
+                            <div class="solari-flap" data-flap-str="SCHEDULED" data-scale="micro" data-length="9"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tuesday -->
+                <div class="bg-board border border-board-light rounded-lg p-4 municipal-border space-y-3">
+                    <div class="text-xs font-mono font-bold text-brass border-b border-white/10 pb-2 flex justify-between">
+                        <span>TUESDAY, AUG 18</span>
+                        <span>MIDWEEK NIGHT</span>
+                    </div>
+                    <div class="space-y-2.5">
+                        <div class="flex justify-between items-center text-xs font-mono">
+                            <div>
+                                <div class="text-cream font-bold">CARTER BANK vs HARRIS HW</div>
+                                <div class="text-cream-dim text-[11px]">FIELD 01 • 6:15 PM</div>
+                            </div>
+                            <div class="solari-flap" data-flap-str="SCHEDULED" data-scale="micro" data-length="9"></div>
+                        </div>
+                        <div class="flex justify-between items-center text-xs font-mono">
+                            <div>
+                                <div class="text-cream font-bold">WILSON FEED vs THOMAS AUTO</div>
+                                <div class="text-cream-dim text-[11px]">FIELD 02 • 6:30 PM</div>
+                            </div>
+                            <div class="solari-flap" data-flap-str="POSTPONED" data-scale="micro" data-length="9" data-status="bad"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: LEAGUE STORY (EDITORIAL SERIF NARRATIVE) -->
+        <section id="story-section" class="bg-board border border-board-light rounded-lg p-6 md:p-10 municipal-border rivet-corner space-y-6">
+            <div class="max-w-3xl mx-auto space-y-6">
+                
+                <div class="text-center space-y-2 border-b border-brass/30 pb-6">
+                    <span class="text-xs font-mono text-brass tracking-widest uppercase">Municipal League Tradition • Est. 1938</span>
+                    <h2 class="font-serif text-3xl md:text-4xl italic text-cream">"After work, the lights come on."</h2>
+                    <p class="text-xs font-mono text-cream-dim uppercase">By Arthur Vance • Civic Sports Historian</p>
+                </div>
+
+                <div class="font-serif text-base md:text-lg text-cream/90 leading-relaxed space-y-4">
+                    <p>
+                        In our town, summer Friday evenings follow an unwritten civic rhythm. Long before the sun dips below the grain silos at the western edge of the county, the parking lot at Municipal Memorial Park begins filling with pickup trucks and family station wagons. Machinists from Miller Electric, bank tellers from Carter Bank & Trust, and hardware clerks from Harris Hardware swap their work boots for cleats.
+                    </p>
+                    <p>
+                        Municipal League Baseball was born in the summer of 1938 during the grand opening of the municipal waterworks. What began as an informal exhibition between downtown merchants and foundry workers quickly solidified into a civic institution. Generations of families have occupied the same wooden grandstand seats behind home plate, keeping score in pencil on printed newsprint sheets.
+                    </p>
+                    <p>
+                        The mechanical split-flap scoreboard perched over Field 01 was commissioned in 1964, constructed by local rail yard technicians using surplus industrial relays and hand-painted steel flap leaves. For over sixty years, its distinctive mechanical clatter has echoed across the outfield grass—a reassuring sound that announces a line-drive double into the right-field gap just as clearly as the crack of a wooden bat.
+                    </p>
+                </div>
+
+                <!-- Hand-painted Signage Emblem Quote -->
+                <div class="bg-field-green/40 border-l-4 border-brass p-4 rounded text-xs font-mono text-cream space-y-1">
+                    <div class="font-bold text-brass uppercase">CIVIC CHARTER ARTICLE IV:</div>
+                    <p class="italic text-cream-dim">
+                        "The diamond shall remain open to all residents of good standing. No player shall receive wages beyond fair civic pride and the fellowship of their neighbors."
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 7: TEAMS DIRECTORY -->
+        <section class="space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b border-white/10 pb-3 gap-2">
+                <div>
+                    <span class="text-xs text-brass uppercase font-mono tracking-widest block">Sponsoring Merchants</span>
+                    <h2 class="font-grotesk text-2xl font-bold text-cream">CIVIC TEAMS & SPONSORS</h2>
+                </div>
+                <div class="text-xs text-cream-dim font-mono">
+                    6 CHARTER FRANCHISES
+                </div>
+            </div>
+
+            <!-- TEAMS GRID -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Team 1 -->
+                <div class="bg-board border border-board-light p-4 rounded-lg municipal-border hover:border-brass/40 transition group">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="font-grotesk font-bold text-lg text-cream group-hover:text-brass transition">HARRIS HARDWARE</div>
+                        <span class="text-xs font-mono text-brass bg-brass/10 px-1.5 py-0.5 rounded">EST. 1942</span>
+                    </div>
+                    <p class="text-xs font-mono text-cream-dim">FOUNDRY DISTRICT • RED & CREAM</p>
+                    <div class="mt-3 text-[11px] font-mono text-cream-dim/80 border-t border-white/5 pt-2 flex justify-between">
+                        <span>MANAGER: E. HARRIS</span>
+                        <span>HOME FIELD: 01</span>
+                    </div>
+                </div>
+
+                <!-- Team 2 -->
+                <div class="bg-board border border-board-light p-4 rounded-lg municipal-border hover:border-brass/40 transition group">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="font-grotesk font-bold text-lg text-cream group-hover:text-brass transition">MILLER ELECTRIC</div>
+                        <span class="text-xs font-mono text-brass bg-brass/10 px-1.5 py-0.5 rounded">EST. 1955</span>
+                    </div>
+                    <p class="text-xs font-mono text-cream-dim">EAST SIDE GRID • NAVY & GOLD</p>
+                    <div class="mt-3 text-[11px] font-mono text-cream-dim/80 border-t border-white/5 pt-2 flex justify-between">
+                        <span>MANAGER: T. MILLER</span>
+                        <span>HOME FIELD: 01</span>
+                    </div>
+                </div>
+
+                <!-- Team 3 -->
+                <div class="bg-board border border-board-light p-4 rounded-lg municipal-border hover:border-brass/40 transition group">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="font-grotesk font-bold text-lg text-cream group-hover:text-brass transition">CARTER BANK & TRUST</div>
+                        <span class="text-xs font-mono text-brass bg-brass/10 px-1.5 py-0.5 rounded">EST. 1938</span>
+                    </div>
+                    <p class="text-xs font-mono text-cream-dim">DOWNTOWN MAIN • GREEN & BRASS</p>
+                    <div class="mt-3 text-[11px] font-mono text-cream-dim/80 border-t border-white/5 pt-2 flex justify-between">
+                        <span>MANAGER: W. CARTER</span>
+                        <span>HOME FIELD: 02</span>
+                    </div>
+                </div>
+
+                <!-- Team 4 -->
+                <div class="bg-board border border-board-light p-4 rounded-lg municipal-border hover:border-brass/40 transition group">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="font-grotesk font-bold text-lg text-cream group-hover:text-brass transition">WILSON FEED & SEED</div>
+                        <span class="text-xs font-mono text-brass bg-brass/10 px-1.5 py-0.5 rounded">EST. 1948</span>
+                    </div>
+                    <p class="text-xs font-mono text-cream-dim">GRAIN ELEVATOR ROW • AMBER & BLACK</p>
+                    <div class="mt-3 text-[11px] font-mono text-cream-dim/80 border-t border-white/5 pt-2 flex justify-between">
+                        <span>MANAGER: H. WILSON</span>
+                        <span>HOME FIELD: 02</span>
+                    </div>
+                </div>
+
+                <!-- Team 5 -->
+                <div class="bg-board border border-board-light p-4 rounded-lg municipal-border hover:border-brass/40 transition group">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="font-grotesk font-bold text-lg text-cream group-hover:text-brass transition">THOMAS AUTO PARTS</div>
+                        <span class="text-xs font-mono text-brass bg-brass/10 px-1.5 py-0.5 rounded">EST. 1961</span>
+                    </div>
+                    <p class="text-xs font-mono text-cream-dim">WEST END RAIL • CHARCOAL & WHITE</p>
+                    <div class="mt-3 text-[11px] font-mono text-cream-dim/80 border-t border-white/5 pt-2 flex justify-between">
+                        <span>MANAGER: R. THOMAS</span>
+                        <span>HOME FIELD: 03</span>
+                    </div>
+                </div>
+
+                <!-- Team 6 -->
+                <div class="bg-board border border-board-light p-4 rounded-lg municipal-border hover:border-brass/40 transition group">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="font-grotesk font-bold text-lg text-cream group-hover:text-brass transition">MAIN STREET MARKET</div>
+                        <span class="text-xs font-mono text-brass bg-brass/10 px-1.5 py-0.5 rounded">EST. 1950</span>
+                    </div>
+                    <p class="text-xs font-mono text-cream-dim">CIVIC SQUARE • BLUE & SILVER</p>
+                    <div class="mt-3 text-[11px] font-mono text-cream-dim/80 border-t border-white/5 pt-2 flex justify-between">
+                        <span>MANAGER: P. ROSSI</span>
+                        <span>HOME FIELD: 03</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/10 bg-board/90 mt-16 py-8 px-4 text-xs font-mono text-cream-dim">
+        <div class="max-w-7xl mx-auto space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div>
+                    <div class="font-grotesk font-bold text-cream text-base mb-2">MUNICIPAL LEAGUE BASEBALL</div>
+                    <p class="text-cream-dim text-[11px] leading-relaxed">
+                        An authentic civic sports organization dedicated to amateur baseball, local business sponsorship, and community tradition since 1938.
+                    </p>
+                </div>
+                <div>
+                    <div class="font-bold text-brass mb-2">COMMISSIONER OFFICE</div>
+                    <ul class="space-y-1 text-[11px]">
+                        <li>Civic Recreation Building Room 204</li>
+                        <li>100 Memorial Park Drive</li>
+                        <li>League Sec: Frank Callahan</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="font-bold text-brass mb-2">FIELD OPERATIONS</div>
+                    <ul class="space-y-1 text-[11px]">
+                        <li>Field 01: Lights Operational</li>
+                        <li>Field 02: Infield Dragged 4:00 PM</li>
+                        <li>Field 03: Concessions Open</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="font-bold text-brass mb-2">MECHANICAL SYSTEM</div>
+                    <ul class="space-y-1 text-[11px]">
+                        <li>Solari Split-Flap Relay Board v4.2</li>
+                        <li>Last Board Sync: <span id="sync-time" class="text-cream">JUST NOW</span></li>
+                        <li>Next First Pitch: <span class="text-cream">6:30 PM</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-white/5 pt-4 flex flex-col sm:flex-row justify-between items-center text-[11px] text-cream-dim gap-2">
+                <span>© 1938–2026 MUNICIPAL LEAGUE BASEBALL ASSOCIATION. ALL RIGHTS RESERVED.</span>
+                <span>SOLARI SPLIT-FLAP DESIGN SYSTEM SHOWCASE</span>
+            </div>
+        </div>
+    </footer>
+
+    
+</body>
+</html>

@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATLAS — Distributed Intelligence Architecture</title>
+    
+    <!-- Google Fonts: Barlow Condensed (Display/Figures), IBM Plex Sans (Body), IBM Plex Mono (Technical/Specs) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS Engine -->
+    
+    
+
+    <style>
+        :root {
+            --bp-bg: #0a0d14;
+            --bp-plate: #101622;
+            --bp-border: #1e2a3d;
+            --bp-line: #38bdf8;
+            --bp-ink: #f1f5f9;
+            --bp-muted: #94a3b8;
+            --bp-amber: #f59e0b;
+        }
+
+        body {
+            background-color: var(--bp-bg);
+            color: #f1f5f9;
+            font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            background-image: 
+                linear-gradient(to right, rgba(30, 42, 61, 0.25) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(30, 42, 61, 0.25) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        /* Blueprint Architectural Line Utilities */
+        .bp-rule-t { border-top: 1px solid var(--bp-border); }
+        .bp-rule-b { border-bottom: 1px solid var(--bp-border); }
+        .bp-rule-l { border-left: 1px solid var(--bp-border); }
+        .bp-rule-r { border-right: 1px solid var(--bp-border); }
+
+        .bp-plate {
+            background-color: var(--bp-plate);
+            border: 1px solid var(--bp-border);
+            border-radius: 0px;
+        }
+
+        /* Technical Callout Badge */
+        .bp-callout {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border: 1px solid var(--bp-line);
+            color: var(--bp-line);
+            background: rgba(56, 189, 248, 0.06);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Interactive Diagram Node Highlights */
+        .arch-node {
+            cursor: pointer;
+            transition: all 120ms linear;
+        }
+
+        .arch-node:hover rect, .arch-node.selected rect {
+            stroke: #38bdf8 !important;
+            stroke-width: 2px !important;
+            fill: #162030 !important;
+        }
+
+        .arch-node.selected text {
+            fill: #38bdf8 !important;
+        }
+
+        /* Leader lines drawing animation on reveal */
+        .leader-line {
+            stroke-dasharray: 6 3;
+            animation: strokeDash 30s linear infinite;
+        }
+
+        @keyframes strokeDash {
+            to { stroke-dashoffset: -100; }
+        }
+
+        /* Custom Scrollbar for technical tables */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0d14;
+            border-left: 1px solid #1e2a3d;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #33435e;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-24 text-slate-200"><div style="position:fixed;right:12px;bottom:12px;z-index:2147483647;padding:8px 10px;background:#111;color:#fff;font:12px/1.3 monospace;border:1px solid #777">ARCHIVED SOURCE · SCRIPTS AND NETWORK DISABLED</div>
+
+    <!-- MASTER ARCHITECTURE HEADER -->
+    <header class="w-full bp-rule-b bg-[#0a0d14]/95 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="py-3 flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-slate-400">
+                <div class="flex items-center gap-4 flex-wrap">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 bg-sky-400 inline-block"></span>
+                        <span class="font-display text-2xl font-bold tracking-wider text-slate-100 uppercase">ATLAS</span>
+                    </div>
+                    <span class="text-slate-600">/</span>
+                    <span class="tracking-wider uppercase text-slate-300">DISTRIBUTED INTELLIGENCE ARCHITECTURE</span>
+                    <span class="text-slate-600">/</span>
+                    <span class="text-sky-400 font-semibold">SYS-ID: ATL-SPEC-2026</span>
+                </div>
+                
+                <div class="flex items-center gap-6 text-xs">
+                    <div class="hidden sm:block">
+                        <span class="text-slate-500">LATENCY:</span>
+                        <span class="text-slate-200 font-mono font-semibold">42 MS</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-500">REVISION:</span>
+                        <span class="text-amber-400 font-mono font-semibold">R08</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-500">STATE:</span>
+                        <span class="text-emerald-400 font-mono font-semibold">● OPERATIONAL</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION INDEX NAVIGATION -->
+            <nav class="bp-rule-t py-2 overflow-x-auto whitespace-nowrap font-mono text-xs scrollbar-none">
+                <div class="flex items-center space-x-6 text-slate-400">
+                    <a href="#sec-a01" class="hover:text-sky-400 transition-colors"><span class="text-sky-400 font-semibold">A-01</span> / SYSTEM ARCHITECTURE</a>
+                    <a href="#sec-a02" class="hover:text-sky-400 transition-colors"><span class="text-sky-400 font-semibold">A-02</span> / SYSTEM SPECIFICATION</a>
+                    <a href="#sec-b01" class="hover:text-sky-400 transition-colors"><span class="text-sky-400 font-semibold">B-01</span> / EXECUTION DETAIL</a>
+                    <a href="#sec-b02" class="hover:text-sky-400 transition-colors"><span class="text-sky-400 font-semibold">B-02</span> / CONTEXT WINDOW</a>
+                    <a href="#sec-c01" class="hover:text-sky-400 transition-colors"><span class="text-sky-400 font-semibold">C-01</span> / MODEL ROUTER</a>
+                    <a href="#sec-c02" class="hover:text-sky-400 transition-colors"><span class="text-sky-400 font-semibold">C-02</span> / REVISION HISTORY</a>
+                    <a href="#sec-d01" class="hover:text-sky-400 transition-colors"><span class="text-sky-400 font-semibold">D-01</span> / OVERVIEW & PHILOSOPHY</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN TECHNICAL BODY -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-20">
+
+        <!-- SECTION A-01 / SYSTEM ARCHITECTURE -->
+        <section id="sec-a01" class="scroll-mt-28">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- INDEX COLUMN -->
+                <div class="lg:col-span-2 font-mono bp-rule-b lg:bp-rule-b-0 lg:bp-rule-r pb-4 lg:pb-0 pr-4 border-slate-800">
+                    <div class="text-4xl font-display font-bold text-slate-100">A-01</div>
+                    <div class="text-xs uppercase tracking-wider text-slate-500 mt-1">SCHEMATIC</div>
+                    <div class="text-xs font-semibold uppercase text-sky-400 mt-1">SYSTEM ARCHITECTURE</div>
+                    <div class="mt-6 text-[11px] text-slate-400 space-y-2 hidden lg:block">
+                        <p>Interactive drafting schematic. Select any node to inspect construction relationships and technical callouts.</p>
+                        <div class="pt-2 text-[10px] text-slate-500 font-mono">DRAWING SCALE: 1:1<br>TOLERANCE: DETERMINISTIC</div>
+                    </div>
+                </div>
+
+                <!-- CONTENT COLUMN (PRIMARY FIGURE) -->
+                <div class="lg:col-span-10 space-y-6">
+                    <div class="flex flex-wrap items-baseline justify-between gap-4 border-b border-slate-800 pb-3">
+                        <div>
+                            <h2 class="font-display text-2xl font-bold uppercase tracking-wide text-slate-100">
+                                FIG. A-01 — ATLAS DISTRIBUTED EXECUTION ARCHITECTURE
+                            </h2>
+                            <p class="text-xs font-mono text-slate-400 mt-0.5">
+                                Technical schematic illustrating end-to-end task decomposition, agent routing, tool execution, memory store, and model dispatching.
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-3 font-mono text-xs">
+                            <span class="bp-callout">01 TASK DECOMPOSITION</span>
+                            <span class="bp-callout">02 CONTEXT ROUTING</span>
+                            <span class="bp-callout">03 TOOL EXECUTION</span>
+                        </div>
+                    </div>
+
+                    <!-- ARCHITECTURAL SCHEMATIC DRAWING (SVG FIGURE) -->
+                    <div class="bp-plate p-4 sm:p-6 relative overflow-x-auto">
+                        
+                        <!-- Drawing Header & Grid Coordinate Indicators -->
+                        <div class="flex justify-between items-center text-[10px] font-mono text-slate-500 border-b border-slate-800/80 pb-2 mb-4">
+                            <div>GRID REF: SEC-A01-NORD / COORD: [X:140 Y:280]</div>
+                            <div class="flex gap-4">
+                                <span>CALLOUTS: 05 ACTIVE</span>
+                                <span>SCHEMATIC REV: R08</span>
+                            </div>
+                        </div>
+
+                        <!-- ARCHITECTURE SVG DRAWING -->
+                        <div class="min-w-[760px] relative">
+                            <svg viewBox="0 0 880 500" class="w-full font-mono text-[11px] select-none">
+                                <defs>
+                                    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#38bdf8" />
+                                    </marker>
+                                    <marker id="arrow-muted" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#33435e" />
+                                    </marker>
+                                </defs>
+
+                                <!-- CONNECTOR LINES & FLOW PATHS -->
+                                <!-- Request -> Orchestrator -->
+                                <path d="M 110 70 L 170 70" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#arrow)" />
+                                
+                                <!-- Orchestrator -> Agent Layer -->
+                                <path d="M 330 70 L 390 70" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#arrow)" />
+                                
+                                <!-- Agent Layer -> Tool Layer -->
+                                <path d="M 530 140 L 530 190" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#arrow)" />
+                                
+                                <!-- Tool Layer -> Memory / Context -->
+                                <path d="M 450 240 L 350 240" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#arrow)" />
+                                
+                                <!-- Memory / Context -> Model Router -->
+                                <path d="M 230 280 L 230 350" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#arrow)" />
+
+                                <!-- Model Router -> Verification Engine -->
+                                <path d="M 350 390 L 450 390" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#arrow)" />
+
+                                <!-- Verification Engine -> Output -->
+                                <path d="M 630 390 L 730 390" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#arrow)" />
+
+                                <!-- Feedback Loop Line (Verification -> Memory Write) -->
+                                <path d="M 540 350 L 540 300 L 290 300 L 290 280" stroke="#33435e" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arrow-muted)" />
+
+                                <!-- SCHEMATIC BLOCKS (INTERACTIVE ARCH NODES) -->
+                                
+                                <!-- 01. USER REQUEST -->
+                                <g class="arch-node" id="node-request">
+                                    <rect x="10" y="40" width="100" height="60" fill="#101622" stroke="#33435e" stroke-width="1.5" />
+                                    <text x="22" y="65" font-weight="bold" fill="#f1f5f9">USER REQUEST</text>
+                                    <text x="22" y="82" fill="#64748b" font-size="9px">PROMPT INGEST</text>
+                                </g>
+
+                                <!-- 02. ORCHESTRATOR (CALLOUT 01) -->
+                                <g class="arch-node selected" id="node-orchestrator">
+                                    <rect x="170" y="30" width="160" height="80" fill="#162030" stroke="#38bdf8" stroke-width="2" />
+                                    <text x="185" y="55" font-weight="bold" fill="#38bdf8" font-size="12px">ORCHESTRATOR</text>
+                                    <text x="185" y="72" fill="#94a3b8" font-size="10px">TASK ROUTER [ORCH-01]</text>
+                                    <text x="185" y="88" fill="#64748b" font-size="9px">DECOMPOSITION & BUS</text>
+                                    <!-- Callout Pin 01 -->
+                                    <rect x="310" y="35" width="15" height="15" fill="#38bdf8" />
+                                    <text x="313" y="46" font-weight="bold" fill="#0a0d14" font-size="9px">01</text>
+                                </g>
+
+                                <!-- 03. AGENT LAYER (CALLOUT 02) -->
+                                <g class="arch-node" id="node-agent">
+                                    <!-- Parent Container Frame -->
+                                    <rect x="390" y="20" width="280" height="120" fill="#101622" stroke="#33435e" stroke-width="1.5" stroke-dasharray="2 2" />
+                                    <text x="402" y="38" font-weight="bold" fill="#94a3b8" font-size="10px">AGENT LAYER [PARALLEL EXECUTION]</text>
+                                    
+                                    <!-- Sub Agent Blocks -->
+                                    <rect x="402" y="48" width="120" height="36" fill="#161e2e" stroke="#33435e" stroke-width="1" />
+                                    <text x="412" y="70" fill="#f1f5f9" font-size="10px">Research Agent</text>
+                                    
+                                    <rect x="536" y="48" width="120" height="36" fill="#161e2e" stroke="#33435e" stroke-width="1" />
+                                    <text x="546" y="70" fill="#f1f5f9" font-size="10px">Planning Agent</text>
+
+                                    <rect x="402" y="92" width="120" height="36" fill="#161e2e" stroke="#33435e" stroke-width="1" />
+                                    <text x="412" y="114" fill="#f1f5f9" font-size="10px">Execution Agent</text>
+
+                                    <rect x="536" y="92" width="120" height="36" fill="#161e2e" stroke="#33435e" stroke-width="1" />
+                                    <text x="546" y="114" fill="#f1f5f9" font-size="10px">Review Agent</text>
+
+                                    <!-- Callout Pin 02 -->
+                                    <rect x="650" y="25" width="15" height="15" fill="#38bdf8" />
+                                    <text x="653" y="36" font-weight="bold" fill="#0a0d14" font-size="9px">02</text>
+                                </g>
+
+                                <!-- 04. TOOL LAYER (CALLOUT 03) -->
+                                <g class="arch-node" id="node-tools">
+                                    <rect x="450" y="190" width="280" height="100" fill="#101622" stroke="#33435e" stroke-width="1.5" />
+                                    <text x="465" y="210" font-weight="bold" fill="#f1f5f9" font-size="11px">TOOL LAYER [RPC CONNECTORS]</text>
+                                    
+                                    <!-- Tool Badges -->
+                                    <rect x="465" y="222" width="55" height="24" fill="#161e2e" stroke="#33435e" />
+                                    <text x="475" y="238" fill="#94a3b8" font-size="9px">SEARCH</text>
+
+                                    <rect x="528" y="222" width="55" height="24" fill="#161e2e" stroke="#33435e" />
+                                    <text x="541" y="238" fill="#94a3b8" font-size="9px">CODE</text>
+
+                                    <rect x="591" y="222" width="55" height="24" fill="#161e2e" stroke="#33435e" />
+                                    <text x="604" y="238" fill="#94a3b8" font-size="9px">FILES</text>
+
+                                    <rect x="654" y="222" width="60" height="24" fill="#161e2e" stroke="#33435e" />
+                                    <text x="672" y="238" fill="#94a3b8" font-size="9px">APIs</text>
+
+                                    <text x="465" y="272" fill="#64748b" font-size="9px">gVisor Ephemeral Sandbox Isolation</text>
+
+                                    <!-- Callout Pin 03 -->
+                                    <rect x="710" y="195" width="15" height="15" fill="#38bdf8" />
+                                    <text x="713" y="206" font-weight="bold" fill="#0a0d14" font-size="9px">03</text>
+                                </g>
+
+                                <!-- 05. MEMORY / CONTEXT (CALLOUT 04) -->
+                                <g class="arch-node" id="node-memory">
+                                    <rect x="110" y="200" width="240" height="80" fill="#101622" stroke="#33435e" stroke-width="1.5" />
+                                    <text x="125" y="225" font-weight="bold" fill="#f1f5f9" font-size="11px">MEMORY / CONTEXT [MEM-02]</text>
+                                    <text x="125" y="243" fill="#94a3b8" font-size="10px">Vector Index & Episodic Cache</text>
+                                    <text x="125" y="260" fill="#64748b" font-size="9px">128,000 Token Sliding Window</text>
+
+                                    <!-- Callout Pin 04 -->
+                                    <rect x="330" y="205" width="15" height="15" fill="#38bdf8" />
+                                    <text x="333" y="216" font-weight="bold" fill="#0a0d14" font-size="9px">04</text>
+                                </g>
+
+                                <!-- 06. MODEL ROUTER -->
+                                <g class="arch-node" id="node-router">
+                                    <rect x="110" y="350" width="240" height="80" fill="#101622" stroke="#33435e" stroke-width="1.5" />
+                                    <text x="125" y="375" font-weight="bold" fill="#f1f5f9" font-size="11px">MODEL ROUTER [ROUT-01]</text>
+                                    <text x="125" y="393" fill="#94a3b8" font-size="10px">Multi-LLM Dispatcher (DETAIL C-04)</text>
+                                    <text x="125" y="410" fill="#64748b" font-size="9px">Fast / Reasoning / Code / Vision</text>
+                                </g>
+
+                                <!-- 07. VERIFICATION ENGINE (CALLOUT 05) -->
+                                <g class="arch-node" id="node-eval">
+                                    <rect x="450" y="350" width="180" height="80" fill="#101622" stroke="#33435e" stroke-width="1.5" />
+                                    <text x="465" y="375" font-weight="bold" fill="#f1f5f9" font-size="11px">VERIFICATION [EVAL-01]</text>
+                                    <text x="465" y="393" fill="#94a3b8" font-size="10px">Result Review Harness</text>
+                                    <text x="465" y="410" fill="#10b981" font-size="9px">Deterministic Gate > 94%</text>
+
+                                    <!-- Callout Pin 05 -->
+                                    <rect x="610" y="355" width="15" height="15" fill="#38bdf8" />
+                                    <text x="613" y="366" font-weight="bold" fill="#0a0d14" font-size="9px">05</text>
+                                </g>
+
+                                <!-- 08. OUTPUT -->
+                                <g class="arch-node" id="node-output">
+                                    <rect x="730" y="360" width="120" height="60" fill="#101622" stroke="#33435e" stroke-width="1.5" />
+                                    <text x="745" y="388" font-weight="bold" fill="#f1f5f9">SYNTHESIS</text>
+                                    <text x="745" y="405" fill="#64748b" font-size="9px">VERIFIED OUTPUT</text>
+                                </g>
+
+                                <!-- Architectural Callout Leader Lines & Dimension Marks -->
+                                <line x1="325" y1="35" x2="350" y2="15" stroke="#38bdf8" stroke-width="1" class="leader-line" />
+                                <text x="355" y="15" fill="#38bdf8" font-size="9px">CALLOUT 01: TASK DECOMPOSITION</text>
+
+                                <line x1="665" y1="25" x2="690" y2="10" stroke="#38bdf8" stroke-width="1" class="leader-line" />
+                                <text x="695" y="10" fill="#38bdf8" font-size="9px">CALLOUT 02: CONTEXT ROUTING</text>
+
+                            </svg>
+                        </div>
+
+                        <!-- SCHEMATIC INSPECTION DETAIL PANEL -->
+                        <div id="arch-inspect-panel" class="mt-6 pt-4 bp-rule-t font-mono text-xs space-y-3">
+                            <div class="flex justify-between items-center text-slate-400">
+                                <span class="text-sky-400 font-bold uppercase tracking-wider" id="insp-title">COMPONENT INSPECTION: [ORCH-01 / ORCHESTRATOR]</span>
+                                <span class="text-slate-500 text-[11px]" id="insp-coord">GRID LOCATION: X:170 Y:30</span>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-[#0a0d14] p-4 border border-slate-800">
+                                <div>
+                                    <div class="text-slate-500 text-[10px] uppercase">PRIMARY FUNCTION</div>
+                                    <div class="text-slate-200 font-semibold mt-0.5" id="insp-func">Task Decomposition & Event Bus</div>
+                                    <p class="text-slate-400 text-[11px] mt-1" id="insp-desc">Parses complex prompts into DAG execution graphs and dispatches sub-tasks to specialized agents.</p>
+                                </div>
+                                <div>
+                                    <div class="text-slate-500 text-[10px] uppercase">OPERATIONAL BOUNDS</div>
+                                    <div class="text-slate-200 font-semibold mt-0.5" id="insp-bounds">Latency Ceiling: 50ms</div>
+                                    <p class="text-slate-400 text-[11px] mt-1" id="insp-dep">Upstream: User Request Ingest<br>Downstream: Agent Layer & Model Router</p>
+                                </div>
+                                <div>
+                                    <div class="text-slate-500 text-[10px] uppercase">SPECIFICATION STATE</div>
+                                    <div class="text-emerald-400 font-semibold mt-0.5" id="insp-state">STATE: ACTIVE (REV R08)</div>
+                                    <p class="text-slate-400 text-[11px] mt-1" id="insp-spec">Deterministic dispatch rules enforced by SHA-256 graph signatures.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION A-02 / SYSTEM SPECIFICATION -->
+        <section id="sec-a02" class="scroll-mt-28 bp-rule-t pt-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- INDEX COLUMN -->
+                <div class="lg:col-span-2 font-mono bp-rule-b lg:bp-rule-b-0 lg:bp-rule-r pb-4 lg:pb-0 pr-4 border-slate-800">
+                    <div class="text-4xl font-display font-bold text-slate-100">A-02</div>
+                    <div class="text-xs uppercase tracking-wider text-slate-500 mt-1">SCHEDULE</div>
+                    <div class="text-xs font-semibold uppercase text-sky-400 mt-1">SYSTEM SPECIFICATION</div>
+                </div>
+
+                <!-- CONTENT COLUMN (SPECIFICATION TABLE) -->
+                <div class="lg:col-span-10 space-y-6">
+                    <div>
+                        <h2 class="font-display text-2xl font-bold uppercase tracking-wide text-slate-100">
+                            A-02 / SYSTEM SPECIFICATION SCHEDULE
+                        </h2>
+                        <p class="text-xs font-mono text-slate-400 mt-1">
+                            Engineering schedule detailing cluster service roles, latency constraints, revision identifiers, and current state.
+                        </p>
+                    </div>
+
+                    <!-- STRUCTURED ENGINEERING SCHEDULE TABLE -->
+                    <div class="bp-plate overflow-x-auto font-mono text-xs">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-[#161e2e] bp-rule-b text-slate-300 font-bold">
+                                    <th class="p-3 border-r border-slate-800">SERVICE ID</th>
+                                    <th class="p-3 border-r border-slate-800">ROLE</th>
+                                    <th class="p-3 border-r border-slate-800">STATE</th>
+                                    <th class="p-3 border-r border-slate-800">LATENCY</th>
+                                    <th class="p-3 border-r border-slate-800">REVISION</th>
+                                    <th class="p-3">DEPENDENCY BOUND</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800/80">
+                                <tr class="hover:bg-[#161e2e]/50 transition-colors">
+                                    <td class="p-3 font-bold text-sky-400 border-r border-slate-800">ORCH-01</td>
+                                    <td class="p-3 text-slate-200 border-r border-slate-800">TASK ROUTER & DECOMPOSITION BUS</td>
+                                    <td class="p-3 font-semibold text-emerald-400 border-r border-slate-800">ACTIVE</td>
+                                    <td class="p-3 text-slate-300 border-r border-slate-800">42 MS</td>
+                                    <td class="p-3 text-amber-400 font-bold border-r border-slate-800">R08</td>
+                                    <td class="p-3 text-slate-400 text-[11px]">User Ingest → Agent Bus</td>
+                                </tr>
+                                <tr class="hover:bg-[#161e2e]/50 transition-colors">
+                                    <td class="p-3 font-bold text-sky-400 border-r border-slate-800">MEM-02</td>
+                                    <td class="p-3 text-slate-200 border-r border-slate-800">CONTEXT STORE & VECTOR INDEX</td>
+                                    <td class="p-3 font-semibold text-emerald-400 border-r border-slate-800">ACTIVE</td>
+                                    <td class="p-3 text-slate-300 border-r border-slate-800">18 MS</td>
+                                    <td class="p-3 text-amber-400 font-bold border-r border-slate-800">R11</td>
+                                    <td class="p-3 text-slate-400 text-[11px]">Redis Vector DB / HNSW Index</td>
+                                </tr>
+                                <tr class="hover:bg-[#161e2e]/50 transition-colors">
+                                    <td class="p-3 font-bold text-sky-400 border-r border-slate-800">EVAL-01</td>
+                                    <td class="p-3 text-slate-200 border-r border-slate-800">RESPONSE REVIEW & VERIFICATION</td>
+                                    <td class="p-3 font-semibold text-emerald-400 border-r border-slate-800">ACTIVE</td>
+                                    <td class="p-3 text-slate-300 border-r border-slate-800">78 MS</td>
+                                    <td class="p-3 text-amber-400 font-bold border-r border-slate-800">R05</td>
+                                    <td class="p-3 text-slate-400 text-[11px]">Deterministic Safety Gate</td>
+                                </tr>
+                                <tr class="hover:bg-[#161e2e]/50 transition-colors">
+                                    <td class="p-3 font-bold text-sky-400 border-r border-slate-800">TOOL-04</td>
+                                    <td class="p-3 text-slate-200 border-r border-slate-800">WEB SEARCH CONNECTOR</td>
+                                    <td class="p-3 font-semibold text-slate-400 border-r border-slate-800">STANDBY</td>
+                                    <td class="p-3 text-slate-500 border-r border-slate-800">—</td>
+                                    <td class="p-3 text-slate-400 font-bold border-r border-slate-800">R03</td>
+                                    <td class="p-3 text-slate-400 text-[11px]">External Egress Proxy</td>
+                                </tr>
+                                <tr class="hover:bg-[#161e2e]/50 transition-colors">
+                                    <td class="p-3 font-bold text-sky-400 border-r border-slate-800">TOOL-08</td>
+                                    <td class="p-3 text-slate-200 border-r border-slate-800">CODE EXECUTION SANDBOX</td>
+                                    <td class="p-3 font-semibold text-emerald-400 border-r border-slate-800">ACTIVE</td>
+                                    <td class="p-3 text-slate-300 border-r border-slate-800">124 MS</td>
+                                    <td class="p-3 text-amber-400 font-bold border-r border-slate-800">R09</td>
+                                    <td class="p-3 text-slate-400 text-[11px]">gVisor Isolated Runtime</td>
+                                </tr>
+                                <tr class="hover:bg-[#161e2e]/50 transition-colors">
+                                    <td class="p-3 font-bold text-sky-400 border-r border-slate-800">ROUT-01</td>
+                                    <td class="p-3 text-slate-200 border-r border-slate-800">MULTI-MODEL DISPATCH ROUTER</td>
+                                    <td class="p-3 font-semibold text-emerald-400 border-r border-slate-800">ACTIVE</td>
+                                    <td class="p-3 text-slate-300 border-r border-slate-800">14 MS</td>
+                                    <td class="p-3 text-amber-400 font-bold border-r border-slate-800">R08</td>
+                                    <td class="p-3 text-slate-400 text-[11px]">Claude / OpenAI / Local API Proxy</td>
+                                </tr>
+                                <tr class="hover:bg-[#161e2e]/50 transition-colors">
+                                    <td class="p-3 font-bold text-sky-400 border-r border-slate-800">AGENT-04</td>
+                                    <td class="p-3 text-slate-200 border-r border-slate-800">RESEARCH & SYNTHESIS AGENT</td>
+                                    <td class="p-3 font-semibold text-emerald-400 border-r border-slate-800">ACTIVE</td>
+                                    <td class="p-3 text-slate-300 border-r border-slate-800">310 MS</td>
+                                    <td class="p-3 text-amber-400 font-bold border-r border-slate-800">R07</td>
+                                    <td class="p-3 text-slate-400 text-[11px]">Multi-Turn Document Extraction</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="flex justify-between items-center text-[11px] font-mono text-slate-500 pt-2">
+                        <span>TOTAL REGISTERED SERVICES: 07</span>
+                        <span>CLUSTER REGION: US-EAST-1A (VPC PRIVATE)</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION B-01 / EXECUTION DETAIL -->
+        <section id="sec-b01" class="scroll-mt-28 bp-rule-t pt-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- INDEX COLUMN -->
+                <div class="lg:col-span-2 font-mono bp-rule-b lg:bp-rule-b-0 lg:bp-rule-r pb-4 lg:pb-0 pr-4 border-slate-800">
+                    <div class="text-4xl font-display font-bold text-slate-100">B-01</div>
+                    <div class="text-xs uppercase tracking-wider text-slate-500 mt-1">TRACE</div>
+                    <div class="text-xs font-semibold uppercase text-sky-400 mt-1">EXECUTION DETAIL</div>
+                </div>
+
+                <!-- CONTENT COLUMN (EXECUTION SEQUENCE) -->
+                <div class="lg:col-span-10 space-y-6">
+                    <div>
+                        <h2 class="font-display text-2xl font-bold uppercase tracking-wide text-slate-100">
+                            B-01 / REAL-TIME REQUEST EXECUTION TRACE
+                        </h2>
+                        <p class="text-xs font-mono text-slate-400 mt-1">
+                            Step-sequence trace showing an incoming user request moving through the ATLAS orchestration pipeline.
+                        </p>
+                    </div>
+
+                    <!-- REQUEST BANNER -->
+                    <div class="bp-plate p-4 font-mono text-xs flex flex-wrap justify-between items-center gap-4 bg-[#101622]">
+                        <div>
+                            <span class="text-slate-500 uppercase text-[10px]">ACTIVE REQUEST PROMPT:</span>
+                            <div class="text-slate-100 font-semibold text-sm mt-0.5">"Compare regional manufacturing trends across North America, EU, and Asia-Pacific."</div>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-slate-500 uppercase text-[10px]">TRACE IDENTIFIER:</span>
+                            <div class="text-sky-400 font-bold">#TR-8841-REGIONAL</div>
+                        </div>
+                    </div>
+
+                    <!-- STEP SEQUENCE LIST -->
+                    <div class="border border-slate-800 divide-y divide-slate-800 font-mono text-xs bg-[#101622]">
+                        
+                        <!-- STEP 01 -->
+                        <div id="step-row-1" class="p-4 flex flex-wrap items-center justify-between gap-4 hover:bg-[#161e2e]/50 cursor-pointer transition-colors">
+                            <div class="flex items-center gap-4">
+                                <span class="w-6 h-6 border border-sky-400 text-sky-400 flex items-center justify-center font-bold text-xs">01</span>
+                                <div>
+                                    <div class="text-slate-100 font-bold">01 / RECEIVE</div>
+                                    <div class="text-slate-400 text-[11px]">Ingest prompt, validate schema against API gateway, assign Trace ID.</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-emerald-400 font-semibold">EXECUTED</span>
+                                <span class="text-slate-500 text-[11px] block">TIMESTAMP: 14:32:01.002</span>
+                            </div>
+                        </div>
+
+                        <!-- STEP 02 -->
+                        <div id="step-row-2" class="p-4 flex flex-wrap items-center justify-between gap-4 hover:bg-[#161e2e]/50 cursor-pointer transition-colors">
+                            <div class="flex items-center gap-4">
+                                <span class="w-6 h-6 border border-sky-400 text-sky-400 flex items-center justify-center font-bold text-xs">02</span>
+                                <div>
+                                    <div class="text-slate-100 font-bold">02 / DECOMPOSE</div>
+                                    <div class="text-slate-400 text-[11px]">ORCH-01 breaks query into 3 parallel sub-tasks (NA, EU, APAC vectors).</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-emerald-400 font-semibold">EXECUTED</span>
+                                <span class="text-slate-500 text-[11px] block">TIMESTAMP: 14:32:01.044</span>
+                            </div>
+                        </div>
+
+                        <!-- STEP 03 -->
+                        <div id="step-row-3" class="p-4 flex flex-wrap items-center justify-between gap-4 hover:bg-[#161e2e]/50 cursor-pointer transition-colors">
+                            <div class="flex items-center gap-4">
+                                <span class="w-6 h-6 border border-sky-400 text-sky-400 flex items-center justify-center font-bold text-xs">03</span>
+                                <div>
+                                    <div class="text-slate-100 font-bold">03 / RETRIEVE</div>
+                                    <div class="text-slate-400 text-[11px]">Query MEM-02 vector index & execute TOOL-04 web search for recent filings.</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-emerald-400 font-semibold">EXECUTED</span>
+                                <span class="text-slate-500 text-[11px] block">TIMESTAMP: 14:32:01.120</span>
+                            </div>
+                        </div>
+
+                        <!-- STEP 04 -->
+                        <div id="step-row-4" class="p-4 flex flex-wrap items-center justify-between gap-4 hover:bg-[#161e2e]/50 cursor-pointer transition-colors">
+                            <div class="flex items-center gap-4">
+                                <span class="w-6 h-6 border border-sky-400 text-sky-400 flex items-center justify-center font-bold text-xs">04</span>
+                                <div>
+                                    <div class="text-slate-100 font-bold">04 / ANALYZE</div>
+                                    <div class="text-slate-400 text-[11px]">Dispatch tasks to Research Agent & Code Sandbox for statistical extraction.</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-emerald-400 font-semibold">EXECUTED</span>
+                                <span class="text-slate-500 text-[11px] block">TIMESTAMP: 14:32:01.430</span>
+                            </div>
+                        </div>
+
+                        <!-- STEP 05 -->
+                        <div id="step-row-5" class="p-4 flex flex-wrap items-center justify-between gap-4 hover:bg-[#161e2e]/50 cursor-pointer transition-colors">
+                            <div class="flex items-center gap-4">
+                                <span class="w-6 h-6 border border-sky-400 text-sky-400 flex items-center justify-center font-bold text-xs">05</span>
+                                <div>
+                                    <div class="text-slate-100 font-bold">05 / VERIFY</div>
+                                    <div class="text-slate-400 text-[11px]">EVAL-01 checks extraction accuracy & verifies citations against raw source.</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-emerald-400 font-semibold">EXECUTED</span>
+                                <span class="text-slate-500 text-[11px] block">TIMESTAMP: 14:32:01.508</span>
+                            </div>
+                        </div>
+
+                        <!-- STEP 06 -->
+                        <div id="step-row-6" class="p-4 flex flex-wrap items-center justify-between gap-4 hover:bg-[#161e2e]/50 cursor-pointer transition-colors">
+                            <div class="flex items-center gap-4">
+                                <span class="w-6 h-6 border border-sky-400 text-sky-400 flex items-center justify-center font-bold text-xs">06</span>
+                                <div>
+                                    <div class="text-slate-100 font-bold">06 / SYNTHESIZE</div>
+                                    <div class="text-slate-400 text-[11px]">Formulate final response with confidence markers and return payload.</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-emerald-400 font-semibold">EXECUTED</span>
+                                <span class="text-slate-500 text-[11px] block">TIMESTAMP: 14:32:01.550</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- STEP LOG DETAIL DISPLAY BOX -->
+                    <div id="step-detail-box" class="p-4 bg-[#0a0d14] border border-slate-800 font-mono text-xs space-y-2">
+                        <div class="flex justify-between text-slate-500 text-[10px] border-b border-slate-800 pb-1">
+                            <span id="step-detail-title">STEP EXECUTION LOG DETAIL: STEP 01 / RECEIVE</span>
+                            <span>TRACE ID: TR-8841</span>
+                        </div>
+                        <div id="step-detail-body" class="text-slate-300 text-[11px] space-y-1">
+                            <div>[14:32:01.002] Prompt length: 78 chars. Validated against OAuth token `usr_sec_9918`.</div>
+                            <div>[14:32:01.015] Ingest signature verified. Dispatched to `ORCH-01` on node `cluster-us-east-1a`.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION B-02 / CONTEXT WINDOW ALLOCATION -->
+        <section id="sec-b02" class="scroll-mt-28 bp-rule-t pt-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- INDEX COLUMN -->
+                <div class="lg:col-span-2 font-mono bp-rule-b lg:bp-rule-b-0 lg:bp-rule-r pb-4 lg:pb-0 pr-4 border-slate-800">
+                    <div class="text-4xl font-display font-bold text-slate-100">B-02</div>
+                    <div class="text-xs uppercase tracking-wider text-slate-500 mt-1">ALLOCATION</div>
+                    <div class="text-xs font-semibold uppercase text-sky-400 mt-1">CONTEXT WINDOW</div>
+                </div>
+
+                <!-- CONTENT COLUMN (MEASURED DIMENSION SCALE) -->
+                <div class="lg:col-span-10 space-y-6">
+                    <div>
+                        <h2 class="font-display text-2xl font-bold uppercase tracking-wide text-slate-100">
+                            B-02 / CONTEXT WINDOW BUDGET ALLOCATION
+                        </h2>
+                        <p class="text-xs font-mono text-slate-400 mt-1">
+                            Architectural linear dimension grammar representing context allocation bounds (128,000 Token Max Capacity).
+                        </p>
+                    </div>
+
+                    <!-- ARCHITECTURAL DIMENSION BAR VISUALIZATION -->
+                    <div class="bp-plate p-6 font-mono text-xs space-y-6">
+                        
+                        <div class="flex justify-between items-center text-slate-400 text-[11px] border-b border-slate-800 pb-2">
+                            <span>TOTAL CONTEXT CAPACITY: 128,000 TOKENS</span>
+                            <span>SLIDING WINDOW POLICY: STRICT PRUNE</span>
+                        </div>
+
+                        <!-- LINEAR MEASURED BAR -->
+                        <div class="space-y-2">
+                            <div class="w-full h-8 bg-[#0a0d14] border border-slate-700 flex overflow-hidden p-0.5">
+                                <!-- System (12%) -->
+                                <div class="h-full bg-slate-700 text-slate-200 text-[10px] flex items-center justify-center font-bold border-r border-slate-900" style="width: 12%;">12%</div>
+                                <!-- User (18%) -->
+                                <div class="h-full bg-sky-900 text-sky-200 text-[10px] flex items-center justify-center font-bold border-r border-slate-900" style="width: 18%;">18%</div>
+                                <!-- Retrieval (31%) -->
+                                <div class="h-full bg-blue-800 text-blue-100 text-[10px] flex items-center justify-center font-bold border-r border-slate-900" style="width: 31%;">31%</div>
+                                <!-- Working (24%) -->
+                                <div class="h-full bg-indigo-900 text-indigo-200 text-[10px] flex items-center justify-center font-bold border-r border-slate-900" style="width: 24%;">24%</div>
+                                <!-- Response (15%) -->
+                                <div class="h-full bg-emerald-950 text-emerald-300 text-[10px] flex items-center justify-center font-bold" style="width: 15%;">15%</div>
+                            </div>
+
+                            <!-- DIMENSION BOUND MARKERS -->
+                            <div class="flex justify-between text-[10px] text-slate-500 font-mono pt-1">
+                                <span>[0 TOKENS]</span>
+                                <span>[38,400 T]</span>
+                                <span>[78,080 T]</span>
+                                <span>[108,800 T]</span>
+                                <span>[128,000 TOKENS MAX]</span>
+                            </div>
+                        </div>
+
+                        <!-- ALLOCATION SCHEDULE BREAKDOWN -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4 border-t border-slate-800">
+                            
+                            <div class="p-3 bg-[#0a0d14] border border-slate-800 space-y-1">
+                                <div class="text-slate-500 text-[10px] font-bold">01 / SYSTEM PROMPT</div>
+                                <div class="text-slate-100 font-bold text-sm">12% <span class="text-slate-500 text-xs font-normal">(15,360 T)</span></div>
+                                <p class="text-slate-400 text-[11px]">Immutable safety rules, tool definitions, output schemas.</p>
+                            </div>
+
+                            <div class="p-3 bg-[#0a0d14] border border-slate-800 space-y-1">
+                                <div class="text-sky-400 text-[10px] font-bold">02 / USER HISTORY</div>
+                                <div class="text-slate-100 font-bold text-sm">18% <span class="text-slate-500 text-xs font-normal">(23,040 T)</span></div>
+                                <p class="text-slate-400 text-[11px]">Prior turn interactions and user-provided uploaded files.</p>
+                            </div>
+
+                            <div class="p-3 bg-[#0a0d14] border border-slate-800 space-y-1">
+                                <div class="text-blue-400 text-[10px] font-bold">03 / RETRIEVAL DOCS</div>
+                                <div class="text-slate-100 font-bold text-sm">31% <span class="text-slate-500 text-xs font-normal">(39,680 T)</span></div>
+                                <p class="text-slate-400 text-[11px]">Vector database RAG chunks and external API results.</p>
+                            </div>
+
+                            <div class="p-3 bg-[#0a0d14] border border-slate-800 space-y-1">
+                                <div class="text-indigo-400 text-[10px] font-bold">04 / WORKING CONTEXT</div>
+                                <div class="text-slate-100 font-bold text-sm">24% <span class="text-slate-500 text-xs font-normal">(30,720 T)</span></div>
+                                <p class="text-slate-400 text-[11px]">Agent execution scratchpad, intermediate reasoning steps.</p>
+                            </div>
+
+                            <div class="p-3 bg-[#0a0d14] border border-slate-800 space-y-1">
+                                <div class="text-emerald-400 text-[10px] font-bold">05 / RESPONSE BUDGET</div>
+                                <div class="text-slate-100 font-bold text-sm">15% <span class="text-slate-500 text-xs font-normal">(19,200 T)</span></div>
+                                <p class="text-slate-400 text-[11px]">Reserved token space for final synthesized output generation.</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION C-01 / MODEL ROUTING DETAIL -->
+        <section id="sec-c01" class="scroll-mt-28 bp-rule-t pt-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- INDEX COLUMN -->
+                <div class="lg:col-span-2 font-mono bp-rule-b lg:bp-rule-b-0 lg:bp-rule-r pb-4 lg:pb-0 pr-4 border-slate-800">
+                    <div class="text-4xl font-display font-bold text-slate-100">C-01</div>
+                    <div class="text-xs uppercase tracking-wider text-slate-500 mt-1">DISPATCH</div>
+                    <div class="text-xs font-semibold uppercase text-sky-400 mt-1">MODEL ROUTER</div>
+                </div>
+
+                <!-- CONTENT COLUMN (DETAIL C-04 SCHEMATIC) -->
+                <div class="lg:col-span-10 space-y-6">
+                    <div>
+                        <h2 class="font-display text-2xl font-bold uppercase tracking-wide text-slate-100">
+                            DETAIL C-04 / MULTI-MODEL ROUTER SCHEMATIC
+                        </h2>
+                        <p class="text-xs font-mono text-slate-400 mt-1">
+                            Technical classification routing model classes based on task complexity, latency requirements, and context scale.
+                        </p>
+                    </div>
+
+                    <!-- MODEL ROUTER CARDS / TECHNICAL PLATES -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono text-xs">
+                        
+                        <!-- FAST CLASS -->
+                        <div class="bp-plate p-5 space-y-3 relative border-t-2 border-t-sky-400">
+                            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                                <span class="font-bold text-slate-100 text-sm">CLASS 01 / FAST</span>
+                                <span class="bp-callout">&lt; 150 MS</span>
+                            </div>
+                            <div class="text-slate-300 font-semibold">Claude 3 Haiku / GPT-4o-Mini</div>
+                            <p class="text-slate-400 text-[11px] leading-relaxed">
+                                Optimized for low-latency classification, prompt triaging, schema validation, and simple routing logic.
+                            </p>
+                            <div class="pt-2 border-t border-slate-800/80 text-[10px] text-slate-500 space-y-1">
+                                <div>TASK TYPE: Triage / Regex / Intent Mapping</div>
+                                <div>COST EFFICIENCY: High (1x Base)</div>
+                            </div>
+                        </div>
+
+                        <!-- REASONING CLASS -->
+                        <div class="bp-plate p-5 space-y-3 relative border-t-2 border-t-indigo-400">
+                            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                                <span class="font-bold text-slate-100 text-sm">CLASS 02 / REASONING</span>
+                                <span class="bp-callout">1.2s - 4.0s</span>
+                            </div>
+                            <div class="text-slate-300 font-semibold">O1 / Claude 3.5 Sonnet</div>
+                            <p class="text-slate-400 text-[11px] leading-relaxed">
+                                Used for multi-step algorithmic planning, complex math, multi-turn synthesis, and research extraction.
+                            </p>
+                            <div class="pt-2 border-t border-slate-800/80 text-[10px] text-slate-500 space-y-1">
+                                <div>TASK TYPE: Multi-step Logic / Strategic Plan</div>
+                                <div>COST EFFICIENCY: Medium (4x Base)</div>
+                            </div>
+                        </div>
+
+                        <!-- CODE CLASS -->
+                        <div class="bp-plate p-5 space-y-3 relative border-t-2 border-t-emerald-400">
+                            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                                <span class="font-bold text-slate-100 text-sm">CLASS 03 / CODE</span>
+                                <span class="bp-callout">600 MS</span>
+                            </div>
+                            <div class="text-slate-300 font-semibold">DeepSeek-Coder / Claude 3.5</div>
+                            <p class="text-slate-400 text-[11px] leading-relaxed">
+                                Dedicated AST generation, refactoring, API integration payload writing, and gVisor sandbox execution.
+                            </p>
+                            <div class="pt-2 border-t border-slate-800/80 text-[10px] text-slate-500 space-y-1">
+                                <div>TASK TYPE: Code Gen / Vulnerability Audit</div>
+                                <div>COST EFFICIENCY: High (2x Base)</div>
+                            </div>
+                        </div>
+
+                        <!-- VISION CLASS -->
+                        <div class="bp-plate p-5 space-y-3 relative border-t-2 border-t-amber-400">
+                            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                                <span class="font-bold text-slate-100 text-sm">CLASS 04 / VISION</span>
+                                <span class="bp-callout">800 MS</span>
+                            </div>
+                            <div class="text-slate-300 font-semibold">GPT-4o Vision / Sonnet</div>
+                            <p class="text-slate-400 text-[11px] leading-relaxed">
+                                Document diagram ingestion, CAD drawing analysis, spatial chart extraction, and OCR verification.
+                            </p>
+                            <div class="pt-2 border-t border-slate-800/80 text-[10px] text-slate-500 space-y-1">
+                                <div>TASK TYPE: Architectural Drawings / PDF Charts</div>
+                                <div>COST EFFICIENCY: Medium (3x Base)</div>
+                            </div>
+                        </div>
+
+                        <!-- LONG CONTEXT CLASS -->
+                        <div class="bp-plate p-5 space-y-3 relative border-t-2 border-t-purple-400 md:col-span-2">
+                            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                                <span class="font-bold text-slate-100 text-sm">CLASS 05 / LONG CONTEXT</span>
+                                <span class="bp-callout">2.1s</span>
+                            </div>
+                            <div class="text-slate-300 font-semibold">Gemini 1.5 Pro / Claude 3.5 Sonnet 200k</div>
+                            <p class="text-slate-400 text-[11px] leading-relaxed">
+                                Full codebase ingestion, multi-document policy corpus scanning, and cross-file reference mapping over 1M+ token context windows.
+                            </p>
+                            <div class="pt-2 border-t border-slate-800/80 text-[10px] text-slate-500 flex justify-between">
+                                <span>TASK TYPE: Repository Audit / Legal Corpus</span>
+                                <span>CONTEXT CAPABILITY: 1,000,000+ TOKENS</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION C-02 / REVISION HISTORY -->
+        <section id="sec-c02" class="scroll-mt-28 bp-rule-t pt-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- INDEX COLUMN -->
+                <div class="lg:col-span-2 font-mono bp-rule-b lg:bp-rule-b-0 lg:bp-rule-r pb-4 lg:pb-0 pr-4 border-slate-800">
+                    <div class="text-4xl font-display font-bold text-slate-100">C-02</div>
+                    <div class="text-xs uppercase tracking-wider text-slate-500 mt-1">HISTORY</div>
+                    <div class="text-xs font-semibold uppercase text-sky-400 mt-1">REVISION HISTORY</div>
+                </div>
+
+                <!-- CONTENT COLUMN (REVISION TABLE) -->
+                <div class="lg:col-span-10 space-y-6">
+                    <div>
+                        <h2 class="font-display text-2xl font-bold uppercase tracking-wide text-slate-100">
+                            C-02 / RECORD OF SYSTEM REVISIONS
+                        </h2>
+                        <p class="text-xs font-mono text-slate-400 mt-1">
+                            Immutable architectural change record documenting policy updates, verification gates, and container parameters.
+                        </p>
+                    </div>
+
+                    <!-- REVISION TABLE -->
+                    <div class="bp-plate overflow-x-auto font-mono text-xs">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-[#161e2e] bp-rule-b text-slate-300 font-bold">
+                                    <th class="p-3 border-r border-slate-800">REV</th>
+                                    <th class="p-3 border-r border-slate-800">DATE</th>
+                                    <th class="p-3 border-r border-slate-800">CHANGE DESCRIPTION</th>
+                                    <th class="p-3 border-r border-slate-800">VERIFIED BY</th>
+                                    <th class="p-3">HASH SIGNATURE</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800/80">
+                                <tr class="hover:bg-[#161e2e]/50 transition-colors">
+                                    <td class="p-3 font-bold text-amber-400 border-r border-slate-800">08</td>
+                                    <td class="p-3 text-slate-300 border-r border-slate-800">AUG 14, 2026</td>
+                                    <td class="p-3 text-slate-200 border-r border-slate-800">ROUTING POLICY UPDATE — Lowered latency ceiling by 18% for Class 01 fast models.</td>
+                                    <td class="p-3 text-emerald-400 font-semibold border-r border-slate-800">SYSTEM AUTOMATION</td>
+                                    <td class="p-3 text-slate-500 text-[11px]">e8f4a299c104</td>
+                                </tr>
+                                <tr class="hover:bg-[#161e2e]/50 transition-colors">
+                                    <td class="p-3 font-bold text-slate-400 border-r border-slate-800">07</td>
+                                    <td class="p-3 text-slate-300 border-r border-slate-800">AUG 02, 2026</td>
+                                    <td class="p-3 text-slate-200 border-r border-slate-800">MEMORY PRIORITY MODEL — Introduced sliding HNSW index buffer for long-turn turns.</td>
+                                    <td class="p-3 text-sky-400 font-semibold border-r border-slate-800">QA SAFETY TEAM</td>
+                                    <td class="p-3 text-slate-500 text-[11px]">44b78e12d3aa</td>
+                                </tr>
+                                <tr class="hover:bg-[#161e2e]/50 transition-colors">
+                                    <td class="p-3 font-bold text-slate-400 border-r border-slate-800">06</td>
+                                    <td class="p-3 text-slate-300 border-r border-slate-800">JUL 21, 2026</td>
+                                    <td class="p-3 text-slate-200 border-r border-slate-800">EVALUATION PATH — Enforced mandatory dual-pass verification gate on tool outputs.</td>
+                                    <td class="p-3 text-emerald-400 font-semibold border-r border-slate-800">SYSTEM AUTOMATION</td>
+                                    <td class="p-3 text-slate-500 text-[11px]">11c0903f7188</td>
+                                </tr>
+                                <tr class="hover:bg-[#161e2e]/50 transition-colors">
+                                    <td class="p-3 font-bold text-slate-400 border-r border-slate-800">05</td>
+                                    <td class="p-3 text-slate-300 border-r border-slate-800">JUL 04, 2026</td>
+                                    <td class="p-3 text-slate-200 border-r border-slate-800">TOOL SANDBOX ISOLATION — Upgraded gVisor tool execution sandbox container parameters.</td>
+                                    <td class="p-3 text-sky-400 font-semibold border-r border-slate-800">INFRASTRUCTURE</td>
+                                    <td class="p-3 text-slate-500 text-[11px]">77d901bc4421</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION D-01 / PRODUCT OVERVIEW & PHILOSOPHY -->
+        <section id="sec-d01" class="scroll-mt-28 bp-rule-t pt-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- INDEX COLUMN -->
+                <div class="lg:col-span-2 font-mono bp-rule-b lg:bp-rule-b-0 lg:bp-rule-r pb-4 lg:pb-0 pr-4 border-slate-800">
+                    <div class="text-4xl font-display font-bold text-slate-100">D-01</div>
+                    <div class="text-xs uppercase tracking-wider text-slate-500 mt-1">OVERVIEW</div>
+                    <div class="text-xs font-semibold uppercase text-sky-400 mt-1">PRODUCT SPEC</div>
+                </div>
+
+                <!-- CONTENT COLUMN (CONVENTIONAL PROSE EXPLANATION) -->
+                <div class="lg:col-span-10 space-y-8">
+                    <div>
+                        <h2 class="font-display text-2xl font-bold uppercase tracking-wide text-slate-100">
+                            D-01 / PRODUCT OVERVIEW & ARCHITECTURAL PHILOSOPHY
+                        </h2>
+                        <p class="text-sm text-slate-400 mt-1">
+                            Software architecture documented as a working system blueprint.
+                        </p>
+                    </div>
+
+                    <div class="space-y-6 text-slate-300 text-sm leading-relaxed font-sans max-w-4xl">
+                        
+                        <div class="p-6 bp-plate space-y-3 font-sans">
+                            <h3 class="text-lg font-bold text-slate-100 font-display uppercase tracking-wide">
+                                What ATLAS Is
+                            </h3>
+                            <p>
+                                ATLAS is an enterprise AI systems architecture designed to coordinate multi-agent execution, vector context stores, tool microservices, and multi-model dispatching with absolute deterministic governance. Instead of relying on monolithic LLM prompts or unstructured chain scripts, ATLAS treats intelligence as a distributed network of specialized components.
+                            </p>
+                        </div>
+
+                        <div class="p-6 bp-plate space-y-3 font-sans">
+                            <h3 class="text-lg font-bold text-slate-100 font-display uppercase tracking-wide">
+                                Why Orchestration Matters
+                            </h3>
+                            <p>
+                                Modern enterprise applications cannot afford fragile, unpredictable model calls. Unstructured agent loops frequently suffer from context drift, infinite execution loops, and unverified data mutation. ATLAS enforces strict state boundaries between task planning (<code class="font-mono text-sky-400">ORCH-01</code>), agent execution, tool execution sandboxes, and response synthesis.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="p-6 bp-plate space-y-3 font-sans">
+                                <h3 class="text-base font-bold text-slate-100 font-display uppercase tracking-wide">
+                                    How Context Moves
+                                </h3>
+                                <p class="text-xs text-slate-400 leading-relaxed">
+                                    Context is treated as an architectural resource with strict capacity budgets (<code class="font-mono text-sky-400">Section B-02</code>). Sliding vector memory caches, user interaction histories, and RAG document payloads are explicitly bounded to prevent token exhaustion and halluncinatory noise.
+                                </p>
+                            </div>
+
+                            <div class="p-6 bp-plate space-y-3 font-sans">
+                                <h3 class="text-base font-bold text-slate-100 font-display uppercase tracking-wide">
+                                    Separation of Verification
+                                </h3>
+                                <p class="text-xs text-slate-400 leading-relaxed">
+                                    In ATLAS, no agent signs off on its own generated output. Execution agents (<code class="font-mono text-sky-400">AGENT-04</code>) generate payloads, but a separate, deterministic verification harness (<code class="font-mono text-sky-400">EVAL-01</code>) evaluates result accuracy, citation integrity, and safety bounds prior to output synthesis.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- FOOTER COMMAND BAR -->
+                    <div class="pt-8 bp-rule-t flex flex-wrap gap-4 justify-between items-center font-mono text-xs text-slate-500">
+                        <div>
+                            ATLAS SPECIFICATION COMPLETE • REVISION R08 • BUILD 2026.08.14
+                        </div>
+                        <div class="flex gap-4">
+                            <button class="px-3 py-1.5 border border-slate-700 hover:border-sky-400 text-slate-200 transition-colors">
+                                PRINT ARCHITECTURE BLUEPRINT [⌘P]
+                            </button>
+                            <a href="#sec-a01" class="px-3 py-1.5 bg-sky-400 text-slate-950 font-bold hover:bg-sky-300 transition-colors">
+                                RETURN TO TOP ▲
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    
+</body>
+</html>

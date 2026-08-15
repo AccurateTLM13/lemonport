@@ -26,6 +26,7 @@ const REGISTERED_PAGES = [
   { key: "lemon-dom", label: "Lemon DOM", htmlPath: "lemon-dom/index.html", canonicalUrl: "https://lemonteed.com/lemon-dom/" },
   { key: "studio-lab", label: "Studio Lab", htmlPath: "studio-lab/index.html", canonicalUrl: "https://lemonteed.com/studio-lab/" },
   { key: "lemonteed-fm", label: "Lemonteed FM", htmlPath: "lemonteed-fm/index.html", canonicalUrl: "https://lemonteed.com/lemonteed-fm/" },
+  { key: "benchmark", label: "Design Skill Benchmark Archive", htmlPath: "benchmark/index.html", canonicalUrl: "https://lemonteed.com/benchmark/" },
 ];
 
 const CANONICAL_ORIGIN = "https://lemonteed.com";

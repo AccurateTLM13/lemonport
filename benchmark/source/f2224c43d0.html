@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUNICIPAL TRAIL OPERATIONS — Operating Handbook & Field Status</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    
+
+    
+
+    <style>
+        :root {
+            --paper: #e7e4d8;
+            --paper-raised: #f0ede3;
+            --ink: #1d1d1a;
+            --ink-soft: #4c4c46;
+            --ink-muted: #77766e;
+            --rule: #9d9a8e;
+            --rule-strong: #45453f;
+            --revision: #a54532;
+            --warning: #c18a28;
+            --verified: #4f7455;
+        }
+
+        body {
+            background-color: var(--paper);
+            color: var(--ink);
+            font-family: 'IBM Plex Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Custom Scrollbar for procedural look */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--paper);
+            border-left: 1px solid var(--rule);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--rule-strong);
+        }
+
+        /* Technical Rule classes */
+        .border-rule { border-color: var(--rule); }
+        .border-rule-strong { border-color: var(--rule-strong); }
+
+        /* Document layout grid structure */
+        .manual-section {
+            display: grid;
+            grid-template-columns: 100px minmax(0, 1fr) 180px;
+            gap: 1.5rem;
+            border-bottom: 1px solid var(--rule);
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .manual-section {
+                grid-template-columns: 80px minmax(0, 1fr) 150px;
+                gap: 1rem;
+            }
+        }
+
+        /* Mobile preservation: SECTION -> CONTENT -> ANNOTATION */
+        @media (max-width: 768px) {
+            .manual-section {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                padding-top: 1.5rem;
+                padding-bottom: 1.5rem;
+            }
+        }
+
+        /* State Mark styling */
+        .state-mark {
+            display: inline-flex;
+            align-items: center;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border: 1px solid currentColor;
+            letter-spacing: 0.05em;
+        }
+
+        .state-mark-progress {
+            color: var(--warning);
+            border-color: var(--warning);
+            background-color: rgba(193, 138, 40, 0.08);
+        }
+
+        .state-mark-dispatched {
+            color: var(--ink-soft);
+            border-color: var(--ink-soft);
+            background-color: rgba(76, 76, 70, 0.05);
+        }
+
+        .state-mark-completed {
+            color: var(--verified);
+            border-color: var(--verified);
+            background-color: rgba(79, 116, 85, 0.08);
+        }
+
+        .state-mark-closed {
+            color: var(--revision);
+            border-color: var(--revision);
+            background-color: rgba(165, 69, 50, 0.08);
+        }
+
+        /* Procedure step mark animation */
+        .step-checkbox {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 1.5px solid var(--ink);
+            background: transparent;
+            cursor: pointer;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0px;
+            transition: all 120ms linear;
+        }
+
+        .step-checkbox:checked {
+            background: var(--ink);
+        }
+
+        .step-checkbox:checked::after {
+            content: '✓';
+            color: var(--paper);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Technical SVG diagram callout highlight */
+        .diagram-target {
+            cursor: pointer;
+            transition: all 150ms ease;
+        }
+        .diagram-target:hover, .diagram-target.active {
+            stroke: var(--revision) !important;
+            stroke-width: 2.5px !important;
+        }
+        .diagram-node {
+            cursor: pointer;
+            transition: transform 150ms ease, fill 150ms ease;
+        }
+        .diagram-node:hover, .diagram-node.active {
+            fill: var(--revision);
+        }
+
+        /* Command Plate Buttons */
+        .command-plate {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 600;
+            text-transform: uppercase;
+            border: 1px solid var(--ink);
+            background-color: var(--paper-raised);
+            padding: 8px 16px;
+            transition: background-color 120ms ease, border-color 120ms ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .command-plate:hover {
+            background-color: var(--ink);
+            color: var(--paper);
+        }
+        .command-plate:active {
+            transform: translateY(1px);
+        }
+
+        /* Print media rules */
+        @media print {
+            body { background: white; color: black; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-ink selection:text-paper"><div style="position:fixed;right:12px;bottom:12px;z-index:2147483647;padding:8px 10px;background:#111;color:#fff;font:12px/1.3 monospace;border:1px solid #777">ARCHIVED SOURCE · SCRIPTS AND NETWORK DISABLED</div>
+
+    <!-- TOP HEADER / MUNICIPAL IDENTIFIER BAR -->
+    <header class="border-b-2 border-rule-strong bg-paper px-4 py-3 md:px-8">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            
+            <div class="flex items-center gap-3">
+                <!-- Civic Emblem SVG -->
+                <div class="w-8 h-8 border border-ink flex items-center justify-center shrink-0 bg-paper-raised">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square" stroke-linejoin="miter">
+                        <path d="M3 20h18"></path>
+                        <path d="M5 20v-4l5-6 4 4 5-8v14"></path>
+                        <path d="M12 4v3"></path>
+                        <path d="M9 7h6"></path>
+                    </svg>
+                </div>
+                <div>
+                    <div class="font-mono text-xs text-ink-muted uppercase tracking-wider">District 07 Regional Parks Department</div>
+                    <h1 class="font-display font-bold text-xl md:text-2xl text-ink uppercase tracking-tight leading-none">
+                        Municipal Trail Operations
+                    </h1>
+                </div>
+            </div>
+
+            <!-- Operational System State Stamp -->
+            <div class="flex items-center gap-4 text-xs font-mono text-ink-soft border-t md:border-t-0 md:border-l border-rule pt-2 md:pt-0 md:pl-6">
+                <div>
+                    <span class="text-ink-muted block text-[10px]">SYSTEM STATUS</span>
+                    <span class="font-semibold text-verified flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 bg-verified inline-block"></span> OPERATIONAL
+                    </span>
+                </div>
+                <div class="border-l border-rule pl-4">
+                    <span class="text-ink-muted block text-[10px]">DOC ID</span>
+                    <span class="font-semibold text-ink">MTO-HBK-2026</span>
+                </div>
+                <div class="border-l border-rule pl-4 hidden sm:block">
+                    <span class="text-ink-muted block text-[10px]">LAST UPDATE</span>
+                    <span id="header-clock" class="font-semibold text-ink">16:45 CDT</span>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- SECTION INDEX NAVIGATION BAR -->
+    <nav class="border-b border-rule bg-paper-raised px-4 py-2 md:px-8 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between overflow-x-auto no-scrollbar gap-6 text-xs font-mono">
+            <div class="flex items-center gap-4 whitespace-nowrap py-1">
+                <a href="#status" class="text-ink hover:underline font-semibold hover:text-revision flex items-center gap-1">
+                    <span class="text-ink-muted">01</span> STATUS
+                </a>
+                <span class="text-rule">/</span>
+                <a href="#orders" class="text-ink hover:underline font-semibold hover:text-revision flex items-center gap-1">
+                    <span class="text-ink-muted">02</span> FIELD ORDERS
+                </a>
+                <span class="text-rule">/</span>
+                <a href="#procedure" class="text-ink hover:underline font-semibold hover:text-revision flex items-center gap-1">
+                    <span class="text-ink-muted">03</span> INSPECTION
+                </a>
+                <span class="text-rule">/</span>
+                <a href="#figure" class="text-ink hover:underline font-semibold hover:text-revision flex items-center gap-1">
+                    <span class="text-ink-muted">04</span> FIG. 03
+                </a>
+                <span class="text-rule">/</span>
+                <a href="#notices" class="text-ink hover:underline font-semibold hover:text-revision flex items-center gap-1">
+                    <span class="text-ink-muted">05</span> NOTICES
+                </a>
+                <span class="text-rule">/</span>
+                <a href="#records" class="text-ink hover:underline font-semibold hover:text-revision flex items-center gap-1">
+                    <span class="text-ink-muted">06</span> LOG
+                </a>
+                <span class="text-rule">/</span>
+                <a href="#public" class="text-ink hover:underline font-semibold hover:text-revision flex items-center gap-1">
+                    <span class="text-ink-muted">07</span> PUBLIC REF
+                </a>
+            </div>
+
+            <div class="hidden lg:flex items-center gap-2 shrink-0">
+                <button class="command-plate text-xs py-1 px-3">
+                    <span>REPORT ISSUE</span>
+                    <span class="text-[10px]">08</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN MANUAL CONTENT BODY CONTAINER -->
+    <main class="max-w-7xl mx-auto w-full px-4 md:px-8 py-4 flex-grow">
+
+        <!-- ========================================== -->
+        <!-- 01 / OPERATIONS STATUS                     -->
+        <!-- ========================================== -->
+        <section id="status" class="manual-section">
+            
+            <!-- INDEX COLUMN -->
+            <div class="font-mono">
+                <div class="text-2xl md:text-3xl font-display font-bold text-ink">01</div>
+                <div class="text-xs font-semibold uppercase text-ink-muted tracking-wider">STATUS</div>
+            </div>
+
+            <!-- CONTENT COLUMN -->
+            <div>
+                <div class="flex items-center justify-between mb-3 border-b border-rule pb-2">
+                    <h2 class="font-display font-bold text-xl md:text-2xl uppercase tracking-tight text-ink">
+                        Operations Status Overview
+                    </h2>
+                    <span class="font-mono text-xs text-ink-soft hidden sm:inline-block">RECORDED SYSTEM STATE</span>
+                </div>
+
+                <p class="font-body text-sm text-ink-soft mb-6 leading-relaxed">
+                    Real-time field activity metrics logged across District 07 network (22 main segments, 142 total trail miles). States are recorded continuously by field leads upon verification.
+                </p>
+
+                <!-- OPERATIONAL METRIC PLATES -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    
+                    <!-- Metric 1 -->
+                    <div class="border border-rule bg-paper-raised p-3">
+                        <div class="font-mono text-[11px] text-ink-muted uppercase">01.1 / INSPECTIONS</div>
+                        <div class="font-display font-bold text-2xl text-ink my-1">14 / 22</div>
+                        <div class="font-mono text-xs text-ink-soft flex items-center justify-between border-t border-rule pt-2 mt-2">
+                            <span>SEGMENTS TODAY</span>
+                            <span class="text-verified font-semibold">63.6%</span>
+                        </div>
+                    </div>
+
+                    <!-- Metric 2 -->
+                    <div class="border border-rule bg-paper-raised p-3">
+                        <div class="font-mono text-[11px] text-ink-muted uppercase">01.2 / ACTIVE WORK</div>
+                        <div class="font-display font-bold text-2xl text-warning my-1">03 ZONES</div>
+                        <div class="font-mono text-xs text-ink-soft flex items-center justify-between border-t border-rule pt-2 mt-2">
+                            <span>CREWS ACTIVE</span>
+                            <span class="text-ink font-semibold">UNITS 01, 03, 07</span>
+                        </div>
+                    </div>
+
+                    <!-- Metric 3 -->
+                    <div class="border border-rule bg-paper-raised p-3">
+                        <div class="font-mono text-[11px] text-ink-muted uppercase">01.3 / CLOSURES</div>
+                        <div class="font-display font-bold text-2xl text-revision my-1">02 SEGMENTS</div>
+                        <div class="font-mono text-xs text-ink-soft flex items-center justify-between border-t border-rule pt-2 mt-2">
+                            <span>SAFETY / MAINT</span>
+                            <span class="text-revision font-semibold">TR 04-B, TR 09</span>
+                        </div>
+                    </div>
+
+                    <!-- Metric 4 -->
+                    <div class="border border-rule bg-paper-raised p-3">
+                        <div class="font-mono text-[11px] text-ink-muted uppercase">01.4 / DEPLOYMENT</div>
+                        <div class="font-display font-bold text-2xl text-ink my-1">04 CREWS</div>
+                        <div class="font-mono text-xs text-ink-soft flex items-center justify-between border-t border-rule pt-2 mt-2">
+                            <span>FIELD STAFF</span>
+                            <span class="text-ink font-semibold">16 ON DUTY</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ANNOTATION MARGIN -->
+            <div class="font-mono text-xs text-ink-soft border-t md:border-t-0 md:border-l border-rule pt-3 md:pt-0 md:pl-4 space-y-3">
+                <div>
+                    <span class="text-ink-muted block text-[10px]">RECORDING STATION</span>
+                    <span>METRO DISPATCH (STN-04)</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">SYSTEM UPDATE</span>
+                    <span>2026-08-14 16:45:00</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">LOG PROTOCOL</span>
+                    <span class="text-ink font-semibold">AUTOLOG-V3.2</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">FIELD WEATHER</span>
+                    <span>74°F / CLEAR / WIND 4MPH</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 02 / CURRENT FIELD ORDERS                  -->
+        <!-- ========================================== -->
+        <section id="orders" class="manual-section">
+            
+            <!-- INDEX COLUMN -->
+            <div class="font-mono">
+                <div class="text-2xl md:text-3xl font-display font-bold text-ink">02</div>
+                <div class="text-xs font-semibold uppercase text-ink-muted tracking-wider">ORDERS</div>
+            </div>
+
+            <!-- CONTENT COLUMN -->
+            <div>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 border-b border-rule pb-2 gap-2">
+                    <h2 class="font-display font-bold text-xl md:text-2xl uppercase tracking-tight text-ink">
+                        Current Field Orders
+                    </h2>
+                    <!-- Operational Filter Control -->
+                    <div class="flex items-center gap-1 font-mono text-xs">
+                        <span class="text-ink-muted mr-1">FILTER:</span>
+                        <button id="filter-btn-ALL" class="px-2 py-0.5 border border-ink bg-ink text-paper font-semibold">ALL</button>
+                        <button id="filter-btn-PROGRESS" class="px-2 py-0.5 border border-rule bg-paper-raised text-ink-soft hover:border-ink">PROGRESS</button>
+                        <button id="filter-btn-DISPATCHED" class="px-2 py-0.5 border border-rule bg-paper-raised text-ink-soft hover:border-ink">DISPATCHED</button>
+                    </div>
+                </div>
+
+                <p class="font-body text-sm text-ink-soft mb-6 leading-relaxed">
+                    Active maintenance dispatches issued to district trail units. Each record represents a formal field directive executed according to Municipal Code §402-B.
+                </p>
+
+                <!-- FIELD ORDERS LIST (Operational Document Plates) -->
+                <div class="space-y-4">
+                    
+                    <!-- ORDER 01 -->
+                    <div class="order-card border border-rule bg-paper-raised p-4 relative" data-status="PROGRESS">
+                        <div class="flex flex-wrap items-start justify-between gap-2 border-b border-rule pb-3 mb-3">
+                            <div>
+                                <div class="font-mono text-xs text-ink-muted flex items-center gap-2">
+                                    <span class="font-semibold text-ink">ORDER #2026-884</span>
+                                    <span>|</span>
+                                    <span>ISSUED: 07:30 CDT</span>
+                                </div>
+                                <h3 class="font-display font-bold text-lg text-ink uppercase tracking-tight mt-0.5">
+                                    TRAIL 04-B — North Ridge Loop
+                                </h3>
+                            </div>
+                            <span class="state-mark state-mark-progress">STATE: IN PROGRESS</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-mono mb-3">
+                            <div class="border-l-2 border-rule-strong pl-2">
+                                <span class="text-ink-muted block text-[10px]">CONDITION RECORDED</span>
+                                <span class="text-ink font-semibold">Drainage obstruction / Culvert siltation MP 2.4</span>
+                            </div>
+                            <div class="border-l-2 border-rule-strong pl-2">
+                                <span class="text-ink-muted block text-[10px]">FIELD ACTION</span>
+                                <span class="text-ink font-semibold">Clear culvert / inspect tread integrity</span>
+                            </div>
+                            <div class="border-l-2 border-rule-strong pl-2">
+                                <span class="text-ink-muted block text-[10px]">ASSIGNED UNIT</span>
+                                <span class="text-ink font-semibold">Unit 03 (Lead: J. Vance)</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between pt-2 border-t border-rule text-xs font-mono">
+                            <span class="text-ink-soft">PRIORITY: <strong class="text-revision">P1 - IMMEDIATE SAFETY</strong></span>
+                            <span class="text-ink-muted">SECTOR: NORTH RIDGE</span>
+                        </div>
+                    </div>
+
+                    <!-- ORDER 02 -->
+                    <div class="order-card border border-rule bg-paper-raised p-4 relative" data-status="DISPATCHED">
+                        <div class="flex flex-wrap items-start justify-between gap-2 border-b border-rule pb-3 mb-3">
+                            <div>
+                                <div class="font-mono text-xs text-ink-muted flex items-center gap-2">
+                                    <span class="font-semibold text-ink">ORDER #2026-889</span>
+                                    <span>|</span>
+                                    <span>ISSUED: 09:15 CDT</span>
+                                </div>
+                                <h3 class="font-display font-bold text-lg text-ink uppercase tracking-tight mt-0.5">
+                                    TRAIL 09 — Pine Creek Spur
+                                </h3>
+                            </div>
+                            <span class="state-mark state-mark-dispatched">STATE: DISPATCHED</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-mono mb-3">
+                            <div class="border-l-2 border-rule-strong pl-2">
+                                <span class="text-ink-muted block text-[10px]">CONDITION RECORDED</span>
+                                <span class="text-ink font-semibold">Windfall hazard / Overhanging birch MP 0.8</span>
+                            </div>
+                            <div class="border-l-2 border-rule-strong pl-2">
+                                <span class="text-ink-muted block text-[10px]">FIELD ACTION</span>
+                                <span class="text-ink font-semibold">Saw team deploy / clear corridor to 8ft</span>
+                            </div>
+                            <div class="border-l-2 border-rule-strong pl-2">
+                                <span class="text-ink-muted block text-[10px]">ASSIGNED UNIT</span>
+                                <span class="text-ink font-semibold">Unit 01 (Lead: M. Thorne)</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between pt-2 border-t border-rule text-xs font-mono">
+                            <span class="text-ink-soft">PRIORITY: <strong class="text-warning">P2 - SCHEDULED CLEARANCE</strong></span>
+                            <span class="text-ink-muted">SECTOR: EAST BASIN</span>
+                        </div>
+                    </div>
+
+                    <!-- ORDER 03 -->
+                    <div class="order-card border border-rule bg-paper-raised p-4 relative" data-status="PROGRESS">
+                        <div class="flex flex-wrap items-start justify-between gap-2 border-b border-rule pb-3 mb-3">
+                            <div>
+                                <div class="font-mono text-xs text-ink-muted flex items-center gap-2">
+                                    <span class="font-semibold text-ink">ORDER #2026-872</span>
+                                    <span>|</span>
+                                    <span>ISSUED: YESTERDAY 14:00 CDT</span>
+                                </div>
+                                <h3 class="font-display font-bold text-lg text-ink uppercase tracking-tight mt-0.5">
+                                    TRAIL 12-A — Bear Canyon Pass
+                                </h3>
+                            </div>
+                            <span class="state-mark state-mark-progress">STATE: IN PROGRESS</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-mono mb-3">
+                            <div class="border-l-2 border-rule-strong pl-2">
+                                <span class="text-ink-muted block text-[10px]">CONDITION RECORDED</span>
+                                <span class="text-ink font-semibold">Tread erosion & outer shoulder slump Switchback 4</span>
+                            </div>
+                            <div class="border-l-2 border-rule-strong pl-2">
+                                <span class="text-ink-muted block text-[10px]">FIELD ACTION</span>
+                                <span class="text-ink font-semibold">Install timber cribbing & aggregate backfill</span>
+                            </div>
+                            <div class="border-l-2 border-rule-strong pl-2">
+                                <span class="text-ink-muted block text-[10px]">ASSIGNED UNIT</span>
+                                <span class="text-ink font-semibold">Unit 07 (Lead: R. Chen)</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between pt-2 border-t border-rule text-xs font-mono">
+                            <span class="text-ink-soft">PRIORITY: <strong class="text-revision">P1 - STRUCTURAL REPAIR</strong></span>
+                            <span class="text-ink-muted">SECTOR: HIGH CANYON</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ANNOTATION MARGIN -->
+            <div class="font-mono text-xs text-ink-soft border-t md:border-t-0 md:border-l border-rule pt-3 md:pt-0 md:pl-4 space-y-3">
+                <div>
+                    <span class="text-ink-muted block text-[10px]">DIRECTIVE AUTHORITY</span>
+                    <span>DISTRICT SUPT. P. VANCE</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">WORK CODE COMPLIANCE</span>
+                    <span>MTO-SPEC-2024.1</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">RADIO CALLSIGN</span>
+                    <span>DISPATCH-7 (462.575 MHz)</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">REVISION LOG</span>
+                    <span class="text-revision font-semibold">REV 03 (UPDATED 14:10)</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 03 / INSPECTION PROCEDURE                  -->
+        <!-- ========================================== -->
+        <section id="procedure" class="manual-section">
+            
+            <!-- INDEX COLUMN -->
+            <div class="font-mono">
+                <div class="text-2xl md:text-3xl font-display font-bold text-ink">03</div>
+                <div class="text-xs font-semibold uppercase text-ink-muted tracking-wider">INSPECT</div>
+            </div>
+
+            <!-- CONTENT COLUMN -->
+            <div>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-3 border-b border-rule pb-2 gap-2">
+                    <h2 class="font-display font-bold text-xl md:text-2xl uppercase tracking-tight text-ink">
+                        Daily Trail Inspection Protocol
+                    </h2>
+                    <div class="font-mono text-xs text-ink-soft">
+                        PROGRESS: <span id="procedure-counter" class="font-semibold text-ink">0 / 6 COMPLETED</span>
+                    </div>
+                </div>
+
+                <p class="font-body text-sm text-ink-soft mb-6 leading-relaxed">
+                    Standard operating sequence performed by field rangers prior to public log submission. Click each step below to simulate field execution and mark step completion.
+                </p>
+
+                <!-- CHECKLIST PROCEDURAL SEQUENCE -->
+                <div class="space-y-3 font-mono text-sm">
+                    
+                    <!-- STEP 01 -->
+                    <div class="procedure-item border border-rule bg-paper-raised p-3 flex items-start gap-3 transition-colors" id="step-row-1">
+                        <input type="checkbox" id="step-1" class="step-checkbox mt-1">
+                        <div class="flex-grow">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <label for="step-1" class="font-bold text-ink cursor-pointer select-none">
+                                    01 CHECK ACCESS
+                                </label>
+                                <span id="step-mark-1" class="text-xs text-ink-muted">[ PENDING ]</span>
+                            </div>
+                            <p class="font-body text-xs text-ink-soft mt-1 leading-normal">
+                                Verify trailhead gate lock, emergency access road clearance, vehicle turnout safety, and trailhead notice board legibility.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- STEP 02 -->
+                    <div class="procedure-item border border-rule bg-paper-raised p-3 flex items-start gap-3 transition-colors" id="step-row-2">
+                        <input type="checkbox" id="step-2" class="step-checkbox mt-1">
+                        <div class="flex-grow">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <label for="step-2" class="font-bold text-ink cursor-pointer select-none">
+                                    02 INSPECT SURFACE
+                                </label>
+                                <span id="step-mark-2" class="text-xs text-ink-muted">[ PENDING ]</span>
+                            </div>
+                            <p class="font-body text-xs text-ink-soft mt-1 leading-normal">
+                                Examine tread condition for severe rutting, exposed root crowns, loose aggregate displacement, or soil slumping greater than 2 inches.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- STEP 03 -->
+                    <div class="procedure-item border border-rule bg-paper-raised p-3 flex items-start gap-3 transition-colors" id="step-row-3">
+                        <input type="checkbox" id="step-3" class="step-checkbox mt-1">
+                        <div class="flex-grow">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <label for="step-3" class="font-bold text-ink cursor-pointer select-none">
+                                    03 VERIFY DRAINAGE
+                                </label>
+                                <span id="step-mark-3" class="text-xs text-ink-muted">[ PENDING ]</span>
+                            </div>
+                            <p class="font-body text-xs text-ink-soft mt-1 leading-normal">
+                                Confirm waterbars, grade dips, catch basins, and culvert inlets are unobstructed by silt, leaves, or woody debris.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- STEP 04 -->
+                    <div class="procedure-item border border-rule bg-paper-raised p-3 flex items-start gap-3 transition-colors" id="step-row-4">
+                        <input type="checkbox" id="step-4" class="step-checkbox mt-1">
+                        <div class="flex-grow">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <label for="step-4" class="font-bold text-ink cursor-pointer select-none">
+                                    04 INSPECT SIGNAGE
+                                </label>
+                                <span id="step-mark-4" class="text-xs text-ink-muted">[ PENDING ]</span>
+                            </div>
+                            <p class="font-body text-xs text-ink-soft mt-1 leading-normal">
+                                Audit corridor directional signage, mileposts, hazard warnings, and boundary markers for damage or vandalism.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- STEP 05 -->
+                    <div class="procedure-item border border-rule bg-paper-raised p-3 flex items-start gap-3 transition-colors" id="step-row-5">
+                        <input type="checkbox" id="step-5" class="step-checkbox mt-1">
+                        <div class="flex-grow">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <label for="step-5" class="font-bold text-ink cursor-pointer select-none">
+                                    05 RECORD CONDITION
+                                </label>
+                                <span id="step-mark-5" class="text-xs text-ink-muted">[ PENDING ]</span>
+                            </div>
+                            <p class="font-body text-xs text-ink-soft mt-1 leading-normal">
+                                Enter observations into field tablet, record GPS coordinates for identified hazards, and attach photo evidence.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- STEP 06 -->
+                    <div class="procedure-item border border-rule bg-paper-raised p-3 flex items-start gap-3 transition-colors" id="step-row-6">
+                        <input type="checkbox" id="step-6" class="step-checkbox mt-1">
+                        <div class="flex-grow">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <label for="step-6" class="font-bold text-ink cursor-pointer select-none">
+                                    06 CLOSE REPORT
+                                </label>
+                                <span id="step-mark-6" class="text-xs text-ink-muted">[ PENDING ]</span>
+                            </div>
+                            <p class="font-body text-xs text-ink-soft mt-1 leading-normal">
+                                Sign off digital field log, transmit report to district server, and notify dispatch of segment operational readiness.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- RESET & VERIFICATION ACTIONS -->
+                <div class="mt-4 flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-rule font-mono text-xs">
+                    <button class="text-ink-soft hover:text-ink underline">
+                        RESET PROCEDURE CHECKLIST
+                    </button>
+                    <span id="procedure-timestamp" class="text-ink-muted">LOG STATE: UNVERIFIED</span>
+                </div>
+            </div>
+
+            <!-- ANNOTATION MARGIN -->
+            <div class="font-mono text-xs text-ink-soft border-t md:border-t-0 md:border-l border-rule pt-3 md:pt-0 md:pl-4 space-y-3">
+                <div>
+                    <span class="text-ink-muted block text-[10px]">MANUAL REF</span>
+                    <span>MTO-SOP-SEC-03</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">REQUIRED FREQUENCY</span>
+                    <span>DAILY PRIOR TO 10:00</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">INSPECTION TOOLKIT</span>
+                    <span>TREAD GAUGE, GPS-2, CLINOMETER</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">AUDIT MARK</span>
+                    <span id="audit-mark-status" class="text-warning font-semibold">INCOMPLETE</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 04 / FIGURE 03 — TRAIL CONDITION           -->
+        <!-- ========================================== -->
+        <section id="figure" class="manual-section">
+            
+            <!-- INDEX COLUMN -->
+            <div class="font-mono">
+                <div class="text-2xl md:text-3xl font-display font-bold text-ink">04</div>
+                <div class="text-xs font-semibold uppercase text-ink-muted tracking-wider">FIGURE</div>
+            </div>
+
+            <!-- CONTENT COLUMN -->
+            <div>
+                <div class="flex items-center justify-between mb-3 border-b border-rule pb-2">
+                    <h2 class="font-display font-bold text-xl md:text-2xl uppercase tracking-tight text-ink">
+                        FIG. 03 — Standard Trail Cross-Section & Clearance
+                    </h2>
+                    <span class="font-mono text-xs text-ink-soft hidden sm:inline-block">TECHNICAL SPECIFICATION</span>
+                </div>
+
+                <p class="font-body text-sm text-ink-soft mb-4 leading-relaxed">
+                    Engineering cross-section for Class 3 regional multi-use trail tread. Click numbered callouts [01–05] to highlight specification details and construction tolerances.
+                </p>
+
+                <!-- TECHNICAL SVG LINE ILLUSTRATION -->
+                <div class="border border-rule bg-paper-raised p-4 sm:p-6 mb-4 relative overflow-hidden">
+                    
+                    <div class="font-mono text-[11px] text-ink-muted flex items-center justify-between mb-2">
+                        <span>SCALE: 1:20 (METRIC/IMPERIAL)</span>
+                        <span>MTO DIAGRAM #TR-2026-X3</span>
+                    </div>
+
+                    <svg viewBox="0 0 700 360" class="w-full h-auto text-ink font-mono text-xs select-none">
+                        
+                        <!-- Grid / Construction Lines -->
+                        <line x1="50" y1="280" x2="650" y2="280" stroke="var(--rule)" stroke-width="1" stroke-dasharray="4 4" />
+                        <line x1="120" y1="50" x2="120" y2="300" stroke="var(--rule)" stroke-width="1" stroke-dasharray="2 2" />
+                        <line x1="580" y1="50" x2="580" y2="300" stroke="var(--rule)" stroke-width="1" stroke-dasharray="2 2" />
+                        
+                        <!-- Natural Hillside Slope Cut Line -->
+                        <path d="M 40 100 L 160 180 L 180 230 L 220 230 L 500 245 L 560 250 L 660 310" 
+                              fill="none" stroke="var(--ink-soft)" stroke-width="1.5" stroke-dasharray="6 3" />
+                        
+                        <!-- Finished Grade & Tread Contour (Highlighted target lines) -->
+                        <path id="path-tread" class="diagram-target"
+                              d="M 220 230 L 500 245" fill="none" stroke="var(--ink)" stroke-width="3" />
+                        
+                        <path id="path-shoulder" class="diagram-target"
+                              d="M 500 245 L 560 250" fill="none" stroke="var(--ink)" stroke-width="3" />
+                        
+                        <path id="path-drainage" class="diagram-target"
+                              d="M 160 180 L 180 230 L 220 230" fill="none" stroke="var(--ink)" stroke-width="3" />
+
+                        <rect id="path-veg" class="diagram-target"
+                              x="180" y="80" width="380" height="150" fill="rgba(79, 116, 85, 0.05)" stroke="var(--verified)" stroke-width="1.5" stroke-dasharray="4 4" />
+
+                        <!-- Vegetation clearance indicators (Trees/Branches) -->
+                        <path d="M 140 140 C 130 100, 150 70, 170 80 C 180 60, 210 60, 220 90 C 230 110, 200 150, 180 180 Z" fill="none" stroke="var(--ink-soft)" stroke-width="1.2" />
+                        <path d="M 580 190 C 590 140, 620 120, 640 150 C 660 170, 630 210, 600 240 Z" fill="none" stroke="var(--ink-soft)" stroke-width="1.2" />
+
+                        <!-- Slope Grade Indicator (05 Grade) -->
+                        <line id="path-grade" class="diagram-target"
+                              x1="220" y1="215" x2="500" y2="215" stroke="var(--revision)" stroke-width="2" stroke-dasharray="3 3" />
+                        <text x="340" y="210" font-size="11" fill="var(--revision)" text-anchor="middle" font-weight="bold">3–5% OUT-SLOPE</text>
+
+                        <!-- CALLOUT NODES & NUMERALS -->
+                        
+                        <!-- 01 TREAD -->
+                        <g class="diagram-node" id="node-1">
+                            <line x1="360" y1="240" x2="360" y2="150" stroke="var(--ink)" stroke-width="1.5" />
+                            <circle cx="360" cy="140" r="14" fill="var(--paper-raised)" stroke="var(--ink)" stroke-width="2" />
+                            <text x="360" y="144" font-size="12" font-weight="bold" fill="var(--ink)" text-anchor="middle">01</text>
+                        </g>
+
+                        <!-- 02 SHOULDER -->
+                        <g class="diagram-node" id="node-2">
+                            <line x1="530" y1="248" x2="530" y2="180" stroke="var(--ink)" stroke-width="1.5" />
+                            <circle cx="530" cy="170" r="14" fill="var(--paper-raised)" stroke="var(--ink)" stroke-width="2" />
+                            <text x="530" y="174" font-size="12" font-weight="bold" fill="var(--ink)" text-anchor="middle">02</text>
+                        </g>
+
+                        <!-- 03 DRAINAGE -->
+                        <g class="diagram-node" id="node-3">
+                            <line x1="200" y1="230" x2="200" y2="140" stroke="var(--ink)" stroke-width="1.5" />
+                            <circle cx="200" cy="130" r="14" fill="var(--paper-raised)" stroke="var(--ink)" stroke-width="2" />
+                            <text x="200" y="134" font-size="12" font-weight="bold" fill="var(--ink)" text-anchor="middle">03</text>
+                        </g>
+
+                        <!-- 04 VEGETATION CLEARANCE -->
+                        <g class="diagram-node" id="node-4">
+                            <circle cx="360" cy="95" r="14" fill="var(--paper-raised)" stroke="var(--verified)" stroke-width="2" />
+                            <text x="360" y="99" font-size="12" font-weight="bold" fill="var(--verified)" text-anchor="middle">04</text>
+                        </g>
+
+                        <!-- 05 GRADE -->
+                        <g class="diagram-node" id="node-5">
+                            <circle cx="280" cy="190" r="14" fill="var(--paper-raised)" stroke="var(--revision)" stroke-width="2" />
+                            <text x="280" y="194" font-size="12" font-weight="bold" fill="var(--revision)" text-anchor="middle">05</text>
+                        </g>
+
+                        <!-- Legend Dimension Labels -->
+                        <text x="360" y="270" font-size="10" fill="var(--ink-soft)" text-anchor="middle">TREAD WIDTH: 36" - 48"</text>
+                        <text x="180" y="320" font-size="10" fill="var(--ink-muted)">CUT SLOPE (NATIVE)</text>
+                        <text x="540" y="320" font-size="10" fill="var(--ink-muted)">FILL SLOPE</text>
+                        <text x="100" y="110" font-size="10" fill="var(--verified)">8.0 FT CLEARANCE</text>
+                    </svg>
+
+                </div>
+
+                <!-- CALLOUT ANNOTATION SHEET DISPLAY -->
+                <div id="callout-detail-box" class="border border-rule bg-paper-raised p-4 font-mono text-xs">
+                    <div class="flex items-center justify-between border-b border-rule pb-2 mb-2">
+                        <span id="callout-title" class="font-bold text-ink uppercase text-sm">CALLOUT 01 — TREAD COMPACTION & SLOPE</span>
+                        <span id="callout-code" class="text-ink-muted">SPEC §04.1-A</span>
+                    </div>
+                    <p id="callout-text" class="font-body text-xs text-ink-soft leading-relaxed">
+                        Compacted 36” to 48” travel lane constructed over mineral subgrade. Maintained with a continuous 3–5% cross-slope toward the outer downhill edge to ensure sheet flow drainage without tread gullying.
+                    </p>
+                </div>
+            </div>
+
+            <!-- ANNOTATION MARGIN -->
+            <div class="font-mono text-xs text-ink-soft border-t md:border-t-0 md:border-l border-rule pt-3 md:pt-0 md:pl-4 space-y-3">
+                <div>
+                    <span class="text-ink-muted block text-[10px]">FIGURE REF</span>
+                    <span>FIG. 03 (REV 2.1)</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">DESIGN CLASS</span>
+                    <span>CLASS 3 MULTI-USE</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">MAX SUSTAINED GRADE</span>
+                    <span>10% (12% FOR &lt;50 FT)</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">CORRIDOR ENVELOPE</span>
+                    <span>8.0 FT HEIGHT x 6.0 FT WIDTH</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 05 / FIELD NOTICES                         -->
+        <!-- ========================================== -->
+        <section id="notices" class="manual-section">
+            
+            <!-- INDEX COLUMN -->
+            <div class="font-mono">
+                <div class="text-2xl md:text-3xl font-display font-bold text-ink">05</div>
+                <div class="text-xs font-semibold uppercase text-ink-muted tracking-wider">NOTICES</div>
+            </div>
+
+            <!-- CONTENT COLUMN -->
+            <div>
+                <div class="flex items-center justify-between mb-3 border-b border-rule pb-2">
+                    <h2 class="font-display font-bold text-xl md:text-2xl uppercase tracking-tight text-ink">
+                        Active Field Advisory Notices
+                    </h2>
+                    <span class="font-mono text-xs text-ink-soft hidden sm:inline-block">PUBLIC & CREW DIRECTIVES</span>
+                </div>
+
+                <p class="font-body text-sm text-ink-soft mb-6 leading-relaxed">
+                    Official advisory notices promulgated by the Operations Chief. Classified by operational severity according to Municipal Code §408.
+                </p>
+
+                <!-- STRUCTURED FIELD NOTICES CONTAINER -->
+                <div class="space-y-4 font-mono text-xs">
+                    
+                    <!-- NOTICE 01 / NOTE -->
+                    <div class="border-l-4 border-rule-strong border-t border-r border-b border-rule bg-paper-raised p-4">
+                        <div class="flex items-center justify-between mb-2 pb-1 border-b border-rule">
+                            <span class="font-bold text-ink flex items-center gap-2 text-sm">
+                                <span class="px-1.5 py-0.5 bg-ink text-paper text-[10px]">NOTE</span>
+                                NOTICE 05.1 / ADVISORY
+                            </span>
+                            <span class="text-ink-muted">EFFECTIVE: 2026-08-10</span>
+                        </div>
+                        <p class="font-body text-xs text-ink-soft leading-relaxed">
+                            <strong>SEASONAL TREAD SOFTENING:</strong> Elevated soil moisture remains along Riverbank Greenway (Trail 01, Posts 0.0 to 2.4). Cyclists are requested to avoid hard braking in unpaved sectors to prevent deep rutting.
+                        </p>
+                    </div>
+
+                    <!-- NOTICE 02 / CAUTION -->
+                    <div class="border-l-4 border-warning border-t border-r border-b border-rule bg-paper-raised p-4">
+                        <div class="flex items-center justify-between mb-2 pb-1 border-b border-rule">
+                            <span class="font-bold text-warning flex items-center gap-2 text-sm">
+                                <span class="px-1.5 py-0.5 border border-warning text-warning text-[10px]">CAUTION</span>
+                                NOTICE 05.2 / HEAVY EQUIPMENT
+                            </span>
+                            <span class="text-ink-muted">EFFECTIVE: AUG 14 - AUG 18</span>
+                        </div>
+                        <p class="font-body text-xs text-ink-soft leading-relaxed">
+                            <strong>ACTIVE MACHINERY IN CORRIDOR:</strong> Unit 07 trail excavators operating on Trail 12-A near Switchback 4. Visitors must yield to operations personnel and await clear pass signal from flaggers.
+                        </p>
+                    </div>
+
+                    <!-- NOTICE 03 / TEMPORARY CLOSURE -->
+                    <div class="border-l-4 border-revision border-t border-r border-b border-rule bg-paper-raised p-4">
+                        <div class="flex items-center justify-between mb-2 pb-1 border-b border-rule">
+                            <span class="font-bold text-revision flex items-center gap-2 text-sm">
+                                <span class="px-1.5 py-0.5 bg-revision text-paper text-[10px]">TEMPORARY CLOSURE</span>
+                                NOTICE 05.3 / CLOSED SEGMENT
+                            </span>
+                            <span class="text-revision font-semibold">IMMEDIATE CLOSURE</span>
+                        </div>
+                        <p class="font-body text-xs text-ink-soft leading-relaxed">
+                            <strong>TRAIL 04-B (NORTH RIDGE LOOP):</strong> Closed between Post 3 and Summit Junction due to active culvert replacement and embankment stabilization. Reopening estimated for <strong>August 17 at 18:00 CDT</strong>. Do not bypass barrier fencing.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ANNOTATION MARGIN -->
+            <div class="font-mono text-xs text-ink-soft border-t md:border-t-0 md:border-l border-rule pt-3 md:pt-0 md:pl-4 space-y-3">
+                <div>
+                    <span class="text-ink-muted block text-[10px]">PROMULGATING OFFICER</span>
+                    <span>C. MARTINEZ (OPS CHIEF)</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">NOTICE AUDIT ID</span>
+                    <span>ADV-2026-Q3-09</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">PUBLIC BROADCAST</span>
+                    <span>DISTRICT WEBSITE & POSTS</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">ENFORCEMENT CODE</span>
+                    <span>ORD §408-C (PENALTY $150)</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 06 / MAINTENANCE RECORD                    -->
+        <!-- ========================================== -->
+        <section id="records" class="manual-section">
+            
+            <!-- INDEX COLUMN -->
+            <div class="font-mono">
+                <div class="text-2xl md:text-3xl font-display font-bold text-ink">06</div>
+                <div class="text-xs font-semibold uppercase text-ink-muted tracking-wider">RECORDS</div>
+            </div>
+
+            <!-- CONTENT COLUMN -->
+            <div>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-3 border-b border-rule pb-2 gap-2">
+                    <h2 class="font-display font-bold text-xl md:text-2xl uppercase tracking-tight text-ink">
+                        Recent Maintenance Log
+                    </h2>
+                    <!-- Search input -->
+                    <div class="flex items-center gap-2 font-mono text-xs">
+                        <span class="text-ink-muted">SEARCH:</span>
+                        <input type="text" id="record-search" placeholder="Trail ID, Action..." 
+                               class="bg-paper-raised border border-rule px-2 py-0.5 text-ink focus:outline-none focus:border-ink w-36 sm:w-48">
+                    </div>
+                </div>
+
+                <p class="font-body text-sm text-ink-soft mb-4 leading-relaxed">
+                    Audit log of verified trail actions completed during current operational quarter. Density optimized for rapid field verification.
+                </p>
+
+                <!-- DENSE READABLE TABLE -->
+                <div class="overflow-x-auto border border-rule bg-paper-raised">
+                    <table class="w-full text-left font-mono text-xs border-collapse">
+                        <thead>
+                            <tr class="border-b border-rule-strong bg-paper text-ink-muted font-bold">
+                                <th class="p-2 border-r border-rule">REV</th>
+                                <th class="p-2 border-r border-rule">DATE</th>
+                                <th class="p-2 border-r border-rule">TRAIL</th>
+                                <th class="p-2 border-r border-rule">ACTION PERFORMED</th>
+                                <th class="p-2 border-r border-rule">CREW</th>
+                                <th class="p-2">VERIFIED BY</th>
+                            </tr>
+                        </thead>
+                        <tbody id="record-table-body" class="divide-y divide-rule">
+                            
+                            <tr class="hover:bg-paper transition-colors">
+                                <td class="p-2 border-r border-rule text-revision font-bold">REV 03</td>
+                                <td class="p-2 border-r border-rule text-ink-soft whitespace-nowrap">2026-08-14</td>
+                                <td class="p-2 border-r border-rule font-bold text-ink">TR-01-C</td>
+                                <td class="p-2 border-r border-rule text-ink">Wayfinding post 1.2 replacement & re-anchoring</td>
+                                <td class="p-2 border-r border-rule text-ink-soft">Unit 02</td>
+                                <td class="p-2 text-verified font-semibold">Insp. D. Miller (ID-402)</td>
+                            </tr>
+
+                            <tr class="hover:bg-paper transition-colors">
+                                <td class="p-2 border-r border-rule text-ink-muted">REV 02</td>
+                                <td class="p-2 border-r border-rule text-ink-soft whitespace-nowrap">2026-08-13</td>
+                                <td class="p-2 border-r border-rule font-bold text-ink">TR-08-A</td>
+                                <td class="p-2 border-r border-rule text-ink">Hazard tree removal (30" Douglas Fir windfall)</td>
+                                <td class="p-2 border-r border-rule text-ink-soft">Unit 01</td>
+                                <td class="p-2 text-verified font-semibold">Lead M. Thorne (ID-118)</td>
+                            </tr>
+
+                            <tr class="hover:bg-paper transition-colors">
+                                <td class="p-2 border-r border-rule text-ink-muted">REV 01</td>
+                                <td class="p-2 border-r border-rule text-ink-soft whitespace-nowrap">2026-08-12</td>
+                                <td class="p-2 border-r border-rule font-bold text-ink">TR-03-B</td>
+                                <td class="p-2 border-r border-rule text-ink">Re-established 120m tread out-slope & cleared waterbar</td>
+                                <td class="p-2 border-r border-rule text-ink-soft">Unit 03</td>
+                                <td class="p-2 text-verified font-semibold">Insp. S. Haze (ID-309)</td>
+                            </tr>
+
+                            <tr class="hover:bg-paper transition-colors">
+                                <td class="p-2 border-r border-rule text-ink-muted">REV 04</td>
+                                <td class="p-2 border-r border-rule text-ink-soft whitespace-nowrap">2026-08-10</td>
+                                <td class="p-2 border-r border-rule font-bold text-ink">TR-05-D</td>
+                                <td class="p-2 border-r border-rule text-ink">Footbridge decking plank replacement & tensioning</td>
+                                <td class="p-2 border-r border-rule text-ink-soft">Unit 04</td>
+                                <td class="p-2 text-verified font-semibold">Supt. P. Vance (ID-002)</td>
+                            </tr>
+
+                            <tr class="hover:bg-paper transition-colors">
+                                <td class="p-2 border-r border-rule text-ink-muted">REV 01</td>
+                                <td class="p-2 border-r border-rule text-ink-soft whitespace-nowrap">2026-08-08</td>
+                                <td class="p-2 border-r border-rule font-bold text-ink">TR-11-A</td>
+                                <td class="p-2 border-r border-rule text-ink">Brush clearance & corridor pruning (MP 0.0 - 4.5)</td>
+                                <td class="p-2 border-r border-rule text-ink-soft">Unit 02</td>
+                                <td class="p-2 text-verified font-semibold">Insp. D. Miller (ID-402)</td>
+                            </tr>
+
+                            <tr class="hover:bg-paper transition-colors">
+                                <td class="p-2 border-r border-rule text-ink-muted">REV 02</td>
+                                <td class="p-2 border-r border-rule text-ink-soft whitespace-nowrap">2026-08-05</td>
+                                <td class="p-2 border-r border-rule font-bold text-ink">TR-02-E</td>
+                                <td class="p-2 border-r border-rule text-ink">Retaining wall timber cribbing reinforcement</td>
+                                <td class="p-2 border-r border-rule text-ink-soft">Unit 07</td>
+                                <td class="p-2 text-verified font-semibold">Lead R. Chen (ID-205)</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-3 flex items-center justify-between font-mono text-xs text-ink-soft">
+                    <span>DISPLAYING 6 RECENT FIELD VERIFICATIONS</span>
+                    <button class="text-ink hover:underline">PRINT AUDIT SHEET</button>
+                </div>
+            </div>
+
+            <!-- ANNOTATION MARGIN -->
+            <div class="font-mono text-xs text-ink-soft border-t md:border-t-0 md:border-l border-rule pt-3 md:pt-0 md:pl-4 space-y-3">
+                <div>
+                    <span class="text-ink-muted block text-[10px]">LOG ARCHIVE</span>
+                    <span>Q3-2026 MASTER FILE</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">TOTAL ACTIONS Q3</span>
+                    <span class="font-semibold text-ink">142 COMPLETED</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">INSPECTION RATE</span>
+                    <span>98.4% COMPLIANT</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">SYSTEM VERIFICATION</span>
+                    <span class="text-verified font-semibold">AUDITED OK</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 07 / PUBLIC REFERENCE                      -->
+        <!-- ========================================== -->
+        <section id="public" class="manual-section">
+            
+            <!-- INDEX COLUMN -->
+            <div class="font-mono">
+                <div class="text-2xl md:text-3xl font-display font-bold text-ink">07</div>
+                <div class="text-xs font-semibold uppercase text-ink-muted tracking-wider">PUBLIC REF</div>
+            </div>
+
+            <!-- CONTENT COLUMN -->
+            <div>
+                <div class="flex items-center justify-between mb-4 border-b border-rule pb-2">
+                    <h2 class="font-display font-bold text-xl md:text-2xl uppercase tracking-tight text-ink">
+                        Public Operational Guide
+                    </h2>
+                    <span class="font-mono text-xs text-ink-soft hidden sm:inline-block">CIVIC POLICY REFERENCE</span>
+                </div>
+
+                <!-- Editorial body typography -->
+                <div class="space-y-6 text-sm text-ink leading-relaxed font-body">
+                    
+                    <!-- Topic 01 -->
+                    <div>
+                        <h3 class="font-display font-bold text-lg text-ink uppercase tracking-tight mb-1 flex items-center gap-2">
+                            <span class="font-mono text-xs text-ink-muted">07.1 /</span>
+                            Why Trails Are Temporarily Closed
+                        </h3>
+                        <p class="text-ink-soft">
+                            Trail closures are enacted exclusively when physical conditions compromise visitor safety or when continued use would cause irreversible ecological and structural damage. During severe precipitation or thaw events, saturated soil tread loses structural bearing capacity. Heavy foot or bike traffic under these conditions cuts deep ruts through the protective top layer, turning natural drainage pathways into erosive gullies. Temporary closures allow the subgrade to consolidate, protecting taxpayer investment in trail infrastructure.
+                        </p>
+                    </div>
+
+                    <!-- Topic 02 -->
+                    <div>
+                        <h3 class="font-display font-bold text-lg text-ink uppercase tracking-tight mb-1 flex items-center gap-2">
+                            <span class="font-mono text-xs text-ink-muted 07.2 /">07.2 /</span>
+                            What Trail Crews Inspect
+                        </h3>
+                        <p class="text-ink-soft">
+                            District trail rangers conduct systematic physical audits across all 142 miles of network. Inspections evaluate five structural domains: <strong>Tread Integrity</strong> (monitoring compaction and roots), <strong>Drainage Structures</strong> (testing culverts and waterbars for hydraulic flow), <strong>Corridor Clearance</strong> (maintaining an 8-foot vertical brush envelope), <strong>Structural Anchors</strong> (inspecting footbridges, boardwalks, and timber cribbing), and <strong>Safety Signage</strong> (verifying legibility of boundary and warning placards).
+                        </p>
+                    </div>
+
+                    <!-- Topic 03 -->
+                    <div>
+                        <h3 class="font-display font-bold text-lg text-ink uppercase tracking-tight mb-1 flex items-center gap-2">
+                            <span class="font-mono text-xs text-ink-muted">07.3 /</span>
+                            How Maintenance Priorities Are Determined
+                        </h3>
+                        <p class="text-ink-soft">
+                            Dispatches are categorized into three operational priority tiers. Priority 1 (Immediate Hazard) includes active structural failures, downed trees obstructing primary thoroughfares, or severe washouts threatening public safety. Priority 2 (Scheduled Corrective Maintenance) addresses functional degradation such as clogged culverts or surface rutting before severe damage occurs. Priority 3 (Routine Maintenance) covers scheduled corridor clearing, sign updates, and minor tread re-grading.
+                        </p>
+                    </div>
+
+                    <!-- Topic 04 -->
+                    <div>
+                        <h3 class="font-display font-bold text-lg text-ink uppercase tracking-tight mb-1 flex items-center gap-2">
+                            <span class="font-mono text-xs text-ink-muted">07.4 /</span>
+                            How Visitors Can Report an Issue
+                        </h3>
+                        <p class="text-ink-soft">
+                            Public observations provide vital ground data for dispatchers. When reporting a field condition, note the exact trail ID and nearest milepost marker (found on all brown post signages at 0.2-mile intervals). Describe the obstruction clearly (e.g., "Downed birch branch 3 inches diameter" or "Silted culvert intake"). Reports can be submitted via the public reporting terminal below or by calling District Central Dispatch at <strong>555-0194 (Ext. 3)</strong>.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ANNOTATION MARGIN -->
+            <div class="font-mono text-xs text-ink-soft border-t md:border-t-0 md:border-l border-rule pt-3 md:pt-0 md:pl-4 space-y-3">
+                <div>
+                    <span class="text-ink-muted block text-[10px]">CIVIC CHARTER</span>
+                    <span>REGIONAL PARKS CODE §402</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">PUBLIC ACCESSIBILITY</span>
+                    <span>ADA CLASS 2 STANDARD</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">DISPATCH INQUIRIES</span>
+                    <span>TEL: 555-0194-EXT-3</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">OFFICE ADDRESS</span>
+                    <span>104 CIVIC PARKWAY, SUITE 2</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 08 / PUBLIC ISSUE REPORTING SUPPLEMENT     -->
+        <!-- ========================================== -->
+        <section id="report-modal" class="manual-section border-b-0 pb-12">
+            
+            <!-- INDEX COLUMN -->
+            <div class="font-mono">
+                <div class="text-2xl md:text-3xl font-display font-bold text-ink">08</div>
+                <div class="text-xs font-semibold uppercase text-ink-muted tracking-wider">REPORT</div>
+            </div>
+
+            <!-- CONTENT COLUMN -->
+            <div>
+                <div class="flex items-center justify-between mb-3 border-b border-rule pb-2">
+                    <h2 class="font-display font-bold text-xl md:text-2xl uppercase tracking-tight text-ink">
+                        Supplement 08-A — Public Observation Filing
+                    </h2>
+                    <span class="font-mono text-xs text-ink-soft hidden sm:inline-block">FIELD ENTRY TERMINAL</span>
+                </div>
+
+                <p class="font-body text-sm text-ink-soft mb-6 leading-relaxed">
+                    Submit a recorded field observation to Municipal Trail Operations. Formatted as an official district intake record.
+                </p>
+
+                <!-- FORM CONTAINER -->
+                <form id="public-report-form" class="border border-rule bg-paper-raised p-4 sm:p-6 space-y-4 font-mono text-xs">
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        
+                        <!-- Trail Selection -->
+                        <div>
+                            <label class="block text-ink-muted text-[10px] uppercase mb-1">SELECT TRAIL SEGMENT *</label>
+                            <select id="form-trail" required class="w-full bg-paper border border-rule p-2 text-ink focus:outline-none focus:border-ink">
+                                <option value="">-- SELECT SEGMENT --</option>
+                                <option value="TR-01-C">TR-01-C — Riverbank Greenway</option>
+                                <option value="TR-04-B">TR-04-B — North Ridge Loop</option>
+                                <option value="TR-08-A">TR-08-A — Birch Grove Cutoff</option>
+                                <option value="TR-09">TR-09 — Pine Creek Spur</option>
+                                <option value="TR-12-A">TR-12-A — Bear Canyon Pass</option>
+                            </select>
+                        </div>
+
+                        <!-- Milepost / Location -->
+                        <div>
+                            <label class="block text-ink-muted text-[10px] uppercase mb-1">MILEPOST / LOCATION REFERENCE *</label>
+                            <input type="text" id="form-location" required placeholder="e.g. Post 1.4 or Switchback 2"
+                                   class="w-full bg-paper border border-rule p-2 text-ink focus:outline-none focus:border-ink">
+                        </div>
+
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        
+                        <!-- Observation Type -->
+                        <div>
+                            <label class="block text-ink-muted text-[10px] uppercase mb-1">OBSERVATION TYPE *</label>
+                            <select id="form-type" required class="w-full bg-paper border border-rule p-2 text-ink focus:outline-none focus:border-ink">
+                                <option value="Drainage obstruction">Drainage obstruction / Siltation</option>
+                                <option value="Downed tree / Vegetation">Downed tree / Branch hazard</option>
+                                <option value="Tread erosion">Tread erosion / Surface rutting</option>
+                                <option value="Signage damaged">Signage damaged or missing</option>
+                                <option value="Structure repair">Bridge / Retaining wall issue</option>
+                            </select>
+                        </div>
+
+                        <!-- Reporter Contact -->
+                        <div>
+                            <label class="block text-ink-muted text-[10px] uppercase mb-1">REPORTER CONTACT (OPTIONAL)</label>
+                            <input type="email" id="form-contact" placeholder="email@domain.org"
+                                   class="w-full bg-paper border border-rule p-2 text-ink focus:outline-none focus:border-ink">
+                        </div>
+
+                    </div>
+
+                    <!-- Description -->
+                    <div>
+                        <label class="block text-ink-muted text-[10px] uppercase mb-1">OBSERVATION DETAILS *</label>
+                        <textarea id="form-details" required rows="3" placeholder="Describe physical condition, size, and potential safety hazard..."
+                                  class="w-full bg-paper border border-rule p-2 text-ink focus:outline-none focus:border-ink font-body text-xs"></textarea>
+                    </div>
+
+                    <!-- Submit Command Plate -->
+                    <div class="flex items-center justify-between pt-2 border-t border-rule">
+                        <span class="text-ink-muted text-[10px]">FORM REF: MTO-IN-2026</span>
+                        <button type="submit" class="command-plate text-xs">
+                            <span>RECORD PUBLIC OBSERVATION</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+
+                </form>
+
+                <!-- Confirmation Alert Sheet (Hidden initially) -->
+                <div id="form-confirmation" class="hidden border-2 border-verified bg-paper p-4 font-mono text-xs space-y-2 mt-4">
+                    <div class="flex items-center justify-between text-verified font-bold">
+                        <span>[✓] OBSERVATION SUCCESSFULLY RECORDED</span>
+                        <span id="confirm-code">OBS-2026-9941</span>
+                    </div>
+                    <p class="font-body text-xs text-ink-soft">
+                        Thank you. Your field observation has been filed in the central dispatch intake buffer and assigned to the district area inspector for field verification.
+                    </p>
+                    <div class="pt-2 border-t border-rule text-[10px] text-ink-muted flex justify-between">
+                        <span>ROUTED TO: SECTOR DISPATCH</span>
+                        <span>STATUS: QUEUED FOR INSPECTION</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ANNOTATION MARGIN -->
+            <div class="font-mono text-xs text-ink-soft border-t md:border-t-0 md:border-l border-rule pt-3 md:pt-0 md:pl-4 space-y-3">
+                <div>
+                    <span class="text-ink-muted block text-[10px]">INTAKE STATUS</span>
+                    <span>ONLINE / OPEN</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">AVERAGE VERIFICATION</span>
+                    <span>WITHIN 24 HOURS</span>
+                </div>
+                <div class="border-t border-rule pt-2">
+                    <span class="text-ink-muted block text-[10px]">EMERGENCY LINE</span>
+                    <span class="text-revision font-semibold">DIAL 911 FOR INJURIES</span>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t-2 border-rule-strong bg-paper px-4 py-6 md:px-8 font-mono text-xs text-ink-soft">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <div>
+                <span class="font-bold text-ink">MUNICIPAL TRAIL OPERATIONS</span>
+                <span class="text-ink-muted mx-2">|</span>
+                <span>REGIONAL PARKS DEPARTMENT DISTRICT 07</span>
+            </div>
+
+            <div class="flex items-center gap-4 text-ink-muted text-[11px]">
+                <span>MANUAL VERSION 2.4.0</span>
+                <span>•</span>
+                <span>CIVIC SERVICE SYSTEM</span>
+                <span>•</span>
+                <a href="#status" class="hover:text-ink underline">RETURN TO TOP</a>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- CLIENT-SIDE INTERACTION SCRIPT -->
+    
+</body>
+</html>

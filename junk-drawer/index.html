@@ -28,7 +28,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="/assets/css/style.css?v=10">
-    <link rel="stylesheet" href="/assets/css/junk-drawer.css?v=1">
+    <link rel="stylesheet" href="/assets/css/junk-drawer.css?v=3">
     <link rel="stylesheet" href="/assets/css/lemmy.css?v=2">
     <script type="application/ld+json">
       {
@@ -47,6 +47,7 @@
     <script src="/assets/js/mobile-header.js?v=1" defer></script>
     <script src="/assets/js/lemmy-data.js?v=2" defer></script>
     <script src="/assets/js/lemmy.js?v=2" defer></script>
+    <script src="/assets/js/junk-drawer.js?v=2" defer></script>
   </head>
   <body class="junk-drawer-page" data-lemmy-zone="junk-drawer">
     <a class="skip-link" href="#junk-drawer-content">Skip to content</a>
@@ -81,17 +82,16 @@
           <p class="sidebar__utility-label">Workbench</p>
           <a class="sidebar__utility-link sidebar__utility-link--primary" href="/studio-lab/">Studio Lab</a>
           <a class="sidebar__utility-link" href="/operator-log/">Operator's Log</a>
+          <a class="sidebar__utility-link" href="/benchmark/">Design Benchmark</a>
         </nav>
       </aside>
 
       <main class="content junk-drawer-main" id="junk-drawer-content" data-gallery-page data-gallery-title="Junk Drawer">
         <header class="junk-drawer-hero">
           <div class="junk-drawer-hero__tape" aria-hidden="true"></div>
-          <nav class="junk-drawer-breadcrumb" aria-label="Breadcrumb">
-            <a href="/">Home</a>
-            <span>District 04</span>
-            <strong>Junk Drawer</strong>
-          </nav>
+          <div class="page-header__meta">
+            <span class="page-header__eyebrow">[ DISTRICT 04 / JUNK DRAWER ]</span>
+          </div>
           <h1>Junk Drawer</h1>
           <p class="junk-drawer-hero__copy">The drawer that never quite closes. Browser-first utilities, experiments, reference shelves, and useful internet debris, sorted into compartments without sanding off the weird parts.</p>
           <ul class="junk-drawer-hero__notes" aria-label="Junk drawer rules">
@@ -122,7 +122,7 @@
         </nav>
 
         <section class="junk-drawer-premier" aria-labelledby="premier-tool-title">
-          <div class="junk-drawer-premier__tag">Currently on top of the pile</div>
+          <div class="junk-drawer-premier__tag">[ TOP OF THE PILE ]</div>
           <div class="junk-drawer-premier__layout">
             <div class="junk-drawer-premier__visual" aria-hidden="true">
               <img src="/images/lighthouse-handoff/lighthouse-handoff-card.webp" alt="" width="1280" height="800" aria-hidden="true">
@@ -143,6 +143,18 @@
           </div>
         </section>
 
+        <!-- STAGING BIN (WHEN DROPS ARE PRESENT) -->
+        <section class="junk-drawer-shelf junk-drawer-shelf--staging" id="staging-bin-shelf" aria-labelledby="staging-bin-title" style="display: none;">
+          <div class="junk-drawer-shelf__head">
+            <h2 id="staging-bin-title">Recently Dropped</h2>
+            <p>Local staging bin for raw links and submitted utilities.</p>
+          </div>
+          <div class="junk-drawer-grid" id="staging-bin-grid">
+            <!-- Dynamically populated by assets/js/junk-drawer.js -->
+          </div>
+        </section>
+
+        <!-- WORKING BROWSER TOOLS -->
         <section class="junk-drawer-shelf" aria-labelledby="working-tools-title">
           <div class="junk-drawer-shelf__head">
             <h2 id="working-tools-title">Working Browser Tools</h2>
@@ -184,11 +196,28 @@
                   </ul>
                   <span class="junk-drawer-card__cta junk-drawer-card__cta--primary">Open compressor</span>
                 </a>
+
+                <!-- VACANT SLOT CARD -->
+                <div class="junk-drawer-card junk-drawer-card--ghost">
+                  <span class="junk-drawer-card__type">Slot 03 • Vacant</span>
+                  <h4>Open Bay</h4>
+                  <p>Reserved cutout for upcoming browser tool.</p>
+                  <span class="junk-drawer-card__cta junk-drawer-card__cta--secondary">Awaiting tool</span>
+                </div>
+
+                <!-- ADD TOOL CARD -->
+                <div class="junk-drawer-card junk-drawer-card--add" data-target-tray="Browser Tools">
+                  <span class="junk-drawer-card__type">+ Quick Drop</span>
+                  <h4>Add Tool</h4>
+                  <p>Drop a utility link or tool suggestion into staging.</p>
+                  <button type="button" class="junk-drawer-card__cta junk-drawer-card__cta--secondary">+ Drop item</button>
+                </div>
               </div>
             </section>
           </div>
         </section>
 
+        <!-- TEXT & REFERENCE TOOLS -->
         <section class="junk-drawer-shelf" aria-labelledby="text-reference-title">
           <div class="junk-drawer-shelf__head">
             <h2 id="text-reference-title">Text &amp; Reference Tools</h2>
@@ -230,11 +259,20 @@
                   </ul>
                   <span class="junk-drawer-card__cta junk-drawer-card__cta--primary">Open mechanic</span>
                 </a>
+
+                <!-- ADD TOOL CARD -->
+                <div class="junk-drawer-card junk-drawer-card--add" data-target-tray="Text & Reference">
+                  <span class="junk-drawer-card__type">+ Quick Drop</span>
+                  <h4>Add Reference</h4>
+                  <p>Drop a reference cutout into staging.</p>
+                  <button type="button" class="junk-drawer-card__cta junk-drawer-card__cta--secondary">+ Drop item</button>
+                </div>
               </div>
             </section>
           </div>
         </section>
 
+        <!-- EXPERIMENTS & PROJECTS -->
         <section class="junk-drawer-shelf" aria-labelledby="experiments-title">
           <div class="junk-drawer-shelf__head">
             <h2 id="experiments-title">Experiments &amp; Projects</h2>
@@ -276,11 +314,20 @@
                   </ul>
                   <span class="junk-drawer-card__cta junk-drawer-card__cta--secondary">Open generator</span>
                 </a>
+
+                <!-- ADD TOOL CARD -->
+                <div class="junk-drawer-card junk-drawer-card--add" data-target-tray="Experiments">
+                  <span class="junk-drawer-card__type">+ Quick Drop</span>
+                  <h4>Add Experiment</h4>
+                  <p>Drop an oddity or prototype into staging.</p>
+                  <button type="button" class="junk-drawer-card__cta junk-drawer-card__cta--secondary">+ Drop item</button>
+                </div>
               </div>
             </section>
           </div>
         </section>
 
+        <!-- ELSEWHERE IN THE DRAWER -->
         <section class="junk-drawer-shelf" aria-labelledby="elsewhere-title">
           <div class="junk-drawer-shelf__head">
             <h2 id="elsewhere-title">Elsewhere in the Drawer</h2>
@@ -327,11 +374,20 @@ Convert HTML/CSS into PNG, JPG or WebP</p>
                   
                 </article>
               <!-- EXTERNAL_TOOLS_END -->
+
+                <!-- ADD TOOL CARD -->
+                <div class="junk-drawer-card junk-drawer-card--add" data-target-tray="External Finds">
+                  <span class="junk-drawer-card__type">+ Quick Drop</span>
+                  <h4>Add External Find</h4>
+                  <p>Drop an outbound link into staging.</p>
+                  <button type="button" class="junk-drawer-card__cta junk-drawer-card__cta--secondary">+ Drop item</button>
+                </div>
               </div>
             </section>
           </div>
         </section>
 
+        <!-- SPONSORED -->
         <section class="junk-drawer-shelf" aria-labelledby="drawer-sponsors-title">
           <div class="junk-drawer-shelf__head">
             <h2 id="drawer-sponsors-title">Highly Biased Recommendations</h2>
@@ -354,6 +410,7 @@ Convert HTML/CSS into PNG, JPG or WebP</p>
           </div>
         </section>
 
+        <!-- RELATED DISTRICTS -->
         <section class="junk-drawer-shelf junk-drawer-related" aria-labelledby="related-districts-title">
           <div class="junk-drawer-shelf__head">
             <h2 id="related-districts-title">Related Districts</h2>
@@ -366,6 +423,43 @@ Convert HTML/CSS into PNG, JPG or WebP</p>
           </div>
         </section>
       </main>
+    </div>
+
+    <!-- QUICK DROP MODAL -->
+    <div class="junk-drawer-modal" id="junk-drawer-drop-modal" role="dialog" aria-modal="true" aria-labelledby="drop-modal-title" aria-hidden="true">
+      <div class="junk-drawer-modal__dialog">
+        <div class="junk-drawer-modal__head">
+          <span class="junk-drawer-modal__eyebrow">[ QUICK DROP // STAGING BIN ]</span>
+          <h3 id="drop-modal-title">Drop Item into Junk Drawer</h3>
+          <button class="junk-drawer-modal__close" id="junk-drawer-drop-close" type="button" aria-label="Close modal">&times;</button>
+        </div>
+        <form class="junk-drawer-modal__form" id="junk-drawer-drop-form">
+          <div class="junk-drawer-modal__field">
+            <label for="junk-drawer-drop-url">Tool or Resource URL *</label>
+            <input type="url" id="junk-drawer-drop-url" required placeholder="https://example.com/tool">
+          </div>
+          <div class="junk-drawer-modal__field">
+            <label for="junk-drawer-drop-title">Name / Title</label>
+            <input type="text" id="junk-drawer-drop-title" placeholder="e.g., Micro GIF Optimizer">
+          </div>
+          <div class="junk-drawer-modal__field">
+            <label for="junk-drawer-drop-tray">Target Compartment</label>
+            <select id="junk-drawer-drop-tray">
+              <option value="Browser Tools">Browser Tools</option>
+              <option value="Text & Reference">Text &amp; Reference</option>
+              <option value="Experiments">Experiments &amp; Projects</option>
+              <option value="External Finds">External Finds</option>
+            </select>
+          </div>
+          <div class="junk-drawer-modal__field">
+            <label for="junk-drawer-drop-desc">Short Note / Description</label>
+            <textarea id="junk-drawer-drop-desc" rows="3" placeholder="Why should this stay in the drawer?"></textarea>
+          </div>
+          <div class="junk-drawer-modal__actions">
+            <button type="submit" class="junk-drawer-btn junk-drawer-btn--primary">DROP INTO STAGING</button>
+          </div>
+        </form>
+      </div>
     </div>
   </body>
 </html>

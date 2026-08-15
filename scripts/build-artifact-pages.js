@@ -12,6 +12,7 @@
  *   node scripts/build-artifact-pages.js             # full build
  *   node scripts/build-artifact-pages.js --dry-run    # preview without writing
  *   node scripts/build-artifact-pages.js --clean      # remove all generated pages first
+ *   node scripts/build-artifact-pages.js --sitemap-only # refresh sitemap files only
  */
 
 const fs = require("node:fs");
@@ -26,6 +27,7 @@ const outputDir = path.join(root, "artifacts");
 const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run");
 const clean = args.includes("--clean");
+const sitemapOnly = args.includes("--sitemap-only");
 
 const SITE_URL = "https://lemonteed.com";
 
@@ -392,22 +394,81 @@ function buildSitemap() {
     return `  <url>\n    <loc>${escapeHtml(post.canonical)}</loc>${lastmodTag}\n  </url>`;
   });
 
-  /* Remove existing generated artifact and Operator Log article entries */
+  const benchmarkData = readBenchmarkPages();
+  const benchmarkEntries = benchmarkData.urls.map((page) => {
+    const lastmodTag = page.date ? `\n    <lastmod>${page.date}</lastmod>` : "";
+    return `  <url>\n    <loc>${escapeHtml(page.canonical)}</loc>${lastmodTag}\n  </url>`;
+  });
+
+  /* Remove existing generated artifact, Operator Log, and Benchmark entries */
   const cleanedSitemap = existingSitemap.replace(
     /\s*<url>\s*<loc>https:\/\/lemonteed\.com\/artifacts\/[^<]+<\/loc>[\s\S]*?<\/url>/g,
     ""
   ).replace(
     /\s*<url>\s*<loc>https:\/\/lemonteed\.com\/operator-log\/[^<]+<\/loc>[\s\S]*?<\/url>/g,
     ""
+  ).replace(
+    /\s*<url>\s*<loc>https:\/\/lemonteed\.com\/benchmark(\/[^<]*)?<\/loc>[\s\S]*?<\/url>/g,
+    ""
   );
 
   /* Insert before closing </urlset> */
   const newSitemap = cleanedSitemap.replace(
     "</urlset>",
-    operatorEntries.concat(artifactEntries).join("\n") + "\n</urlset>"
+    operatorEntries.concat(benchmarkEntries).concat(artifactEntries).join("\n") + "\n</urlset>"
   );
 
-  return { sitemapContent: newSitemap, entryCount: artifactEntries.length + operatorEntries.length };
+  return { sitemapContent: newSitemap, entryCount: artifactEntries.length + operatorEntries.length + benchmarkEntries.length };
+}
+
+function readBenchmarkPages() {
+  const benchmarkDir = path.join(root, "benchmark");
+  if (!fs.existsSync(benchmarkDir)) {
+    return { urls: [], images: [] };
+  }
+
+  const urls = [];
+  const images = [];
+
+  // Main benchmark index
+  const indexPath = path.join(benchmarkDir, "index.html");
+  if (fs.existsSync(indexPath)) {
+    urls.push({
+      canonical: `${SITE_URL}/benchmark/`,
+      date: "2026-08-15"
+    });
+  }
+
+  // Record pages
+  const recordsDir = path.join(benchmarkDir, "records");
+  if (fs.existsSync(recordsDir)) {
+    const files = fs.readdirSync(recordsDir).filter((f) => f.endsWith(".html")).sort();
+    files.forEach((file) => {
+      const id = path.basename(file, ".html");
+      const recordCanonical = `${SITE_URL}/benchmark/records/${file}`;
+      urls.push({
+        canonical: recordCanonical,
+        date: "2026-08-15"
+      });
+
+      const desktopImg = `${SITE_URL}/benchmark/images/desktop/${id}.webp`;
+      const mobileImg = `${SITE_URL}/benchmark/images/mobile/${id}.webp`;
+      images.push({
+        loc: recordCanonical,
+        imageUrl: desktopImg,
+        caption: `Desktop benchmark review frame for record ${id}`,
+        title: `Benchmark Record ${id} Desktop Frame`
+      });
+      images.push({
+        loc: recordCanonical,
+        imageUrl: mobileImg,
+        caption: `Mobile benchmark review frame for record ${id}`,
+        title: `Benchmark Record ${id} Mobile Frame`
+      });
+    });
+  }
+
+  return { urls, images };
 }
 
 function readOperatorLogPosts() {
@@ -482,11 +543,25 @@ function buildImageSitemap() {
     ].join("\n");
   }));
 
+  const benchmarkData = readBenchmarkPages();
+  const benchmarkImageEntries = benchmarkData.images.map((img) => {
+    return [
+      `  <url>`,
+      `    <loc>${escapeHtml(img.loc)}</loc>`,
+      `    <image:image>`,
+      `      <image:loc>${escapeHtml(img.imageUrl)}</image:loc>`,
+      `      <image:caption>${escapeHtml(img.caption)}</image:caption>`,
+      `      <image:title>${escapeHtml(img.title)}</image:title>`,
+      `    </image:image>`,
+      `  </url>`
+    ].join("\n");
+  });
+
   const xml = [
     `<?xml version="1.0" encoding="UTF-8"?>`,
     `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"`,
     `        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">`,
-    entries.concat(operatorImageEntries).join("\n"),
+    entries.concat(operatorImageEntries).concat(benchmarkImageEntries).join("\n"),
     `</urlset>`,
     ``
   ].join("\n");
@@ -497,25 +572,37 @@ function buildImageSitemap() {
 /* ─── Main ───────────────────────────────────────────────── */
 
 if (require.main === module) {
-  const result = build();
-  const verb = dryRun ? "Would generate" : "Generated";
-  console.log(`\n${verb} ${result.generated} artifact pages in artifacts/`);
-
-  if (result.warnings.length) {
-    console.log("\nWarnings:");
-    result.warnings.forEach((w) => console.log(`  ⚠ ${w}`));
-  }
-
-  if (!dryRun) {
-    /* Update sitemap */
+  if (sitemapOnly) {
     const { sitemapContent, entryCount } = buildSitemap();
-    fs.writeFileSync(path.join(root, "sitemap.xml"), sitemapContent);
-    console.log(`Updated sitemap.xml with ${entryCount} artifact entries.`);
-
-    /* Generate image sitemap */
     const imageSitemap = buildImageSitemap();
-    fs.writeFileSync(path.join(root, "image-sitemap.xml"), imageSitemap);
-    console.log(`Generated image-sitemap.xml`);
+    if (dryRun) {
+      console.log(`Would refresh sitemap.xml with ${entryCount} generated entries.`);
+      console.log("Would regenerate image-sitemap.xml.");
+    } else {
+      fs.writeFileSync(path.join(root, "sitemap.xml"), sitemapContent);
+      fs.writeFileSync(path.join(root, "image-sitemap.xml"), imageSitemap);
+      console.log(`Updated sitemap.xml with ${entryCount} generated entries.`);
+      console.log("Generated image-sitemap.xml.");
+    }
+  } else {
+    const result = build();
+    const verb = dryRun ? "Would generate" : "Generated";
+    console.log(`\n${verb} ${result.generated} artifact pages in artifacts/`);
+
+    if (result.warnings.length) {
+      console.log("\nWarnings:");
+      result.warnings.forEach((w) => console.log(`  ⚠ ${w}`));
+    }
+
+    if (!dryRun) {
+      const { sitemapContent, entryCount } = buildSitemap();
+      fs.writeFileSync(path.join(root, "sitemap.xml"), sitemapContent);
+      console.log(`Updated sitemap.xml with ${entryCount} artifact entries.`);
+
+      const imageSitemap = buildImageSitemap();
+      fs.writeFileSync(path.join(root, "image-sitemap.xml"), imageSitemap);
+      console.log("Generated image-sitemap.xml");
+    }
   }
 }
 

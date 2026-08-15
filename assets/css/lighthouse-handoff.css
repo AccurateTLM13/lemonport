@@ -1,6 +1,6 @@
 /* Lighthouse Handoff — field report / workbench theme */
 
-.lh-page {
+body.lh-page {
   --lh-bg: #1a1a18;
   --lh-bg-elevated: #222220;
   --lh-bg-panel: #1e1e1c;
@@ -22,6 +22,11 @@
   --lh-touch: 44px;
   --lh-gutter: clamp(16px, 4vw, 32px);
   --lh-max: 1120px;
+  --bg: #1a1a18;
+  --ink: #e8e6e1;
+  --muted: #9a968c;
+  --hairline: rgb(255 255 255 / 0.12);
+  --panel: #222220;
 
   min-height: 100vh;
   margin: 0;
@@ -37,6 +42,66 @@
   font-size: 16px;
   line-height: 1.55;
   text-rendering: optimizeLegibility;
+}
+
+body.lh-page .sidebar {
+  background: #161614;
+  border-right: 1px solid rgb(255 255 255 / 0.1);
+}
+
+body.lh-page .category-link {
+  background: transparent;
+  color: #9a968c;
+  border-color: rgb(255 255 255 / 0.12);
+}
+
+body.lh-page .category-link:hover {
+  background: rgb(255 255 255 / 0.06);
+  color: #e8e6e1;
+  border-color: rgb(255 255 255 / 0.25);
+}
+
+body.lh-page .category-link.is-active {
+  background: #c9a227;
+  color: #11100d;
+  border-color: #c9a227;
+}
+
+body.lh-page .info-link,
+body.lh-page .sidebar__utility-link {
+  color: #9a968c;
+}
+
+body.lh-page .sidebar__utility-link:hover {
+  color: #e8e6e1;
+}
+
+body.lh-page .random-artifact {
+  background: #222220;
+  border-color: rgb(255 255 255 / 0.15);
+  color: #e8e6e1;
+}
+
+body.lh-page .random-artifact:hover {
+  background: #2a2a28;
+}
+
+body.lh-page .page-header {
+  margin-bottom: clamp(24px, 4vw, 36px);
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--lh-border);
+}
+
+body.lh-page .page-header__eyebrow {
+  color: var(--lh-brass);
+}
+
+body.lh-page .page-header__title {
+  color: var(--lh-ink);
+}
+
+body.lh-page .page-header__lede {
+  color: var(--lh-ink-muted);
 }
 
 .lh-page::before {
@@ -192,8 +257,14 @@
 
 .lh-main {
   width: min(100%, var(--lh-max));
-  margin: 0 auto;
-  padding: clamp(32px, 6vw, 64px) var(--lh-gutter) clamp(48px, 8vw, 80px);
+  margin-left: var(--sidebar);
+  padding: clamp(24px, 4vw, 48px) var(--lh-gutter) clamp(48px, 8vw, 80px);
+}
+
+@media (max-width: 1023px) {
+  .lh-main {
+    margin-left: 0;
+  }
 }
 
 .lh-section {

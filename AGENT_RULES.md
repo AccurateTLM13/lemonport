@@ -5,6 +5,13 @@ This repository is a static public site plus a local Studio tool. Treat `LEMONTE
 ## Do
 
 - Preserve the static public-site architecture.
+- Follow `lemonteed-brand-system.md` for all voice, copy, layout, and component styling.
+- Frame copy and status labels in a dry, self-aware, deadpan workshop/lab tone ("on the bench", "in the drawer", "STATUS: OFF CLOCK").
+- Standardize all pills/tags to single-weight outlined uppercase mono rectangles (`[ CATEGORY ]`).
+- Limit CTAs to max 1 primary solid-fill button per section; use outlined styles for secondary actions.
+- Give Lemmy (the mascot) a functional Operator quote/guidance job when present, rather than floating decoration.
+- Inspect the ENTIRE viewport (including sidebars, navigation rails, headers, and footers) during visual checks—do not inspect main content in isolation.
+- Explicitly override `background`, `color`, `border`, and `box-shadow` on all shared global chrome elements (`.category-link`, `.sidebar`, `.junk-drawer-module`, `.random-artifact`) when creating dark mode or theme variant CSS overrides to prevent light-theme styles from leaking through.
 - Prefer existing plain HTML, CSS, and JavaScript patterns.
 - Put public tool pages inside the shared site shell/sidebar when practical so navigation, mobile chrome, and archive context stay consistent.
 - Use `content/projects.json` and `content/categories.json` as content source of truth.
@@ -15,11 +22,15 @@ This repository is a static public site plus a local Studio tool. Treat `LEMONTE
 - Treat category `slug` values as references used by project records, filtering, paths, and image folders.
 - Use the canonical Studio statuses: `Draft`, `Ready`, `Published`, `Hidden`, `Archived`, and `Deleted`.
 - Keep Memetic Warfare game data consistent with referenced gallery artifact IDs.
+- Strictly convert all new images, screenshots, review frames, and media uploads to WebP (`.webp`) format with high quality (`-quality 85` / `webp:method=6`) before committing or saving to disk to maintain minimal storage footprint and maximum performance.
 - Check for existing user changes before editing files.
 - Treat page-specific behavior requests as applying to that page's main content by default. Header, sidebar, navigation, mobile chrome, drawers, and footer are shared/global chrome and should only be changed when the user explicitly asks for a global or navigation-level change.
 
 ## Do Not
 
+- Do not perform partial or premature redesigns on pages not currently scheduled for work (follow `lemonteed-brand-system.md` Section 7 incremental migration).
+- Do not commit or store raw `.png`, `.jpg`, `.jpeg`, or uncompressed images on the site for content, review frames, screenshots, or gallery items (standard browser compliance favicons under `images/favicons/` excepted). All content images must be `.webp`.
+- Do not write generic corporate/SaaS marketing copy or hedged disclaimers.
 - Do not manually edit `assets/js/gallery-data.js` or `assets/js/gallery-categories.js` as source data.
 - Do not replace the public site with a frontend framework.
 - Do not introduce a public server requirement for the deployed site.
@@ -32,10 +43,7 @@ This repository is a static public site plus a local Studio tool. Treat `LEMONTE
 - Do not attach page-specific click interception or coming-soon behavior to `<body>` when the intent is page content only. Scope it to `main`, `article`, or a page-owned content container.
 - Do not use accent-colored borders, border-left stripes, or decorative border accents on cards anywhere in the public site. Use neutral hairlines, surface contrast, whitespace, typography, or non-border state treatments instead.
 
-
 ## Generated File Policy
-
-Generated files should be regenerated, not hand-maintained.
 
 Current generated public data files:
 
@@ -70,6 +78,14 @@ Before finishing a content or Studio-related change:
 - Confirm published projects have image and thumbnail data.
 - Confirm non-public workflow states are not expected to appear in generated gallery data.
 - Run the relevant build or explain why it was not run.
+
+## Visual & Theme Checklist
+
+Before finishing any UI, layout, or page theme modification:
+
+- Perform a full-viewport visual check of the entire page shell (sidebar, navigation rail, top header, main content stage, and footer).
+- On pages with theme overrides (e.g. `is-vrg-vault-mode`, dark modes, or custom page palettes), verify that shared navigation links (`.category-link`, `.info-link`, `.random-artifact`, `.junk-drawer-module`) do not inherit light-theme background fills, borders, or text colors.
+- Verify hover and active states for all navigation items in both light and dark mode contexts.
 
 ## Local Commands
 

@@ -16,7 +16,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Lighthouse Handoff | Lemonteed">
   <meta name="twitter:description" content="Turn PageSpeed Insights into coding-agent-ready Markdown.">
-  <meta name="twitter:image" content="https://lemonteed.com/images/og/lemonteed-og-home-final.webp">
+  <meta name="twitter:image" content="https://lemonteed.com/images/og/lighthouse-handoff.webp">
   <link rel="icon" href="/images/favicons/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">
@@ -24,7 +24,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/lighthouse-handoff.css?v=5">
+  <link rel="stylesheet" href="/assets/css/style.css?v=10">
+  <link rel="stylesheet" href="/assets/css/lighthouse-handoff.css?v=6">
+  <link rel="stylesheet" href="/assets/css/lemmy.css?v=2">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -41,38 +43,77 @@
       }
     }
   </script>
+  <script src="/assets/js/mobile-header.js?v=1" defer></script>
+  <script src="/assets/js/lemmy-data.js?v=2" defer></script>
+  <script src="/assets/js/lemmy.js?v=2" defer></script>
   <script src="/assets/js/lighthouse-handoff.js?v=2" defer></script>
   <meta property="og:image:secure_url" content="https://lemonteed.com/images/og/lighthouse-handoff.webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
 </head>
-<body class="lh-page">
+<body class="lh-page" data-lemmy-zone="junk-drawer">
   <a class="lh-skip" href="#lh-main">Skip to content</a>
 
-  <div class="lh-shell">
-    <header class="lh-header" role="banner">
-      <span class="lh-header__label">Lemonteed / Field Report</span>
-      <span class="lh-header__project">Lighthouse Handoff</span>
-      <a class="lh-header__back" href="/">← Archive</a>
-    </header>
+  <div class="site-shell">
+    <aside class="sidebar" aria-label="Site navigation">
+      <div class="sidebar__top">
+        <a class="brand" href="/" aria-label="Lemonteed home">
+          <img class="brand__logo" src="/images/lemonteedlogo-250.webp" srcset="/images/lemonteedlogo-250.webp 250w, /images/lemonteedlogo-456.webp 456w" sizes="160px" width="456" height="96" alt="Lemonteed">
+        </a>
+        <a class="info-link" href="/studio-lab/">+ STUDIO LAB</a>
+        <a class="random-artifact" href="/archive/?random=1" aria-label="Summon random artifact: opens a surprise archive page">
+          SUMMON RANDOM ARTIFACT
+          <span class="random-artifact__hint">Surprise archive page</span>
+        </a>
+      </div>
+      <nav class="category-nav" aria-label="Portfolio categories">
+        <span class="nav-label">Categories</span>
+        <a class="category-link" href="/archive/" data-category-link="all">All</a>
+        <a class="category-link" href="/vrg-cards/" data-category-link="vrg-cards">VRG Cards</a>
+        <a class="category-link" href="/what-if/" data-category-link="what-if">What If</a>
+        <a class="category-link" href="/misc-gens/" data-category-link="misc-gens">Misc Gens</a>
+        <a class="category-link" href="/memetic-warfare/">Memetic Warfare</a>
+        <a class="category-link" href="/lemonteed-fm/">Lemonteed FM</a>
+      </nav>
+      <a href="/junk-drawer/" class="junk-drawer-module" aria-label="Open Junk Drawer">
+        <div class="junk-drawer-module__face">
+          <div class="junk-drawer-module__handle"></div>
+          <span class="junk-drawer-module__label">Junk Drawer</span>
+        </div>
+      </a>
+      <nav class="sidebar__utility-nav" aria-label="Lemonteed workbench">
+        <p class="sidebar__utility-label">Workbench</p>
+        <a class="sidebar__utility-link sidebar__utility-link--primary" href="/studio-lab/">Studio Lab</a>
+        <a class="sidebar__utility-link" href="/operator-log/">Operator's Log</a>
+        <a class="sidebar__utility-link" href="/benchmark/">Design Benchmark</a>
+      </nav>
+    </aside>
 
-    <div class="lh-sticky-cta" id="lh-sticky-cta" hidden>
-      <span class="lh-sticky-cta__label">Lighthouse Handoff</span>
-      <a class="lh-sticky-cta__link" href="https://chromewebstore.google.com/detail/lighthouse-handoff/aiddegolbikmimjpggbepjmlkbjphgcb" target="_blank" rel="noopener">Add to Chrome</a>
-    </div>
+    <div class="lh-shell">
+      <div class="lh-sticky-cta" id="lh-sticky-cta" hidden>
+        <span class="lh-sticky-cta__label">Lighthouse Handoff</span>
+        <a class="lh-sticky-cta__link" href="https://chromewebstore.google.com/detail/lighthouse-handoff/aiddegolbikmimjpggbepjmlkbjphgcb" target="_blank" rel="noopener">Add to Chrome</a>
+      </div>
 
-    <main class="lh-main" id="lh-main" tabindex="-1">
-
-      <!-- Hero -->
-      <section class="lh-section lh-hero" id="hero" aria-labelledby="lh-hero-title">
-        <div class="lh-hero__copy">
-          <div class="lh-hero__brand" aria-label="Lighthouse Handoff Chrome extension">
-            <img class="lh-hero__logo" src="/images/lighthouse-handoff/LHHO%20LOGO.webp" alt="Lighthouse Handoff extension logo" width="160" height="160">
-            <span class="lh-hero__brand-text">Available in the Chrome Web Store</span>
+      <main class="content lh-main" id="lh-main" tabindex="-1">
+        <header class="page-header">
+          <div class="page-header__meta">
+            <span class="page-header__eyebrow">[ FIELD REPORT / LIGHTHOUSE HANDOFF ]</span>
           </div>
-          <p class="lh-kicker">Chrome Extension · Handoff Layer</p>
-          <h1 id="lh-hero-title">Turn PageSpeed Insights into coding-agent-ready Markdown.</h1>
-          <span class="lh-badge lh-badge--status">Available in the Chrome Web Store</span>
+          <h1 class="page-header__title">Lighthouse Handoff</h1>
+          <p class="page-header__lede">Turn PageSpeed Insights into coding-agent-ready Markdown. Priorities, tasks, guardrails, and acceptance criteria.</p>
+        </header>
+
+        <!-- Hero -->
+        <section class="lh-section lh-hero" id="hero" aria-labelledby="lh-hero-title">
+          <div class="lh-hero__copy">
+            <div class="lh-hero__brand" aria-label="Lighthouse Handoff Chrome extension">
+              <img class="lh-hero__logo" src="/images/lighthouse-handoff/LHHO%20LOGO.webp" alt="Lighthouse Handoff extension logo" width="160" height="160">
+              <span class="lh-hero__brand-text">Available in the Chrome Web Store</span>
+            </div>
+            <p class="lh-kicker">Chrome Extension · Handoff Layer</p>
+            <h2 id="lh-hero-title" class="visually-hidden">Lighthouse Handoff Overview</h2>
+            <span class="lh-badge lh-badge--status">[ AVAILABLE IN THE CHROME WEB STORE ]</span>
           <p class="lh-lede">PageSpeed gives you the diagnosis.<br>Lighthouse Handoff turns it into a structured handoff — priorities, tasks, guardrails, and acceptance criteria.</p>
           <p class="lh-lede-sub">Not another dashboard.<br>A handoff layer.</p>
           <div class="lh-hero__actions">
@@ -474,5 +515,6 @@
 
     </main>
   </div>
+</div>
 </body>
 </html>

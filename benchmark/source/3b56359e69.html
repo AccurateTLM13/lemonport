@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HALLOWAY INSTRUMENTS // HX-4 Field Monitor Technical Manual</title>
+    
+    <!-- Google Fonts: Barlow Condensed, IBM Plex Sans, IBM Plex Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    
+    
+
+    <style>
+        /* Base Technical Typography & Styles */
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background-color: #f3f1ea;
+            color: #111315;
+            -webkit-font-smoothing: antialiased;
+            letter-spacing: -0.01em;
+        }
+
+        .dark body {
+            background-color: #0f1113;
+            color: #e2e8f0;
+        }
+
+        /* Hairline borders & crosshair styling */
+        .tech-border {
+            border: 1px solid #bcaba0;
+        }
+        .dark .tech-border {
+            border: 1px solid #282e35;
+        }
+
+        .tech-border-b {
+            border-bottom: 1px solid #bcaba0;
+        }
+        .dark .tech-border-b {
+            border-bottom: 1px solid #282e35;
+        }
+
+        .tech-border-r {
+            border-right: 1px solid #bcaba0;
+        }
+        .dark .tech-border-r {
+            border-right: 1px solid #282e35;
+        }
+
+        /* Subtle Technical Grid Background */
+        .bg-tech-grid {
+            background-image: radial-gradient(#2a2f35 0.75px, transparent 0.75px);
+            background-size: 16px 16px;
+        }
+        .light .bg-tech-grid {
+            background-image: radial-gradient(#9c9288 0.75px, transparent 0.75px);
+        }
+
+        /* Corner Marks */
+        .corner-mark {
+            position: relative;
+        }
+        .corner-mark::before, .corner-mark::after {
+            content: '';
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-color: currentColor;
+            pointer-events: none;
+        }
+        .corner-mark::before {
+            top: -1px;
+            left: -1px;
+            border-top: 1.5px solid;
+            border-left: 1.5px solid;
+        }
+        .corner-mark::after {
+            bottom: -1px;
+            right: -1px;
+            border-bottom: 1.5px solid;
+            border-right: 1.5px solid;
+        }
+
+        /* Technical Field Manual Notice Blocks */
+        .notice-caution {
+            border-left: 4px solid #8c2d19;
+            background: rgba(140, 45, 25, 0.05);
+        }
+        .dark .notice-caution {
+            border-left: 4px solid #dc2626;
+            background: rgba(220, 38, 38, 0.1);
+        }
+
+        .notice-note {
+            border-left: 4px solid #3d5236;
+            background: rgba(61, 82, 54, 0.05);
+        }
+        .dark .notice-note {
+            border-left: 4px solid #16a34a;
+            background: rgba(22, 163, 74, 0.1);
+        }
+
+        /* Custom Scrollbar for Spec Tables & Code */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #a39589;
+        }
+        .dark ::webkit-scrollbar-thumb {
+            background: #374151;
+        }
+
+        /* Printed stamp effect */
+        .stamp-badge {
+            font-family: 'IBM Plex Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border: 1px solid currentColor;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        /* Remove default button focus ring, use clean manual highlight */
+        button:focus-visible, a:focus-visible {
+            outline: 2px solid #b87c14;
+            outline-offset: 1px;
+        }
+
+        /* SVG Callout pin animation state */
+        .pin-active {
+            stroke: #b87c14;
+            fill: #b87c14;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-amber-800 selection:text-white"><div style="position:fixed;right:12px;bottom:12px;z-index:2147483647;padding:8px 10px;background:#111;color:#fff;font:12px/1.3 monospace;border:1px solid #777">ARCHIVED SOURCE · SCRIPTS AND NETWORK DISABLED</div>
+
+    <!-- MAIN UTILITY & SYSTEM IDENTIFIER HEADER -->
+    <header class="sticky top-0 z-40 bg-field-paper dark:bg-field-slate tech-border-b backdrop-blur-md bg-opacity-95 dark:bg-opacity-95">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-14 text-xs font-mono">
+                <!-- Brand Title -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-3 h-3 bg-field-ink dark:bg-slate-200"></div>
+                    <span class="font-condensed font-bold text-lg tracking-widest text-field-ink dark:text-slate-100 uppercase">
+                        HALLOWAY INSTRUMENTS
+                    </span>
+                    <span class="hidden sm:inline text-field-muted dark:text-slate-500">|</span>
+                    <span class="hidden sm:inline font-mono text-field-muted dark:text-slate-400">DOC-REF: HW-HX4-MAN-2026.REV-D</span>
+                </div>
+
+                <!-- Global System Controls & UTC Clock -->
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:flex items-center space-x-2 text-field-muted dark:text-slate-400">
+                        <span>SYS UTC:</span>
+                        <span id="utc-clock" class="font-mono text-field-ink dark:text-slate-200 font-semibold">2026-08-14 17:35:25 Z</span>
+                    </div>
+
+                    <!-- Unit Toggle (Metric / Imperial) -->
+                    <button id="unit-toggle" class="px-2 py-1 tech-border hover:bg-black/5 dark:hover:bg-white/5 transition-colors font-mono uppercase tracking-wider text-field-ink dark:text-slate-200">
+                        UNITS: <span id="unit-label" class="font-bold">SI (METRIC)</span>
+                    </button>
+
+                    <!-- Theme Toggle -->
+                    <button class="px-2 py-1 tech-border hover:bg-black/5 dark:hover:bg-white/5 transition-colors font-mono uppercase tracking-wider text-field-ink dark:text-slate-200">
+                        MODE: <span id="mode-label" class="font-bold">LIGHT</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Navigation Ribbon -->
+        <nav class="bg-field-card dark:bg-field-slateLight tech-border-b overflow-x-auto">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-1 sm:space-x-6 text-xs font-mono whitespace-nowrap py-2">
+                <a href="#sec-overview" class="text-field-ink dark:text-slate-300 hover:text-field-amberDark py-1 px-1 font-semibold">[01 OVERVIEW]</a>
+                <a href="#sec-config" class="text-field-muted dark:text-slate-400 hover:text-field-amberDark py-1 px-1">[02 CONFIGURATION]</a>
+                <a href="#sec-procedure" class="text-field-muted dark:text-slate-400 hover:text-field-amberDark py-1 px-1">[03 PROCEDURE]</a>
+                <a href="#sec-specifications" class="text-field-muted dark:text-slate-400 hover:text-field-amberDark py-1 px-1">[04 SPECIFICATIONS]</a>
+                <a href="#sec-field-notes" class="text-field-muted dark:text-slate-400 hover:text-field-amberDark py-1 px-1">[05 FIELD NOTES]</a>
+                <a href="#sec-notices" class="text-field-muted dark:text-slate-400 hover:text-field-amberDark py-1 px-1">[06 SERVICE NOTICES]</a>
+                <a href="#sec-docs" class="text-field-muted dark:text-slate-400 hover:text-field-amberDark py-1 px-1">[07 DOCUMENTATION]</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- MAIN MANUAL CONTENT CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-16">
+
+        <!-- 01 / SYSTEM OVERVIEW -->
+        <section id="sec-overview" class="scroll-mt-24 space-y-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between border-b-2 border-field-ink dark:border-slate-700 pb-3">
+                <div>
+                    <span class="font-mono text-xs font-bold text-field-amber dark:text-amber-500 uppercase tracking-widest">SECTION 01 // TECHNICAL SPECIFICATION</span>
+                    <h1 class="font-condensed text-3xl sm:text-4xl md:text-5xl font-bold uppercase tracking-wide text-field-ink dark:text-slate-100">
+                        HX-4 ENVIRONMENTAL FIELD MONITOR
+                    </h1>
+                </div>
+                <div class="mt-2 md:mt-0 font-mono text-xs text-field-muted dark:text-slate-400">
+                    CLASSIFICATION: PORTABLE TELEMETRY UNIT / ALL-TERRAIN
+                </div>
+            </div>
+
+            <!-- Intro Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Technical Diagram Panel -->
+                <div class="lg:col-span-7 tech-border bg-white dark:bg-field-slateLight p-6 relative corner-mark">
+                    <div class="flex items-center justify-between border-b tech-border-b pb-2 mb-4 font-mono text-xs text-field-muted dark:text-slate-400">
+                        <span>FIG 1.1 // SYSTEM SCHEMATIC OVERVIEW</span>
+                        <span>SCALE 1:2.5 [ISOMETRIC PROJECTION]</span>
+                    </div>
+
+                    <!-- CAD-Style SVG Product Vector Illustration -->
+                    <div class="relative w-full aspect-[4/3] bg-field-paper dark:bg-field-slate tech-border p-3 flex items-center justify-center overflow-hidden">
+                        <svg viewBox="0 0 800 520" class="w-full h-full stroke-field-ink dark:stroke-slate-200 fill-none" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter">
+                            <defs>
+                                <!-- Hatching pattern for cross-section CAD details -->
+                                <pattern id="cad-hatch" width="8" height="8" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+                                    <line x1="0" y1="0" x2="0" y2="8" stroke="currentColor" stroke-width="0.75" opacity="0.25"/>
+                                </pattern>
+                                <!-- Arrow marker for dimensioning lines -->
+                                <marker id="arrow-start" viewBox="0 0 10 10" refX="0" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                    <path d="M 10 0 L 0 5 L 10 10 Z" class="fill-field-amberDark stroke-none"/>
+                                </marker>
+                                <marker id="arrow-end" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                    <path d="M 0 0 L 10 5 L 0 10 Z" class="fill-field-amberDark stroke-none"/>
+                                </marker>
+                            </defs>
+
+                            <!-- Isometric Background Grid Lines (30° / 150° Isometric Grid) -->
+                            <g stroke="currentColor" stroke-width="0.4" stroke-dasharray="2,4" opacity="0.18">
+                                <!-- Horizontal Axis Reference -->
+                                <line x1="40" y1="260" x2="760" y2="260"/>
+                                <line x1="400" y1="20" x2="400" y2="500"/>
+                                <!-- 30 Degree Isometric Diagonals -->
+                                <line x1="40" y1="50" x2="760" y2="466"/>
+                                <line x1="40" y1="466" x2="760" y2="50"/>
+                                <line x1="40" y1="150" x2="680" y2="520"/>
+                                <line x1="120" y1="0" x2="760" y2="370"/>
+                                <line x1="40" y1="370" x2="680" y2="0"/>
+                                <line x1="120" y1="520" x2="760" y2="150"/>
+                            </g>
+
+                            <!-- ISOMETRIC CHASSIS BASE (3D Isometric Projection) -->
+                            <!-- Isometric Base Geometry Origin (380, 310) -->
+                            <!-- Top Surface -->
+                            <polygon points="380,150 560,240 380,330 200,240" class="fill-field-card/80 dark:fill-field-slateLight/80" stroke-width="2"/>
+                            <!-- Front Left Surface -->
+                            <polygon points="200,240 380,330 380,410 200,320" class="fill-field-paperDark dark:fill-field-slate" stroke-width="2"/>
+                            <!-- Front Right Surface -->
+                            <polygon points="380,330 560,240 560,320 380,410" class="fill-field-paper dark:fill-field-slate/80" stroke-width="2"/>
+
+                            <!-- Corner Bumper Guards (3D Chamfers) -->
+                            <!-- Front Corner Bumper -->
+                            <polygon points="370,325 390,335 390,415 370,405" class="fill-field-slate dark:fill-slate-700"/>
+                            <!-- Left Corner Bumper -->
+                            <polygon points="190,235 210,245 210,325 190,315" class="fill-field-slate dark:fill-slate-700"/>
+                            <!-- Right Corner Bumper -->
+                            <polygon points="550,235 570,245 570,325 550,315" class="fill-field-slate dark:fill-slate-700"/>
+
+                            <!-- Transflective LCD Display Window (Isometric Raised Panel) -->
+                            <polygon points="380,185 500,245 380,305 260,245" class="fill-field-paper dark:fill-slate-900" stroke-width="2"/>
+                            <!-- Inner Display Bezels -->
+                            <polygon points="380,195 480,245 380,295 280,245" stroke-dasharray="2,2" stroke-width="1"/>
+
+                            <!-- Display Pixel Waveform Graph (Isometric Grid View) -->
+                            <path d="M 300,245 L 330,235 L 350,255 L 380,225 L 410,250 L 440,230 L 460,245" stroke="#b87c14" stroke-width="2" stroke-linejoin="round"/>
+                            <!-- On-Screen Telemetry Micro-Text -->
+                            <text x="345" y="215" font-family="IBM Plex Mono" font-size="9" class="fill-field-ink dark:fill-slate-300 stroke-none font-bold" transform="rotate(26, 345, 215) skewX(-30)">SYS_OK: 1013.2 hPa</text>
+                            <text x="315" y="275" font-family="IBM Plex Mono" font-size="9" class="fill-field-amberDark stroke-none font-bold" transform="rotate(-26, 315, 275) skewX(30)">REC [10Hz] 21.4°C</text>
+
+                            <!-- Hex Screw Head Details (Isometric Circles/Hexagons) -->
+                            <polygon points="220,235 224,233 228,235 228,239 224,241 220,239" class="fill-none" stroke-width="1"/>
+                            <polygon points="540,235 544,233 548,235 548,239 544,241 540,239" class="fill-none" stroke-width="1"/>
+                            <polygon points="380,315 384,313 388,315 388,319 384,321 380,319" class="fill-none" stroke-width="1"/>
+
+                            <!-- GNSS Antenna Mast Assembly (Isometric Top Cylinder) -->
+                            <polygon points="360,140 400,120 400,150 360,170" class="fill-field-card dark:fill-slate-800"/>
+                            <ellipse cx="380" cy="130" rx="20" ry="10" class="fill-field-paper dark:fill-slate-700" stroke-width="1.5"/>
+                            <line x1="380" y1="130" x2="380" y2="70" stroke-width="1.5" stroke-dasharray="3,2"/>
+                            <ellipse cx="380" cy="70" rx="28" ry="12" class="fill-field-card dark:fill-slate-800" stroke-width="1.5"/>
+
+                            <!-- M12 Threaded Socket Tower (Left Side Isometric Extension) -->
+                            <polygon points="160,220 200,240 200,270 160,250" class="fill-field-paperDark dark:fill-slate-800"/>
+                            <ellipse cx="180" cy="230" rx="14" ry="8" class="fill-slate-400 dark:fill-slate-900"/>
+                            <circle cx="180" cy="230" r="4" class="fill-field-amberDark stroke-none"/>
+
+                            <!-- Mechanical Latching Clamps (Right Side) -->
+                            <path d="M 560 270 L 590 255 L 590 285 L 560 300 Z" class="fill-field-card dark:fill-slate-800"/>
+                            <line x1="575" y1="262" x2="575" y2="292" stroke-width="2"/>
+
+                            <!-- CAD DIMENSION LINES & MEASUREMENT CALLOUTS -->
+                            <!-- Dimension 1: Total Length (Top Dimension) -->
+                            <line x1="200" y1="210" x2="160" y2="130" stroke="#b87c14" stroke-width="0.8" stroke-dasharray="2,2"/>
+                            <line x1="560" y1="210" x2="520" y2="130" stroke="#b87c14" stroke-width="0.8" stroke-dasharray="2,2"/>
+                            <line x1="170" y1="140" x2="510" y2="140" stroke="#b87c14" stroke-width="1.2" marker-start="url(#arrow-start)" marker-end="url(#arrow-end)"/>
+                            <rect x="300" y="128" width="80" height="20" class="fill-field-paper dark:fill-field-slate stroke-field-amberDark" stroke-width="0.8"/>
+                            <text x="340" y="142" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" font-weight="bold" class="fill-field-ink dark:fill-slate-100 stroke-none">284.0 mm</text>
+
+                            <!-- Dimension 2: Height (Right Vertical Dimension) -->
+                            <line x1="570" y1="245" x2="650" y2="245" stroke="#b87c14" stroke-width="0.8" stroke-dasharray="2,2"/>
+                            <line x1="570" y1="325" x2="650" y2="325" stroke="#b87c14" stroke-width="0.8" stroke-dasharray="2,2"/>
+                            <line x1="640" y1="250" x2="640" y2="320" stroke="#b87c14" stroke-width="1.2" marker-start="url(#arrow-start)" marker-end="url(#arrow-end)"/>
+                            <rect x="600" y="275" width="80" height="20" class="fill-field-paper dark:fill-field-slate stroke-field-amberDark" stroke-width="0.8"/>
+                            <text x="640" y="289" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" font-weight="bold" class="fill-field-ink dark:fill-slate-100 stroke-none">162.5 mm</text>
+
+                            <!-- Dimension 3: Depth (Front Left Isometric Dimension) -->
+                            <line x1="200" y1="330" x2="140" y2="360" stroke="#b87c14" stroke-width="0.8" stroke-dasharray="2,2"/>
+                            <line x1="380" y1="420" x2="320" y2="450" stroke="#b87c14" stroke-width="0.8" stroke-dasharray="2,2"/>
+                            <line x1="150" y1="365" x2="310" y2="445" stroke="#b87c14" stroke-width="1.2" marker-start="url(#arrow-start)" marker-end="url(#arrow-end)"/>
+                            <rect x="200" y="405" width="75" height="18" class="fill-field-paper dark:fill-field-slate stroke-field-amberDark" stroke-width="0.8"/>
+                            <text x="237" y="418" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" font-weight="bold" class="fill-field-ink dark:fill-slate-100 stroke-none">94.0 mm [D]</text>
+
+                            <!-- CAD DATUM & DRAFTING NOTES BLOCK -->
+                            <!-- Datum Axis Marker -->
+                            <g transform="translate(70, 430)">
+                                <circle cx="0" cy="0" r="16" class="fill-field-paper dark:fill-field-slate stroke-field-ink dark:stroke-slate-200"/>
+                                <line x1="-20" y1="0" x2="20" y2="0"/>
+                                <line x1="0" y1="-20" x2="0" y2="20"/>
+                                <text x="0" y="4" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" font-weight="bold" class="fill-field-amberDark stroke-none">DAT-A</text>
+                            </g>
+
+                            <!-- CAD Standard Title Block Watermark -->
+                            <g transform="translate(480, 430)" class="font-mono text-[9px]">
+                                <rect x="0" y="0" width="280" height="65" class="fill-field-paper/90 dark:fill-field-slate/90 stroke-field-muted" stroke-width="0.8"/>
+                                <line x1="0" y1="20" x2="280" y2="20" stroke-width="0.5"/>
+                                <line x1="0" y1="42" x2="280" y2="42" stroke-width="0.5"/>
+                                <line x1="140" y1="20" x2="140" y2="65" stroke-width="0.5"/>
+                                <text x="10" y="14" class="fill-field-ink dark:fill-slate-200 font-bold stroke-none">DWG: HX4-CAD-ISO-8092</text>
+                                <text x="150" y="14" class="fill-field-muted stroke-none">PROJECTION: 3RD ANGLE</text>
+                                <text x="10" y="34" class="fill-field-muted stroke-none">TOLERANCE: ISO 2768-mK</text>
+                                <text x="150" y="34" class="fill-field-amberDark font-bold stroke-none">MAT: ALU 6061-T6 ANODIZED</text>
+                                <text x="10" y="56" class="fill-field-muted stroke-none">REVISION: REV-D (2026)</text>
+                                <text x="150" y="56" class="fill-field-ink dark:fill-slate-200 font-bold stroke-none">APPROVED: CHIEF ENGR</text>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <div class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2 font-mono text-xs">
+                        <div class="p-2 tech-border bg-field-paper dark:bg-field-slate">
+                            <span class="block text-field-muted dark:text-slate-500">HOUSING</span>
+                            <span class="font-bold text-field-ink dark:text-slate-200">ALU 6061-T6</span>
+                        </div>
+                        <div class="p-2 tech-border bg-field-paper dark:bg-field-slate">
+                            <span class="block text-field-muted dark:text-slate-500">SEAL DATING</span>
+                            <span class="font-bold text-field-ink dark:text-slate-200">MIL-STD-810H</span>
+                        </div>
+                        <div class="p-2 tech-border bg-field-paper dark:bg-field-slate">
+                            <span class="block text-field-muted dark:text-slate-500">INGRESS</span>
+                            <span class="font-bold text-field-ink dark:text-slate-200">IP68 (20M/4H)</span>
+                        </div>
+                        <div class="p-2 tech-border bg-field-paper dark:bg-field-slate">
+                            <span class="block text-field-muted dark:text-slate-500">DISPLAY</span>
+                            <span class="font-bold text-field-ink dark:text-slate-200">MONO GRAPHIC</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Textual Overview & System Specifications -->
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="tech-border bg-white dark:bg-field-slateLight p-6 corner-mark space-y-4">
+                        <h2 class="font-condensed text-xl font-bold uppercase tracking-wider border-b tech-border-b pb-2 text-field-ink dark:text-slate-100">
+                            ENGINEERING ARCHITECTURE
+                        </h2>
+                        <p class="text-sm leading-relaxed text-field-ink dark:text-slate-300">
+                            The Halloway HX-4 Environmental Field Monitor is a self-contained precision instrument for remote hydrological, atmospheric, and pedological telemetry. Built within a CNC-machined anodized aluminum monocoque, the unit operates in extreme ambient conditions without requiring external environmental shelters.
+                        </p>
+                        <p class="text-sm leading-relaxed text-field-ink dark:text-slate-300">
+                            Equipped with a dual-redundant sensor bus, active thermistor compensation, and direct satellite/cellular sub-GHz packet broadcast, the HX-4 provides continuous field verification for surveyor teams and environmental research units.
+                        </p>
+                    </div>
+
+                    <!-- Quick Operating Specs Block -->
+                    <div class="tech-border bg-field-card dark:bg-field-slate p-5 space-y-3 font-mono text-xs">
+                        <div class="font-bold uppercase tracking-wider text-field-amber dark:text-amber-500 border-b tech-border-b pb-1">
+                            [ OPERATIONAL ENVELOPE ]
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-field-muted dark:text-slate-400">AMB. TEMP RANGE:</span>
+                            <span class="font-bold text-field-ink dark:text-slate-200 font-mono val-temp">-40°C to +70°C</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-field-muted dark:text-slate-400">MAX SUBMERGENCE:</span>
+                            <span class="font-bold text-field-ink dark:text-slate-200 font-mono val-depth">20.0 METERS</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-field-muted dark:text-slate-400">CONTINUOUS RUNTIME:</span>
+                            <span class="font-bold text-field-ink dark:text-slate-200 font-mono">72 HOURS (1-MIN SAMPLING)</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-field-muted dark:text-slate-400">DATA RECORDING:</span>
+                            <span class="font-bold text-field-ink dark:text-slate-200 font-mono">32GB INDUSTRIAL SLC FLASH</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02 / FIELD CONFIGURATION -->
+        <section id="sec-config" class="scroll-mt-24 space-y-6">
+            <div class="border-b-2 border-field-ink dark:border-slate-700 pb-3">
+                <span class="font-mono text-xs font-bold text-field-amber dark:text-amber-500 uppercase tracking-widest">SECTION 02 // COMPONENT BREAKDOWN</span>
+                <h2 class="font-condensed text-3xl font-bold uppercase tracking-wide text-field-ink dark:text-slate-100">
+                    FIELD CONFIGURATION & INTERFACE CALLOUTS
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Left: Interactive Technical Diagram with Callout Pins -->
+                <div class="lg:col-span-7 tech-border bg-white dark:bg-field-slateLight p-6 corner-mark">
+                    <div class="flex justify-between items-center mb-4 font-mono text-xs">
+                        <span class="font-bold uppercase tracking-wider text-field-ink dark:text-slate-200">FIGURE 2.1 — EXPLODED TELEMETRY ASSEMBLY SCHEMATIC</span>
+                        <span class="text-field-muted dark:text-slate-400">CLICK CALLOUT NUMBER TO INSPECT</span>
+                    </div>
+
+                    <!-- Exploded Wireframe HUD Schematic Diagram -->
+                    <div class="relative w-full aspect-[4/3] bg-field-paper dark:bg-field-slate tech-border p-2">
+                        <svg viewBox="0 0 800 520" class="w-full h-full stroke-field-ink dark:stroke-slate-300 fill-none" stroke-width="1.5">
+                            
+                            <!-- Central Assembly Projection Axes (Dash-Dotted Line) -->
+                            <g stroke="#b87c14" stroke-width="1" stroke-dasharray="6,3,1,3" opacity="0.6">
+                                <!-- Horizontal Main Axis -->
+                                <line x1="80" y1="260" x2="720" y2="260"/>
+                                <!-- Sub-assembly vertical guidelines -->
+                                <line x1="160" y1="80" x2="160" y2="440"/>
+                                <line x1="400" y1="60" x2="400" y2="460"/>
+                                <line x1="640" y1="100" x2="640" y2="420"/>
+                            </g>
+
+                            <!-- EXPLODED MODULE 01: ATMOSPHERIC WEATHER PROBE ASSEMBLY (Top Left) -->
+                            <g id="comp-group-1" class="transition-all duration-300">
+                                <!-- Perforated Sensor Probe Sleeve -->
+                                <rect x="100" y="90" width="120" height="40" rx="3" class="fill-field-paper dark:fill-slate-800" stroke-width="1.8"/>
+                                <!-- Vent Perforations -->
+                                <line x1="120" y1="100" x2="120" y2="120" stroke-dasharray="2,2"/>
+                                <line x1="135" y1="100" x2="135" y2="120" stroke-dasharray="2,2"/>
+                                <line x1="150" y1="100" x2="150" y2="120" stroke-dasharray="2,2"/>
+                                <line x1="165" y1="100" x2="165" y2="120" stroke-dasharray="2,2"/>
+                                <!-- Internal Sensing Elements Stack -->
+                                <circle cx="195" cy="110" r="8" class="fill-field-amberDark/30 stroke-field-amberDark"/>
+                                <text x="110" y="80" font-family="IBM Plex Mono" font-size="9" class="fill-field-amberDark stroke-none font-bold">[01] ATMOSPHERIC ARRAY</text>
+                            </g>
+
+                            <!-- EXPLODED MODULE 02: M12 HYDROLOGICAL / SOIL INTERFACE PORT (Bottom Left) -->
+                            <g id="comp-group-2" class="transition-all duration-300">
+                                <!-- Threaded Connector Body -->
+                                <rect x="110" y="340" width="100" height="50" rx="2" class="fill-field-paper dark:fill-slate-800" stroke-width="1.8"/>
+                                <!-- Threading Ribs -->
+                                <line x1="120" y1="340" x2="120" y2="390"/>
+                                <line x1="128" y1="340" x2="128" y2="390"/>
+                                <line x1="136" y1="340" x2="136" y2="390"/>
+                                <!-- Gold Contact Pin Interface -->
+                                <circle cx="180" cy="365" r="14" class="fill-field-card dark:fill-slate-900"/>
+                                <circle cx="174" cy="360" r="2" class="fill-field-amberDark stroke-none"/>
+                                <circle cx="186" cy="360" r="2" class="fill-field-amberDark stroke-none"/>
+                                <circle cx="174" cy="370" r="2" class="fill-field-amberDark stroke-none"/>
+                                <circle cx="186" cy="370" r="2" class="fill-field-amberDark stroke-none"/>
+                                <text x="110" y="410" font-family="IBM Plex Mono" font-size="9" class="fill-field-amberDark stroke-none font-bold">[02] M12 SOIL SOCKET</text>
+                            </g>
+
+                            <!-- EXPLODED MODULE 03: GNSS RECEIVER & SUB-GHZ ANTENNA (Top Center) -->
+                            <g id="comp-group-3" class="transition-all duration-300">
+                                <!-- Ceramic Patch Element Dome -->
+                                <path d="M 350 110 L 350 70 A 50 50 0 0 1 450 70 L 450 110 Z" class="fill-field-paper dark:fill-slate-800" stroke-width="1.8"/>
+                                <ellipse cx="400" cy="110" rx="50" ry="12" class="fill-field-card dark:fill-slate-900"/>
+                                <!-- Polar Radiation Pattern Grid Overlay -->
+                                <circle cx="400" cy="70" r="20" stroke-dasharray="2,2" stroke-width="0.8"/>
+                                <line x1="400" y1="45" x2="400" y2="95" stroke-dasharray="2,2" stroke-width="0.8"/>
+                                <text x="350" y="35" font-family="IBM Plex Mono" font-size="9" class="fill-field-amberDark stroke-none font-bold">[03] L1/L5 GNSS MAST</text>
+                            </g>
+
+                            <!-- MAIN CENTRAL MONOCOQUE CHASSIS (Center Axial Mount) -->
+                            <g transform="translate(280, 180)">
+                                <rect x="0" y="0" width="240" height="160" rx="6" class="fill-field-card/60 dark:fill-field-slateLight/60" stroke-width="2.5"/>
+                                <rect x="30" y="25" width="180" height="90" class="fill-field-paper dark:fill-slate-900" stroke-width="1.5"/>
+                                <text x="120" y="75" font-family="IBM Plex Mono" text-anchor="middle" font-size="12" class="fill-field-ink dark:fill-slate-300 stroke-none font-bold">HX-4 MONOCOQUE</text>
+                                <!-- IP68 Seal Ring Overlay -->
+                                <rect x="6" y="6" width="228" height="148" rx="4" stroke="#b87c14" stroke-width="1" stroke-dasharray="4,4"/>
+                            </g>
+
+                            <!-- EXPLODED MODULE 04: LIFEPO4 SMART BATTERY PACK (Center Right) -->
+                            <g id="comp-group-4" class="transition-all duration-300">
+                                <!-- Battery Module Frame -->
+                                <rect x="560" y="160" width="160" height="110" rx="4" class="fill-field-paper dark:fill-slate-800" stroke-width="1.8"/>
+                                <!-- Internal 4-Cell Cylinder Views -->
+                                <rect x="575" y="175" width="30" height="80" rx="15" stroke-dasharray="2,2"/>
+                                <rect x="610" y="175" width="30" height="80" rx="15" stroke-dasharray="2,2"/>
+                                <rect x="645" y="175" width="30" height="80" rx="15" stroke-dasharray="2,2"/>
+                                <rect x="680" y="175" width="30" height="80" rx="15" stroke-dasharray="2,2"/>
+                                <text x="560" y="145" font-family="IBM Plex Mono" font-size="9" class="fill-field-amberDark stroke-none font-bold">[04] 98Wh LIFEPO4 PACK</text>
+                            </g>
+
+                            <!-- EXPLODED MODULE 05: DATA & OPTICAL TRUNK PORT (Bottom Right) -->
+                            <g id="comp-group-5" class="transition-all duration-300">
+                                <rect x="570" y="340" width="120" height="45" rx="3" class="fill-field-paper dark:fill-slate-800" stroke-width="1.8"/>
+                                <rect x="585" y="352" width="28" height="20" rx="2" class="fill-field-card dark:fill-slate-900"/>
+                                <rect x="630" y="352" width="45" height="20" rx="2" class="fill-field-card dark:fill-slate-900"/>
+                                <text x="570" y="405" font-family="IBM Plex Mono" font-size="9" class="fill-field-amberDark stroke-none font-bold">[05] USB-C / LORA TRUNK</text>
+                            </g>
+
+                            <!-- CALLOUT TARGET RETICLES & LEADER LINES (INTERACTIVE PINS) -->
+                            
+                            <!-- Callout Pin 01 -->
+                            <g class="cursor-pointer group">
+                                <line x1="160" y1="110" x2="160" y2="30" stroke="#b87c14" stroke-width="1.2"/>
+                                <line x1="160" y1="30" x2="90" y2="30" stroke="#b87c14" stroke-width="1.2"/>
+                                <circle id="pin-1" cx="90" cy="30" r="16" class="fill-field-paper dark:fill-field-slate stroke-field-amberDark stroke-2"/>
+                                <text x="90" y="34" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" font-weight="bold" class="fill-field-ink dark:fill-slate-100 stroke-none">01</text>
+                            </g>
+
+                            <!-- Callout Pin 02 -->
+                            <g class="cursor-pointer group">
+                                <line x1="160" y1="365" x2="160" y2="470" stroke="#b87c14" stroke-width="1.2"/>
+                                <line x1="160" y1="470" x2="90" y2="470" stroke="#b87c14" stroke-width="1.2"/>
+                                <circle id="pin-2" cx="90" cy="470" r="16" class="fill-field-paper dark:fill-field-slate stroke-field-amberDark stroke-2"/>
+                                <text x="90" y="474" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" font-weight="bold" class="fill-field-ink dark:fill-slate-100 stroke-none">02</text>
+                            </g>
+
+                            <!-- Callout Pin 03 -->
+                            <g class="cursor-pointer group">
+                                <line x1="400" y1="70" x2="400" y2="20" stroke="#b87c14" stroke-width="1.2"/>
+                                <line x1="400" y1="20" x2="280" y2="20" stroke="#b87c14" stroke-width="1.2"/>
+                                <circle id="pin-3" cx="280" cy="20" r="16" class="fill-field-paper dark:fill-field-slate stroke-field-amberDark stroke-2"/>
+                                <text x="280" y="24" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" font-weight="bold" class="fill-field-ink dark:fill-slate-100 stroke-none">03</text>
+                            </g>
+
+                            <!-- Callout Pin 04 -->
+                            <g class="cursor-pointer group">
+                                <line x1="640" y1="215" x2="740" y2="215" stroke="#b87c14" stroke-width="1.2"/>
+                                <circle id="pin-4" cx="740" cy="215" r="16" class="fill-field-paper dark:fill-field-slate stroke-field-amberDark stroke-2"/>
+                                <text x="740" y="219" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" font-weight="bold" class="fill-field-ink dark:fill-slate-100 stroke-none">04</text>
+                            </g>
+
+                            <!-- Callout Pin 05 -->
+                            <g class="cursor-pointer group">
+                                <line x1="630" y1="362" x2="630" y2="470" stroke="#b87c14" stroke-width="1.2"/>
+                                <line x1="630" y1="470" x2="740" y2="470" stroke="#b87c14" stroke-width="1.2"/>
+                                <circle id="pin-5" cx="740" cy="470" r="16" class="fill-field-paper dark:fill-field-slate stroke-field-amberDark stroke-2"/>
+                                <text x="740" y="474" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" font-weight="bold" class="fill-field-ink dark:fill-slate-100 stroke-none">05</text>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Right: Callout Details Panel -->
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="tech-border bg-white dark:bg-field-slateLight p-6 corner-mark">
+                        <div class="flex justify-between items-center border-b tech-border-b pb-2 mb-4 font-mono text-xs">
+                            <span class="font-bold text-field-amber dark:text-amber-500 uppercase tracking-wider">[ COMPONENT DETAIL PANEL ]</span>
+                            <span id="callout-id-label" class="stamp-badge">CALLOUT 01</span>
+                        </div>
+
+                        <div id="callout-detail-content" class="space-y-4 font-sans text-sm">
+                            <h3 id="callout-title" class="font-condensed text-2xl font-bold uppercase tracking-wide text-field-ink dark:text-slate-100">
+                                ATMOSPHERIC PROBE
+                            </h3>
+                            <p id="callout-desc" class="text-field-ink dark:text-slate-300 leading-relaxed">
+                                Multi-parameter weather array featuring barometric pressure sensor, relative humidity sensor, calibrated ambient temperature thermistor, and volatile organic compound (VOC) sniffer.
+                            </p>
+                            
+                            <div class="tech-border bg-field-paper dark:bg-field-slate p-4 font-mono text-xs space-y-2">
+                                <div class="font-bold text-field-muted dark:text-slate-400 border-b tech-border-b pb-1">PART & INTERFACE SPECIFICATIONS</div>
+                                <div class="flex justify-between">
+                                    <span>PART NUMBER:</span>
+                                    <span id="callout-part" class="font-bold text-field-ink dark:text-slate-200">HW-PRB-ATM4</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>INTERFACE:</span>
+                                    <span id="callout-bus" class="font-bold text-field-ink dark:text-slate-200">SDI-12 / I2C REDUNDANT</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>OPERATING TOLERANCE:</span>
+                                    <span id="callout-tol" class="font-bold text-field-ink dark:text-slate-200">±0.05°C / ±0.1 hPa</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Selector Buttons -->
+                        <div class="mt-6 pt-4 border-t tech-border-b grid grid-cols-5 gap-1 font-mono text-xs">
+                            <button class="py-2 tech-border text-center hover:bg-black/5 dark:hover:bg-white/5 font-bold">01</button>
+                            <button class="py-2 tech-border text-center hover:bg-black/5 dark:hover:bg-white/5 font-bold">02</button>
+                            <button class="py-2 tech-border text-center hover:bg-black/5 dark:hover:bg-white/5 font-bold">03</button>
+                            <button class="py-2 tech-border text-center hover:bg-black/5 dark:hover:bg-white/5 font-bold">04</button>
+                            <button class="py-2 tech-border text-center hover:bg-black/5 dark:hover:bg-white/5 font-bold">05</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03 / OPERATING PROCEDURE -->
+        <section id="sec-procedure" class="scroll-mt-24 space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b-2 border-field-ink dark:border-slate-700 pb-3">
+                <div>
+                    <span class="font-mono text-xs font-bold text-field-amber dark:text-amber-500 uppercase tracking-widest">SECTION 03 // STANDARD OPERATING PROCEDURE</span>
+                    <h2 class="font-condensed text-3xl font-bold uppercase tracking-wide text-field-ink dark:text-slate-100">
+                        FIELD DEPLOYMENT SEQUENCE
+                    </h2>
+                </div>
+                <div class="mt-2 sm:mt-0 font-mono text-xs flex items-center space-x-3">
+                    <span id="proc-progress" class="stamp-badge">0 / 6 STEPS RECORDED</span>
+                    <button class="underline text-field-muted hover:text-field-ink dark:hover:text-slate-200">RESET FORM</button>
+                </div>
+            </div>
+
+            <div class="tech-border bg-white dark:bg-field-slateLight p-6 corner-mark space-y-6">
+                <p class="text-sm text-field-muted dark:text-slate-400 font-mono">
+                    PROCEDURE CODE: SOP-HX4-009 // ALL STEPS MUST BE EXECUTED AND RECORDED PRIOR TO UNATTENDED LOGGING SESSION.
+                </p>
+
+                <!-- Steps List -->
+                <div class="space-y-4 font-mono text-xs">
+
+                    <!-- STEP 01 -->
+                    <div id="step-box-1" class="tech-border p-4 bg-field-paper dark:bg-field-slate transition-colors">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-start space-x-3">
+                                <button class="mt-0.5 px-2 py-1 tech-border font-bold bg-white dark:bg-field-slateLight hover:bg-field-card transition-colors">
+                                    <span id="step-check-1">[ &nbsp; ]</span>
+                                </button>
+                                space-y-1">
+                                    <div class="font-bold text-sm uppercase tracking-wider text-field-ink dark:text-slate-100">01 INSPECT</div>
+                                    <p class="font-sans text-xs text-field-muted dark:text-slate-300">
+                                        Perform visual inspection of outer anodized chassis, nitrile O-ring gaskets, desiccator optical window, and M12 waterproof connector threads. Ensure zero particulate accumulation.
+                                    </p>
+                                </div>
+                            </div>
+                            <div id="step-time-1" class="hidden sm:block text-right font-mono text-xs text-field-muted dark:text-slate-400">
+                                UNRECORDED
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 02 -->
+                    <div id="step-box-2" class="tech-border p-4 bg-field-paper dark:bg-field-slate transition-colors">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-start space-x-3">
+                                <button class="mt-0.5 px-2 py-1 tech-border font-bold bg-white dark:bg-field-slateLight hover:bg-field-card transition-colors">
+                                    <span id="step-check-2">[ &nbsp; ]</span>
+                                </button>
+                                <div class="space-y-1">
+                                    <div class="font-bold text-sm uppercase tracking-wider text-field-ink dark:text-slate-100">02 POWER</div>
+                                    <p class="font-sans text-xs text-field-muted dark:text-slate-300">
+                                        Depress primary power toggle switch for 3.0 seconds until diagnostic chime sounds. Observe initial boot Power-On Self-Test (POST). Verify status code 0x00_OK on graphic LCD display.
+                                    </p>
+                                </div>
+                            </div>
+                            <div id="step-time-2" class="hidden sm:block text-right font-mono text-xs text-field-muted dark:text-slate-400">
+                                UNRECORDED
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 03 -->
+                    <div id="step-box-3" class="tech-border p-4 bg-field-paper dark:bg-field-slate transition-colors">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-start space-x-3">
+                                <button class="mt-0.5 px-2 py-1 tech-border font-bold bg-white dark:bg-field-slateLight hover:bg-field-card transition-colors">
+                                    <span id="step-check-3">[ &nbsp; ]</span>
+                                </button>
+                                <div class="space-y-1">
+                                    <div class="font-bold text-sm uppercase tracking-wider text-field-ink dark:text-slate-100">03 CALIBRATE</div>
+                                    <p class="font-sans text-xs text-field-muted dark:text-slate-300">
+                                        Expose atmospheric probe to ambient standard air; execute 2-point zero/span thermal slope calibration cycle. Allow 120 seconds for thermistor stabilization.
+                                    </p>
+                                </div>
+                            </div>
+                            <div id="step-time-3" class="hidden sm:block text-right font-mono text-xs text-field-muted dark:text-slate-400">
+                                UNRECORDED
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 04 -->
+                    <div id="step-box-4" class="tech-border p-4 bg-field-paper dark:bg-field-slate transition-colors">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-start space-x-3">
+                                <button class="mt-0.5 px-2 py-1 tech-border font-bold bg-white dark:bg-field-slateLight hover:bg-field-card transition-colors">
+                                    <span id="step-check-4">[ &nbsp; ]</span>
+                                </button>
+                                <div class="space-y-1">
+                                    <div class="font-bold text-sm uppercase tracking-wider text-field-ink dark:text-slate-100">04 POSITION</div>
+                                    <p class="font-sans text-xs text-field-muted dark:text-slate-300">
+                                        Mount monitor chassis securely to non-magnetic tripod or earth anchor point. Ensure top GNSS receiver mast has clear zenith visibility (>120° unobstructed sky dome).
+                                    </p>
+                                </div>
+                            </div>
+                            <div id="step-time-4" class="hidden sm:block text-right font-mono text-xs text-field-muted dark:text-slate-400">
+                                UNRECORDED
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 05 -->
+                    <div id="step-box-5" class="tech-border p-4 bg-field-paper dark:bg-field-slate transition-colors">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-start space-x-3">
+                                <button class="mt-0.5 px-2 py-1 tech-border font-bold bg-white dark:bg-field-slateLight hover:bg-field-card transition-colors">
+                                    <span id="step-check-5">[ &nbsp; ]</span>
+                                </button>
+                                <div class="space-y-1">
+                                    <div class="font-bold text-sm uppercase tracking-wider text-field-ink dark:text-slate-100">05 RECORD</div>
+                                    <p class="font-sans text-xs text-field-muted dark:text-slate-300">
+                                        Select sampling frequency (default: 60s); initiate local internal flash recording session. Verify sub-GHz radio handshake or satellite packet transmission sequence.
+                                    </p>
+                                </div>
+                            </div>
+                            <div id="step-time-5" class="hidden sm:block text-right font-mono text-xs text-field-muted dark:text-slate-400">
+                                UNRECORDED
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 06 -->
+                    <div id="step-box-6" class="tech-border p-4 bg-field-paper dark:bg-field-slate transition-colors">
+                        <div class="flex items-start justify-between">
+                            <div class="flex items-start space-x-3">
+                                <button class="mt-0.5 px-2 py-1 tech-border font-bold bg-white dark:bg-field-slateLight hover:bg-field-card transition-colors">
+                                    <span id="step-check-6">[ &nbsp; ]</span>
+                                </button>
+                                <div class="space-y-1">
+                                    <div class="font-bold text-sm uppercase tracking-wider text-field-ink dark:text-slate-100">06 VERIFY</div>
+                                    <p class="font-sans text-xs text-field-muted dark:text-slate-300">
+                                        Confirm live telemetry output values against redundant reference handheld meter. Variance must not exceed ±0.15% across all active active channels. Secure outer housing latches.
+                                    </p>
+                                </div>
+                            </div>
+                            <div id="step-time-6" class="hidden sm:block text-right font-mono text-xs text-field-muted dark:text-slate-400">
+                                UNRECORDED
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Run Log Export Bar -->
+                <div class="pt-4 border-t tech-border-b flex flex-col sm:flex-row justify-between items-center text-xs font-mono space-y-2 sm:space-y-0">
+                    <span class="text-field-muted dark:text-slate-400">SIGN-OFF STAMP: <strong class="text-field-ink dark:text-slate-200">OP-TECH #4092-HW</strong></span>
+                    <button class="px-4 py-2 bg-field-ink text-white dark:bg-slate-200 dark:text-field-slate font-bold uppercase tracking-wider hover:opacity-90 transition-opacity">
+                        EXPORT PROCEDURAL LOG (.TXT)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 04 / LIVE SPECIFICATION -->
+        <section id="sec-specifications" class="scroll-mt-24 space-y-6">
+            <div class="border-b-2 border-field-ink dark:border-slate-700 pb-3">
+                <span class="font-mono text-xs font-bold text-field-amber dark:text-amber-500 uppercase tracking-widest">SECTION 04 // TECHNICAL SPECIFICATION DATA</span>
+                <h2 class="font-condensed text-3xl font-bold uppercase tracking-wide text-field-ink dark:text-slate-100">
+                    SYSTEM PERFORMANCE PARAMETERS
+                </h2>
+            </div>
+
+            <!-- Tabular Specification Grid -->
+            <div class="tech-border bg-white dark:bg-field-slateLight corner-mark overflow-x-auto">
+                <table class="w-full text-left font-mono text-xs border-collapse">
+                    <thead>
+                        <tr class="bg-field-card dark:bg-field-slate text-field-ink dark:text-slate-200 border-b tech-border-b uppercase">
+                            <th class="p-3 tech-border-r font-bold">SPECIFICATION PARAMETER</th>
+                            <th class="p-3 tech-border-r font-bold">RATED OPERATIONAL VALUE</th>
+                            <th class="p-3 tech-border-r font-bold">TEST METHOD / STANDARD</th>
+                            <th class="p-3 font-bold">VERIFICATION STATE</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-300 dark:divide-slate-800 text-field-ink dark:text-slate-300">
+                        <tr>
+                            <td class="p-3 font-bold tech-border-r bg-field-paper/50 dark:bg-field-slate/50">OPERATING TEMPERATURE</td>
+                            <td class="p-3 tech-border-r font-bold text-field-amberDark font-mono val-temp-spec">-40°C to +70°C (-40°F to +158°F)</td>
+                            <td class="p-3 tech-border-r">MIL-STD-810H Method 501.7 / 502.7</td>
+                            <td class="p-3"><span class="stamp-badge border-emerald-700 text-emerald-800 dark:text-emerald-400">PASSED</span></td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold tech-border-r bg-field-paper/50 dark:bg-field-slate/50">BATTERY RUNTIME</td>
+                            <td class="p-3 tech-border-r font-bold text-field-amberDark font-mono">72h Continuous (1s sample) / 180 Days (Low Burst)</td>
+                            <td class="p-3 tech-border-r">14.4V 98Wh LiFePO4 Pack @ 20°C</td>
+                            <td class="p-3"><span class="stamp-badge border-emerald-700 text-emerald-800 dark:text-emerald-400">VERIFIED</span></td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold tech-border-r bg-field-paper/50 dark:bg-field-slate/50">ENVIRONMENTAL RATING</td>
+                            <td class="p-3 tech-border-r font-bold text-field-amberDark font-mono val-depth-spec">IP68 Submersible (20 meters / 4 hours)</td>
+                            <td class="p-3 tech-border-r">IEC 60529 / EN 60529 Hydrostatic Test</td>
+                            <td class="p-3"><span class="stamp-badge border-emerald-700 text-emerald-800 dark:text-emerald-400">CERTIFIED</span></td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold tech-border-r bg-field-paper/50 dark:bg-field-slate/50">SENSOR TOLERANCE</td>
+                            <td class="p-3 tech-border-r font-bold text-field-amberDark font-mono">Temp ±0.05°C | Press ±0.1 hPa | RH ±1.0%</td>
+                            <td class="p-3 tech-border-r">NIST Traceable Factory Calibration</td>
+                            <td class="p-3"><span class="stamp-badge border-emerald-700 text-emerald-800 dark:text-emerald-400">CALIBRATED</span></td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold tech-border-r bg-field-paper/50 dark:bg-field-slate/50">DATA LOGGING INTERVAL</td>
+                            <td class="p-3 tech-border-r font-bold text-field-amberDark font-mono">100ms (10Hz) to 86,400s (24 Hours) User-Config</td>
+                            <td class="p-3 tech-border-r">Internal RTC Drift &lt;2 sec/year</td>
+                            <td class="p-3"><span class="stamp-badge border-emerald-700 text-emerald-800 dark:text-emerald-400">PASS</span></td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold tech-border-r bg-field-paper/50 dark:bg-field-slate/50">TOTAL DEVICE MASS</td>
+                            <td class="p-3 tech-border-r font-bold text-field-amberDark font-mono val-mass-spec">2.14 kg (4.72 lbs) incl. battery & antenna</td>
+                            <td class="p-3 tech-border-r">Calibrated Electronic Scale ISO 9001</td>
+                            <td class="p-3"><span class="stamp-badge border-emerald-700 text-emerald-800 dark:text-emerald-400">NOMINAL</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Dynamic Interactive Sampling Runtime Estimator -->
+            <div class="tech-border bg-white dark:bg-field-slateLight p-6 corner-mark space-y-4">
+                <div class="flex justify-between items-center border-b tech-border-b pb-2 font-mono text-xs">
+                    <span class="font-bold uppercase text-field-ink dark:text-slate-100">[ DYNAMIC FIELD ENDURANCE ESTIMATOR ]</span>
+                    <span class="text-field-muted dark:text-slate-400">PARAMETER SIMULATOR</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                    <div class="md:col-span-7 space-y-3 font-mono text-xs">
+                        <label class="block font-bold text-field-ink dark:text-slate-200">
+                            LOGGING INTERVAL FREQUENCY: <span id="interval-val" class="text-field-amberDark">60 SECONDS</span>
+                        </label>
+                        <input id="interval-slider" type="range" min="1" max="300" value="60" class="w-full h-2 bg-field-card dark:bg-field-slate rounded-none appearance-none cursor-pointer accent-field-amberDark">
+                        <div class="flex justify-between text-field-muted dark:text-slate-500 text-[10px]">
+                            <span>1 SEC (1Hz Continuous)</span>
+                            <span>60 SEC (Standard)</span>
+                            <span>300 SEC (Low Power)</span>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-5 tech-border bg-field-paper dark:bg-field-slate p-4 font-mono text-xs space-y-2">
+                        <div class="flex justify-between">
+                            <span class="text-field-muted dark:text-slate-400">ESTIMATED RUNTIME:</span>
+                            <span id="calc-runtime" class="font-bold text-field-ink dark:text-slate-100 font-mono">144.0 HOURS</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-field-muted dark:text-slate-400">FLASH LOGGING CAPACITY:</span>
+                            <span id="calc-storage" class="font-bold text-field-ink dark:text-slate-100 font-mono">820 DAYS</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-field-muted dark:text-slate-400">AVG POWER DRAW:</span>
+                            <span id="calc-power" class="font-bold text-field-ink dark:text-slate-100 font-mono">680 mW</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 05 / FIELD NOTES -->
+        <section id="sec-field-notes" class="scroll-mt-24 space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b-2 border-field-ink dark:border-slate-700 pb-3">
+                <div>
+                    <span class="font-mono text-xs font-bold text-field-amber dark:text-amber-500 uppercase tracking-widest">SECTION 05 // FIELD OBSERVATIONS</span>
+                    <h2 class="font-condensed text-3xl font-bold uppercase tracking-wide text-field-ink dark:text-slate-100">
+                        OPERATOR ANNOTATIONS & LOG RECORD
+                    </h2>
+                </div>
+                <div class="mt-2 sm:mt-0 font-mono text-xs space-x-2">
+                    <button class="px-2 py-1 tech-border font-bold">ALL</button>
+                    <button class="px-2 py-1 tech-border text-emerald-800 dark:text-emerald-400 font-bold">VERIFIED</button>
+                    <button class="px-2 py-1 tech-border text-amber-800 dark:text-amber-400 font-bold">FLAGGED</button>
+                </div>
+            </div>
+
+            <!-- Notes List -->
+            <div id="field-notes-container" class="space-y-4">
+                
+                <!-- Entry 01 -->
+                <div class="note-card tech-border bg-white dark:bg-field-slateLight p-5 corner-mark space-y-3 font-mono text-xs" data-status="VERIFIED">
+                    <div class="flex flex-wrap justify-between items-center border-b tech-border-b pb-2 gap-2">
+                        <div class="flex items-center space-x-3">
+                            <span class="font-bold text-field-ink dark:text-slate-200">ENTRY #009-A4</span>
+                            <span class="stamp-badge border-emerald-700 text-emerald-800 dark:text-emerald-400">[ VERIFIED ]</span>
+                            <span class="text-field-muted dark:text-slate-400">REV.B</span>
+                        </div>
+                        <div class="text-field-muted dark:text-slate-400">
+                            2026-08-12T09:14:02Z // LOCATION: SECTOR-7 ARCTIC TUNDRA
+                        </div>
+                    </div>
+                    <p class="font-sans text-sm text-field-ink dark:text-slate-200 leading-relaxed">
+                        Ambient temperature dropped to -31.4°C during overnight logging window. Internal self-heating circuit maintained battery enclosure temperature at +4.2°C. No volumetric moisture probe offset or data dropouts recorded across 14,400 consecutive samples.
+                    </p>
+                    <div class="flex justify-between text-field-muted dark:text-slate-400 text-[11px] pt-1">
+                        <span>OPERATOR: TECH-809 (H. LARSEN)</span>
+                        <span>DEVICE ID: HX4-SN-998412</span>
+                    </div>
+                </div>
+
+                <!-- Entry 02 -->
+                <div class="note-card tech-border bg-white dark:bg-field-slateLight p-5 corner-mark space-y-3 font-mono text-xs" data-status="FLAGGED">
+                    <div class="flex flex-wrap justify-between items-center border-b tech-border-b pb-2 gap-2">
+                        <div class="flex items-center space-x-3">
+                            <span class="font-bold text-field-ink dark:text-slate-200">ENTRY #009-A5</span>
+                            <span class="stamp-badge border-amber-700 text-amber-800 dark:text-amber-400">[ FLAG - SENSOR DRIFT ]</span>
+                            <span class="text-field-muted dark:text-slate-400">REV.A</span>
+                        </div>
+                        <div class="text-field-muted dark:text-slate-400">
+                            2026-08-13T14:45:10Z // LOCATION: COASTAL ESTUARY B3
+                        </div>
+                    </div>
+                    <p class="font-sans text-sm text-field-ink dark:text-slate-200 leading-relaxed">
+                        Marine aerosol accumulation detected on optical dust cap after 72 hours of exposure to direct salt spray. Relative Humidity channel registered +1.8% positive offset prior to distilled water rinse. Cleaned seal and re-calibrated zero reference at 15:10 UTC.
+                    </p>
+                    <div class="flex justify-between text-field-muted dark:text-slate-400 text-[11px] pt-1">
+                        <span>OPERATOR: TECH-402 (M. CHEN)</span>
+                        <span>DEVICE ID: HX4-SN-998412</span>
+                    </div>
+                </div>
+
+                <!-- Entry 03 -->
+                <div class="note-card tech-border bg-white dark:bg-field-slateLight p-5 corner-mark space-y-3 font-mono text-xs" data-status="VERIFIED">
+                    <div class="flex flex-wrap justify-between items-center border-b tech-border-b pb-2 gap-2">
+                        <div class="flex items-center space-x-3">
+                            <span class="font-bold text-field-ink dark:text-slate-200">ENTRY #009-A6</span>
+                            <span class="stamp-badge border-emerald-700 text-emerald-800 dark:text-emerald-400">[ VERIFIED ]</span>
+                            <span class="text-field-muted dark:text-slate-400">REV.C</span>
+                        </div>
+                        <div class="text-field-muted dark:text-slate-400">
+                            2026-08-14T11:20:00Z // LOCATION: ALPINE RIDGE SITE 12
+                        </div>
+                    </div>
+                    <p class="font-sans text-sm text-field-ink dark:text-slate-200 leading-relaxed">
+                        Sub-GHz long-range telemetry handshake verified with baseline station at 14.8 km direct line-of-sight distance over rugged granite topography. Packet error rate measured at 0.002%.
+                    </p>
+                    <div class="flex justify-between text-field-muted dark:text-slate-400 text-[11px] pt-1">
+                        <span>OPERATOR: TECH-112 (D. VANCE)</span>
+                        <span>DEVICE ID: HX4-SN-998415</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Append Field Note Form -->
+            <div class="tech-border bg-field-card dark:bg-field-slate p-6 corner-mark space-y-4">
+                <div class="font-mono text-xs font-bold uppercase tracking-wider text-field-ink dark:text-slate-200 border-b tech-border-b pb-2">
+                    [ APPEND OPERATOR FIELD OBSERVATION ]
+                </div>
+                <form id="add-note-form" class="space-y-3 font-mono text-xs">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-field-muted dark:text-slate-400 mb-1">LOCATION ID / SITE</label>
+                            <input id="note-loc" type="text" required placeholder="e.g. SECTOR 4 HYDRO-STATION" class="w-full p-2 tech-border bg-white dark:bg-field-slateLight text-field-ink dark:text-slate-100">
+                        </div>
+                        <div>
+                            <label class="block text-field-muted dark:text-slate-400 mb-1">OPERATOR CODE</label>
+                            <input id="note-op" type="text" required placeholder="e.g. TECH-904" class="w-full p-2 tech-border bg-white dark:bg-field-slateLight text-field-ink dark:text-slate-100">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-field-muted dark:text-slate-400 mb-1">TECHNICAL OBSERVATION / ANNOTATION</label>
+                        <textarea id="note-text" required rows="3" placeholder="Enter precise measurement observations or site condition notes..." class="w-full p-2 tech-border bg-white dark:bg-field-slateLight text-field-ink dark:text-slate-100 font-sans text-sm"></textarea>
+                    </div>
+                    <button type="submit" class="px-4 py-2 bg-field-ink text-white dark:bg-slate-200 dark:text-field-slate font-bold uppercase tracking-wider hover:opacity-90 transition-opacity">
+                        SUBMIT VERIFIED ENTRY
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- 06 / SERVICE NOTICE -->
+        <section id="sec-notices" class="scroll-mt-24 space-y-6">
+            <div class="border-b-2 border-field-ink dark:border-slate-700 pb-3">
+                <span class="font-mono text-xs font-bold text-field-amber dark:text-amber-500 uppercase tracking-widest">SECTION 06 // MANDATORY ADVISORIES</span>
+                <h2 class="font-condensed text-3xl font-bold uppercase tracking-wide text-field-ink dark:text-slate-100">
+                    SERVICE NOTICES & SAFETY PROCEDURES
+                </h2>
+            </div>
+
+            <div class="space-y-4">
+                
+                <!-- CAUTION NOTICE -->
+                <div class="notice-caution p-6 tech-border corner-mark space-y-3 font-mono">
+                    <div class="flex items-center justify-between border-b border-red-900/20 dark:border-red-500/20 pb-2">
+                        <span class="font-bold text-red-800 dark:text-red-400 tracking-wider text-sm">
+                            [ CAUTION // REF-CAUT-HX4-082 ]
+                        </span>
+                        <span class="text-xs text-red-800 dark:text-red-400">SEALING INTEGRITY CRITICAL</span>
+                    </div>
+                    <p class="font-sans text-sm text-field-ink dark:text-slate-200 leading-relaxed font-semibold">
+                        Ensure M12 soil interface connector threads are completely free of particulate matter before coupling. Sand or fine silica grit on the nitrile O-ring seal will compromise IP68 water resistance during deep soil submergence (&gt;0.5m hydrostatic depth).
+                    </p>
+                    <p class="font-mono text-xs text-field-muted dark:text-slate-400">
+                        MANDATORY REMEDY: Inspect O-ring with 10x optical loupe prior to mating. Apply Fluorosilicone grease (Part #HW-LUB-02) every 50 mating cycles.
+                    </p>
+                </div>
+
+                <!-- NOTE NOTICE -->
+                <div class="notice-note p-6 tech-border corner-mark space-y-3 font-mono">
+                    <div class="flex items-center justify-between border-b border-emerald-900/20 dark:border-emerald-500/20 pb-2">
+                        <span class="font-bold text-emerald-800 dark:text-emerald-400 tracking-wider text-sm">
+                            [ NOTE // REF-NOTE-HX4-019 ]
+                        </span>
+                        <span class="text-xs text-emerald-800 dark:text-emerald-400 font-bold">COLD WEATHER OPERATION</span>
+                    </div>
+                    <p class="font-sans text-sm text-field-ink dark:text-slate-200 leading-relaxed font-semibold">
+                        When deploying in ambient temperatures below -20°C (-4°F), allow the GNSS module 90 seconds to execute cold-start ephemeris acquisition before logging coordinate fixes. Lithium Iron Phosphate battery capacity diminishes by approximately 12% at -30°C.
+                    </p>
+                    <p class="font-mono text-xs text-field-muted dark:text-slate-400">
+                        RECOMMENDED ACTION: Enable internal thermostatic pulse heater mode in sub-zero deployments to maintain peak discharge voltage.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 07 / DOCUMENTATION -->
+        <section id="sec-docs" class="scroll-mt-24 space-y-6">
+            <div class="border-b-2 border-field-ink dark:border-slate-700 pb-3">
+                <span class="font-mono text-xs font-bold text-field-amber dark:text-amber-500 uppercase tracking-widest">SECTION 07 // TECHNICAL REPOSITORY</span>
+                <h2 class="font-condensed text-3xl font-bold uppercase tracking-wide text-field-ink dark:text-slate-100">
+                    FIELD MANUAL INDEX & SCHEMATICS
+                </h2>
+            </div>
+
+            <!-- Indexed Links Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 font-mono text-xs">
+                
+                <!-- Manual Item 01 -->
+                <button class="tech-border bg-white dark:bg-field-slateLight p-5 text-left hover:border-field-amberDark transition-colors corner-mark space-y-2 group">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-field-amber dark:text-amber-500">INDEX 01</span>
+                        <span class="text-field-muted dark:text-slate-400 group-hover:text-field-ink dark:group-hover:text-slate-100">[ READ DOC ]</span>
+                    </div>
+                    <div class="font-condensed text-xl font-bold text-field-ink dark:text-slate-100 uppercase tracking-wide">
+                        QUICK START GUIDE
+                    </div>
+                    <div class="text-field-muted dark:text-slate-400 font-sans text-xs">
+                        Unboxing, initial battery charging, pinout diagnostics, and baseline zero-point setup.
+                    </div>
+                    <div class="text-[10px] text-field-muted dark:text-slate-500 border-t tech-border-b pt-2">
+                        REF: HW-DOC-QS-HX4 // REV 3.1
+                    </div>
+                </button>
+
+                <!-- Manual Item 02 -->
+                <button class="tech-border bg-white dark:bg-field-slateLight p-5 text-left hover:border-field-amberDark transition-colors corner-mark space-y-2 group">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-field-amber dark:text-amber-500">INDEX 02</span>
+                        <span class="text-field-muted dark:text-slate-400 group-hover:text-field-ink dark:group-hover:text-slate-100">[ READ DOC ]</span>
+                    </div>
+                    <div class="font-condensed text-xl font-bold text-field-ink dark:text-slate-100 uppercase tracking-wide">
+                        CALIBRATION MANUAL
+                    </div>
+                    <div class="text-field-muted dark:text-slate-400 font-sans text-xs">
+                        2-Point thermal drift compensation, barometric reference offset, and soil EC calibration.
+                    </div>
+                    <div class="text-[10px] text-field-muted dark:text-slate-500 border-t tech-border-b pt-2">
+                        REF: HW-DOC-CAL-HX4 // REV 4.0
+                    </div>
+                </button>
+
+                <!-- Manual Item 03 -->
+                <button class="tech-border bg-white dark:bg-field-slateLight p-5 text-left hover:border-field-amberDark transition-colors corner-mark space-y-2 group">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-field-amber dark:text-amber-500">INDEX 03</span>
+                        <span class="text-field-muted dark:text-slate-400 group-hover:text-field-ink dark:group-hover:text-slate-100">[ READ DOC ]</span>
+                    </div>
+                    <div class="font-condensed text-xl font-bold text-field-ink dark:text-slate-100 uppercase tracking-wide">
+                        FIELD OPERATION PROTOCOL
+                    </div>
+                    <div class="text-field-muted dark:text-slate-400 font-sans text-xs">
+                        Sub-GHz mesh telemetry configuration, burst mode logging, and encrypted FLASH storage.
+                    </div>
+                    <div class="text-[10px] text-field-muted dark:text-slate-500 border-t tech-border-b pt-2">
+                        REF: HW-DOC-OP-HX4 // REV 2.8
+                    </div>
+                </button>
+
+                <!-- Manual Item 04 -->
+                <button class="tech-border bg-white dark:bg-field-slateLight p-5 text-left hover:border-field-amberDark transition-colors corner-mark space-y-2 group">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-field-amber dark:text-amber-500">INDEX 04</span>
+                        <span class="text-field-muted dark:text-slate-400 group-hover:text-field-ink dark:group-hover:text-slate-100">[ READ DOC ]</span>
+                    </div>
+                    <div class="font-condensed text-xl font-bold text-field-ink dark:text-slate-100 uppercase tracking-wide">
+                        PREVENTIVE MAINTENANCE
+                    </div>
+                    <div class="text-field-muted dark:text-slate-400 font-sans text-xs">
+                        O-ring seal replacement, Gore-Tex vent purge, lithium pack conditioning, and cleaning.
+                    </div>
+                    <div class="text-[10px] text-field-muted dark:text-slate-500 border-t tech-border-b pt-2">
+                        REF: HW-DOC-MAINT-HX4 // REV 1.9
+                    </div>
+                </button>
+
+                <!-- Manual Item 05 -->
+                <button class="tech-border bg-white dark:bg-field-slateLight p-5 text-left hover:border-field-amberDark transition-colors corner-mark space-y-2 group md:col-span-2 lg:col-span-2">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-field-amber dark:text-amber-500">INDEX 05</span>
+                        <span class="text-field-muted dark:text-slate-400 group-hover:text-field-ink dark:group-hover:text-slate-100">[ READ DOC ]</span>
+                    </div>
+                    <div class="font-condensed text-xl font-bold text-field-ink dark:text-slate-100 uppercase tracking-wide">
+                        TECHNICAL SPECIFICATIONS & PINOUT SCHEMATIC
+                    </div>
+                    <div class="text-field-muted dark:text-slate-400 font-sans text-xs">
+                        Complete pinouts for M12 SDI-12 port, RS-485 Modbus protocol registers, electrical draw profiles, and CNC mechanical housing drawings.
+                    </div>
+                    <div class="text-[10px] text-field-muted dark:text-slate-500 border-t tech-border-b pt-2">
+                        REF: HW-DOC-SPEC-HX4 // REV 5.2
+                    </div>
+                </button>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- DOCUMENTATION MODAL OVERLAY -->
+    <div id="doc-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="tech-border bg-field-paper dark:bg-field-slate max-w-3xl w-full max-h-[85vh] flex flex-col corner-mark shadow-2xl">
+            <!-- Modal Header -->
+            <div class="p-4 tech-border-b bg-field-card dark:bg-field-slateLight flex justify-between items-center font-mono text-xs">
+                <div>
+                    <span id="modal-doc-id" class="stamp-badge border-field-amberDark text-field-amberDark">REF: HW-DOC-QS-HX4</span>
+                    <span id="modal-doc-title" class="ml-3 font-bold text-field-ink dark:text-slate-100 uppercase">QUICK START GUIDE</span>
+                </div>
+                <button class="px-2 py-1 tech-border font-bold hover:bg-black/10 dark:hover:bg-white/10">
+                    [ CLOSE ]
+                </button>
+            </div>
+
+            <!-- Modal Body Text -->
+            <div id="modal-doc-body" class="p-6 overflow-y-auto font-sans text-sm leading-relaxed space-y-4 text-field-ink dark:text-slate-200">
+                <!-- Content injected via JS -->
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-3 tech-border-t bg-field-card dark:bg-field-slateLight flex justify-between items-center font-mono text-xs text-field-muted dark:text-slate-400">
+                <span>HALLOWAY INSTRUMENTS TECHNICAL PUBLICATIONS DIVISION</span>
+                <button class="underline text-field-ink dark:text-slate-200">RETURN TO MANUAL INDEX</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER & COMPLIANCE METADATA -->
+    <footer class="tech-border-t bg-field-card dark:bg-field-slate py-8 font-mono text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b tech-border-b pb-4 gap-4">
+                <div>
+                    <span class="font-condensed font-bold text-base text-field-ink dark:text-slate-100 uppercase tracking-widest">
+                        HALLOWAY INSTRUMENTS INC.
+                    </span>
+                    <p class="text-field-muted dark:text-slate-400 text-[11px] font-sans">
+                        Precision Environmental Field Equipment & Telemetry Hardware Engineering
+                    </p>
+                </div>
+                <div class="text-right font-mono text-[11px] text-field-muted dark:text-slate-400 space-y-1">
+                    <div>ISO 9001:2025 CERTIFIED MANUFACTURING FACILITY</div>
+                    <div>NIST TRACEABLE SENSOR CALIBRATION LABORATORY</div>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-between items-center text-field-muted dark:text-slate-500 text-[11px] gap-2">
+                <span>© 2026 HALLOWAY INSTRUMENTS. ALL RIGHTS RESERVED. SPECIFICATIONS SUBJECT TO CHANGE WITHOUT NOTICE.</span>
+                <span>SYSTEM ID: HX4-MANUAL-GUI-V4</span>
+            </div>
+        </div>
+    </footer>
+
+    
+</body>
+</html>

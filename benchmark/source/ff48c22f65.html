@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HALLOWAY INSTRUMENTS — HX-4 Environmental Field Monitor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --board-bg: #0d0d0d;
+    --cell-bg: #161616;
+    --cell-bg-subtle: #1c1c1c;
+    --seam: rgba(0, 0, 0, 0.65);
+    --seam-light: rgba(255, 255, 255, 0.05);
+    --flap-text: #f4ede1;
+    --flap-text-dim: rgba(244, 237, 225, 0.35);
+    --label: rgba(244, 237, 225, 0.45);
+    --label-dim: rgba(244, 237, 225, 0.25);
+    --accent: #e8a33d;
+    --accent-dim: rgba(232, 163, 61, 0.2);
+    --status-good: #6fae6f;
+    --status-warn: #e8a33d;
+    --status-bad: #c25b4a;
+    --border-subtle: rgba(244, 237, 225, 0.08);
+    --border-strong: rgba(244, 237, 225, 0.16);
+    --bg-page: #080808;
+    --bg-surface: #111111;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--bg-page);
+    color: var(--flap-text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 80px;
+    overflow-x: hidden;
+  }
+
+  /* FLAP MECHANISM STYLES */
+  .flap-board {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+    background: var(--board-bg);
+    padding: 10px;
+    border: 1px solid var(--border-subtle);
+    border-radius: 2px;
+  }
+
+  .flap-row {
+    display: inline-flex;
+    gap: 2px;
+    align-items: center;
+  }
+
+  .flap-cell {
+    position: relative;
+    background: var(--cell-bg);
+    border-radius: 2px;
+    perspective: 350px;
+    user-select: none;
+    display: inline-block;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  }
+
+  /* Scales */
+  .flap-cell.scale-display {
+    width: 38px;
+    height: 56px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 34px;
+  }
+
+  .flap-cell.scale-standard {
+    width: 22px;
+    height: 32px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .flap-cell.scale-micro {
+    width: 14px;
+    height: 20px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  /* Half-plates */
+  .flap-half {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 50%;
+    overflow: hidden;
+    background: var(--cell-bg);
+    color: var(--flap-text);
+  }
+
+  .flap-half.top {
+    top: 0;
+    border-bottom: 1px solid var(--seam);
+    border-top: 1px solid var(--seam-light);
+    border-radius: 2px 2px 0 0;
+    transform-origin: bottom center;
+  }
+
+  .flap-half.bottom {
+    bottom: 0;
+    border-top: 1px solid var(--seam);
+    border-radius: 0 0 2px 2px;
+    transform-origin: top center;
+  }
+
+  /* Glyph alignment within half */
+  .flap-glyph {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    text-align: center;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .flap-cell.scale-display .flap-half.top .flap-glyph {
+    bottom: -28px;
+    height: 56px;
+    line-height: 56px;
+  }
+  .flap-cell.scale-display .flap-half.bottom .flap-glyph {
+    top: 0;
+    height: 56px;
+    line-height: 56px;
+    margin-top: -28px;
+  }
+
+  .flap-cell.scale-standard .flap-half.top .flap-glyph {
+    bottom: -16px;
+    height: 32px;
+    line-height: 32px;
+  }
+  .flap-cell.scale-standard .flap-half.bottom .flap-glyph {
+    top: 0;
+    height: 32px;
+    line-height: 32px;
+    margin-top: -16px;
+  }
+
+  .flap-cell.scale-micro .flap-half.top .flap-glyph {
+    bottom: -10px;
+    height: 20px;
+    line-height: 20px;
+  }
+  .flap-cell.scale-micro .flap-half.bottom .flap-glyph {
+    top: 0;
+    height: 20px;
+    line-height: 20px;
+    margin-top: -10px;
+  }
+
+  /* Colors for glyphs */
+  .flap-cell[data-status="good"] .flap-half { color: var(--status-good); }
+  .flap-cell[data-status="warn"] .flap-half { color: var(--status-warn); }
+  .flap-cell[data-status="bad"] .flap-half { color: var(--status-bad); }
+  .flap-cell[data-status="accent"] .flap-half { color: var(--accent); }
+
+  /* Dynamic Flap Animation Leaves */
+  .flap-leaf {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 50%;
+    overflow: hidden;
+    background: var(--cell-bg);
+    color: var(--flap-text);
+    z-index: 10;
+    backface-visibility: hidden;
+  }
+
+  .flap-leaf.leaf-top {
+    top: 0;
+    transform-origin: bottom center;
+    border-bottom: 1px solid var(--seam);
+    border-top: 1px solid var(--seam-light);
+    border-radius: 2px 2px 0 0;
+    animation: flipTopAnim 0.12s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+  }
+
+  .flap-leaf.leaf-bottom {
+    bottom: 0;
+    transform-origin: top center;
+    border-top: 1px solid var(--seam);
+    border-radius: 0 0 2px 2px;
+    transform: rotateX(90deg);
+    animation: flipBottomAnim 0.12s cubic-bezier(0, 0, 0.45, 1) forwards;
+  }
+
+  @keyframes flipTopAnim {
+    0% { transform: rotateX(0deg); }
+    100% { transform: rotateX(-90deg); }
+  }
+
+  @keyframes flipBottomAnim {
+    0% { transform: rotateX(90deg); }
+    100% { transform: rotateX(0deg); }
+  }
+
+  /* LAYOUT & CHROME */
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  header {
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 20px 0;
+    background: #0a0a0a;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .brand-logo .dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  .brand-tag {
+    font-size: 11px;
+    color: var(--label);
+    letter-spacing: 1px;
+    border-left: 1px solid var(--border-subtle);
+    padding-left: 14px;
+  }
+
+  .system-telemetry {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 11px;
+  }
+
+  .tele-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .tele-label {
+    color: var(--label);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .audio-btn {
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    color: var(--label);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 2px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+
+  .audio-btn.active {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+
+  /* SECTION WRAPPERS */
+  section {
+    padding: 48px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 24px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-num {
+    color: var(--accent);
+  }
+
+  .section-meta {
+    font-size: 11px;
+    color: var(--label);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* HERO BOARD (01 SYSTEM OVERVIEW) */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 32px;
+    align-items: stretch;
+  }
+
+  .hero-board-wrapper {
+    background: var(--board-bg);
+    border: 1px solid var(--border-strong);
+    padding: 24px;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .board-housing-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--label);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(244, 237, 225, 0.05);
+    padding-bottom: 8px;
+  }
+
+  .board-display-main {
+    margin: 16px 0;
+  }
+
+  .board-column-headers {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    color: var(--label);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    padding: 0 4px;
+  }
+
+  .board-row-spec {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(244, 237, 225, 0.03);
+  }
+
+  .board-row-label {
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--label);
+    text-transform: uppercase;
+  }
+
+  .hero-controls {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .mech-btn {
+    background: var(--cell-bg);
+    border: 1px solid var(--border-strong);
+    color: var(--flap-text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 10px 18px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.15s, border-color 0.15s;
+    border-radius: 2px;
+  }
+
+  .mech-btn:hover {
+    background: var(--cell-bg-subtle);
+    border-color: var(--accent);
+  }
+
+  .mech-btn:active {
+    transform: translateY(1px);
+  }
+
+  /* TECHNICAL ILLUSTRATION (FIG 01) */
+  .tech-figure-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .figure-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--label);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+
+  .figure-header .fig-id {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .figure-viewport {
+    position: relative;
+    background: #090909;
+    border: 1px solid var(--border-subtle);
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .diagram-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .figure-caption {
+    font-size: 11px;
+    color: var(--label);
+    line-height: 1.6;
+  }
+
+  /* 02 CONFIGURATION CALLOUTS */
+  .config-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+
+  .config-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    padding: 16px;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .config-callout-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .callout-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--accent);
+  }
+
+  .config-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .config-desc {
+    font-size: 11px;
+    color: var(--label);
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+
+  .config-state-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .config-meta-label {
+    font-size: 10px;
+    color: var(--label-dim);
+    text-transform: uppercase;
+  }
+
+  /* 03 OPERATING PROCEDURE CHECKLIST */
+  .procedure-container {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-strong);
+    padding: 24px;
+    border-radius: 2px;
+  }
+
+  .proc-status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-subtle);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .proc-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .proc-item {
+    display: grid;
+    grid-template-columns: 40px 1.2fr 2fr 160px 100px;
+    align-items: center;
+    gap: 16px;
+    background: var(--board-bg);
+    border: 1px solid var(--border-subtle);
+    padding: 12px 16px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .proc-item:hover {
+    border-color: var(--border-strong);
+    background: #121212;
+  }
+
+  .proc-item.completed {
+    border-left: 3px solid var(--status-good);
+  }
+
+  .proc-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    color: var(--label);
+    font-size: 12px;
+  }
+
+  .proc-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .proc-detail {
+    font-size: 11px;
+    color: var(--label);
+  }
+
+  .proc-action-btn {
+    background: var(--cell-bg);
+    border: 1px solid var(--border-subtle);
+    color: var(--flap-text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border-radius: 2px;
+    cursor: pointer;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+
+  .proc-action-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* 04 LIVE SPECIFICATION TABLE */
+  .spec-table-wrapper {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    overflow-x: auto;
+  }
+
+  .spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    text-align: left;
+  }
+
+  .spec-table th {
+    background: var(--board-bg);
+    padding: 12px 16px;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--label);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .spec-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(244, 237, 225, 0.04);
+    vertical-align: middle;
+  }
+
+  .spec-table tr:hover td {
+    background: rgba(244, 237, 225, 0.02);
+  }
+
+  .spec-param-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+
+  .spec-param-sub {
+    font-size: 10px;
+    color: var(--label);
+    margin-top: 2px;
+  }
+
+  /* 05 FIELD NOTES & 06 NOTICES */
+  .notes-notices-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .field-notes-card, .service-notices-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    padding: 24px;
+    border-radius: 2px;
+  }
+
+  .note-entry {
+    border-left: 2px solid var(--accent);
+    padding-left: 14px;
+    margin-bottom: 20px;
+  }
+
+  .note-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--label);
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .note-body {
+    font-size: 12px;
+    color: var(--flap-text);
+    line-height: 1.5;
+  }
+
+  .notice-box {
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 2px;
+    border: 1px solid;
+    font-size: 11px;
+    line-height: 1.6;
+  }
+
+  .notice-box.caution {
+    background: rgba(232, 163, 61, 0.04);
+    border-color: var(--accent);
+  }
+
+  .notice-box.caution .notice-title {
+    color: var(--accent);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .notice-box.note {
+    background: rgba(244, 237, 225, 0.02);
+    border-color: var(--border-strong);
+  }
+
+  .notice-box.note .notice-title {
+    color: var(--flap-text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    margin-bottom: 6px;
+  }
+
+  /* 07 DOCUMENTATION INDEX */
+  .doc-index-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .doc-link-item {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, transform 0.15s;
+    border-radius: 2px;
+  }
+
+  .doc-link-item:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .doc-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+
+  .doc-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .doc-meta {
+    font-size: 10px;
+    color: var(--label);
+  }
+
+  /* FOOTER */
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--label);
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  @media (max-width: 960px) {
+    .overview-grid, .notes-notices-grid {
+      grid-template-columns: 1fr;
+    }
+    .proc-item {
+      grid-template-columns: 30px 1fr 100px;
+    }
+    .proc-detail {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body><div style="position:fixed;right:12px;bottom:12px;z-index:2147483647;padding:8px 10px;background:#111;color:#fff;font:12px/1.3 monospace;border:1px solid #777">ARCHIVED SOURCE · SCRIPTS AND NETWORK DISABLED</div>
+
+<header>
+  <div class="container header-inner">
+    <div class="brand">
+      <div class="brand-logo">
+        <span class="dot"></span>
+        HALLOWAY INSTRUMENTS
+      </div>
+      <div class="brand-tag">ENVIRONMENTAL FIELD DIVISION</div>
+    </div>
+    <div class="system-telemetry">
+      <div class="tele-item">
+        <span class="tele-label">SYSTEM CLOCK</span>
+        <div class="flap-row" id="system-clock-row"></div>
+      </div>
+      <div class="tele-item">
+        <span class="tele-label">LINK</span>
+        <div class="flap-row" id="system-link-row"></div>
+      </div>
+      <button class="audio-btn active" id="audio-toggle" title="Toggle Mechanical Clatter Audio">
+        <span style="font-size:10px;">FLAP AUDIO</span> [ON]
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- 01 SYSTEM OVERVIEW -->
+  <section id="overview">
+    <div class="section-header">
+      <div class="section-title">
+        <span class="section-num">01</span> SYSTEM OVERVIEW / HX-4 FIELD MONITOR
+      </div>
+      <div class="section-meta">DOC ID: HI-MN-8842-REV.04</div>
+    </div>
+
+    <div class="overview-grid">
+      <!-- SOLARI MAIN BOARD -->
+      <div class="hero-board-wrapper">
+        <div class="board-housing-header">
+          <span>FIELD TELEMETRY BOARD — UNIT HX-4-7109</span>
+          <span>STATION ID: 44.98°N 93.26°W</span>
+        </div>
+
+        <div class="board-display-main">
+          <div class="board-column-headers">
+            <span>PARAMETER</span>
+            <span>LIVE FLAP READOUT</span>
+          </div>
+
+          <div class="board-row-spec">
+            <div class="board-row-label">OPERATING STATE</div>
+            <div class="flap-row" id="hero-status-row"></div>
+          </div>
+          <div class="board-row-spec">
+            <div class="board-row-label">ATMOSPHERIC TEMP</div>
+            <div class="flap-row" id="hero-temp-row"></div>
+          </div>
+          <div class="board-row-spec">
+            <div class="board-row-label">SOIL MOISTURE VWC</div>
+            <div class="flap-row" id="hero-moist-row"></div>
+          </div>
+          <div class="board-row-spec">
+            <div class="board-row-label">BAROMETRIC PRESSURE</div>
+            <div class="flap-row" id="hero-baro-row"></div>
+          </div>
+          <div class="board-row-spec">
+            <div class="board-row-label">BATTERY RESERVE</div>
+            <div class="flap-row" id="hero-batt-row"></div>
+          </div>
+        </div>
+
+        <div class="hero-controls">
+          <button class="mech-btn" id="refresh-telemetry-btn">
+            CYCLE TELEMETRY READOUT
+          </button>
+          <button class="mech-btn" id="toggle-mode-btn">
+            MODE: <span id="mode-label" style="color:var(--accent)">CONTINUOUS</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- FIGURE 01 TECHNICAL OVERVIEW -->
+      <div class="tech-figure-card">
+        <div class="figure-header">
+          <span class="fig-id">FIG. 01</span>
+          <span>HX-4 CHASSIS HOUSING SCHEMATIC</span>
+        </div>
+        <div class="figure-viewport">
+          <svg class="diagram-svg" viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Blueprint grid lines -->
+            <line x1="20" y1="20" x2="380" y2="20" stroke="#222" stroke-width="1" stroke-dasharray="2,2"/>
+            <line x1="20" y1="120" x2="380" y2="120" stroke="#222" stroke-width="1" stroke-dasharray="2,2"/>
+            <line x1="20" y1="220" x2="380" y2="220" stroke="#222" stroke-width="1" stroke-dasharray="2,2"/>
+            <line x1="200" y1="10" x2="200" y2="230" stroke="#222" stroke-width="1" stroke-dasharray="2,2"/>
+            
+            <!-- Chassis outline -->
+            <rect x="110" y="45" width="180" height="150" rx="2" stroke="#f4ede1" stroke-width="1.5" fill="#141414"/>
+            <!-- Sensor Probe Port -->
+            <line x1="200" y1="45" x2="200" y2="15" stroke="#e8a33d" stroke-width="2"/>
+            <circle cx="200" cy="15" r="4" fill="#e8a33d"/>
+            <!-- Soil Probe connector -->
+            <line x1="140" y1="195" x2="140" y2="225" stroke="#6fae6f" stroke-width="1.5"/>
+            <rect x="135" y="225" width="10" height="10" fill="#6fae6f"/>
+            <!-- GNSS Antenna -->
+            <rect x="250" y="30" width="24" height="15" fill="#2a2a2a" stroke="#f4ede1" stroke-width="1"/>
+            <!-- Internal display window -->
+            <rect x="135" y="70" width="130" height="48" rx="1" stroke="#444" fill="#0d0d0d"/>
+            <text x="145" y="90" fill="#e8a33d" font-family="'Space Grotesk'" font-size="10" font-weight="700">HX-4 7109 ACTIVE</text>
+            <text x="145" y="106" fill="#6fae6f" font-family="'IBM Plex Mono'" font-size="8">SYNC: 100% OK</text>
+            <!-- Callout Lines -->
+            <path d="M 90 25 L 195 25" stroke="#888" stroke-width="0.8"/>
+            <text x="35" y="28" fill="#888" font-family="'IBM Plex Mono'" font-size="9">[01] ATMOS PROBE</text>
+            <path d="M 310 100 L 265 100" stroke="#888" stroke-width="0.8"/>
+            <text x="315" y="103" fill="#888" font-family="'IBM Plex Mono'" font-size="9">[02] CORE BUS</text>
+            <path d="M 90 220 L 135 220" stroke="#888" stroke-width="0.8"/>
+            <text x="25" y="223" fill="#888" font-family="'IBM Plex Mono'" font-size="9">[03] SOIL SENSOR</text>
+          </svg>
+        </div>
+        <div class="figure-caption">
+          Milled aerospace aluminum housing with sealed silicone O-ring gaskets. IP68 submersible rating to 2 meters for 48 continuous hours.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 FIELD CONFIGURATION -->
+  <section id="configuration">
+    <div class="section-header">
+      <div class="section-title">
+        <span class="section-num">02</span> FIELD CONFIGURATION / MODULE SUBSYSTEMS
+      </div>
+      <div class="section-meta">FIG 02 CALLOUT INDEX</div>
+    </div>
+
+    <div class="config-grid">
+      <div class="config-card">
+        <div class="config-callout-head">
+          <span class="callout-num">REF 01</span>
+          <div class="flap-row config-flap-status" data-target="READY"></div>
+        </div>
+        <div class="config-title">ATMOSPHERIC PROBE</div>
+        <div class="config-desc">Dual platinum RTD temperature and capacitive relative humidity array with sintered bronze shield.</div>
+        <div class="config-state-row">
+          <span class="config-meta-label">PORT: MOD-A1</span>
+          <span class="config-meta-label">CALIB: 2026-08</span>
+        </div>
+      </div>
+
+      <div class="config-card">
+        <div class="config-callout-head">
+          <span class="callout-num">REF 02</span>
+          <div class="flap-row config-flap-status" data-target="ACTIVE"></div>
+        </div>
+        <div class="config-title">SOIL INPUT</div>
+        <div class="config-desc">High-frequency FDR dielectric permittivity sensor measuring volumetric water content and electrical conductivity.</div>
+        <div class="config-state-row">
+          <span class="config-meta-label">PORT: SDI-12</span>
+          <span class="config-meta-label">DEPTH: 30 CM</span>
+        </div>
+      </div>
+
+      <div class="config-card">
+        <div class="config-callout-head">
+          <span class="callout-num">REF 03</span>
+          <div class="flap-row config-flap-status" data-target="LOCKED"></div>
+        </div>
+        <div class="config-title">GNSS RECEIVER</div>
+        <div class="config-desc">Multi-band GPS/GLONASS/Galileo receiver with integrated ceramic patch antenna for sub-meter georeferencing.</div>
+        <div class="config-state-row">
+          <span class="config-meta-label">SATS: 14 FIX</span>
+          <span class="config-meta-label">HDOP: 0.82</span>
+        </div>
+      </div>
+
+      <div class="config-card">
+        <div class="config-callout-head">
+          <span class="callout-num">REF 04</span>
+          <div class="flap-row config-flap-status" data-target="NOMINAL"></div>
+        </div>
+        <div class="config-title">BATTERY MODULE</div>
+        <div class="config-desc">Lithium Iron Phosphate (LiFePO4) 12.8V 7Ah hot-swappable pack with integrated solar charge controller.</div>
+        <div class="config-state-row">
+          <span class="config-meta-label">V_IN: 13.4V</span>
+          <span class="config-meta-label">SOLAR: OK</span>
+        </div>
+      </div>
+
+      <div class="config-card">
+        <div class="config-callout-head">
+          <span class="callout-num">REF 05</span>
+          <div class="flap-row config-flap-status" data-target="LINKED"></div>
+        </div>
+        <div class="config-title">DATA PORT</div>
+        <div class="config-desc">Mil-spec 8-pin waterproof bayonet coupling supporting RS-485, USB 2.0 Host, and direct LoRaWAN telemetry.</div>
+        <div class="config-state-row">
+          <span class="config-meta-label">BAUD: 115200</span>
+          <span class="config-meta-label">BUS: ACTIVE</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 OPERATING PROCEDURE -->
+  <section id="procedure">
+    <div class="section-header">
+      <div class="section-title">
+        <span class="section-num">03</span> OPERATING PROCEDURE / PRE-DEPLOYMENT CHECKLIST
+      </div>
+      <div class="section-meta">SOP-HI-4022 • PROCEDURAL SEQUENCE</div>
+    </div>
+
+    <div class="procedure-container">
+      <div class="proc-status-bar">
+        <div>
+          <span style="color:var(--label); font-size:11px; letter-spacing:1px;">PROCEDURE SEQUENCE PROGRESS:</span>
+          <span id="proc-progress-label" style="font-weight:700; color:var(--accent); margin-left:8px;">0 / 6 STEPS VERIFIED</span>
+        </div>
+        <button class="mech-btn" id="reset-proc-btn" style="padding:6px 12px; font-size:10px;">
+          RESET PROCEDURE
+        </button>
+      </div>
+
+      <div class="proc-list">
+        <div class="proc-item" data-step="1">
+          <div class="proc-num">01</div>
+          <div class="proc-name">INSPECT</div>
+          <div class="proc-detail">Examine enclosure seals, connector pins, and desiccant indicator window for moisture ingress.</div>
+          <div class="flap-row proc-flap-status" data-target="PENDING"></div>
+          <button class="proc-action-btn">TOGGLE</button>
+        </div>
+
+        <div class="proc-item" data-step="2">
+          <div class="proc-num">02</div>
+          <div class="proc-name">POWER</div>
+          <div class="proc-detail">Connect LiFePO4 battery pack and verify continuous 12.8V bus voltage on internal rail.</div>
+          <div class="flap-row proc-flap-status" data-target="PENDING"></div>
+          <button class="proc-action-btn">TOGGLE</button>
+        </div>
+
+        <div class="proc-item" data-step="3">
+          <div class="proc-num">03</div>
+          <div class="proc-name">CALIBRATE</div>
+          <div class="proc-detail">Perform 2-point relative humidity verification using standard saturated salt reference chambers.</div>
+          <div class="flap-row proc-flap-status" data-target="PENDING"></div>
+          <button class="proc-action-btn">TOGGLE</button>
+        </div>
+
+        <div class="proc-item" data-step="4">
+          <div class="proc-num">04</div>
+          <div class="proc-name">POSITION</div>
+          <div class="proc-detail">Mount chassis on non-magnetic surveyor tripod at 1.5m standard WMO observation height.</div>
+          <div class="flap-row proc-flap-status" data-target="PENDING"></div>
+          <button class="proc-action-btn">TOGGLE</button>
+        </div>
+
+        <div class="proc-item" data-step="5">
+          <div class="proc-num">05</div>
+          <div class="proc-name">RECORD</div>
+          <div class="proc-detail">Initiate baseline telemetry logging to internal flash memory at 1-second sample cadence.</div>
+          <div class="flap-row proc-flap-status" data-target="PENDING"></div>
+          <button class="proc-action-btn">TOGGLE</button>
+        </div>
+
+        <div class="proc-item" data-step="6">
+          <div class="proc-num">06</div>
+          <div class="proc-name">VERIFY</div>
+          <div class="proc-detail">Confirm satellite telemetry handshake and sign off pre-deployment QA validation record.</div>
+          <div class="flap-row proc-flap-status" data-target="PENDING"></div>
+          <button class="proc-action-btn">TOGGLE</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 LIVE SPECIFICATION -->
+  <section id="specifications">
+    <div class="section-header">
+      <div class="section-title">
+        <span class="section-num">04</span> LIVE SPECIFICATION / ENGINEERING TOLERANCES
+      </div>
+      <div class="section-meta">ISO 9001 / WMO-NO. 8 CERTIFIED</div>
+    </div>
+
+    <div class="spec-table-wrapper">
+      <table class="spec-table">
+        <thead>
+          <tr>
+            <th>SPECIFICATION PARAMETER</th>
+            <th>RATED TOLERANCE / RANGE</th>
+            <th>FIELD CONDITION READOUT</th>
+            <th>COMPLIANCE STATE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="spec-param-title">OPERATING TEMPERATURE</div>
+              <div class="spec-param-sub">Continuous rated range in ambient conditions</div>
+            </td>
+            <td>-40.0°C to +85.0°C (-40°F to +185°F)</td>
+            <td>
+              <div class="flap-row spec-flap" data-target="-04.2 C"></div>
+            </td>
+            <td>
+              <div class="flap-row spec-state-flap" data-target="PASSED" data-status="good"></div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="spec-param-title">BATTERY RUNTIME</div>
+              <div class="spec-param-sub">Internal LiFePO4 pack at 60s sample interval</div>
+            </td>
+            <td>380 Hours Continuous (Solar Autonomous)</td>
+            <td>
+              <div class="flap-row spec-flap" data-target="342 HRS"></div>
+            </td>
+            <td>
+              <div class="flap-row spec-state-flap" data-target="NOMINAL" data-status="good"></div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="spec-param-title">ENVIRONMENTAL RATING</div>
+              <div class="spec-param-sub">Ingress protection against dust and liquid</div>
+            </td>
+            <td>IP68 (2.0m depth / 48 hrs immersion)</td>
+            <td>
+              <div class="flap-row spec-flap" data-target="SEAL OK"></div>
+            </td>
+            <td>
+              <div class="flap-row spec-state-flap" data-target="LOCKED" data-status="good"></div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="spec-param-title">SENSOR TOLERANCE</div>
+              <div class="spec-param-sub">Atmospheric temperature absolute accuracy</div>
+            </td>
+            <td>±0.08°C at 20°C (NIST Traceable)</td>
+            <td>
+              <div class="flap-row spec-flap" data-target="+0.04 C"></div>
+            </td>
+            <td>
+              <div class="flap-row spec-state-flap" data-target="CALIB OK" data-status="good"></div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="spec-param-title">DATA INTERVAL</div>
+              <div class="spec-param-sub">Programmable burst or continuous cadence</div>
+            </td>
+            <td>100 ms to 3600 s (User Selectable)</td>
+            <td>
+              <div class="flap-row spec-flap" data-target="0001 SEC"></div>
+            </td>
+            <td>
+              <div class="flap-row spec-state-flap" data-target="ACTIVE" data-status="good"></div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="spec-param-title">DEVICE MASS</div>
+              <div class="spec-param-sub">Full field assembly including battery module</div>
+            </td>
+            <td>1,420 g ± 15 g (3.13 lbs)</td>
+            <td>
+              <div class="flap-row spec-flap" data-target="1424 G"></div>
+            </td>
+            <td>
+              <div class="flap-row spec-state-flap" data-target="VERIFIED" data-status="good"></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 05 FIELD NOTES & 06 SERVICE NOTICE -->
+  <section id="notes-notices">
+    <div class="section-header">
+      <div class="section-title">
+        <span class="section-num">05 & 06</span> FIELD NOTES & SERVICE NOTICES
+      </div>
+      <div class="section-meta">OPERATOR LOG & SAFETY DIRECTIVES</div>
+    </div>
+
+    <div class="notes-notices-grid">
+      <!-- 05 FIELD NOTES -->
+      <div class="field-notes-card">
+        <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:13px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:16px; display:flex; justify-content:space-between;">
+          <span>05 / OPERATOR FIELD NOTES</span>
+          <span style="color:var(--accent); font-size:11px;">3 VERIFIED RECORDS</span>
+        </div>
+
+        <div class="note-entry">
+          <div class="note-header">
+            <span>SITE 04B / TUNDRA RESEARCH TRANSECT</span>
+            <span>2026-08-14 09:15 UTC</span>
+          </div>
+          <div class="note-body">
+            HX-4 unit deployed at peatland permafrost monitoring plot. Calibration offset verified with reference dry-well thermometer. Zero drift observed across 72h continuous run.
+          </div>
+        </div>
+
+        <div class="note-entry">
+          <div class="note-header">
+            <span>SITE 12A / ALPINE BASIN DEPLOYMENT</span>
+            <span>2026-08-12 16:40 UTC</span>
+          </div>
+          <div class="note-body">
+            Ambient temperature plummeted to -28.4°C during frontal passage. Solar charging suspended automatically per low-temp lithium safeguard protocol. Internal heating element engaged.
+          </div>
+        </div>
+
+        <div class="note-entry">
+          <div class="note-header">
+            <span>REVISION ANNOTATION / REV 04.1</span>
+            <span>2026-08-01 11:20 UTC</span>
+          </div>
+          <div class="note-body">
+            Firmware v4.12 applied. Telemetry compression enabled on LoRaWAN uplink. Memory buffer efficiency increased by 38%.
+          </div>
+        </div>
+      </div>
+
+      <!-- 06 SERVICE NOTICES -->
+      <div class="service-notices-card">
+        <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:13px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:16px;">
+          06 / FIELD NOTICES
+        </div>
+
+        <div class="notice-box caution">
+          <div class="notice-title">
+            <span>▲ CAUTION / NOTICE 08-B</span>
+          </div>
+          Do not disconnect the atmospheric probe cable while the main 12.8V power rail is energized. Electrostatic discharge into ungrounded RTD sensor terminals may cause permanent calibration drift exceeding ±0.5°C.
+        </div>
+
+        <div class="notice-box note">
+          <div class="notice-title">
+            <span>ℹ NOTE / DIRECTIVE 14-A</span>
+          </div>
+          When operating in environments below -20°C, ensure the external solar charge regulator is set to "Cold Battery" mode to prevent dendrite formation in the LiFePO4 cells during rapid charging cycles.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 DOCUMENTATION -->
+  <section id="documentation">
+    <div class="section-header">
+      <div class="section-title">
+        <span class="section-num">07</span> DOCUMENTATION & TECHNICAL REFERENCES
+      </div>
+      <div class="section-meta">INDEXED MANUAL REPOSITORIES</div>
+    </div>
+
+    <div class="doc-index-grid">
+      <a href="#overview" class="doc-link-item">
+        <div class="doc-num">DOC 01</div>
+        <div class="doc-title">QUICK START</div>
+        <div class="doc-meta">UNBOXING, FIELD ASSEMBLY & FIRST POWER-ON • 12 PAGES</div>
+      </a>
+
+      <a href="#procedure" class="doc-link-item">
+        <div class="doc-num">DOC 02</div>
+        <div class="doc-title">CALIBRATION</div>
+        <div class="doc-meta">2-POINT NIST VERIFICATION & FIELD OFFSET PROCEDURES • 28 PAGES</div>
+      </a>
+
+      <a href="#configuration" class="doc-link-item">
+        <div class="doc-num">DOC 03</div>
+        <div class="doc-title">FIELD OPERATION</div>
+        <div class="doc-meta">AUTONOMOUS LOGGING, LORAWAN UPLINK & SITE SELECTION • 44 PAGES</div>
+      </a>
+
+      <a href="#notes-notices" class="doc-link-item">
+        <div class="doc-num">DOC 04</div>
+        <div class="doc-title">MAINTENANCE</div>
+        <div class="doc-meta">O-RING REPLACEMENT, DESICCANT SERVICE & CLEANING • 18 PAGES</div>
+      </a>
+
+      <a href="#specifications" class="doc-link-item">
+        <div class="doc-num">DOC 05</div>
+        <div class="doc-title">TECHNICAL SPECS</div>
+        <div class="doc-meta">ELECTRICAL PINOUTS, PROTOCOL DEFINITION & SCHEMATICS • 56 PAGES</div>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="container">
+  <div>
+    © 2026 HALLOWAY INSTRUMENTS CO. • ALL RIGHTS RESERVED • ENGINEERED IN BOULDER, CO
+  </div>
+  <div>
+    SOLARI SPLIT-FLAP INTERFACE SPECIFICATION • SYSTEM OPERATING DISCRETE
+  </div>
+</footer>
+
+
+
+</body>
+</html>

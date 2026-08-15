@@ -642,6 +642,54 @@
     </image:image>
   </url>
   <url>
+    <loc>https://lemonteed.com/operator-log/design-skill-benchmark/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/operator-log/design-skill-benchmark/dashboard.webp</image:loc>
+      <image:caption>The local report keeps every dimension visible. A total is useful; the reason behind it is the actual record.</image:caption>
+      <image:title>Design Skill Benchmark dashboard showing model averages and the beginning of the ranked artifact table</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/operator-log/design-skill-benchmark/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/operator-log/design-skill-benchmark/blueprint-atlas-desktop.webp</image:loc>
+      <image:caption>Blueprint / ATLAS / GPT-5.6 Sol — the architecture diagram becomes the page structure rather than decorative engineering wallpaper.</image:caption>
+      <image:title>Desktop ATLAS systems architecture website using Blueprint technical drawing language</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/operator-log/design-skill-benchmark/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/operator-log/design-skill-benchmark/field-manual-relay-desktop.webp</image:loc>
+      <image:caption>Field Manual / RELAY / Grok 4.6 — recorded state, procedural hierarchy, and a strong mobile document produced the highest score in the baseline: 97.</image:caption>
+      <image:title>Desktop RELAY AI deployment handbook using Field Manual procedural document language</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/operator-log/design-skill-benchmark/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/operator-log/design-skill-benchmark/solari-baseball-desktop.webp</image:loc>
+      <image:caption>Solari / Municipal League Baseball / Gemini 3.7 Flash — a civic scoreboard identity survives the narrow translation without turning into an airport parody.</image:caption>
+      <image:title>Desktop Municipal League Baseball website using Solari split-flap scoreboard language</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/operator-log/design-skill-benchmark/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/operator-log/design-skill-benchmark/desktop-contact-sheet.webp</image:loc>
+      <image:caption>All 32 desktop review frames. Open the image for the full sheet.</image:caption>
+      <image:title>Contact sheet containing desktop review frames for all 32 benchmark outputs</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/operator-log/design-skill-benchmark/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/operator-log/design-skill-benchmark/mobile-contact-sheet.webp</image:loc>
+      <image:caption>All 32 mobile review frames. This sheet caught what the desktop sheet politely omitted.</image:caption>
+      <image:title>Contact sheet containing mobile review frames for all 32 benchmark outputs</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://lemonteed.com/operator-log/localhost-watchdog-update-02/</loc>
     <image:image>
       <image:loc>https://lemonteed.com/images/operator-log/localhost-watchdog-update-02-inventory.webp</image:loc>
@@ -655,6 +703,518 @@
       <image:loc>https://lemonteed.com/images/operator-log/localhost-watchdog-update-02-listener-report.webp</image:loc>
       <image:caption>The listener evidence report ties the visible server to its project root, process chain, launcher context, lifecycle, history, and HTTP probe.</image:caption>
       <image:title>Localhost Watchdog listener evidence report for demo-website on port 5173, showing process, project, launcher, lifecycle, history, and HTTP probe details</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/0250fde051.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/0250fde051.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record 0250fde051</image:caption>
+      <image:title>Benchmark Record 0250fde051 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/0250fde051.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/0250fde051.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record 0250fde051</image:caption>
+      <image:title>Benchmark Record 0250fde051 Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/144258e9a2.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/144258e9a2.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record 144258e9a2</image:caption>
+      <image:title>Benchmark Record 144258e9a2 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/144258e9a2.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/144258e9a2.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record 144258e9a2</image:caption>
+      <image:title>Benchmark Record 144258e9a2 Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/16470def5d.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/16470def5d.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record 16470def5d</image:caption>
+      <image:title>Benchmark Record 16470def5d Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/16470def5d.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/16470def5d.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record 16470def5d</image:caption>
+      <image:title>Benchmark Record 16470def5d Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/18b7c892b1.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/18b7c892b1.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record 18b7c892b1</image:caption>
+      <image:title>Benchmark Record 18b7c892b1 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/18b7c892b1.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/18b7c892b1.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record 18b7c892b1</image:caption>
+      <image:title>Benchmark Record 18b7c892b1 Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/1aea8d9a0e.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/1aea8d9a0e.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record 1aea8d9a0e</image:caption>
+      <image:title>Benchmark Record 1aea8d9a0e Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/1aea8d9a0e.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/1aea8d9a0e.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record 1aea8d9a0e</image:caption>
+      <image:title>Benchmark Record 1aea8d9a0e Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/2dcb583384.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/2dcb583384.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record 2dcb583384</image:caption>
+      <image:title>Benchmark Record 2dcb583384 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/2dcb583384.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/2dcb583384.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record 2dcb583384</image:caption>
+      <image:title>Benchmark Record 2dcb583384 Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/36ae0633d4.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/36ae0633d4.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record 36ae0633d4</image:caption>
+      <image:title>Benchmark Record 36ae0633d4 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/36ae0633d4.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/36ae0633d4.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record 36ae0633d4</image:caption>
+      <image:title>Benchmark Record 36ae0633d4 Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/3a49d453e8.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/3a49d453e8.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record 3a49d453e8</image:caption>
+      <image:title>Benchmark Record 3a49d453e8 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/3a49d453e8.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/3a49d453e8.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record 3a49d453e8</image:caption>
+      <image:title>Benchmark Record 3a49d453e8 Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/3b56359e69.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/3b56359e69.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record 3b56359e69</image:caption>
+      <image:title>Benchmark Record 3b56359e69 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/3b56359e69.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/3b56359e69.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record 3b56359e69</image:caption>
+      <image:title>Benchmark Record 3b56359e69 Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/49f25fde18.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/49f25fde18.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record 49f25fde18</image:caption>
+      <image:title>Benchmark Record 49f25fde18 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/49f25fde18.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/49f25fde18.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record 49f25fde18</image:caption>
+      <image:title>Benchmark Record 49f25fde18 Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/4e95b35e74.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/4e95b35e74.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record 4e95b35e74</image:caption>
+      <image:title>Benchmark Record 4e95b35e74 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/4e95b35e74.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/4e95b35e74.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record 4e95b35e74</image:caption>
+      <image:title>Benchmark Record 4e95b35e74 Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/53a4416d3e.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/53a4416d3e.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record 53a4416d3e</image:caption>
+      <image:title>Benchmark Record 53a4416d3e Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/53a4416d3e.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/53a4416d3e.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record 53a4416d3e</image:caption>
+      <image:title>Benchmark Record 53a4416d3e Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/655ff6ee2a.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/655ff6ee2a.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record 655ff6ee2a</image:caption>
+      <image:title>Benchmark Record 655ff6ee2a Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/655ff6ee2a.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/655ff6ee2a.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record 655ff6ee2a</image:caption>
+      <image:title>Benchmark Record 655ff6ee2a Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/720bdd4e98.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/720bdd4e98.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record 720bdd4e98</image:caption>
+      <image:title>Benchmark Record 720bdd4e98 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/720bdd4e98.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/720bdd4e98.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record 720bdd4e98</image:caption>
+      <image:title>Benchmark Record 720bdd4e98 Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/7e41999fcf.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/7e41999fcf.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record 7e41999fcf</image:caption>
+      <image:title>Benchmark Record 7e41999fcf Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/7e41999fcf.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/7e41999fcf.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record 7e41999fcf</image:caption>
+      <image:title>Benchmark Record 7e41999fcf Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/8e1c97dc55.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/8e1c97dc55.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record 8e1c97dc55</image:caption>
+      <image:title>Benchmark Record 8e1c97dc55 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/8e1c97dc55.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/8e1c97dc55.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record 8e1c97dc55</image:caption>
+      <image:title>Benchmark Record 8e1c97dc55 Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/918cf65fd6.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/918cf65fd6.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record 918cf65fd6</image:caption>
+      <image:title>Benchmark Record 918cf65fd6 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/918cf65fd6.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/918cf65fd6.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record 918cf65fd6</image:caption>
+      <image:title>Benchmark Record 918cf65fd6 Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/9d29d090b2.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/9d29d090b2.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record 9d29d090b2</image:caption>
+      <image:title>Benchmark Record 9d29d090b2 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/9d29d090b2.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/9d29d090b2.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record 9d29d090b2</image:caption>
+      <image:title>Benchmark Record 9d29d090b2 Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/a1b362a689.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/a1b362a689.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record a1b362a689</image:caption>
+      <image:title>Benchmark Record a1b362a689 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/a1b362a689.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/a1b362a689.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record a1b362a689</image:caption>
+      <image:title>Benchmark Record a1b362a689 Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/aa1a286acb.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/aa1a286acb.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record aa1a286acb</image:caption>
+      <image:title>Benchmark Record aa1a286acb Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/aa1a286acb.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/aa1a286acb.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record aa1a286acb</image:caption>
+      <image:title>Benchmark Record aa1a286acb Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/b0973ca1b7.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/b0973ca1b7.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record b0973ca1b7</image:caption>
+      <image:title>Benchmark Record b0973ca1b7 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/b0973ca1b7.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/b0973ca1b7.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record b0973ca1b7</image:caption>
+      <image:title>Benchmark Record b0973ca1b7 Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/b14c24587b.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/b14c24587b.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record b14c24587b</image:caption>
+      <image:title>Benchmark Record b14c24587b Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/b14c24587b.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/b14c24587b.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record b14c24587b</image:caption>
+      <image:title>Benchmark Record b14c24587b Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/bad37c7212.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/bad37c7212.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record bad37c7212</image:caption>
+      <image:title>Benchmark Record bad37c7212 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/bad37c7212.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/bad37c7212.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record bad37c7212</image:caption>
+      <image:title>Benchmark Record bad37c7212 Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/c71572624c.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/c71572624c.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record c71572624c</image:caption>
+      <image:title>Benchmark Record c71572624c Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/c71572624c.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/c71572624c.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record c71572624c</image:caption>
+      <image:title>Benchmark Record c71572624c Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/d593172b12.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/d593172b12.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record d593172b12</image:caption>
+      <image:title>Benchmark Record d593172b12 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/d593172b12.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/d593172b12.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record d593172b12</image:caption>
+      <image:title>Benchmark Record d593172b12 Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/d599cdfc71.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/d599cdfc71.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record d599cdfc71</image:caption>
+      <image:title>Benchmark Record d599cdfc71 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/d599cdfc71.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/d599cdfc71.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record d599cdfc71</image:caption>
+      <image:title>Benchmark Record d599cdfc71 Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/dcf7be1796.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/dcf7be1796.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record dcf7be1796</image:caption>
+      <image:title>Benchmark Record dcf7be1796 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/dcf7be1796.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/dcf7be1796.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record dcf7be1796</image:caption>
+      <image:title>Benchmark Record dcf7be1796 Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/ded79f6ea9.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/ded79f6ea9.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record ded79f6ea9</image:caption>
+      <image:title>Benchmark Record ded79f6ea9 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/ded79f6ea9.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/ded79f6ea9.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record ded79f6ea9</image:caption>
+      <image:title>Benchmark Record ded79f6ea9 Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/e14eb0d4ea.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/e14eb0d4ea.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record e14eb0d4ea</image:caption>
+      <image:title>Benchmark Record e14eb0d4ea Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/e14eb0d4ea.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/e14eb0d4ea.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record e14eb0d4ea</image:caption>
+      <image:title>Benchmark Record e14eb0d4ea Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/f2224c43d0.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/f2224c43d0.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record f2224c43d0</image:caption>
+      <image:title>Benchmark Record f2224c43d0 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/f2224c43d0.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/f2224c43d0.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record f2224c43d0</image:caption>
+      <image:title>Benchmark Record f2224c43d0 Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/fb38689c34.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/fb38689c34.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record fb38689c34</image:caption>
+      <image:title>Benchmark Record fb38689c34 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/fb38689c34.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/fb38689c34.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record fb38689c34</image:caption>
+      <image:title>Benchmark Record fb38689c34 Mobile Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/ff48c22f65.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/desktop/ff48c22f65.webp</image:loc>
+      <image:caption>Desktop benchmark review frame for record ff48c22f65</image:caption>
+      <image:title>Benchmark Record ff48c22f65 Desktop Frame</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/benchmark/records/ff48c22f65.html</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/benchmark/images/mobile/ff48c22f65.webp</image:loc>
+      <image:caption>Mobile benchmark review frame for record ff48c22f65</image:caption>
+      <image:title>Benchmark Record ff48c22f65 Mobile Frame</image:title>
     </image:image>
   </url>
 </urlset>

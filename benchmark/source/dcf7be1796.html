@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MUNICIPAL LEAGUE BASEBALL — Civic Baseball System</title>
+  <meta name="description" content="Municipal League Baseball: Tennessee's civic institution. Live scores, standings, schedule, and league history — powered by the Solari split-flap system.">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --board-bg:      #0d0d0d;
+      --cell-bg:       #161616;
+      --seam:          rgba(0,0,0,0.55);
+      --flap-text:     #f4ede1;
+      --label:         rgba(244,237,225,0.45);
+      --accent:        #e8a33d;
+      --status-good:   #6fae6f;
+      --status-warn:   #e8a33d;
+      --status-bad:    #c25b4a;
+      --housing:       #111111;
+      --border:        rgba(244,237,225,0.1);
+      --text-body:     rgba(244,237,225,0.75);
+      --text-dim:      rgba(244,237,225,0.35);
+    }
+    html { background: var(--board-bg); color: var(--flap-text); font-family: 'Space Mono', monospace; scroll-behavior: smooth; }
+    body { min-height: 100vh; }
+
+    /* FLAP CELL */
+    .flap-cell {
+      display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+      position: relative; background: var(--cell-bg); border-radius: 2px; perspective: 400px; user-select: none;
+    }
+    .flap-cell .half-top, .flap-cell .half-bottom {
+      display: flex; align-items: flex-end; justify-content: center; width: 100%; height: 50%; overflow: hidden;
+    }
+    .flap-cell .half-top { border-bottom: 1px solid var(--seam); }
+    .flap-cell .half-bottom { align-items: flex-start; }
+    .flap-cell .char { font-family: 'Space Grotesk', sans-serif; font-weight: 700; text-transform: uppercase; color: var(--flap-text); line-height: 1; display: block; }
+    .flap-cell .half-top .char { transform: translateY(50%); }
+    .flap-cell .half-bottom .char { transform: translateY(-50%); }
+    .flap-cell .flip-panel {
+      position: absolute; top: 0; left: 0; width: 100%; height: 50%; background: var(--cell-bg);
+      transform-origin: bottom center; transform: rotateX(0deg);
+      display: flex; align-items: flex-end; justify-content: center; overflow: hidden;
+      backface-visibility: hidden; z-index: 10; border-radius: 2px 2px 0 0;
+    }
+    .flap-cell .flip-panel .char { transform: translateY(50%); }
+    .flap-cell.flipping .flip-panel { animation: flap-flip 0.18s cubic-bezier(0.55,0,1,0.45) forwards; }
+    @keyframes flap-flip { 0% { transform: rotateX(0deg); } 100% { transform: rotateX(-90deg); } }
+    .flap-cell .flip-panel-bottom {
+      position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: var(--cell-bg);
+      transform-origin: top center; transform: rotateX(90deg);
+      display: flex; align-items: flex-start; justify-content: center; overflow: hidden;
+      backface-visibility: hidden; z-index: 9; border-radius: 0 0 2px 2px;
+    }
+    .flap-cell .flip-panel-bottom .char { transform: translateY(-50%); }
+    .flap-cell.flipping .flip-panel-bottom { animation: flap-reveal 0.18s cubic-bezier(0.55,0,1,0.45) forwards; animation-delay: 0.18s; }
+    @keyframes flap-reveal { 0% { transform: rotateX(90deg); } 100% { transform: rotateX(0deg); } }
+
+    .flap-display .flap-cell { width: 52px; height: 72px; margin: 0 2px; }
+    .flap-display .flap-cell .char { font-size: 48px; }
+    .flap-standard .flap-cell { width: 28px; height: 38px; margin: 0 1px; }
+    .flap-standard .flap-cell .char { font-size: 22px; }
+    .flap-micro .flap-cell { width: 16px; height: 22px; margin: 0 1px; }
+    .flap-micro .flap-cell .char { font-size: 13px; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100; background: var(--housing); border-bottom: 1px solid var(--border);
+      padding: 0 48px; display: flex; align-items: center; height: 52px; gap: 0;
+    }
+    .nav-brand { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--flap-text); white-space: nowrap; }
+    .nav-season { font-size: 9px; color: var(--label); letter-spacing: 0.12em; text-transform: uppercase; margin-left: 20px; }
+    .nav-links { display: flex; gap: 24px; margin-left: auto; }
+    .nav-link {
+      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--label);
+      text-decoration: none; cursor: pointer; padding: 4px 0; border-bottom: 1px solid transparent; transition: color 0.15s;
+    }
+    .nav-link.active, .nav-link:hover { color: var(--flap-text); border-bottom-color: var(--accent); }
+
+    main { max-width: 1180px; margin: 0 auto; padding: 48px 48px 80px; }
+    section { margin-bottom: 72px; }
+    .section-label {
+      font-size: 10px; letter-spacing: 0.2em; color: var(--label); text-transform: uppercase;
+      margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    /* SCOREBOARD */
+    .game-board { display: flex; flex-direction: column; gap: 2px; }
+    .game-card {
+      background: var(--housing); border: 1px solid var(--border);
+      padding: 20px 28px; display: grid;
+      grid-template-columns: 80px 1fr 100px 100px 140px;
+      gap: 0 24px; align-items: center;
+    }
+    .game-field-label { font-size: 9px; letter-spacing: 0.15em; color: var(--label); text-transform: uppercase; }
+    .game-teams { display: flex; flex-direction: column; gap: 8px; }
+    .game-team-row { display: flex; align-items: center; gap: 12px; }
+    .game-team-name { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--flap-text); width: 220px; }
+    .game-meta-group { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .game-meta-label { font-size: 9px; color: var(--label); letter-spacing: 0.12em; text-transform: uppercase; }
+
+    /* LEAGUE TABLE */
+    .board-housing { background: var(--housing); border: 1px solid var(--border); }
+    .league-table { width: 100%; border-collapse: collapse; }
+    .league-table th { font-size: 9px; letter-spacing: 0.15em; color: var(--label); text-transform: uppercase; padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+    .league-table td { font-size: 11px; padding: 11px 12px; border-bottom: 1px solid rgba(244,237,225,0.05); color: var(--flap-text); vertical-align: middle; }
+    .td-status { font-size: 10px; font-weight: 700; }
+    .td-live { color: var(--status-good); } .td-warmup { color: var(--status-warn); }
+    .td-sched { color: var(--label); } .td-final { color: var(--text-dim); } .td-delay { color: var(--status-bad); }
+
+    /* STANDINGS */
+    .standings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .standings-div-label { font-size: 9px; letter-spacing: 0.15em; color: var(--accent); text-transform: uppercase; margin-bottom: 12px; }
+    .standings-table { width: 100%; border-collapse: collapse; }
+    .standings-table th { font-size: 9px; letter-spacing: 0.14em; color: var(--label); text-transform: uppercase; padding: 6px 8px; border-bottom: 1px solid var(--border); text-align: right; }
+    .standings-table th:first-child { text-align: left; }
+    .standings-table td { font-size: 11px; padding: 10px 8px; border-bottom: 1px solid rgba(244,237,225,0.04); text-align: right; color: var(--flap-text); }
+    .standings-table td:first-child { text-align: left; font-size: 10px; }
+    .streak-w { color: var(--status-good); } .streak-l { color: var(--status-bad); }
+
+    /* SCHEDULE */
+    .schedule-table { width: 100%; border-collapse: collapse; }
+    .schedule-table th { font-size: 9px; letter-spacing: 0.15em; color: var(--label); text-transform: uppercase; padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; }
+    .schedule-table td { font-size: 11px; padding: 10px 10px; border-bottom: 1px solid rgba(244,237,225,0.04); color: var(--flap-text); }
+    .sched-state { font-size: 10px; font-weight: 700; }
+
+    /* FIELD STATUS */
+    .field-status-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+    .field-status-cell { background: var(--housing); border: 1px solid var(--border); padding: 16px 20px; }
+    .fs-label { font-size: 9px; letter-spacing: 0.15em; color: var(--label); text-transform: uppercase; margin-bottom: 8px; }
+    .fs-val { display: flex; flex-wrap: nowrap; }
+
+    /* LEADERS */
+    .leaders-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; }
+    .leader-cell { background: var(--housing); border: 1px solid var(--border); padding: 16px 20px; }
+    .leader-stat-label { font-size: 9px; letter-spacing: 0.15em; color: var(--label); text-transform: uppercase; margin-bottom: 8px; }
+    .leader-stat-val { display: flex; flex-wrap: nowrap; margin-bottom: 6px; }
+    .leader-name { font-size: 9px; color: var(--label); text-transform: uppercase; letter-spacing: 0.1em; }
+
+    /* STORY */
+    .story-headline { font-size: 18px; font-weight: 700; letter-spacing: 0.06em; color: var(--flap-text); margin-bottom: 24px; line-height: 1.4; }
+    .story-copy { font-size: 12px; line-height: 1.9; color: var(--text-body); max-width: 640px; }
+    .story-copy p + p { margin-top: 18px; }
+
+    /* TEAMS */
+    .teams-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+    .team-card { background: var(--housing); border: 1px solid var(--border); padding: 20px; }
+    .team-name { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--flap-text); margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+    .team-field { font-size: 9px; color: var(--label); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 2px; margin-top: 6px; }
+    .team-val { font-size: 10px; color: var(--flap-text); letter-spacing: 0.06em; }
+    .team-record { display: flex; flex-wrap: nowrap; margin-top: 10px; }
+
+    .demo-btn {
+      background: none; border: 1px solid var(--border); color: var(--flap-text);
+      font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.15em;
+      text-transform: uppercase; padding: 12px 24px; cursor: pointer; transition: border-color 0.2s, color 0.2s;
+    }
+    .demo-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 24px 48px;
+      display: grid; grid-template-columns: repeat(6, 1fr);
+      gap: 16px; max-width: 1180px; margin: 0 auto;
+    }
+    .footer-field { font-size: 9px; letter-spacing: 0.12em; color: var(--label); text-transform: uppercase; }
+    .footer-label { font-size: 8px; color: var(--text-dim); margin-bottom: 4px; }
+
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      main { padding: 32px 20px 60px; }
+      .standings-grid, .field-status-grid, .leaders-grid, .teams-grid { grid-template-columns: 1fr 1fr; }
+      .game-card { grid-template-columns: 1fr; gap: 12px; }
+      footer { grid-template-columns: 1fr 1fr 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .flap-cell.flipping .flip-panel, .flap-cell.flipping .flip-panel-bottom { animation: none; }
+    }
+  </style>
+</head>
+<body><div style="position:fixed;right:12px;bottom:12px;z-index:2147483647;padding:8px 10px;background:#111;color:#fff;font:12px/1.3 monospace;border:1px solid #777">ARCHIVED SOURCE · SCRIPTS AND NETWORK DISABLED</div>
+
+<nav>
+  <div class="nav-brand">MUNICIPAL LEAGUE BASEBALL</div>
+  <div class="nav-season">2026 SEASON &middot; WK 14</div>
+  <div class="nav-links">
+    <a class="nav-link active" href="#scoreboard">LIVE</a>
+    <a class="nav-link" href="#standings">STANDINGS</a>
+    <a class="nav-link" href="#schedule">SCHEDULE</a>
+    <a class="nav-link" href="#teams">TEAMS</a>
+    <a class="nav-link" href="#story">ABOUT</a>
+  </div>
+</nav>
+
+<main>
+
+  <section id="scoreboard">
+    <div class="section-label">A-01 / FRIDAY NIGHT SCOREBOARD</div>
+    <div class="game-board" id="game-board"></div>
+    <div style="margin-top:16px;display:flex;align-items:center;gap:16px;">
+      <button class="demo-btn" id="advance-btn">ADVANCE GAME</button>
+      <span style="font-size:9px;letter-spacing:0.12em;color:var(--label);text-transform:uppercase;">Simulates a game event</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">A-02 / AROUND THE LEAGUE</div>
+    <div class="board-housing" style="padding:0 16px;">
+      <table class="league-table">
+        <thead>
+          <tr><th>FIELD</th><th>HOME</th><th>AWAY</th><th>TIME</th><th>STATUS</th></tr>
+        </thead>
+        <tbody id="league-table-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="standings">
+    <div class="section-label">B-01 / STANDINGS</div>
+    <div class="standings-grid">
+      <div>
+        <div class="standings-div-label">NORTH DIVISION</div>
+        <table class="standings-table" id="north-standings">
+          <thead><tr><th>TEAM</th><th>W</th><th>L</th><th>GB</th><th>STK</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div>
+        <div class="standings-div-label">SOUTH DIVISION</div>
+        <table class="standings-table" id="south-standings">
+          <thead><tr><th>TEAM</th><th>W</th><th>L</th><th>GB</th><th>STK</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">B-02 / LEAGUE LEADERS</div>
+    <div class="leaders-grid">
+      <div class="leader-cell">
+        <div class="leader-stat-label">BATTING AVG</div>
+        <div class="leader-stat-val flap-standard" id="avg-board"></div>
+        <div class="leader-name">R. CALLOWAY</div>
+      </div>
+      <div class="leader-cell">
+        <div class="leader-stat-label">HOME RUNS</div>
+        <div class="leader-stat-val flap-display" id="hr-board"></div>
+        <div class="leader-name">T. HARRIS</div>
+      </div>
+      <div class="leader-cell">
+        <div class="leader-stat-label">ERA</div>
+        <div class="leader-stat-val flap-standard" id="era-board"></div>
+        <div class="leader-name">J. OKAFOR</div>
+      </div>
+      <div class="leader-cell">
+        <div class="leader-stat-label">STRIKEOUTS</div>
+        <div class="leader-stat-val flap-standard" id="so-board"></div>
+        <div class="leader-name">J. OKAFOR</div>
+      </div>
+      <div class="leader-cell">
+        <div class="leader-stat-label">RUNS SCORED</div>
+        <div class="leader-stat-val flap-standard" id="runs-board"></div>
+        <div class="leader-name">D. BENTON</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="schedule">
+    <div class="section-label">C-01 / UPCOMING SCHEDULE</div>
+    <div class="board-housing" style="padding:0 16px;">
+      <table class="schedule-table">
+        <thead><tr><th>DATE</th><th>FIELD</th><th>HOME</th><th>AWAY</th><th>FIRST PITCH</th><th>STATE</th></tr></thead>
+        <tbody>
+          <tr><td>AUG 15</td><td>FIELD 01</td><td>HARRIS HARDWARE</td><td>MILLER ELECTRIC</td><td>6:10 PM</td><td class="sched-state td-live">LIVE</td></tr>
+          <tr><td>AUG 15</td><td>FIELD 02</td><td>CARTER BANK</td><td>WILSON FEED</td><td>6:30 PM</td><td class="sched-state td-warmup">WARMUPS</td></tr>
+          <tr><td>AUG 15</td><td>FIELD 03</td><td>THOMAS AUTO</td><td>MAIN ST MARKET</td><td>7:00 PM</td><td class="sched-state td-sched">SCHEDULED</td></tr>
+          <tr><td>AUG 22</td><td>FIELD 01</td><td>BENTON SUPPLY</td><td>PARKER DRUG</td><td>6:10 PM</td><td class="sched-state td-sched">SCHEDULED</td></tr>
+          <tr><td>AUG 22</td><td>FIELD 02</td><td>MILLER ELECTRIC</td><td>CARTER BANK</td><td>6:30 PM</td><td class="sched-state td-sched">SCHEDULED</td></tr>
+          <tr><td>AUG 29</td><td>FIELD 03</td><td>WILSON FEED</td><td>BENTON SUPPLY</td><td>6:10 PM</td><td class="sched-state td-sched">SCHEDULED</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">C-02 / FIELD STATUS</div>
+    <div class="field-status-grid">
+      <div class="field-status-cell"><div class="fs-label">FIELD 01</div><div class="fs-val flap-standard" id="fs-1"></div></div>
+      <div class="field-status-cell"><div class="fs-label">FIELD 02</div><div class="fs-val flap-standard" id="fs-2"></div></div>
+      <div class="field-status-cell"><div class="fs-label">FIELD 03</div><div class="fs-val flap-standard" id="fs-3"></div></div>
+      <div class="field-status-cell"><div class="fs-label">FIELD 04</div><div class="fs-val flap-standard" id="fs-4"></div></div>
+    </div>
+  </section>
+
+  <section id="story">
+    <div class="section-label">D-01 / LEAGUE STORY</div>
+    <div class="story-headline">"After work,<br>the lights come on."</div>
+    <div class="story-copy">
+      <p>Municipal League Baseball has been part of Harlan, Tennessee since 1961. What began as a few businesses sponsoring pickup teams on a borrowed field behind the fairgrounds has grown into eight clubs, four fields, and a Friday-night tradition that brings the whole town out.</p>
+      <p>Every team is sponsored by a local business. The name on the jersey is the name on the storefront down the street. Harris Hardware has fielded a team for thirty-one consecutive seasons. The Millers have been in Electric since before most of the current roster were born. Families have followed standings for two and three generations.</p>
+      <p>Grounds crews are volunteers. League officials are elected. The all-star break in July shuts down half the town for a weekend. The scoreboard at Field 01 was hand-built by a retired machinist in 1978 and has been maintained by his son every season since. This interface is a digital translation of that board &mdash; built to match its mechanical precision and its civic weight.</p>
+    </div>
+  </section>
+
+  <section id="teams">
+    <div class="section-label">D-02 / TEAMS</div>
+    <div class="teams-grid">
+      <div class="team-card">
+        <div class="team-name">HARRIS HARDWARE</div>
+        <div class="team-field">FOUNDED</div><div class="team-val">1974</div>
+        <div class="team-field">HOME FIELD</div><div class="team-val">FIELD 01</div>
+        <div class="team-field">DIVISION</div><div class="team-val">NORTH</div>
+        <div class="team-field">RECORD</div>
+        <div class="team-record flap-micro" id="team-hh-rec"></div>
+      </div>
+      <div class="team-card">
+        <div class="team-name">MILLER ELECTRIC</div>
+        <div class="team-field">FOUNDED</div><div class="team-val">1967</div>
+        <div class="team-field">HOME FIELD</div><div class="team-val">FIELD 02</div>
+        <div class="team-field">DIVISION</div><div class="team-val">NORTH</div>
+        <div class="team-field">RECORD</div>
+        <div class="team-record flap-micro" id="team-me-rec"></div>
+      </div>
+      <div class="team-card">
+        <div class="team-name">CARTER BANK</div>
+        <div class="team-field">FOUNDED</div><div class="team-val">1982</div>
+        <div class="team-field">HOME FIELD</div><div class="team-val">FIELD 01</div>
+        <div class="team-field">DIVISION</div><div class="team-val">SOUTH</div>
+        <div class="team-field">RECORD</div>
+        <div class="team-record flap-micro" id="team-cb-rec"></div>
+      </div>
+      <div class="team-card">
+        <div class="team-name">WILSON FEED</div>
+        <div class="team-field">FOUNDED</div><div class="team-val">1971</div>
+        <div class="team-field">HOME FIELD</div><div class="team-val">FIELD 03</div>
+        <div class="team-field">DIVISION</div><div class="team-val">SOUTH</div>
+        <div class="team-field">RECORD</div>
+        <div class="team-record flap-micro" id="team-wf-rec"></div>
+      </div>
+      <div class="team-card">
+        <div class="team-name">THOMAS AUTO</div>
+        <div class="team-field">FOUNDED</div><div class="team-val">1989</div>
+        <div class="team-field">HOME FIELD</div><div class="team-val">FIELD 02</div>
+        <div class="team-field">DIVISION</div><div class="team-val">NORTH</div>
+        <div class="team-field">RECORD</div>
+        <div class="team-record flap-micro" id="team-ta-rec"></div>
+      </div>
+      <div class="team-card">
+        <div class="team-name">MAIN ST MARKET</div>
+        <div class="team-field">FOUNDED</div><div class="team-val">1993</div>
+        <div class="team-field">HOME FIELD</div><div class="team-val">FIELD 03</div>
+        <div class="team-field">DIVISION</div><div class="team-val">NORTH</div>
+        <div class="team-field">RECORD</div>
+        <div class="team-record flap-micro" id="team-ms-rec"></div>
+      </div>
+      <div class="team-card">
+        <div class="team-name">BENTON SUPPLY</div>
+        <div class="team-field">FOUNDED</div><div class="team-val">1978</div>
+        <div class="team-field">HOME FIELD</div><div class="team-val">FIELD 04</div>
+        <div class="team-field">DIVISION</div><div class="team-val">SOUTH</div>
+        <div class="team-field">RECORD</div>
+        <div class="team-record flap-micro" id="team-bs-rec"></div>
+      </div>
+      <div class="team-card">
+        <div class="team-name">PARKER DRUG</div>
+        <div class="team-field">FOUNDED</div><div class="team-val">1965</div>
+        <div class="team-field">HOME FIELD</div><div class="team-val">FIELD 04</div>
+        <div class="team-field">DIVISION</div><div class="team-val">SOUTH</div>
+        <div class="team-field">RECORD</div>
+        <div class="team-record flap-micro" id="team-pd-rec"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-field"><div class="footer-label">SEASON</div>2026</div>
+  <div class="footer-field"><div class="footer-label">WEEK</div>14 OF 22</div>
+  <div class="footer-field"><div class="footer-label">LEAGUE OFFICE</div>HARLAN, TN</div>
+  <div class="footer-field"><div class="footer-label">FIELD STATUS</div>3 OF 4 OPEN</div>
+  <div class="footer-field"><div class="footer-label">NEXT FIRST PITCH</div>6:10 PM FRI</div>
+  <div class="footer-field"><div class="footer-label">LAST SYNC</div>20:01 LOCAL</div>
+</footer>
+
+
+</body>
+</html>

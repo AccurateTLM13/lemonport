@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#e7e4d8">
+<title>NORTHSTAR OBSERVATORY — NS-TEL-OPS-014 — Telescope Operations Sheet</title>
+<meta name="description" content="Northstar Observatory telescope operations sheet: observation window, instrument status, alignment procedure, optical path figure, observation records, and calibration notice for night 26-0814.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #e7e4d8;
+  --paper-raised: #f0ede3;
+  --ink: #1d1d1a;
+  --ink-soft: #4c4c46;
+  --ink-muted: #77766e;
+  --rule: #9d9a8e;
+  --rule-strong: #45453f;
+  --revision: #a54532;
+  --warning: #c18a28;
+  --verified: #4f7455;
+  --display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --index-w: 148px;
+  --annot-w: 176px;
+  --content-max: 760px;
+  --motion: 140ms;
+  --motion-long: 170ms;
+  --ease: linear;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  background: var(--paper);
+  color: var(--ink);
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.55;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-variant-numeric: tabular-nums;
+}
+img,
+svg {
+  max-width: 100%;
+  display: block;
+}
+button,
+a {
+  font-family: inherit;
+}
+button {
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+}
+a {
+  color: var(--ink);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+a:hover {
+  color: var(--revision);
+}
+:focus {
+  outline: none;
+}
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.skip {
+  position: absolute;
+  left: 12px;
+  top: -48px;
+  z-index: 40;
+  padding: 8px 12px;
+  background: var(--paper-raised);
+  border: 1px solid var(--rule-strong);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.skip:focus {
+  top: 12px;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+.doc-chrome {
+  border-bottom: 2px solid var(--rule-strong);
+  background: var(--paper);
+}
+.doc-chrome-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 18px 24px 16px;
+}
+.doc-kicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.doc-kicker b {
+  font-weight: 600;
+  color: var(--ink);
+}
+.doc-title-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px 32px;
+  align-items: end;
+}
+.doc-title {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 0;
+}
+.doc-sub {
+  margin: 8px 0 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.doc-ident {
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 18px;
+  row-gap: 4px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.doc-ident dt {
+  color: var(--ink-muted);
+}
+.doc-ident dd {
+  margin: 0;
+  color: var(--ink);
+  font-weight: 600;
+}
+.shell {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: var(--index-w) minmax(0, 1fr);
+  gap: 0 28px;
+  padding: 0 24px 96px;
+  align-items: start;
+}
+.index {
+  position: sticky;
+  top: 0;
+  padding: 28px 0 40px;
+  border-right: 1px solid var(--rule);
+  min-height: 100vh;
+}
+.index-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 0 0 14px;
+}
+.index-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.index-link {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 8px;
+  align-items: baseline;
+  padding: 7px 10px 7px 8px;
+  border-left: 2px solid transparent;
+  text-decoration: none;
+  color: var(--ink-soft);
+}
+.index-link:hover {
+  color: var(--ink);
+}
+.index-link.is-active {
+  color: var(--ink);
+  border-left-color: var(--ink);
+}
+.index-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.index-name {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+.page {
+  min-width: 0;
+  padding-top: 8px;
+}
+.block {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--annot-w);
+  gap: 0 28px;
+  padding: 36px 0 40px;
+  border-bottom: 1px solid var(--rule);
+}
+.block:last-of-type {
+  border-bottom: 0;
+}
+.block-head {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 16px 20px;
+  align-items: end;
+  margin-bottom: 28px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule-strong);
+}
+.sec-num {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 56px;
+  line-height: 0.8;
+  letter-spacing: -0.02em;
+}
+.sec-title-wrap {
+  min-width: 0;
+}
+.sec-code {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 0 0 6px;
+}
+.sec-title {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(22px, 3vw, 32px);
+  line-height: 0.95;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0;
+}
+.content {
+  min-width: 0;
+}
+.annot {
+  min-width: 0;
+  padding-top: 2px;
+  border-left: 1px solid var(--rule);
+  padding-left: 16px;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.45;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.annot p {
+  margin: 0 0 10px;
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.annot-kicker {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--ink-muted);
+}
+.annot-item {
+  display: block;
+  margin: 0 0 6px;
+}
+.annot-item b {
+  font-weight: 600;
+  color: var(--ink);
+}
+.mark-rev {
+  color: var(--revision);
+  font-weight: 600;
+}
+.mark-ok {
+  color: var(--verified);
+  font-weight: 600;
+}
+.mark-warn {
+  color: var(--ink);
+  font-weight: 600;
+  border-bottom: 2px solid var(--warning);
+}
+.fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+}
+.field {
+  padding: 14px 16px 16px 0;
+  border-bottom: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+}
+.field:nth-child(even) {
+  padding-right: 0;
+  padding-left: 16px;
+  border-right: 0;
+}
+.field-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 6px;
+}
+.field-value {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.field-ref {
+  margin-top: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.state-box {
+  display: inline-block;
+  border: 1px solid var(--rule-strong);
+  padding: 4px 8px 3px;
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  background: var(--paper-raised);
+}
+.state-box[data-state="READY"] {
+  border-color: var(--verified);
+}
+.state-box[data-state="TRACKING"],
+.state-box[data-state="EXPOSING"] {
+  border-color: var(--rule-strong);
+}
+.state-box[data-state="COMPLETE"] {
+  border-color: var(--verified);
+  color: var(--verified);
+}
+.cmd-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  margin-top: 20px;
+  align-items: stretch;
+}
+.cmd {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 28px;
+  min-width: 220px;
+  padding: 10px 12px;
+  border: 1px solid var(--rule-strong);
+  background: var(--paper-raised);
+  border-radius: 1px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  transition: border-color var(--motion) var(--ease), background-color var(--motion) var(--ease);
+}
+.cmd:hover {
+  border-color: var(--ink);
+}
+.cmd:disabled,
+.cmd.is-done {
+  border-color: var(--rule);
+  color: var(--ink-soft);
+  cursor: default;
+}
+.cmd small {
+  font-weight: 400;
+  color: var(--ink-muted);
+}
+.log {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+.log li {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 12px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.log time {
+  color: var(--ink-muted);
+}
+.spec {
+  width: 100%;
+  border-collapse: collapse;
+}
+.spec th,
+.spec td {
+  text-align: left;
+  vertical-align: baseline;
+  padding: 10px 12px 10px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.spec th {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.spec td {
+  font-size: 14px;
+}
+.spec .p {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  width: 34%;
+}
+.spec .v {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.spec .t {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.spec .s {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+.spec tr.is-rev .v {
+  color: var(--ink);
+}
+.spec .rev {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--revision);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity var(--motion) var(--ease), transform var(--motion) var(--ease), color 160ms var(--ease);
+}
+.spec tr.is-rev .rev {
+  opacity: 1;
+  transform: none;
+}
+.spec tr.is-rev .rev.is-settled {
+  color: var(--ink-muted);
+}
+.lede {
+  margin: 0 0 18px;
+  max-width: 58ch;
+  color: var(--ink);
+  font-size: 15px;
+}
+.lede.editorial {
+  max-width: 62ch;
+  font-size: 16px;
+  line-height: 1.65;
+}
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.step {
+  display: grid;
+  grid-template-columns: 28px 36px minmax(0, 1fr) auto;
+  gap: 8px 10px;
+  align-items: start;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.step-mark {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  transition: color var(--motion) var(--ease);
+}
+.step.is-done .step-mark {
+  color: var(--verified);
+}
+.step-id {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+.step-body h3 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.step-body p {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+  max-width: 52ch;
+}
+.step-state {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  white-space: nowrap;
+  text-align: right;
+  min-width: 118px;
+}
+.step.is-current {
+  border-left: 2px solid var(--ink);
+  padding-left: 10px;
+  margin-left: -12px;
+}
+.step.is-current .step-state {
+  color: var(--ink);
+  font-weight: 600;
+}
+.step.is-done .step-state {
+  color: var(--verified);
+}
+.step.is-current .step-body h3 {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+.figure-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 16px 20px;
+  align-items: start;
+}
+.figure-frame {
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  padding: 12px 8px 8px;
+  border-radius: 1px;
+}
+.figure-cap {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding: 0 8px 8px;
+}
+.opt-svg {
+  width: 100%;
+  height: auto;
+}
+.callout {
+  cursor: pointer;
+}
+.callout circle {
+  fill: var(--paper-raised);
+  stroke: var(--rule-strong);
+  stroke-width: 1.25;
+  transition: fill var(--motion) var(--ease), stroke var(--motion) var(--ease);
+}
+.callout text {
+  fill: var(--ink);
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.callout.is-on circle,
+.callout:focus-visible circle {
+  fill: var(--ink);
+  stroke: var(--ink);
+}
+.callout.is-on text,
+.callout:focus-visible text {
+  fill: var(--paper);
+}
+.leader {
+  stroke: var(--rule);
+  stroke-width: 1;
+  fill: none;
+}
+.note-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.note {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 0 10px 10px;
+  border-left: 2px solid transparent;
+  border-bottom: 1px solid var(--rule);
+  border-radius: 0;
+  transition: border-color var(--motion) var(--ease);
+}
+.note.is-on {
+  border-left-color: var(--ink);
+}
+.note-id {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.note-copy {
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  text-transform: none;
+  letter-spacing: 0;
+}
+.table-scroll {
+  overflow-x: auto;
+  border-top: 1px solid var(--rule-strong);
+}
+.records {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+}
+.records th,
+.records td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--rule);
+  white-space: nowrap;
+  font-size: 13px;
+}
+.records th {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  background: var(--paper);
+}
+.records td {
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.records tbody tr {
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  transition: border-color var(--motion) var(--ease);
+}
+.records tbody tr:hover td {
+  color: var(--ink);
+}
+.records tbody tr[aria-selected="true"] {
+  border-left-color: var(--ink);
+}
+.records tbody tr[aria-selected="true"] td:last-child::after {
+  content: " SELECTED";
+  margin-left: 8px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+}
+.st-complete {
+  color: var(--verified);
+  font-weight: 600;
+}
+.st-ready,
+.st-queued {
+  color: var(--ink);
+  font-weight: 600;
+}
+.st-aborted {
+  color: var(--revision);
+  font-weight: 600;
+}
+.see-note {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--ink);
+  padding: 0 0 2px;
+  border-radius: 0;
+  transition: border-color var(--motion) var(--ease), color var(--motion) var(--ease);
+}
+.see-note[aria-expanded="true"] {
+  color: var(--revision);
+  border-bottom-color: var(--revision);
+}
+.field-note {
+  margin-top: 16px;
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height var(--motion-long) var(--ease), opacity var(--motion) var(--ease);
+}
+.field-note.is-open {
+  max-height: 520px;
+  opacity: 1;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+}
+.note-sheet-id {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--revision);
+  margin: 0 0 8px;
+}
+.note-sheet h3 {
+  margin: 0 0 10px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.note-sheet p {
+  margin: 0 0 12px;
+  max-width: 58ch;
+  font-size: 15px;
+  color: var(--ink);
+}
+.note-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.notice {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 16px 20px;
+  padding: 4px 0 0;
+}
+.notice-level {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+  border-left: 3px solid var(--warning);
+  padding-left: 10px;
+  color: var(--ink);
+}
+.notice-ref {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.notice h3 {
+  margin: 0 0 10px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.notice p {
+  margin: 0 0 12px;
+  max-width: 58ch;
+}
+.limits {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+.limits th,
+.limits td {
+  text-align: left;
+  padding: 8px 12px 8px 0;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.limits th {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.prose h3 {
+  margin: 28px 0 10px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.prose p {
+  margin: 0 0 14px;
+  max-width: 62ch;
+  font-size: 16px;
+  line-height: 1.65;
+}
+.prose ul {
+  margin: 0 0 16px;
+  padding: 0 0 0 18px;
+  max-width: 62ch;
+}
+.prose li {
+  margin: 0 0 6px;
+  font-size: 15px;
+  line-height: 1.55;
+}
+.change {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+.change th,
+.change td {
+  text-align: left;
+  padding: 7px 10px 7px 0;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.change th {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--ink-muted);
+}
+.doc-foot {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 18px 24px 40px;
+  border-top: 2px solid var(--rule-strong);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+@media (max-width: 1100px) {
+  .shell {
+    grid-template-columns: 128px minmax(0, 1fr);
+    gap: 0 20px;
+  }
+  .block {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .annot {
+    border-left: 0;
+    padding-left: 0;
+    border-top: 1px solid var(--rule);
+    padding-top: 14px;
+  }
+  .figure-layout {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 720px) {
+  .doc-chrome-inner,
+  .shell,
+  .doc-foot {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .doc-title-row,
+  .doc-ident {
+    grid-template-columns: 1fr;
+  }
+  .shell {
+    grid-template-columns: 1fr;
+    padding-top: 0;
+  }
+  .index {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    min-height: 0;
+    padding: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--rule-strong);
+    background: var(--paper);
+  }
+  .index-label {
+    display: none;
+  }
+  .index-list {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 0;
+    padding: 8px 0;
+  }
+  .index-link {
+    grid-template-columns: auto;
+    min-width: max-content;
+    border-left: 0;
+    border-bottom: 2px solid transparent;
+    padding: 8px 12px;
+  }
+  .index-link.is-active {
+    border-left-color: transparent;
+    border-bottom-color: var(--ink);
+  }
+  .index-name {
+    display: none;
+  }
+  .fields {
+    grid-template-columns: 1fr;
+  }
+  .field,
+  .field:nth-child(even) {
+    padding-left: 0;
+    padding-right: 0;
+    border-right: 0;
+  }
+  .step {
+    grid-template-columns: 24px 28px minmax(0, 1fr);
+  }
+  .step-state {
+    grid-column: 3;
+    text-align: left;
+    min-width: 0;
+  }
+  .notice {
+    grid-template-columns: 1fr;
+  }
+  .sec-num {
+    font-size: 44px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body><div style="position:fixed;right:12px;bottom:12px;z-index:2147483647;padding:8px 10px;background:#111;color:#fff;font:12px/1.3 monospace;border:1px solid #777">ARCHIVED SOURCE · SCRIPTS AND NETWORK DISABLED</div>
+<a class="skip" href="#content">Skip to content</a>
+<div class="live" id="live" aria-live="polite" aria-atomic="true"></div>
+<header class="doc-chrome">
+  <div class="doc-chrome-inner">
+    <div class="doc-kicker">
+      <span>Facility document / operations</span>
+      <span><b>Open</b> · Controlled copy on station</span>
+    </div>
+    <div class="doc-title-row">
+      <div>
+        <h1 class="doc-title">Northstar Observatory</h1>
+        <p class="doc-sub">Telescope operations sheet · Ritchey-Chrétien 1.8 m</p>
+      </div>
+      <dl class="doc-ident">
+        <dt>Sheet</dt>
+        <dd>NS-TEL-OPS-014</dd>
+        <dt>Rev</dt>
+        <dd>03</dd>
+        <dt>Date</dt>
+        <dd>14 Aug 2026</dd>
+        <dt>Night</dt>
+        <dd>26-0814</dd>
+      </dl>
+    </div>
+  </div>
+</header>
+<div class="shell">
+<nav class="index" aria-label="Section index">
+  <p class="index-label">Index</p>
+  <ol class="index-list">
+    <li><a class="index-link is-active" href="#s01"><span class="index-num">01</span><span class="index-name">Observation window</span></a></li>
+    <li><a class="index-link" href="#s02"><span class="index-num">02</span><span class="index-name">Instrument status</span></a></li>
+    <li><a class="index-link" href="#s03"><span class="index-num">03</span><span class="index-name">Alignment procedure</span></a></li>
+    <li><a class="index-link" href="#s04"><span class="index-num">04</span><span class="index-name">Figure 07 optical path</span></a></li>
+    <li><a class="index-link" href="#s05"><span class="index-num">05</span><span class="index-name">Observation record</span></a></li>
+    <li><a class="index-link" href="#s06"><span class="index-num">06</span><span class="index-name">Field note</span></a></li>
+    <li><a class="index-link" href="#s07"><span class="index-num">07</span><span class="index-name">Calibration notice</span></a></li>
+    <li><a class="index-link" href="#s08"><span class="index-num">08</span><span class="index-name">About the facility</span></a></li>
+  </ol>
+</nav>
+<main class="page" id="content">
+<section class="block" id="s01" data-section="01">
+  <header class="block-head">
+    <div class="sec-num" aria-hidden="true">01</div>
+    <div class="sec-title-wrap">
+      <p class="sec-code">01 / Observation window</p>
+      <h2 class="sec-title">Assigned window · NGC 7000</h2>
+    </div>
+  </header>
+  <div class="content">
+    <p class="lede">Tonight’s primary assignment is the west wall of NGC 7000 through the 1.8 m Ritchey-Chrétien. The window is recorded below. Advance the window only after the mount is homed and the alignment solution in section 03 is complete or waived by the duty astronomer.</p>
+    <div class="fields">
+      <div class="field">
+        <span class="field-label">Target</span>
+        <div class="field-value">NGC 7000</div>
+        <div class="field-ref">Catalogue / North America Nebula · west wall</div>
+      </div>
+      <div class="field">
+        <span class="field-label">Instrument</span>
+        <div class="field-value">Ritchey-Chrétien 1.8 m</div>
+        <div class="field-ref">ID / NS-RC-18 · focus f/8 · port A</div>
+      </div>
+      <div class="field">
+        <span class="field-label">Window</span>
+        <div class="field-value">22:42–01:16</div>
+        <div class="field-ref">Local · night 26-0814 · LST 19:08 at open</div>
+      </div>
+      <div class="field">
+        <span class="field-label">State</span>
+        <div class="field-value"><span class="state-box" id="window-state" data-state="READY">READY</span></div>
+        <div class="field-ref" id="window-state-ref">Mark / operator · recorded 22:42:00</div>
+      </div>
+    </div>
+    <p class="field-ref" style="margin-top:16px">See observation / <a href="#rec-26-0814-A" id="see-obs">26-0814-A</a></p>
+    <div class="cmd-row">
+      <button class="cmd" type="button" id="advance-window" aria-describedby="advance-hint">
+        <span>Advance window</span>
+        <small>01.1</small>
+      </button>
+    </div>
+    <p class="field-ref" id="advance-hint">Command plate records READY → TRACKING → EXPOSING → COMPLETE. Each change writes a timestamp to the window log.</p>
+    <ol class="log" id="window-log">
+      <li><time datetime="2026-08-14T22:41:06">22:41:06</time><span>Window assigned · NGC 7000</span></li>
+      <li><time datetime="2026-08-14T22:41:58">22:41:58</time><span>Thermal soak complete · 18 min</span></li>
+      <li><time datetime="2026-08-14T22:42:00">22:42:00</time><span>State / READY</span></li>
+    </ol>
+  </div>
+  <aside class="annot" aria-label="Section 01 annotations">
+    <span class="annot-kicker">Annotation</span>
+    <span class="annot-item"><b>Sheet</b> 01.1</span>
+    <span class="annot-item"><b>Record</b> 26-0814-A</span>
+    <span class="annot-item"><b>Filter</b> Hα 656.3 nm</span>
+    <span class="annot-item"><b>Exposure</b> 1800 s planned</span>
+    <span class="annot-item"><b>Guider</b> Off-axis · TYC 2684-1238-1</span>
+    <span class="annot-item"><b>Rev</b> 03</span>
+    <p>Do not open the shutter until STATE reads TRACKING and tracking error in 02 is inside 0.40″.</p>
+  </aside>
+</section>
+<section class="block" id="s02" data-section="02">
+  <header class="block-head">
+    <div class="sec-num" aria-hidden="true">02</div>
+    <div class="sec-title-wrap">
+      <p class="sec-code">02 / Instrument status</p>
+      <h2 class="sec-title">Specification · NS-RC-18</h2>
+    </div>
+  </header>
+  <div class="content">
+    <p class="lede">Values are read from the instrument bus at the time of last poll. They are not a dashboard. When the observation window advances, selected rows receive a temporary REV mark. Tolerances are from NS-TEL-SPEC-18 Rev 07.</p>
+    <table class="spec">
+      <thead>
+        <tr>
+          <th scope="col">Parameter</th>
+          <th scope="col">Value</th>
+          <th scope="col">Tolerance</th>
+          <th scope="col">State</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-param="temp">
+          <td class="p">Primary temp</td>
+          <td class="v">−8.4 °C <span class="rev" hidden>REV</span></td>
+          <td class="t">± 0.5 °C of set</td>
+          <td class="s" data-status>Nominal</td>
+        </tr>
+        <tr data-param="delta">
+          <td class="p">Mirror delta</td>
+          <td class="v">0.12 K <span class="rev" hidden>REV</span></td>
+          <td class="t">Max 0.30 K</td>
+          <td class="s" data-status>Nominal</td>
+        </tr>
+        <tr data-param="humid">
+          <td class="p">Dome humidity</td>
+          <td class="v">18 % <span class="rev" hidden>REV</span></td>
+          <td class="t">Max 40 %</td>
+          <td class="s" data-status>Nominal</td>
+        </tr>
+        <tr data-param="wind">
+          <td class="p">Wind</td>
+          <td class="v">4.2 m/s <span class="rev" hidden>REV</span></td>
+          <td class="t">Max 12 m/s</td>
+          <td class="s" data-status>Nominal</td>
+        </tr>
+        <tr data-param="track">
+          <td class="p">Tracking error</td>
+          <td class="v">0.18″ <span class="rev" hidden>REV</span></td>
+          <td class="t">Max 0.40″ rms</td>
+          <td class="s" data-status>Nominal</td>
+        </tr>
+        <tr data-param="seeing">
+          <td class="p">Seeing</td>
+          <td class="v">0.94″ <span class="rev" hidden>REV</span></td>
+          <td class="t">Nom 0.80–1.20″</td>
+          <td class="s" data-status>Nominal</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="field-ref" style="margin-top:14px">Set point primary −8.5 °C · last poll 22:41:51 · bus NS-INST-02</p>
+  </div>
+  <aside class="annot" aria-label="Section 02 annotations">
+    <span class="annot-kicker">Annotation</span>
+    <span class="annot-item"><b>Spec</b> NS-TEL-SPEC-18</span>
+    <span class="annot-item"><b>Bus</b> NS-INST-02</span>
+    <span class="annot-item"><b>Poll</b> 12 s</span>
+    <span class="annot-item"><b>See</b> 04.2 thermal</span>
+    <p>If mirror delta exceeds 0.30 K, halt exposure and consult the calibration notice in section 07. Do not compensate by focus alone.</p>
+  </aside>
+</section>
+<section class="block" id="s03" data-section="03">
+  <header class="block-head">
+    <div class="sec-num" aria-hidden="true">03</div>
+    <div class="sec-title-wrap">
+      <p class="sec-code">03 / Alignment procedure</p>
+      <h2 class="sec-title">Mount solution · night start</h2>
+    </div>
+  </header>
+  <div class="content">
+    <p class="lede">Complete the six steps in order. Mark a step only after the stated check is true. The current step is underlined and labeled CURRENT. Completed steps receive an operator mark and a timestamp. Reset returns the sheet to step 01 without clearing the observation window.</p>
+    <ol class="steps" id="procedure">
+      <li class="step is-current" data-step="0">
+        <span class="step-mark" aria-hidden="true">[ ]</span>
+        <span class="step-id">01</span>
+        <div class="step-body">
+          <h3>Home mount</h3>
+          <p>Drive both axes to encoded home. Confirm azimuth and altitude limit flags are clear before any slew to target.</p>
+        </div>
+        <span class="step-state">Current</span>
+      </li>
+      <li class="step" data-step="1">
+        <span class="step-mark" aria-hidden="true">[ ]</span>
+        <span class="step-id">02</span>
+        <div class="step-body">
+          <h3>Verify encoders</h3>
+          <p>Compare tape encoder and motor encoder on each axis. Difference must remain inside 2.0 arcsec after a 5° jog and return.</p>
+        </div>
+        <span class="step-state">Pending</span>
+      </li>
+      <li class="step" data-step="2">
+        <span class="step-mark" aria-hidden="true">[ ]</span>
+        <span class="step-id">03</span>
+        <div class="step-body">
+          <h3>Acquire reference</h3>
+          <p>Center TYC 2684-1238-1 on the guider. Record pixel centroid. Do not use NGC 7000 itself as the pointing reference.</p>
+        </div>
+        <span class="step-state">Pending</span>
+      </li>
+      <li class="step" data-step="3">
+        <span class="step-mark" aria-hidden="true">[ ]</span>
+        <span class="step-id">04</span>
+        <div class="step-body">
+          <h3>Correct offset</h3>
+          <p>Apply the measured pointing offset to the mount model. Re-center the reference and confirm residual below 0.30″.</p>
+        </div>
+        <span class="step-state">Pending</span>
+      </li>
+      <li class="step" data-step="4">
+        <span class="step-mark" aria-hidden="true">[ ]</span>
+        <span class="step-id">05</span>
+        <div class="step-body">
+          <h3>Verify track</h3>
+          <p>Enable sidereal track for 60 s. Guider rms must remain inside 0.40″. If wind exceeds 8 m/s, extend the sample to 90 s.</p>
+        </div>
+        <span class="step-state">Pending</span>
+      </li>
+      <li class="step" data-step="5">
+        <span class="step-mark" aria-hidden="true">[ ]</span>
+        <span class="step-id">06</span>
+        <div class="step-body">
+          <h3>Record solution</h3>
+          <p>Write the pointing solution to night 26-0814. Attach the operator ident and the reference star used. Close the procedure.</p>
+        </div>
+        <span class="step-state">Pending</span>
+      </li>
+    </ol>
+    <div class="cmd-row">
+      <button class="cmd" type="button" id="mark-step">
+        <span>Mark step</span>
+        <small>03.1</small>
+      </button>
+      <button class="cmd" type="button" id="reset-procedure">
+        <span>Reset procedure</span>
+        <small>03.2</small>
+      </button>
+    </div>
+  </div>
+  <aside class="annot" aria-label="Section 03 annotations">
+    <span class="annot-kicker">Annotation</span>
+    <span class="annot-item"><b>Procedure</b> NS-ALG-06</span>
+    <span class="annot-item"><b>Axes</b> Az / Alt</span>
+    <span class="annot-item"><b>Ref star</b> TYC 2684-1238-1</span>
+    <span class="annot-item" id="proc-annot"><b>Progress</b> 01 of 06 current</span>
+    <p>If encoder disagreement exceeds 2.0 arcsec, stop. Do not continue to acquire reference. Call instrument support on loop 4.</p>
+  </aside>
+</section>
+<section class="block" id="s04" data-section="04">
+  <header class="block-head">
+    <div class="sec-num" aria-hidden="true">04</div>
+    <div class="sec-title-wrap">
+      <p class="sec-code">04 / Figure 07</p>
+      <h2 class="sec-title">Optical path · Ritchey-Chrétien</h2>
+    </div>
+  </header>
+  <div class="content">
+    <p class="lede">Side elevation of NS-RC-18. Select a numbered callout to mark the matching note. Callouts remain on the figure at every width. On a narrow sheet the notes sit below the drawing.</p>
+    <div class="figure-layout">
+      <div class="figure-frame">
+        <p class="figure-cap" id="fig07-title">Fig. 07 — Optical path · NS-RC-18 · view / elevation</p>
+        <svg class="opt-svg" viewBox="0 0 420 540" role="img" aria-labelledby="fig07-title fig07-desc">
+          <desc id="fig07-desc">Line diagram of a Ritchey-Chrétien telescope: incoming beam at the aperture, hyperbolic primary at the base, hyperbolic secondary near the top, Cassegrain path through the primary perforation, and focuser with instrument port below the cell.</desc>
+          <g stroke="#9d9a8e" stroke-width="1" fill="none">
+            <rect x="132" y="36" width="156" height="372"/>
+            <line x1="132" y1="36" x2="288" y2="36"/>
+            <line x1="176" y1="36" x2="176" y2="22"/>
+            <line x1="244" y1="36" x2="244" y2="22"/>
+            <line x1="176" y1="22" x2="244" y2="22"/>
+          </g>
+          <g stroke="#1d1d1a" stroke-width="1.25" fill="none">
+            <path d="M148 392 Q210 348 272 392"/>
+            <path d="M148 392 L154 404 L266 404 L272 392"/>
+            <path d="M192 96 Q210 112 228 96"/>
+            <path d="M194 94 L226 94"/>
+            <rect x="198" y="404" width="24" height="52"/>
+            <rect x="186" y="456" width="48" height="28"/>
+            <line x1="204" y1="484" x2="204" y2="508"/>
+            <line x1="216" y1="484" x2="216" y2="508"/>
+            <rect x="188" y="508" width="44" height="14"/>
+          </g>
+          <g stroke="#45453f" stroke-width="1" fill="none" stroke-dasharray="4 3">
+            <line x1="186" y1="24" x2="198" y2="392"/>
+            <line x1="234" y1="24" x2="222" y2="392"/>
+            <line x1="210" y1="24" x2="210" y2="96"/>
+            <line x1="198" y1="392" x2="210" y2="104"/>
+            <line x1="222" y1="392" x2="210" y2="104"/>
+            <line x1="210" y1="112" x2="210" y2="508"/>
+          </g>
+          <g fill="none" stroke="#9d9a8e" stroke-width="1">
+            <line x1="204" y1="392" x2="216" y2="392"/>
+            <rect x="202" y="368" width="16" height="24"/>
+          </g>
+          <text x="300" y="28" fill="#4c4c46" font-family="IBM Plex Mono, monospace" font-size="9">INCOMING</text>
+          <text x="300" y="40" fill="#4c4c46" font-family="IBM Plex Mono, monospace" font-size="9">BEAM</text>
+          <text x="300" y="400" fill="#4c4c46" font-family="IBM Plex Mono, monospace" font-size="9">PRIMARY</text>
+          <text x="300" y="468" fill="#4c4c46" font-family="IBM Plex Mono, monospace" font-size="9">FOCUSER</text>
+          <line class="leader" x1="54" y1="30" x2="176" y2="30"/>
+          <line class="leader" x1="54" y1="104" x2="192" y2="104"/>
+          <line class="leader" x1="54" y1="380" x2="160" y2="380"/>
+          <line class="leader" x1="366" y1="380" x2="252" y2="380"/>
+          <line class="leader" x1="366" y1="500" x2="232" y2="500"/>
+          <g class="callout is-on" tabindex="0" role="button" aria-pressed="true" data-note="01" aria-label="Callout 01 aperture and incoming beam">
+            <circle cx="42" cy="30" r="14"/>
+            <text x="42" y="34" text-anchor="middle">01</text>
+          </g>
+          <g class="callout" tabindex="0" role="button" aria-pressed="false" data-note="02" aria-label="Callout 02 primary mirror">
+            <circle cx="42" cy="380" r="14"/>
+            <text x="42" y="384" text-anchor="middle">02</text>
+          </g>
+          <g class="callout" tabindex="0" role="button" aria-pressed="false" data-note="03" aria-label="Callout 03 secondary mirror">
+            <circle cx="42" cy="104" r="14"/>
+            <text x="42" y="108" text-anchor="middle">03</text>
+          </g>
+          <g class="callout" tabindex="0" role="button" aria-pressed="false" data-note="04" aria-label="Callout 04 central perforation and Cassegrain path">
+            <circle cx="378" cy="380" r="14"/>
+            <text x="378" y="384" text-anchor="middle">04</text>
+          </g>
+          <g class="callout" tabindex="0" role="button" aria-pressed="false" data-note="05" aria-label="Callout 05 focuser and instrument port">
+            <circle cx="378" cy="500" r="14"/>
+            <text x="378" y="504" text-anchor="middle">05</text>
+          </g>
+        </svg>
+      </div>
+      <div class="note-rail" id="fig-notes" role="list">
+        <button class="note is-on" type="button" role="listitem" id="note-01" data-note="01" aria-pressed="true">
+          <span class="note-id">01 Aperture</span>
+          <span class="note-copy">Incoming collimated beam. Clear aperture 1800 mm. Central obstruction 0.38 by diameter from the secondary and baffle.</span>
+        </button>
+        <button class="note" type="button" role="listitem" id="note-02" data-note="02" aria-pressed="false">
+          <span class="note-id">02 Primary mirror</span>
+          <span class="note-copy">Hyperbolic concave Zerodur substrate. f/2.4. Actively supported. Surface figure λ/20 at 632.8 nm.</span>
+        </button>
+        <button class="note" type="button" role="listitem" id="note-03" data-note="03" aria-pressed="false">
+          <span class="note-id">03 Secondary mirror</span>
+          <span class="note-copy">Hyperbolic convex. Diameter 412 mm. Motorized tip-tilt and focus. Magnification 3.33×.</span>
+        </button>
+        <button class="note" type="button" role="listitem" id="note-04" data-note="04" aria-pressed="false">
+          <span class="note-id">04 Cassegrain path</span>
+          <span class="note-copy">Return beam through the primary perforation. Baffle length 620 mm. Stray-light control per NS-OPT-07.</span>
+        </button>
+        <button class="note" type="button" role="listitem" id="note-05" data-note="05" aria-pressed="false">
+          <span class="note-id">05 Instrument port</span>
+          <span class="note-copy">Ritchey-Chrétien focus f/8. Back focal distance 280 mm. Guider pickoff and filter wheel ahead of the science camera.</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <aside class="annot" aria-label="Section 04 annotations">
+    <span class="annot-kicker">Annotation</span>
+    <span class="annot-item"><b>Fig</b> 07</span>
+    <span class="annot-item"><b>Scale</b> Schematic</span>
+    <span class="annot-item"><b>System</b> RC f/8</span>
+    <span class="annot-item"><b>Port</b> A · science</span>
+    <span class="annot-item" id="fig-annot"><b>Selected</b> 01 aperture</span>
+    <p>This figure is a working reference for alignment and baffle inspection. It is not a prescription drawing. Prescription data live in NS-OPT-07.</p>
+  </aside>
+</section>
+<section class="block" id="s05" data-section="05">
+  <header class="block-head">
+    <div class="sec-num" aria-hidden="true">05</div>
+    <div class="sec-title-wrap">
+      <p class="sec-code">05 / Observation record</p>
+      <h2 class="sec-title">Night log · 26-0814 and prior</h2>
+    </div>
+  </header>
+  <div class="content">
+    <p class="lede">Select a row to mark it SELECTED. Selection uses a left rule, not a fill. Horizontal scroll is permitted on a narrow sheet. Record 26-0814-A is the current assignment.</p>
+    <div class="table-scroll">
+      <table class="records" id="records">
+        <thead>
+          <tr>
+            <th scope="col">Record</th>
+            <th scope="col">Target</th>
+            <th scope="col">Start</th>
+            <th scope="col">Exposure</th>
+            <th scope="col">Filter</th>
+            <th scope="col">State</th>
+            <th scope="col">Rev</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="rec-26-0814-A" tabindex="0" aria-selected="true">
+            <td>26-0814-A</td>
+            <td>NGC 7000</td>
+            <td>22:42</td>
+            <td>1800 s</td>
+            <td>Hα</td>
+            <td class="st-ready">Ready</td>
+            <td>—</td>
+          </tr>
+          <tr id="rec-26-0814-B" tabindex="0" aria-selected="false">
+            <td>26-0814-B</td>
+            <td>NGC 7000</td>
+            <td>23:18</td>
+            <td>1800 s</td>
+            <td>Hα</td>
+            <td class="st-queued">Queued</td>
+            <td>—</td>
+          </tr>
+          <tr id="rec-26-0813-C" tabindex="0" aria-selected="false">
+            <td>26-0813-C</td>
+            <td>M 31</td>
+            <td>21:06</td>
+            <td>900 s</td>
+            <td>V</td>
+            <td class="st-complete">Complete</td>
+            <td>01</td>
+          </tr>
+          <tr id="rec-26-0813-D" tabindex="0" aria-selected="false">
+            <td>26-0813-D</td>
+            <td>M 31</td>
+            <td>21:28</td>
+            <td>900 s</td>
+            <td>B</td>
+            <td class="st-complete">Complete</td>
+            <td>—</td>
+          </tr>
+          <tr id="rec-26-0813-E" tabindex="0" aria-selected="false">
+            <td>26-0813-E</td>
+            <td>NGC 891</td>
+            <td>22:14</td>
+            <td>1200 s</td>
+            <td>r</td>
+            <td class="st-complete">Complete</td>
+            <td>02</td>
+          </tr>
+          <tr id="rec-26-0812-A" tabindex="0" aria-selected="false">
+            <td>26-0812-A</td>
+            <td>SN 2026ie</td>
+            <td>20:51</td>
+            <td>600 s</td>
+            <td>V</td>
+            <td class="st-complete">Complete</td>
+            <td>—</td>
+          </tr>
+          <tr id="rec-26-0812-B" tabindex="0" aria-selected="false">
+            <td>26-0812-B</td>
+            <td>SN 2026ie</td>
+            <td>21:04</td>
+            <td>2400 s</td>
+            <td>Hα</td>
+            <td class="st-aborted">Aborted</td>
+            <td>03</td>
+          </tr>
+          <tr id="rec-26-0811-F" tabindex="0" aria-selected="false">
+            <td>26-0811-F</td>
+            <td>NGC 6992</td>
+            <td>23:40</td>
+            <td>1800 s</td>
+            <td>OIII</td>
+            <td class="st-complete">Complete</td>
+            <td>—</td>
+          </tr>
+          <tr id="rec-26-0810-A" tabindex="0" aria-selected="false">
+            <td>26-0810-A</td>
+            <td>M 13</td>
+            <td>02:18</td>
+            <td>300 s</td>
+            <td>V</td>
+            <td class="st-complete">Complete</td>
+            <td>—</td>
+          </tr>
+          <tr id="rec-26-0809-C" tabindex="0" aria-selected="false">
+            <td>26-0809-C</td>
+            <td>IC 1396</td>
+            <td>22:02</td>
+            <td>1500 s</td>
+            <td>Hα</td>
+            <td class="st-complete">Complete</td>
+            <td>01</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="field-ref" style="margin-top:12px" id="record-annot-line">Selected / 26-0814-A · see note A in section 06</p>
+  </div>
+  <aside class="annot" aria-label="Section 05 annotations">
+    <span class="annot-kicker">Annotation</span>
+    <span class="annot-item"><b>Log</b> NS-OBS-LOG</span>
+    <span class="annot-item"><b>Night</b> 26-0814</span>
+    <span class="annot-item"><b>Rows</b> 10 shown</span>
+    <span class="annot-item" id="rec-selected"><b>Selected</b> 26-0814-A</span>
+    <p>Aborted record 26-0812-B was closed after cloud. Do not combine it with later SN 2026ie frames.</p>
+  </aside>
+</section>
+<section class="block" id="s06" data-section="06">
+  <header class="block-head">
+    <div class="sec-num" aria-hidden="true">06</div>
+    <div class="sec-title-wrap">
+      <p class="sec-code">06 / Field note</p>
+      <h2 class="sec-title">Operator annotation · 26-0814-A</h2>
+    </div>
+  </header>
+  <div class="content">
+    <p class="lede">This note is attached to observation 26-0814-A. It is a working annotation, not a message. Reveal it only when the record is in use.</p>
+    <p class="field-ref">Attached to / <a href="#rec-26-0814-A">26-0814-A</a> · NGC 7000 · Hα</p>
+    <div class="cmd-row">
+      <button class="see-note" type="button" id="see-note" aria-expanded="false" aria-controls="note-a">See note A</button>
+    </div>
+    <div class="field-note" id="note-a" hidden>
+      <div class="note-sheet">
+        <p class="note-sheet-id">Note A · observation 26-0814-A · night 26-0814</p>
+        <h3>West wall · Hα window</h3>
+        <p>Opened the H-alpha window after an 18 minute thermal soak on the primary. Seeing held at 0.9″ through the first twenty minutes of track. Secondary dew heater left at 12 percent. Offset from TYC 2684-1238-1 solved at 0.21″ rms on the guider.</p>
+        <p>Do not stack these frames with 26-0813 material. The instrument rotator zero was reset at 22:11 after a cable wrap. Position angle on 26-0814-A is measured from the new zero. If the west wall is still on the chip at 23:10, keep the same guide star and do not reacquire.</p>
+        <p>Humidity in the dome is low enough to leave the hatch at the winter stop. Wind on the ridge is from the west at 4 m/s. If it climbs through 8 m/s, shorten the second exposure rather than opening the wind screen further.</p>
+        <p class="note-meta">Operator R. Voss · recorded 22:40:17 · station NS-OPS · see 01.1 and 05</p>
+      </div>
+    </div>
+  </div>
+  <aside class="annot" aria-label="Section 06 annotations">
+    <span class="annot-kicker">Annotation</span>
+    <span class="annot-item"><b>Note</b> A</span>
+    <span class="annot-item"><b>Attaches</b> 26-0814-A</span>
+    <span class="annot-item"><b>Author</b> R. Voss</span>
+    <span class="annot-item"><b>Time</b> 22:40:17</span>
+    <p>Treat this as part of the record. If the window is advanced to EXPOSING, leave the note open on the sheet.</p>
+  </aside>
+</section>
+<section class="block" id="s07" data-section="07">
+  <header class="block-head">
+    <div class="sec-num" aria-hidden="true">07</div>
+    <div class="sec-title-wrap">
+      <p class="sec-code">07 / Calibration notice</p>
+      <h2 class="sec-title">Caution · thermal differential</h2>
+    </div>
+  </header>
+  <div class="content">
+    <div class="notice">
+      <div>
+        <div class="notice-level">Caution</div>
+        <span class="notice-ref">04.2</span>
+      </div>
+      <div>
+        <h3>Calibration values invalid after thermal differential exceeds specified tolerance</h3>
+        <p>Flat, dark, and focus solutions taken before the soak are not valid once the primary-to-cell differential exceeds 0.30 K. Do not apply last night’s focus offset. Do not mix calibration frames from 26-0813 with science frames from 26-0814-A.</p>
+        <p>If MIRROR DELTA in section 02 is marked above the limit, stop the exposure, close the shutter, and wait for the primary to return inside tolerance. Recollect a focus pair on TYC 2684-1238-1 before reopening the window.</p>
+        <table class="limits">
+          <thead>
+            <tr>
+              <th scope="col">Limit</th>
+              <th scope="col">Value</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mirror delta</td>
+              <td>Max 0.30 K</td>
+              <td>Halt exposure</td>
+            </tr>
+            <tr>
+              <td>Primary rate</td>
+              <td>Max 0.08 K / 10 min</td>
+              <td>Hold shutter</td>
+            </tr>
+            <tr>
+              <td>Focus offset age</td>
+              <td>Max 40 min</td>
+              <td>Retake pair</td>
+            </tr>
+            <tr>
+              <td>Flat set</td>
+              <td>Same night only</td>
+              <td>Do not inherit</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <aside class="annot" aria-label="Section 07 annotations">
+    <span class="annot-kicker">Annotation</span>
+    <span class="annot-item"><b>Notice</b> Caution</span>
+    <span class="annot-item"><b>Code</b> 04.2</span>
+    <span class="annot-item"><b>Issued</b> 14 Aug 2026</span>
+    <span class="annot-item"><b>Rev</b> 03</span>
+    <p>This caution is the reason sheet NS-TEL-OPS-014 moved to revision 03. See the record of change in section 08.</p>
+  </aside>
+</section>
+<section class="block" id="s08" data-section="08">
+  <header class="block-head">
+    <div class="sec-num" aria-hidden="true">08</div>
+    <div class="sec-title-wrap">
+      <p class="sec-code">08 / About the facility</p>
+      <h2 class="sec-title">Northstar Observatory</h2>
+    </div>
+  </header>
+  <div class="content">
+    <div class="prose">
+      <p>Northstar Observatory sits on a limestone ridge at 2,847 metres, four hours by road from the nearest town and twelve kilometres from the nearest public trailhead. The site was chosen for a dark western horizon, stable summer seeing, and a wind pattern that usually stays below the dome’s operating limit after dusk. The facility is staffed by a small night team: a duty astronomer, a telescope operator, and an instrument technician on call from the lower camp.</p>
+      <p>The main telescope is a 1.8 metre Ritchey-Chrétien on an altitude-azimuth mount, commissioned in 2019 and rebuilt in 2024 with a new primary cell and a faster instrument rotator. The optical design keeps a wide, well-corrected field at f/8, which is why the house camera and the visiting spectrograph can share the same port without a corrector change. A 0.4 metre wide-field telescope on the north pier is used for transient confirmation and for photometric standards when the main tube is committed to a long window.</p>
+      <h3>Research program</h3>
+      <p>The standing program is emission-line mapping of nearby star-forming complexes, with a secondary effort on nearby supernovae and other optical transients that need a measured position angle and a clean subtraction frame. NGC 7000, IC 1396, and the east wall of NGC 6992 return each season so that the same filter set and the same rotator convention can be compared year to year. Guest observers are accepted for targets that fit the 1.8 metre’s field and the site’s weather, provided they accept the house calibration rules in section 07.</p>
+      <p>Data leave the mountain on a delayed microwave link at dawn. The night sheet remains the authoritative record until the archive ingest confirms checksums the following afternoon. Operators are asked to write notes as they would in a paper log: attached to a record, timed, and specific about what must not be mixed with what.</p>
+      <h3>How this sheet is used</h3>
+      <p>This page is the working copy for night 26-0814. Section 01 holds the assigned window. Section 02 is the instrument specification at last poll. Section 03 is the alignment sequence that must be marked before the shutter opens. Figure 07 is the optical path used when baffles or focus are in question. The observation table is the legal log. Note A belongs to 26-0814-A. The caution in 04.2 governs calibration after a thermal excursion.</p>
+      <p>Nothing here is decorative. If a value changes, it is marked. If a step is done, it is checked. If a row is in use, it is selected. The facility is remote. The document has to stand in for a hallway conversation that cannot happen at 23:00.</p>
+    </div>
+    <h3 class="sec-code" style="margin-top:28px">Record of change</h3>
+    <table class="change">
+      <thead>
+        <tr>
+          <th scope="col">Rev</th>
+          <th scope="col">Date</th>
+          <th scope="col">Section</th>
+          <th scope="col">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>01</td>
+          <td>12 Jun 2026</td>
+          <td>00</td>
+          <td>Initial issue of operations sheet</td>
+        </tr>
+        <tr>
+          <td>02</td>
+          <td>28 Jul 2026</td>
+          <td>02.1</td>
+          <td>Thermal limits updated after cell rebuild</td>
+        </tr>
+        <tr>
+          <td>03</td>
+          <td>14 Aug 2026</td>
+          <td>04.2</td>
+          <td>Calibration caution issued for night 26-0814</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <aside class="annot" aria-label="Section 08 annotations">
+    <span class="annot-kicker">Annotation</span>
+    <span class="annot-item"><b>Site</b> 2,847 m</span>
+    <span class="annot-item"><b>Lat</b> 37.614 N</span>
+    <span class="annot-item"><b>Long</b> 118.092 W</span>
+    <span class="annot-item"><b>Primary</b> 1.8 m RC</span>
+    <span class="annot-item"><b>Staff</b> Night 3</span>
+    <p>Sentence-case body copy is intentional. This section is editorial. The rest of the sheet stays procedural.</p>
+  </aside>
+</section>
+</main>
+</div>
+<footer class="doc-foot">
+  <span>NS-TEL-OPS-014 · Rev 03 · 14 Aug 2026</span>
+  <span>Northstar Observatory · night 26-0814</span>
+  <span>End of sheet</span>
+</footer>
+
+</body>
+</html>

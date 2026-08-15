@@ -45,6 +45,7 @@ body.is-vrg-vault-mode .category-nav {
 }
 
 body.is-vrg-vault-mode .category-link {
+  background: transparent;
   color: rgba(235, 244, 255, 0.48);
   min-height: 38px;
   padding: 0 14px 0 18px;

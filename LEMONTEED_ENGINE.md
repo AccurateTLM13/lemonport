@@ -20,9 +20,11 @@ Static public pages include:
 - `junk-drawer/character-supply/index.html`
 - `live-experiment/index.html` (hidden; noindex; not in sitemap)
 - `lighthouse-handoff/index.html`
+- `free-source/index.html`
 - `lemonteed-fm/index.html`
 - `million-dollar-receipt/index.html`
-- `operator-log/index.html` (hidden; noindex; not in sitemap)
+- `operator-log/index.html`
+- `benchmark/index.html`
 - `studio-lab/index.html`
 
 Shared public assets include:
@@ -80,7 +82,7 @@ Responsive image variants under `images/**` are also generated assets. Keep them
 
 `scripts/build-lemmy.js` validates `content/lemmy.json` and writes `assets/js/lemmy-data.js` for the deterministic public Lemmy guide.
 
-`scripts/build-artifact-pages.js` also refreshes generated sitemap entries for Operator Log article pages and article figure images by reading their canonical links and authored HTML metadata.
+`scripts/build-artifact-pages.js` generates individual static HTML pages for all published artifacts, updates `sitemap.xml` with artifacts, Operator Log articles, and Benchmark pages, and builds `image-sitemap.xml`.
 
 `scripts/lemmy-health.js` is the pure/read-only collector used by Studio's `GET /api/lemmy/health` endpoint. It combines canonical validation, media-health results, project inspection, and bounded deterministic issue output without modifying content or generated files.
 
@@ -122,19 +124,21 @@ Studio is a local-only content management layer for artifact metadata, category 
 
 Studio is not a public production admin panel. Do not deploy it publicly unless the project is explicitly redesigned with authentication, authorization, upload hardening, rate limiting, backup strategy, and general server security.
 
-## Image Pipeline
+## Image Pipeline & WebP Requirement
 
 Image handling depends on ImageMagick being available as `magick`.
 
-Studio uploads are converted to WebP and responsive variants are generated at these target widths when smaller than the source image:
+**Strict WebP Standard**: All images stored, committed, or rendered on the public website (including gallery pieces, benchmark review frames, tool screenshots, and figures) must strictly be formatted as `.webp`. Raw `.png`, `.jpg`, `.jpeg`, `.bmp`, and `.tiff` formats are prohibited on the site (standard browser favicon compliance under `images/favicons/` excepted).
 
-- `320`
-- `480`
-- `640`
-- `768`
-- `900`
-- `1024`
-- `1600`
+- **Conversion Quality**: Image conversions to WebP should preserve high visual fidelity while reducing file size (recommended parameters: `-quality 85 -define webp:method=6`).
+- **Studio Uploads**: Studio uploads are automatically converted to WebP and responsive variants are generated at these target widths when smaller than the source image:
+  - `320`
+  - `480`
+  - `640`
+  - `768`
+  - `900`
+  - `1024`
+  - `1600`
 
 `scripts/generate-image-variants.js` can regenerate responsive variants for gallery roots and then rebuild the generated gallery data.
 

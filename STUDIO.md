@@ -62,7 +62,7 @@ http://localhost:5173/
 - Edits Lemonteed FM playlist tracks and manages audio/artwork uploads from the Studio UI.
 - Queries operator log schedules and triggers mutation promotions from the Studio backend.
 - Edits meta titles, descriptions, Open Graph data, and OG images for every registered public static page from the SEO Manager workspace.
-- Uploads new OG images (converted to WebP at 1200×630) directly into `images/og/` from the SEO Manager.
+- Generates themed, psychology-driven 1200×630 WebP OG cards automatically with 1-click `✨ Auto-Generate Card` or uploads custom images directly into `images/og/`.
 - Saves SEO data to `content/seo.json` and patches the HTML files in place through `scripts/build-seo.js`.
 - Manages external Junk Drawer tools in `content/junk-drawer.json`, including name, description, URL, WebP preview image uploads, and affiliate disclosure, then rebuilds `junk-drawer/index.html`.
 

@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RELAY — AI Agent Deployment & Operations Handbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --board-bg: #0c0d0e;
+    --cell-bg: #151719;
+    --cell-bg-subtle: #1c1f22;
+    --seam: rgba(0, 0, 0, 0.65);
+    --seam-light: rgba(255, 255, 255, 0.05);
+    --flap-text: #f4ede1;
+    --flap-text-dim: rgba(244, 237, 225, 0.35);
+    --label: rgba(244, 237, 225, 0.45);
+    --label-dim: rgba(244, 237, 225, 0.25);
+    --accent: #e8a33d;
+    --accent-dim: rgba(232, 163, 61, 0.15);
+    --status-good: #6fae6f;
+    --status-warn: #e8a33d;
+    --status-bad: #c25b4a;
+    --border-subtle: rgba(244, 237, 225, 0.08);
+    --border-strong: rgba(244, 237, 225, 0.16);
+    --bg-page: #070809;
+    --bg-surface: #0f1113;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--bg-page);
+    color: var(--flap-text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 80px;
+    overflow-x: hidden;
+  }
+
+  /* FLAP MECHANISM STYLES */
+  .flap-board {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+    background: var(--board-bg);
+    padding: 12px;
+    border: 1px solid var(--border-strong);
+    border-radius: 2px;
+  }
+
+  .flap-row {
+    display: inline-flex;
+    gap: 2px;
+    align-items: center;
+  }
+
+  .flap-cell {
+    position: relative;
+    background: var(--cell-bg);
+    border-radius: 2px;
+    perspective: 350px;
+    user-select: none;
+    display: inline-block;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  }
+
+  /* Scales */
+  .flap-cell.scale-display {
+    width: 38px;
+    height: 56px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 34px;
+  }
+
+  .flap-cell.scale-standard {
+    width: 22px;
+    height: 32px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .flap-cell.scale-micro {
+    width: 14px;
+    height: 20px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  /* Half plates */
+  .flap-half {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 50%;
+    overflow: hidden;
+    background: var(--cell-bg);
+    color: var(--flap-text);
+  }
+
+  .flap-half.top {
+    top: 0;
+    border-bottom: 1px solid var(--seam);
+    border-top: 1px solid var(--seam-light);
+    border-radius: 2px 2px 0 0;
+    transform-origin: bottom center;
+  }
+
+  .flap-half.bottom {
+    bottom: 0;
+    border-top: 1px solid var(--seam);
+    border-radius: 0 0 2px 2px;
+    transform-origin: top center;
+  }
+
+  /* Glyph positioning */
+  .flap-glyph {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    text-align: center;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .flap-cell.scale-display .flap-half.top .flap-glyph {
+    bottom: -28px;
+    height: 56px;
+    line-height: 56px;
+  }
+  .flap-cell.scale-display .flap-half.bottom .flap-glyph {
+    top: 0;
+    height: 56px;
+    line-height: 56px;
+    margin-top: -28px;
+  }
+
+  .flap-cell.scale-standard .flap-half.top .flap-glyph {
+    bottom: -16px;
+    height: 32px;
+    line-height: 32px;
+  }
+  .flap-cell.scale-standard .flap-half.bottom .flap-glyph {
+    top: 0;
+    height: 32px;
+    line-height: 32px;
+    margin-top: -16px;
+  }
+
+  .flap-cell.scale-micro .flap-half.top .flap-glyph {
+    bottom: -10px;
+    height: 20px;
+    line-height: 20px;
+  }
+  .flap-cell.scale-micro .flap-half.bottom .flap-glyph {
+    top: 0;
+    height: 20px;
+    line-height: 20px;
+    margin-top: -10px;
+  }
+
+  /* Status Colors */
+  .flap-cell[data-status="good"] .flap-half { color: var(--status-good); }
+  .flap-cell[data-status="warn"] .flap-half { color: var(--status-warn); }
+  .flap-cell[data-status="bad"] .flap-half { color: var(--status-bad); }
+  .flap-cell[data-status="accent"] .flap-half { color: var(--accent); }
+
+  /* Moving leaves */
+  .flap-leaf {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 50%;
+    overflow: hidden;
+    background: var(--cell-bg);
+    color: var(--flap-text);
+    z-index: 10;
+    backface-visibility: hidden;
+  }
+
+  .flap-leaf.leaf-top {
+    top: 0;
+    transform-origin: bottom center;
+    border-bottom: 1px solid var(--seam);
+    border-top: 1px solid var(--seam-light);
+    border-radius: 2px 2px 0 0;
+    animation: flipTopAnim 0.12s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+  }
+
+  .flap-leaf.leaf-bottom {
+    bottom: 0;
+    transform-origin: top center;
+    border-top: 1px solid var(--seam);
+    border-radius: 0 0 2px 2px;
+    transform: rotateX(90deg);
+    animation: flipBottomAnim 0.12s cubic-bezier(0, 0, 0.45, 1) forwards;
+  }
+
+  @keyframes flipTopAnim {
+    0% { transform: rotateX(0deg); }
+    100% { transform: rotateX(-90deg); }
+  }
+
+  @keyframes flipBottomAnim {
+    0% { transform: rotateX(90deg); }
+    100% { transform: rotateX(0deg); }
+  }
+
+  /* CHROME & LAYOUT */
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  header {
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 18px 0;
+    background: #090a0c;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .brand-block {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .brand-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .brand-marker {
+    width: 6px;
+    height: 12px;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  .brand-sub {
+    font-size: 11px;
+    color: var(--label);
+    letter-spacing: 1px;
+    border-left: 1px solid var(--border-subtle);
+    padding-left: 12px;
+    text-transform: uppercase;
+  }
+
+  .system-stats-bar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 11px;
+  }
+
+  .stat-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .stat-label {
+    color: var(--label);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .audio-btn {
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    color: var(--label);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 2px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+
+  .audio-btn.active {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 48px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 24px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-num {
+    color: var(--accent);
+  }
+
+  .section-meta {
+    font-size: 11px;
+    color: var(--label);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* 01 DEPLOYMENT RECORD HERO BOARD */
+  .deployment-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 0.6fr;
+    gap: 28px;
+    align-items: stretch;
+  }
+
+  .departure-board-frame {
+    background: var(--board-bg);
+    border: 1px solid var(--border-strong);
+    padding: 24px;
+    border-radius: 2px;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+  }
+
+  .board-housing-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--label);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(244, 237, 225, 0.06);
+    padding-bottom: 10px;
+  }
+
+  .board-col-headers {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    color: var(--label);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    padding: 0 4px;
+  }
+
+  .board-field-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(244, 237, 225, 0.03);
+  }
+
+  .board-field-name {
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--label);
+    text-transform: uppercase;
+  }
+
+  .board-control-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border-subtle);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .mech-btn {
+    background: var(--cell-bg);
+    border: 1px solid var(--border-strong);
+    color: var(--flap-text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 10px 18px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.15s, border-color 0.15s;
+    border-radius: 2px;
+  }
+
+  .mech-btn:hover {
+    background: var(--cell-bg-subtle);
+    border-color: var(--accent);
+  }
+
+  .mech-btn:active {
+    transform: translateY(1px);
+  }
+
+  .active-agent-info-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .info-card-head {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--label);
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+
+  .info-summary-block {
+    margin-bottom: 20px;
+  }
+
+  .info-summary-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: var(--flap-text);
+  }
+
+  .info-summary-desc {
+    font-size: 11px;
+    color: var(--label);
+    line-height: 1.6;
+  }
+
+  /* 02 DEPLOYMENT PROCEDURE PIPELINE */
+  .procedure-pipeline-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-strong);
+    padding: 24px;
+    border-radius: 2px;
+  }
+
+  .proc-controls-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .pipeline-stage-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .stage-item {
+    display: grid;
+    grid-template-columns: 40px 1.4fr 2fr 160px 100px;
+    align-items: center;
+    gap: 16px;
+    background: var(--board-bg);
+    border: 1px solid var(--border-subtle);
+    padding: 12px 16px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .stage-item:hover {
+    border-color: var(--border-strong);
+    background: #111417;
+  }
+
+  .stage-item.completed {
+    border-left: 3px solid var(--status-good);
+  }
+
+  .stage-item.current {
+    border-left: 3px solid var(--accent);
+    background: #15181c;
+  }
+
+  .stage-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    color: var(--label);
+    font-size: 12px;
+  }
+
+  .stage-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .stage-desc {
+    font-size: 11px;
+    color: var(--label);
+  }
+
+  /* 03 SYSTEM SPECIFICATION & 05 CHANGE RECORD */
+  .spec-history-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+
+  .spec-sheet-card, .change-record-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    padding: 24px;
+    border-radius: 2px;
+  }
+
+  .spec-grid-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border-subtle);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .spec-grid-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--board-bg);
+    padding: 10px 14px;
+  }
+
+  .spec-grid-key {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--label);
+    text-transform: uppercase;
+  }
+
+  .change-item {
+    border-left: 2px solid var(--accent);
+    padding-left: 14px;
+    margin-bottom: 18px;
+  }
+
+  .change-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--label);
+    margin-bottom: 4px;
+  }
+
+  .change-rev-tag {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .change-text {
+    font-size: 12px;
+    color: var(--flap-text);
+  }
+
+  /* 04 AGENT RECORDS TABLE */
+  .agent-table-wrapper {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    overflow-x: auto;
+  }
+
+  .agent-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    text-align: left;
+  }
+
+  .agent-table th {
+    background: var(--board-bg);
+    padding: 12px 16px;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--label);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .agent-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(244, 237, 225, 0.04);
+    vertical-align: middle;
+  }
+
+  .agent-table tr {
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .agent-table tr:hover td {
+    background: rgba(244, 237, 225, 0.03);
+  }
+
+  .agent-table tr.active td {
+    background: rgba(232, 163, 61, 0.05);
+  }
+
+  /* 06 ANNOTATIONS & 07 FAILURE PROCEDURE */
+  .annotation-diag-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+
+  .annotation-card, .diag-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    padding: 24px;
+    border-radius: 2px;
+  }
+
+  .annotation-box {
+    background: rgba(244, 237, 225, 0.02);
+    border: 1px solid var(--border-strong);
+    padding: 16px;
+    border-radius: 2px;
+    margin-bottom: 14px;
+  }
+
+  .annotation-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .annotation-id {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    color: var(--accent);
+  }
+
+  .annotation-body {
+    font-size: 12px;
+    color: var(--flap-text);
+    line-height: 1.5;
+  }
+
+  .diag-step-box {
+    background: var(--board-bg);
+    border: 1px solid var(--border-subtle);
+    padding: 14px;
+    margin-top: 12px;
+    border-radius: 2px;
+  }
+
+  .diag-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(244, 237, 225, 0.04);
+  }
+
+  .diag-row:last-child {
+    border-bottom: none;
+  }
+
+  /* 08 PRODUCT EXPLANATION */
+  .editorial-prose {
+    max-width: 800px;
+    font-size: 13px;
+    line-height: 1.8;
+    color: rgba(244, 237, 225, 0.85);
+  }
+
+  .editorial-prose p {
+    margin-bottom: 16px;
+  }
+
+  /* FOOTER */
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--label);
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  @media (max-width: 960px) {
+    .deployment-grid, .spec-history-grid, .annotation-diag-grid {
+      grid-template-columns: 1fr;
+    }
+    .stage-item {
+      grid-template-columns: 30px 1fr 90px;
+    }
+    .stage-desc {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body><div style="position:fixed;right:12px;bottom:12px;z-index:2147483647;padding:8px 10px;background:#111;color:#fff;font:12px/1.3 monospace;border:1px solid #777">ARCHIVED SOURCE · SCRIPTS AND NETWORK DISABLED</div>
+
+<header>
+  <div class="container header-inner">
+    <div class="brand-block">
+      <div class="brand-name">
+        <span class="brand-marker"></span>
+        RELAY
+      </div>
+      <div class="brand-sub">AI AGENT DEPLOYMENT & OPS HANDBOOK</div>
+    </div>
+    <div class="system-stats-bar">
+      <div class="stat-group">
+        <span class="stat-label">CLUSTER</span>
+        <div class="flap-row" id="cluster-status-row"></div>
+      </div>
+      <div class="stat-group">
+        <span class="stat-label">TIME (UTC)</span>
+        <div class="flap-row" id="system-time-row"></div>
+      </div>
+      <button class="audio-btn active" id="audio-toggle" title="Toggle Mechanical Clatter Audio">
+        <span style="font-size:10px;">FLAP AUDIO</span> [ON]
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- 01 DEPLOYMENT RECORD -->
+  <section id="deployment-record">
+    <div class="section-header">
+      <div class="section-title">
+        <span class="section-num">01</span> DEPLOYMENT RECORD / OPERATIONAL STATUS BOARD
+      </div>
+      <div class="section-meta">LIVE TELEMETRY DISPATCH</div>
+    </div>
+
+    <div class="deployment-grid">
+      <!-- HERO SOLARI DEPLOYMENT BOARD -->
+      <div class="departure-board-frame">
+        <div class="board-housing-meta">
+          <span>ACTIVE AGENT PIPELINE DISPATCH BOARD</span>
+          <span>CLUSTER ID: US-EAST-RLY-99</span>
+        </div>
+
+        <div class="board-col-headers">
+          <span>FIELD</span>
+          <span>DISPATCH MATRIX</span>
+        </div>
+
+        <div class="board-field-row">
+          <div class="board-field-name">TARGET AGENT</div>
+          <div class="flap-row" id="hero-agent-row"></div>
+        </div>
+        <div class="board-field-row">
+          <div class="board-field-name">BUILD NUMBER</div>
+          <div class="flap-row" id="hero-build-row"></div>
+        </div>
+        <div class="board-field-row">
+          <div class="board-field-name">ENVIRONMENT</div>
+          <div class="flap-row" id="hero-env-row"></div>
+        </div>
+        <div class="board-field-row">
+          <div class="board-field-name">VERIFICATION STATE</div>
+          <div class="flap-row" id="hero-state-row"></div>
+        </div>
+        <div class="board-field-row">
+          <div class="board-field-name">DEPLOYED TIME</div>
+          <div class="flap-row" id="hero-time-row"></div>
+        </div>
+        <div class="board-field-row">
+          <div class="board-field-name">REVISION MARK</div>
+          <div class="flap-row" id="hero-rev-row"></div>
+        </div>
+
+        <div class="board-control-bar">
+          <button class="mech-btn" id="deploy-agent-btn">
+            DISPATCH NEW REVISION
+          </button>
+          <div style="display:flex; gap:8px;">
+            <button class="mech-btn" id="switch-agent-btn" style="font-size:10px; padding:8px 12px;">
+              CYCLE AGENT
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIVE AGENT SUMMARY CARD -->
+      <div class="active-agent-info-card">
+        <div>
+          <div class="info-card-head">
+            <span>OPERATIONAL PROFILE</span>
+            <span style="color:var(--status-good);">ACTIVE IN PRODUCTION</span>
+          </div>
+
+          <div class="info-summary-block">
+            <div class="info-summary-title">RESEARCH-04 AUTONOMOUS WORKFLOW</div>
+            <div class="info-summary-desc">
+              Executes continuous deep technical synthesis across distributed knowledge graphs. Sandboxed tool execution with strict credential isolation and rate-limited API gateway access.
+            </div>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid var(--border-subtle); padding-top:16px;">
+          <div style="font-size:10px; color:var(--label); margin-bottom:8px; text-transform:uppercase; letter-spacing:1px;">GATEWAY STATUS:</div>
+          <div class="flap-row" id="gateway-status-row"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 DEPLOYMENT PROCEDURE -->
+  <section id="procedure">
+    <div class="section-header">
+      <div class="section-title">
+        <span class="section-num">02</span> DEPLOYMENT PROCEDURE / VERIFICATION SEQUENCE
+      </div>
+      <div class="section-meta">SOP-RLY-8422 • 7-STAGE PIPELINE</div>
+    </div>
+
+    <div class="procedure-pipeline-card">
+      <div class="proc-controls-row">
+        <div>
+          <span style="color:var(--label); font-size:11px; letter-spacing:1px;">PIPELINE STATUS:</span>
+          <span id="pipeline-status-label" style="font-weight:700; color:var(--status-good); margin-left:8px;">7 OF 7 STAGES SIGNED OFF</span>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button class="mech-btn" id="advance-pipeline-btn" style="padding:6px 14px; font-size:10px;">
+            RUN FULL EVAL PIPELINE
+          </button>
+          <button class="mech-btn" id="reset-pipeline-btn" style="padding:6px 12px; font-size:10px;">
+            RESET
+          </button>
+        </div>
+      </div>
+
+      <div class="pipeline-stage-list">
+        <div class="stage-item completed" data-stage="1">
+          <div class="stage-num">01</div>
+          <div class="stage-name">VALIDATE CONFIG</div>
+          <div class="stage-desc">Schema conformance, environment variables, prompt template integrity check.</div>
+          <div class="flap-row stage-flap-status" data-target="VERIFIED" data-status="good"></div>
+          <div style="font-size:11px; color:var(--label);">14:31:02</div>
+        </div>
+
+        <div class="stage-item completed" data-stage="2">
+          <div class="stage-num">02</div>
+          <div class="stage-name">RESOLVE TOOLS</div>
+          <div class="stage-desc">Verify MCP endpoints, tool definitions, cryptographic signatures and schemas.</div>
+          <div class="flap-row stage-flap-status" data-target="VERIFIED" data-status="good"></div>
+          <div style="font-size:11px; color:var(--label);">14:31:18</div>
+        </div>
+
+        <div class="stage-item completed" data-stage="3">
+          <div class="stage-num">03</div>
+          <div class="stage-name">RUN EVALUATION</div>
+          <div class="stage-desc">Execute 128 benchmark suites across reasoning, latency, and safety boundaries.</div>
+          <div class="flap-row stage-flap-status" data-target="VERIFIED" data-status="good"></div>
+          <div style="font-size:11px; color:var(--label);">14:31:45</div>
+        </div>
+
+        <div class="stage-item completed" data-stage="4">
+          <div class="stage-num">04</div>
+          <div class="stage-name">VERIFY PERMISSIONS</div>
+          <div class="stage-desc">Audit OAuth2 scopes, least-privilege token access, and rate quotas.</div>
+          <div class="flap-row stage-flap-status" data-target="VERIFIED" data-status="good"></div>
+          <div style="font-size:11px; color:var(--label);">14:32:00</div>
+        </div>
+
+        <div class="stage-item completed" data-stage="5">
+          <div class="stage-num">05</div>
+          <div class="stage-name">DEPLOY</div>
+          <div class="stage-desc">Blue-green canary rollover to global inference fleet without downtime.</div>
+          <div class="flap-row stage-flap-status" data-target="VERIFIED" data-status="good"></div>
+          <div style="font-size:11px; color:var(--label);">14:32:15</div>
+        </div>
+
+        <div class="stage-item completed" data-stage="6">
+          <div class="stage-num">06</div>
+          <div class="stage-name">OBSERVE</div>
+          <div class="stage-desc">Real-time trace monitoring, anomaly threshold bounds check, token efficiency.</div>
+          <div class="flap-row stage-flap-status" data-target="VERIFIED" data-status="good"></div>
+          <div style="font-size:11px; color:var(--label);">14:32:28</div>
+        </div>
+
+        <div class="stage-item completed" data-stage="7">
+          <div class="stage-num">07</div>
+          <div class="stage-name">SIGN OFF</div>
+          <div class="stage-desc">Operator cryptographic attestation recorded in immutable ledger.</div>
+          <div class="flap-row stage-flap-status" data-target="VERIFIED" data-status="good"></div>
+          <div style="font-size:11px; color:var(--label);">14:32:30</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 SYSTEM SPECIFICATION & 05 CHANGE RECORD -->
+  <section id="specifications-changes">
+    <div class="section-header">
+      <div class="section-title">
+        <span class="section-num">03 & 05</span> SYSTEM SPECIFICATION & CHANGE RECORD
+      </div>
+      <div class="section-meta">HARDWARE / RUNTIME TOPOLOGY</div>
+    </div>
+
+    <div class="spec-history-grid">
+      <!-- 03 SYSTEM SPECIFICATION -->
+      <div class="spec-sheet-card">
+        <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:13px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:16px;">
+          03 / RUNTIME SPECIFICATION SHEET
+        </div>
+
+        <div class="spec-grid-list">
+          <div class="spec-grid-row">
+            <div class="spec-grid-key">FOUNDATION MODEL</div>
+            <div class="flap-row spec-cell" data-target="GEMINI 2.5 PRO"></div>
+          </div>
+          <div class="spec-grid-row">
+            <div class="spec-grid-key">CONTEXT CAPACITY</div>
+            <div class="flap-row spec-cell" data-target="2,000,000 TOK"></div>
+          </div>
+          <div class="spec-grid-row">
+            <div class="spec-grid-key">REGISTERED TOOLS</div>
+            <div class="flap-row spec-cell" data-target="14 MCP SERVERS"></div>
+          </div>
+          <div class="spec-grid-row">
+            <div class="spec-grid-key">PERSISTENT MEMORY</div>
+            <div class="flap-row spec-cell" data-target="VECTOR EMBED 8K"></div>
+          </div>
+          <div class="spec-grid-row">
+            <div class="spec-grid-key">EXECUTION TIMEOUT</div>
+            <div class="flap-row spec-cell" data-target="0120 SECONDS"></div>
+          </div>
+          <div class="spec-grid-row">
+            <div class="spec-grid-key">DEPLOY REGION</div>
+            <div class="flap-row spec-cell" data-target="GLOBAL ANYCAST"></div>
+          </div>
+          <div class="spec-grid-row">
+            <div class="spec-grid-key">RUNTIME VERSION</div>
+            <div class="flap-row spec-cell" data-target="RELAY V4.8.2"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 05 CHANGE RECORD -->
+      <div class="change-record-card">
+        <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:13px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:16px; display:flex; justify-content:space-between;">
+          <span>05 / REVISION LEDGER</span>
+          <span style="color:var(--label); font-size:11px;">IMMUTABLE LOG</span>
+        </div>
+
+        <div class="change-item">
+          <div class="change-header">
+            <span class="change-rev-tag">REV 07</span>
+            <span>2026-08-14 14:32:30 UTC</span>
+          </div>
+          <div class="change-text">
+            Production deployment verified. Canary rollover completed at 100% traffic allocation across all regional edge clusters.
+          </div>
+        </div>
+
+        <div class="change-item">
+          <div class="change-header">
+            <span class="change-rev-tag">REV 06</span>
+            <span>2026-08-14 11:15:10 UTC</span>
+          </div>
+          <div class="change-text">
+            Evaluation threshold updated to 99.4% task benchmark accuracy. Automated regression testing passes.
+          </div>
+        </div>
+
+        <div class="change-item">
+          <div class="change-header">
+            <span class="change-rev-tag">REV 05</span>
+            <span>2026-08-13 18:40:22 UTC</span>
+          </div>
+          <div class="change-text">
+            Tool permissions changed. Fine-grained read-only sandbox filters applied to file browsing MCP connector.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 AGENT RECORDS -->
+  <section id="agent-records">
+    <div class="section-header">
+      <div class="section-title">
+        <span class="section-num">04</span> AGENT FLEET RECORDS / REGISTERED INSTANCES
+      </div>
+      <div class="section-meta">OPERATIONAL INVENTORY TABLE</div>
+    </div>
+
+    <div class="agent-table-wrapper">
+      <table class="agent-table">
+        <thead>
+          <tr>
+            <th>AGENT IDENTIFIER</th>
+            <th>REV</th>
+            <th>ASSIGNED TASK</th>
+            <th>ENVIRONMENT</th>
+            <th>SYSTEM STATE</th>
+            <th>LAST DISPATCH</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="active">
+            <td style="font-family:'Space Grotesk',sans-serif; font-weight:700;">RESEARCH-04</td>
+            <td>07</td>
+            <td>LITERATURE SYNTHESIS & SUMMARIZATION</td>
+            <td><span style="color:var(--accent);">PRODUCTION</span></td>
+            <td><div class="flap-row tbl-flap-stat" data-target="VERIFIED" data-status="good"></div></td>
+            <td>14:32 UTC</td>
+          </tr>
+          <tr>
+            <td style="font-family:'Space Grotesk',sans-serif; font-weight:700;">CODER-09</td>
+            <td>12</td>
+            <td>AUTOMATED PR REFACTORING & TESTS</td>
+            <td><span style="color:var(--label);">STAGING</span></td>
+            <td><div class="flap-row tbl-flap-stat" data-target="RUNNING" data-status="accent"></div></td>
+            <td>12:15 UTC</td>
+          </tr>
+          <tr>
+            <td style="font-family:'Space Grotesk',sans-serif; font-weight:700;">AUDIT-02</td>
+            <td>04</td>
+            <td>COMPLIANCE & TRACE VALIDATION</td>
+            <td><span style="color:var(--accent);">PRODUCTION</span></td>
+            <td><div class="flap-row tbl-flap-stat" data-target="VERIFIED" data-status="good"></div></td>
+            <td>08:44 UTC</td>
+          </tr>
+          <tr>
+            <td style="font-family:'Space Grotesk',sans-serif; font-weight:700;">SYNTH-01</td>
+            <td>09</td>
+            <td>DATA EXTRACTION & NORMALIZATION</td>
+            <td><span style="color:var(--label);">CANARY</span></td>
+            <td><div class="flap-row tbl-flap-stat" data-target="STANDBY" data-status="warn"></div></td>
+            <td>AUG 13</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 06 ANNOTATION & 07 FAILURE PROCEDURE -->
+  <section id="annotations-diagnostics">
+    <div class="section-header">
+      <div class="section-title">
+        <span class="section-num">06 & 07</span> ANNOTATIONS & DIAGNOSTIC PROCEDURES
+      </div>
+      <div class="section-meta">OPERATIONAL SAFEGUARDS</div>
+    </div>
+
+    <div class="annotation-diag-grid">
+      <!-- 06 ANNOTATIONS -->
+      <div class="annotation-card">
+        <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:13px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:16px;">
+          06 / OPERATIONAL ANNOTATIONS
+        </div>
+
+        <div class="annotation-box">
+          <div class="annotation-head">
+            <span class="annotation-id">NOTE A</span>
+            <span style="font-size:10px; color:var(--label);">MANDATORY DIRECTIVE</span>
+          </div>
+          <div class="annotation-body">
+            Production agents require evaluation approval before deployment. Any agent failing the standard 128-benchmark regression test will have automated canary progression aborted immediately.
+          </div>
+        </div>
+
+        <div class="annotation-box">
+          <div class="annotation-head">
+            <span class="annotation-id">NOTE B</span>
+            <span style="font-size:10px; color:var(--label);">CONTEXT HYGIENE</span>
+          </div>
+          <div class="annotation-body">
+            Token window compression algorithms must execute whenever multi-turn agent conversations exceed 1.4M tokens to maintain deterministic tool resolution latency under 800ms.
+          </div>
+        </div>
+      </div>
+
+      <!-- 07 FAILURE PROCEDURE -->
+      <div class="diag-card">
+        <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:13px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:16px; display:flex; justify-content:space-between;">
+          <span>07 / DIAGNOSTIC PROTOCOL</span>
+          <span style="color:var(--status-bad); font-size:11px;">ERR-701 RESOLUTION</span>
+        </div>
+
+        <div class="diag-step-box">
+          <div class="diag-row">
+            <span style="color:var(--label);">SYMPTOM:</span>
+            <span style="font-weight:700; color:var(--status-bad);">TOOL EXECUTION UNAVAILABLE</span>
+          </div>
+          <div class="diag-row">
+            <span style="color:var(--label);">POSSIBLE CAUSE:</span>
+            <span>PERMISSION SCOPE INCOMPLETE</span>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;">
+          <div style="font-size:10px; color:var(--label); letter-spacing:1px; margin-bottom:8px; text-transform:uppercase;">REMEDIATION PROCEDURE:</div>
+          <div style="display:flex; flex-direction:column; gap:6px; font-size:12px;">
+            <div><strong style="color:var(--accent);">01</strong> Inspect configuration manifest for scope definitions</div>
+            <div><strong style="color:var(--accent);">02</strong> Verify connector mTLS certificates and proxy routing</div>
+            <div><strong style="color:var(--accent);">03</strong> Rerun synthetic validation harness</div>
+          </div>
+        </div>
+
+        <button class="mech-btn" id="run-diag-btn" style="margin-top:16px; width:100%; justify-content:center;">
+          EXECUTE AUTOMATED DIAGNOSTIC SUITE
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 PRODUCT EXPLANATION -->
+  <section id="explanation">
+    <div class="section-header">
+      <div class="section-title">
+        <span class="section-num">08</span> PRODUCT ARCHITECTURE & PHILOSOPHY
+      </div>
+      <div class="section-meta">ENGINEERING STATEMENT</div>
+    </div>
+
+    <div class="editorial-prose">
+      <p>
+        Relay is built on the conviction that autonomous AI agent systems should not be deployed through opaque, glossy dashboards with vague status indicators. As AI agents take on critical operational responsibilities, managing them requires the uncompromising rigor and verification discipline of industrial instrumentation.
+      </p>
+      <p>
+        Every agent configuration, tool authorization boundary, and runtime state in Relay is treated as a verifiable operational document. Changes are recorded in immutable revision ledgers, execution stages must be explicitly signed off, and system telemetry resolves through deterministic mechanical states.
+      </p>
+      <p>
+        By uniting the tactile precision of the Solari split-flap mechanism with modern AI runtime orchestration, Relay provides teams with total visibility, auditability, and command over their autonomous software fleets.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="container">
+  <div>
+    © 2026 RELAY SYSTEMS INC. • ALL RIGHTS RESERVED • SAN FRANCISCO & ZURICH
+  </div>
+  <div>
+    DISCRETE SOLARI SPLIT-FLAP DEPLOYMENT SPECIFICATION
+  </div>
+</footer>
+
+
+
+</body>
+</html>

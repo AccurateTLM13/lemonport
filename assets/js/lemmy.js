@@ -16,13 +16,19 @@
     }
 
     if (!trigger) {
-      trigger = document.createElement("button");
-      trigger.className = "lemmy-trigger lemmy-page-trigger";
-      trigger.type = "button";
-      trigger.setAttribute("aria-label", "Open Lemmy, the Lemonteed groundskeeper");
-      trigger.setAttribute("aria-expanded", "false");
-      trigger.innerHTML = '<img src="" alt="" aria-hidden="true" width="220" height="220">';
-      document.body.append(trigger);
+      // Allow pages to suppress the floating trigger (e.g. Studio Lab which uses an inline host station)
+      if (document.body.dataset.lemmySuppressTrigger === "1") {
+        // Still wire up the panel but don't inject the page trigger
+        trigger = null;
+      } else {
+        trigger = document.createElement("button");
+        trigger.className = "lemmy-trigger lemmy-page-trigger";
+        trigger.type = "button";
+        trigger.setAttribute("aria-label", "Open Lemmy, the Lemonteed groundskeeper");
+        trigger.setAttribute("aria-expanded", "false");
+        trigger.innerHTML = '<img src="" alt="" aria-hidden="true" width="220" height="220">';
+        document.body.append(trigger);
+      }
     }
 
     const panel = document.createElement("section");
@@ -53,15 +59,17 @@
     const minimizeButton = panel.querySelector(".lemmy-panel__minimize");
     const storageKey = data.preferences && data.preferences.storageKey;
     const stateAssets = data.character.stateAssets || {};
-    const triggerImage = trigger.querySelector("img");
+    const triggerImage = trigger ? trigger.querySelector("img") : null;
     let lastFocus = trigger;
     let lastReactionAt = 0;
     let reactionResetTimer = 0;
 
     title.textContent = data.character.name;
     message.textContent = zoneConfig.messages[0];
-    trigger.removeAttribute("aria-hidden");
-    trigger.setAttribute("aria-expanded", "false");
+    if (trigger) {
+      trigger.removeAttribute("aria-hidden");
+      trigger.setAttribute("aria-expanded", "false");
+    }
 
     function setVisualState(state) {
       const asset = stateAssets[state] || data.character.defaultAsset;
@@ -167,9 +175,9 @@
       closePanel();
     }
 
-    trigger.addEventListener("click", openPanel);
-    closeButton.addEventListener("click", () => closePanel());
-    minimizeButton.addEventListener("click", setMinimized);
+    if (trigger) trigger.addEventListener("click", openPanel);
+    if (closeButton) closeButton.addEventListener("click", () => closePanel());
+    if (minimizeButton) minimizeButton.addEventListener("click", setMinimized);
     Object.entries(zoneConfig.reactions || {}).forEach(([eventName, reaction]) => {
       document.addEventListener(eventName, () => {
         const now = Date.now();

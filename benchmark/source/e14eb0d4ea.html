@@ -1,0 +1,2640 @@
+<!doctype html>
+<html lang="en">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0d1218" />
+  <title>ATLAS — Distributed Intelligence Architecture</title>
+  <meta
+    name="description"
+    content="ATLAS is a fictional AI infrastructure platform presented as architecture documentation: orchestrators, agents, tools, memory, routing, and verification."
+  />
+
+  <style>
+    :root {
+      --bg: #0d1218;
+      --bg-elev: #111821;
+      --bg-elev-2: #161f29;
+      --panel: #0f151c;
+      --panel-2: #131b24;
+
+      --ink: #e6edf4;
+      --ink-soft: #b7c1cb;
+      --ink-dim: #8994a0;
+      --ink-faint: #69737e;
+
+      --line: #24303c;
+      --line-strong: #344353;
+      --line-bright: #506174;
+
+      --accent: #adc6df;
+      --accent-strong: #d9e7f5;
+      --accent-fill: rgba(173, 198, 223, 0.08);
+
+      --warn: #c6b37f;
+
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono: "SFMono-Regular", ui-monospace, Menlo, Consolas, "Liberation Mono", monospace;
+
+      --radius: 0px;
+      --shadow: 0 0 0 1px rgba(255, 255, 255, 0.02);
+      --max: 1520px;
+      --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.01), rgba(255,255,255,0)),
+        var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+      color: inherit;
+    }
+
+    button {
+      background: none;
+      border: 0;
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img,
+    svg {
+      max-width: 100%;
+      display: block;
+    }
+
+    ::selection {
+      background: rgba(173, 198, 223, 0.22);
+      color: var(--ink);
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent-strong);
+      outline-offset: 3px;
+    }
+
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      clip-path: inset(50%) !important;
+    }
+
+    .shell {
+      width: min(calc(100% - 40px), var(--max));
+      margin-inline: auto;
+    }
+
+    .mono,
+    .eyebrow,
+    .section-code,
+    .fig-caption,
+    .meta,
+    .stamp,
+    .legend,
+    .chip,
+    .command,
+    .table-wrap th,
+    .sequence-id,
+    .sequence-meta,
+    .metric-label,
+    .routing-code,
+    .footer-meta,
+    .inspect-grid dt,
+    .inspect-ref,
+    .detail-code,
+    .callout-tag,
+    .context-scale,
+    .revision-table th,
+    .revision-table td,
+    .service-table td:nth-child(1),
+    .service-table td:nth-child(3),
+    .service-table td:nth-child(4),
+    .service-table td:nth-child(5) {
+      font-family: var(--mono);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .eyebrow,
+    .section-code,
+    .stamp,
+    .meta,
+    .legend,
+    .chip,
+    .command,
+    .table-wrap th,
+    .sequence-id,
+    .sequence-meta,
+    .metric-label,
+    .routing-code,
+    .footer-meta,
+    .inspect-grid dt,
+    .callout-tag {
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .skip-link {
+      position: fixed;
+      z-index: 9999;
+      top: 12px;
+      left: 12px;
+      padding: 10px 14px;
+      transform: translateY(-160%);
+      background: var(--ink);
+      color: var(--bg);
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .command {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 42px;
+      padding: 0 14px;
+      border: 1px solid var(--line-bright);
+      color: var(--ink);
+      background: transparent;
+      transition:
+        background 180ms var(--ease),
+        border-color 180ms var(--ease),
+        color 180ms var(--ease);
+    }
+
+    .command:hover {
+      background: rgba(255,255,255,0.025);
+      border-color: var(--accent);
+    }
+
+    .command.secondary {
+      color: var(--ink-soft);
+      border-color: var(--line);
+    }
+
+    .command.active {
+      background: var(--accent-fill);
+      border-color: var(--accent);
+      color: var(--accent-strong);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid var(--line);
+      background: rgba(13, 18, 24, 0.92);
+      backdrop-filter: blur(12px);
+    }
+
+    .header-grid {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr) 260px;
+      min-height: 74px;
+      align-items: stretch;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border-right: 1px solid var(--line);
+      min-width: 0;
+    }
+
+    .brand-mark {
+      position: relative;
+      width: 22px;
+      height: 22px;
+      flex: 0 0 auto;
+    }
+
+    .brand-mark::before,
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--accent);
+    }
+
+    .brand-mark::after {
+      inset: 5px;
+      border-color: var(--line-bright);
+    }
+
+    .brand-copy {
+      min-width: 0;
+    }
+
+    .brand-name {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .brand-sub {
+      margin-top: 3px;
+      color: var(--ink-dim);
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+    }
+
+    .nav {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav a {
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      white-space: nowrap;
+      color: var(--ink-soft);
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .nav a::after {
+      content: "";
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: -1px;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 180ms var(--ease);
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      color: var(--ink);
+    }
+
+    .nav a.active::after {
+      transform: scaleX(1);
+    }
+
+    .header-meta {
+      display: grid;
+      place-items: center end;
+      border-left: 1px solid var(--line);
+      text-align: right;
+      color: var(--ink-dim);
+      font-family: var(--mono);
+      font-size: 10px;
+      line-height: 1.6;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+    }
+
+    .header-meta strong {
+      color: var(--accent-strong);
+      display: block;
+    }
+
+    .hero {
+      padding: 34px 0 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) 320px;
+      gap: 32px;
+      align-items: end;
+    }
+
+    .hero-topline {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 34px;
+    }
+
+    .hero-title {
+      margin: 0;
+      font-size: clamp(48px, 8vw, 112px);
+      line-height: 0.92;
+      letter-spacing: -0.05em;
+      font-weight: 700;
+      text-transform: uppercase;
+      max-width: 980px;
+    }
+
+    .hero-subtitle {
+      margin: 22px 0 0;
+      max-width: 820px;
+      color: var(--ink-soft);
+      font-size: clamp(17px, 2vw, 22px);
+      line-height: 1.65;
+    }
+
+    .hero-note {
+      color: var(--ink-dim);
+      font-size: 14px;
+      line-height: 1.7;
+      border-left: 1px solid var(--line);
+      padding-left: 18px;
+      margin: 0 0 8px;
+    }
+
+    .page {
+      padding-bottom: 56px;
+    }
+
+    .manual-section {
+      border-bottom: 1px solid var(--line);
+      scroll-margin-top: 90px;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: 124px minmax(0, 1fr);
+      gap: 0;
+    }
+
+    .section-rail {
+      padding: 42px 22px 42px 0;
+      border-right: 1px solid var(--line);
+    }
+
+    .section-code {
+      display: block;
+      color: var(--accent);
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .section-index {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      color: var(--ink-faint);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .section-main {
+      padding: 42px 0 64px 34px;
+      min-width: 0;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 400px);
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 28px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 64px);
+      line-height: 0.94;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .figure-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .fig-caption {
+      color: var(--accent-strong);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .stamp {
+      color: var(--ink-faint);
+    }
+
+    .arch-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .figure-card,
+    .inspect-panel,
+    .table-wrap,
+    .sequence-block,
+    .context-block,
+    .routing-layout,
+    .router-panel,
+    .prose-panel {
+      background: linear-gradient(to bottom, rgba(255,255,255,0.015), rgba(255,255,255,0.005));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .figure-card {
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .figure-topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      min-height: 44px;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink-dim);
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+    }
+
+    .pan-hint {
+      display: none;
+      color: var(--warn);
+    }
+
+    .figure-scroll {
+      overflow-x: auto;
+      overflow-y: hidden;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.008), rgba(255,255,255,0)),
+        var(--panel);
+    }
+
+    .architecture-svg {
+      width: 1320px;
+      height: auto;
+      display: block;
+      background: transparent;
+    }
+
+    .arch-node,
+    .route-node {
+      cursor: pointer;
+    }
+
+    .arch-object {
+      fill: rgba(255,255,255,0.02);
+      stroke: var(--line-bright);
+      stroke-width: 1.1;
+      transition:
+        stroke 160ms var(--ease),
+        fill 160ms var(--ease),
+        stroke-width 160ms var(--ease);
+    }
+
+    .arch-node:hover .arch-object {
+      stroke: var(--accent);
+    }
+
+    .arch-node.active .arch-object {
+      fill: rgba(173, 198, 223, 0.075);
+      stroke: var(--accent-strong);
+      stroke-width: 2.15;
+    }
+
+    .arch-main-label {
+      fill: var(--ink);
+      font-family: var(--sans);
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .arch-sub-label {
+      fill: var(--ink-soft);
+      font-family: var(--sans);
+      font-size: 17px;
+      font-weight: 500;
+    }
+
+    .arch-ref {
+      fill: var(--ink-faint);
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .arch-outline {
+      fill: none;
+      stroke: var(--line);
+      stroke-width: 1;
+    }
+
+    .arch-base-line {
+      stroke: var(--line-bright);
+      stroke-width: 1.3;
+      fill: none;
+    }
+
+    .arch-base-line.soft {
+      stroke: var(--line);
+    }
+
+    .arch-joint {
+      fill: var(--line-bright);
+    }
+
+    .relation {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms var(--ease);
+    }
+
+    .relation.visible {
+      opacity: 1;
+    }
+
+    .relation .leader,
+    .callout .leader {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 1.15;
+      stroke-dasharray: 9 6;
+      stroke-dashoffset: 180;
+      transition:
+        stroke-dashoffset 420ms var(--ease),
+        opacity 200ms var(--ease);
+    }
+
+    .relation.visible .leader,
+    .callout.visible .leader {
+      stroke-dashoffset: 0;
+    }
+
+    .relation .marker {
+      fill: var(--accent-strong);
+    }
+
+    .callout {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms var(--ease);
+    }
+
+    .callout.visible {
+      opacity: 1;
+    }
+
+    .callout-box {
+      fill: rgba(173, 198, 223, 0.05);
+      stroke: var(--accent);
+      stroke-width: 1;
+    }
+
+    .callout-title {
+      fill: var(--accent-strong);
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .callout-copy {
+      fill: var(--ink-soft);
+      font-family: var(--sans);
+      font-size: 13px;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px 24px;
+      padding: 12px 14px 14px;
+      border-top: 1px solid var(--line);
+      color: var(--ink-dim);
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .legend-line,
+    .legend-box,
+    .legend-highlight {
+      display: inline-block;
+      flex: 0 0 auto;
+    }
+
+    .legend-line {
+      width: 18px;
+      height: 1px;
+      background: var(--line-bright);
+    }
+
+    .legend-box {
+      width: 18px;
+      height: 10px;
+      border: 1px solid var(--line-bright);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .legend-highlight {
+      width: 18px;
+      height: 10px;
+      border: 1px solid var(--accent);
+      background: rgba(173,198,223,0.07);
+    }
+
+    .inspect-panel {
+      padding: 16px;
+      min-height: 100%;
+    }
+
+    .inspect-ref {
+      color: var(--accent-strong);
+      margin-bottom: 8px;
+    }
+
+    .inspect-panel h3 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      line-height: 1.04;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+    }
+
+    .inspect-sub {
+      margin: 0 0 14px;
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    .inspect-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0;
+      margin: 14px 0 16px;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .inspect-grid div {
+      padding: 10px 10px 11px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      min-height: 68px;
+    }
+
+    .inspect-grid dt {
+      color: var(--ink-dim);
+      margin-bottom: 8px;
+    }
+
+    .inspect-grid dd {
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--ink);
+    }
+
+    .inspect-summary {
+      color: var(--ink-soft);
+      font-size: 14px;
+      line-height: 1.75;
+      margin: 0 0 16px;
+    }
+
+    .detail-block {
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+      margin-top: 14px;
+    }
+
+    .detail-block h4 {
+      margin: 0 0 10px;
+      font-size: 12px;
+      color: var(--ink-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .detail-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .detail-list li {
+      padding: 7px 0;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    .detail-list li:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .callout-tag {
+      color: var(--accent-strong);
+      margin-right: 10px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      background: var(--panel);
+    }
+
+    table {
+      width: 100%;
+      min-width: 860px;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 14px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    thead th {
+      color: var(--ink-dim);
+      font-size: 10px;
+      background: rgba(255,255,255,0.015);
+    }
+
+    tbody td {
+      font-size: 14px;
+      color: var(--ink-soft);
+    }
+
+    tbody tr:hover {
+      background: rgba(255,255,255,0.02);
+    }
+
+    tbody tr.highlight {
+      background: rgba(173, 198, 223, 0.08);
+      color: var(--ink);
+    }
+
+    tbody tr.highlight td {
+      color: var(--ink);
+    }
+
+    .state-active {
+      color: var(--accent-strong);
+    }
+
+    .state-standby {
+      color: var(--warn);
+    }
+
+    .table-note {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 12px 14px;
+      color: var(--ink-faint);
+      border-top: 1px solid rgba(255,255,255,0.03);
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .sequence-block {
+      padding: 0;
+      overflow: hidden;
+      background: var(--panel);
+    }
+
+    .sequence-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: end;
+      padding: 16px 16px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .sequence-request {
+      margin: 6px 0 0;
+      font-size: 22px;
+      line-height: 1.35;
+      color: var(--ink);
+    }
+
+    .sequence-rail {
+      position: relative;
+      padding: 6px 0;
+    }
+
+    .sequence-rail::before {
+      content: "";
+      position: absolute;
+      top: 26px;
+      bottom: 26px;
+      left: 42px;
+      width: 1px;
+      background: var(--line-bright);
+    }
+
+    .sequence-step {
+      position: relative;
+      display: grid;
+      grid-template-columns: 72px minmax(220px, 1.15fr) minmax(120px, 0.7fr) minmax(200px, 1fr);
+      align-items: start;
+      gap: 0;
+      min-height: 88px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .sequence-step:last-child {
+      border-bottom: 0;
+    }
+
+    .sequence-id,
+    .sequence-body,
+    .sequence-meta,
+    .sequence-desc {
+      padding: 16px 14px;
+    }
+
+    .sequence-id {
+      position: relative;
+      color: var(--accent-strong);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .sequence-id::after {
+      content: "";
+      position: absolute;
+      left: 36px;
+      top: 28px;
+      width: 12px;
+      height: 12px;
+      border: 1px solid var(--accent);
+      background: var(--bg);
+    }
+
+    .sequence-body {
+      border-left: 1px solid var(--line);
+    }
+
+    .sequence-body strong {
+      display: block;
+      font-size: 19px;
+      color: var(--ink);
+      letter-spacing: 0.02em;
+    }
+
+    .sequence-body span {
+      display: block;
+      margin-top: 4px;
+      color: var(--ink-dim);
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+    }
+
+    .sequence-meta {
+      border-left: 1px solid var(--line);
+      color: var(--ink);
+      font-size: 12px;
+    }
+
+    .sequence-desc {
+      border-left: 1px solid var(--line);
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    .context-block {
+      padding: 16px;
+      background: var(--panel);
+    }
+
+    .context-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: end;
+      margin-bottom: 18px;
+    }
+
+    .context-total {
+      color: var(--accent-strong);
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+    }
+
+    .context-scale {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      gap: 0;
+      color: var(--ink-faint);
+      font-size: 9px;
+      margin-bottom: 8px;
+    }
+
+    .context-scale span {
+      position: relative;
+      text-align: left;
+      padding-top: 10px;
+    }
+
+    .context-scale span::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1px;
+      height: 8px;
+      background: var(--line-bright);
+    }
+
+    .context-frame {
+      position: relative;
+      border-top: 1px solid var(--line-bright);
+      border-bottom: 1px solid var(--line-bright);
+      padding: 12px 0;
+      margin-bottom: 20px;
+    }
+
+    .context-bar {
+      display: flex;
+      height: 120px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.015);
+      overflow: hidden;
+    }
+
+    .context-segment {
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      padding: 12px;
+      border-right: 1px solid var(--line);
+      background:
+        linear-gradient(to top, rgba(255,255,255,0.018), rgba(255,255,255,0.005));
+      min-width: 56px;
+    }
+
+    .context-segment:last-child {
+      border-right: 0;
+    }
+
+    .context-segment strong {
+      display: block;
+      font-size: 14px;
+      line-height: 1.3;
+      color: var(--ink);
+      max-width: 160px;
+    }
+
+    .context-segment span {
+      display: block;
+      margin-top: 6px;
+      color: var(--ink-dim);
+      font-family: var(--mono);
+      font-size: 11px;
+      line-height: 1.5;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .context-summary {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .context-summary .cell {
+      padding: 12px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      min-height: 88px;
+    }
+
+    .metric-label {
+      display: block;
+      color: var(--ink-dim);
+      margin-bottom: 8px;
+    }
+
+    .metric-value {
+      display: block;
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .routing-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 0;
+      overflow: hidden;
+      background: var(--panel);
+    }
+
+    .routing-figure {
+      position: relative;
+      min-height: 520px;
+      padding: 20px 18px 18px;
+      border-right: 1px solid var(--line);
+    }
+
+    .routing-map {
+      position: relative;
+      min-height: 460px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.01);
+      overflow: hidden;
+    }
+
+    .routing-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .routing-node {
+      position: absolute;
+      min-width: 172px;
+      padding: 12px 14px;
+      border: 1px solid var(--line-bright);
+      background: rgba(255,255,255,0.02);
+      text-align: left;
+      transition:
+        border-color 160ms var(--ease),
+        background 160ms var(--ease),
+        color 160ms var(--ease);
+    }
+
+    .routing-node strong {
+      display: block;
+      font-size: 18px;
+      letter-spacing: 0.02em;
+    }
+
+    .routing-node span {
+      display: block;
+      margin-top: 6px;
+      color: var(--ink-dim);
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      line-height: 1.5;
+    }
+
+    .routing-node:hover,
+    .routing-node.active {
+      border-color: var(--accent);
+      background: var(--accent-fill);
+    }
+
+    .routing-node.fast { top: 34px; left: 34px; }
+    .routing-node.reasoning { top: 34px; right: 34px; }
+    .routing-node.vision { top: 180px; left: 34px; }
+    .routing-node.code { top: 180px; right: 34px; }
+    .routing-node.longcontext { bottom: 34px; left: calc(50% - 96px); }
+
+    .routing-center {
+      position: absolute;
+      top: calc(50% - 52px);
+      left: calc(50% - 115px);
+      width: 230px;
+      min-height: 104px;
+      padding: 14px;
+      border: 1px solid var(--accent);
+      background: rgba(173,198,223,0.06);
+      text-align: left;
+    }
+
+    .routing-center strong {
+      display: block;
+      font-size: 22px;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    .routing-center span {
+      display: block;
+      margin-top: 7px;
+      color: var(--ink-soft);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .routing-callouts {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .routing-callout {
+      min-height: 38px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.015);
+      color: var(--ink-dim);
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .router-panel {
+      padding: 16px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.015), rgba(255,255,255,0.005));
+    }
+
+    .router-panel h3 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+    }
+
+    .router-panel p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .router-panel .detail-block {
+      margin-top: 16px;
+    }
+
+    .revision-wrap {
+      overflow-x: auto;
+      background: var(--panel);
+      border: 1px solid var(--line);
+    }
+
+    .revision-table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+    }
+
+    .revision-table th,
+    .revision-table td {
+      padding: 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+      font-size: 12px;
+    }
+
+    .revision-table thead th {
+      color: var(--ink-dim);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      background: rgba(255,255,255,0.015);
+    }
+
+    .revision-table tbody td {
+      color: var(--ink-soft);
+    }
+
+    .revision-table tbody tr.current {
+      background: rgba(173,198,223,0.07);
+    }
+
+    .revision-table tbody tr.current td {
+      color: var(--ink);
+    }
+
+    .prose-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) 340px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .prose-panel {
+      padding: 18px;
+      background: var(--panel);
+    }
+
+    .prose-main h3 {
+      margin: 0 0 18px;
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+
+    .prose-main p {
+      margin: 0 0 18px;
+      color: var(--ink-soft);
+      font-size: 17px;
+      line-height: 1.85;
+    }
+
+    .prose-side-block {
+      padding: 12px 0 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .prose-side-block:first-child {
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    .prose-side-block strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 20px;
+      line-height: 1.35;
+      color: var(--ink);
+    }
+
+    .prose-side-block p {
+      margin: 8px 0 0;
+      color: var(--ink-dim);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      padding: 22px 0 38px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: end;
+    }
+
+    .footer-brand {
+      margin: 0;
+      font-size: clamp(44px, 10vw, 110px);
+      line-height: 0.86;
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .footer-meta {
+      color: var(--ink-faint);
+      text-align: right;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 1180px) {
+      .header-grid {
+        grid-template-columns: 260px minmax(0, 1fr);
+      }
+
+      .header-meta {
+        display: none;
+      }
+
+      .hero-grid,
+      .arch-layout,
+      .routing-layout,
+      .prose-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .inspect-panel {
+        min-height: 0;
+      }
+
+      .routing-figure {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+    }
+
+    @media (max-width: 920px) {
+      .section-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-rail {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 28px 0 0;
+        border-right: 0;
+      }
+
+      .section-index {
+        writing-mode: horizontal-tb;
+        transform: none;
+      }
+
+      .section-main {
+        padding: 22px 0 48px;
+      }
+
+      .section-head {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 24px;
+      }
+
+      .hero-grid {
+        gap: 18px;
+      }
+
+      .hero-note {
+        border-left: 0;
+        border-top: 1px solid var(--line);
+        padding-left: 0;
+        padding-top: 14px;
+      }
+
+      .sequence-step {
+        grid-template-columns: 72px minmax(200px, 1fr);
+      }
+
+      .sequence-meta,
+      .sequence-desc {
+        border-left: 1px solid var(--line);
+      }
+
+      .sequence-meta {
+        grid-column: 2;
+        border-top: 1px solid rgba(255,255,255,0.035);
+      }
+
+      .sequence-desc {
+        grid-column: 2;
+        border-top: 1px solid rgba(255,255,255,0.035);
+      }
+
+      .context-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .prose-layout {
+        gap: 16px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-meta {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        width: min(calc(100% - 24px), var(--max));
+      }
+
+      .site-header {
+        position: relative;
+      }
+
+      .header-grid {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .brand {
+        min-height: 64px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .nav {
+        min-height: 48px;
+      }
+
+      .nav a {
+        padding: 0 12px;
+      }
+
+      .nav a::after {
+        left: 12px;
+        right: 12px;
+      }
+
+      .context-summary {
+        grid-template-columns: 1fr;
+      }
+
+      .pan-hint {
+        display: inline;
+      }
+
+      .routing-map {
+        min-height: 600px;
+      }
+
+      .routing-node.fast,
+      .routing-node.reasoning {
+        top: 20px;
+      }
+
+      .routing-node.fast,
+      .routing-node.vision {
+        left: 20px;
+      }
+
+      .routing-node.reasoning,
+      .routing-node.code {
+        right: 20px;
+      }
+
+      .routing-node.vision,
+      .routing-node.code {
+        top: 190px;
+      }
+
+      .routing-node.longcontext {
+        bottom: 20px;
+        left: calc(50% - 90px);
+      }
+
+      .routing-center {
+        top: calc(50% - 70px);
+        left: calc(50% - 105px);
+        width: 210px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hero-topline {
+        gap: 8px;
+      }
+
+      .section-head h2 {
+        font-size: clamp(28px, 10vw, 46px);
+      }
+
+      .inspect-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .routing-map {
+        min-height: 720px;
+      }
+
+      .routing-node.fast,
+      .routing-node.reasoning,
+      .routing-node.vision,
+      .routing-node.code,
+      .routing-node.longcontext {
+        position: absolute;
+        left: 18px;
+        right: 18px;
+        min-width: 0;
+      }
+
+      .routing-node.fast { top: 18px; }
+      .routing-node.reasoning { top: 114px; }
+      .routing-node.vision { top: 210px; }
+      .routing-node.code { top: 306px; }
+      .routing-node.longcontext { top: 402px; bottom: auto; }
+      .routing-center {
+        top: 520px;
+        left: 18px;
+        right: 18px;
+        width: auto;
+      }
+
+      .routing-callouts {
+        left: 18px;
+        right: 18px;
+        bottom: 12px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+  </style>
+</head>
+<body><div style="position:fixed;right:12px;bottom:12px;z-index:2147483647;padding:8px 10px;background:#111;color:#fff;font:12px/1.3 monospace;border:1px solid #777">ARCHIVED SOURCE · SCRIPTS AND NETWORK DISABLED</div>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="shell header-grid">
+      <a class="brand" href="#top" aria-label="ATLAS home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div class="brand-copy">
+          <div class="brand-name">ATLAS</div>
+          <div class="brand-sub">Distributed Intelligence Architecture</div>
+        </div>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <a href="#system-architecture">A-01 Architecture</a>
+        <a href="#system-specification">A-02 Specification</a>
+        <a href="#execution-detail">B-01 Execution</a>
+        <a href="#context-window">B-02 Context</a>
+        <a href="#model-routing">C-01 Routing</a>
+        <a href="#revision-history">C-02 Revisions</a>
+        <a href="#product-explanation">D-01 Product</a>
+      </nav>
+
+      <div class="header-meta">
+        Diagram state / ready
+        <strong>Interactive architecture available</strong>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page">
+    <section id="top" class="hero">
+      <div class="shell">
+        <div class="hero-topline">
+          <div class="meta">Document / ATLAS-ARCH-01 · Dark Technical · Homepage Figure</div>
+          <div class="meta">Status / Fictional system · Revision / 08</div>
+        </div>
+
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow">Distributed intelligence architecture</div>
+            <h1 class="hero-title">The system architecture diagram became the website.</h1>
+            <p class="hero-subtitle">
+              ATLAS coordinates AI agents, models, tools, memory systems, evaluation services,
+              and external data sources through a controlled orchestration layer. The interface is
+              organized like architecture documentation: references, schedules, routing detail,
+              execution sequence, and revision records.
+            </p>
+          </div>
+
+          <p class="hero-note">
+            Technical clarity comes from hierarchy, construction lines, schedules, and references —
+            not glow, not spectacle, and not dashboard shorthand.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- A-01 / SYSTEM ARCHITECTURE -->
+    <section class="manual-section" id="system-architecture" data-nav-section>
+      <div class="shell section-grid">
+        <aside class="section-rail" aria-hidden="true">
+          <span class="section-code">A-01</span>
+          <span class="section-index">System Architecture</span>
+        </aside>
+
+        <div class="section-main">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Primary technical figure</div>
+              <h2>System architecture</h2>
+            </div>
+
+            <p>
+              Select a component in the figure to inspect it. The selected object
+              strengthens its outline, reveals associated callouts, exposes related
+              construction lines, and updates the specification detail.
+            </p>
+          </div>
+
+          <div class="figure-head">
+            <div class="fig-caption">FIG. A-01 / ATLAS DISTRIBUTED EXECUTION ARCHITECTURE</div>
+            <div class="stamp">Interactive object inspection enabled</div>
+          </div>
+
+          <div class="arch-layout">
+            <div class="figure-card">
+              <div class="figure-topbar">
+                <span>Primary figure / distributed execution path</span>
+                <span class="pan-hint">Pan horizontally on mobile to inspect full figure</span>
+              </div>
+
+              <div class="figure-scroll" aria-label="Architecture figure scroll region">
+                <svg
+                  class="architecture-svg"
+                  viewBox="0 0 1320 1020"
+                  role="img"
+                  aria-labelledby="atlasFigureTitle atlasFigureDesc"
+                >
+                  <title id="atlasFigureTitle">ATLAS distributed execution architecture</title>
+                  <desc id="atlasFigureDesc">
+                    A vertical system architecture diagram showing user request, orchestrator,
+                    agent layer, tool layer, memory and context, model router, and output,
+                    with technical callouts and connector lines.
+                  </desc>
+
+                  <!-- figure frame -->
+                  <rect x="18" y="18" width="1284" height="984" class="arch-outline" />
+                  <text x="38" y="46" class="arch-ref">FIG. A-01</text>
+                  <text x="1120" y="46" class="arch-ref">ATLAS / REV 08</text>
+
+                  <!-- base connector spine -->
+                  <line x1="660" y1="110" x2="660" y2="890" class="arch-base-line" />
+                  <circle cx="660" cy="110" r="3.5" class="arch-joint" />
+                  <circle cx="660" cy="230" r="3.5" class="arch-joint" />
+                  <circle cx="660" cy="380" r="3.5" class="arch-joint" />
+                  <circle cx="660" cy="560" r="3.5" class="arch-joint" />
+                  <circle cx="660" cy="705" r="3.5" class="arch-joint" />
+                  <circle cx="660" cy="820" r="3.5" class="arch-joint" />
+                  <circle cx="660" cy="890" r="3.5" class="arch-joint" />
+
+                  <!-- primary nodes -->
+                  <g class="arch-node" data-component="user-request" tabindex="0" role="button" aria-label="Select User Request">
+                    <rect x="470" y="70" rx="0" ry="0" width="380" height="80" class="arch-object" />
+                    <text x="660" y="110" text-anchor="middle" class="arch-main-label">USER REQUEST</text>
+                    <text x="660" y="132" text-anchor="middle" class="arch-ref">ING-01 / REQUEST NORMALIZATION</text>
+                  </g>
+
+                  <g class="arch-node" data-component="orchestrator" tabindex="0" role="button" aria-label="Select Orchestrator">
+                    <rect x="440" y="190" rx="0" ry="0" width="440" height="90" class="arch-object" />
+                    <text x="660" y="230" text-anchor="middle" class="arch-main-label">ORCHESTRATOR</text>
+                    <text x="660" y="252" text-anchor="middle" class="arch-ref">ORCH-01 / TASK ROUTER · POLICY CONTROLLER</text>
+                  </g>
+
+                  <g class="arch-node" data-component="agent-layer" tabindex="0" role="button" aria-label="Select Agent Layer">
+                    <rect x="320" y="320" rx="0" ry="0" width="680" height="120" class="arch-object" />
+                    <text x="350" y="352" class="arch-ref">LAYER A / AGENT LAYER</text>
+                  </g>
+
+                  <g class="arch-node" data-component="research-agent" tabindex="0" role="button" aria-label="Select Research Agent">
+                    <rect x="350" y="370" width="145" height="46" class="arch-object" />
+                    <text x="422" y="398" text-anchor="middle" class="arch-sub-label">Research Agent</text>
+                    <text x="422" y="414" text-anchor="middle" class="arch-ref">AGT-R1</text>
+                  </g>
+
+                  <g class="arch-node" data-component="planning-agent" tabindex="0" role="button" aria-label="Select Planning Agent">
+                    <rect x="510" y="370" width="145" height="46" class="arch-object" />
+                    <text x="582" y="398" text-anchor="middle" class="arch-sub-label">Planning Agent</text>
+                    <text x="582" y="414" text-anchor="middle" class="arch-ref">AGT-P1</text>
+                  </g>
+
+                  <g class="arch-node" data-component="execution-agent" tabindex="0" role="button" aria-label="Select Execution Agent">
+                    <rect x="670" y="370" width="145" height="46" class="arch-object" />
+                    <text x="742" y="398" text-anchor="middle" class="arch-sub-label">Execution Agent</text>
+                    <text x="742" y="414" text-anchor="middle" class="arch-ref">AGT-X1</text>
+                  </g>
+
+                  <g class="arch-node" data-component="review-agent" tabindex="0" role="button" aria-label="Select Review Agent">
+                    <rect x="830" y="370" width="145" height="46" class="arch-object" />
+                    <text x="902" y="398" text-anchor="middle" class="arch-sub-label">Review Agent</text>
+                    <text x="902" y="414" text-anchor="middle" class="arch-ref">AGT-V1</text>
+                  </g>
+
+                  <g class="arch-node" data-component="tool-layer" tabindex="0" role="button" aria-label="Select Tool Layer">
+                    <rect x="360" y="500" rx="0" ry="0" width="600" height="120" class="arch-object" />
+                    <text x="390" y="532" class="arch-ref">LAYER B / TOOL LAYER</text>
+                  </g>
+
+                  <g class="arch-node" data-component="search-tool" tabindex="0" role="button" aria-label="Select Search tool">
+                    <rect x="390" y="548" width="120" height="44" class="arch-object" />
+                    <text x="450" y="575" text-anchor="middle" class="arch-sub-label">Search</text>
+                    <text x="450" y="590" text-anchor="middle" class="arch-ref">TOOL-04</text>
+                  </g>
+
+                  <g class="arch-node" data-component="code-tool" tabindex="0" role="button" aria-label="Select Code tool">
+                    <rect x="530" y="548" width="120" height="44" class="arch-object" />
+                    <text x="590" y="575" text-anchor="middle" class="arch-sub-label">Code</text>
+                    <text x="590" y="590" text-anchor="middle" class="arch-ref">TOOL-07</text>
+                  </g>
+
+                  <g class="arch-node" data-component="files-tool" tabindex="0" role="button" aria-label="Select Files tool">
+                    <rect x="670" y="548" width="120" height="44" class="arch-object" />
+                    <text x="730" y="575" text-anchor="middle" class="arch-sub-label">Files</text>
+                    <text x="730" y="590" text-anchor="middle" class="arch-ref">TOOL-02</text>
+                  </g>
+
+                  <g class="arch-node" data-component="api-tool" tabindex="0" role="button" aria-label="Select APIs tool">
+                    <rect x="810" y="548" width="120" height="44" class="arch-object" />
+                    <text x="870" y="575" text-anchor="middle" class="arch-sub-label">APIs</text>
+                    <text x="870" y="590" text-anchor="middle" class="arch-ref">TOOL-09</text>
+                  </g>
+
+                  <g class="arch-node" data-component="memory-context" tabindex="0" role="button" aria-label="Select Memory and Context">
+                    <rect x="430" y="660" rx="0" ry="0" width="460" height="90" class="arch-object" />
+                    <text x="660" y="702" text-anchor="middle" class="arch-main-label">MEMORY / CONTEXT</text>
+                    <text x="660" y="724" text-anchor="middle" class="arch-ref">MEM-02 / CONTEXT STORE · RETRIEVAL PRIORITY</text>
+                  </g>
+
+                  <g class="arch-node" data-component="model-router" tabindex="0" role="button" aria-label="Select Model Router">
+                    <rect x="460" y="785" rx="0" ry="0" width="400" height="88" class="arch-object" />
+                    <text x="660" y="824" text-anchor="middle" class="arch-main-label">MODEL ROUTER</text>
+                    <text x="660" y="846" text-anchor="middle" class="arch-ref">ROUT-01 / CLASS SELECTION · BUDGET CONTROL</text>
+                  </g>
+
+                  <g class="arch-node" data-component="output" tabindex="0" role="button" aria-label="Select Output">
+                    <rect x="520" y="915" rx="0" ry="0" width="280" height="66" class="arch-object" />
+                    <text x="660" y="952" text-anchor="middle" class="arch-main-label">OUTPUT</text>
+                    <text x="660" y="973" text-anchor="middle" class="arch-ref">RESP-01 / VERIFIED RESPONSE</text>
+                  </g>
+
+                  <!-- supporting construction lines -->
+                  <line x1="495" y1="393" x2="510" y2="393" class="arch-base-line soft" />
+                  <line x1="655" y1="393" x2="670" y2="393" class="arch-base-line soft" />
+                  <line x1="815" y1="393" x2="830" y2="393" class="arch-base-line soft" />
+                  <line x1="510" y1="570" x2="530" y2="570" class="arch-base-line soft" />
+                  <line x1="650" y1="570" x2="670" y2="570" class="arch-base-line soft" />
+                  <line x1="790" y1="570" x2="810" y2="570" class="arch-base-line soft" />
+
+                  <!-- relations -->
+                  <g class="relation" data-relation="rel-orchestrator">
+                    <path class="leader" d="M 440 235 L 300 235 L 300 382 L 320 382" />
+                    <circle cx="300" cy="235" r="3" class="marker" />
+                    <circle cx="300" cy="382" r="3" class="marker" />
+                    <path class="leader" d="M 880 235 L 1020 235 L 1020 382 L 1000 382" />
+                    <circle cx="1020" cy="235" r="3" class="marker" />
+                    <circle cx="1020" cy="382" r="3" class="marker" />
+                  </g>
+
+                  <g class="relation" data-relation="rel-agent-layer">
+                    <path class="leader" d="M 422 416 L 422 470 L 660 470 L 660 500" />
+                    <path class="leader" d="M 582 416 L 582 462 L 660 462 L 660 500" />
+                    <path class="leader" d="M 742 416 L 742 454 L 660 454 L 660 500" />
+                    <path class="leader" d="M 902 416 L 902 446 L 660 446 L 660 500" />
+                  </g>
+
+                  <g class="relation" data-relation="rel-tool-layer">
+                    <path class="leader" d="M 450 592 L 450 634 L 660 634 L 660 660" />
+                    <path class="leader" d="M 590 592 L 590 626 L 660 626 L 660 660" />
+                    <path class="leader" d="M 730 592 L 730 618 L 660 618 L 660 660" />
+                    <path class="leader" d="M 870 592 L 870 610 L 660 610 L 660 660" />
+                  </g>
+
+                  <g class="relation" data-relation="rel-memory-context">
+                    <path class="leader" d="M 430 705 L 312 705 L 312 235 L 440 235" />
+                    <path class="leader" d="M 890 705 L 1010 705 L 1010 829 L 860 829" />
+                    <circle cx="312" cy="705" r="3" class="marker" />
+                    <circle cx="1010" cy="705" r="3" class="marker" />
+                  </g>
+
+                  <g class="relation" data-relation="rel-model-router">
+                    <path class="leader" d="M 860 829 L 1002 829 L 1002 948 L 800 948" />
+                    <circle cx="1002" cy="829" r="3" class="marker" />
+                    <circle cx="1002" cy="948" r="3" class="marker" />
+                  </g>
+
+                  <g class="relation" data-relation="rel-review-agent">
+                    <path class="leader" d="M 902 416 L 1120 416 L 1120 948 L 800 948" />
+                    <circle cx="1120" cy="416" r="3" class="marker" />
+                    <circle cx="1120" cy="948" r="3" class="marker" />
+                  </g>
+
+                  <!-- callouts -->
+                  <g class="callout" data-callout="01">
+                    <path class="leader" d="M 440 235 L 220 235" />
+                    <rect x="44" y="188" width="156" height="94" class="callout-box" />
+                    <text x="58" y="208" class="callout-title">01 / TASK DECOMPOSITION</text>
+                    <text x="58" y="230" class="callout-copy">Break request into</text>
+                    <text x="58" y="248" class="callout-copy">agent-sized tasks,</text>
+                    <text x="58" y="266" class="callout-copy">constraints, and goals.</text>
+                  </g>
+
+                  <g class="callout" data-callout="02">
+                    <path class="leader" d="M 890 705 L 1126 705" />
+                    <rect x="1138" y="657" width="150" height="96" class="callout-box" />
+                    <text x="1152" y="677" class="callout-title">02 / CONTEXT ROUTING</text>
+                    <text x="1152" y="699" class="callout-copy">Budgeted context</text>
+                    <text x="1152" y="717" class="callout-copy">allocation by source,</text>
+                    <text x="1152" y="735" class="callout-copy">priority, and recency.</text>
+                  </g>
+
+                  <g class="callout" data-callout="03">
+                    <path class="leader" d="M 960 560 L 1140 560" />
+                    <rect x="1148" y="514" width="140" height="92" class="callout-box" />
+                    <text x="1162" y="534" class="callout-title">03 / TOOL EXECUTION</text>
+                    <text x="1162" y="556" class="callout-copy">Connectors execute</text>
+                    <text x="1162" y="574" class="callout-copy">under scoped policy</text>
+                    <text x="1162" y="592" class="callout-copy">and audit rules.</text>
+                  </g>
+
+                  <g class="callout" data-callout="04">
+                    <path class="leader" d="M 430 705 L 220 705" />
+                    <rect x="42" y="656" width="158" height="98" class="callout-box" />
+                    <text x="56" y="676" class="callout-title">04 / MEMORY WRITE</text>
+                    <text x="56" y="698" class="callout-copy">Persist working</text>
+                    <text x="56" y="716" class="callout-copy">state, retrieval</text>
+                    <text x="56" y="734" class="callout-copy">evidence, and output cues.</text>
+                  </g>
+
+                  <g class="callout" data-callout="05">
+                    <path class="leader" d="M 800 948 L 1115 948" />
+                    <rect x="1125" y="902" width="160" height="92" class="callout-box" />
+                    <text x="1139" y="922" class="callout-title">05 / RESULT VERIFICATION</text>
+                    <text x="1139" y="944" class="callout-copy">Review and evaluation</text>
+                    <text x="1139" y="962" class="callout-copy">separate checking</text>
+                    <text x="1139" y="980" class="callout-copy">from generation.</text>
+                  </g>
+                </svg>
+              </div>
+
+              <div class="legend" aria-hidden="true">
+                <span><i class="legend-box"></i> system object</span>
+                <span><i class="legend-highlight"></i> selected object</span>
+                <span><i class="legend-line"></i> primary flow connector</span>
+                <span><i class="legend-line" style="background: var(--accent);"></i> revealed relation / leader line</span>
+              </div>
+            </div>
+
+            <aside class="inspect-panel" aria-live="polite">
+              <div class="inspect-ref" id="inspect-ref">OBJ / ORCH-01</div>
+              <h3 id="inspect-title">Orchestrator</h3>
+              <p class="inspect-sub" id="inspect-sub">Primary execution coordinator</p>
+
+              <dl class="inspect-grid">
+                <div>
+                  <dt>Role</dt>
+                  <dd id="inspect-role">Task router</dd>
+                </div>
+                <div>
+                  <dt>State</dt>
+                  <dd id="inspect-state">ACTIVE</dd>
+                </div>
+                <div>
+                  <dt>Latency</dt>
+                  <dd id="inspect-latency">42 MS</dd>
+                </div>
+                <div>
+                  <dt>Rev</dt>
+                  <dd id="inspect-rev">R08</dd>
+                </div>
+              </dl>
+
+              <p class="inspect-summary" id="inspect-summary">
+                The orchestrator interprets the request envelope, decomposes work,
+                assigns task depth, and determines which agent path should execute next.
+              </p>
+
+              <div class="detail-block">
+                <h4>Construction relationships</h4>
+                <ul class="detail-list" id="inspect-links"></ul>
+              </div>
+
+              <div class="detail-block">
+                <h4>Associated callouts</h4>
+                <ul class="detail-list" id="inspect-callouts"></ul>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- A-02 / SYSTEM SPECIFICATION -->
+    <section class="manual-section" id="system-specification" data-nav-section>
+      <div class="shell section-grid">
+        <aside class="section-rail" aria-hidden="true">
+          <span class="section-code">A-02</span>
+          <span class="section-index">System Specification</span>
+        </aside>
+
+        <div class="section-main">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Engineering schedule</div>
+              <h2>System specification</h2>
+            </div>
+
+            <p>
+              This schedule treats services as an engineering system rather than a set
+              of decorative metrics. Selecting components in the architecture highlights
+              related service entries below.
+            </p>
+          </div>
+
+          <div class="table-wrap">
+            <table class="service-table" aria-label="System specification schedule">
+              <thead>
+                <tr>
+                  <th>SERVICE</th>
+                  <th>ROLE</th>
+                  <th>STATE</th>
+                  <th>LATENCY</th>
+                  <th>REV</th>
+                </tr>
+              </thead>
+              <tbody id="service-table-body">
+                <tr data-service="ING-01">
+                  <td>ING-01</td>
+                  <td>REQUEST NORMALIZATION</td>
+                  <td class="state-active">ACTIVE</td>
+                  <td>04 MS</td>
+                  <td>R12</td>
+                </tr>
+                <tr data-service="ORCH-01">
+                  <td>ORCH-01</td>
+                  <td>TASK ROUTER</td>
+                  <td class="state-active">ACTIVE</td>
+                  <td>42 MS</td>
+                  <td>R08</td>
+                </tr>
+                <tr data-service="AGT-R1">
+                  <td>AGT-R1</td>
+                  <td>RESEARCH AGENT</td>
+                  <td class="state-active">ACTIVE</td>
+                  <td>63 MS</td>
+                  <td>R12</td>
+                </tr>
+                <tr data-service="AGT-P1">
+                  <td>AGT-P1</td>
+                  <td>PLANNING AGENT</td>
+                  <td class="state-active">ACTIVE</td>
+                  <td>51 MS</td>
+                  <td>R11</td>
+                </tr>
+                <tr data-service="AGT-X1">
+                  <td>AGT-X1</td>
+                  <td>EXECUTION AGENT</td>
+                  <td class="state-active">ACTIVE</td>
+                  <td>47 MS</td>
+                  <td>R10</td>
+                </tr>
+                <tr data-service="AGT-V1">
+                  <td>AGT-V1</td>
+                  <td>REVIEW AGENT</td>
+                  <td class="state-active">ACTIVE</td>
+                  <td>78 MS</td>
+                  <td>R09</td>
+                </tr>
+                <tr data-service="TOOL-04">
+                  <td>TOOL-04</td>
+                  <td>WEB CONNECTOR</td>
+                  <td class="state-standby">STANDBY</td>
+                  <td>—</td>
+                  <td>R03</td>
+                </tr>
+                <tr data-service="TOOL-07">
+                  <td>TOOL-07</td>
+                  <td>CODE CONNECTOR</td>
+                  <td class="state-active">ACTIVE</td>
+                  <td>35 MS</td>
+                  <td>R06</td>
+                </tr>
+                <tr data-service="TOOL-02">
+                  <td>TOOL-02</td>
+                  <td>FILE CONNECTOR</td>
+                  <td class="state-active">ACTIVE</td>
+                  <td>12 MS</td>
+                  <td>R04</td>
+                </tr>
+                <tr data-service="TOOL-09">
+                  <td>TOOL-09</td>
+                  <td>EXTERNAL API CONNECTOR</td>
+                  <td class="state-active">ACTIVE</td>
+                  <td>59 MS</td>
+                  <td>R05</td>
+                </tr>
+                <tr data-service="MEM-02">
+                  <td>MEM-02</td>
+                  <td>CONTEXT STORE</td>
+                  <td class="state-active">ACTIVE</td>
+                  <td>18 MS</td>
+                  <td>R11</td>
+                </tr>
+                <tr data-service="ROUT-01">
+                  <td>ROUT-01</td>
+                  <td>MODEL ROUTER</td>
+                  <td class="state-active">ACTIVE</td>
+                  <td>24 MS</td>
+                  <td>R08</td>
+                </tr>
+                <tr data-service="EVAL-01">
+                  <td>EVAL-01</td>
+                  <td>RESPONSE REVIEW</td>
+                  <td class="state-active">ACTIVE</td>
+                  <td>78 MS</td>
+                  <td>R05</td>
+                </tr>
+                <tr data-service="RESP-01">
+                  <td>RESP-01</td>
+                  <td>RESPONSE ASSEMBLY</td>
+                  <td class="state-active">ACTIVE</td>
+                  <td>09 MS</td>
+                  <td>R08</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="table-note">
+              <span>Schedule / SYS-SPEC-08</span>
+              <span>Active selection highlights related services</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- B-01 / EXECUTION DETAIL -->
+    <section class="manual-section" id="execution-detail" data-nav-section>
+      <div class="shell section-grid">
+        <aside class="section-rail" aria-hidden="true">
+          <span class="section-code">B-01</span>
+          <span class="section-index">Execution Detail</span>
+        </aside>
+
+        <div class="section-main">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Step sequence language</div>
+              <h2>Execution detail</h2>
+            </div>
+
+            <p>
+              One request moving through the system. Each stage receives an explicit
+              reference, execution role, and system metadata, making the chain legible
+              as a procedure rather than an animation.
+            </p>
+          </div>
+
+          <div class="sequence-block">
+            <div class="sequence-head">
+              <div>
+                <div class="eyebrow">Request</div>
+                <p class="sequence-request">“Compare regional manufacturing trends.”</p>
+              </div>
+
+              <div class="meta">Sequence / EX-114 · Path / Research + Review</div>
+            </div>
+
+            <div class="sequence-rail">
+              <div class="sequence-step">
+                <div class="sequence-id">01</div>
+                <div class="sequence-body">
+                  <strong>RECEIVE</strong>
+                  <span>ING-01 · REQUEST NORMALIZATION</span>
+                </div>
+                <div class="sequence-meta">State / ACCEPTED<br>Latency / 04 MS</div>
+                <div class="sequence-desc">
+                  Inbound request is parsed, associated with a runtime policy profile, and
+                  stamped with an execution envelope.
+                </div>
+              </div>
+
+              <div class="sequence-step">
+                <div class="sequence-id">02</div>
+                <div class="sequence-body">
+                  <strong>DECOMPOSE</strong>
+                  <span>ORCH-01 · TASK ROUTER</span>
+                </div>
+                <div class="sequence-meta">State / ACTIVE<br>Latency / 42 MS</div>
+                <div class="sequence-desc">
+                  The orchestrator separates the prompt into sub-questions, selects
+                  agent responsibilities, and allocates initial context budget.
+                </div>
+              </div>
+
+              <div class="sequence-step">
+                <div class="sequence-id">03</div>
+                <div class="sequence-body">
+                  <strong>RETRIEVE</strong>
+                  <span>AGT-R1 + TOOL-04 + MEM-02</span>
+                </div>
+                <div class="sequence-meta">State / ACTIVE<br>Latency / 84 MS</div>
+                <div class="sequence-desc">
+                  Research tasks query external sources, inspect retained context, and
+                  return evidence candidates with source-level references.
+                </div>
+              </div>
+
+              <div class="sequence-step">
+                <div class="sequence-id">04</div>
+                <div class="sequence-body">
+                  <strong>ANALYZE</strong>
+                  <span>AGT-P1 + AGT-X1 + ROUT-01</span>
+                </div>
+                <div class="sequence-meta">State / ACTIVE<br>Latency / 116 MS</div>
+                <div class="sequence-desc">
+                  Planning and execution agents synthesize evidence, compare regional
+                  signals, and route computation to the appropriate model class.
+                </div>
+              </div>
+
+              <div class="sequence-step">
+                <div class="sequence-id">05</div>
+                <div class="sequence-body">
+                  <strong>VERIFY</strong>
+                  <span>AGT-V1 + EVAL-01</span>
+                </div>
+                <div class="sequence-meta">State / REVIEW<br>Latency / 63 MS</div>
+                <div class="sequence-desc">
+                  Verification is handled outside the execution path to check grounding,
+                  structure, source completeness, and response policy compliance.
+                </div>
+              </div>
+
+              <div class="sequence-step">
+                <div class="sequence-id">06</div>
+                <div class="sequence-body">
+                  <strong>SYNTHESIZE</strong>
+                  <span>RESP-01 · OUTPUT ASSEMBLY</span>
+                </div>
+                <div class="sequence-meta">State / COMPLETE<br>Latency / 27 MS</div>
+                <div class="sequence-desc">
+                  Approved output is assembled, final references are attached, and the
+                  response leaves the system as a verified result package.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- B-02 / CONTEXT WINDOW -->
+    <section class="manual-section" id="context-window" data-nav-section>
+      <div class="shell section-grid">
+        <aside class="section-rail" aria-hidden="true">
+          <span class="section-code">B-02</span>
+          <span class="section-index">Context Window</span>
+        </aside>
+
+        <div class="section-main">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Allocated range schedule</div>
+              <h2>Context window</h2>
+            </div>
+
+            <p>
+              Context is represented as a measured system allocation rather than a
+              modern chart. The range shows how the active context budget is distributed
+              across system rules, user input, retrieval evidence, working context, and
+              response budget.
+            </p>
+          </div>
+
+          <div class="context-block">
+            <div class="context-head">
+              <div class="fig-caption">DETAIL B-02 / CONTEXT ALLOCATION RANGE</div>
+              <div class="context-total">Total context budget / 128k tokens</div>
+            </div>
+
+            <div class="context-scale" aria-hidden="true">
+              <span>0k</span>
+              <span>16k</span>
+              <span>32k</span>
+              <span>48k</span>
+              <span>64k</span>
+              <span>80k</span>
+              <span>96k</span>
+              <span>112k</span>
+              <span>128k</span>
+            </div>
+
+            <div class="context-frame">
+              <div class="context-bar" aria-label="Context allocation bar">
+                <div class="context-segment" style="width: 12%;">
+                  <div>
+                    <strong>SYSTEM</strong>
+                    <span>12% · 15.4k tokens</span>
+                  </div>
+                </div>
+
+                <div class="context-segment" style="width: 18%;">
+                  <div>
+                    <strong>USER</strong>
+                    <span>18% · 23.0k tokens</span>
+                  </div>
+                </div>
+
+                <div class="context-segment" style="width: 31%;">
+                  <div>
+                    <strong>RETRIEVAL</strong>
+                    <span>31% · 39.7k tokens</span>
+                  </div>
+                </div>
+
+                <div class="context-segment" style="width: 24%;">
+                  <div>
+                    <strong>WORKING CONTEXT</strong>
+                    <span>24% · 30.7k tokens</span>
+                  </div>
+                </div>
+
+                <div class="context-segment" style="width: 15%;">
+                  <div>
+                    <strong>RESPONSE BUDGET</strong>
+                    <span>15% · 19.2k tokens</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="context-summary">
+              <div class="cell">
+                <span class="metric-label">SYSTEM</span>
+                <span class="metric-value">Policy, routing instructions, execution constraints.</span>
+              </div>
+              <div class="cell">
+                <span class="metric-label">USER</span>
+                <span class="metric-value">Primary request text, clarifications, task parameters.</span>
+              </div>
+              <div class="cell">
+                <span class="metric-label">RETRIEVAL</span>
+                <span class="metric-value">External evidence, memory retrievals, linked documents.</span>
+              </div>
+              <div class="cell">
+                <span class="metric-label">WORKING CONTEXT</span>
+                <span class="metric-value">Intermediate plans, tool results, synthesis notes.</span>
+              </div>
+              <div class="cell">
+                <span class="metric-label">RESPONSE BUDGET</span>
+                <span class="metric-value">Reserved space for final assembly and citations.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- C-01 / MODEL ROUTING DETAIL -->
+    <section class="manual-section" id="model-routing" data-nav-section>
+      <div class="shell section-grid">
+        <aside class="section-rail" aria-hidden="true">
+          <span class="section-code">C-01</span>
+          <span class="section-index">Model Routing Detail</span>
+        </aside>
+
+        <div class="section-main">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Detail C-04</div>
+              <h2>Model router</h2>
+            </div>
+
+            <p>
+              ATLAS does not route everything to one model class. The router evaluates
+              task depth, modality, tool dependency, context demand, and response budget
+              before choosing a path.
+            </p>
+          </div>
+
+          <div class="routing-layout">
+            <div class="routing-figure">
+              <div class="fig-caption" style="margin-bottom: 12px;">DETAIL C-04 / MODEL ROUTER</div>
+
+              <div class="routing-map">
+                <svg class="routing-svg" viewBox="0 0 1000 600" aria-hidden="true">
+                  <path d="M 270 100 L 500 300" stroke="var(--line-bright)" stroke-width="1.2" fill="none"/>
+                  <path d="M 730 100 L 500 300" stroke="var(--line-bright)" stroke-width="1.2" fill="none"/>
+                  <path d="M 270 260 L 500 300" stroke="var(--line-bright)" stroke-width="1.2" fill="none"/>
+                  <path d="M 730 260 L 500 300" stroke="var(--line-bright)" stroke-width="1.2" fill="none"/>
+                  <path d="M 500 480 L 500 300" stroke="var(--line-bright)" stroke-width="1.2" fill="none"/>
+                </svg>
+
+                <button class="routing-node route-node fast active" data-route="fast" type="button">
+                  <strong>FAST</strong>
+                  <span>Short latency / light reasoning</span>
+                </button>
+
+                <button class="routing-node route-node reasoning" data-route="reasoning" type="button">
+                  <strong>REASONING</strong>
+                  <span>Deep inference / multi-step logic</span>
+                </button>
+
+                <button class="routing-node route-node vision" data-route="vision" type="button">
+                  <strong>VISION</strong>
+                  <span>Image or diagram inputs</span>
+                </button>
+
+                <button class="routing-node route-node code" data-route="code" type="button">
+                  <strong>CODE</strong>
+                  <span>Execution, analysis, transformation</span>
+                </button>
+
+                <button class="routing-node route-node longcontext" data-route="longcontext" type="button">
+                  <strong>LONG CONTEXT</strong>
+                  <span>Large retrieval / document synthesis</span>
+                </button>
+
+                <div class="routing-center">
+                  <strong>MODEL ROUTER</strong>
+                  <span>
+                    Chooses a model class by task type, context demand, latency
+                    budget, and verification requirements.
+                  </span>
+                </div>
+
+                <div class="routing-callouts">
+                  <div class="routing-callout">01 / PRIORITY · TASK DEPTH</div>
+                  <div class="routing-callout">02 / PRIORITY · MODALITY</div>
+                  <div class="routing-callout">03 / PRIORITY · TOOL DEPENDENCY</div>
+                  <div class="routing-callout">04 / PRIORITY · CONTEXT SIZE</div>
+                  <div class="routing-callout">05 / PRIORITY · LATENCY BUDGET</div>
+                </div>
+              </div>
+            </div>
+
+            <aside class="router-panel" aria-live="polite">
+              <div class="routing-code" id="route-ref">ROUTE / FAST</div>
+              <h3 id="route-title">Fast</h3>
+              <p id="route-summary">
+                Used for short-form requests, lightweight transformations, and tasks where
+                response speed matters more than deep chain-of-thought complexity.
+              </p>
+
+              <div class="detail-block">
+                <h4>Typical task types</h4>
+                <ul class="detail-list" id="route-tasks"></ul>
+              </div>
+
+              <div class="detail-block">
+                <h4>Routing conditions</h4>
+                <ul class="detail-list" id="route-conditions"></ul>
+              </div>
+
+              <div class="detail-block">
+                <h4>Verification note</h4>
+                <ul class="detail-list" id="route-notes"></ul>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- C-02 / REVISION HISTORY -->
+    <section class="manual-section" id="revision-history" data-nav-section>
+      <div class="shell section-grid">
+        <aside class="section-rail" aria-hidden="true">
+          <span class="section-code">C-02</span>
+          <span class="section-index">Revision History</span>
+        </aside>
+
+        <div class="section-main">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Architecture record</div>
+              <h2>Revision history</h2>
+            </div>
+
+            <p>
+              Changes are recorded as architecture documentation. This preserves what
+              was modified, when it was modified, and who verified the current system state.
+            </p>
+          </div>
+
+          <div class="revision-wrap">
+            <table class="revision-table" aria-label="Revision history">
+              <thead>
+                <tr>
+                  <th>REV</th>
+                  <th>DATE</th>
+                  <th>CHANGE</th>
+                  <th>VERIFIED BY</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="current">
+                  <td>08</td>
+                  <td>AUG 14</td>
+                  <td>ROUTING POLICY UPDATE</td>
+                  <td>SYSTEM</td>
+                </tr>
+                <tr>
+                  <td>07</td>
+                  <td>AUG 02</td>
+                  <td>MEMORY PRIORITY MODEL</td>
+                  <td>QA</td>
+                </tr>
+                <tr>
+                  <td>06</td>
+                  <td>JUL 21</td>
+                  <td>EVALUATION PATH</td>
+                  <td>SYSTEM</td>
+                </tr>
+                <tr>
+                  <td>05</td>
+                  <td>JUL 08</td>
+                  <td>EXTERNAL CONNECTOR SCOPE</td>
+                  <td>OPS</td>
+                </tr>
+                <tr>
+                  <td>04</td>
+                  <td>JUN 24</td>
+                  <td>LONG-CONTEXT ROUTING CLASS</td>
+                  <td>ARCH</td>
+                </tr>
+                <tr>
+                  <td>03</td>
+                  <td>JUN 12</td>
+                  <td>REVIEW AGENT INSERTED INTO OUTPUT PATH</td>
+                  <td>QA</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="table-note">
+              <span>Revision block / ATLAS-REV-08</span>
+              <span>Current active architecture / revision 08</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- D-01 / PRODUCT EXPLANATION -->
+    <section class="manual-section" id="product-explanation" data-nav-section>
+      <div class="shell section-grid">
+        <aside class="section-rail" aria-hidden="true">
+          <span class="section-code">D-01</span>
+          <span class="section-index">Product Explanation</span>
+        </aside>
+
+        <div class="section-main">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Conventional prose</div>
+              <h2>What ATLAS is</h2>
+            </div>
+
+            <p>
+              The site uses technical drawing logic, but the product itself should still
+              be understandable in plain language.
+            </p>
+          </div>
+
+          <div class="prose-layout">
+            <article class="prose-panel prose-main">
+              <h3>Architecture for AI systems, not just AI outputs.</h3>
+
+              <p>
+                ATLAS is a fictional infrastructure platform for operating AI systems that
+                are composed of more than one model call. It coordinates incoming requests,
+                breaks work into steps, dispatches specialized agents, manages tool access,
+                allocates context, chooses model classes, and routes completed work into a
+                separate verification path before the response is returned.
+              </p>
+
+              <p>
+                Orchestration matters because modern AI products are not single prompts.
+                Useful systems have to decide what kind of work is being asked for, which
+                tools are allowed, what information should be retrieved, how much context
+                should be consumed, and when an answer should be checked before it is shown
+                to a user. Without orchestration, those decisions are buried in application
+                code and are hard to inspect or improve.
+              </p>
+
+              <p>
+                Context moves through ATLAS as a budgeted resource. User input, system rules,
+                retrieval evidence, working memory, and response space all compete for a
+                finite context window. ATLAS makes those allocations explicit so that teams
+                can reason about quality, latency, and failure modes instead of treating
+                context as an invisible implementation detail.
+              </p>
+
+              <p>
+                Verification is separated from execution because generation and checking are
+                different jobs. Execution is responsible for producing candidate work.
+                Verification is responsible for evaluating that work against evidence,
+                structure, and policy. Keeping them separate improves traceability and makes
+                it easier to change standards without rewriting the whole execution path.
+              </p>
+            </article>
+
+            <aside class="prose-panel">
+              <div class="prose-side-block">
+                <div class="eyebrow">System position</div>
+                <strong>Between the request and the response.</strong>
+                <p>
+                  ATLAS sits in the path where orchestration, memory, routing, and review
+                  need to be visible and governable.
+                </p>
+              </div>
+
+              <div class="prose-side-block">
+                <div class="eyebrow">Primary value</div>
+                <strong>Coordination with technical legibility.</strong>
+                <p>
+                  It exposes how the system works instead of hiding it behind a minimal dashboard.
+                </p>
+              </div>
+
+              <div class="prose-side-block">
+                <div class="eyebrow">Design intent</div>
+                <strong>Closer to architecture documentation than science fiction.</strong>
+                <p>
+                  The interface avoids spectacle and relies on drawing hierarchy, measured layout,
+                  and explicit references.
+                </p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="shell footer-grid">
+        <div>
+          <div class="eyebrow">ATLAS · Distributed Intelligence Architecture</div>
+          <p class="footer-brand">ATLAS</p>
+        </div>
+
+        <div class="footer-meta">
+          Fictional platform demonstration<br />
+          Document class / public<br />
+          Interface mode / dark technical<br />
+          Architecture revision / 08
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  
+</body>
+</html>

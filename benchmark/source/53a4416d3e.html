@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANALOG CINEMA CLUB</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --board-bg:#0d0d0d;
+  --cell-bg:#161616;
+  --seam:rgba(0,0,0,0.55);
+  --flap-text:#f4ede1;
+  --flap-text-dim:rgba(244,237,225,0.35);
+  --label:rgba(244,237,225,0.45);
+  --accent:#e8a33d;
+  --status-good:#6fae6f;
+  --status-warn:#e8a33d;
+  --status-bad:#c25b4a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--board-bg);color:var(--flap-text);font-family:'Space Mono',monospace;font-size:14px;line-height:1.4;min-height:100vh}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* Flap Primitives */
+.flap-row{display:flex;gap:2px;margin-bottom:2px}
+.flap-cell{position:relative;width:1ch;height:1em;overflow:hidden;background:var(--cell-bg);perspective:200px;font-family:'Space Grotesk',sans-serif;font-weight:700;text-transform:uppercase;line-height:1}
+.flap-cell::after{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:var(--seam);z-index:10;pointer-events:none}
+.flap-top,.flap-bottom{position:absolute;left:0;width:100%;height:50%;overflow:hidden;background:var(--cell-bg);backface-visibility:hidden}
+.flap-top{top:0;transform-origin:bottom;z-index:5}
+.flap-bottom{bottom:0;transform-origin:top;z-index:3}
+.flap-top span,.flap-bottom span{position:absolute;left:0;width:100%;text-align:center;display:block}
+.flap-top span{top:0;height:200%}
+.flap-bottom span{bottom:0;height:200%}
+.flap-next-top,.flap-next-bottom{position:absolute;left:0;width:100%;height:50%;overflow:hidden;background:var(--cell-bg);z-index:2}
+.flap-next-top{top:0}
+.flap-next-bottom{bottom:0;z-index:6;transform-origin:top;transform:rotateX(90deg);backface-visibility:hidden}
+.flap-next-top span,.flap-next-bottom span{position:absolute;left:0;width:100%;text-align:center;display:block}
+.flap-next-top span{top:0;height:200%}
+.flap-next-bottom span{bottom:0;height:200%}
+
+/* Sizes */
+.display-scale .flap-cell{font-size:64px;height:64px;width:52px;line-height:64px}
+.display-scale .flap-top span,.display-scale .flap-bottom span,.display-scale .flap-next-top span,.display-scale .flap-next-bottom span{line-height:64px}
+.standard-scale .flap-cell{font-size:28px;height:28px;width:24px;line-height:28px}
+.standard-scale .flap-top span,.standard-scale .flap-bottom span,.standard-scale .flap-next-top span,.standard-scale .flap-next-bottom span{line-height:28px}
+.micro-scale .flap-cell{font-size:16px;height:16px;width:14px;line-height:16px}
+.micro-scale .flap-top span,.micro-scale .flap-bottom span,.micro-scale .flap-next-top span,.micro-scale .flap-next-bottom span{line-height:16px}
+
+/* Animations */
+@keyframes flipDown{
+  0%{transform:rotateX(0deg)}
+  100%{transform:rotateX(-90deg)}
+}
+@keyframes revealUp{
+  0%{transform:rotateX(90deg)}
+  100%{transform:rotateX(0deg)}
+}
+.animating .flap-top{animation:flipDown var(--dur,350ms) cubic-bezier(0.55,0,1,0.45) forwards}
+.animating .flap-next-bottom{animation:revealUp var(--dur,350ms) cubic-bezier(0.55,0,1,0.45) forwards}
+
+/* Colors */
+.status-good .flap-cell{color:var(--status-good)}
+.status-warn .flap-cell{color:var(--status-warn)}
+.status-bad .flap-cell{color:var(--status-bad)}
+
+/* Layout */
+.container{max-width:1200px;margin:0 auto;padding:24px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:48px;border-bottom:1px solid rgba(244,237,225,0.1);padding-bottom:16px}
+.brand h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;letter-spacing:2px;text-transform:uppercase}
+.brand .sub{font-size:11px;color:var(--label);letter-spacing:1.5px;text-transform:uppercase;margin-top:4px}
+nav{display:flex;gap:24px}
+nav a{color:var(--label);text-decoration:none;text-transform:uppercase;font-size:12px;letter-spacing:1px;position:relative}
+nav a.active{color:var(--flap-text)}
+section{margin-bottom:64px}
+.section-label{font-size:11px;letter-spacing:2px;color:var(--label);text-transform:uppercase;margin-bottom:12px;font-weight:700}
+
+/* Now Screening */
+.now-screening{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.board-side .film-title{display:flex;gap:4px;margin-bottom:8px}
+.board-side .film-year{display:flex;gap:4px;margin-bottom:24px}
+.meta-side{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.meta-side .meta-label{font-size:11px;color:var(--label);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+
+/* Schedule Board */
+.schedule-board .schedule-row{display:grid;grid-template-columns:80px 1fr 60px 60px 100px;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid rgba(244,237,225,0.06)}
+.schedule-board .schedule-row.header{font-size:11px;color:var(--label);letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid rgba(244,237,225,0.15);padding-bottom:8px}
+.schedule-board .time{font-size:13px;color:var(--label)}
+
+/* Seats */
+.seat-board{display:flex;gap:32px;align-items:flex-start}
+.seat-counter .seat-number{display:flex;gap:4px;margin-bottom:8px}
+.seat-info{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.seat-info .seat-label{font-size:11px;color:var(--label);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+
+/* Feature */
+.feature{background:rgba(244,237,225,0.03);padding:32px;border:1px solid rgba(244,237,225,0.08)}
+.feature h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;text-transform:uppercase;margin-bottom:8px}
+.feature .sub{font-size:12px;color:var(--label);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px}
+.feature p{color:rgba(244,237,225,0.7);line-height:1.7;margin-bottom:12px}
+
+/* Archive */
+.archive-board .archive-row{display:grid;grid-template-columns:60px 1fr 1fr 50px 50px 80px;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid rgba(244,237,225,0.06)}
+.archive-board .archive-row.header{font-size:11px;color:var(--label);letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid rgba(244,237,225,0.15);padding-bottom:8px}
+
+/* Visitor */
+.visitor-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.visitor-item .visitor-label{font-size:10px;color:var(--label);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+
+/* Story */
+.story{max-width:640px}
+.story h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:28px;margin-bottom:16px;line-height:1.2;text-transform:uppercase}
+.story p{margin-bottom:16px;color:rgba(244,237,225,0.7);font-size:14px;line-height:1.7}
+
+/* Controls */
+.controls{margin-top:32px;display:flex;gap:16px}
+button{background:var(--cell-bg);border:1px solid rgba(244,237,225,0.2);color:var(--flap-text);font-family:'Space Mono',monospace;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;padding:10px 20px;cursor:pointer}
+button:hover{border-color:var(--flap-text)}
+
+/* Responsive */
+@media (max-width:768px){
+  .now-screening{grid-template-columns:1fr}
+  .meta-side{grid-template-columns:1fr 1fr}
+  .schedule-board .schedule-row{grid-template-columns:60px 1fr 50px 50px 80px}
+  .archive-board .archive-row{grid-template-columns:50px 1fr 1fr 40px 40px 60px}
+  .visitor-grid{grid-template-columns:repeat(3,1fr)}
+  .seat-board{flex-direction:column;gap:24px}
+}
+</style>
+</head>
+<body><div style="position:fixed;right:12px;bottom:12px;z-index:2147483647;padding:8px 10px;background:#111;color:#fff;font:12px/1.3 monospace;border:1px solid #777">ARCHIVED SOURCE · SCRIPTS AND NETWORK DISABLED</div>
+<div class="container">
+<header>
+<div class="brand">
+  <h1>ANALOG CINEMA CLUB</h1>
+  <div class="sub">Film / Print / Nightly</div>
+</div>
+<nav id="mainNav">
+  <a href="#screening" class="active">PROGRAM</a>
+  <a href="#schedule">SCHEDULE</a>
+  <a href="#archive">ARCHIVE</a>
+  <a href="#about">ABOUT</a>
+  <a href="#visit">VISIT</a>
+</nav>
+</header>
+
+<section id="screening">
+  <div class="section-label">A-01 / Now Screening</div>
+  <div class="now-screening">
+    <div class="board-side">
+      <div class="film-title display-scale" id="filmTitle"></div>
+      <div class="film-year standard-scale" id="filmYear"></div>
+      <div class="meta-side">
+        <div>
+          <div class="meta-label">Screen</div>
+          <div class="standard-scale" id="screenNum"></div>
+        </div>
+        <div>
+          <div class="meta-label">Format</div>
+          <div class="standard-scale" id="filmFormat"></div>
+        </div>
+        <div>
+          <div class="meta-label">Started</div>
+          <div class="standard-scale" id="startTime"></div>
+        </div>
+        <div>
+          <div class="meta-label">Ends</div>
+          <div class="standard-scale" id="endTime"></div>
+        </div>
+        <div>
+          <div class="meta-label">State</div>
+          <div class="standard-scale" id="screenState"></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="section-label" style="margin-bottom:16px">A-03 / Seats Remaining</div>
+      <div class="seat-board">
+        <div class="seat-counter">
+          <div class="seat-number display-scale" id="seatCount"></div>
+          <div style="font-size:11px;color:var(--label);letter-spacing:1.5px;text-transform:uppercase;margin-top:8px">Available</div>
+        </div>
+        <div class="seat-info">
+          <div>
+            <div class="seat-label">Screen</div>
+            <div class="standard-scale" id="seatScreen"></div>
+          </div>
+          <div>
+            <div class="seat-label">Capacity</div>
+            <div class="standard-scale" id="seatCapacity"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:24px">
+        <button id="reserveBtn">Reserve</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="schedule">
+  <div class="section-label">A-02 / Tonight</div>
+  <div class="schedule-board" id="scheduleBoard">
+    <div class="schedule-row header">
+      <div>Time</div>
+      <div>Film</div>
+      <div>Screen</div>
+      <div>Format</div>
+      <div>Availability</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">B-02 / Next Screenings</div>
+  <div id="nextScreenings"></div>
+</section>
+
+<section id="archive">
+  <div class="section-label">C-01 / Program Archive</div>
+  <div class="archive-board" id="archiveBoard">
+    <div class="archive-row header">
+      <div>Date</div>
+      <div>Title</div>
+      <div>Director</div>
+      <div>Year</div>
+      <div>Format</div>
+      <div>Program</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">B-01 / Featured Program</div>
+  <div class="feature">
+    <h2>Michael Mann</h2>
+    <div class="sub">Night / City / Machine</div>
+    <p>August 14-24. A complete retrospective of one of American cinemas most atmospheric directors, programmed across three screens in 35mm and 4K restoration prints.</p>
+    <p>Films include Thief, Manhunter, Heat, Collateral, and Miami Vice. Each screening introduced by a rotating guest programmer from the local film community. Memberships receive early booking access.</p>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-label">D-01 / Cinema Story</div>
+  <div class="story">
+    <h2>Some films deserve a room, a print, and a specific hour.</h2>
+    <p>Analog Cinema Club screens exclusively from physical media. 35mm prints, restored DCPs, and rare 4K masters are the only formats we project. We believe the conditions of viewing are part of the work itself.</p>
+    <p>Our programming is built around director retrospectives, thematic series, and midnight screenings of films that benefit from a dark room and an attentive audience. We do not stream. We do not release windows.</p>
+    <p>The theater operates three screens in a converted warehouse near the river. Memberships fund our print preservation work and grant early access to limited-run screenings.</p>
+  </div>
+</section>
+
+<section id="visit">
+  <div class="section-label">D-02 / Visitor Information</div>
+  <div class="visitor-grid" id="visitorGrid"></div>
+</section>
+
+<section class="controls">
+  <div class="section-label">Demonstration Mode</div>
+  <button id="advanceBtn">Advance Schedule</button>
+</section>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NORTHLINE WATERWORKS — Regional Water Authority / Engineering & Public Information Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Blueprint Paper Technical Theme */
+    --sheet-bg: #f2efe9;
+    --sheet-panel: #e8e5dc;
+    --sheet-subtle: #dedad0;
+    --drawing-major: #14222b;
+    --drawing-mid: rgba(20, 34, 43, 0.70);
+    --drawing-minor: rgba(20, 34, 43, 0.38);
+    --construction: rgba(20, 34, 43, 0.16);
+    --grid-line: rgba(20, 34, 43, 0.07);
+    --accent: #1b6385;
+    --accent-light: rgba(27, 99, 133, 0.12);
+    --annotation: #223742;
+    --muted: rgba(34, 55, 66, 0.58);
+    --warning: #b3741b;
+    --status-good: #2a7e43;
+    --border-sheet: #14222b;
+    --border-inner: rgba(20, 34, 43, 0.22);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: #dcd8cf;
+    color: var(--drawing-major);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 24px;
+    background-image: 
+      radial-gradient(var(--grid-line) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* SHEET OUTER WRAPPER */
+  .drawing-sheet {
+    max-width: 1320px;
+    margin: 0 auto;
+    background: var(--sheet-bg);
+    border: 2px solid var(--border-sheet);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    position: relative;
+    padding: 32px 36px 40px 36px;
+  }
+
+  /* Sheet coordinate grid marks */
+  .sheet-border-coords {
+    position: absolute;
+    top: 6px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--drawing-minor);
+    letter-spacing: 2px;
+    pointer-events: none;
+  }
+
+  .sheet-side-coords {
+    position: absolute;
+    top: 60px;
+    bottom: 60px;
+    left: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--drawing-minor);
+    pointer-events: none;
+  }
+
+  /* TITLE BLOCK / HEADER */
+  .title-block-header {
+    border: 2px solid var(--border-sheet);
+    background: var(--sheet-panel);
+    display: grid;
+    grid-template-columns: 2fr 1.2fr 1fr;
+    margin-bottom: 32px;
+  }
+
+  .tb-cell {
+    padding: 12px 16px;
+    border-right: 1px solid var(--border-sheet);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .tb-cell:last-child {
+    border-right: none;
+  }
+
+  .tb-label {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .tb-title {
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--drawing-major);
+  }
+
+  .tb-subtitle {
+    font-size: 11px;
+    color: var(--annotation);
+  }
+
+  .tb-value {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--drawing-major);
+  }
+
+  /* SECTION LABELS & DRAWING TITLES */
+  .drawing-section {
+    margin-bottom: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border-inner);
+  }
+
+  .drawing-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .drawing-tag {
+    background: var(--drawing-major);
+    color: var(--sheet-bg);
+    padding: 2px 8px;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  .drawing-name {
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .drawing-scale {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    margin-left: auto;
+  }
+
+  /* A-01 SYSTEM OVERVIEW DIAGRAM */
+  .system-diagram-container {
+    background: var(--sheet-panel);
+    border: 1px solid var(--border-sheet);
+    padding: 20px;
+    position: relative;
+  }
+
+  .diagram-svg-wrap {
+    width: 100%;
+    height: 380px;
+    background: var(--sheet-bg);
+    border: 1px solid var(--border-inner);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .system-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .callouts-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .callout-box {
+    background: var(--sheet-bg);
+    border: 1px solid var(--border-inner);
+    padding: 10px;
+  }
+
+  .callout-num {
+    font-weight: 700;
+    font-size: 11px;
+    color: var(--accent);
+    margin-bottom: 2px;
+  }
+
+  .callout-label {
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .callout-desc {
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.3;
+  }
+
+  /* A-02 CURRENT SYSTEM CONDITIONS (DIMENSIONS) */
+  .conditions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .dimension-card {
+    background: var(--sheet-panel);
+    border: 1px solid var(--border-inner);
+    padding: 16px;
+  }
+
+  .dim-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .dim-value-display {
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    color: var(--drawing-major);
+    line-height: 1.1;
+  }
+
+  .dim-unit {
+    font-size: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--muted);
+    margin-left: 4px;
+  }
+
+  .dim-line-visual {
+    position: relative;
+    height: 16px;
+    margin: 10px 0;
+    border-left: 2px solid var(--drawing-major);
+    border-right: 2px solid var(--drawing-major);
+  }
+
+  .dim-line-bar {
+    position: absolute;
+    top: 7px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--drawing-major);
+  }
+
+  .dim-line-fill {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    height: 5px;
+    background: var(--accent);
+  }
+
+  .dim-sub {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--annotation);
+  }
+
+  /* B-01 FACILITY DETAIL SECTION */
+  .facility-section-layout {
+    display: grid;
+    grid-template-columns: 2.2fr 1fr;
+    gap: 20px;
+  }
+
+  .facility-drawing-frame {
+    background: var(--sheet-panel);
+    border: 1px solid var(--border-sheet);
+    padding: 16px;
+  }
+
+  .facility-svg-box {
+    height: 280px;
+    background: var(--sheet-bg);
+    border: 1px solid var(--border-inner);
+  }
+
+  .note-rail {
+    background: var(--sheet-panel);
+    border: 1px solid var(--border-inner);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .note-rail-header {
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border-sheet);
+    padding-bottom: 6px;
+  }
+
+  .note-rail-item {
+    font-size: 11px;
+    line-height: 1.4;
+    padding-left: 12px;
+    border-left: 2px solid var(--accent);
+  }
+
+  .note-rail-item strong {
+    color: var(--drawing-major);
+  }
+
+  /* B-02 INFRASTRUCTURE SCHEDULE TABLE */
+  .schedule-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border-sheet);
+    background: var(--sheet-panel);
+  }
+
+  .schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    text-align: left;
+  }
+
+  .schedule-table th {
+    background: var(--sheet-subtle);
+    padding: 10px 14px;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--drawing-major);
+    border-bottom: 2px solid var(--border-sheet);
+    border-right: 1px solid var(--border-inner);
+  }
+
+  .schedule-table th:last-child {
+    border-right: none;
+  }
+
+  .schedule-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border-inner);
+    border-right: 1px solid var(--border-inner);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .schedule-table td:last-child {
+    border-right: none;
+  }
+
+  .schedule-table tr:hover td {
+    background: rgba(27, 99, 133, 0.05);
+  }
+
+  .state-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: 700;
+    border: 1px solid;
+  }
+
+  .state-badge.active {
+    color: var(--status-good);
+    border-color: var(--status-good);
+    background: rgba(42, 126, 67, 0.08);
+  }
+
+  .state-badge.normal {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: rgba(27, 99, 133, 0.08);
+  }
+
+  .state-badge.maint {
+    color: var(--warning);
+    border-color: var(--warning);
+    background: rgba(179, 116, 27, 0.08);
+  }
+
+  /* C-01 CAPITAL PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .project-card {
+    background: var(--sheet-panel);
+    border: 1px solid var(--border-sheet);
+    padding: 18px;
+  }
+
+  .project-id-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .project-name {
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .project-progress-dim {
+    margin: 12px 0;
+  }
+
+  .dim-bar-track {
+    height: 8px;
+    background: var(--sheet-subtle);
+    border: 1px solid var(--border-sheet);
+    position: relative;
+  }
+
+  .dim-bar-progress {
+    height: 100%;
+    background: var(--accent);
+  }
+
+  .dim-bar-ticks {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* C-02 PUBLIC INFORMATION (NORMAL EDITORIAL PROSE) */
+  .public-prose-container {
+    background: var(--sheet-bg);
+    border: 1px solid var(--border-inner);
+    padding: 28px 32px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: #1d2b33;
+    line-height: 1.7;
+    font-size: 14px;
+  }
+
+  .public-prose-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .public-prose-grid h4 {
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--drawing-major);
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--border-inner);
+    padding-bottom: 4px;
+  }
+
+  .public-prose-grid p {
+    margin-bottom: 16px;
+    font-size: 13.5px;
+  }
+
+  /* SHEET REVISION FOOTER */
+  .sheet-footer-block {
+    border: 2px solid var(--border-sheet);
+    background: var(--sheet-panel);
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    margin-top: 40px;
+  }
+
+  .footer-cell {
+    padding: 10px 14px;
+    border-right: 1px solid var(--border-sheet);
+    font-size: 11px;
+  }
+  .footer-cell:last-child {
+    border-right: none;
+  }
+
+  @media (max-width: 900px) {
+    .title-block-header, .facility-section-layout, .public-prose-grid, .sheet-footer-block {
+      grid-template-columns: 1fr;
+    }
+    .callouts-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>
+</head>
+<body><div style="position:fixed;right:12px;bottom:12px;z-index:2147483647;padding:8px 10px;background:#111;color:#fff;font:12px/1.3 monospace;border:1px solid #777">ARCHIVED SOURCE · SCRIPTS AND NETWORK DISABLED</div>
+
+<div class="drawing-sheet">
+  <!-- Border coordinate ticks -->
+  <div class="sheet-border-coords">
+    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span>
+  </div>
+  <div class="sheet-side-coords">
+    <span>A</span><span>B</span><span>C</span><span>D</span>
+  </div>
+
+  <!-- TITLE BLOCK -->
+  <header class="title-block-header">
+    <div class="tb-cell">
+      <div class="tb-label">REGIONAL PUBLIC AUTHORITY / CIVIC ENGINEERING</div>
+      <div class="tb-title">NORTHLINE WATERWORKS</div>
+      <div class="tb-subtitle">MUNICIPAL WATER TREATMENT, STORAGE & DISTRIBUTION SYSTEM</div>
+    </div>
+    <div class="tb-cell">
+      <div class="tb-label">DRAWING SET & JURISDICTION</div>
+      <div class="tb-value">SHEET SET: M-2026-WTR</div>
+      <div class="tb-value" style="font-weight:400; color:var(--annotation); font-size:11px;">SERVICE AREA: NORTH REGIONAL BASIN (POP. 248,000)</div>
+    </div>
+    <div class="tb-cell">
+      <div class="tb-label">SYSTEM STATUS / DATE</div>
+      <div class="tb-value" style="color:var(--status-good);">OPERATIONAL / NORMAL</div>
+      <div class="tb-value" style="font-weight:400; font-size:11px;">2026-08-14 • REV. 04</div>
+    </div>
+  </header>
+
+  <!-- A-01 SYSTEM OVERVIEW -->
+  <section class="drawing-section" id="sec-a01">
+    <div class="drawing-title-row">
+      <span class="drawing-tag">A-01</span>
+      <h2 class="drawing-name">REGIONAL WATER INFRASTRUCTURE / SCHEMATIC OVERVIEW</h2>
+      <span class="drawing-scale">DWG REF: NLW-SCH-01</span>
+    </div>
+
+    <div class="system-diagram-container">
+      <div class="diagram-svg-wrap">
+        <svg class="system-svg" viewBox="0 0 900 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Flow Grids / Dimension Markers -->
+          <line x1="40" y1="180" x2="860" y2="180" stroke="#14222b" stroke-width="1.5" stroke-dasharray="6,4"/>
+          <line x1="40" y1="100" x2="860" y2="100" stroke="rgba(20,34,43,0.15)" stroke-width="1"/>
+          <line x1="40" y1="260" x2="860" y2="260" stroke="rgba(20,34,43,0.15)" stroke-width="1"/>
+
+          <!-- 01 Raw Water Intake -->
+          <rect x="50" y="140" width="90" height="80" fill="#e8e5dc" stroke="#14222b" stroke-width="2"/>
+          <text x="95" y="175" text-anchor="middle" font-family="'IBM Plex Sans Condensed'" font-weight="700" font-size="11" fill="#14222b">RIVER INTAKE</text>
+          <text x="95" y="195" text-anchor="middle" font-family="'IBM Plex Mono'" font-size="9" fill="#1b6385">28.0 MGD CAP</text>
+
+          <!-- Pipe line 1 -->
+          <line x1="140" y1="180" x2="200" y2="180" stroke="#1b6385" stroke-width="4"/>
+          
+          <!-- 02 Northline Treatment Plant -->
+          <rect x="200" y="120" width="160" height="120" fill="#e8e5dc" stroke="#14222b" stroke-width="2"/>
+          <rect x="210" y="130" width="140" height="40" fill="#dedad0" stroke="#14222b" stroke-width="1"/>
+          <text x="280" y="155" text-anchor="middle" font-family="'IBM Plex Sans Condensed'" font-weight="700" font-size="12" fill="#14222b">TREATMENT PLANT</text>
+          <text x="280" y="195" text-anchor="middle" font-family="'IBM Plex Mono'" font-size="9" fill="#223742">SEDIMENT • FILTER • CL2</text>
+          <text x="280" y="215" text-anchor="middle" font-family="'IBM Plex Mono'" font-weight="700" font-size="10" fill="#2a7e43">18.4 MGD ACTIVE</text>
+
+          <!-- Pipe to Booster PS-A -->
+          <line x1="360" y1="180" x2="430" y2="180" stroke="#1b6385" stroke-width="4"/>
+          
+          <!-- Pump Station A -->
+          <polygon points="430,160 480,180 430,200" fill="#e8e5dc" stroke="#14222b" stroke-width="2"/>
+          <text x="450" y="225" text-anchor="middle" font-family="'IBM Plex Mono'" font-weight="700" font-size="10" fill="#14222b">PUMP A</text>
+
+          <!-- Transmission line split to Reservoirs -->
+          <path d="M 480 180 L 530 180 L 530 110 L 580 110" stroke="#1b6385" stroke-width="3" fill="none"/>
+          <path d="M 480 180 L 530 180 L 530 250 L 580 250" stroke="#1b6385" stroke-width="3" fill="none"/>
+
+          <!-- Reservoir 01 (North Ridge) -->
+          <ellipse cx="640" cy="110" rx="60" ry="30" fill="#e8e5dc" stroke="#14222b" stroke-width="2"/>
+          <text x="640" y="112" text-anchor="middle" font-family="'IBM Plex Sans Condensed'" font-weight="700" font-size="11" fill="#14222b">RESERVOIR 01</text>
+          <text x="640" y="126" text-anchor="middle" font-family="'IBM Plex Mono'" font-size="9" fill="#1b6385">4.2 MG (88%)</text>
+
+          <!-- Reservoir 02 (South Basin) -->
+          <ellipse cx="640" cy="250" rx="60" ry="30" fill="#e8e5dc" stroke="#14222b" stroke-width="2"/>
+          <text x="640" y="252" text-anchor="middle" font-family="'IBM Plex Sans Condensed'" font-weight="700" font-size="11" fill="#14222b">RESERVOIR 02</text>
+          <text x="640" y="266" text-anchor="middle" font-family="'IBM Plex Mono'" font-size="9" fill="#1b6385">3.8 MG (92%)</text>
+
+          <!-- Feed lines to zones -->
+          <line x1="700" y1="110" x2="770" y2="110" stroke="#1b6385" stroke-width="3"/>
+          <line x1="700" y1="250" x2="770" y2="250" stroke="#1b6385" stroke-width="3"/>
+
+          <!-- East Zone & West Zone -->
+          <rect x="770" y="80" width="100" height="60" fill="#e8e5dc" stroke="#14222b" stroke-width="2"/>
+          <text x="820" y="105" text-anchor="middle" font-family="'IBM Plex Sans Condensed'" font-weight="700" font-size="11" fill="#14222b">EAST ZONE</text>
+          <text x="820" y="122" text-anchor="middle" font-family="'IBM Plex Mono'" font-size="9" fill="#2a7e43">64 PSI • NORMAL</text>
+
+          <rect x="770" y="220" width="100" height="60" fill="#e8e5dc" stroke="#14222b" stroke-width="2"/>
+          <text x="820" y="245" text-anchor="middle" font-family="'IBM Plex Sans Condensed'" font-weight="700" font-size="11" fill="#14222b">WEST ZONE</text>
+          <text x="820" y="262" text-anchor="middle" font-family="'IBM Plex Mono'" font-size="9" fill="#2a7e43">58 PSI • NORMAL</text>
+
+          <!-- Numbered Callouts Leader Lines -->
+          <circle cx="95" cy="130" r="8" fill="#1b6385"/>
+          <text x="95" y="133" text-anchor="middle" font-family="'IBM Plex Mono'" font-weight="700" font-size="9" fill="#fff">1</text>
+
+          <circle cx="280" cy="110" r="8" fill="#1b6385"/>
+          <text x="280" y="113" text-anchor="middle" font-family="'IBM Plex Mono'" font-weight="700" font-size="9" fill="#fff">2</text>
+
+          <circle cx="640" cy="70" r="8" fill="#1b6385"/>
+          <text x="640" y="73" text-anchor="middle" font-family="'IBM Plex Mono'" font-weight="700" font-size="9" fill="#fff">3</text>
+
+          <circle cx="455" cy="150" r="8" fill="#1b6385"/>
+          <text x="455" y="153" text-anchor="middle" font-family="'IBM Plex Mono'" font-weight="700" font-size="9" fill="#fff">4</text>
+
+          <circle cx="820" cy="65" r="8" fill="#1b6385"/>
+          <text x="820" y="68" text-anchor="middle" font-family="'IBM Plex Mono'" font-weight="700" font-size="9" fill="#fff">5</text>
+        </svg>
+      </div>
+
+      <div class="callouts-grid">
+        <div class="callout-box">
+          <div class="callout-num">[01] RAW INTAKE</div>
+          <div class="callout-label">NORTH SULLIVAN RIVER</div>
+          <div class="callout-desc">Triple bar screen with automatic traveling debris rake and submerged ultrasonic flow sensors.</div>
+        </div>
+        <div class="callout-box">
+          <div class="callout-num">[02] PRIMARY TREATMENT</div>
+          <div class="callout-label">NORTHLINE FACILITY</div>
+          <div class="callout-desc">Coagulation, flocculation, dual-media anthracite filtration, and UV/chlorine contact chambers.</div>
+        </div>
+        <div class="callout-box">
+          <div class="callout-num">[03] ELEVATED STORAGE</div>
+          <div class="callout-label">RESERVOIRS 01 & 02</div>
+          <div class="callout-desc">8.0 MG combined enclosed storage providing 36h emergency civic reserve and hydraulic head.</div>
+        </div>
+        <div class="callout-box">
+          <div class="callout-num">[04] PRESSURE BOOST</div>
+          <div class="callout-label">PUMP STATIONS A/B</div>
+          <div class="callout-desc">Variable frequency drive vertical turbine pumps maintaining grid pressure across elevation gradients.</div>
+        </div>
+        <div class="callout-box">
+          <div class="callout-num">[05] DISTRIBUTION</div>
+          <div class="callout-label">EAST / WEST GRIDS</div>
+          <div class="callout-desc">480 miles of ductile iron distribution mains serving residential, commercial, and fire suppression loops.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- A-02 CURRENT SYSTEM CONDITIONS -->
+  <section class="drawing-section" id="sec-a02">
+    <div class="drawing-title-row">
+      <span class="drawing-tag">A-02</span>
+      <h2 class="drawing-name">CURRENT SYSTEM CONDITIONS / DIMENSIONS & SCHEDULED VALUES</h2>
+      <span class="drawing-scale">LIVE TELEMETRY CADENCE: 60 SEC</span>
+    </div>
+
+    <div class="conditions-grid">
+      <div class="dimension-card">
+        <div class="dim-label">DAILY TREATMENT FLOW</div>
+        <div class="dim-value-display">18.4<span class="dim-unit">MGD</span></div>
+        <div class="dim-line-visual">
+          <div class="dim-line-bar"></div>
+          <div class="dim-line-fill" style="width: 76.6%;"></div>
+        </div>
+        <div class="dim-sub">
+          <span>DESIGN CAP: 24.0 MGD</span>
+          <span style="font-weight:700; color:var(--status-good);">76.6% OF CAP</span>
+        </div>
+      </div>
+
+      <div class="dimension-card">
+        <div class="dim-label">COMBINED RESERVOIR STORAGE</div>
+        <div class="dim-value-display">7.24<span class="dim-unit">MG</span></div>
+        <div class="dim-line-visual">
+          <div class="dim-line-bar"></div>
+          <div class="dim-line-fill" style="width: 90.5%;"></div>
+        </div>
+        <div class="dim-sub">
+          <span>MAX CAPACITY: 8.0 MG</span>
+          <span style="font-weight:700; color:var(--status-good);">90.5% FULL</span>
+        </div>
+      </div>
+
+      <div class="dimension-card">
+        <div class="dim-label">AVERAGE GRID PRESSURE</div>
+        <div class="dim-value-display">61.2<span class="dim-unit">PSI</span></div>
+        <div class="dim-line-visual">
+          <div class="dim-line-bar"></div>
+          <div class="dim-line-fill" style="width: 72%;"></div>
+        </div>
+        <div class="dim-sub">
+          <span>RANGE: 50–80 PSI</span>
+          <span style="font-weight:700; color:var(--status-good);">NOMINAL</span>
+        </div>
+      </div>
+
+      <div class="dimension-card">
+        <div class="dim-label">ACTIVE BOOSTER PUMP FLEET</div>
+        <div class="dim-value-display">7 / 8<span class="dim-unit">UNITS</span></div>
+        <div class="dim-line-visual">
+          <div class="dim-line-bar"></div>
+          <div class="dim-line-fill" style="width: 87.5%;"></div>
+        </div>
+        <div class="dim-sub">
+          <span>1 UNIT ON STANDBY PM</span>
+          <span style="font-weight:700; color:var(--accent);">STANDBY</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- B-01 FACILITY DETAIL SECTION (FIG 04) -->
+  <section class="drawing-section" id="sec-b01">
+    <div class="drawing-title-row">
+      <span class="drawing-tag">B-01</span>
+      <h2 class="drawing-name">FIG. 04 / NORTHLINE TREATMENT PLANT PROCESS CROSS-SECTION</h2>
+      <span class="drawing-scale">CROSS-SECTION SCHEMATIC</span>
+    </div>
+
+    <div class="facility-section-layout">
+      <div class="facility-drawing-frame">
+        <div class="facility-svg-box">
+          <svg viewBox="0 0 700 240" fill="none" style="width:100%; height:100%;" xmlns="http://www.w3.org/2000/svg">
+            <!-- Ground Line -->
+            <line x1="20" y1="180" x2="680" y2="180" stroke="#14222b" stroke-width="2"/>
+            <pattern id="hatch" width="10" height="10" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+              <line x1="0" y1="0" x2="0" y2="10" stroke="rgba(20,34,43,0.1)" stroke-width="1"/>
+            </pattern>
+            <rect x="20" y="180" width="660" height="50" fill="url(#hatch)"/>
+
+            <!-- Basin 1: Intake & Flash Mix -->
+            <rect x="40" y="90" width="90" height="90" fill="#e8e5dc" stroke="#14222b" stroke-width="1.5"/>
+            <text x="85" y="130" text-anchor="middle" font-family="'IBM Plex Sans Condensed'" font-weight="700" font-size="10" fill="#14222b">INTAKE / MIX</text>
+            <line x1="85" y1="90" x2="85" y2="60" stroke="#1b6385" stroke-width="1"/>
+            <circle cx="85" cy="55" r="7" fill="#1b6385"/>
+            <text x="85" y="58" text-anchor="middle" font-family="'IBM Plex Mono'" font-size="8" fill="#fff">A</text>
+
+            <!-- Basin 2: Sedimentation -->
+            <rect x="150" y="100" width="110" height="80" fill="#e8e5dc" stroke="#14222b" stroke-width="1.5"/>
+            <text x="205" y="135" text-anchor="middle" font-family="'IBM Plex Sans Condensed'" font-weight="700" font-size="10" fill="#14222b">SEDIMENTATION</text>
+            <line x1="205" y1="100" x2="205" y2="60" stroke="#1b6385" stroke-width="1"/>
+            <circle cx="205" cy="55" r="7" fill="#1b6385"/>
+            <text x="205" y="58" text-anchor="middle" font-family="'IBM Plex Mono'" font-size="8" fill="#fff">B</text>
+
+            <!-- Basin 3: Anthracite / Sand Filtration -->
+            <rect x="280" y="95" width="110" height="85" fill="#e8e5dc" stroke="#14222b" stroke-width="1.5"/>
+            <rect x="290" y="140" width="90" height="30" fill="#dedad0" stroke="#14222b" stroke-width="1"/>
+            <text x="335" y="125" text-anchor="middle" font-family="'IBM Plex Sans Condensed'" font-weight="700" font-size="10" fill="#14222b">FILTRATION</text>
+            <line x1="335" y1="95" x2="335" y2="60" stroke="#1b6385" stroke-width="1"/>
+            <circle cx="335" cy="55" r="7" fill="#1b6385"/>
+            <text x="335" y="58" text-anchor="middle" font-family="'IBM Plex Mono'" font-size="8" fill="#fff">C</text>
+
+            <!-- Basin 4: Disinfection / Ozone / Chlorine Contact -->
+            <rect x="410" y="110" width="100" height="70" fill="#e8e5dc" stroke="#14222b" stroke-width="1.5"/>
+            <text x="460" y="140" text-anchor="middle" font-family="'IBM Plex Sans Condensed'" font-weight="700" font-size="10" fill="#14222b">DISINFECTION</text>
+            <line x1="460" y1="110" x2="460" y2="60" stroke="#1b6385" stroke-width="1"/>
+            <circle cx="460" cy="55" r="7" fill="#1b6385"/>
+            <text x="460" y="58" text-anchor="middle" font-family="'IBM Plex Mono'" font-size="8" fill="#fff">D</text>
+
+            <!-- Basin 5: Clearwell Storage & High Service Pumps -->
+            <rect x="530" y="80" width="130" height="100" fill="#e8e5dc" stroke="#14222b" stroke-width="1.5"/>
+            <text x="595" y="120" text-anchor="middle" font-family="'IBM Plex Sans Condensed'" font-weight="700" font-size="10" fill="#14222b">CLEARWELL</text>
+            <text x="595" y="150" text-anchor="middle" font-family="'IBM Plex Mono'" font-size="8" fill="#1b6385">HIGH-SERVICE PUMPS</text>
+            <line x1="595" y1="80" x2="595" y2="60" stroke="#1b6385" stroke-width="1"/>
+            <circle cx="595" cy="55" r="7" fill="#1b6385"/>
+            <text x="595" y="58" text-anchor="middle" font-family="'IBM Plex Mono'" font-size="8" fill="#fff">E</text>
+
+            <!-- Hydraulic flow line -->
+            <path d="M 40 145 L 650 145" stroke="#1b6385" stroke-width="2" stroke-dasharray="4,3"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="note-rail">
+        <div class="note-rail-header">PROCESS ANNOTATION RAIL</div>
+        <div class="note-rail-item">
+          <strong>[A] RAPID MIX:</strong> Coagulant dosing (alum + polymer) destabilizes colloidal particulates in 45s flash mix.
+        </div>
+        <div class="note-rail-item">
+          <strong>[B] CLARIFICATION:</strong> Lamella plate settlers reduce suspended solids by 94% before downstream filters.
+        </div>
+        <div class="note-rail-item">
+          <strong>[C] DUAL MEDIA:</strong> 24-inch anthracite over 12-inch silica sand achieves effluent turbidity &lt;0.05 NTU.
+        </div>
+        <div class="note-rail-item">
+          <strong>[D] CONTACT BASIN:</strong> Sodium hypochlorite contact time CT &gt; 30 mg•min/L provides 4-log virus inactivation.
+        </div>
+        <div class="note-rail-item">
+          <strong>[E] CLEARWELL:</strong> 2.5 MG underground finished water clearwell feeds three 400-HP vertical turbine pumps.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- B-02 INFRASTRUCTURE SCHEDULE -->
+  <section class="drawing-section" id="sec-b02">
+    <div class="drawing-title-row">
+      <span class="drawing-tag">B-02</span>
+      <h2 class="drawing-name">INFRASTRUCTURE ASSET SCHEDULE / ACTIVE FACILITIES</h2>
+      <span class="drawing-scale">INVENTORY REV: 2026-Q3</span>
+    </div>
+
+    <div class="schedule-table-wrap">
+      <table class="schedule-table">
+        <thead>
+          <tr>
+            <th>MARK</th>
+            <th>FACILITY / LOCATION</th>
+            <th>TYPE / FUNCTION</th>
+            <th>DESIGN CAPACITY</th>
+            <th>OPERATIONAL STATE</th>
+            <th>LAST INSPECTION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>PS-A01</strong></td>
+            <td>North Booster Station • Mile 4.2 Northline Rd</td>
+            <td>Distribution Booster</td>
+            <td>8.4 MGD (3 Pumps)</td>
+            <td><span class="state-badge active">ACTIVE</span></td>
+            <td>AUG 04, 2026</td>
+          </tr>
+          <tr>
+            <td><strong>RS-01</strong></td>
+            <td>Ridge Elevated Reservoir • Hilltop Crest</td>
+            <td>Treated Storage</td>
+            <td>4.2 MG Enclosed</td>
+            <td><span class="state-badge normal">NORMAL (88%)</span></td>
+            <td>AUG 08, 2026</td>
+          </tr>
+          <tr>
+            <td><strong>PS-B02</strong></td>
+            <td>Creek Pumping Station • East Valley Branch</td>
+            <td>Pressure Boost Loop</td>
+            <td>5.8 MGD (2 Pumps)</td>
+            <td><span class="state-badge maint">MAINTENANCE</span></td>
+            <td>AUG 11, 2026</td>
+          </tr>
+          <tr>
+            <td><strong>RS-02</strong></td>
+            <td>South Basin Tank • Industrial Corridor</td>
+            <td>Equalization Storage</td>
+            <td>3.8 MG Enclosed</td>
+            <td><span class="state-badge normal">NORMAL (92%)</span></td>
+            <td>AUG 02, 2026</td>
+          </tr>
+          <tr>
+            <td><strong>TP-01</strong></td>
+            <td>Northline Main Water Treatment Facility</td>
+            <td>Primary Clarification/Filtration</td>
+            <td>24.0 MGD Rated</td>
+            <td><span class="state-badge active">ACTIVE</span></td>
+            <td>AUG 14, 2026</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- C-01 CAPITAL PROJECTS -->
+  <section class="drawing-section" id="sec-c01">
+    <div class="drawing-title-row">
+      <span class="drawing-tag">C-01</span>
+      <h2 class="drawing-name">CAPITAL IMPROVEMENT PROGRAM / ACTIVE INFRASTRUCTURE PROJECTS</h2>
+      <span class="drawing-scale">CIP FISCAL 2026-2027</span>
+    </div>
+
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-id-row">
+          <span>PROJECT C-14</span>
+          <span style="color:var(--accent);">CONSTRUCTION</span>
+        </div>
+        <div class="project-name">WEST MAIN TRANSMISSION LINE REPLACEMENT</div>
+        <div style="font-size:11px; color:var(--annotation); line-height:1.4;">
+          Replacing 4.8 miles of 36-inch cast iron main with resilient C905 fusible PVC to reinforce redundant supply to West District.
+        </div>
+        <div class="project-progress-dim">
+          <div style="display:flex; justify-content:space-between; font-size:10px; margin-bottom:4px;">
+            <span>TOTAL LENGTH: 4.8 MILES</span>
+            <span style="font-weight:700;">62% COMPLETED</span>
+          </div>
+          <div class="dim-bar-track">
+            <div class="dim-bar-progress" style="width: 62%;"></div>
+          </div>
+          <div class="dim-bar-ticks">
+            <span>0.0 MI</span>
+            <span>2.4 MI</span>
+            <span>4.8 MI</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-id-row">
+          <span>PROJECT C-18</span>
+          <span style="color:var(--status-good);">PHASE 2 TESTING</span>
+        </div>
+        <div class="project-name">NORTHLINE OZONE DISINFECTION UPGRADE</div>
+        <div style="font-size:11px; color:var(--annotation); line-height:1.4;">
+          Installation of advanced ozone generation contactors to neutralize seasonal taste/odor compounds and emerging micro-pollutants.
+        </div>
+        <div class="project-progress-dim">
+          <div style="display:flex; justify-content:space-between; font-size:10px; margin-bottom:4px;">
+            <span>CAPACITY: 24.0 MGD</span>
+            <span style="font-weight:700;">88% COMPLETED</span>
+          </div>
+          <div class="dim-bar-track">
+            <div class="dim-bar-progress" style="width: 88%;"></div>
+          </div>
+          <div class="dim-bar-ticks">
+            <span>0%</span>
+            <span>50%</span>
+            <span>100%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-id-row">
+          <span>PROJECT C-22</span>
+          <span style="color:var(--warning);">PROCUREMENT</span>
+        </div>
+        <div class="project-name">SMART ACOUSTIC LEAK DETECTION GRID</div>
+        <div style="font-size:11px; color:var(--annotation); line-height:1.4;">
+          Deployment of 320 permanent correlating hydrophone loggers on critical distribution valves to achieve real-time loss mitigation.
+        </div>
+        <div class="project-progress-dim">
+          <div style="display:flex; justify-content:space-between; font-size:10px; margin-bottom:4px;">
+            <span>SENSORS: 320 UNITS</span>
+            <span style="font-weight:700;">25% COMPLETED</span>
+          </div>
+          <div class="dim-bar-track">
+            <div class="dim-bar-progress" style="width: 25%;"></div>
+          </div>
+          <div class="dim-bar-ticks">
+            <span>0 UNITS</span>
+            <span>160</span>
+            <span>320 UNITS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- C-02 PUBLIC INFORMATION (READABLE EDITORIAL PROSE) -->
+  <section class="drawing-section" id="sec-c02" style="border-bottom:none; margin-bottom:0; padding-bottom:0;">
+    <div class="drawing-title-row">
+      <span class="drawing-tag">C-02</span>
+      <h2 class="drawing-name">PUBLIC INFORMATION & RESIDENTIAL REFERENCE</h2>
+      <span class="drawing-scale">CIVIC ADVISORY SECTION</span>
+    </div>
+
+    <div class="public-prose-container">
+      <div class="public-prose-grid">
+        <div>
+          <h4>Where Your Water Comes From</h4>
+          <p>
+            Northline Waterworks draws untreated source water from the protected upper reaches of the Sullivan River Watershed. This regional basin is fed by mountain snowmelt and monitored continuous riparian buffers to preserve baseline purity before entering municipal intake channels.
+          </p>
+
+          <h4>Understanding Water Treatment</h4>
+          <p>
+            Water undergoes a multi-barrier purification process combining rapid coagulation, gravity sedimentation, dual-media anthracite filtration, and multi-point disinfection. Every drop meets or exceeds all National Primary Drinking Water Standards before leaving our clearwell reservoirs.
+          </p>
+        </div>
+
+        <div>
+          <h4>What To Do During Grid Maintenance</h4>
+          <p>
+            Scheduled maintenance on local booster stations or transmission pipes may occasionally cause minor temporary fluctuations in pressure or harmless mineral discoloration. If you notice sediment after work in your area, simply run your cold water tap for 2–3 minutes until clear.
+          </p>
+
+          <h4>How Infrastructure Projects Are Prioritized</h4>
+          <p>
+            Capital projects are prioritized through rigorous asset management criteria including pipe age, historical break frequency, hydraulic demand growth, and water quality telemetry. Our 10-year capital improvement program balances long-term reliability with responsible public rate management.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHEET FOOTER / REVISION BLOCK -->
+  <footer class="sheet-footer-block">
+    <div class="footer-cell">
+      <div class="tb-label">APPROVAL SIGN-OFF</div>
+      <div style="font-weight:700;">CHIEF CIVIL ENGINEER</div>
+      <div style="font-size:10px; color:var(--muted);">PE REG. #48291-CO</div>
+    </div>
+    <div class="footer-cell">
+      <div class="tb-label">DRAWING REVISION SUMMARY</div>
+      <div>REV 04: CAPITAL PROJECT C-14 ALIGNMENT UPDATED • SYSTEM TELEMETRY ONLINE</div>
+    </div>
+    <div class="footer-cell">
+      <div class="tb-label">CAD SHEET NUMBER</div>
+      <div style="font-family:'IBM Plex Sans Condensed'; font-weight:700; font-size:16px;">SHEET NLW-01 OF 04</div>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>

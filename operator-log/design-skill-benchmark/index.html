@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCB0LW648K"></script>
+  <script src="/assets/js/analytics.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>I Built a Test Bench for Website Design Skills | Operator's Log</title>
+  <meta name="description" content="A case study of 32 generated websites, six AI models, three design systems, and the benchmark built to grade skill fidelity, prompt fidelity, visual quality, technical quality, responsiveness, and originality.">
+  <link rel="canonical" href="https://lemonteed.com/operator-log/design-skill-benchmark/">
+  <meta property="og:title" content="I Built a Test Bench for Website Design Skills | Operator's Log">
+  <meta property="og:description" content="32 generated websites. Six models. Three design systems. One attempt to stop saying ‘this looks pretty good.’">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://lemonteed.com/operator-log/design-skill-benchmark/">
+  <meta property="og:image" content="https://lemonteed.com/images/og/design-skill-benchmark.webp">
+  <meta property="og:image:secure_url" content="https://lemonteed.com/images/og/design-skill-benchmark.webp">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:published_time" content="2026-08-14T00:00:00.000-05:00">
+  <meta property="article:modified_time" content="2026-08-14T00:00:00.000-05:00">
+  <meta property="article:section" content="Case Study">
+  <meta property="article:tag" content="Design Systems">
+  <meta property="article:tag" content="AI Models">
+  <meta property="article:tag" content="Benchmarking">
+  <meta property="article:tag" content="Web Design">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="I Built a Test Bench for Website Design Skills">
+  <meta name="twitter:description" content="32 generated websites. Six models. Three design systems. One attempt to stop saying ‘this looks pretty good.’">
+  <meta name="twitter:image" content="https://lemonteed.com/images/og/design-skill-benchmark.webp">
+  <link rel="icon" href="/images/favicons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/favicon-180.png">
+  <link rel="stylesheet" href="/operator-log/operator.css?v=2">
+  <link rel="stylesheet" href="/operator-log/design-skill-benchmark/benchmark.css?v=1">
+  <script src="/operator-log/design-skill-benchmark/benchmark.js?v=1" defer></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "I Built a Test Bench for Website Design Skills",
+      "description": "A case study of 32 generated websites, six AI models, three design systems, and a six-dimension grading system.",
+      "image": "https://lemonteed.com/images/og/design-skill-benchmark.webp",
+      "datePublished": "2026-08-14",
+      "dateModified": "2026-08-14",
+      "author": { "@type": "Person", "name": "Lemonteed Operator" },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Lemonteed",
+        "logo": { "@type": "ImageObject", "url": "https://lemonteed.com/images/lemonteedlogo-250.webp" }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://lemonteed.com/operator-log/design-skill-benchmark/"
+      },
+      "articleSection": "Case Study",
+      "keywords": ["Design Systems", "AI Models", "Benchmarking", "Web Design"]
+    }
+  </script>
+</head>
+<body class="operator-page benchmark-page">
+  <a class="op-skip" href="#op-content">Skip to content</a>
+
+  <div class="op-shell">
+    <header class="op-header" role="banner">
+      <span class="op-header__classify">Lemonteed / Operator's Log</span>
+      <span class="op-header__phase">Experiment 001</span>
+      <a class="op-header__back" href="/operator-log/" aria-label="Return to Operator's Log index">&larr; Log Index</a>
+    </header>
+
+    <main class="op-main" id="op-content" tabindex="-1">
+      <article class="op-article benchmark-article">
+        <header class="op-article-header benchmark-hero">
+          <div class="op-article-meta">
+            <time class="op-article-date" datetime="2026-08-14">2026-08-14</time>
+            <span class="op-article-tag op-article-tag--experiment">Experiment</span>
+            <span class="op-article-tag">Case Study</span>
+            <span class="op-article-project">Design Skill Benchmark Lab</span>
+          </div>
+          <p class="benchmark-eyebrow">[ OPERATOR'S LOG / EXPERIMENT 001 ]</p>
+          <h1 class="op-headline">I Built a Test Bench for Website Design Skills</h1>
+          <p class="op-subhead">32 generated websites. Six models. Three design systems. One attempt to stop saying &ldquo;this looks pretty good.&rdquo;</p>
+          <div class="benchmark-status" role="status">
+            <span>BASELINE 001</span>
+            <strong>RECORDED</strong>
+            <span>31 COMPLETE / 1 PROVISIONAL</span>
+          </div>
+          <div class="benchmark-hero-cta">
+            <a class="benchmark-action-btn benchmark-action-btn--primary" href="/benchmark/">Browse 32-Generation Evidence Archive &rarr;</a>
+            <a class="benchmark-action-btn benchmark-action-btn--secondary" href="/operator-log/design-skill-benchmark/data/baseline.csv" download>Download Baseline Data (.CSV)</a>
+          </div>
+        </header>
+
+        <div class="op-article-content">
+          <section class="op-section benchmark-opening">
+            <div class="benchmark-opening__copy">
+              <h2 class="op-section-title">The missing layer was judgment</h2>
+              <p>I already had the production line: give a design skill and a website prompt to a model, then save the result. It produced an archive of attractive HTML files and one stubborn question: which part was actually good?</p>
+              <p>A polished screenshot could hide weak prompt coverage. A faithful design system could still produce a bad website. A beautiful desktop layout could quietly become a horizontal scrolling incident at 375 pixels.</p>
+              <p>So I added the evaluation layer.</p>
+            </div>
+            <div class="benchmark-equation" aria-label="Design skill times prompt times model produces an output, which is then evaluated">
+              <span>DESIGN SKILL</span><b>&times;</b><span>PROMPT</span><b>&times;</b><span>MODEL</span><b>&rarr;</b><span>OUTPUT</span><b>&rarr;</b><strong>EVIDENCE</strong>
+            </div>
+          </section>
+
+          <section class="op-section" aria-labelledby="baseline-title">
+            <div class="benchmark-section-heading">
+              <div>
+                <span class="benchmark-section-index">01 / BASELINE</span>
+                <h2 class="op-section-title" id="baseline-title">What went through the machine</h2>
+              </div>
+              <p>This is a real baseline, not a balanced tournament bracket. The uneven coverage matters later.</p>
+            </div>
+            <dl class="benchmark-stat-strip">
+              <div><dt>Outputs</dt><dd>32</dd></div>
+              <div><dt>Models</dt><dd>6</dd></div>
+              <div><dt>Skills</dt><dd>3</dd></div>
+              <div><dt>Viewports</dt><dd>6</dd></div>
+            </dl>
+            <figure class="op-figure benchmark-figure benchmark-figure--wide">
+              <a href="/images/operator-log/design-skill-benchmark/dashboard.webp" target="_blank" rel="noopener">
+                <img src="/images/operator-log/design-skill-benchmark/dashboard.webp" alt="Design Skill Benchmark dashboard showing model averages and the beginning of the ranked artifact table" width="1425" height="990" loading="eager" decoding="async">
+              </a>
+              <figcaption>The local report keeps every dimension visible. A total is useful; the reason behind it is the actual record.</figcaption>
+            </figure>
+            <div class="benchmark-callout-box">
+              <div class="benchmark-callout-box__header">
+                <span class="benchmark-callout-box__title">Live Evidence Archive</span>
+              </div>
+              <p>Every single one of the 32 scored outputs has a dedicated record page with full-resolution desktop and mobile review frames, sub-score metrics, review notes, and live HTML source.</p>
+              <div class="benchmark-callout-box__actions">
+                <a class="benchmark-action-btn benchmark-action-btn--primary" href="/benchmark/">Open Design Skill Benchmark Archive &rarr;</a>
+              </div>
+            </div>
+          </section>
+
+          <section class="op-section" aria-labelledby="rubric-title">
+            <div class="benchmark-section-heading">
+              <div>
+                <span class="benchmark-section-index">02 / RUBRIC</span>
+                <h2 class="op-section-title" id="rubric-title">Six dimensions, one hundred points</h2>
+              </div>
+              <p>The rubric separates instruction-following from design judgment and browser behavior.</p>
+            </div>
+            <div class="benchmark-rubric">
+              <div class="benchmark-rubric__row"><span>01</span><strong>Skill fidelity</strong><b>25</b><p>Visual language, layout grammar, typography, components, prohibited patterns, and distinctiveness.</p></div>
+              <div class="benchmark-rubric__row"><span>02</span><strong>Prompt fidelity</strong><b>25</b><p>Explicit requirement coverage tied back to the prompt stored in the repository.</p></div>
+              <div class="benchmark-rubric__row"><span>03</span><strong>Design quality</strong><b>20</b><p>Hierarchy, composition, spacing, readability, rhythm, polish, coherence, and intentionality.</p></div>
+              <div class="benchmark-rubric__row"><span>04</span><strong>Technical quality</strong><b>15</b><p>Semantics, accessibility basics, asset health, runtime failures, and code weight.</p></div>
+              <div class="benchmark-rubric__row"><span>05</span><strong>Responsive quality</strong><b>10</b><p>Rendered behavior at 375, 430, 768, 1024, 1440, and 1920 pixels.</p></div>
+              <div class="benchmark-rubric__row"><span>06</span><strong>Originality</strong><b>5</b><p>The artifact-versus-template test: did this particular website feel deliberately designed?</p></div>
+            </div>
+            <aside class="benchmark-method-note">
+              <span>THREE EVIDENCE TYPES</span>
+              <p><strong>Measured:</strong> markup, assets, browser width, and runtime state. <strong>Checked:</strong> prompt requirements and skill fingerprints. <strong>Reviewed:</strong> hierarchy, composition, polish, coherence, and originality.</p>
+            </aside>
+          </section>
+
+          <section class="op-section" aria-labelledby="results-title">
+            <div class="benchmark-section-heading">
+              <div>
+                <span class="benchmark-section-index">03 / RESULTS</span>
+                <h2 class="op-section-title" id="results-title">The first scoreboard</h2>
+              </div>
+              <p>These averages describe this dataset. They do not prove that one model is generally superior.</p>
+            </div>
+
+            <div class="benchmark-table-wrap" tabindex="0" role="region" aria-label="Model results table">
+              <table class="benchmark-table">
+                <thead><tr><th>Model</th><th>Outputs</th><th>Overall</th><th>Responsive</th><th>Design</th></tr></thead>
+                <tbody>
+                  <tr><td>Grok 4.6</td><td>4</td><td><strong>93.4</strong></td><td>7.5 / 10</td><td>17.9 / 20</td></tr>
+                  <tr><td>GPT-5.6 Sol</td><td>11</td><td><strong>93.0</strong></td><td>7.9 / 10</td><td>17.3 / 20</td></tr>
+                  <tr><td>Gemini 3.7 Flash</td><td>10</td><td><strong>90.4</strong></td><td>6.0 / 10</td><td>17.2 / 20</td></tr>
+                  <tr><td>MiMo V2.5</td><td>2</td><td><strong>84.6</strong></td><td>5.7 / 10</td><td>14.5 / 20</td></tr>
+                  <tr><td>Sonnet 4.6 Thinking</td><td>3</td><td><strong>84.0</strong></td><td>3.2 / 10</td><td>15.3 / 20</td></tr>
+                  <tr><td>Kimi K2.6</td><td>2</td><td><strong>82.4</strong></td><td>2.6 / 10</td><td>15.0 / 20</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="benchmark-skill-results" aria-label="Skill averages">
+              <div><span>BLUEPRINT</span><strong>91.3</strong><small>5 outputs</small></div>
+              <div><span>FIELD MANUAL</span><strong>90.9</strong><small>12 outputs</small></div>
+              <div><span>SOLARI</span><strong>89.2</strong><small>15 outputs</small></div>
+            </div>
+
+            <div class="benchmark-findings">
+              <article>
+                <span class="benchmark-section-index">FINDING A</span>
+                <h3>Pretty desktop work was common.</h3>
+                <p>The meaningful separation appeared when prompt coverage, negative constraints, and mobile translation were scored separately.</p>
+              </article>
+              <article>
+                <span class="benchmark-section-index">FINDING B</span>
+                <h3>Responsive behavior moved the rankings.</h3>
+                <p>Several convincing split-flap designs remained fixed-width. One Kimi cinema output overflowed until the viewport reached 1920 pixels.</p>
+              </article>
+              <article>
+                <span class="benchmark-section-index">FINDING C</span>
+                <h3>Specific structure beat decoration.</h3>
+                <p>The strongest work turned the subject matter into the interface instead of applying the design skill as a surface treatment.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="op-section" aria-labelledby="evidence-title">
+            <div class="benchmark-section-heading">
+              <div>
+                <span class="benchmark-section-index">04 / EVIDENCE</span>
+                <h2 class="op-section-title" id="evidence-title">The design language survived. Sometimes.</h2>
+              </div>
+              <p>Three representative pairs show how each system translated the same artifact from desktop into a narrow viewport.</p>
+            </div>
+
+            <div class="benchmark-pairs">
+              <figure class="op-figure benchmark-figure benchmark-pair">
+                <div class="benchmark-pair__images">
+                  <img src="/images/operator-log/design-skill-benchmark/blueprint-atlas-desktop.webp" alt="Desktop ATLAS systems architecture website using Blueprint technical drawing language" width="1280" height="800" loading="lazy" decoding="async">
+                  <img src="/images/operator-log/design-skill-benchmark/blueprint-atlas-mobile.webp" alt="Mobile ATLAS systems architecture website preserving Blueprint hierarchy" width="360" height="864" loading="lazy" decoding="async">
+                </div>
+                <figcaption><strong>Blueprint / ATLAS / GPT-5.6 Sol</strong> — the architecture diagram becomes the page structure rather than decorative engineering wallpaper.</figcaption>
+              </figure>
+
+              <figure class="op-figure benchmark-figure benchmark-pair">
+                <div class="benchmark-pair__images">
+                  <img src="/images/operator-log/design-skill-benchmark/field-manual-relay-desktop.webp" alt="Desktop RELAY AI deployment handbook using Field Manual procedural document language" width="1280" height="800" loading="lazy" decoding="async">
+                  <img src="/images/operator-log/design-skill-benchmark/field-manual-relay-mobile.webp" alt="Mobile RELAY AI deployment handbook preserving recorded state and procedural hierarchy" width="360" height="864" loading="lazy" decoding="async">
+                </div>
+                <figcaption><strong>Field Manual / RELAY / Grok 4.6</strong> — recorded state, procedural hierarchy, and a strong mobile document produced the highest score in the baseline: 97.</figcaption>
+              </figure>
+
+              <figure class="op-figure benchmark-figure benchmark-pair">
+                <div class="benchmark-pair__images">
+                  <img src="/images/operator-log/design-skill-benchmark/solari-baseball-desktop.webp" alt="Desktop Municipal League Baseball website using Solari split-flap scoreboard language" width="1280" height="800" loading="lazy" decoding="async">
+                  <img src="/images/operator-log/design-skill-benchmark/solari-baseball-mobile.webp" alt="Mobile Municipal League Baseball website preserving the Solari scoreboard mechanism" width="367" height="881" loading="lazy" decoding="async">
+                </div>
+                <figcaption><strong>Solari / Municipal League Baseball / Gemini 3.7 Flash</strong> — a civic scoreboard identity survives the narrow translation without turning into an airport parody.</figcaption>
+              </figure>
+            </div>
+
+            <div class="benchmark-contact-sheets">
+              <figure class="op-figure benchmark-figure">
+                <a href="/images/operator-log/design-skill-benchmark/desktop-contact-sheet.webp" target="_blank" rel="noopener">
+                  <img src="/images/operator-log/design-skill-benchmark/desktop-contact-sheet.webp" alt="Contact sheet containing desktop review frames for all 32 benchmark outputs" width="1400" height="2167" loading="lazy" decoding="async">
+                </a>
+                <figcaption>All 32 desktop review frames. Open the image for the full sheet.</figcaption>
+              </figure>
+              <figure class="op-figure benchmark-figure">
+                <a href="/images/operator-log/design-skill-benchmark/mobile-contact-sheet.webp" target="_blank" rel="noopener">
+                  <img src="/images/operator-log/design-skill-benchmark/mobile-contact-sheet.webp" alt="Contact sheet containing mobile review frames for all 32 benchmark outputs" width="1400" height="1789" loading="lazy" decoding="async">
+                </a>
+                <figcaption>All 32 mobile review frames. This sheet caught what the desktop sheet politely omitted.</figcaption>
+              </figure>
+            </div>
+            <div class="benchmark-callout-box">
+              <div class="benchmark-callout-box__header">
+                <span class="benchmark-callout-box__title">Inspect Individual Frames</span>
+              </div>
+              <p>Want to inspect any specific site's desktop and mobile frames at 1:1 scale? Browse the full visual gallery in the benchmark archive.</p>
+              <div class="benchmark-callout-box__actions">
+                <a class="benchmark-action-btn benchmark-action-btn--primary" href="/benchmark/">View All 64 Review Frames in Archive &rarr;</a>
+              </div>
+            </div>
+          </section>
+
+          <section class="op-section benchmark-explorer-section" aria-labelledby="explorer-title">
+            <div class="benchmark-section-heading">
+              <div>
+                <span class="benchmark-section-index">05 / FULL RECORD</span>
+                <h2 class="op-section-title" id="explorer-title">Inspect all 32 grades</h2>
+              </div>
+              <p>Filter the baseline, sort by any dimension, and open any record to see its score breakdown, violations, review note, and direct links to its evidence page and live source output.</p>
+            </div>
+
+            <form class="benchmark-controls" id="benchmark-controls">
+              <label>Model<select id="filter-model" name="model"><option value="all">All models</option></select></label>
+              <label>Skill<select id="filter-skill" name="skill"><option value="all">All skills</option></select></label>
+              <label>Classification<select id="filter-classification" name="classification"><option value="all">All classes</option></select></label>
+              <label>Sort<select id="sort-results" name="sort">
+                <option value="total">Overall score</option>
+                <option value="skillFidelity">Skill fidelity</option>
+                <option value="promptFidelity">Prompt fidelity</option>
+                <option value="designQuality">Design quality</option>
+                <option value="technicalQuality">Technical quality</option>
+                <option value="responsiveQuality">Responsive quality</option>
+                <option value="originality">Originality</option>
+              </select></label>
+              <button type="reset" class="benchmark-reset">Reset filters</button>
+            </form>
+
+            <div class="benchmark-results-meta">
+              <span id="benchmark-result-count" aria-live="polite">Loading the baseline&hellip;</span>
+              <span>Higher scores first</span>
+            </div>
+            <div class="benchmark-results" id="benchmark-results" aria-busy="true"></div>
+            <noscript>
+              <p class="benchmark-data-error">The interactive explorer needs JavaScript. The complete baseline is still available in the downloads below.</p>
+            </noscript>
+          </section>
+
+          <section class="op-section" aria-labelledby="stability-title">
+            <div class="benchmark-section-heading">
+              <div>
+                <span class="benchmark-section-index">06 / STABILITY</span>
+                <h2 class="op-section-title" id="stability-title">Consistency is its own result</h2>
+              </div>
+              <p>Stability uses distinct prompt means, so duplicate variants of one prompt do not dominate. Lower deviation is steadier.</p>
+            </div>
+            <div class="benchmark-table-wrap" tabindex="0" role="region" aria-label="Skill stability table">
+              <table class="benchmark-table benchmark-table--compact">
+                <thead><tr><th>Model</th><th>Skill</th><th>Prompts</th><th>Mean</th><th>Deviation</th></tr></thead>
+                <tbody>
+                  <tr><td>GPT-5.6 Sol</td><td>Blueprint</td><td>2</td><td>91.9</td><td><strong>0.1</strong></td></tr>
+                  <tr><td>Gemini 3.7 Flash</td><td>Blueprint</td><td>2</td><td>90.5</td><td><strong>0.5</strong></td></tr>
+                  <tr><td>GPT-5.6 Sol</td><td>Field Manual</td><td>2</td><td>95.8</td><td><strong>0.8</strong></td></tr>
+                  <tr><td>Grok 4.6</td><td>Field Manual</td><td>2</td><td>96.2</td><td><strong>0.9</strong></td></tr>
+                  <tr><td>Gemini 3.7 Flash</td><td>Field Manual</td><td>4</td><td>90.1</td><td><strong>1.0</strong></td></tr>
+                  <tr><td>GPT-5.6 Sol</td><td>Solari</td><td>4</td><td>92.5</td><td><strong>1.3</strong></td></tr>
+                  <tr><td>Gemini 3.7 Flash</td><td>Solari</td><td>2</td><td>91.9</td><td><strong>1.6</strong></td></tr>
+                  <tr><td>MiMo V2.5</td><td>Solari</td><td>2</td><td>84.6</td><td><strong>2.8</strong></td></tr>
+                  <tr><td>Grok 4.6</td><td>Solari</td><td>2</td><td>90.7</td><td><strong>2.9</strong></td></tr>
+                  <tr><td>Kimi K2.6</td><td>Solari</td><td>2</td><td>82.4</td><td><strong>3.4</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="op-section" aria-labelledby="limits-title">
+            <div class="benchmark-section-heading">
+              <div>
+                <span class="benchmark-section-index">07 / LIMITS</span>
+                <h2 class="op-section-title" id="limits-title">What this baseline cannot prove</h2>
+              </div>
+            </div>
+            <ul class="benchmark-limit-list">
+              <li><strong>The model field is unbalanced.</strong> GPT-5.6 Sol has 11 outputs. Kimi and MiMo have two each. The averages are descriptive, not a controlled model ranking.</li>
+              <li><strong>One artifact is provisional.</strong> Ridgeline Trail Conservancy has no matching source prompt in the repository, so its prompt score is omitted and its total is normalized across available dimensions.</li>
+              <li><strong>Skill differentiation is not measured yet.</strong> No identical brief appears under more than one skill. The system cannot honestly say how far Blueprint and Field Manual diverge on the same subject.</li>
+              <li><strong>This is not a Lighthouse study.</strong> Technical quality covers source and browser checks, not Lighthouse Performance, Accessibility, Best Practices, or SEO scores.</li>
+              <li><strong>The visual review is a baseline judgment.</strong> The next useful measurement is the difference between this grade and the owner's independent grade.</li>
+            </ul>
+          </section>
+
+          <section class="op-section" aria-labelledby="next-title">
+            <div class="benchmark-section-heading">
+              <div>
+                <span class="benchmark-section-index">08 / NEXT RUN</span>
+                <h2 class="op-section-title" id="next-title">Make the experiment harder</h2>
+              </div>
+            </div>
+            <ol class="benchmark-next-list">
+              <li><span>01</span><div><strong>Shared-brief differentiation</strong><p>Give one municipal water authority brief to every skill, including a no-skill control.</p></div></li>
+              <li><span>02</span><div><strong>Balanced model matrix</strong><p>Run the same number of prompts per model and skill before comparing averages.</p></div></li>
+              <li><span>03</span><div><strong>Repeated trials</strong><p>Generate each cell more than once and report variance instead of treating one output as the model.</p></div></li>
+              <li><span>04</span><div><strong>Transferability</strong><p>Stress each design language across civic, industrial, cultural, scientific, editorial, consumer, and commerce briefs.</p></div></li>
+              <li><span>05</span><div><strong>Human comparison</strong><p>Record the owner's grade beside this baseline and inspect where the rubric or reviewer disagrees.</p></div></li>
+            </ol>
+          </section>
+
+          <aside class="op-related benchmark-downloads" aria-label="Benchmark downloads">
+            <div>
+              <span class="benchmark-section-index">BASELINE 001 / FROZEN SNAPSHOT</span>
+              <h2 class="op-related-title">Take the record with you</h2>
+              <p>The public page is a dated snapshot. The evaluator remains local; these files preserve the evidence without creating a live dependency between repositories.</p>
+            </div>
+            <div class="op-related-links">
+              <a class="op-related-link" href="/operator-log/design-skill-benchmark/data/baseline.json" download>Download JSON &rarr;</a>
+              <a class="op-related-link" href="/operator-log/design-skill-benchmark/data/baseline.csv" download>Download CSV &rarr;</a>
+              <a class="op-related-link" href="/benchmark/">Inspect every generation &rarr;</a>
+              <a class="op-related-link" href="/studio-lab/">Open Studio Lab &rarr;</a>
+            </div>
+          </aside>
+
+          <nav class="op-entry-nav" aria-label="Entry navigation">
+            <a class="op-entry-nav__prev" href="/operator-log/">&larr; Back to log index</a>
+            <a class="op-entry-nav__next" href="/operator-log/localhost-watchdog-update-02/">Next entry: Localhost Watchdog Update 02 &rarr;</a>
+          </nav>
+        </div>
+      </article>
+    </main>
+
+    <footer class="op-footer" role="contentinfo">
+      <span class="op-footer__left">LEMONTEED / OPERATOR'S LOG</span>
+      <span class="op-footer__right"><a href="/">&larr; Back to the archive</a></span>
+    </footer>
+  </div>
+</body>
+</html>

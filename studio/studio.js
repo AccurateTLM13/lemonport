@@ -3457,6 +3457,7 @@
   const seoOgImg = document.querySelector("[data-seo-og-img]");
   const seoOgEmpty = document.querySelector("[data-seo-og-empty]");
   const seoOgUpload = document.querySelector("[data-seo-og-upload]");
+  const seoGenOgBtn = document.querySelector("[data-seo-generate-og]");
   const seoUploadStatus = document.querySelector("[data-seo-upload-status]");
   const seoPageLink = document.querySelector("[data-seo-page-link]");
   const seoReloadBtn = document.querySelector("[data-seo-reload]");
@@ -3631,6 +3632,52 @@
     }
   }
 
+  async function autoGenerateSeoOgImage() {
+    if (!activeSeoKey) return;
+    if (seoUploadStatus) {
+      seoUploadStatus.textContent = "Generating card…";
+      seoUploadStatus.hidden = false;
+    }
+    if (seoGenOgBtn) seoGenOgBtn.disabled = true;
+
+    try {
+      setStatus(`Generating psychological OG card for ${activeSeoKey}…`);
+      const result = await api("/api/seo/generate-og", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ key: activeSeoKey })
+      });
+
+      // Update the ogImage and twitterImage fields and preview
+      const ogImageField = seoForm ? seoForm.querySelector("[data-seo-field='ogImage']") : null;
+      if (ogImageField) ogImageField.value = result.url;
+
+      const twitterImageField = seoForm ? seoForm.querySelector("[data-seo-field='twitterImage']") : null;
+      if (twitterImageField && (!twitterImageField.value || twitterImageField.value.startsWith("/images/og/"))) {
+        twitterImageField.value = result.url;
+      }
+
+      const widthField = seoForm ? seoForm.querySelector("[data-seo-field='ogImageWidth']") : null;
+      if (widthField) widthField.value = result.width || 1200;
+      const heightField = seoForm ? seoForm.querySelector("[data-seo-field='ogImageHeight']") : null;
+      if (heightField) heightField.value = result.height || 630;
+
+      // Bust cache for preview
+      const previewUrl = `${result.url}?t=${Date.now()}`;
+      updateOgPreview(previewUrl);
+
+      if (seoUploadStatus) {
+        seoUploadStatus.textContent = `Generated: ${result.url}`;
+      }
+      setStatus(`Branded OG card generated: ${result.url}`);
+    } catch (error) {
+      if (seoUploadStatus) seoUploadStatus.textContent = "Generation failed.";
+      showError(error);
+    } finally {
+      if (seoGenOgBtn) seoGenOgBtn.disabled = false;
+    }
+  }
+
   // Wire up SEO workspace events
   if (seoPageNav) {
     seoPageNav.addEventListener("click", (event) => {
@@ -3655,6 +3702,10 @@
       const file = seoOgUpload.files && seoOgUpload.files[0];
       if (file) uploadSeoOgImage(file);
     });
+  }
+
+  if (seoGenOgBtn) {
+    seoGenOgBtn.addEventListener("click", autoGenerateSeoOgImage);
   }
 
   if (seoReloadBtn) {

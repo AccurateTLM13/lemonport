@@ -1,0 +1,5313 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-15T02:37:34.121Z",
+  "methodology": {
+    "weights": {
+      "skillFidelity": 25,
+      "promptFidelity": 25,
+      "designQuality": 20,
+      "technicalQuality": 15,
+      "responsiveQuality": 10,
+      "originality": 5
+    },
+    "totalOutputs": 32
+  },
+  "results": [
+    {
+      "id": "b0973ca1b7",
+      "relative": "output/gemini-3.7-flash/atlas_ai_systems_architecture-gemini-3.7-flash.html",
+      "model": "gemini-3.7-flash",
+      "promptId": "atlas",
+      "skillId": "blueprint",
+      "mappingConfidence": "source-matched",
+      "title": "ATLAS — Distributed Intelligence Architecture",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 25,
+        "designQuality": 18,
+        "technicalQuality": 13.5,
+        "responsiveQuality": 5,
+        "originality": 4.5
+      },
+      "total": 91,
+      "provisional": false,
+      "classification": "EXCELLENT",
+      "reviewStatus": "reviewed",
+      "violations": [
+        "no reduced-motion handling detected"
+      ],
+      "skillChecks": [
+        {
+          "label": "technical typography",
+          "pass": true
+        },
+        {
+          "label": "drawing references",
+          "pass": true
+        },
+        {
+          "label": "dimension language",
+          "pass": true
+        },
+        {
+          "label": "technical figure",
+          "pass": true
+        },
+        {
+          "label": "title block or schedule",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "system architecture",
+          "pass": true
+        },
+        {
+          "label": "orchestrator",
+          "pass": true
+        },
+        {
+          "label": "agent layer",
+          "pass": true
+        },
+        {
+          "label": "research agent",
+          "pass": true
+        },
+        {
+          "label": "planning agent",
+          "pass": true
+        },
+        {
+          "label": "evaluation service",
+          "pass": true
+        },
+        {
+          "label": "technical treatment",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/blueprint-prompts.md",
+      "notes": "Dense architecture information remains legible and deliberately diagrammatic on desktop and mobile.",
+      "audit": {
+        "bytes": 79729,
+        "cssBytes": 2665,
+        "jsBytes": 11232,
+        "domElements": 512,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": false,
+        "hasMain": true,
+        "hasH1": false,
+        "mediaQueries": 0,
+        "breakpoints": [],
+        "reducedMotion": false,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 1,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 0,
+        "horizontalOverflowStrategy": false,
+        "inlineSvg": 1
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 1,
+            "clippedText": false,
+            "documentWidth": 371,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 1,
+            "clippedText": false,
+            "documentWidth": 426,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 1,
+            "clippedText": false,
+            "documentWidth": 764,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 1,
+            "clippedText": false,
+            "documentWidth": 1020,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 1,
+            "clippedText": false,
+            "documentWidth": 1436,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 1,
+            "clippedText": false,
+            "documentWidth": 1916,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "ff48c22f65",
+      "relative": "output/gemini-3.7-flash/halloway-instruments.html",
+      "model": "gemini-3.7-flash",
+      "promptId": "halloway-instruments",
+      "skillId": "field-manual",
+      "mappingConfidence": "source-matched",
+      "title": "HALLOWAY INSTRUMENTS — HX-4 Environmental Field Monitor",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 25,
+        "designQuality": 16,
+        "technicalQuality": 13.5,
+        "responsiveQuality": 4.5,
+        "originality": 4
+      },
+      "total": 88,
+      "provisional": false,
+      "classification": "STRONG",
+      "reviewStatus": "reviewed",
+      "violations": [
+        "no reduced-motion handling detected"
+      ],
+      "skillChecks": [
+        {
+          "label": "manual typography",
+          "pass": true
+        },
+        {
+          "label": "procedural structure",
+          "pass": true
+        },
+        {
+          "label": "document references",
+          "pass": true
+        },
+        {
+          "label": "annotation system",
+          "pass": true
+        },
+        {
+          "label": "recorded state",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "brand identity",
+          "pass": true
+        },
+        {
+          "label": "HX-4 product",
+          "pass": true
+        },
+        {
+          "label": "field configuration",
+          "pass": true
+        },
+        {
+          "label": "operating procedure",
+          "pass": true
+        },
+        {
+          "label": "live specification",
+          "pass": true
+        },
+        {
+          "label": "technical figure",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/field-guide-prompts.md",
+      "notes": "Strong instrument-panel character, though the field-manual language is less disciplined and mobile overflows at 375 and 430 px.",
+      "audit": {
+        "bytes": 51636,
+        "cssBytes": 17350,
+        "jsBytes": 12394,
+        "domElements": 323,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": false,
+        "hasMain": true,
+        "hasH1": false,
+        "mediaQueries": 1,
+        "breakpoints": [
+          960
+        ],
+        "reducedMotion": false,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 10,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 2,
+        "horizontalOverflowStrategy": true,
+        "inlineSvg": 1
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 11,
+            "clippedText": true,
+            "documentWidth": 492,
+            "horizontalOverflow": true,
+            "overflowPixels": 117,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 11,
+            "clippedText": true,
+            "documentWidth": 492,
+            "horizontalOverflow": true,
+            "overflowPixels": 62,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 6,
+            "clippedText": true,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "3b56359e69",
+      "relative": "output/gemini-3.7-flash/halloway_instruments_technical_interface_field_manual-gemini-3.7-flash.html",
+      "model": "gemini-3.7-flash",
+      "promptId": "halloway-instruments",
+      "skillId": "field-manual",
+      "mappingConfidence": "source-matched",
+      "title": "HALLOWAY INSTRUMENTS // HX-4 Field Monitor Technical Manual",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 25,
+        "designQuality": 18,
+        "technicalQuality": 12.5,
+        "responsiveQuality": 5,
+        "originality": 4.5
+      },
+      "total": 90,
+      "provisional": false,
+      "classification": "EXCELLENT",
+      "reviewStatus": "reviewed",
+      "violations": [
+        "4 form control(s) missing accessible label",
+        "no reduced-motion handling detected"
+      ],
+      "skillChecks": [
+        {
+          "label": "manual typography",
+          "pass": true
+        },
+        {
+          "label": "procedural structure",
+          "pass": true
+        },
+        {
+          "label": "document references",
+          "pass": true
+        },
+        {
+          "label": "annotation system",
+          "pass": true
+        },
+        {
+          "label": "recorded state",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "brand identity",
+          "pass": true
+        },
+        {
+          "label": "HX-4 product",
+          "pass": true
+        },
+        {
+          "label": "field configuration",
+          "pass": true
+        },
+        {
+          "label": "operating procedure",
+          "pass": true
+        },
+        {
+          "label": "live specification",
+          "pass": true
+        },
+        {
+          "label": "technical figure",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/field-guide-prompts.md",
+      "notes": "Excellent technical-sheet composition with useful figure hierarchy; form-control labeling remains incomplete.",
+      "audit": {
+        "bytes": 103175,
+        "cssBytes": 3627,
+        "jsBytes": 19489,
+        "domElements": 572,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": false,
+        "hasMain": true,
+        "hasH1": true,
+        "mediaQueries": 0,
+        "breakpoints": [],
+        "reducedMotion": false,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 30,
+        "inputsMissingLabel": 4,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 0,
+        "horizontalOverflowStrategy": false,
+        "inlineSvg": 2
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 2,
+            "clippedText": false,
+            "documentWidth": 369,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 2,
+            "clippedText": false,
+            "documentWidth": 424,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 2,
+            "clippedText": false,
+            "documentWidth": 762,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 2,
+            "clippedText": false,
+            "documentWidth": 1018,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 1,
+            "clippedText": false,
+            "documentWidth": 1434,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 1,
+            "clippedText": false,
+            "documentWidth": 1914,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "36ae0633d4",
+      "relative": "output/gemini-3.7-flash/municipal_league_baseball-gemini-3.7-flash.html",
+      "model": "gemini-3.7-flash",
+      "promptId": "municipal-league-baseball",
+      "skillId": "solari",
+      "mappingConfidence": "source-matched",
+      "title": "Municipal League Baseball — Civic Scoreboard & League Desk",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 20.8,
+        "designQuality": 17.5,
+        "technicalQuality": 14.5,
+        "responsiveQuality": 8,
+        "originality": 4.5
+      },
+      "total": 90.3,
+      "provisional": false,
+      "classification": "EXCELLENT",
+      "reviewStatus": "reviewed",
+      "violations": [],
+      "skillChecks": [
+        {
+          "label": "split-flap cells",
+          "pass": true
+        },
+        {
+          "label": "mechanical seam",
+          "pass": true
+        },
+        {
+          "label": "board typography",
+          "pass": true
+        },
+        {
+          "label": "state board",
+          "pass": true
+        },
+        {
+          "label": "reduced motion",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "league identity",
+          "pass": true
+        },
+        {
+          "label": "live scoring",
+          "pass": true
+        },
+        {
+          "label": "standings",
+          "pass": true
+        },
+        {
+          "label": "schedule",
+          "pass": true
+        },
+        {
+          "label": "team or game data",
+          "pass": true
+        },
+        {
+          "label": "historical story",
+          "pass": false
+        }
+      ],
+      "promptSource": "prompts/solari-prompts.md",
+      "notes": "Convincing civic scoreboard identity with strong state hierarchy and a coherent mobile translation.",
+      "audit": {
+        "bytes": 81357,
+        "cssBytes": 6186,
+        "jsBytes": 16913,
+        "domElements": 509,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": false,
+        "hasMain": true,
+        "hasH1": true,
+        "mediaQueries": 1,
+        "breakpoints": [],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 8,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 0,
+        "horizontalOverflowStrategy": false,
+        "inlineSvg": 2
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 367,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 422,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 760,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1016,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1432,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1912,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "f2224c43d0",
+      "relative": "output/gemini-3.7-flash/municipal_trail_operations-gemini-3.7-flash.html",
+      "model": "gemini-3.7-flash",
+      "promptId": "municipal-trail-operations",
+      "skillId": "field-manual",
+      "mappingConfidence": "source-matched",
+      "title": "MUNICIPAL TRAIL OPERATIONS — Operating Handbook & Field Status",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 25,
+        "designQuality": 18,
+        "technicalQuality": 12.5,
+        "responsiveQuality": 6.5,
+        "originality": 4.5
+      },
+      "total": 91.5,
+      "provisional": false,
+      "classification": "EXCELLENT",
+      "reviewStatus": "reviewed",
+      "violations": [
+        "12 form control(s) missing accessible label",
+        "no reduced-motion handling detected"
+      ],
+      "skillChecks": [
+        {
+          "label": "manual typography",
+          "pass": true
+        },
+        {
+          "label": "procedural structure",
+          "pass": true
+        },
+        {
+          "label": "document references",
+          "pass": true
+        },
+        {
+          "label": "annotation system",
+          "pass": true
+        },
+        {
+          "label": "recorded state",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "department identity",
+          "pass": true
+        },
+        {
+          "label": "trail status",
+          "pass": true
+        },
+        {
+          "label": "operating procedure",
+          "pass": true
+        },
+        {
+          "label": "field notices",
+          "pass": true
+        },
+        {
+          "label": "maintenance records",
+          "pass": true
+        },
+        {
+          "label": "public guidance",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/field-guide-prompts.md",
+      "notes": "Art-directed public handbook composition; highly recognizable across widths, with accessibility debt in unlabeled controls.",
+      "audit": {
+        "bytes": 87530,
+        "cssBytes": 5198,
+        "jsBytes": 11168,
+        "domElements": 584,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": false,
+        "hasMain": true,
+        "hasH1": true,
+        "mediaQueries": 3,
+        "breakpoints": [
+          1024,
+          768
+        ],
+        "reducedMotion": false,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 19,
+        "inputsMissingLabel": 12,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 2,
+        "horizontalOverflowStrategy": false,
+        "inlineSvg": 2
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 369,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 424,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 762,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1018,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1434,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1914,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "720bdd4e98",
+      "relative": "output/gemini-3.7-flash/northline-waterworks-exp.html",
+      "model": "gemini-3.7-flash",
+      "promptId": "northline-waterworks",
+      "skillId": "blueprint",
+      "mappingConfidence": "source-matched",
+      "title": "NORTHLINE WATERWORKS — Regional Water Authority / Engineering & Public Information Sheet",
+      "dimensions": {
+        "skillFidelity": 23,
+        "promptFidelity": 25,
+        "designQuality": 17,
+        "technicalQuality": 13.5,
+        "responsiveQuality": 7,
+        "originality": 4.5
+      },
+      "total": 90,
+      "provisional": false,
+      "classification": "EXCELLENT",
+      "reviewStatus": "reviewed",
+      "violations": [
+        "gradient spectacle"
+      ],
+      "skillChecks": [
+        {
+          "label": "technical typography",
+          "pass": true
+        },
+        {
+          "label": "drawing references",
+          "pass": true
+        },
+        {
+          "label": "dimension language",
+          "pass": true
+        },
+        {
+          "label": "technical figure",
+          "pass": true
+        },
+        {
+          "label": "title block or schedule",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "authority identity",
+          "pass": true
+        },
+        {
+          "label": "system overview",
+          "pass": true
+        },
+        {
+          "label": "treatment facilities",
+          "pass": true
+        },
+        {
+          "label": "pumping or distribution",
+          "pass": true
+        },
+        {
+          "label": "public information",
+          "pass": true
+        },
+        {
+          "label": "paper technical treatment",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/blueprint-prompts.md",
+      "notes": "Clear paper-technical system drawing and title-block language; slight 375 px overflow and a decorative gradient weaken fidelity.",
+      "audit": {
+        "bytes": 37241,
+        "cssBytes": 11003,
+        "jsBytes": 0,
+        "domElements": 350,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": false,
+        "hasMain": false,
+        "hasH1": false,
+        "mediaQueries": 1,
+        "breakpoints": [
+          900
+        ],
+        "reducedMotion": false,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 0,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 2,
+        "horizontalOverflowStrategy": true,
+        "inlineSvg": 2
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 9,
+            "clippedText": true,
+            "documentWidth": 360,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 415,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "16470def5d",
+      "relative": "output/gemini-3.7-flash/northstar-observatory-exp.html",
+      "model": "gemini-3.7-flash",
+      "promptId": "northstar-observatory",
+      "skillId": "field-manual",
+      "mappingConfidence": "source-matched",
+      "title": "NORTHSTAR OBSERVATORY — Telescope Operations & Field Manual",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 25,
+        "designQuality": 16,
+        "technicalQuality": 13.5,
+        "responsiveQuality": 7,
+        "originality": 4
+      },
+      "total": 90.5,
+      "provisional": false,
+      "classification": "EXCELLENT",
+      "reviewStatus": "reviewed",
+      "violations": [
+        "no reduced-motion handling detected"
+      ],
+      "skillChecks": [
+        {
+          "label": "manual typography",
+          "pass": true
+        },
+        {
+          "label": "procedural structure",
+          "pass": true
+        },
+        {
+          "label": "document references",
+          "pass": true
+        },
+        {
+          "label": "annotation system",
+          "pass": true
+        },
+        {
+          "label": "recorded state",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "observatory identity",
+          "pass": true
+        },
+        {
+          "label": "telescope operations",
+          "pass": true
+        },
+        {
+          "label": "observation window",
+          "pass": true
+        },
+        {
+          "label": "instrument status",
+          "pass": true
+        },
+        {
+          "label": "alignment procedure",
+          "pass": true
+        },
+        {
+          "label": "records and calibration",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/field-guide-prompts.md",
+      "notes": "Coherent dark operations manual, but dense fixed geometry produces mobile overflow through 768 px.",
+      "audit": {
+        "bytes": 28369,
+        "cssBytes": 11079,
+        "jsBytes": 827,
+        "domElements": 249,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": false,
+        "hasMain": false,
+        "hasH1": false,
+        "mediaQueries": 1,
+        "breakpoints": [
+          900
+        ],
+        "reducedMotion": false,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 6,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 3,
+        "horizontalOverflowStrategy": true,
+        "inlineSvg": 1
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 7,
+            "clippedText": true,
+            "documentWidth": 360,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 7,
+            "clippedText": true,
+            "documentWidth": 415,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 7,
+            "clippedText": true,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 1,
+            "clippedText": false,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 1,
+            "clippedText": false,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 1,
+            "clippedText": false,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "144258e9a2",
+      "relative": "output/gemini-3.7-flash/relay.html",
+      "model": "gemini-3.7-flash",
+      "promptId": "relay",
+      "skillId": "field-manual",
+      "mappingConfidence": "source-matched",
+      "title": "RELAY — AI Agent Deployment & Operations Handbook",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 25,
+        "designQuality": 16,
+        "technicalQuality": 13.5,
+        "responsiveQuality": 4.5,
+        "originality": 4
+      },
+      "total": 88,
+      "provisional": false,
+      "classification": "STRONG",
+      "reviewStatus": "reviewed",
+      "violations": [
+        "no reduced-motion handling detected"
+      ],
+      "skillChecks": [
+        {
+          "label": "manual typography",
+          "pass": true
+        },
+        {
+          "label": "procedural structure",
+          "pass": true
+        },
+        {
+          "label": "document references",
+          "pass": true
+        },
+        {
+          "label": "annotation system",
+          "pass": true
+        },
+        {
+          "label": "recorded state",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "platform identity",
+          "pass": true
+        },
+        {
+          "label": "AI deployment",
+          "pass": true
+        },
+        {
+          "label": "procedure",
+          "pass": true
+        },
+        {
+          "label": "agent status",
+          "pass": true
+        },
+        {
+          "label": "diagnostics",
+          "pass": true
+        },
+        {
+          "label": "revision or record",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/field-guide-prompts.md",
+      "notes": "Distinct operational board treatment, but weaker procedural-document character and overflow through tablet width.",
+      "audit": {
+        "bytes": 48970,
+        "cssBytes": 15721,
+        "jsBytes": 12983,
+        "domElements": 289,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": false,
+        "hasMain": true,
+        "hasH1": false,
+        "mediaQueries": 1,
+        "breakpoints": [
+          960
+        ],
+        "reducedMotion": false,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 6,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 3,
+        "horizontalOverflowStrategy": true,
+        "inlineSvg": 0
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 16,
+            "clippedText": true,
+            "documentWidth": 616,
+            "horizontalOverflow": true,
+            "overflowPixels": 241,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 14,
+            "clippedText": true,
+            "documentWidth": 616,
+            "horizontalOverflow": true,
+            "overflowPixels": 186,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 7,
+            "clippedText": true,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "0250fde051",
+      "relative": "output/gemini-3.7-flash/relay_ai_operations_field_manual-gemini-3.7-flash.html",
+      "model": "gemini-3.7-flash",
+      "promptId": "relay",
+      "skillId": "field-manual",
+      "mappingConfidence": "source-matched",
+      "title": "RELAY — AI Agent Deployment & Operations Platform",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 25,
+        "designQuality": 18,
+        "technicalQuality": 13.5,
+        "responsiveQuality": 5,
+        "originality": 4.5
+      },
+      "total": 91,
+      "provisional": false,
+      "classification": "EXCELLENT",
+      "reviewStatus": "reviewed",
+      "violations": [
+        "no reduced-motion handling detected"
+      ],
+      "skillChecks": [
+        {
+          "label": "manual typography",
+          "pass": true
+        },
+        {
+          "label": "procedural structure",
+          "pass": true
+        },
+        {
+          "label": "document references",
+          "pass": true
+        },
+        {
+          "label": "annotation system",
+          "pass": true
+        },
+        {
+          "label": "recorded state",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "platform identity",
+          "pass": true
+        },
+        {
+          "label": "AI deployment",
+          "pass": true
+        },
+        {
+          "label": "procedure",
+          "pass": true
+        },
+        {
+          "label": "agent status",
+          "pass": true
+        },
+        {
+          "label": "diagnostics",
+          "pass": true
+        },
+        {
+          "label": "revision or record",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/field-guide-prompts.md",
+      "notes": "Excellent procedure-led layout with annotation margins and recorded state preserved on mobile.",
+      "audit": {
+        "bytes": 85848,
+        "cssBytes": 3337,
+        "jsBytes": 13473,
+        "domElements": 558,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": false,
+        "hasMain": true,
+        "hasH1": false,
+        "mediaQueries": 0,
+        "breakpoints": [],
+        "reducedMotion": false,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 18,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 0,
+        "horizontalOverflowStrategy": false,
+        "inlineSvg": 1
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 1,
+            "clippedText": false,
+            "documentWidth": 369,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 1,
+            "clippedText": false,
+            "documentWidth": 424,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 1,
+            "clippedText": false,
+            "documentWidth": 762,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 1,
+            "clippedText": false,
+            "documentWidth": 1018,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 1,
+            "clippedText": false,
+            "documentWidth": 1434,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 1,
+            "clippedText": false,
+            "documentWidth": 1914,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "2dcb583384",
+      "relative": "output/gemini-3.7-flash/terminal_17_regional_freight_exchange-gemini-3.7-flash.html",
+      "model": "gemini-3.7-flash",
+      "promptId": "terminal-17",
+      "skillId": "solari",
+      "mappingConfidence": "source-matched",
+      "title": "TERMINAL 17 — Regional Freight Exchange",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 25,
+        "designQuality": 17.5,
+        "technicalQuality": 14,
+        "responsiveQuality": 7.5,
+        "originality": 4.5
+      },
+      "total": 93.5,
+      "provisional": false,
+      "classification": "EXCELLENT",
+      "reviewStatus": "reviewed",
+      "violations": [
+        "1 form control(s) missing accessible label"
+      ],
+      "skillChecks": [
+        {
+          "label": "split-flap cells",
+          "pass": true
+        },
+        {
+          "label": "mechanical seam",
+          "pass": true
+        },
+        {
+          "label": "board typography",
+          "pass": true
+        },
+        {
+          "label": "state board",
+          "pass": true
+        },
+        {
+          "label": "reduced motion",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "exchange identity",
+          "pass": true
+        },
+        {
+          "label": "dispatching",
+          "pass": true
+        },
+        {
+          "label": "load status",
+          "pass": true
+        },
+        {
+          "label": "dock operations",
+          "pass": true
+        },
+        {
+          "label": "schedule or departures",
+          "pass": true
+        },
+        {
+          "label": "dense operational data",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/solari-prompts.md",
+      "notes": "Dense dispatch information feels mechanical and intentional; only the 768 px probe showed document overflow.",
+      "audit": {
+        "bytes": 67264,
+        "cssBytes": 7096,
+        "jsBytes": 23021,
+        "domElements": 355,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": false,
+        "hasMain": true,
+        "hasH1": true,
+        "mediaQueries": 5,
+        "breakpoints": [
+          640,
+          640,
+          640,
+          640
+        ],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 17,
+        "inputsMissingLabel": 1,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 4,
+        "horizontalOverflowStrategy": false,
+        "inlineSvg": 0
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 360,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 415,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 18,
+            "clippedText": true,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "ded79f6ea9",
+      "relative": "output/gpt-5.6-sol/aeroline-cycle-works-gpt-5.6-sol.html",
+      "model": "gpt-5.6-sol",
+      "promptId": "aeroline-cycle-works",
+      "skillId": "blueprint",
+      "mappingConfidence": "source-matched",
+      "title": "AEROLINE R7 — Endurance Platform",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 25,
+        "designQuality": 17.5,
+        "technicalQuality": 12.5,
+        "responsiveQuality": 7.5,
+        "originality": 4.5
+      },
+      "total": 92,
+      "provisional": false,
+      "classification": "EXCELLENT",
+      "reviewStatus": "reviewed",
+      "violations": [
+        "5 form control(s) missing accessible label"
+      ],
+      "skillChecks": [
+        {
+          "label": "technical typography",
+          "pass": true
+        },
+        {
+          "label": "drawing references",
+          "pass": true
+        },
+        {
+          "label": "dimension language",
+          "pass": true
+        },
+        {
+          "label": "technical figure",
+          "pass": true
+        },
+        {
+          "label": "title block or schedule",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "brand identity",
+          "pass": true
+        },
+        {
+          "label": "product presentation",
+          "pass": true
+        },
+        {
+          "label": "exploded diagram",
+          "pass": true
+        },
+        {
+          "label": "dimensions",
+          "pass": true
+        },
+        {
+          "label": "configuration",
+          "pass": true
+        },
+        {
+          "label": "engineering specifications",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/blueprint-prompts.md",
+      "notes": "Strong product-specific technical drawing rather than a generic commerce layout; intentional internal scrolling preserves the document width.",
+      "audit": {
+        "bytes": 16993,
+        "cssBytes": 5894,
+        "jsBytes": 2503,
+        "domElements": 264,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": false,
+        "hasMain": true,
+        "hasH1": true,
+        "mediaQueries": 3,
+        "breakpoints": [
+          900,
+          600
+        ],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 13,
+        "inputsMissingLabel": 5,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 8,
+        "horizontalOverflowStrategy": false,
+        "inlineSvg": 1
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 10,
+            "clippedText": true,
+            "documentWidth": 360,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 7,
+            "clippedText": true,
+            "documentWidth": 415,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 7,
+            "clippedText": true,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 7,
+            "clippedText": true,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 7,
+            "clippedText": true,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 7,
+            "clippedText": true,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "18b7c892b1",
+      "relative": "output/gpt-5.6-sol/analog-cinema-club.html",
+      "model": "gpt-5.6-sol",
+      "promptId": "analog-cinema-club",
+      "skillId": "solari",
+      "mappingConfidence": "source-matched",
+      "title": "Analog Cinema Club",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 20.8,
+        "designQuality": 18,
+        "technicalQuality": 14.5,
+        "responsiveQuality": 7.8,
+        "originality": 4.5
+      },
+      "total": 90.6,
+      "provisional": false,
+      "classification": "EXCELLENT",
+      "reviewStatus": "reviewed",
+      "violations": [],
+      "skillChecks": [
+        {
+          "label": "split-flap cells",
+          "pass": true
+        },
+        {
+          "label": "mechanical seam",
+          "pass": true
+        },
+        {
+          "label": "board typography",
+          "pass": true
+        },
+        {
+          "label": "state board",
+          "pass": true
+        },
+        {
+          "label": "reduced motion",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "cinema identity",
+          "pass": true
+        },
+        {
+          "label": "showtimes",
+          "pass": false
+        },
+        {
+          "label": "ticket state",
+          "pass": true
+        },
+        {
+          "label": "programming",
+          "pass": true
+        },
+        {
+          "label": "film archive",
+          "pass": true
+        },
+        {
+          "label": "editorial context",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/solari-prompts.md",
+      "notes": "Art-directed cinema identity with a strong editorial/mechanical contrast, but the board creates broad horizontal overflow below desktop.",
+      "audit": {
+        "bytes": 13120,
+        "cssBytes": 5581,
+        "jsBytes": 3552,
+        "domElements": 159,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": false,
+        "hasMain": true,
+        "hasH1": true,
+        "mediaQueries": 3,
+        "breakpoints": [
+          760,
+          760
+        ],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 2,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 10,
+        "horizontalOverflowStrategy": true,
+        "inlineSvg": 0
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 148,
+            "clippedText": true,
+            "documentWidth": 431,
+            "horizontalOverflow": true,
+            "overflowPixels": 56,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 148,
+            "clippedText": true,
+            "documentWidth": 431,
+            "horizontalOverflow": false,
+            "overflowPixels": 1,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 141,
+            "clippedText": true,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 136,
+            "clippedText": true,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 136,
+            "clippedText": true,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 136,
+            "clippedText": true,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "7e41999fcf",
+      "relative": "output/gpt-5.6-sol/atlas-gpt-5.6-sol.html",
+      "model": "gpt-5.6-sol",
+      "promptId": "atlas",
+      "skillId": "blueprint",
+      "mappingConfidence": "source-matched",
+      "title": "ATLAS — Distributed Intelligence Architecture",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 25,
+        "designQuality": 16.5,
+        "technicalQuality": 14.5,
+        "responsiveQuality": 5,
+        "originality": 4
+      },
+      "total": 90,
+      "provisional": false,
+      "classification": "EXCELLENT",
+      "reviewStatus": "reviewed",
+      "violations": [],
+      "skillChecks": [
+        {
+          "label": "technical typography",
+          "pass": true
+        },
+        {
+          "label": "drawing references",
+          "pass": true
+        },
+        {
+          "label": "dimension language",
+          "pass": true
+        },
+        {
+          "label": "technical figure",
+          "pass": true
+        },
+        {
+          "label": "title block or schedule",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "system architecture",
+          "pass": true
+        },
+        {
+          "label": "orchestrator",
+          "pass": true
+        },
+        {
+          "label": "agent layer",
+          "pass": true
+        },
+        {
+          "label": "research agent",
+          "pass": true
+        },
+        {
+          "label": "planning agent",
+          "pass": true
+        },
+        {
+          "label": "evaluation service",
+          "pass": true
+        },
+        {
+          "label": "technical treatment",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/blueprint-prompts.md",
+      "notes": "Clear architecture-first composition, though the dashboard grid is more conventional and two viewport probes expose overflow.",
+      "audit": {
+        "bytes": 17584,
+        "cssBytes": 6045,
+        "jsBytes": 1918,
+        "domElements": 259,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": false,
+        "hasMain": true,
+        "hasH1": true,
+        "mediaQueries": 3,
+        "breakpoints": [
+          900,
+          600
+        ],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 0,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 8,
+        "horizontalOverflowStrategy": false,
+        "inlineSvg": 1
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 7,
+            "clippedText": true,
+            "documentWidth": 380,
+            "horizontalOverflow": true,
+            "overflowPixels": 5,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 5,
+            "clippedText": false,
+            "documentWidth": 427,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 3,
+            "clippedText": false,
+            "documentWidth": 1034,
+            "horizontalOverflow": true,
+            "overflowPixels": 10,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "e14eb0d4ea",
+      "relative": "output/gpt-5.6-sol/atlas_ai_systems_architecture-gpt5.6-sol.html",
+      "model": "gpt-5.6-sol",
+      "promptId": "atlas",
+      "skillId": "blueprint",
+      "mappingConfidence": "source-matched",
+      "title": "ATLAS — Distributed Intelligence Architecture",
+      "dimensions": {
+        "skillFidelity": 21.6,
+        "promptFidelity": 25,
+        "designQuality": 18.5,
+        "technicalQuality": 15,
+        "responsiveQuality": 9,
+        "originality": 4.5
+      },
+      "total": 93.6,
+      "provisional": false,
+      "classification": "EXCELLENT",
+      "reviewStatus": "reviewed",
+      "violations": [],
+      "skillChecks": [
+        {
+          "label": "technical typography",
+          "pass": false
+        },
+        {
+          "label": "drawing references",
+          "pass": true
+        },
+        {
+          "label": "dimension language",
+          "pass": true
+        },
+        {
+          "label": "technical figure",
+          "pass": true
+        },
+        {
+          "label": "title block or schedule",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "system architecture",
+          "pass": true
+        },
+        {
+          "label": "orchestrator",
+          "pass": true
+        },
+        {
+          "label": "agent layer",
+          "pass": true
+        },
+        {
+          "label": "research agent",
+          "pass": true
+        },
+        {
+          "label": "planning agent",
+          "pass": true
+        },
+        {
+          "label": "evaluation service",
+          "pass": true
+        },
+        {
+          "label": "technical treatment",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/blueprint-prompts.md",
+      "notes": "One of the strongest artifact-specific compositions: dramatic hierarchy, useful topology, and a disciplined mobile document.",
+      "audit": {
+        "bytes": 100809,
+        "cssBytes": 32199,
+        "jsBytes": 21776,
+        "domElements": 630,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": true,
+        "hasMain": true,
+        "hasH1": true,
+        "mediaQueries": 5,
+        "breakpoints": [
+          1180,
+          920,
+          720,
+          560
+        ],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 5,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 9,
+        "horizontalOverflowStrategy": true,
+        "inlineSvg": 2
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 5,
+            "clippedText": false,
+            "documentWidth": 360,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 3,
+            "clippedText": false,
+            "documentWidth": 415,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "fb38689c34",
+      "relative": "output/gpt-5.6-sol/municipal-league-baseball-gpt-5.6-sol.html",
+      "model": "gpt-5.6-sol",
+      "promptId": "municipal-league-baseball",
+      "skillId": "solari",
+      "mappingConfidence": "source-matched",
+      "title": "Municipal League Baseball",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 20.8,
+        "designQuality": 17.5,
+        "technicalQuality": 14.5,
+        "responsiveQuality": 7.5,
+        "originality": 4.5
+      },
+      "total": 89.8,
+      "provisional": false,
+      "classification": "STRONG",
+      "reviewStatus": "reviewed",
+      "violations": [],
+      "skillChecks": [
+        {
+          "label": "split-flap cells",
+          "pass": true
+        },
+        {
+          "label": "mechanical seam",
+          "pass": true
+        },
+        {
+          "label": "board typography",
+          "pass": true
+        },
+        {
+          "label": "state board",
+          "pass": true
+        },
+        {
+          "label": "reduced motion",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "league identity",
+          "pass": true
+        },
+        {
+          "label": "live scoring",
+          "pass": true
+        },
+        {
+          "label": "standings",
+          "pass": true
+        },
+        {
+          "label": "schedule",
+          "pass": true
+        },
+        {
+          "label": "team or game data",
+          "pass": true
+        },
+        {
+          "label": "historical story",
+          "pass": false
+        }
+      ],
+      "promptSource": "prompts/solari-prompts.md",
+      "notes": "Balanced civic editorial frame and scoreboard mechanism with clean document-level responsiveness.",
+      "audit": {
+        "bytes": 16404,
+        "cssBytes": 5772,
+        "jsBytes": 2519,
+        "domElements": 353,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": false,
+        "hasMain": true,
+        "hasH1": true,
+        "mediaQueries": 3,
+        "breakpoints": [
+          900,
+          560
+        ],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 1,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 6,
+        "horizontalOverflowStrategy": false,
+        "inlineSvg": 0
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 360,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 415,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "918cf65fd6",
+      "relative": "output/gpt-5.6-sol/municipal-trail-operations-gpt5.6-sol.html",
+      "model": "gpt-5.6-sol",
+      "promptId": "municipal-trail-operations",
+      "skillId": "field-manual",
+      "mappingConfidence": "source-matched",
+      "title": "Municipal Trail Operations",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 25,
+        "designQuality": 18,
+        "technicalQuality": 15,
+        "responsiveQuality": 9,
+        "originality": 4.5
+      },
+      "total": 96.5,
+      "provisional": false,
+      "classification": "EXCELLENT",
+      "reviewStatus": "reviewed",
+      "violations": [],
+      "skillChecks": [
+        {
+          "label": "manual typography",
+          "pass": true
+        },
+        {
+          "label": "procedural structure",
+          "pass": true
+        },
+        {
+          "label": "document references",
+          "pass": true
+        },
+        {
+          "label": "annotation system",
+          "pass": true
+        },
+        {
+          "label": "recorded state",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "department identity",
+          "pass": true
+        },
+        {
+          "label": "trail status",
+          "pass": true
+        },
+        {
+          "label": "operating procedure",
+          "pass": true
+        },
+        {
+          "label": "field notices",
+          "pass": true
+        },
+        {
+          "label": "maintenance records",
+          "pass": true
+        },
+        {
+          "label": "public guidance",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/field-guide-prompts.md",
+      "notes": "A convincing municipal field document with excellent typography and restrained state language; one tablet-width overflow remains.",
+      "audit": {
+        "bytes": 61470,
+        "cssBytes": 28299,
+        "jsBytes": 1640,
+        "domElements": 571,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": true,
+        "hasMain": true,
+        "hasH1": true,
+        "mediaQueries": 4,
+        "breakpoints": [
+          1040,
+          820,
+          640
+        ],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 8,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 10,
+        "horizontalOverflowStrategy": true,
+        "inlineSvg": 2
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 360,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 415,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 16,
+            "clippedText": true,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 3,
+            "clippedText": false,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 1,
+            "clippedText": false,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 1,
+            "clippedText": false,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "3a49d453e8",
+      "relative": "output/gpt-5.6-sol/municipal_league_baseball-gpt5.6-sol.html",
+      "model": "gpt-5.6-sol",
+      "promptId": "municipal-league-baseball",
+      "skillId": "solari",
+      "mappingConfidence": "source-matched",
+      "title": "Municipal League Baseball — 2026 Season",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 25,
+        "designQuality": 17,
+        "technicalQuality": 15,
+        "responsiveQuality": 9,
+        "originality": 4
+      },
+      "total": 95,
+      "provisional": false,
+      "classification": "EXCELLENT",
+      "reviewStatus": "reviewed",
+      "violations": [],
+      "skillChecks": [
+        {
+          "label": "split-flap cells",
+          "pass": true
+        },
+        {
+          "label": "mechanical seam",
+          "pass": true
+        },
+        {
+          "label": "board typography",
+          "pass": true
+        },
+        {
+          "label": "state board",
+          "pass": true
+        },
+        {
+          "label": "reduced motion",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "league identity",
+          "pass": true
+        },
+        {
+          "label": "live scoring",
+          "pass": true
+        },
+        {
+          "label": "standings",
+          "pass": true
+        },
+        {
+          "label": "schedule",
+          "pass": true
+        },
+        {
+          "label": "team or game data",
+          "pass": true
+        },
+        {
+          "label": "historical story",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/solari-prompts.md",
+      "notes": "Rich live-score hierarchy and credible league identity; isolated overflow appears at 375 and 768 px.",
+      "audit": {
+        "bytes": 60776,
+        "cssBytes": 26254,
+        "jsBytes": 11648,
+        "domElements": 433,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": true,
+        "hasMain": true,
+        "hasH1": true,
+        "mediaQueries": 4,
+        "breakpoints": [
+          1100,
+          760,
+          520
+        ],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 6,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 13,
+        "horizontalOverflowStrategy": true,
+        "inlineSvg": 0
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 14,
+            "clippedText": true,
+            "documentWidth": 360,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 2,
+            "clippedText": false,
+            "documentWidth": 415,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 6,
+            "clippedText": true,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 2,
+            "clippedText": false,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 2,
+            "clippedText": false,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 2,
+            "clippedText": false,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "d593172b12",
+      "relative": "output/gpt-5.6-sol/night-shift-gpt-5.6-sol.html",
+      "model": "gpt-5.6-sol",
+      "promptId": "night-shift",
+      "skillId": "solari",
+      "mappingConfidence": "source-matched",
+      "title": "NIGHT SHIFT 91.3 FM",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 25,
+        "designQuality": 17.5,
+        "technicalQuality": 14.5,
+        "responsiveQuality": 7.5,
+        "originality": 4.5
+      },
+      "total": 94,
+      "provisional": false,
+      "classification": "EXCELLENT",
+      "reviewStatus": "reviewed",
+      "violations": [],
+      "skillChecks": [
+        {
+          "label": "split-flap cells",
+          "pass": true
+        },
+        {
+          "label": "mechanical seam",
+          "pass": true
+        },
+        {
+          "label": "board typography",
+          "pass": true
+        },
+        {
+          "label": "state board",
+          "pass": true
+        },
+        {
+          "label": "reduced motion",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "station identity",
+          "pass": true
+        },
+        {
+          "label": "frequency",
+          "pass": true
+        },
+        {
+          "label": "live state",
+          "pass": true
+        },
+        {
+          "label": "programming schedule",
+          "pass": true
+        },
+        {
+          "label": "editorial content",
+          "pass": true
+        },
+        {
+          "label": "non-airport treatment",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/solari-prompts.md",
+      "notes": "Specific radio identity and good editorial-to-mechanical rhythm; mobile preserves hierarchy without document overflow.",
+      "audit": {
+        "bytes": 14231,
+        "cssBytes": 5416,
+        "jsBytes": 3198,
+        "domElements": 212,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": false,
+        "hasMain": true,
+        "hasH1": true,
+        "mediaQueries": 3,
+        "breakpoints": [
+          800,
+          520
+        ],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 6,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 9,
+        "horizontalOverflowStrategy": false,
+        "inlineSvg": 0
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 3,
+            "clippedText": false,
+            "documentWidth": 369,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 415,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "c71572624c",
+      "relative": "output/gpt-5.6-sol/relay-ai-agents-gpt5.6-sol.html",
+      "model": "gpt-5.6-sol",
+      "promptId": "relay",
+      "skillId": "field-manual",
+      "mappingConfidence": "source-matched",
+      "title": "RELAY — AI Agent Deployment & Operations",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 25,
+        "designQuality": 17,
+        "technicalQuality": 15,
+        "responsiveQuality": 9,
+        "originality": 4
+      },
+      "total": 95,
+      "provisional": false,
+      "classification": "EXCELLENT",
+      "reviewStatus": "reviewed",
+      "violations": [],
+      "skillChecks": [
+        {
+          "label": "manual typography",
+          "pass": true
+        },
+        {
+          "label": "procedural structure",
+          "pass": true
+        },
+        {
+          "label": "document references",
+          "pass": true
+        },
+        {
+          "label": "annotation system",
+          "pass": true
+        },
+        {
+          "label": "recorded state",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "platform identity",
+          "pass": true
+        },
+        {
+          "label": "AI deployment",
+          "pass": true
+        },
+        {
+          "label": "procedure",
+          "pass": true
+        },
+        {
+          "label": "agent status",
+          "pass": true
+        },
+        {
+          "label": "diagnostics",
+          "pass": true
+        },
+        {
+          "label": "revision or record",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/field-guide-prompts.md",
+      "notes": "Bold, memorable handbook cover system and coherent mobile composition, though procedural density is lighter above the fold.",
+      "audit": {
+        "bytes": 76359,
+        "cssBytes": 35002,
+        "jsBytes": 12414,
+        "domElements": 385,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": true,
+        "hasMain": true,
+        "hasH1": true,
+        "mediaQueries": 4,
+        "breakpoints": [
+          1120,
+          860,
+          580
+        ],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 4,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 12,
+        "horizontalOverflowStrategy": true,
+        "inlineSvg": 0
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 360,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 415,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "49f25fde18",
+      "relative": "output/gpt-5.6-sol/terminal-17-regional-freight-exchange-gpt5.6-sol.html",
+      "model": "gpt-5.6-sol",
+      "promptId": "terminal-17",
+      "skillId": "solari",
+      "mappingConfidence": "source-matched",
+      "title": "TERMINAL 17 — Regional Freight Exchange",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 25,
+        "designQuality": 16,
+        "technicalQuality": 14.5,
+        "responsiveQuality": 8,
+        "originality": 4
+      },
+      "total": 92.5,
+      "provisional": false,
+      "classification": "EXCELLENT",
+      "reviewStatus": "reviewed",
+      "violations": [
+        "1 form control(s) missing accessible label"
+      ],
+      "skillChecks": [
+        {
+          "label": "split-flap cells",
+          "pass": true
+        },
+        {
+          "label": "mechanical seam",
+          "pass": true
+        },
+        {
+          "label": "board typography",
+          "pass": true
+        },
+        {
+          "label": "state board",
+          "pass": true
+        },
+        {
+          "label": "reduced motion",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "exchange identity",
+          "pass": true
+        },
+        {
+          "label": "dispatching",
+          "pass": true
+        },
+        {
+          "label": "load status",
+          "pass": true
+        },
+        {
+          "label": "dock operations",
+          "pass": true
+        },
+        {
+          "label": "schedule or departures",
+          "pass": true
+        },
+        {
+          "label": "dense operational data",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/solari-prompts.md",
+      "notes": "Energetic freight-specific art direction, but large fixed dispatch rows overflow through tablet widths.",
+      "audit": {
+        "bytes": 59955,
+        "cssBytes": 21328,
+        "jsBytes": 23952,
+        "domElements": 291,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": true,
+        "hasMain": true,
+        "hasH1": true,
+        "mediaQueries": 3,
+        "breakpoints": [
+          1120,
+          780
+        ],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 3,
+        "inputsMissingLabel": 1,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 10,
+        "horizontalOverflowStrategy": true,
+        "inlineSvg": 0
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 10,
+            "clippedText": true,
+            "documentWidth": 360,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 10,
+            "clippedText": true,
+            "documentWidth": 415,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 10,
+            "clippedText": true,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 2,
+            "clippedText": false,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 2,
+            "clippedText": false,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 2,
+            "clippedText": false,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "a1b362a689",
+      "relative": "output/gpt-5.6-sol/terminal-17.html",
+      "model": "gpt-5.6-sol",
+      "promptId": "terminal-17",
+      "skillId": "solari",
+      "mappingConfidence": "source-matched",
+      "title": "Terminal 17 — Regional Freight Exchange",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 25,
+        "designQuality": 17,
+        "technicalQuality": 14.5,
+        "responsiveQuality": 7.8,
+        "originality": 4.5
+      },
+      "total": 93.8,
+      "provisional": false,
+      "classification": "EXCELLENT",
+      "reviewStatus": "reviewed",
+      "violations": [],
+      "skillChecks": [
+        {
+          "label": "split-flap cells",
+          "pass": true
+        },
+        {
+          "label": "mechanical seam",
+          "pass": true
+        },
+        {
+          "label": "board typography",
+          "pass": true
+        },
+        {
+          "label": "state board",
+          "pass": true
+        },
+        {
+          "label": "reduced motion",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "exchange identity",
+          "pass": true
+        },
+        {
+          "label": "dispatching",
+          "pass": true
+        },
+        {
+          "label": "load status",
+          "pass": true
+        },
+        {
+          "label": "dock operations",
+          "pass": true
+        },
+        {
+          "label": "schedule or departures",
+          "pass": true
+        },
+        {
+          "label": "dense operational data",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/solari-prompts.md",
+      "notes": "Strong hybrid of civic print and mechanical board; the wide operational table is not contained at several tested widths.",
+      "audit": {
+        "bytes": 13356,
+        "cssBytes": 5310,
+        "jsBytes": 4179,
+        "domElements": 173,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": false,
+        "hasMain": true,
+        "hasH1": true,
+        "mediaQueries": 3,
+        "breakpoints": [
+          760,
+          760
+        ],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 3,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 7,
+        "horizontalOverflowStrategy": true,
+        "inlineSvg": 0
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 20,
+            "clippedText": true,
+            "documentWidth": 418,
+            "horizontalOverflow": true,
+            "overflowPixels": 43,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 20,
+            "clippedText": true,
+            "documentWidth": 418,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 18,
+            "clippedText": true,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 18,
+            "clippedText": true,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 18,
+            "clippedText": true,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 18,
+            "clippedText": true,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "aa1a286acb",
+      "relative": "output/grok-4.6/municipal-league-baseball-grok-4.6.html",
+      "model": "grok-4.6",
+      "promptId": "municipal-league-baseball",
+      "skillId": "solari",
+      "mappingConfidence": "source-matched",
+      "title": "Municipal League Baseball — Humboldt, Tennessee",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 20.8,
+        "designQuality": 17,
+        "technicalQuality": 14.5,
+        "responsiveQuality": 6.5,
+        "originality": 4
+      },
+      "total": 87.8,
+      "provisional": false,
+      "classification": "STRONG",
+      "reviewStatus": "reviewed",
+      "violations": [],
+      "skillChecks": [
+        {
+          "label": "split-flap cells",
+          "pass": true
+        },
+        {
+          "label": "mechanical seam",
+          "pass": true
+        },
+        {
+          "label": "board typography",
+          "pass": true
+        },
+        {
+          "label": "state board",
+          "pass": true
+        },
+        {
+          "label": "reduced motion",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "league identity",
+          "pass": true
+        },
+        {
+          "label": "live scoring",
+          "pass": true
+        },
+        {
+          "label": "standings",
+          "pass": true
+        },
+        {
+          "label": "schedule",
+          "pass": true
+        },
+        {
+          "label": "team or game data",
+          "pass": true
+        },
+        {
+          "label": "historical story",
+          "pass": false
+        }
+      ],
+      "promptSource": "prompts/solari-prompts.md",
+      "notes": "Cohesive civic identity and strong opening hierarchy; mobile document overflow persists at 375 and 430 px.",
+      "audit": {
+        "bytes": 64892,
+        "cssBytes": 16191,
+        "jsBytes": 32484,
+        "domElements": 332,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": false,
+        "hasMain": true,
+        "hasH1": true,
+        "mediaQueries": 4,
+        "breakpoints": [
+          1100,
+          820,
+          560
+        ],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 1,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 6,
+        "horizontalOverflowStrategy": true,
+        "inlineSvg": 1
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 22,
+            "clippedText": true,
+            "documentWidth": 504,
+            "horizontalOverflow": true,
+            "overflowPixels": 129,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 22,
+            "clippedText": true,
+            "documentWidth": 504,
+            "horizontalOverflow": true,
+            "overflowPixels": 74,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "bad37c7212",
+      "relative": "output/grok-4.6/northstar-observatory-grok-4.6.html",
+      "model": "grok-4.6",
+      "promptId": "northstar-observatory",
+      "skillId": "field-manual",
+      "mappingConfidence": "source-matched",
+      "title": "NORTHSTAR OBSERVATORY — NS-TEL-OPS-014 — Telescope Operations Sheet",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 25,
+        "designQuality": 18,
+        "technicalQuality": 15,
+        "responsiveQuality": 7.8,
+        "originality": 4.5
+      },
+      "total": 95.3,
+      "provisional": false,
+      "classification": "EXCELLENT",
+      "reviewStatus": "reviewed",
+      "violations": [],
+      "skillChecks": [
+        {
+          "label": "manual typography",
+          "pass": true
+        },
+        {
+          "label": "procedural structure",
+          "pass": true
+        },
+        {
+          "label": "document references",
+          "pass": true
+        },
+        {
+          "label": "annotation system",
+          "pass": true
+        },
+        {
+          "label": "recorded state",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "observatory identity",
+          "pass": true
+        },
+        {
+          "label": "telescope operations",
+          "pass": true
+        },
+        {
+          "label": "observation window",
+          "pass": true
+        },
+        {
+          "label": "instrument status",
+          "pass": true
+        },
+        {
+          "label": "alignment procedure",
+          "pass": true
+        },
+        {
+          "label": "records and calibration",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/field-guide-prompts.md",
+      "notes": "Excellent observatory-sheet specificity and controlled information density; only the narrowest viewport overflows.",
+      "audit": {
+        "bytes": 65535,
+        "cssBytes": 20304,
+        "jsBytes": 11062,
+        "domElements": 607,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": true,
+        "hasMain": true,
+        "hasH1": true,
+        "mediaQueries": 3,
+        "breakpoints": [
+          1100,
+          720
+        ],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 9,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 6,
+        "horizontalOverflowStrategy": true,
+        "inlineSvg": 1
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 4,
+            "clippedText": false,
+            "documentWidth": 385,
+            "horizontalOverflow": true,
+            "overflowPixels": 10,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 415,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "b14c24587b",
+      "relative": "output/grok-4.6/relay-grok-4.6.html",
+      "model": "grok-4.6",
+      "promptId": "relay",
+      "skillId": "field-manual",
+      "mappingConfidence": "source-matched",
+      "title": "RELAY — AI Deployment Handbook",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 25,
+        "designQuality": 18.5,
+        "technicalQuality": 15,
+        "responsiveQuality": 9,
+        "originality": 4.5
+      },
+      "total": 97,
+      "provisional": false,
+      "classification": "EXCELLENT",
+      "reviewStatus": "reviewed",
+      "violations": [],
+      "skillChecks": [
+        {
+          "label": "manual typography",
+          "pass": true
+        },
+        {
+          "label": "procedural structure",
+          "pass": true
+        },
+        {
+          "label": "document references",
+          "pass": true
+        },
+        {
+          "label": "annotation system",
+          "pass": true
+        },
+        {
+          "label": "recorded state",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "platform identity",
+          "pass": true
+        },
+        {
+          "label": "AI deployment",
+          "pass": true
+        },
+        {
+          "label": "procedure",
+          "pass": true
+        },
+        {
+          "label": "agent status",
+          "pass": true
+        },
+        {
+          "label": "diagnostics",
+          "pass": true
+        },
+        {
+          "label": "revision or record",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/field-guide-prompts.md",
+      "notes": "Highly art-directed manual with strong recorded-state hierarchy; browser measurements reveal persistent page-width overflow despite the visual polish.",
+      "audit": {
+        "bytes": 69454,
+        "cssBytes": 19676,
+        "jsBytes": 6782,
+        "domElements": 715,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": true,
+        "hasMain": true,
+        "hasH1": true,
+        "mediaQueries": 3,
+        "breakpoints": [
+          1100,
+          720
+        ],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 15,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 8,
+        "horizontalOverflowStrategy": true,
+        "inlineSvg": 12
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 10,
+            "clippedText": true,
+            "documentWidth": 360,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 10,
+            "clippedText": true,
+            "documentWidth": 415,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 10,
+            "clippedText": true,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 10,
+            "clippedText": true,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 10,
+            "clippedText": true,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 10,
+            "clippedText": true,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "1aea8d9a0e",
+      "relative": "output/grok-4.6/terminal-17-grok-4.6.html",
+      "model": "grok-4.6",
+      "promptId": "terminal-17",
+      "skillId": "solari",
+      "mappingConfidence": "source-matched",
+      "title": "TERMINAL 17 — Regional Freight Exchange",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 25,
+        "designQuality": 18,
+        "technicalQuality": 14.5,
+        "responsiveQuality": 6.5,
+        "originality": 4.5
+      },
+      "total": 93.5,
+      "provisional": false,
+      "classification": "EXCELLENT",
+      "reviewStatus": "reviewed",
+      "violations": [
+        "1 form control(s) missing accessible label"
+      ],
+      "skillChecks": [
+        {
+          "label": "split-flap cells",
+          "pass": true
+        },
+        {
+          "label": "mechanical seam",
+          "pass": true
+        },
+        {
+          "label": "board typography",
+          "pass": true
+        },
+        {
+          "label": "state board",
+          "pass": true
+        },
+        {
+          "label": "reduced motion",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "exchange identity",
+          "pass": true
+        },
+        {
+          "label": "dispatching",
+          "pass": true
+        },
+        {
+          "label": "load status",
+          "pass": true
+        },
+        {
+          "label": "dock operations",
+          "pass": true
+        },
+        {
+          "label": "schedule or departures",
+          "pass": true
+        },
+        {
+          "label": "dense operational data",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/solari-prompts.md",
+      "notes": "Distinct freight document with a powerful dispatch-board focal point; fixed-width content overflows across most probes.",
+      "audit": {
+        "bytes": 76670,
+        "cssBytes": 21230,
+        "jsBytes": 34733,
+        "domElements": 368,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": true,
+        "hasMain": true,
+        "hasH1": true,
+        "mediaQueries": 3,
+        "breakpoints": [
+          1100,
+          760
+        ],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 8,
+        "inputsMissingLabel": 1,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 8,
+        "horizontalOverflowStrategy": true,
+        "inlineSvg": 0
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 57,
+            "clippedText": true,
+            "documentWidth": 446,
+            "horizontalOverflow": true,
+            "overflowPixels": 71,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 57,
+            "clippedText": true,
+            "documentWidth": 446,
+            "horizontalOverflow": true,
+            "overflowPixels": 16,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 52,
+            "clippedText": true,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 51,
+            "clippedText": true,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 30,
+            "clippedText": true,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 30,
+            "clippedText": true,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "53a4416d3e",
+      "relative": "output/kimi-k2.6/analog-cinema-club.html",
+      "model": "kimi-k2.6",
+      "promptId": "analog-cinema-club",
+      "skillId": "solari",
+      "mappingConfidence": "source-matched",
+      "title": "ANALOG CINEMA CLUB",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 20.8,
+        "designQuality": 15,
+        "technicalQuality": 13.5,
+        "responsiveQuality": 1.3,
+        "originality": 3.5
+      },
+      "total": 79.1,
+      "provisional": false,
+      "classification": "COMPETENT",
+      "reviewStatus": "reviewed",
+      "violations": [],
+      "skillChecks": [
+        {
+          "label": "split-flap cells",
+          "pass": true
+        },
+        {
+          "label": "mechanical seam",
+          "pass": true
+        },
+        {
+          "label": "board typography",
+          "pass": true
+        },
+        {
+          "label": "state board",
+          "pass": true
+        },
+        {
+          "label": "reduced motion",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "cinema identity",
+          "pass": true
+        },
+        {
+          "label": "showtimes",
+          "pass": false
+        },
+        {
+          "label": "ticket state",
+          "pass": true
+        },
+        {
+          "label": "programming",
+          "pass": true
+        },
+        {
+          "label": "film archive",
+          "pass": true
+        },
+        {
+          "label": "editorial context",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/solari-prompts.md",
+      "notes": "Clear Solari vocabulary, but the composition reads as a reusable board template and remains fixed-width until 1920 px.",
+      "audit": {
+        "bytes": 26511,
+        "cssBytes": 7122,
+        "jsBytes": 14342,
+        "domElements": 99,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": false,
+        "hasMain": false,
+        "hasH1": true,
+        "mediaQueries": 2,
+        "breakpoints": [
+          768
+        ],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 2,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 3,
+        "horizontalOverflowStrategy": false,
+        "inlineSvg": 0
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 212,
+            "clippedText": true,
+            "documentWidth": 1142,
+            "horizontalOverflow": true,
+            "overflowPixels": 767,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 203,
+            "clippedText": true,
+            "documentWidth": 1142,
+            "horizontalOverflow": true,
+            "overflowPixels": 712,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 200,
+            "clippedText": true,
+            "documentWidth": 1142,
+            "horizontalOverflow": true,
+            "overflowPixels": 374,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 155,
+            "clippedText": true,
+            "documentWidth": 1563,
+            "horizontalOverflow": true,
+            "overflowPixels": 539,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 155,
+            "clippedText": true,
+            "documentWidth": 1676,
+            "horizontalOverflow": true,
+            "overflowPixels": 236,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 155,
+            "clippedText": true,
+            "documentWidth": 1916,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "655ff6ee2a",
+      "relative": "output/kimi-k2.6/night-shift.html",
+      "model": "kimi-k2.6",
+      "promptId": "night-shift",
+      "skillId": "solari",
+      "mappingConfidence": "source-matched",
+      "title": "NIGHT SHIFT 91.3 FM",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 25,
+        "designQuality": 15,
+        "technicalQuality": 13.5,
+        "responsiveQuality": 3.8,
+        "originality": 3.5
+      },
+      "total": 85.8,
+      "provisional": false,
+      "classification": "STRONG",
+      "reviewStatus": "reviewed",
+      "violations": [],
+      "skillChecks": [
+        {
+          "label": "split-flap cells",
+          "pass": true
+        },
+        {
+          "label": "mechanical seam",
+          "pass": true
+        },
+        {
+          "label": "board typography",
+          "pass": true
+        },
+        {
+          "label": "state board",
+          "pass": true
+        },
+        {
+          "label": "reduced motion",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "station identity",
+          "pass": true
+        },
+        {
+          "label": "frequency",
+          "pass": true
+        },
+        {
+          "label": "live state",
+          "pass": true
+        },
+        {
+          "label": "programming schedule",
+          "pass": true
+        },
+        {
+          "label": "editorial content",
+          "pass": true
+        },
+        {
+          "label": "non-airport treatment",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/solari-prompts.md",
+      "notes": "Atmospheric and readable at its intended width, but template similarity and severe horizontal overflow reduce intentionality.",
+      "audit": {
+        "bytes": 23275,
+        "cssBytes": 6123,
+        "jsBytes": 13180,
+        "domElements": 77,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": false,
+        "hasMain": false,
+        "hasH1": true,
+        "mediaQueries": 2,
+        "breakpoints": [
+          768
+        ],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 1,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 3,
+        "horizontalOverflowStrategy": false,
+        "inlineSvg": 0
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 536,
+            "clippedText": true,
+            "documentWidth": 996,
+            "horizontalOverflow": true,
+            "overflowPixels": 621,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 522,
+            "clippedText": true,
+            "documentWidth": 996,
+            "horizontalOverflow": true,
+            "overflowPixels": 566,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 520,
+            "clippedText": true,
+            "documentWidth": 996,
+            "horizontalOverflow": true,
+            "overflowPixels": 228,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 471,
+            "clippedText": true,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 468,
+            "clippedText": true,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 468,
+            "clippedText": true,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "9d29d090b2",
+      "relative": "output/mimo-v2.5/municipal-league-baseball.html",
+      "model": "mimo-v2.5",
+      "promptId": "municipal-league-baseball",
+      "skillId": "solari",
+      "mappingConfidence": "source-matched",
+      "title": "MUNICIPAL LEAGUE BASEBALL",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 20.8,
+        "designQuality": 14.5,
+        "technicalQuality": 13.5,
+        "responsiveQuality": 5,
+        "originality": 3
+      },
+      "total": 81.8,
+      "provisional": false,
+      "classification": "STRONG",
+      "reviewStatus": "reviewed",
+      "violations": [],
+      "skillChecks": [
+        {
+          "label": "split-flap cells",
+          "pass": true
+        },
+        {
+          "label": "mechanical seam",
+          "pass": true
+        },
+        {
+          "label": "board typography",
+          "pass": true
+        },
+        {
+          "label": "state board",
+          "pass": true
+        },
+        {
+          "label": "reduced motion",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "league identity",
+          "pass": true
+        },
+        {
+          "label": "live scoring",
+          "pass": true
+        },
+        {
+          "label": "standings",
+          "pass": true
+        },
+        {
+          "label": "schedule",
+          "pass": true
+        },
+        {
+          "label": "team or game data",
+          "pass": true
+        },
+        {
+          "label": "historical story",
+          "pass": false
+        }
+      ],
+      "promptSource": "prompts/solari-prompts.md",
+      "notes": "Competent scoreboard assembly with weaker editorial hierarchy; fixed-width behavior fails every viewport probe.",
+      "audit": {
+        "bytes": 23320,
+        "cssBytes": 7707,
+        "jsBytes": 2384,
+        "domElements": 410,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": false,
+        "hasMain": false,
+        "hasH1": false,
+        "mediaQueries": 5,
+        "breakpoints": [
+          900,
+          768,
+          900,
+          768
+        ],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 1,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 6,
+        "horizontalOverflowStrategy": false,
+        "inlineSvg": 0
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 33,
+            "clippedText": true,
+            "documentWidth": 562,
+            "horizontalOverflow": true,
+            "overflowPixels": 187,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 33,
+            "clippedText": true,
+            "documentWidth": 562,
+            "horizontalOverflow": true,
+            "overflowPixels": 132,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 30,
+            "clippedText": true,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 30,
+            "clippedText": true,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 30,
+            "clippedText": true,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 30,
+            "clippedText": true,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "8e1c97dc55",
+      "relative": "output/mimo-v2.5/night-shift.html",
+      "model": "mimo-v2.5",
+      "promptId": "night-shift",
+      "skillId": "solari",
+      "mappingConfidence": "source-matched",
+      "title": "NIGHT SHIFT — 91.3 FM",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 25,
+        "designQuality": 14.5,
+        "technicalQuality": 13.5,
+        "responsiveQuality": 6.3,
+        "originality": 3
+      },
+      "total": 87.3,
+      "provisional": false,
+      "classification": "STRONG",
+      "reviewStatus": "reviewed",
+      "violations": [],
+      "skillChecks": [
+        {
+          "label": "split-flap cells",
+          "pass": true
+        },
+        {
+          "label": "mechanical seam",
+          "pass": true
+        },
+        {
+          "label": "board typography",
+          "pass": true
+        },
+        {
+          "label": "state board",
+          "pass": true
+        },
+        {
+          "label": "reduced motion",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "station identity",
+          "pass": true
+        },
+        {
+          "label": "frequency",
+          "pass": true
+        },
+        {
+          "label": "live state",
+          "pass": true
+        },
+        {
+          "label": "programming schedule",
+          "pass": true
+        },
+        {
+          "label": "editorial content",
+          "pass": true
+        },
+        {
+          "label": "non-airport treatment",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/solari-prompts.md",
+      "notes": "Recognizable mechanical radio board, but the composition is conventional and the narrowest viewport overflows.",
+      "audit": {
+        "bytes": 28080,
+        "cssBytes": 6339,
+        "jsBytes": 2746,
+        "domElements": 615,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": false,
+        "hasMain": false,
+        "hasH1": false,
+        "mediaQueries": 2,
+        "breakpoints": [
+          768
+        ],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 1,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 3,
+        "horizontalOverflowStrategy": false,
+        "inlineSvg": 0
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 3,
+            "clippedText": false,
+            "documentWidth": 429,
+            "horizontalOverflow": true,
+            "overflowPixels": 54,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 3,
+            "clippedText": false,
+            "documentWidth": 429,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 0,
+            "clippedText": false,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "dcf7be1796",
+      "relative": "output/sonnet-4.6-thinking/municipal-league-baseball.html",
+      "model": "sonnet-4.6-thinking",
+      "promptId": "municipal-league-baseball",
+      "skillId": "solari",
+      "mappingConfidence": "source-matched",
+      "title": "MUNICIPAL LEAGUE BASEBALL — Civic Baseball System",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": 25,
+        "designQuality": 14,
+        "technicalQuality": 14,
+        "responsiveQuality": 2.8,
+        "originality": 3
+      },
+      "total": 83.8,
+      "provisional": false,
+      "classification": "STRONG",
+      "reviewStatus": "reviewed",
+      "violations": [],
+      "skillChecks": [
+        {
+          "label": "split-flap cells",
+          "pass": true
+        },
+        {
+          "label": "mechanical seam",
+          "pass": true
+        },
+        {
+          "label": "board typography",
+          "pass": true
+        },
+        {
+          "label": "state board",
+          "pass": true
+        },
+        {
+          "label": "reduced motion",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "league identity",
+          "pass": true
+        },
+        {
+          "label": "live scoring",
+          "pass": true
+        },
+        {
+          "label": "standings",
+          "pass": true
+        },
+        {
+          "label": "schedule",
+          "pass": true
+        },
+        {
+          "label": "team or game data",
+          "pass": true
+        },
+        {
+          "label": "historical story",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/solari-prompts.md",
+      "notes": "Clean but sparse scoreboard treatment that feels closer to a component demo; document overflow appears across the full probe set.",
+      "audit": {
+        "bytes": 31835,
+        "cssBytes": 10815,
+        "jsBytes": 9736,
+        "domElements": 270,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": true,
+        "hasMain": true,
+        "hasH1": false,
+        "mediaQueries": 2,
+        "breakpoints": [
+          900
+        ],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 1,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 4,
+        "horizontalOverflowStrategy": false,
+        "inlineSvg": 0
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 29,
+            "clippedText": true,
+            "documentWidth": 609,
+            "horizontalOverflow": true,
+            "overflowPixels": 234,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 22,
+            "clippedText": true,
+            "documentWidth": 609,
+            "horizontalOverflow": true,
+            "overflowPixels": 179,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 14,
+            "clippedText": true,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 25,
+            "clippedText": true,
+            "documentWidth": 1182,
+            "horizontalOverflow": true,
+            "overflowPixels": 158,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 24,
+            "clippedText": true,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 24,
+            "clippedText": true,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "4e95b35e74",
+      "relative": "output/sonnet-4.6-thinking/northstar-observatory.html",
+      "model": "sonnet-4.6-thinking",
+      "promptId": "northstar-observatory",
+      "skillId": "field-manual",
+      "mappingConfidence": "source-matched",
+      "title": "NORTHSTAR OBSERVATORY — Telescope Operations",
+      "dimensions": {
+        "skillFidelity": 21.6,
+        "promptFidelity": 25,
+        "designQuality": 14,
+        "technicalQuality": 14,
+        "responsiveQuality": 5,
+        "originality": 3
+      },
+      "total": 82.6,
+      "provisional": false,
+      "classification": "STRONG",
+      "reviewStatus": "reviewed",
+      "violations": [],
+      "skillChecks": [
+        {
+          "label": "manual typography",
+          "pass": false
+        },
+        {
+          "label": "procedural structure",
+          "pass": true
+        },
+        {
+          "label": "document references",
+          "pass": true
+        },
+        {
+          "label": "annotation system",
+          "pass": true
+        },
+        {
+          "label": "recorded state",
+          "pass": true
+        }
+      ],
+      "promptChecks": [
+        {
+          "label": "observatory identity",
+          "pass": true
+        },
+        {
+          "label": "telescope operations",
+          "pass": true
+        },
+        {
+          "label": "observation window",
+          "pass": true
+        },
+        {
+          "label": "instrument status",
+          "pass": true
+        },
+        {
+          "label": "alignment procedure",
+          "pass": true
+        },
+        {
+          "label": "records and calibration",
+          "pass": true
+        }
+      ],
+      "promptSource": "prompts/field-guide-prompts.md",
+      "notes": "The content is prompt-specific, but Solari-like board construction weakens Field Manual fidelity and fixed-width behavior fails narrow probes.",
+      "audit": {
+        "bytes": 28436,
+        "cssBytes": 10484,
+        "jsBytes": 4448,
+        "domElements": 245,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": true,
+        "hasMain": true,
+        "hasH1": false,
+        "mediaQueries": 2,
+        "breakpoints": [
+          768
+        ],
+        "reducedMotion": true,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 1,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 4,
+        "horizontalOverflowStrategy": false,
+        "inlineSvg": 0
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 18,
+            "clippedText": true,
+            "documentWidth": 531,
+            "horizontalOverflow": true,
+            "overflowPixels": 156,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 13,
+            "clippedText": true,
+            "documentWidth": 531,
+            "horizontalOverflow": true,
+            "overflowPixels": 101,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 8,
+            "clippedText": true,
+            "documentWidth": 753,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 8,
+            "clippedText": true,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 8,
+            "clippedText": true,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 8,
+            "clippedText": true,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    },
+    {
+      "id": "d599cdfc71",
+      "relative": "output/sonnet-4.6-thinking/ridgeline-trail-conservancy.html",
+      "model": "sonnet-4.6-thinking",
+      "promptId": null,
+      "skillId": "field-manual",
+      "mappingConfidence": "inferred-low",
+      "title": "RIDGELINE TRAIL CONSERVANCY — SERIES NPS-5 / SHEET NPS-01",
+      "dimensions": {
+        "skillFidelity": 25,
+        "promptFidelity": null,
+        "designQuality": 18,
+        "technicalQuality": 15,
+        "responsiveQuality": 1.8,
+        "originality": 4.5
+      },
+      "total": 85.7,
+      "provisional": true,
+      "classification": "STRONG",
+      "reviewStatus": "reviewed",
+      "violations": [
+        "no reduced-motion handling detected"
+      ],
+      "skillChecks": [
+        {
+          "label": "manual typography",
+          "pass": true
+        },
+        {
+          "label": "procedural structure",
+          "pass": true
+        },
+        {
+          "label": "document references",
+          "pass": true
+        },
+        {
+          "label": "annotation system",
+          "pass": true
+        },
+        {
+          "label": "recorded state",
+          "pass": true
+        }
+      ],
+      "promptChecks": [],
+      "promptSource": null,
+      "notes": "Beautifully specific topographic field document with strong visual rhythm; source prompt is unavailable and mobile overflow remains through 768 px.",
+      "audit": {
+        "bytes": 56508,
+        "cssBytes": 17169,
+        "jsBytes": 1111,
+        "domElements": 536,
+        "hasDoctype": true,
+        "hasLang": true,
+        "hasViewport": true,
+        "hasDescription": true,
+        "hasMain": true,
+        "hasH1": true,
+        "mediaQueries": 1,
+        "breakpoints": [
+          900
+        ],
+        "reducedMotion": false,
+        "images": 0,
+        "imagesMissingAlt": 0,
+        "controls": 0,
+        "inputsMissingLabel": 0,
+        "emptyLinks": 0,
+        "missingLocalAssets": [],
+        "fixedWidthsOverViewport": 3,
+        "horizontalOverflowStrategy": false,
+        "inlineSvg": 11
+      },
+      "browser": {
+        "viewports": {
+          "375": {
+            "clippedElements": 10,
+            "clippedText": true,
+            "documentWidth": 958,
+            "horizontalOverflow": true,
+            "overflowPixels": 583,
+            "viewport": 375
+          },
+          "430": {
+            "clippedElements": 7,
+            "clippedText": true,
+            "documentWidth": 958,
+            "horizontalOverflow": true,
+            "overflowPixels": 528,
+            "viewport": 430
+          },
+          "768": {
+            "clippedElements": 5,
+            "clippedText": false,
+            "documentWidth": 958,
+            "horizontalOverflow": true,
+            "overflowPixels": 190,
+            "viewport": 768
+          },
+          "1024": {
+            "clippedElements": 3,
+            "clippedText": false,
+            "documentWidth": 1009,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1024
+          },
+          "1440": {
+            "clippedElements": 3,
+            "clippedText": false,
+            "documentWidth": 1425,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1440
+          },
+          "1920": {
+            "clippedElements": 3,
+            "clippedText": false,
+            "documentWidth": 1905,
+            "horizontalOverflow": false,
+            "overflowPixels": 0,
+            "viewport": 1920
+          }
+        },
+        "consoleErrors": 0,
+        "failedResources": 0
+      }
+    }
+  ],
+  "aggregates": {
+    "models": [
+      {
+        "name": "grok-4.6",
+        "count": 4,
+        "overall": 93.4,
+        "dimensions": {
+          "skillFidelity": 25,
+          "promptFidelity": 24,
+          "designQuality": 17.9,
+          "technicalQuality": 14.8,
+          "responsiveQuality": 7.5,
+          "originality": 4.4
+        }
+      },
+      {
+        "name": "gpt-5.6-sol",
+        "count": 11,
+        "overall": 93,
+        "dimensions": {
+          "skillFidelity": 24.7,
+          "promptFidelity": 24.2,
+          "designQuality": 17.3,
+          "technicalQuality": 14.5,
+          "responsiveQuality": 7.9,
+          "originality": 4.3
+        }
+      },
+      {
+        "name": "gemini-3.7-flash",
+        "count": 10,
+        "overall": 90.4,
+        "dimensions": {
+          "skillFidelity": 24.8,
+          "promptFidelity": 24.6,
+          "designQuality": 17.2,
+          "technicalQuality": 13.5,
+          "responsiveQuality": 6,
+          "originality": 4.4
+        }
+      },
+      {
+        "name": "mimo-v2.5",
+        "count": 2,
+        "overall": 84.6,
+        "dimensions": {
+          "skillFidelity": 25,
+          "promptFidelity": 22.9,
+          "designQuality": 14.5,
+          "technicalQuality": 13.5,
+          "responsiveQuality": 5.7,
+          "originality": 3
+        }
+      },
+      {
+        "name": "sonnet-4.6-thinking",
+        "count": 3,
+        "overall": 84,
+        "dimensions": {
+          "skillFidelity": 23.9,
+          "promptFidelity": 25,
+          "designQuality": 15.3,
+          "technicalQuality": 14.3,
+          "responsiveQuality": 3.2,
+          "originality": 3.5
+        }
+      },
+      {
+        "name": "kimi-k2.6",
+        "count": 2,
+        "overall": 82.4,
+        "dimensions": {
+          "skillFidelity": 25,
+          "promptFidelity": 22.9,
+          "designQuality": 15,
+          "technicalQuality": 13.5,
+          "responsiveQuality": 2.6,
+          "originality": 3.5
+        }
+      }
+    ],
+    "skills": [
+      {
+        "name": "blueprint",
+        "count": 5,
+        "overall": 91.3,
+        "dimensions": {
+          "skillFidelity": 23.9,
+          "promptFidelity": 25,
+          "designQuality": 17.5,
+          "technicalQuality": 13.8,
+          "responsiveQuality": 6.7,
+          "originality": 4.4
+        }
+      },
+      {
+        "name": "field-manual",
+        "count": 12,
+        "overall": 90.9,
+        "dimensions": {
+          "skillFidelity": 24.7,
+          "promptFidelity": 25,
+          "designQuality": 17.1,
+          "technicalQuality": 14,
+          "responsiveQuality": 6.2,
+          "originality": 4.2
+        }
+      },
+      {
+        "name": "solari",
+        "count": 15,
+        "overall": 89.2,
+        "dimensions": {
+          "skillFidelity": 25,
+          "promptFidelity": 23.3,
+          "designQuality": 16.4,
+          "technicalQuality": 14.2,
+          "responsiveQuality": 6.4,
+          "originality": 4
+        }
+      }
+    ],
+    "prompts": [
+      {
+        "name": "municipal-trail-operations",
+        "count": 2,
+        "overall": 94,
+        "dimensions": {
+          "skillFidelity": 25,
+          "promptFidelity": 25,
+          "designQuality": 18,
+          "technicalQuality": 13.8,
+          "responsiveQuality": 7.8,
+          "originality": 4.5
+        }
+      },
+      {
+        "name": "terminal-17",
+        "count": 4,
+        "overall": 93.3,
+        "dimensions": {
+          "skillFidelity": 25,
+          "promptFidelity": 25,
+          "designQuality": 17.1,
+          "technicalQuality": 14.4,
+          "responsiveQuality": 7.5,
+          "originality": 4.4
+        }
+      },
+      {
+        "name": "relay",
+        "count": 4,
+        "overall": 92.8,
+        "dimensions": {
+          "skillFidelity": 25,
+          "promptFidelity": 25,
+          "designQuality": 17.4,
+          "technicalQuality": 14.3,
+          "responsiveQuality": 6.9,
+          "originality": 4.3
+        }
+      },
+      {
+        "name": "aeroline-cycle-works",
+        "count": 1,
+        "overall": 92,
+        "dimensions": {
+          "skillFidelity": 25,
+          "promptFidelity": 25,
+          "designQuality": 17.5,
+          "technicalQuality": 12.5,
+          "responsiveQuality": 7.5,
+          "originality": 4.5
+        }
+      },
+      {
+        "name": "atlas",
+        "count": 3,
+        "overall": 91.5,
+        "dimensions": {
+          "skillFidelity": 23.9,
+          "promptFidelity": 25,
+          "designQuality": 17.7,
+          "technicalQuality": 14.3,
+          "responsiveQuality": 6.3,
+          "originality": 4.3
+        }
+      },
+      {
+        "name": "northline-waterworks",
+        "count": 1,
+        "overall": 90,
+        "dimensions": {
+          "skillFidelity": 23,
+          "promptFidelity": 25,
+          "designQuality": 17,
+          "technicalQuality": 13.5,
+          "responsiveQuality": 7,
+          "originality": 4.5
+        }
+      },
+      {
+        "name": "northstar-observatory",
+        "count": 3,
+        "overall": 89.5,
+        "dimensions": {
+          "skillFidelity": 23.9,
+          "promptFidelity": 25,
+          "designQuality": 16,
+          "technicalQuality": 14.2,
+          "responsiveQuality": 6.6,
+          "originality": 3.8
+        }
+      },
+      {
+        "name": "halloway-instruments",
+        "count": 2,
+        "overall": 89,
+        "dimensions": {
+          "skillFidelity": 25,
+          "promptFidelity": 25,
+          "designQuality": 17,
+          "technicalQuality": 13,
+          "responsiveQuality": 4.8,
+          "originality": 4.3
+        }
+      },
+      {
+        "name": "night-shift",
+        "count": 3,
+        "overall": 89,
+        "dimensions": {
+          "skillFidelity": 25,
+          "promptFidelity": 25,
+          "designQuality": 15.7,
+          "technicalQuality": 13.8,
+          "responsiveQuality": 5.9,
+          "originality": 3.7
+        }
+      },
+      {
+        "name": "municipal-league-baseball",
+        "count": 6,
+        "overall": 88.1,
+        "dimensions": {
+          "skillFidelity": 25,
+          "promptFidelity": 22.2,
+          "designQuality": 16.3,
+          "technicalQuality": 14.3,
+          "responsiveQuality": 6.5,
+          "originality": 3.8
+        }
+      },
+      {
+        "name": "UNMAPPED",
+        "count": 1,
+        "overall": 85.7,
+        "dimensions": {
+          "skillFidelity": 25,
+          "promptFidelity": null,
+          "designQuality": 18,
+          "technicalQuality": 15,
+          "responsiveQuality": 1.8,
+          "originality": 4.5
+        }
+      },
+      {
+        "name": "analog-cinema-club",
+        "count": 2,
+        "overall": 84.9,
+        "dimensions": {
+          "skillFidelity": 25,
+          "promptFidelity": 20.8,
+          "designQuality": 16.5,
+          "technicalQuality": 14,
+          "responsiveQuality": 4.6,
+          "originality": 4
+        }
+      }
+    ],
+    "modelSkillStability": [
+      {
+        "model": "gemini-3.7-flash",
+        "skill": "field-manual",
+        "distinctPrompts": 4,
+        "mean": 90.1,
+        "standardDeviation": 1,
+        "comparable": true
+      },
+      {
+        "model": "gpt-5.6-sol",
+        "skill": "solari",
+        "distinctPrompts": 4,
+        "mean": 92.5,
+        "standardDeviation": 1.3,
+        "comparable": true
+      },
+      {
+        "model": "gpt-5.6-sol",
+        "skill": "blueprint",
+        "distinctPrompts": 2,
+        "mean": 91.9,
+        "standardDeviation": 0.1,
+        "comparable": true
+      },
+      {
+        "model": "gemini-3.7-flash",
+        "skill": "blueprint",
+        "distinctPrompts": 2,
+        "mean": 90.5,
+        "standardDeviation": 0.5,
+        "comparable": true
+      },
+      {
+        "model": "gpt-5.6-sol",
+        "skill": "field-manual",
+        "distinctPrompts": 2,
+        "mean": 95.8,
+        "standardDeviation": 0.8,
+        "comparable": true
+      },
+      {
+        "model": "grok-4.6",
+        "skill": "field-manual",
+        "distinctPrompts": 2,
+        "mean": 96.2,
+        "standardDeviation": 0.9,
+        "comparable": true
+      },
+      {
+        "model": "gemini-3.7-flash",
+        "skill": "solari",
+        "distinctPrompts": 2,
+        "mean": 91.9,
+        "standardDeviation": 1.6,
+        "comparable": true
+      },
+      {
+        "model": "mimo-v2.5",
+        "skill": "solari",
+        "distinctPrompts": 2,
+        "mean": 84.6,
+        "standardDeviation": 2.8,
+        "comparable": true
+      },
+      {
+        "model": "grok-4.6",
+        "skill": "solari",
+        "distinctPrompts": 2,
+        "mean": 90.7,
+        "standardDeviation": 2.9,
+        "comparable": true
+      },
+      {
+        "model": "kimi-k2.6",
+        "skill": "solari",
+        "distinctPrompts": 2,
+        "mean": 82.4,
+        "standardDeviation": 3.4,
+        "comparable": true
+      },
+      {
+        "model": "sonnet-4.6-thinking",
+        "skill": "solari",
+        "distinctPrompts": 1,
+        "mean": 83.8,
+        "standardDeviation": 0,
+        "comparable": false
+      },
+      {
+        "model": "sonnet-4.6-thinking",
+        "skill": "field-manual",
+        "distinctPrompts": 1,
+        "mean": 82.6,
+        "standardDeviation": 0,
+        "comparable": false
+      }
+    ]
+  },
+  "experimentReadiness": {
+    "transferability": [
+      {
+        "skill": "blueprint",
+        "distinctPrompts": 3
+      },
+      {
+        "skill": "field-manual",
+        "distinctPrompts": 4
+      },
+      {
+        "skill": "solari",
+        "distinctPrompts": 4
+      }
+    ],
+    "comparableBriefs": [],
+    "differentiationMeasurable": false
+  }
+}

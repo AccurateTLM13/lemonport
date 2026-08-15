@@ -39,7 +39,8 @@ window.LEMMY_DATA = {
       "hrefs": [
         "/junk-drawer/",
         "/lighthouse-handoff/",
-        "/free-source/"
+        "/free-source/",
+        "/benchmark/"
       ]
     },
     {
@@ -97,7 +98,8 @@ window.LEMMY_DATA = {
         "point"
       ],
       "messages": [
-        "The lab is still warm. Try a build."
+        "The lab is still warm. Try a build.",
+        "Thirty-two websites went through the test bench. Check the benchmark records."
       ],
       "destinationIds": [
         "useful",

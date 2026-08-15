@@ -2500,6 +2500,35 @@ button:disabled {
   background: #eceae3;
 }
 
+.seo-gen-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  min-height: 42px;
+  border: 1px solid #11100d;
+  background: #11100d;
+  color: #ffc83b;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.seo-gen-btn:hover {
+  background: #2b2822;
+  color: #ffffff;
+}
+
+.seo-gen-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .seo-upload-input {
   position: absolute;
   width: 1px;
