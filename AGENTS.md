@@ -69,6 +69,7 @@ npx wrangler dev --local --port 8788 --config mdr-api/wrangler.toml
 | `node scripts/build-mdr-stats.js` | Rebuild Million Dollar Receipt stats |
 | `node scripts/build-artifact-pages.js` | Generate static pages for all published artifacts + update sitemap |
 | `node scripts/build-junk-drawer.js` | Rebuild external Junk Drawer cards |
+| `node scripts/build-specimens.js` | Rebuild Specimen Vault index + record pages |
 | `node scripts/generate-og-images.js` | Generate psychology-driven branded 1200×630 WebP OG cards |
 | `node scripts/build-seo.js` | Sync SEO metadata and patch HTML files in place |
 | `node scripts/promote-operator-mutation.js` | Promote active operator log phase |
@@ -97,6 +98,17 @@ To support concurrent work streams and seamless handoffs between agent runs:
   This allows anyone (the owner or a subsequent agent) to pick up right where the previous session ended.
 
 ## Active Projects & Feature Progress
+
+### Specimen Vault (Public HTML Filing System)
+
+* **Status: Completed locally; not deployed**
+  * **Completed:** Built a generalized version of the benchmark evidence-archive machinery as a standing public zone at `/specimens/`. Studio gained a **Specimen Vault** workspace: upload or paste raw HTML plus metadata (title, model used, skill/system, verbatim prompt, capture date, tags, operator notes, optional 0–100 score, canonical workflow statuses). On save the server sanitizes the HTML (`scripts/build-specimens.js` exports `sanitizeSpecimenHtml()` — strict injected CSP, `script-src 'none'`, connections off), stores it at `specimens/source/<id>.html`, writes `content/specimens.json` (backed up, validated), and regenerates the single-page `specimens/index.html`.
+  * **Single-page architecture:** No per-specimen record pages. Each card links **straight to the archived HTML** (`source/<id>.html`, new tab) — click a specimen, see it in the browser. Metadata lives in statically-rendered per-specimen `<dialog>` elements inside the served HTML (fully crawlable); `specimens/vault.js` opens them as right-side slide-out drawers with backdrop close and focus return — progressive enhancement only.
+  * **Card images:** One optional desktop screenshot per specimen (`POST /api/specimens/image`, crop-fitted 1440×900 WebP q85 at `specimens/images/<id>.webp`) shown on the public card and in the Studio list; deleting a specimen removes source file, card image, and asset folder.
+  * **Page assets:** Photos used inside a specimen are uploaded through the same workspace (`POST /api/specimens/asset`). Each upload converts to WebP q85 under `specimens/assets/<id>/`, and `applyAssetMap()` rewrites matching `<img src>`/`poster`/CSS `url()` references in the stored source file by filename basename, so archived pages render fully offline. Asset uploads work before or after the HTML is saved.
+  * **Registrations:** Zone registered in `content/seo.json` + `build-seo.js` (auto re-sync after every Studio save), OG card via `generate-og-images.js --page=specimens`, sitemap entry via `build-artifact-pages.js`, audit glob via `site-completion-audit.js`, and a Workbench sidebar nav card across all 11 zone pages.
+  * **Codebase State:** Full lifecycle verified end-to-end against the live Studio API (create → card image upload → asset upload with reference rewriting → drawer markup verification → delete → cleanup). Only `Published` specimens appear publicly. Standard checks pass: content validation clean, 0 missing referenced images, audit findings unchanged from baseline.
+  * **Next steps:** Upload the `assets/rivet/*.webp` photos for the filed "Rivet Supply Co" specimen through Studio so its live view renders; add its desktop screenshot as the card image; file further specimens as outputs come off the bench.
 
 ### Psychology-Driven Automated OG Image Generator
 

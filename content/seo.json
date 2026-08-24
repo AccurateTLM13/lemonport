@@ -287,5 +287,22 @@
     "twitterImage": "/images/og/benchmark-2.webp",
     "canonicalUrl": "https://lemonteed.com/benchmark/",
     "updatedAt": "2026-08-15T18:24:57.624Z"
+  },
+  {
+    "key": "specimens",
+    "label": "Specimen Vault",
+    "htmlPath": "specimens/index.html",
+    "title": "Specimen Vault | Lemonteed",
+    "description": "Hand-filed generated HTML pages with their prompts, models, skills, capture frames, and a sandboxed live preview of every output.",
+    "ogTitle": "Specimen Vault | Lemonteed",
+    "ogDescription": "Hand-filed generated HTML pages with their prompts, models, skills, capture frames, and a sandboxed live preview of every output.",
+    "ogImage": "/images/og/specimens.webp",
+    "ogImageWidth": 1200,
+    "ogImageHeight": 630,
+    "twitterTitle": "Specimen Vault | Lemonteed",
+    "twitterDescription": "Hand-filed generated HTML pages with prompts, models, skills, and sandboxed sources.",
+    "twitterImage": "/images/og/specimens.webp",
+    "canonicalUrl": "https://lemonteed.com/specimens/",
+    "updatedAt": "2026-08-23T00:00:00.000Z"
   }
 ]

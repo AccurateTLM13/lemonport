@@ -206,6 +206,17 @@ const PAGE_CONFIGS = {
     statusColor: "#3b82f6",
     accentColor: "#ffc83b",
   },
+  specimens: {
+    archetype: "zone-atlas",
+    eyebrow: "[ THE WORKBENCH / SPECIMEN VAULT ]",
+    title: "Specimen Vault",
+    subtitle: "Hand-filed HTML outputs with their prompts, models, skills, and capture frames. Scripts removed at the door.",
+    badges: ["PROMPT ON FILE", "SANDBOXED SOURCE", "SCRIPTS OFF"],
+    pose: "point",
+    statusText: "ACCEPTING SPECIMENS",
+    statusColor: "#2e7d32",
+    accentColor: "#ffc83b",
+  },
 };
 
 /**

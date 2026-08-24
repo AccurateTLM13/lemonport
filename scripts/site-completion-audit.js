@@ -103,6 +103,16 @@ try {
   /* continue without benchmark pages */
 }
 
+/* Dynamically add specimen vault page */
+try {
+  const specimensDir = path.join(root, "specimens");
+  if (fs.existsSync(specimensDir) && fs.existsSync(path.join(specimensDir, "index.html"))) {
+    PUBLIC_HTML_GLOBS.push("specimens/index.html");
+  }
+} catch {
+  /* continue without specimen pages */
+}
+
 const findings = {
   critical: [],
   high: [],

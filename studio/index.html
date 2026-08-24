@@ -29,6 +29,7 @@
           <button type="button" data-workspace-nav="fm">Lemonteed FM</button>
           <button type="button" data-workspace-nav="report">Build Report</button>
           <button type="button" data-workspace-nav="junk-drawer">Junk Drawer</button>
+          <button type="button" data-workspace-nav="specimens">Specimen Vault</button>
           <button type="button" data-workspace-nav="seo">SEO Manager</button>
         </nav>
         <div class="studio-dev-links" aria-label="Hidden dev pages">
@@ -526,6 +527,67 @@
             <div class="junk-tool-actions">
               <button type="submit" data-junk-tool-save>Save + Rebuild</button>
               <button type="button" data-junk-tool-reset>Clear</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="workspace-panel vault-panel" data-workspace="specimens" aria-labelledby="vault-title">
+        <div class="panel-heading">
+          <h2 id="vault-title">Specimen Vault</h2>
+          <p>File generated HTML pages into the public Specimen Vault. Each record carries the file itself (sanitized, scripts disabled), the prompt, model, skill, and optional capture frames.</p>
+        </div>
+        <div class="junk-tools-layout">
+          <div class="junk-tools-list" data-vault-list></div>
+          <form class="junk-tool-form" data-vault-form>
+            <input type="hidden" name="id">
+            <h3 data-vault-form-title>File a specimen</h3>
+            <label><span>Title</span><input name="title" type="text" required autocomplete="off" placeholder="Halloway Instruments HX-4"></label>
+            <label><span>Model used</span><input name="model" type="text" required autocomplete="off" placeholder="claude-opus-4"></label>
+            <label><span>Skill / system</span><input name="skill" type="text" required autocomplete="off" placeholder="field-manual"></label>
+            <label><span>Captured date</span><input name="date" type="date"></label>
+            <label><span>Status</span>
+              <select name="status">
+                <option value="Draft">Draft</option>
+                <option value="Ready">Ready</option>
+                <option value="Published" selected>Published</option>
+                <option value="Hidden">Hidden</option>
+                <option value="Archived">Archived</option>
+              </select>
+            </label>
+            <label><span>Score out of 100 <em>(optional)</em></span><input name="score" type="number" min="0" max="100" step="0.5" inputmode="decimal"></label>
+            <label><span>Tags <em>(comma separated)</em></span><input name="tags" type="text" autocomplete="off" placeholder="landing-page, instrument-panel"></label>
+            <label><span>Prompt <em>(verbatim)</em></span><textarea name="prompt" rows="6" placeholder="The full prompt that produced this output. Shown publicly on the record page."></textarea></label>
+            <label><span>Operator notes <em>(optional)</em></span><textarea name="notes" rows="3" placeholder="What held up, what broke, what surprised you."></textarea></label>
+            <fieldset class="vault-fieldset">
+              <legend>Specimen HTML source</legend>
+              <label class="seo-upload-label">Upload .html file
+                <input type="file" accept=".html,.htm,text/html" class="seo-upload-input" data-vault-html-file>
+              </label>
+              <label><span>…or paste raw HTML</span><textarea name="htmlContent" rows="7" data-vault-html-paste placeholder="&lt;!DOCTYPE html&gt; …"></textarea></label>
+              <p class="vault-hint">Saved to /specimens/source/ with a strict content-security policy: scripts off, connections off. Leave both empty when only editing metadata.</p>
+            </fieldset>
+            <fieldset class="vault-fieldset">
+              <legend>Card image <em>(desktop screenshot, optional)</em></legend>
+              <div class="vault-image-row">
+                <label class="seo-upload-label">Upload card image
+                  <input type="file" accept="image/png,image/jpeg,image/webp" class="seo-upload-input" data-vault-image-file>
+                </label>
+                <p class="vault-hint" data-vault-image-note hidden></p>
+              </div>
+              <p class="vault-hint">Crop-fitted to 1440&times;900 WebP and shown as the card visual on the vault and in Studio. Upload after the specimen has been saved once so it has an ID.</p>
+            </fieldset>
+            <fieldset class="vault-fieldset">
+              <legend>Page assets <em>(photos the HTML uses)</em></legend>
+              <label class="seo-upload-label">Upload asset images
+                <input type="file" accept="image/png,image/jpeg,image/webp,image/gif" class="seo-upload-input" multiple data-vault-assets-file>
+              </label>
+              <p class="vault-hint">Stored under /specimens/assets/&lt;id&gt;/ as WebP. Any &lt;img&gt;/CSS references matching the original filename are rewritten automatically. Upload after the specimen has been saved once so it has an ID.</p>
+              <p class="vault-hint" data-vault-assets-note hidden></p>
+            </fieldset>
+            <div class="junk-tool-actions">
+              <button type="submit" data-vault-save>Save + Rebuild Vault</button>
+              <button type="button" data-vault-reset>Clear</button>
             </div>
           </form>
         </div>

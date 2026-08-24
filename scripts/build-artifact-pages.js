@@ -400,7 +400,13 @@ function buildSitemap() {
     return `  <url>\n    <loc>${escapeHtml(page.canonical)}</loc>${lastmodTag}\n  </url>`;
   });
 
-  /* Remove existing generated artifact, Operator Log, and Benchmark entries */
+  const specimenData = readSpecimenPages();
+  const specimenEntries = specimenData.urls.map((page) => {
+    const lastmodTag = page.date ? `\n    <lastmod>${page.date}</lastmod>` : "";
+    return `  <url>\n    <loc>${escapeHtml(page.canonical)}</loc>${lastmodTag}\n  </url>`;
+  });
+
+  /* Remove existing generated artifact, Operator Log, Benchmark, and Specimen entries */
   const cleanedSitemap = existingSitemap.replace(
     /\s*<url>\s*<loc>https:\/\/lemonteed\.com\/artifacts\/[^<]+<\/loc>[\s\S]*?<\/url>/g,
     ""
@@ -410,15 +416,18 @@ function buildSitemap() {
   ).replace(
     /\s*<url>\s*<loc>https:\/\/lemonteed\.com\/benchmark(\/[^<]*)?<\/loc>[\s\S]*?<\/url>/g,
     ""
+  ).replace(
+    /\s*<url>\s*<loc>https:\/\/lemonteed\.com\/specimens(\/[^<]*)?<\/loc>[\s\S]*?<\/url>/g,
+    ""
   );
 
   /* Insert before closing </urlset> */
   const newSitemap = cleanedSitemap.replace(
     "</urlset>",
-    operatorEntries.concat(benchmarkEntries).concat(artifactEntries).join("\n") + "\n</urlset>"
+    operatorEntries.concat(benchmarkEntries).concat(specimenEntries).concat(artifactEntries).join("\n") + "\n</urlset>"
   );
 
-  return { sitemapContent: newSitemap, entryCount: artifactEntries.length + operatorEntries.length + benchmarkEntries.length };
+  return { sitemapContent: newSitemap, entryCount: artifactEntries.length + operatorEntries.length + benchmarkEntries.length + specimenEntries.length };
 }
 
 function readBenchmarkPages() {
@@ -469,6 +478,22 @@ function readBenchmarkPages() {
   }
 
   return { urls, images };
+}
+
+function readSpecimenPages() {
+  const specimensDir = path.join(root, "specimens");
+  if (!fs.existsSync(specimensDir)) {
+    return { urls: [], images: [] };
+  }
+
+  const urls = [];
+
+  const indexPath = path.join(specimensDir, "index.html");
+  if (fs.existsSync(indexPath)) {
+    urls.push({ canonical: `${SITE_URL}/specimens/`, date: "" });
+  }
+
+  return { urls, images: [] };
 }
 
 function readOperatorLogPosts() {
@@ -557,11 +582,25 @@ function buildImageSitemap() {
     ].join("\n");
   });
 
+  const specimenData = readSpecimenPages();
+  const specimenImageEntries = specimenData.images.map((img) => {
+    return [
+      `  <url>`,
+      `    <loc>${escapeHtml(img.loc)}</loc>`,
+      `    <image:image>`,
+      `      <image:loc>${escapeHtml(img.imageUrl)}</image:loc>`,
+      `      <image:caption>${escapeHtml(img.caption)}</image:caption>`,
+      `      <image:title>${escapeHtml(img.title)}</image:title>`,
+      `    </image:image>`,
+      `  </url>`
+    ].join("\n");
+  });
+
   const xml = [
     `<?xml version="1.0" encoding="UTF-8"?>`,
     `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"`,
     `        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">`,
-    entries.concat(operatorImageEntries).concat(benchmarkImageEntries).join("\n"),
+    entries.concat(operatorImageEntries).concat(benchmarkImageEntries).concat(specimenImageEntries).join("\n"),
     `</urlset>`,
     ``
   ].join("\n");

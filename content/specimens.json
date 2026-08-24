@@ -1,0 +1,111 @@
+{
+  "records": [
+    {
+      "id": "b7031f4c",
+      "title": "Rivet Supply Co",
+      "model": "chatgpt-5.6-sol",
+      "skill": "Working Print",
+      "prompt": "Create the RIVET SUPPLY CO. product-launch landing page using:\n\n1. the supplied active design skill as the governing visual language,\n2. the Landing Page Artifact Standard as the functional and medium-level constraint system,\n3. the RIVET SUPPLY CO. brief as the project-specific source of truth.\n\nDo not introduce a second visual system outside the active design skill. The artifact standard governs usability, responsive behavior, hierarchy, interaction, and landing-page requirements; it does not override the design skill's visual grammar.\n\nBuild a polished, complete landing page rather than a style sample or component inventory.\n\nPrioritize:\n\n- strong product hierarchy\n- commercially useful information\n- clear primary shopping action\n- material and construction credibility\n- product imagery treated as specimens or objects of inspection\n- meaningful variation in scale, density, and composition\n- responsive behavior that preserves the intended hierarchy\n\nInclude all required content from the brief. You may create plausible fictional product names, item numbers, prices, specifications, shipping language, and supporting copy where the brief leaves those details open.\n\nAvoid generic ecommerce defaults, repeated rounded cards, conventional Shopify composition, artificial heritage styling, and visual decisions that are not justified by the active design skill.\n\nThe final artifact should unmistakably express the supplied design skill while still functioning as a clear, persuasive landing page.",
+      "notes": "",
+      "date": "2026-08-22",
+      "tags": [
+        "landing-page",
+        "working-print",
+        "design-skills"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/b7031f4c.html",
+      "createdAt": "2026-08-23T21:23:50.310Z",
+      "updatedAt": "2026-08-24T00:28:12.599Z",
+      "assets": [
+        "/specimens/assets/b7031f4c/crossback-shop-apron.webp",
+        "/specimens/assets/b7031f4c/double-knee-canvas-pant.webp",
+        "/specimens/assets/b7031f4c/foreman-chore-jacket.webp",
+        "/specimens/assets/b7031f4c/shift-quilted-vest.webp",
+        "/specimens/assets/b7031f4c/shop-floor-cap.webp",
+        "/specimens/assets/b7031f4c/shop-note-01-triple-seam.webp",
+        "/specimens/assets/b7031f4c/shop-note-02-bar-tacks.webp",
+        "/specimens/assets/b7031f4c/shop-note-04-repair.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "crossback-shop-apron.webp",
+          "to": "../assets/b7031f4c/crossback-shop-apron.webp"
+        },
+        {
+          "from": "double-knee-canvas-pant.webp",
+          "to": "../assets/b7031f4c/double-knee-canvas-pant.webp"
+        },
+        {
+          "from": "foreman-chore-jacket.webp",
+          "to": "../assets/b7031f4c/foreman-chore-jacket.webp"
+        },
+        {
+          "from": "shift-quilted-vest.webp",
+          "to": "../assets/b7031f4c/shift-quilted-vest.webp"
+        },
+        {
+          "from": "shop-floor-cap.webp",
+          "to": "../assets/b7031f4c/shop-floor-cap.webp"
+        },
+        {
+          "from": "shop-note-01-triple-seam.webp",
+          "to": "../assets/b7031f4c/shop-note-01-triple-seam.webp"
+        },
+        {
+          "from": "shop-note-02-bar-tacks.webp",
+          "to": "../assets/b7031f4c/shop-note-02-bar-tacks.webp"
+        },
+        {
+          "from": "shop-note-04-repair.webp",
+          "to": "../assets/b7031f4c/shop-note-04-repair.webp"
+        }
+      ],
+      "image": "/specimens/images/b7031f4c.webp"
+    },
+    {
+      "id": "ac609536",
+      "title": "Night Shift",
+      "model": "ox-alpha",
+      "skill": "meridian",
+      "prompt": "NIGHT SHIFT — Independent Radio 91.3 FM\n\nTests: broadcast identity, live media state, programming schedules, counters, editorial content, atmospheric branding.\n\n---\n\nCreate a complete, polished fictional website for an independent late-night radio station called:\n\nNIGHT SHIFT\n\n91.3 FM\n\nApply the supplied Solari UI/UX Design Skill as the governing design system.\n\nThis website should act as a flagship demonstration of how the Solari system can create a contemporary cultural brand without becoming an airport parody, retro novelty site, or generic dark music website.\n\nCORE CONCEPT\n\nThe website should feel like:\n\n\"What if an independent midnight radio station built its digital identity around a living mechanical broadcast board?\"\n\nNIGHT SHIFT broadcasts music, interviews, live sessions, experimental programming, and overnight specialty shows from midnight until sunrise.\n\nThe result should feel:\n\n- nocturnal\n\n- analog\n\n- atmospheric\n\n- independent\n\n- intelligent\n\n- understated\n\n- slightly mysterious\n\n- editorial\n\n- premium\n\nDo NOT make it feel like an airport.\n\nAvoid:\n\n- aviation references\n\n- departure terminology\n\n- synthwave clichés\n\n- neon gradients\n\n- glowing waveform backgrounds\n\n- cyberpunk\n\n- glassmorphism\n\n- generic streaming-app cards\n\n- fake vintage radio decoration everywhere\n\nThe split-flap mechanism should feel native to the station's identity because programming, tracks, listeners, timestamps, and broadcast state are constantly changing.\n\nTYPOGRAPHY\n\nUse:\n\nSpace Grotesk 500/700\n\nfor every character inside a split-flap cell.\n\nUse:\n\nSpace Mono 400/700\n\nfor labels, timestamps, metadata, navigation, controls, and tertiary information.\n\nAll characters inside flap cells must remain uppercase.\n\nHOMEPAGE\n\nA-01 / NOW PLAYING\n\nMake the live broadcast state the dominant visual element.\n\nShow:\n\nNOW PLAYING\n\nTHE MIDNIGHT\n\nSUNSET\n\nThe artist and track title should be rendered through large display-scale split-flap characters.\n\nAlso show:\n\nSTARTED\n\n11:37 PM\n\nENDS\n\n11:43 PM\n\nPROGRAM\n\nNIGHT DRIVE\n\nHOST\n\nELLIS\n\nDo not create one large fake flipping card.\n\nEvery character must exist as an independent physical flap cell with its own top half, bottom half, center seam, and hinge animation.\n\nA-02 / LIVE AUDIENCE\n\nShow a live listener count:\n\n001284\n\nLISTENING NOW\n\nUse display-scale numeric flap cells.\n\nOnly digits that actually change should flip whenever practical.\n\nSimulate restrained listener movement over time.\n\nExample:\n\n001284\n\n↓\n\n001291\n\n↓\n\n001287\n\nDo not animate the entire number when only one or two digits changed.\n\nA-03 / UP NEXT\n\nCreate a structured programming board:\n\nTIME | ARTIST / PROGRAM | HOST | STATUS\n\nExample:\n\n11:43 PM | CHROMATICS — SHADOW | AUTOMATED | NEXT\n\n11:48 PM | NIGHT DRIVE | ELLIS | QUEUED\n\n12:00 AM | AFTER HOURS | MARLOW | LIVE SESSION\n\n01:00 AM | DEAD AIR | KLINE | SCHEDULED\n\nStatuses should use standard-scale split-flap cells.\n\nUse restrained semantic status colors only on landed flap text.\n\nDo not apply colored row backgrounds.\n\nB-01 / TONIGHT'S SCHEDULE\n\nCreate an overnight schedule covering approximately:\n\n10 PM → 6 AM\n\nPossible programs:\n\nNIGHT DRIVE\n\nAFTER HOURS\n\nDEAD AIR\n\nTRANSMISSION\n\nTHE LONG WAY HOME\n\nFIRST LIGHT\n\nPresent the schedule as a precise programming grid rather than a collection of cards.\n\nEach program should include:\n\nTIME\n\nPROGRAM\n\nHOST\n\nFORMAT\n\nSTATE\n\nThe current show should visibly advance as simulated time changes.\n\nB-02 / RECENTLY PLAYED\n\nCreate a restrained archive containing:\n\nTIME | ARTIST | TRACK | RELEASE | YEAR\n\nThis section should prove that the system can support dense editorial data without turning every row into a giant flap display.\n\nUse normal typography for records that are no longer changing.\n\nOnly stateful or newly updated values should invoke the mechanism.\n\nC-01 / STATION SIGNAL\n\nCreate a compact station-state section showing:\n\nON AIR\n\nSIGNAL\n\nSTUDIO\n\nSOURCE\n\nLOCAL TIME\n\nExample:\n\nON AIR\n\nYES\n\nSIGNAL\n\nNORMAL\n\nSTUDIO\n\nA\n\nSOURCE\n\nLIVE\n\nUse micro and standard split-flap components appropriately.\n\nDo not use glowing status dots as the primary state language.\n\nC-02 / STATION STORY\n\nCreate a quieter editorial section explaining the fictional station.\n\nPossible headline:\n\n\"Independent radio for the hours nobody owns.\"\n\nExplain:\n\n- the station's overnight programming philosophy\n\n- why it broadcasts after dark\n\n- its relationship with local musicians\n\n- live studio sessions\n\n- listener-supported programming\n\nThis section should use normal readable typography.\n\nDo not force split-flap components into static prose.\n\nD-01 / NAVIGATION\n\nNavigation:\n\nLIVE\n\nSCHEDULE\n\nARCHIVE\n\nSESSIONS\n\nABOUT\n\nWhen the active section changes, use a subtle micro-scale flap interaction.\n\nDo not use a sliding underline as the primary transition.\n\nD-02 / DEMONSTRATION CONTROL\n\nBecause this is a showcase website, include one restrained demonstration control:\n\nADVANCE TRACK\n\nActivating it should:\n\n- move the current track into Recently Played\n\n- promote NEXT into NOW PLAYING\n\n- update timestamps\n\n- change the following queue\n\n- trigger appropriate flap animations\n\nThe interaction should make the Solari mechanism immediately testable without feeling like a developer demo panel.\n\nSPLIT-FLAP MECHANISM\n\nImplement one reusable flap primitive and use it throughout the site.\n\nEvery flap must include:\n\n- separate top and bottom halves\n\n- exact horizontal center seam\n\n- clipped duplicate glyph halves\n\n- slightly lighter flap face than the board housing\n\n- perspective on the parent\n\n- top-down rotateX hinge motion\n\n- correct stacking during transition\n\nNever rotate the entire cell.\n\nNever replace the physical flip with:\n\n- opacity fades\n\n- slides\n\n- scale animations\n\n- spring motion\n\n- color swaps\n\nDISPLAY SCALE\n\nUse for:\n\n- artist\n\n- track title\n\n- listener count\n\nUse 3–4 intermediate character flips before landing.\n\nSTANDARD SCALE\n\nUse for:\n\n- schedule states\n\n- broadcast states\n\n- action confirmations\n\nUse 2–3 intermediate flips.\n\nMICRO SCALE\n\nUse for:\n\n- navigation\n\n- tiny state changes\n\n- compact counters\n\n- small controls\n\nUse one direct physical flip with no clatter sequence.\n\nSTAGGER\n\nCharacters update:\n\nLEFT → RIGHT\n\nWhen several records update:\n\nTOP → BOTTOM\n\nDo not refresh the entire board simultaneously.\n\nIDLE LIFE\n\nEvery 20–40 seconds, allow one isolated flap to perform a quiet resettle.\n\nNever animate multiple idle cells at the same time.\n\nKeep this rare.\n\nRESPONSIVE REQUIREMENT\n\nDesktop should feel like a spacious live broadcast console translated into a public website.\n\nOn mobile preserve:\n\nPROGRAM → STATE → TIME → DETAIL\n\nDo not convert every schedule row into rounded cards.\n\nAllow controlled horizontal scrolling for dense programming boards when necessary.\n\nRespect prefers-reduced-motion.\n\nThe final result should feel like a real independent radio station commissioned a world-class digital identity.",
+      "notes": "",
+      "date": "2026-08-20",
+      "tags": [
+        "home-page",
+        "skill design"
+      ],
+      "status": "Published",
+      "score": null,
+      "image": "/specimens/images/ac609536.webp",
+      "assets": [],
+      "assetMap": [],
+      "source": "/specimens/source/ac609536.html",
+      "createdAt": "2026-08-24T00:54:04.985Z",
+      "updatedAt": "2026-08-24T00:56:33.521Z"
+    },
+    {
+      "id": "c4f3e77a",
+      "title": "Rivet Supply Co",
+      "model": "muse-spark-1.2",
+      "skill": "working-print",
+      "prompt": "Create the RIVET SUPPLY CO. product-launch landing page using:\n\n1. the supplied active design skill as the governing visual language,\n2. the Landing Page Artifact Standard as the functional and medium-level constraint system,\n3. the RIVET SUPPLY CO. brief as the project-specific source of truth.\n\nDo not introduce a second visual system outside the active design skill. The artifact standard governs usability, responsive behavior, hierarchy, interaction, and landing-page requirements; it does not override the design skill's visual grammar.\n\nBuild a polished, complete landing page rather than a style sample or component inventory.\n\nPrioritize:\n\n- strong product hierarchy\n- commercially useful information\n- clear primary shopping action\n- material and construction credibility\n- product imagery treated as specimens or objects of inspection\n- meaningful variation in scale, density, and composition\n- responsive behavior that preserves the intended hierarchy\n\nInclude all required content from the brief. You may create plausible fictional product names, item numbers, prices, specifications, shipping language, and supporting copy where the brief leaves those details open.\n\nAvoid generic ecommerce defaults, repeated rounded cards, conventional Shopify composition, artificial heritage styling, and visual decisions that are not justified by the active design skill.\n\nThe final artifact should unmistakably express the supplied design skill while still functioning as a clear, persuasive landing page.",
+      "notes": "",
+      "date": "2026-08-22",
+      "tags": [
+        "landing-page",
+        "skill-design"
+      ],
+      "status": "Published",
+      "score": null,
+      "image": "/specimens/images/c4f3e77a.webp",
+      "assets": [],
+      "assetMap": [],
+      "source": "/specimens/source/c4f3e77a.html",
+      "createdAt": "2026-08-24T00:59:06.747Z",
+      "updatedAt": "2026-08-24T00:59:29.624Z"
+    }
+  ],
+  "updatedAt": "2026-08-24T00:59:29.630Z"
+}

@@ -2193,6 +2193,80 @@ button:disabled {
   }
 }
 
+/* Specimen Vault workspace */
+.vault-panel .junk-tool-form input[type="date"],
+.vault-panel .junk-tool-form input[type="number"],
+.vault-panel .junk-tool-form select {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+  font: inherit;
+  font-size: 13px;
+}
+
+.vault-fieldset {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 12px;
+  border: 1px dashed var(--line);
+}
+
+.vault-fieldset legend {
+  padding: 0 6px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.vault-fieldset em {
+  font-style: normal;
+  text-transform: none;
+  font-weight: 400;
+  opacity: 0.75;
+}
+
+.vault-image-row {
+  display: grid;
+  gap: 8px;
+}
+
+.vault-hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.vault-row__nothumb {
+  width: 92px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed var(--line);
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.vault-status--published {
+  border-color: #3f7d46;
+  color: #2c5c33;
+}
+
+.vault-status--draft,
+.vault-status--ready,
+.vault-status--hidden,
+.vault-status--archived {
+  opacity: 0.85;
+}
+
 .seo-panel {
   display: flex;
   flex-direction: column;

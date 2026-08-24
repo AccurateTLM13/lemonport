@@ -86,6 +86,7 @@
     fm: ["Lemonteed FM", "Playlist manager"],
     report: ["Build Report", "Publish readiness"],
     "junk-drawer": ["Junk Drawer", "External tool shelf"],
+    specimens: ["Specimen Vault", "HTML filing cabinet"],
     seo: ["SEO Manager", "Titles, descriptions, OG"]
   };
 
@@ -113,6 +114,8 @@
   let activeFmTrackId = "";
   let junkDrawerTools = [];
   let activeJunkToolId = "";
+  let vaultSpecimens = [];
+  let activeVaultId = "";
   let lemmyHealth = null;
   let lemmyHealthLoading = false;
   let lemmyActionLoading = false;
@@ -3444,6 +3447,203 @@
     if (btn.dataset.workspaceNav === "junk-drawer") {
       btn.addEventListener("click", () => {
         loadJunkTools().catch(showError);
+      });
+    }
+  });
+
+  // ── Specimen Vault ────────────────────────────────────────────────────────
+
+  const vaultList = document.querySelector("[data-vault-list]");
+  const vaultForm = document.querySelector("[data-vault-form]");
+  const vaultFormTitle = document.querySelector("[data-vault-form-title]");
+  const vaultReset = document.querySelector("[data-vault-reset]");
+  const vaultHtmlFile = document.querySelector("[data-vault-html-file]");
+  const vaultHtmlPaste = document.querySelector("[data-vault-html-paste]");
+  const vaultAssetsFile = document.querySelector("[data-vault-assets-file]");
+  const vaultAssetsNote = document.querySelector("[data-vault-assets-note]");
+  const vaultImageFile = document.querySelector("[data-vault-image-file]");
+  const vaultImageNote = document.querySelector("[data-vault-image-note]");
+
+  function resetVaultForm() {
+    if (!vaultForm) return;
+    vaultForm.reset();
+    vaultForm.elements.id.value = "";
+    activeVaultId = "";
+    if (vaultFormTitle) vaultFormTitle.textContent = "File a specimen";
+    if (vaultAssetsNote) vaultAssetsNote.hidden = true;
+    if (vaultImageNote) vaultImageNote.hidden = true;
+  }
+
+  function renderVaultList() {
+    if (!vaultList) return;
+    if (!vaultSpecimens.length) {
+      vaultList.innerHTML = "<p class=\"empty-state\">The vault is empty. File the first specimen on the right.</p>";
+      return;
+    }
+    vaultList.innerHTML = vaultSpecimens
+      .slice()
+      .sort((a, b) => String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")))
+      .map((specimen) => `
+        <article class="junk-tool-row vault-row">
+          ${specimen.image ? `<img src="${escapeHtml(specimen.image)}" alt="" loading="lazy">` : "<div class=\"vault-row__nothumb\" aria-hidden=\"true\">NO IMAGE</div>"}
+          <div>
+            <h3>${escapeHtml(specimen.title)}</h3>
+            <p>${escapeHtml(specimen.model)} &middot; ${escapeHtml(specimen.skill)}</p>
+            <span class="junk-tool-row__badge vault-status vault-status--${escapeHtml(String(specimen.status || "draft").toLowerCase())}">${escapeHtml(specimen.status || "Draft")}</span>
+          </div>
+          <div class="junk-tool-row__actions">
+            <button type="button" data-vault-edit="${escapeHtml(specimen.id)}">Edit</button>
+            <button type="button" data-vault-delete="${escapeHtml(specimen.id)}">Delete</button>
+          </div>
+        </article>
+      `).join("");
+  }
+
+  function editVaultSpecimen(id) {
+    const specimen = vaultSpecimens.find((item) => item.id === id);
+    if (!specimen || !vaultForm) return;
+    activeVaultId = id;
+    vaultForm.elements.id.value = id;
+    vaultForm.elements.title.value = specimen.title || "";
+    vaultForm.elements.model.value = specimen.model || "";
+    vaultForm.elements.skill.value = specimen.skill || "";
+    vaultForm.elements.date.value = specimen.date || "";
+    vaultForm.elements.status.value = specimen.status || "Draft";
+    vaultForm.elements.score.value = specimen.score === null || specimen.score === undefined ? "" : String(specimen.score);
+    vaultForm.elements.tags.value = Array.isArray(specimen.tags) ? specimen.tags.join(", ") : "";
+    vaultForm.elements.prompt.value = specimen.prompt || "";
+    vaultForm.elements.notes.value = specimen.notes || "";
+    if (vaultHtmlPaste) vaultHtmlPaste.value = "";
+    if (vaultAssetsNote) {
+      const assetCount = Array.isArray(specimen.assets) ? specimen.assets.length : 0;
+      vaultAssetsNote.textContent = assetCount
+        ? `${assetCount} asset${assetCount === 1 ? "" : "s"} on file for this specimen.`
+        : "No assets on file yet.";
+      vaultAssetsNote.hidden = false;
+    }
+    if (vaultImageNote) {
+      vaultImageNote.textContent = specimen.image
+        ? "Card image on file. Uploading a new one replaces it."
+        : "No card image on file yet.";
+      vaultImageNote.hidden = false;
+    }
+    if (vaultFormTitle) vaultFormTitle.textContent = `Edit: ${specimen.title}`;
+    vaultForm.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  async function loadVault() {
+    const data = await api("/api/specimens");
+    vaultSpecimens = Array.isArray(data.records) ? data.records : [];
+    renderVaultList();
+  }
+
+  async function uploadVaultAsset(file, id) {
+    const result = await api("/api/specimens/asset", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        id,
+        filename: file.name,
+        imageData: await readFileAsDataUrl(file)
+      })
+    });
+    return result;
+  }
+
+  async function uploadVaultImage(id) {
+    const file = vaultImageFile?.files[0];
+    if (!file) return null;
+    return api("/api/specimens/image", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ id, imageData: await readFileAsDataUrl(file) })
+    });
+  }
+
+  async function saveVault(event) {
+    event.preventDefault();
+    if (!vaultForm) return;
+    const id = vaultForm.elements.id.value;
+    const saveButton = vaultForm.querySelector("[data-vault-save]");
+    if (saveButton) saveButton.disabled = true;
+    try {
+      setStatus(`${id ? "Updating" : "Filing"} ${vaultForm.elements.title.value.trim()}...`);
+      const htmlFromFile = vaultHtmlFile?.files[0] ? await readFileAsText(vaultHtmlFile.files[0]) : "";
+      const pastedHtml = vaultHtmlPaste ? vaultHtmlPaste.value : "";
+      const htmlContent = htmlFromFile || (/^\s*</.test(pastedHtml) ? pastedHtml : "");
+
+      const metaPayload = () => ({
+        title: vaultForm.elements.title.value.trim(),
+        model: vaultForm.elements.model.value.trim(),
+        skill: vaultForm.elements.skill.value.trim(),
+        date: vaultForm.elements.date.value,
+        status: vaultForm.elements.status.value,
+        score: vaultForm.elements.score.value === "" ? null : Number(vaultForm.elements.score.value),
+        tags: vaultForm.elements.tags.value.split(",").map((tag) => tag.trim()).filter(Boolean),
+        prompt: vaultForm.elements.prompt.value,
+        notes: vaultForm.elements.notes.value
+      });
+
+      let currentId = id;
+      const created = await api(id ? `/api/specimens/${encodeURIComponent(id)}` : "/api/specimens", {
+        method: id ? "PATCH" : "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ ...metaPayload(), htmlContent })
+      });
+      currentId = created.specimen.id;
+
+      const assetFiles = Array.from(vaultAssetsFile?.files || []);
+      if (assetFiles.length) {
+        for (let i = 0; i < assetFiles.length; i += 1) {
+          setStatus(`Uploading asset ${i + 1} of ${assetFiles.length} (${assetFiles[i].name})...`);
+          await uploadVaultAsset(assetFiles[i], currentId);
+        }
+      }
+
+      if (vaultImageFile?.files[0]) {
+        setStatus("Uploading card image...");
+        await uploadVaultImage(currentId);
+      }
+
+      const refreshed = await api("/api/specimens");
+      vaultSpecimens = refreshed.records || [];
+      renderVaultList();
+      resetVaultForm();
+      if (vaultAssetsNote) vaultAssetsNote.hidden = true;
+      if (vaultImageNote) vaultImageNote.hidden = true;
+      setStatus(`Vault rebuilt. ${vaultSpecimens.filter((item) => item.status === "Published").length} specimen(s) on public display.`);
+    } catch (error) {
+      showError(error);
+    } finally {
+      if (saveButton) saveButton.disabled = false;
+    }
+  }
+
+  if (vaultList) {
+    vaultList.addEventListener("click", (event2) => {
+      const edit = event2.target.closest("[data-vault-edit]");
+      const remove = event2.target.closest("[data-vault-delete]");
+      if (edit) editVaultSpecimen(edit.dataset.vaultEdit);
+      if (remove) {
+        const specimen = vaultSpecimens.find((item) => item.id === remove.dataset.vaultDelete);
+        if (!specimen || !window.confirm(`Delete "${specimen.title}" from the Specimen Vault? The source file and frames go with it.`)) return;
+        api(`/api/specimens/${encodeURIComponent(specimen.id)}`, { method: "DELETE" })
+          .then((result) => {
+            vaultSpecimens = result.records || [];
+            renderVaultList();
+            resetVaultForm();
+            setStatus("Specimen deleted and vault rebuilt.");
+          })
+          .catch(showError);
+      }
+    });
+  }
+  if (vaultForm) vaultForm.addEventListener("submit", saveVault);
+  if (vaultReset) vaultReset.addEventListener("click", resetVaultForm);
+  workspaceButtons.forEach((btn) => {
+    if (btn.dataset.workspaceNav === "specimens") {
+      btn.addEventListener("click", () => {
+        loadVault().catch(showError);
       });
     }
   });

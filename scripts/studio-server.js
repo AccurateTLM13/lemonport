@@ -20,6 +20,16 @@ const { galleryWidths, statuses } = require("./site-config");
 const { loadSeo, saveSeoFile, buildSeo } = require("./build-seo");
 const { generateOgImage } = require("./generate-og-images");
 const { contentFile: junkDrawerFile, loadJunkDrawer, validateExternalTools, buildJunkDrawer, slugify: junkDrawerSlugify } = require("./build-junk-drawer");
+const {
+  contentFile: specimensFile,
+  loadSpecimens,
+  validateSpecimens,
+  sanitizeSpecimenHtml,
+  applyAssetMap,
+  buildSpecimens,
+  asText: specimenAsText,
+  STATUSES: specimenStatuses
+} = require("./build-specimens");
 const { collectLemmyHealth, normalizeLimit } = require("./lemmy-health");
 const { executeLemmyAction } = require("./lemmy-actions");
 
@@ -352,6 +362,267 @@ async function uploadJunkDrawerImage(request, response) {
   } finally {
     if (fs.existsSync(tempFile)) fs.unlinkSync(tempFile);
   }
+}
+
+/* ─── Specimen Vault ────────────────────────────────────── */
+
+const crypto = require("node:crypto");
+const specimensSourceDir = path.join(root, "specimens", "source");
+const specimensAssetsDir = path.join(root, "specimens", "assets");
+
+function saveSpecimens(data) {
+  const result = validateSpecimens(data);
+  if (result.errors.length) {
+    const error = new Error("Specimen Vault validation failed.");
+    error.validation = result;
+    throw error;
+  }
+  backupFile(specimensFile);
+  fs.mkdirSync(path.dirname(specimensFile), { recursive: true });
+  fs.writeFileSync(specimensFile, `${JSON.stringify({ ...data, updatedAt: new Date().toISOString() }, null, 2)}\n`);
+  buildSpecimens();
+  // Converge the vault index meta with content/seo.json after every rebuild.
+  try {
+    buildSeo();
+  } catch (error) {
+    console.error("SEO sync after specimen rebuild failed:", error.message);
+  }
+  return loadSpecimens();
+}
+
+function uniqueSpecimenId(records) {
+  let id = "";
+  do {
+    id = crypto.randomBytes(4).toString("hex");
+  } while (records.some((record) => record.id === id));
+  return id;
+}
+
+function normalizeSpecimen(body, existing = null, records = []) {
+  const title = String(body.title ?? existing?.title ?? "").trim();
+  const model = String(body.model ?? existing?.model ?? "").trim();
+  const skill = String(body.skill ?? existing?.skill ?? "").trim();
+  if (!title || !model || !skill) throw new Error("Title, model, and skill are required.");
+  const status = String(body.status ?? existing?.status ?? "Draft").trim();
+  if (!specimenStatuses.includes(status)) {
+    throw new Error(`Status must be one of ${specimenStatuses.join(", ")}.`);
+  }
+  const scoreRaw = body.score ?? existing?.score ?? null;
+  let score = null;
+  if (scoreRaw !== null && scoreRaw !== "" && scoreRaw !== undefined) {
+    score = Number(scoreRaw);
+    if (!Number.isFinite(score) || score < 0 || score > 100) {
+      throw new Error("Score must be a number between 0 and 100.");
+    }
+  }
+  const specimen = {
+    ...(existing || {}),
+    id: existing?.id || uniqueSpecimenId(records),
+    title,
+    model,
+    skill,
+    prompt: String(body.prompt ?? existing?.prompt ?? "").trim(),
+    notes: String(body.notes ?? existing?.notes ?? "").trim(),
+    date: String(body.date ?? existing?.date ?? "").trim(),
+    tags: Array.isArray(body.tags)
+      ? body.tags.map((tag) => String(tag).trim()).filter(Boolean)
+      : String(body.tags ?? existing?.tags ?? "").split(",").map((tag) => tag.trim()).filter(Boolean),
+    status,
+    score,
+    image: String(body.image ?? existing?.image ?? "").trim(),
+    assets: Array.isArray(existing?.assets) ? existing.assets.filter((asset) => specimenAsText(asset).startsWith("/specimens/assets/")) : [],
+    assetMap: Array.isArray(existing?.assetMap) ? existing.assetMap : []
+  };
+  if (specimen.image && !specimen.image.startsWith("/specimens/images/")) {
+    throw new Error("Card image must live under /specimens/images/.");
+  }
+  return specimen;
+}
+
+function writeSpecimenSource(id, rawHtml, { isReplacement = false, assetMap = [] } = {}) {
+  const target = path.join(specimensSourceDir, `${id}.html`);
+  if (isReplacement && fs.existsSync(target)) {
+    backupFile(target);
+  }
+  fs.mkdirSync(specimensSourceDir, { recursive: true });
+  fs.writeFileSync(target, sanitizeSpecimenHtml(rawHtml, assetMap));
+  return `/specimens/source/${id}.html`;
+}
+
+function removeSpecimenAssets(record) {
+  const targets = [];
+  if (record?.source) targets.push(path.join(root, String(record.source).replace(/^\//, "")));
+  if (record?.image) targets.push(path.join(root, String(record.image).replace(/^\//, "")));
+  targets.forEach((target) => {
+    const resolved = path.resolve(target);
+    if (resolved.startsWith(path.resolve(root, "specimens") + path.sep) && fs.existsSync(resolved)) {
+      fs.unlinkSync(resolved);
+    }
+  });
+  // Remove the specimen's whole asset folder.
+  if (record?.id) {
+    const assetDir = path.join(specimensAssetsDir, String(record.id));
+    const resolved = path.resolve(assetDir);
+    if (resolved.startsWith(path.resolve(root, "specimens") + path.sep) && fs.existsSync(resolved)) {
+      fs.rmSync(resolved, { recursive: true, force: true });
+    }
+  }
+}
+
+async function createSpecimen(request, response) {
+  const body = await readJsonBody(request);
+  const data = loadSpecimens();
+  const specimen = normalizeSpecimen(body, null, data.records);
+  if (typeof body.htmlContent === "string" && body.htmlContent.trim()) {
+    specimen.source = writeSpecimenSource(specimen.id, body.htmlContent);
+  }
+  specimen.createdAt = new Date().toISOString();
+  specimen.updatedAt = specimen.createdAt;
+  data.records.push(specimen);
+  const saved = saveSpecimens(data);
+  sendJson(response, 201, {
+    specimen: saved.records.find((item) => item.id === specimen.id),
+    records: saved.records
+  });
+}
+
+async function updateSpecimen(request, response, id) {
+  const body = await readJsonBody(request);
+  const data = loadSpecimens();
+  const index = data.records.findIndex((item) => item.id === id);
+  if (index < 0) {
+    sendJson(response, 404, { error: "Specimen not found." });
+    return;
+  }
+  const updated = normalizeSpecimen(body, data.records[index], data.records);
+  if (typeof body.htmlContent === "string" && body.htmlContent.trim()) {
+    updated.source = writeSpecimenSource(id, body.htmlContent, { isReplacement: true, assetMap: updated.assetMap });
+  }
+  updated.createdAt = data.records[index].createdAt || new Date().toISOString();
+  updated.updatedAt = new Date().toISOString();
+  // If the id-bearing source file vanished (e.g. hand-deleted), restore the pointer.
+  if (updated.status === "Published" && !updated.source) {
+    updated.source = `/specimens/source/${id}.html`;
+  }
+  data.records[index] = updated;
+  const saved = saveSpecimens(data);
+  sendJson(response, 200, { specimen: saved.records[index], records: saved.records });
+}
+
+function deleteSpecimen(response, id) {
+  const data = loadSpecimens();
+  const index = data.records.findIndex((item) => item.id === id);
+  if (index < 0) {
+    sendJson(response, 404, { error: "Specimen not found." });
+    return;
+  }
+  const [removed] = data.records.splice(index, 1);
+  removeSpecimenAssets(removed);
+  const saved = saveSpecimens(data);
+  sendJson(response, 200, { deleted: id, records: saved.records });
+}
+
+async function uploadSpecimenAsset(request, response) {
+  const body = await readJsonBody(request);
+  const id = String(body.id || "").trim();
+  if (!/^[a-z0-9-]{4,40}$/.test(id)) {
+    throw new Error("A saved specimen id is required before uploading assets.");
+  }
+  const original = String(body.filename || "asset")
+    .split(/[\\/]/)
+    .pop()
+    .replace(/[^a-zA-Z0-9._-]/g, "-")
+    .replace(/^-+/, "") || "asset";
+  const { buffer } = decodeDataUrl(body.imageData);
+  const assetDir = path.join(specimensAssetsDir, id);
+  const uploadDir = path.join(root, ".studio-uploads");
+  const dot = original.lastIndexOf(".");
+  const stem = dot > 0 ? original.slice(0, dot) : original;
+  let base = `${stem}.webp`;
+  let counter = 2;
+  while (fs.existsSync(path.join(assetDir, base))) {
+    base = `${stem}-${counter}.webp`;
+    counter += 1;
+  }
+  const outputFile = path.join(assetDir, base);
+  const tempFile = path.join(uploadDir, `specimen-${id}-asset-${Date.now()}`);
+  fs.mkdirSync(assetDir, { recursive: true });
+  fs.mkdirSync(uploadDir, { recursive: true });
+  fs.writeFileSync(tempFile, buffer);
+  try {
+    execFileSync(
+      "magick",
+      [tempFile, "-auto-orient", "-strip", "-quality", "85", "-define", "webp:method=6", outputFile],
+      { timeout: 20000 }
+    );
+  } finally {
+    if (fs.existsSync(tempFile)) fs.unlinkSync(tempFile);
+  }
+
+  const publicUrl = `/specimens/assets/${id}/${base}`;
+  const relativeTo = `../assets/${id}/${base}`;
+
+  const data = loadSpecimens();
+  const index = data.records.findIndex((item) => item.id === id);
+  if (index < 0) {
+    sendJson(response, 404, { error: "Specimen not found." });
+    return;
+  }
+  const record = data.records[index];
+  record.assets = [...(record.assets || []), publicUrl];
+  record.assetMap = [...(record.assetMap || []), { from: original, to: relativeTo }];
+  record.updatedAt = new Date().toISOString();
+
+  // Rewrite references in the already-stored source file, if present.
+  const sourceAbs = path.join(specimensSourceDir, `${id}.html`);
+  if (fs.existsSync(sourceAbs)) {
+    backupFile(sourceAbs);
+    const html = fs.readFileSync(sourceAbs, "utf8");
+    fs.writeFileSync(sourceAbs, applyAssetMap(html, [{ from: original, to: relativeTo }]));
+  }
+
+  const saved = saveSpecimens(data);
+  sendJson(response, 201, {
+    url: publicUrl,
+    assets: saved.records[index].assets,
+    assetMap: saved.records[index].assetMap
+  });
+}
+
+async function uploadSpecimenImage(request, response) {
+  const body = await readJsonBody(request);
+  const id = String(body.id || "").trim();
+  if (!/^[a-z0-9-]{4,40}$/.test(id)) {
+    throw new Error("A saved specimen id is required before uploading a card image.");
+  }
+  const { buffer } = decodeDataUrl(body.imageData);
+  const imageDir = path.join(root, "specimens", "images");
+  const uploadDir = path.join(root, ".studio-uploads");
+  const outputFile = path.join(imageDir, `${id}.webp`);
+  const tempFile = path.join(uploadDir, `specimen-${id}-image-upload`);
+  fs.mkdirSync(imageDir, { recursive: true });
+  fs.mkdirSync(uploadDir, { recursive: true });
+  fs.writeFileSync(tempFile, buffer);
+  try {
+    execFileSync(
+      "magick",
+      [tempFile, "-auto-orient", "-strip", "-resize", "1440x900^", "-gravity", "north", "-extent", "1440x900", "-quality", "85", "-define", "webp:method=6", outputFile],
+      { timeout: 20000 }
+    );
+  } finally {
+    if (fs.existsSync(tempFile)) fs.unlinkSync(tempFile);
+  }
+
+  const data = loadSpecimens();
+  const index = data.records.findIndex((item) => item.id === id);
+  if (index < 0) {
+    sendJson(response, 404, { error: "Specimen not found." });
+    return;
+  }
+  data.records[index].image = `/specimens/images/${id}.webp`;
+  data.records[index].updatedAt = new Date().toISOString();
+  const saved = saveSpecimens(data);
+  sendJson(response, 201, { url: saved.records[index].image });
 }
 
 function saveLiveExperiment(data) {
@@ -1474,6 +1745,36 @@ async function route(request, response) {
     }
     if (junkDrawerMatch && request.method === "DELETE") {
       deleteJunkDrawerTool(response, junkDrawerMatch[1]);
+      return;
+    }
+
+    if (request.method === "GET" && url.pathname === "/api/specimens") {
+      sendJson(response, 200, loadSpecimens());
+      return;
+    }
+
+    if (request.method === "POST" && url.pathname === "/api/specimens") {
+      await createSpecimen(request, response);
+      return;
+    }
+
+    if (request.method === "POST" && url.pathname === "/api/specimens/asset") {
+      await uploadSpecimenAsset(request, response);
+      return;
+    }
+
+    if (request.method === "POST" && url.pathname === "/api/specimens/image") {
+      await uploadSpecimenImage(request, response);
+      return;
+    }
+
+    const specimenMatch = url.pathname.match(/^\/api\/specimens\/([^/]+)$/);
+    if (specimenMatch && request.method === "PATCH") {
+      await updateSpecimen(request, response, specimenMatch[1]);
+      return;
+    }
+    if (specimenMatch && request.method === "DELETE") {
+      deleteSpecimen(response, specimenMatch[1]);
       return;
     }
 
