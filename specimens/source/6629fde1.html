@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KINETIC FOUNDRY</title>
+<style>
+  :root {
+    --black: #0E0F12;
+    --off-white: #EAEAE4;
+    --orange: #FF4500;
+    --font-display: 'Inter', -apple-system, sans-serif;
+    --font-mono: 'Space Mono', 'Courier New', monospace;
+  }
+  
+  * { box-sizing: border-box; }
+  
+  html, body { overflow-x: hidden; }
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--off-white);
+    color: var(--black);
+    font-family: var(--font-display);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+  
+  .grid { 
+    display: grid; 
+    grid-template-columns: repeat(12, 1fr); 
+    gap: 1rem; 
+  }
+  
+  /* Typography */
+  h1, h2, h3, h4 { margin: 0; line-height: 1; letter-spacing: -0.02em; font-weight: 600; text-transform: uppercase; }
+  
+  h1 { 
+    font-size: clamp(5rem, 14vw, 15rem); 
+    letter-spacing: -0.04em; 
+    line-height: 0.8;
+  }
+  
+  h2 { font-size: clamp(3rem, 6vw, 7rem); letter-spacing: -0.03em; }
+  h3 { font-size: 1.75rem; margin-bottom: 0.75rem; }
+  
+  p { margin: 0; }
+  
+  .subtitle { font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 500; line-height: 1.1; max-width: 25ch; }
+  .desc { font-size: 1.125rem; line-height: 1.4; max-width: 40ch; color: #444; }
+  
+  .mono { font-family: var(--font-mono); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; }
+  .label { color: var(--orange); }
+  
+  /* Layout Structure */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--black);
+    position: sticky;
+    top: 0;
+    background: var(--off-white);
+    z-index: 100;
+  }
+  
+  .hero {
+    padding: 4rem 2rem 8rem 2rem;
+    border-bottom: 1px solid var(--black);
+  }
+  
+  .hero-header {
+    grid-column: 1 / -1;
+    margin-bottom: 6rem;
+  }
+  
+  .hero-image {
+    grid-column: 2 / 12;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2/1;
+    object-fit: cover;
+    display: block;
+    mix-blend-mode: multiply;
+  }
+  
+  .hero-text {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+  
+  .hero-subtitle { grid-column: 2 / 7; }
+  .hero-desc { grid-column: 7 / 12; }
+  
+  .specs {
+    border-bottom: 1px solid var(--black);
+  }
+  
+  .specs-inner {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+  }
+  
+  .specs-title {
+    grid-column: 1 / 5;
+    padding: 4rem 2rem;
+    border-right: 1px solid var(--black);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .spec-list {
+    grid-column: 5 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .spec-item {
+    padding: 3rem 2rem;
+    border-bottom: 1px solid var(--black);
+    border-right: 1px solid var(--black);
+  }
+  .spec-item:nth-child(even) { border-right: none; }
+  .spec-item:nth-last-child(-n+2) { border-bottom: none; }
+  
+  .spec-item .value {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 500;
+    margin-top: 1rem;
+    letter-spacing: -0.02em;
+  }
+  
+  .capabilities {
+    padding: 8rem 2rem;
+    border-bottom: 1px solid var(--black);
+  }
+  
+  .cap-header {
+    grid-column: 1 / -1;
+    margin-bottom: 8rem;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--black);
+    padding-bottom: 1rem;
+  }
+  
+  .cap-card {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .cap-card .mono { margin-bottom: 3rem; }
+  .cap-card p { margin-top: 1rem; color: #444; font-size: 1.125rem; }
+  
+  .deployment {
+    padding: 12rem 2rem;
+    background: var(--black);
+    color: var(--off-white);
+  }
+  
+  .deploy-content {
+    grid-column: 2 / 12;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 1rem;
+  }
+  
+  .deploy-title {
+    grid-column: 1 / 6;
+  }
+  
+  .deploy-desc {
+    grid-column: 6 / -1;
+    font-size: clamp(1.25rem, 2.5vw, 2rem);
+    line-height: 1.3;
+    color: #AAA;
+  }
+  
+  .cta {
+    padding: 12rem 2rem;
+    text-align: center;
+    background: var(--off-white);
+  }
+  
+  .cta h2 { margin-bottom: 4rem; }
+  
+  .button {
+    display: inline-block;
+    background: var(--orange);
+    color: var(--off-white);
+    padding: 1.5rem 5rem;
+    font-family: var(--font-mono);
+    text-decoration: none;
+    font-size: 1.125rem;
+    transition: all 0.2s ease;
+    border: 1px solid var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .button:hover, .button:focus {
+    background: transparent;
+    color: var(--orange);
+    outline: none;
+  }
+  
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .hero-subtitle { grid-column: 1 / 7; }
+    .hero-desc { grid-column: 7 / -1; }
+    .hero-image { grid-column: 1 / -1; aspect-ratio: 16/9; }
+    .specs-title { grid-column: 1 / 6; }
+    .spec-list { grid-column: 6 / -1; display: flex; flex-direction: column; }
+    .spec-item { border-right: none !important; border-bottom: 1px solid var(--black) !important; }
+    .spec-item:last-child { border-bottom: none !important; }
+    .cap-card { grid-column: span 6; margin-bottom: 4rem; }
+  }
+  
+  @media (max-width: 768px) {
+    .grid { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-header { margin-bottom: 3rem; }
+    h1 { font-size: 14vw; word-break: break-word; }
+    .hero-text { grid-template-columns: 1fr; margin-top: 2rem; }
+    .hero-subtitle, .hero-desc { grid-column: 1 / -1; max-width: 100%; }
+    .specs-inner { grid-template-columns: 1fr; }
+    .specs-title { grid-column: 1 / -1; border-right: none; border-bottom: 1px solid var(--black); padding: 4rem 2rem; }
+    .spec-list { grid-column: 1 / -1; }
+    .capabilities { padding: 6rem 2rem; }
+    .cap-header { margin-bottom: 4rem; }
+    .cap-card { grid-column: 1 / -1; margin-bottom: 3rem; }
+    .deploy-content { grid-column: 1 / -1; grid-template-columns: 1fr; }
+    .deploy-title, .deploy-desc { grid-column: 1 / -1; }
+    .deploy-desc { margin-top: 2rem; }
+    .cta { padding: 8rem 2rem; }
+    .cta h2 { font-size: 14vw; }
+    .button { padding: 1.5rem 3rem; width: 100%; }
+  }
+</style>
+</head>
+<body>
+  <header class="header mono">
+    <span>KINETIC FOUNDRY</span>
+    <span>SYS / 01</span>
+    <span class="label">STATUS: ACTIVE</span>
+  </header>
+  
+  <section class="hero grid">
+    <div class="hero-header">
+      <div class="mono" style="margin-bottom: 2rem;">[01] OVERVIEW</div>
+      <h1>Kinetic<br>Foundry</h1>
+    </div>
+    <img src="../assets/6629fde1/kinetic_foundry_hero_1787607324325.webp" alt="Kinetic Foundry Robot" class="hero-image" />
+    <div class="hero-text">
+      <h2 class="subtitle hero-subtitle">Automation built for factories that change.</h2>
+      <p class="desc hero-desc">Modular robotic work cells designed to be reconfigured as production demands evolve. High precision architecture built for the long term.</p>
+    </div>
+  </section>
+  
+  <section class="specs">
+    <div class="specs-inner">
+      <div class="specs-title">
+        <div class="mono label">[02] SPECIFICATIONS</div>
+        <h2>CELL 04</h2>
+      </div>
+      <div class="spec-list">
+        <div class="spec-item"><div class="mono label">PAYLOAD</div><div class="value">35 kg</div></div>
+        <div class="spec-item"><div class="mono label">REACH</div><div class="value">1,850 mm</div></div>
+        <div class="spec-item"><div class="mono label">REPEATABILITY</div><div class="value">Â±0.05 mm</div></div>
+        <div class="spec-item"><div class="mono label">CONFIGURATION</div><div class="value">6-axis</div></div>
+        <div class="spec-item" style="grid-column: 1 / -1;"><div class="mono label">DEPLOYMENT</div><div class="value">Modular</div></div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="capabilities grid">
+    <div class="cap-header mono">
+      <span>[03] CAPABILITIES</span>
+      <span>SYSTEM ADVANTAGES</span>
+    </div>
+    <div class="cap-card">
+      <span class="cap-num mono">CAPABILITY / 01</span>
+      <h3>Rapid Reconfiguration</h3>
+      <p>Adapts to new production runs without complete teardowns, preserving baseline spatial footprint.</p>
+    </div>
+    <div class="cap-card">
+      <span class="cap-num mono">CAPABILITY / 02</span>
+      <h3>Precision Control</h3>
+      <p>Maintains exact tolerances across extended operational cycles with high-frequency feedback loops.</p>
+    </div>
+    <div class="cap-card">
+      <span class="cap-num mono">CAPABILITY / 03</span>
+      <h3>Scalable Architecture</h3>
+      <p>Integrates seamlessly with existing and future cell modules, establishing a durable automation core.</p>
+    </div>
+  </section>
+
+  <section class="deployment grid">
+    <div class="deploy-content">
+      <div class="deploy-title">
+        <div class="mono label" style="margin-bottom: 2rem;">[04] PROCESS</div>
+        <h2 style="font-size: clamp(3rem, 5vw, 5rem);">DEPLOYMENT</h2>
+      </div>
+      <div class="deploy-desc">
+        <p>Designed for minimal disruption. From arrival to active production in a fraction of traditional integration timelines. The factory does not need to change to accommodate the cell.</p>
+      </div>
+    </div>
+  </section>
+  
+  <section class="cta">
+    <h2>INITIATE INTEGRATION</h2>
+    <a href="#" class="button">CONTACT SALES</a>
+  </section>
+</body>
+</html>

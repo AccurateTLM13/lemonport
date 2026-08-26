@@ -105,7 +105,36 @@
       "source": "/specimens/source/c4f3e77a.html",
       "createdAt": "2026-08-24T00:59:06.747Z",
       "updatedAt": "2026-08-24T00:59:29.624Z"
+    },
+    {
+      "id": "6629fde1",
+      "title": "SYSTEM--FORM Test 01 — Industrial Robotics",
+      "model": "Gemini 3.1 Pro",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page landing page for **KINETIC FOUNDRY**, a fictional industrial robotics company that builds modular robotic work cells for small and mid-sized manufacturers.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**KINETIC FOUNDRY**\n\n**Automation built for factories that change.**\n\nModular robotic work cells designed to be reconfigured as production demands evolve.\n\n**KF / CELL 04**\n\nPayload: 35 kg  \nReach: 1,850 mm  \nRepeatability: ±0.05 mm  \nConfiguration: 6-axis  \nDeployment: Modular\n\nInclude:\n\n- hero\n- product overview\n- technical specifications\n- three capabilities\n- deployment/process section\n- final contact CTA\n\n### Direction\n\nDo not imitate a conventional robotics or SaaS website.\n\nThe product and its real specifications should become part of the visual architecture.\n\nUse technical graphics only where they communicate actual supplied information.\n\nDo not invent additional specifications, certifications, performance claims, customers, statistics, coordinates, or operational data.\n\n### Evaluation target\n\nThis is SYSTEM//FORM operating on its natural subject matter.\n\nThe result should demonstrate the design system without relying on generic futuristic, cyberpunk, or industrial-tech tropes.",
+      "notes": "",
+      "date": "2026-08-26",
+      "tags": [
+        "system-form",
+        "design-skill",
+        "industrial-robotics"
+      ],
+      "status": "Published",
+      "score": null,
+      "image": "/specimens/images/6629fde1.webp",
+      "assets": [
+        "/specimens/assets/6629fde1/kinetic_foundry_hero_1787607324325.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "kinetic_foundry_hero_1787607324325.jpg",
+          "to": "../assets/6629fde1/kinetic_foundry_hero_1787607324325.webp"
+        }
+      ],
+      "createdAt": "2026-08-26T16:26:57.405Z",
+      "updatedAt": "2026-08-26T18:57:51.406Z",
+      "source": "/specimens/source/6629fde1.html"
     }
   ],
-  "updatedAt": "2026-08-24T00:59:29.630Z"
+  "updatedAt": "2026-08-26T18:57:51.411Z"
 }
