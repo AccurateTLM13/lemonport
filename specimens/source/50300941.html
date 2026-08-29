@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="KINETIC FOUNDRY — KF / CELL 04. Modular robotic work cells. Payload 35 kg, reach 1,850 mm, ±0.05 mm, 6-axis, modular." />
+  <title>KINETIC FOUNDRY — KF / CELL 04</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@500;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #12110f;
+      --paper: #ece8df;
+      --paper-2: #d9d2c4;
+      --signal: #d63b12;
+      --display: "Syne", ui-sans-serif, system-ui, sans-serif;
+      --mono: "IBM Plex Mono", ui-monospace, monospace;
+      --gutter: clamp(1rem, 2.2vw, 2.1rem);
+      --header-h: 3.25rem;
+      --ease: cubic-bezier(0.22, 0.82, 0.2, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; overflow-x: clip; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--display);
+      font-size: 1.05rem;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
+    }
+    a { color: inherit; }
+    :focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
+    [id] { scroll-margin-top: calc(var(--header-h) + 0.4rem); }
+    .skip {
+      position: absolute; left: 0.75rem; top: -5rem; z-index: 40;
+      background: var(--ink); color: var(--paper); padding: 0.6rem 0.9rem;
+    }
+    .skip:focus { top: 0.75rem; }
+    main > img { display: none !important; }
+    .mono {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .mast {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 0.75rem 1.2rem;
+      min-height: var(--header-h);
+      padding: 0 var(--gutter);
+      border-bottom: 1px solid var(--ink);
+      position: sticky; top: 0; z-index: 12;
+      background: color-mix(in srgb, var(--paper) 92%, transparent);
+      backdrop-filter: blur(12px);
+    }
+    .mast nav { display: flex; flex-wrap: wrap; gap: 1.1rem; justify-content: center; }
+    .mast a { text-decoration: none; }
+    .mast nav a:hover { text-decoration: underline; }
+    .mast .cta {
+      background: var(--ink); color: var(--paper);
+      padding: 0.55rem 0.95rem; min-height: 44px;
+      display: inline-flex; align-items: center;
+    }
+    .mast .cta:hover { background: var(--signal); }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(14rem, 0.85fr);
+      grid-template-rows: auto 1fr auto;
+      min-height: calc(100dvh - var(--header-h));
+      border-bottom: 0;
+    }
+    .hero-id { grid-column: 1 / -1; }
+    .hero-copy { grid-column: 1; grid-row: 2; }
+    .hero-photo { grid-column: 2; grid-row: 2; }
+    .specs {
+      grid-column: 1 / -1;
+      grid-row: 3;
+      border-top: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+    }
+    .hero-id {
+      grid-column: 1 / -1;
+      display: flex; justify-content: space-between;
+      padding: 0.8rem var(--gutter);
+      border-bottom: 1px solid var(--ink);
+    }
+    .hero-copy {
+      padding: var(--gutter);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      min-width: 0; position: relative; z-index: 2;
+    }
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(4.4rem, 11vw, 9.6rem);
+      font-weight: 800;
+      line-height: 0.78;
+      letter-spacing: -0.07em;
+      text-transform: uppercase;
+    }
+    .hero h1 span { display: block; }
+    .lede {
+      margin: 1.4rem 0 0.6rem;
+      font-size: clamp(1.25rem, 2vw, 1.65rem);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      max-width: 22ch;
+    }
+    .body { margin: 0; max-width: 44ch; font-size: 0.98rem; }
+    .hero-photo {
+      position: relative; overflow: hidden;
+      border-left: 1px solid var(--ink);
+      background: var(--ink); min-height: 18rem;
+    }
+    .hero-photo img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: 62% center;
+    }
+    .hero-photo .veil {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(18,17,15,0.08), rgba(18,17,15,0.72));
+      pointer-events: none;
+    }
+    .hero-photo .mark {
+      position: absolute; right: 0.85rem; bottom: 0.7rem; z-index: 2;
+      font-size: clamp(5.5rem, 14vw, 11rem);
+      font-weight: 800; line-height: 0.72;
+      letter-spacing: -0.08em; color: var(--signal);
+      margin: 0;
+    }
+    .hero-photo .cap {
+      position: absolute; left: 0.9rem; top: 0.9rem; z-index: 2; color: var(--paper);
+    }
+
+    .specs {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      border-bottom: 1px solid var(--ink);
+    }
+    .spec {
+      padding: 1.15rem var(--gutter) 1.35rem;
+      border-right: 1px solid var(--ink);
+      min-width: 0;
+    }
+    .spec:last-child { border-right: 0; background: var(--signal); color: var(--paper); }
+    .spec dt { margin: 0 0 0.85rem; }
+    .spec dd {
+      margin: 0;
+      font-size: clamp(1.15rem, 2vw, 1.95rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+    }
+
+    .crop {
+      margin: 0; overflow: hidden; border-bottom: 1px solid var(--ink); min-width: 0;
+    }
+    .crop img {
+      display: block; width: 100%;
+      aspect-ratio: 21 / 8; object-fit: cover;
+      max-height: min(36vh, 20rem);
+    }
+
+    .overview {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      border-bottom: 1px solid var(--ink);
+    }
+    .overview-copy, .diagram {
+      padding: clamp(1.6rem, 3vw, 2.6rem) var(--gutter);
+    }
+    .overview-copy { border-right: 1px solid var(--ink); }
+    .overview-copy h2 {
+      font-size: clamp(2.1rem, 3.8vw, 3.3rem);
+      line-height: 0.92; letter-spacing: -0.045em;
+      text-transform: uppercase; margin: 0 0 1.2rem; max-width: 14ch;
+    }
+    .overview-copy p { max-width: 46ch; margin: 0 0 0.9rem; }
+    .diagram { margin: 0; background: var(--paper-2); }
+    .diagram svg { width: 100%; height: auto; max-height: 22rem; }
+
+    .caps {
+      display: grid;
+      grid-template-columns: auto 1.5fr 1fr 1fr;
+      border-bottom: 1px solid var(--ink);
+    }
+    .cap-index {
+      writing-mode: vertical-rl; transform: rotate(180deg);
+      padding: 1.2rem 0.6rem; border-right: 1px solid var(--ink);
+      display: flex; align-items: center;
+    }
+    .cap {
+      padding: 1.5rem var(--gutter) 1.8rem;
+      border-right: 1px solid var(--ink);
+      display: grid; grid-template-rows: auto 1fr auto; gap: 1.1rem;
+      min-height: 18rem; min-width: 0;
+    }
+    .cap:last-child { border-right: 0; }
+    .cap .n {
+      font-size: clamp(3.4rem, 7vw, 6.2rem);
+      font-weight: 800; line-height: 0.72; letter-spacing: -0.07em;
+    }
+    .cap:first-of-type .n { font-size: clamp(5rem, 10vw, 8.8rem); }
+    .cap h3 { margin: 0; font-size: 1.15rem; letter-spacing: -0.03em; text-transform: uppercase; }
+    .cap p { margin: 0; max-width: 30ch; font-size: 0.94rem; }
+
+    .process {
+      background: var(--ink); color: var(--paper);
+      padding: clamp(1.7rem, 3vw, 2.5rem) var(--gutter) clamp(2rem, 3.4vw, 3rem);
+    }
+    .process-head {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+      border-bottom: 1px solid #4a4946; padding-bottom: 0.85rem; margin-bottom: 1.6rem;
+    }
+    .process-head h2 {
+      margin: 0; font-size: clamp(2rem, 3.6vw, 3.2rem);
+      letter-spacing: -0.04em; text-transform: uppercase; line-height: 0.9;
+    }
+    .steps {
+      list-style: none; margin: 0; padding: 0;
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .step { padding: 0 var(--gutter) 0 0; border-right: 1px solid #4a4946; padding-left: var(--gutter); }
+    .step:first-child { padding-left: 0; }
+    .step:last-child { border-right: 0; padding-right: 0; }
+    .step .n { font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 800; letter-spacing: -0.04em; margin-bottom: 0.7rem; }
+    .step h3 { margin: 0 0 0.45rem; font-size: 0.95rem; text-transform: uppercase; }
+    .step p { margin: 0; font-size: 0.9rem; max-width: 28ch; color: #d4d0c7; }
+
+    .contact {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(16rem, 0.75fr);
+    }
+    .contact-copy {
+      padding: clamp(2rem, 4vw, 3.3rem) var(--gutter);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      border-right: 1px solid var(--ink);
+    }
+    .contact-copy h2 {
+      font-size: clamp(2.6rem, 6.8vw, 5.8rem);
+      line-height: 0.82; letter-spacing: -0.055em;
+      text-transform: uppercase; margin: 0 0 1rem; max-width: 10ch;
+    }
+    form {
+      padding: clamp(1.6rem, 3vw, 2.6rem) var(--gutter);
+      display: flex; flex-direction: column; gap: 1.1rem; justify-content: center;
+    }
+    label { display: flex; flex-direction: column; gap: 0.3rem; }
+    input, textarea {
+      background: transparent; border: 0; border-bottom: 1px solid var(--ink);
+      padding: 0.5rem 0; font: inherit; border-radius: 0; width: 100%;
+    }
+    input:focus, textarea:focus { outline: none; border-bottom-width: 2px; border-bottom-color: var(--signal); }
+    textarea { min-height: 6.2rem; resize: vertical; }
+    button[type="submit"] {
+      align-self: flex-start; background: var(--signal); color: var(--paper);
+      border: 0; padding: 0.9rem 1.3rem; min-height: 44px;
+      font-family: var(--mono); font-size: 0.85rem; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+    }
+    button[type="submit"]:hover { background: var(--ink); }
+    footer {
+      display: flex; justify-content: space-between; gap: 1rem;
+      padding: 0.85rem var(--gutter); border-top: 1px solid var(--ink);
+    }
+
+    @media (max-width: 1100px) {
+      .caps { grid-template-columns: auto 1fr 1fr; }
+      .cap:first-of-type { grid-column: 2 / -1; border-bottom: 1px solid var(--ink); min-height: 0; }
+    }
+    @media (max-width: 860px) {
+      .mast { grid-template-columns: 1fr auto; }
+      .mast nav { grid-column: 1 / -1; justify-content: flex-start; }
+      .hero { grid-template-columns: 1fr; grid-template-rows: auto auto auto auto; min-height: 0; }
+      .hero-photo { grid-column: 1; grid-row: 2; border-left: 0; border-bottom: 1px solid var(--ink); min-height: 16rem; }
+      .hero-copy { grid-column: 1; grid-row: 3; }
+      .specs { grid-column: 1; grid-row: 4; }
+      .hero h1 { font-size: clamp(3.2rem, 16vw, 5.4rem); }
+      .specs { grid-template-columns: 1fr 1fr; }
+      .spec:nth-child(2n) { border-right: 0; }
+      .spec:nth-child(-n+4) { border-bottom: 1px solid var(--ink); }
+      .spec:last-child { grid-column: 1 / -1; }
+      .overview, .contact { grid-template-columns: 1fr; }
+      .overview-copy, .contact-copy { border-right: 0; border-bottom: 1px solid var(--ink); }
+      .caps { grid-template-columns: 1fr; }
+      .cap-index { writing-mode: horizontal-tb; transform: none; border-right: 0; border-bottom: 1px solid var(--ink); padding: 0.7rem var(--gutter); }
+      .cap, .cap:first-of-type { grid-column: auto; border-right: 0; border-bottom: 1px solid var(--ink); min-height: 0; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .step { border-right: 0; padding: 0 0 1.3rem; border-bottom: 1px solid #4a4946; }
+      .step:nth-child(odd) { padding-right: var(--gutter); }
+    }
+    @media (max-width: 520px) {
+      .specs { grid-template-columns: 1fr; }
+      .spec { border-right: 0; border-bottom: 1px solid var(--ink); display: grid; grid-template-columns: 1fr auto; align-items: baseline; padding: 0.8rem var(--gutter); }
+      .spec dt { margin: 0; }
+      .spec dd { font-size: 1.3rem; }
+      .spec:last-child { grid-column: auto; }
+      .steps { grid-template-columns: 1fr; }
+      .step:nth-child(odd) { padding-right: 0; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="mast">
+    <strong class="mono">Kinetic Foundry</strong>
+    <nav class="mono" aria-label="Primary">
+      <a href="#cell">Cell 04</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#process">Process</a>
+    </nav>
+    <a class="cta mono" href="#contact">Inquire</a>
+  </header>
+
+  <main id="content">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-id">
+        <span class="mono">Product</span>
+        <span class="mono">KF / CELL 04</span>
+      </div>
+      <div class="hero-copy">
+        <h1 id="hero-title">Kinetic<br /><span>Foundry</span></h1>
+        <p class="lede">Automation built for factories that change.</p>
+        <p class="body">Modular robotic work cells designed to be reconfigured as production demands evolve.</p>
+      </div>
+      <figure class="hero-photo">
+        <img src="../assets/50300941/kf-cell-hero.webp" alt="Six-axis robot arm inside a modular work cell" width="1152" height="1536" />
+        <span class="veil" aria-hidden="true"></span>
+        <span class="mono cap">Cell</span>
+        <p class="mark" aria-hidden="true">04</p>
+      </figure>
+      <section id="cell" class="specs" aria-label="CELL 04 specifications">
+      <div class="spec"><dl><dt class="mono">Payload</dt><dd>35 kg</dd></dl></div>
+      <div class="spec"><dl><dt class="mono">Reach</dt><dd>1,850 mm</dd></dl></div>
+      <div class="spec"><dl><dt class="mono">Repeatability</dt><dd>±0.05 mm</dd></dl></div>
+      <div class="spec"><dl><dt class="mono">Configuration</dt><dd>6-axis</dd></dl></div>
+      <div class="spec"><dl><dt class="mono">Deployment</dt><dd>Modular</dd></dl></div>
+      </section>
+    </section>
+
+    <figure class="crop">
+      <img src="../assets/50300941/kf-cell-wrist.webp" alt="Close crop of a six-axis robot wrist over a work table" width="1536" height="864" />
+    </figure>
+
+    <section class="overview" aria-labelledby="overview-title">
+      <div class="overview-copy">
+        <p class="mono" style="margin:0 0 0.9rem;">Work cell</p>
+        <h2 id="overview-title">A cell that can be moved when the line moves.</h2>
+        <p>CELL 04 is a six-axis modular work cell for small and mid-sized manufacturers. Payload, reach, and repeatability are fixed. The cell’s place in the factory is not.</p>
+        <p>The same module can be specified, placed, and later reconfigured as production demands evolve.</p>
+      </div>
+      <figure class="diagram">
+        <figcaption class="mono">Reach envelope · CELL 04</figcaption>
+        <svg viewBox="0 0 640 340" role="img" aria-labelledby="reach-title reach-desc">
+          <title id="reach-title">CELL 04 reach envelope</title>
+          <desc id="reach-desc">Plan diagram of a 1,850 millimetre radial reach from the cell origin.</desc>
+          <line x1="72" y1="300" x2="600" y2="300" stroke="#12110f" stroke-width="1" />
+          <line x1="72" y1="28" x2="72" y2="300" stroke="#12110f" stroke-width="1" />
+          <path d="M72 300 A 248 248 0 0 1 320 52" fill="#d63b12" fill-opacity="0.16" stroke="#12110f" stroke-width="1.5" />
+          <circle cx="72" cy="300" r="5" fill="#12110f" />
+          <line x1="72" y1="300" x2="320" y2="52" stroke="#12110f" stroke-width="1" stroke-dasharray="3 4" />
+          <circle cx="320" cy="52" r="3.5" fill="#d63b12" />
+          <text x="86" y="290" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="0.08em">ORIGIN</text>
+          <text x="328" y="46" font-family="IBM Plex Mono, monospace" font-size="12">1,850 MM</text>
+        </svg>
+        <p class="mono" style="margin:0.6rem 0 0;">Repeatability ±0.05 mm · payload 35 kg</p>
+      </figure>
+    </section>
+
+    <section id="capabilities" class="caps" aria-labelledby="cap-title">
+      <div class="cap-index mono" id="cap-title">Three capabilities</div>
+      <article class="cap">
+        <span class="n">01</span>
+        <h3>Modular cells</h3>
+        <p>Work cells are built as modules, not as fixtures welded to a single layout. CELL 04 deploys as a unit that can be relocated.</p>
+      </article>
+      <article class="cap">
+        <span class="n">02</span>
+        <h3>Reconfiguration</h3>
+        <p>As production demands evolve, the cell can be reconfigured rather than replaced.</p>
+      </article>
+      <article class="cap">
+        <span class="n">03</span>
+        <h3>Mid-scale manufacture</h3>
+        <p>Specified for small and mid-sized manufacturers: 35 kg, 1,850 mm, six-axis, ±0.05 mm.</p>
+      </article>
+    </section>
+
+    <section id="process" class="process" aria-labelledby="process-title">
+      <div class="process-head">
+        <h2 id="process-title">Deployment</h2>
+        <p class="mono" style="margin:0;">Specify · Place · Run · Adapt</p>
+      </div>
+      <ol class="steps">
+        <li class="step"><div class="n">01</div><h3>Specify</h3><p>Match CELL 04 to the work: 35 kg payload, 1,850 mm reach, six-axis motion, modular deployment.</p></li>
+        <li class="step"><div class="n">02</div><h3>Place</h3><p>Install the cell as a module. It occupies a position; it is not assumed to occupy that position forever.</p></li>
+        <li class="step"><div class="n">03</div><h3>Run</h3><p>Operate within the published envelope: six axes, 35 kg, 1,850 mm, ±0.05 mm repeatability.</p></li>
+        <li class="step"><div class="n">04</div><h3>Adapt</h3><p>When the factory changes, reconfigure the cell. The product is built for lines that do not stay still.</p></li>
+      </ol>
+    </section>
+
+    <section id="contact" class="contact" aria-labelledby="cta-title">
+      <div class="contact-copy">
+        <p class="mono" style="margin:0 0 0.7rem;">Contact</p>
+        <h2 id="cta-title">Ask about CELL 04.</h2>
+        <p>Write with the production problem you need a modular cell to follow.</p>
+      </div>
+      <form action="#contact" method="get">
+        <label><span class="mono">Name</span><input type="text" name="name" autocomplete="name" required /></label>
+        <label><span class="mono">Organization</span><input type="text" name="org" autocomplete="organization" /></label>
+        <label><span class="mono">Message</span><textarea name="message" required></textarea></label>
+        <button type="submit">Send inquiry</button>
+      </form>
+    </section>
+  </main>
+  <footer>
+    <span class="mono">Kinetic Foundry</span>
+    <span class="mono">KF / CELL 04</span>
+  </footer>
+</body>
+</html>

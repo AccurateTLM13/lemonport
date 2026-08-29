@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Great Lakes Industrial Archive — Industry remembered through the people who built it.</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700;800&family=EB+Garamond:ital@0;1&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F1EC;
+    --paper-2:#EAE6DF;
+    --paper-3:#E2DDD4;
+    --ink:#0E0F12;
+    --line:1px solid #0E0F12;
+    --line-light:1px solid #D9D5CE;
+    --stone:#8A9BA8;
+    --stone-dark:#4A5A67;
+    --warm:#C9B99A;
+    --muted:#7A7A78;
+    --max:1440px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Instrument Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  :focus-visible{outline:2px solid var(--stone-dark);outline-offset:2px}
+  .mono{font-family:'JetBrains Mono',monospace;letter-spacing:0.07em;text-transform:uppercase;font-size:10px;line-height:1.5}
+  .bar{border-bottom:var(--line);display:flex;justify-content:space-between;align-items:center;padding:9px 22px;background:var(--paper);position:sticky;top:0;z-index:20;gap:12px;flex-wrap:wrap}
+  header{border-bottom:var(--line);display:grid;grid-template-columns:320px 1fr 340px;max-width:var(--max);margin:0 auto;width:100%}
+  header>div{padding:0 20px;display:flex;align-items:center;min-height:56px;border-right:var(--line)}
+  header>div:last-child{border-right:none;justify-content:space-between;gap:12px}
+  .brand{font-weight:800;letter-spacing:-0.04em;font-size:14px;line-height:1.05}
+  .brand span{font-family:'EB Garamond',serif;font-weight:400;font-style:italic;letter-spacing:-0.02em;display:block;font-size:12px;margin-top:1px}
+  /* HERO */
+  .hero{display:grid;grid-template-columns:320px 1fr 340px;max-width:var(--max);margin:0 auto;width:100%;min-height:580px;border-bottom:var(--line);background:var(--paper)}
+  .hero-rail{border-right:var(--line);padding:28px 20px;display:flex;flex-direction:column;justify-content:space-between;gap:24px;background:var(--paper)}
+  .hero-rail .index{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--stone-dark);font-weight:700}
+  .hero-main{padding:36px 42px;border-right:var(--line);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;gap:28px;background:var(--paper)}
+  .hero-kicker{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--stone-dark);margin:0 0 18px 0;font-weight:700}
+  .hero-title{font-family:'EB Garamond',serif;font-size:clamp(38px,3.8vw,54px);line-height:0.92;letter-spacing:-0.04em;font-weight:400;margin:0;text-wrap:balance}
+  .hero-title b{font-family:'Instrument Sans',sans-serif;font-weight:800;letter-spacing:-0.05em;font-size:0.96em;display:block}
+  .hero-title i{font-style:italic}
+  .hero-sub{max-width:520px;margin-top:18px;border-left:2px solid var(--ink);padding-left:18px}
+  .hero-sub p{font-size:15px;line-height:1.55;color:#2A2E33;margin:0}
+  .hero-sub p.mono{font-size:10px;color:var(--muted);margin-top:10px;letter-spacing:0.06em;text-transform:uppercase;border-left:none;padding-left:0;line-height:1.5}
+  .hero-stats{border:var(--line);display:grid;grid-template-columns:repeat(4,1fr);background:white}
+  .stat{padding:16px 14px;border-right:var(--line);text-align:left}
+  .stat:last-child{border-right:none}
+  .stat .k{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)}
+  .stat .v{font-size:22px;font-weight:800;letter-spacing:-0.04em;margin-top:6px;line-height:1}
+  .stat .sub{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);margin-top:4px}
+  .hero-right{padding:0;display:flex;flex-direction:column;background:white}
+  .hero-image{flex:1;padding:12px;background:var(--paper-2);display:flex;flex-direction:column;gap:10px}
+  .hero-image .frame{border:var(--line);background:white;padding:8px;flex:1;display:flex;flex-direction:column}
+  .hero-image .frame img{width:100%;flex:1;object-fit:cover;filter:grayscale(1) contrast(1.08) sepia(0.06);display:block;min-height:260px}
+  .frame-caption{padding:10px 0 2px 0;display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:var(--line-light);margin-top:8px}
+  .hero-image .meta{padding:12px 14px;background:var(--ink);color:var(--paper);display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .hero-image .meta .mono{color:rgba(255,255,255,.82);font-size:9px}
+  /* BAND */
+  .band{border-bottom:var(--line);display:grid;grid-template-columns:320px 1fr 340px;max-width:var(--max);margin:0 auto;width:100%;padding:0;background:var(--paper);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.07em;text-transform:uppercase}
+  .band div{padding:11px 20px;border-right:var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .band div:last-child{border-right:none}
+  /* COLLECTIONS */
+  .collections{border-bottom:var(--line);display:grid;grid-template-columns:320px 1fr 340px;max-width:var(--max);margin:0 auto;width:100%;background:white;min-height:420px}
+  .coll-rail{border-right:var(--line);padding:32px 20px;display:flex;flex-direction:column;justify-content:space-between;gap:24px;background:var(--paper)}
+  .coll-rail h2{font-size:20px;line-height:1;letter-spacing:-0.03em;font-weight:800;margin:12px 0 0 0}
+  .coll-rail h2 i{font-family:'EB Garamond',serif;font-weight:400;font-style:italic}
+  .coll-main{padding:32px 36px;border-right:var(--line);background:white}
+  .coll-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .coll-card{border:var(--line);background:white;padding:20px 18px;display:flex;flex-direction:column;gap:12px;position:relative;transition:box-shadow .16s ease}
+  .coll-card:hover{box-shadow:0 6px 20px rgba(14,15,18,.07)}
+  .coll-card .top{display:flex;justify-content:space-between;align-items:start;gap:12px}
+  .coll-card .k{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)}
+  .coll-card .count{font-size:34px;font-weight:800;letter-spacing:-0.05em;line-height:1}
+  .coll-card .count small{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.06em;color:var(--muted);font-weight:500;margin-left:4px}
+  .coll-card h3{font-size:13.5px;letter-spacing:-0.01em;font-weight:700;margin:0;text-transform:uppercase}
+  .coll-card p{font-size:12.5px;line-height:1.58;color:#4A4A48;margin:0;flex:1}
+  .coll-card .bar-line{height:2px;background:var(--ink);opacity:0.13;width:100%;margin-top:2px}
+  .coll-right{padding:22px;background:var(--paper-2);display:flex;flex-direction:column;gap:16px}
+  .est{border:var(--line);background:white;padding:18px;text-align:center}
+  .est .mono{color:var(--muted);margin-bottom:8px;font-size:9px}
+  .est .year{font-size:36px;font-weight:800;letter-spacing:-0.05em}
+  .est .desc{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-top:6px;line-height:1.5}
+  /* FEATURED OBJECT */
+  .featured{border-bottom:var(--line);display:grid;grid-template-columns:320px 1fr 340px;max-width:var(--max);margin:0 auto;width:100%;background:white;min-height:520px}
+  .feat-rail{border-right:var(--line);padding:32px 20px;display:flex;flex-direction:column;justify-content:space-between;gap:24px;background:white}
+  .feat-rail h3{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--stone-dark);margin:0;font-weight:700}
+  .feat-rail .object-num{font-size:72px;font-weight:800;letter-spacing:-0.07em;line-height:0.85;margin-top:12px}
+  .feat-rail .object-num span{font-family:'EB Garamond',serif;font-weight:400;font-style:italic;font-size:68px;letter-spacing:-0.04em;color:var(--stone-dark)}
+  .feat-center{padding:32px 36px;border-right:var(--line);display:grid;grid-template-columns:1.1fr 0.9fr;gap:28px;align-items:start}
+  .feat-image{border:var(--line);padding:8px;background:white;display:flex;flex-direction:column}
+  .feat-image img{width:100%;aspect-ratio:4/3;object-fit:cover;filter:grayscale(1) contrast(1.05);display:block}
+  .feat-image figcaption{padding:10px 0 2px 0;display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:var(--line-light);margin-top:8px}
+  .feat-details h4{font-size:22px;line-height:1;letter-spacing:-0.03em;font-weight:800;margin:0 0 12px 0;text-wrap:balance}
+  .feat-details h4 i{font-family:'EB Garamond',serif;font-weight:400;font-style:italic}
+  .feat-details p{font-size:13px;line-height:1.62;color:#2A2E33;margin:0 0 12px 0}
+  .placeholder-box{border:1px dashed #0E0F12;padding:12px;background:var(--paper-2);margin-top:14px}
+  .placeholder-box .mono{color:var(--muted);line-height:1.6;font-size:9px}
+  .feat-meta{padding:22px;display:flex;flex-direction:column;gap:16px;background:var(--paper-2)}
+  .meta-card{border:var(--line);background:white;padding:16px}
+  .meta-card .mono{margin-bottom:10px;display:flex;justify-content:space-between;gap:12px;font-size:9px}
+  .record-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-bottom:var(--line-light)}
+  .record-row:last-child{border-bottom:none}
+  .record-row .k{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)}
+  .record-row .v{font-size:12px;font-weight:600}
+  /* RESEARCH */
+  .research{border-bottom:var(--line);display:grid;grid-template-columns:320px 1fr 340px;max-width:var(--max);margin:0 auto;width:100%;background:white;min-height:380px}
+  .research-rail{border-right:var(--line);padding:32px 20px;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;justify-content:space-between;gap:24px}
+  .research-rail h3{font-size:22px;line-height:0.92;letter-spacing:-0.03em;font-weight:800;margin:0}
+  .research-rail h3 i{font-family:'EB Garamond',serif;font-weight:400;font-style:italic;color:var(--warm)}
+  .research-main{padding:32px 36px;border-right:var(--line);display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  .research-main h4{font-size:13px;letter-spacing:-0.02em;font-weight:700;margin:0 0 10px 0;text-transform:uppercase}
+  .research-main p{font-size:13px;line-height:1.62;color:#2A2E33;margin:0 0 12px 0}
+  .research-main ul{margin:0;padding:0;list-style:none;border-top:var(--line)}
+  .research-main li{padding:10px 0;border-bottom:var(--line-light);display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:12px}
+  .research-main li .mono{color:var(--muted);font-size:9px}
+  .research-side{padding:22px;background:white;display:flex;flex-direction:column;gap:16px}
+  .hours{border:var(--line);padding:16px;background:var(--paper)}
+  .hours h5{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;margin:0 0 10px 0}
+  /* MISSION */
+  .mission{border-bottom:var(--line);display:grid;grid-template-columns:320px 1fr 340px;max-width:var(--max);margin:0 auto;width:100%;background:white;min-height:360px}
+  .mission-rail{border-right:var(--line);padding:32px 20px;background:var(--paper)}
+  .mission-main{padding:36px 42px;border-right:var(--line);display:flex;flex-direction:column;justify-content:center;gap:16px;background:white}
+  .mission-main blockquote{margin:0;font-family:'EB Garamond',serif;font-size:30px;line-height:1.04;letter-spacing:-0.03em;font-style:italic;max-width:560px;text-wrap:balance}
+  .mission-main blockquote b{font-family:'Instrument Sans',sans-serif;font-style:normal;font-weight:800;letter-spacing:-0.04em;color:var(--ink)}
+  .mission-main p{max-width:48ch;font-size:14px;line-height:1.62;color:#2A2E33;margin:0}
+  .mission-side{padding:22px;background:var(--paper-2);display:flex;flex-direction:column;gap:14px}
+  .fact{border-top:var(--line);padding-top:14px}
+  .fact:first-child{border-top:none;padding-top:0}
+  .fact .k{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)}
+  .fact .v{font-size:13px;font-weight:700;margin-top:4px;line-height:1.4}
+  /* CTA */
+  .cta{border-bottom:var(--line);display:grid;grid-template-columns:320px 1fr 340px;max-width:var(--max);margin:0 auto;width:100%;min-height:340px;background:white}
+  .cta-rail{border-right:var(--line);padding:32px 20px;display:flex;flex-direction:column;justify-content:space-between;gap:24px;background:var(--paper)}
+  .cta-center{padding:36px 42px;border-right:var(--line);background:white;display:flex;flex-direction:column;justify-content:center;gap:14px;position:relative}
+  .cta-center .huge{font-size:clamp(42px,4.8vw,64px);line-height:0.88;letter-spacing:-0.05em;font-weight:800;margin:0;text-wrap:balance}
+  .cta-center .huge i{font-family:'EB Garamond',serif;font-weight:400;font-style:italic}
+  .cta-center p{max-width:44ch;font-size:14px;line-height:1.6;color:#2A2E33;margin:0}
+  .cta-actions{margin-top:10px;display:flex;gap:10px}
+  .btn{border:var(--line);padding:13px 16px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.07em;text-transform:uppercase;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:8px;transition:all .16s ease;cursor:pointer}
+  .btn.dark{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .btn.light{background:white}
+  .btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(14,15,18,.08)}
+  .cta-right{padding:22px;background:var(--paper);display:flex;flex-direction:column;gap:14px}
+  .cta-card{border:var(--line);background:white;padding:16px}
+  footer{max-width:var(--max);margin:0 auto;width:100%;padding:14px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted);border-top:var(--line);background:var(--paper)}
+  @media(max-width:1140px){
+    header,.hero,.band,.collections,.featured,.research,.mission,.cta{grid-template-columns:260px 1fr 300px}
+    .feat-center{grid-template-columns:1fr}
+    .coll-grid{grid-template-columns:1fr}
+    .research-main{grid-template-columns:1fr}
+  }
+  @media(max-width:860px){
+    .bar{padding:8px 16px}
+    header,.hero,.band,.collections,.featured,.research,.mission,.cta{grid-template-columns:1fr}
+    header{height:auto;grid-template-columns:1fr 1fr}
+    header>div{border-bottom:var(--line)}
+    .hero-rail{flex-direction:row;align-items:center;padding:16px 20px;border-right:none;border-bottom:var(--line)}
+    .hero-main{border-right:none;border-bottom:var(--line);padding:26px 20px}
+    .hero-title{font-size:36px}
+    .hero-stats{grid-template-columns:1fr 1fr}
+    .stat{border-bottom:var(--line)}
+    .stat:nth-child(2){border-right:none}
+    .stat:last-child{border-right:var(--line)}
+    .coll-rail,.coll-main,.coll-right{border-right:none;border-bottom:var(--line)}
+    .coll-main{padding:24px 20px}
+    .feat-rail,.feat-center,.feat-meta{border-right:none;border-bottom:var(--line)}
+    .feat-center{padding:24px 20px}
+    .research-rail,.research-main,.research-side{border-right:none;border-bottom:var(--line)}
+    .research-main{padding:24px 20px}
+    .mission-rail,.mission-main,.mission-side{border-right:none;border-bottom:var(--line)}
+    .mission-main{padding:26px 20px}
+    .cta-rail,.cta-center,.cta-right{border-right:none;border-bottom:var(--line)}
+    .cta-center{padding:28px 20px}
+    .cta-center .huge{font-size:38px}
+    .cta-actions{flex-direction:column}
+  }
+  @media(max-width:520px){
+    .hero-title{font-size:32px}
+    .hero-stats{grid-template-columns:1fr 1fr}
+    .coll-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <span class="mono">The Great Lakes Industrial Archive — Established 1987</span>
+  <span class="mono" style="color:var(--muted)">Photographs 18,420 · Documents 7,860 · Oral Histories 614 · Objects 1,205</span>
+  <span class="mono" style="white-space:nowrap">Cleveland, Ohio</span>
+</div>
+
+<header>
+  <div><div class="brand">THE GREAT LAKES<span>Industrial Archive</span></div></div>
+  <div style="justify-content:space-between;gap:16px">
+    <span class="mono" style="color:var(--muted)">Nonprofit archive — Documents, photographs, oral histories</span>
+    <span class="mono" style="font-weight:700">Visit · Research · Support</span>
+  </div>
+  <div><span class="mono">Search the collections →</span><span class="mono" style="border:var(--line);padding:5px 10px;background:white">Plan a visit</span></div>
+</header>
+
+<section class="hero" aria-label="Hero — Industry remembered">
+  <div class="hero-rail">
+    <div>
+      <div class="index">The Great Lakes Industrial Archive</div>
+      <div class="mono" style="margin-top:12px;color:var(--ink);line-height:1.6;text-transform:none;letter-spacing:0">Preserving documents,<br>photographs, oral histories,<br>and physical artifacts<br>related to Great Lakes<br>manufacturing history.</div>
+      <div style="margin-top:20px;border-top:var(--line);padding-top:14px">
+        <div class="mono" style="color:var(--muted);margin-bottom:6px">Holdings index</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;line-height:1.9">Photographs — 18,420<br>Documents — 7,860<br>Oral Histories — 614<br>Physical Objects — 1,205</div>
+      </div>
+    </div>
+    <div class="mono" style="color:var(--muted)">Est. 1987 — Cleveland</div>
+  </div>
+
+  <div class="hero-main">
+    <div>
+      <p class="hero-kicker">01 — Institutional hero</p>
+      <h1 class="hero-title"><b>Industry remembered</b><i>through the people who built it.</i></h1>
+      <div class="hero-sub">
+        <p>A scholarly, public archive for the manufacturing life of the Great Lakes — shop floors, neighborhoods, and the records they left behind.</p>
+        <p class="mono">Established 1987 · Nonprofit · Free and open to researchers, educators, and the public.</p>
+      </div>
+    </div>
+
+    <div class="hero-stats" aria-label="Holdings statistics">
+      <div class="stat"><div class="k">Photographs</div><div class="v">18,420</div><div class="sub">records</div></div>
+      <div class="stat"><div class="k">Documents</div><div class="v">7,860</div><div class="sub">records</div></div>
+      <div class="stat"><div class="k">Oral Histories</div><div class="v">614</div><div class="sub">records</div></div>
+      <div class="stat"><div class="k">Physical Objects</div><div class="v">1,205</div><div class="sub">records</div></div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-image">
+      <div class="frame">
+        <img src="../assets/b7c8c42d/photo-1565849904461-04a58ad377e0.webp" alt="Archive reading room with industrial document cases — Cleveland" loading="eager">
+        <div class="frame-caption">
+          <span class="mono" style="font-size:9px">Archive reading room — Cleveland</span>
+          <span class="mono" style="font-size:9px;color:var(--muted)">Est. 1987</span>
+        </div>
+        <div class="mono" style="font-size:8px;color:var(--muted);line-height:1.5;margin-top:4px">The archive holds material from steel, automotive, shipbuilding, glass, rubber, and tooling industries across the Great Lakes basin.</div>
+      </div>
+    </div>
+    <div class="meta">
+      <span class="mono">Holdings — 28,099 records total</span>
+      <span class="mono">1987 — present</span>
+    </div>
+  </div>
+</section>
+
+<div class="band" aria-hidden="true">
+  <div>Established 1987 — Cleveland, Ohio — Nonprofit archive</div>
+  <div>Photographs 18,420 — Documents 7,860 — Oral Histories 614 — Objects 1,205</div>
+  <div style="display:flex;justify-content:space-between;gap:12px"><span>Free &amp; open to the public</span><span>— GLIA</span></div>
+</div>
+
+<section class="collections" aria-label="Collections">
+  <div class="coll-rail">
+    <div>
+      <div class="mono" style="color:var(--stone-dark);margin-bottom:8px;font-weight:700">02 — Collections</div>
+      <h2>Four forms.<br><i>One</i> history.</h2>
+      <div class="mono" style="margin-top:14px;color:var(--muted);line-height:1.6;text-transform:none;letter-spacing:0">Each collection is catalogued,<br>preserved, and made<br>available for research.</div>
+    </div>
+    <div class="mono" style="font-size:9px;color:var(--muted)">28,099 records total</div>
+  </div>
+
+  <div class="coll-main">
+    <div class="coll-grid">
+      <article class="coll-card">
+        <div class="top"><span class="k">Collection 01</span><span class="k">1890 — 1985</span></div>
+        <div class="count">18,420 <small>records</small></div>
+        <h3>Photographs</h3>
+        <p>Shop floors, portraits, aerials, and neighborhood views. Many identified by worker, plant, and year.</p>
+        <div class="bar-line" aria-hidden="true"></div>
+        <span class="mono" style="font-size:9px;color:var(--muted)">Search photographs →</span>
+      </article>
+      <article class="coll-card">
+        <div class="top"><span class="k">Collection 02</span><span class="k">1902 — 1991</span></div>
+        <div class="count">7,860 <small>records</small></div>
+        <h3>Documents</h3>
+        <p>Pay stubs, manuals, union newsletters, company correspondence, and plant records.</p>
+        <div class="bar-line" aria-hidden="true"></div>
+        <span class="mono" style="font-size:9px;color:var(--muted)">Search documents →</span>
+      </article>
+      <article class="coll-card">
+        <div class="top"><span class="k">Collection 03</span><span class="k">1978 — present</span></div>
+        <div class="count">614 <small>records</small></div>
+        <h3>Oral Histories</h3>
+        <p>Recorded interviews with workers, organizers, and families. Transcribed and indexed.</p>
+        <div class="bar-line" aria-hidden="true"></div>
+        <span class="mono" style="font-size:9px;color:var(--muted)">Listen &amp; read →</span>
+      </article>
+      <article class="coll-card">
+        <div class="top"><span class="k">Collection 04</span><span class="k">1910 — 1980</span></div>
+        <div class="count">1,205 <small>records</small></div>
+        <h3>Physical Objects</h3>
+        <p>Tools, badges, garments, and shop artifacts. Stored and photographed for remote reference.</p>
+        <div class="bar-line" aria-hidden="true"></div>
+        <span class="mono" style="font-size:9px;color:var(--muted)">Browse objects →</span>
+      </article>
+    </div>
+  </div>
+
+  <div class="coll-right">
+    <div class="est">
+      <div class="mono">Established</div>
+      <div class="year">1987</div>
+      <div class="desc">Founded by historians and<br>former plant workers to<br>preserve a disappearing record.</div>
+    </div>
+    <div style="border:var(--line);background:white;padding:16px">
+      <div class="mono" style="margin-bottom:8px">Access</div>
+      <div style="font-size:13px;font-weight:700;line-height:1.4">Free and open.<br>Appointments encouraged<br>for object viewing.</div>
+      <div class="mono" style="text-transform:none;letter-spacing:0;color:var(--muted);margin-top:8px">Reading room — Tue–Sat, 10am–5pm</div>
+    </div>
+    <div class="mono" style="font-size:8px;color:var(--muted);line-height:1.5">Counts reflect catalogued records as of 2026. Growth ongoing.</div>
+  </div>
+</section>
+
+<section class="featured" aria-label="Featured archive object">
+  <div class="feat-rail">
+    <div>
+      <h3>03 — Featured archive object</h3>
+      <div class="object-num">18<span>k+</span></div>
+      <div class="mono" style="color:var(--muted);line-height:1.6;text-transform:none;letter-spacing:0;margin-top:12px">From the photograph<br>collection — workers<br>identified wherever<br>possible.</div>
+    </div>
+    <div class="mono" style="font-size:9px;color:var(--muted)">Placeholder — object details use supplied counts only</div>
+  </div>
+
+  <div class="feat-center">
+    <figure class="feat-image" style="margin:0">
+      <img src="../assets/b7c8c42d/photo-1504328345606-18bbc8c9d7d1.webp" alt="Archival photograph of factory workers — representative collection scope" loading="lazy">
+      <figcaption><span class="mono" style="font-size:9px">Collection: Photographs — Undated shop view</span><span class="mono" style="font-size:9px;color:var(--muted)">Fig. 03</span></figcaption>
+      <div class="mono" style="font-size:8px;color:var(--muted);margin-top:6px;line-height:1.4">Image is illustrative of collection scope — representative of plant and portrait holdings.</div>
+    </figure>
+    <div class="feat-details">
+      <div class="mono" style="color:var(--stone-dark);margin-bottom:8px;font-weight:700">Photographs — 18,420 records · Documents — 7,860</div>
+      <h4>A face, a name, <i>a shift.</i></h4>
+      <p>Our cataloging prioritizes identification: who made it, where they worked, and when. Many photographs arrive with names on the back — we keep them there.</p>
+      <p style="color:#5A5E64;font-size:12.5px">Featured object details beyond supplied collection counts are marked as placeholder. No fabrication of dates, locations, or identifiers.</p>
+      <div class="placeholder-box">
+        <div class="mono"><strong style="color:var(--ink)">Placeholder labeling</strong> — Featured object's specific accession number, date, and donor are not supplied and are shown as [placeholder] in the catalog record. Search the holdings for verified records.</div>
+      </div>
+      <div style="margin-top:16px;display:flex;gap:8px">
+        <a href="#" class="btn dark" style="flex:1;justify-content:center">Search photographs <span style="margin-left:8px" aria-hidden="true">→</span></a>
+        <a href="#" class="btn light" style="flex:1;justify-content:center">How we catalog</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="feat-meta">
+    <div class="meta-card">
+      <div class="mono"><span>Holdings at a glance</span><span style="color:var(--muted)">28,099</span></div>
+      <div class="record-row"><span class="k">Photographs</span><span class="v">18,420</span></div>
+      <div class="record-row"><span class="k">Documents</span><span class="v">7,860</span></div>
+      <div class="record-row"><span class="k">Oral Histories</span><span class="v">614</span></div>
+      <div class="record-row"><span class="k">Physical Objects</span><span class="v">1,205</span></div>
+      <div class="mono" style="font-size:8px;color:var(--muted);margin-top:8px;line-height:1.4">Only counts supplied above are claimed. No individual object fabrication.</div>
+    </div>
+    <div style="border:var(--line);padding:14px;background:white">
+      <div class="mono" style="margin-bottom:6px">Research note</div>
+      <div style="font-family:'EB Garamond',serif;font-style:italic;font-size:14px;line-height:1.4">“We keep the name on the back of the photograph. That’s the finding aid.”</div>
+      <div class="mono" style="text-transform:none;letter-spacing:0;color:var(--muted);margin-top:6px">— Cataloging principle, since 1987</div>
+    </div>
+  </div>
+</section>
+
+<section class="research" aria-label="Research and Access">
+  <div class="research-rail">
+    <div>
+      <div class="mono" style="color:var(--warm);margin-bottom:12px;font-weight:700">04 — Research &amp; Access</div>
+      <h3>Come<br>with a<br>question.<br><i>Leave with</i><br>sources.</h3>
+    </div>
+    <div class="mono" style="color:rgba(255,255,255,0.6);font-size:9px;line-height:1.6;text-transform:none;letter-spacing:0">Free &amp; open. We help<br>first-time and<br>experienced<br>researchers alike.</div>
+  </div>
+
+  <div class="research-main">
+    <div>
+      <h4>How to use the archive</h4>
+      <p>Start with the catalog — every record is searchable by name, plant, year, or subject. Reading room staff pull photographs and documents for in-person viewing; oral histories stream with transcripts.</p>
+      <ul>
+        <li><span>Reading room</span><span class="mono">Tue–Sat · 10–5</span></li>
+        <li><span>Catalog</span><span class="mono">Online · Free</span></li>
+        <li><span>Oral histories</span><span class="mono">614 records · Transcribed</span></li>
+        <li><span>Object viewing</span><span class="mono">By appointment</span></li>
+      </ul>
+    </div>
+    <div>
+      <h4>For educators &amp; families</h4>
+      <p>We host class visits and family research sessions. Many visitors arrive with a single photograph or pay stub and leave with context about the plant, the neighborhood, and the work.</p>
+      <div style="border:var(--line);padding:14px;background:var(--paper);margin-top:12px">
+        <div class="mono" style="margin-bottom:6px">Start here</div>
+        <div style="font-size:12px;line-height:1.6"><strong>Search by plant →</strong> if you know where they worked<br><strong>Search by name →</strong> if you have a photograph or document</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="research-side">
+    <div class="hours">
+      <h5>Reading room</h5>
+      <div style="font-size:13px;line-height:1.6"><strong>Cleveland — University Circle</strong><br>Free and open to the public<br>Tuesday–Saturday, 10am–5pm</div>
+      <div class="mono" style="text-transform:none;letter-spacing:0;color:var(--muted);margin-top:8px">Appointments encouraged for object viewing. Walk-ins welcome for photographs and documents.</div>
+    </div>
+    <div style="border:var(--line);padding:16px;background:var(--ink);color:var(--paper)">
+      <div class="mono" style="color:var(--warm);margin-bottom:6px">Oral histories — 614 records</div>
+      <div style="font-size:12px;line-height:1.5">Recorded interviews with workers, organizers, and families. Indexed by plant and subject.</div>
+      <a href="#" class="btn light" style="margin-top:12px;width:100%;justify-content:center;background:var(--paper)">Browse oral histories <span style="margin-left:6px" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="mission" aria-label="Preservation mission">
+  <div class="mission-rail">
+    <div class="mono" style="color:var(--stone-dark);font-weight:700">05 — Preservation mission</div>
+    <div style="margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:10px;line-height:1.7;color:var(--muted)">Not a corporate museum.<br>A public record.<br>Built by the people<br>who kept the material.</div>
+  </div>
+  <div class="mission-main">
+    <blockquote>“Industry <b>remembered</b> is not<br>about machines. It’s about<br>who showed up to run them.”</blockquote>
+    <p>We preserve material that industry itself often discarded: the manual that went home in a toolbox, the portrait on the break-room wall, the interview recorded at a kitchen table. That’s the history that would otherwise disappear.</p>
+    <p style="color:#5A5E64">Established 1987 by historians and former plant workers. Nonprofit, independent, and accountable to the communities whose history we hold.</p>
+  </div>
+  <div class="mission-side">
+    <div class="fact"><div class="k">Founded</div><div class="v">1987 — by historians &amp; former workers</div></div>
+    <div class="fact"><div class="k">Holdings</div><div class="v">28,099 catalogued records — photographs, documents, oral histories, objects</div></div>
+    <div class="fact"><div class="k">Stewardship</div><div class="v">Climate-controlled storage · Digitization · Transcription</div></div>
+    <div class="fact"><div class="k">Support</div><div class="v">Donations and grants — free access maintained</div></div>
+  </div>
+</section>
+
+<section class="cta" aria-label="Visit">
+  <div class="cta-rail">
+    <div class="mono" style="color:var(--muted)">06 — Visit / Contact</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.6">We answer<br>research questions<br>by email and<br>in the reading room.</div>
+  </div>
+  <div class="cta-center">
+    <div class="mono" style="color:var(--stone-dark);margin-bottom:10px;font-weight:700">The Great Lakes Industrial Archive — Visit</div>
+    <div class="huge">Bring <i>what</i><br>you have.</div>
+    <p>A photograph, a name, a plant, a year — whatever you hold, we can help place it in the larger holdings.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn dark">Plan a visit <span aria-hidden="true">→</span></a>
+      <a href="#" class="btn light">Ask a research question <span aria-hidden="true">↗</span></a>
+    </div>
+  </div>
+  <div class="cta-right">
+    <div class="cta-card">
+      <div class="mono" style="color:var(--muted)">Visit</div>
+      <strong style="font-size:13px">Cleveland — University Circle</strong>
+      <div class="mono" style="text-transform:none;letter-spacing:0;color:var(--muted);margin-top:6px">Reading room — Tue–Sat, 10am–5pm<br>Free and open · Appointments for objects</div>
+    </div>
+    <div class="cta-card">
+      <div class="mono" style="color:var(--muted)">Contact</div>
+      <div style="font-size:12px;line-height:1.6"><strong>research@glia.archive</strong><br>+1 (216) 555-0187</div>
+      <div class="mono" style="text-transform:none;letter-spacing:0;color:var(--muted);margin-top:6px">28,099 records — searchable online</div>
+    </div>
+    <div class="mono" style="font-size:8px;color:var(--muted);line-height:1.5">Only holdings counts and establishment year supplied are claimed. Featured object details are placeholder where not supplied.</div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 The Great Lakes Industrial Archive — Established 1987 — Nonprofit</span>
+  <span>Photographs 18,420 · Documents 7,860 · Oral Histories 614 · Physical Objects 1,205 — Cleveland, Ohio</span>
+</footer>
+
+</body>
+</html>

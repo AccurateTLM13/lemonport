@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE GREAT LAKES INDUSTRIAL ARCHIVE</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink: #1c1b19;
+    --paper: #f7f5f0;
+    --warm: #ece8df;
+    --steel: #8fa8bc;
+    --rule: #d2cdc3;
+    --muted: #87827a;
+    --sans: 'Georgia', 'Times New Roman', serif;
+    --display: 'Georgia', 'Times New Roman', serif;
+    --mono: 'Courier New', monospace;
+  }
+
+  html { font-size: 16px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    padding: 1.25rem 2rem;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    position: sticky;
+    top: 0;
+    background: var(--paper);
+    z-index: 10;
+  }
+
+  @media (min-width: 960px) { .header { padding: 1.25rem 3rem; } }
+
+  .header-brand {
+    font-family: var(--display);
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .header-nav {
+    display: flex;
+    gap: 1.25rem;
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .header-nav a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.15s;
+    padding: 0.2rem 0;
+    border-bottom: 1px solid transparent;
+  }
+
+  .header-nav a:hover { color: var(--ink); border-bottom-color: var(--ink); }
+
+  @media (max-width: 639px) {
+    .header-nav { gap: 0.75rem; font-size: 0.45rem; }
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 5rem 2rem 4rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  @media (min-width: 960px) { .hero { padding: 6rem 3rem 5rem; } }
+
+  .hero-inner { max-width: 800px; }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  .hero-title {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2rem, 5.5vw, 3.8rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-rule {
+    width: 50px;
+    height: 2px;
+    background: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: #5a5854;
+    max-width: 540px;
+  }
+
+  .hero-meta {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 2rem;
+    font-family: var(--mono);
+    font-size: 0.45rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── SECTION ── */
+  .section { padding: 4rem 2rem; border-bottom: 1px solid var(--rule); }
+  @media (min-width: 960px) { .section { padding: 5rem 3rem; } }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.45rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* ── COLLECTIONS ── */
+  .collections {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  @media (min-width: 640px) { .collections { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 960px) { .collections { grid-template-columns: 1fr 1fr 1fr 1fr; } }
+
+  .collection {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  @media (min-width: 640px) {
+    .collection { padding: 2rem 1.5rem; border-bottom: none; border-right: 1px solid var(--rule); }
+    .collection:nth-child(2n) { border-right: none; }
+    .collection:nth-child(-n+2) { border-bottom: 1px solid var(--rule); }
+  }
+
+  @media (min-width: 960px) {
+    .collection { border-right: 1px solid var(--rule); border-bottom: none; padding: 2.5rem 1.5rem; }
+    .collection:last-child { border-right: none; }
+    .collection:nth-child(-n+2) { border-bottom: none; }
+    .collection:nth-child(-n+4) { border-bottom: 1px solid var(--rule); }
+  }
+
+  .collection-type {
+    font-family: var(--mono);
+    font-size: 0.45rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .collection-count {
+    font-family: var(--display);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .collection-label {
+    font-family: var(--display);
+    font-size: 0.85rem;
+    color: #888;
+  }
+
+  /* ── FEATURED OBJECT ── */
+  .featured-obj {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  @media (min-width: 960px) {
+    .featured-obj { grid-template-columns: 1fr 1fr; gap: 3rem; }
+  }
+
+  .obj-image {
+    background: var(--warm);
+    border: 1px solid var(--rule);
+    aspect-ratio: 4/3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    padding: 2rem;
+  }
+
+  .obj-image::before {
+    content: 'CATALOG / GLIA-2024-0847';
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    font-family: var(--mono);
+    font-size: 0.4rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .obj-placeholder-text {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .obj-details h3 {
+    font-family: var(--display);
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .obj-details p {
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: #666;
+    margin-bottom: 1rem;
+  }
+
+  .obj-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    margin-top: 1.5rem;
+  }
+
+  .obj-meta-item {
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .obj-meta-item:nth-child(odd) { padding-right: 1rem; border-right: 1px solid var(--rule); }
+  .obj-meta-item:nth-child(even) { padding-left: 1rem; }
+
+  .obj-meta-key {
+    font-family: var(--mono);
+    font-size: 0.4rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .obj-meta-val {
+    font-family: var(--display);
+    font-size: 0.85rem;
+  }
+
+  /* ── RESEARCH ── */
+  .research {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  @media (min-width: 640px) { .research { grid-template-columns: 1fr 1fr; } }
+
+  .research-block {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  @media (min-width: 640px) {
+    .research-block { padding: 0 1.5rem; border-bottom: none; border-right: 1px solid var(--rule); }
+    .research-block:first-child { padding-left: 0; }
+    .research-block:last-child { border-right: none; padding-right: 0; }
+  }
+
+  .research-block h3 {
+    font-family: var(--display);
+    font-size: 1.05rem;
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .research-block p, .research-block ul {
+    font-size: 0.88rem;
+    line-height: 1.75;
+    color: #666;
+  }
+
+  .research-block ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-top: 0.75rem;
+  }
+
+  .research-block li::before {
+    content: '/ ';
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    color: var(--steel);
+  }
+
+  .research-hours {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-top: 0.75rem;
+    line-height: 1.9;
+  }
+
+  /* ── MISSION ── */
+  .mission { max-width: 640px; }
+
+  .mission-mark {
+    font-family: var(--display);
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--rule);
+    margin-bottom: 0.5rem;
+  }
+
+  .mission blockquote {
+    font-family: var(--display);
+    font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+    line-height: 1.45;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+  }
+
+  .mission p {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #666;
+  }
+
+  /* ── CTA ── */
+  .cta {
+    padding: 5rem 2rem;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  @media (min-width: 960px) { .cta { padding: 6rem 3rem; } }
+
+  .cta-inner { max-width: 600px; }
+
+  .cta .section-label { color: rgba(247,245,240,0.3); }
+  .cta .section-label::after { background: rgba(247,245,240,0.1); }
+
+  .cta-title {
+    font-family: var(--display);
+    font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(247,245,240,0.5);
+    margin-bottom: 2rem;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--paper);
+    padding: 0.9rem 2rem;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .cta-btn:hover { background: var(--steel); transform: translateY(-1px); }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 1.5rem 2rem;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem;
+    font-family: var(--mono);
+    font-size: 0.4rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-brand">THE GREAT LAKES INDUSTRIAL ARCHIVE</div>
+    <nav class="header-nav">
+      <a href="#collections">Collections</a>
+      <a href="#featured">Featured</a>
+      <a href="#research">Research</a>
+      <a href="#mission">Mission</a>
+      <a href="#visit">Visit</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">ESTABLISHED 1987 &mdash; GREAT LAKES REGION</div>
+      <h1 class="hero-title">THE GREAT LAKES<br>INDUSTRIAL ARCHIVE</h1>
+      <div class="hero-rule"></div>
+      <p class="hero-sub">Industry remembered through the people who built it. A nonprofit archive preserving documents, photographs, oral histories, and physical artifacts related to Great Lakes manufacturing history.</p>
+      <div class="hero-meta">
+        <span>EST / 1987</span>
+        <span>TYPE / NONPROFIT</span>
+        <span>REGION / GREAT LAKES</span>
+        <span>ACCESS / PUBLIC</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLLECTIONS -->
+  <section class="section" id="collections">
+    <div class="section-label">COLLECTIONS</div>
+    <div class="collections">
+      <div class="collection">
+        <div class="collection-type">PHOTOGRAPHS</div>
+        <div class="collection-count">18,420</div>
+        <div class="collection-label">Records</div>
+      </div>
+      <div class="collection">
+        <div class="collection-type">DOCUMENTS</div>
+        <div class="collection-count">7,860</div>
+        <div class="collection-label">Records</div>
+      </div>
+      <div class="collection">
+        <div class="collection-type">ORAL HISTORIES</div>
+        <div class="collection-count">614</div>
+        <div class="collection-label">Records</div>
+      </div>
+      <div class="collection">
+        <div class="collection-type">PHYSICAL OBJECTS</div>
+        <div class="collection-count">1,205</div>
+        <div class="collection-label">Records</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED OBJECT -->
+  <section class="section" id="featured">
+    <div class="section-label">FEATURED OBJECT</div>
+    <div class="featured-obj">
+      <div class="obj-image">
+        <div class="obj-placeholder-text">[PHOTOGRAPH / PLACEHOLDER]</div>
+      </div>
+      <div class="obj-details">
+        <h3>Assembly Line Photograph, Great Lakes Steel Corp.</h3>
+        <p>A gelatin silver print documenting the open-hearth furnace operations at Great Lakes Steel Corporation, Zug Island, Michigan. Circa 1952. Donated by the descendants of a shift supervisor.</p>
+        <div class="obj-meta">
+          <div class="obj-meta-item">
+            <div class="obj-meta-key">MEDIUM</div>
+            <div class="obj-meta-val">Gelatin Silver Print</div>
+          </div>
+          <div class="obj-meta-item">
+            <div class="obj-meta-key">DATE</div>
+            <div class="obj-meta-val">Circa 1952</div>
+          </div>
+          <div class="obj-meta-item">
+            <div class="obj-meta-key">DIMENSIONS</div>
+            <div class="obj-meta-val">8 &times; 10 in.</div>
+          </div>
+          <div class="obj-meta-item">
+            <div class="obj-meta-key">CATALOG</div>
+            <div class="obj-meta-val">GLIA-2024-0847</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section class="section" id="research">
+    <div class="section-label">RESEARCH &amp; ACCESS</div>
+    <div class="research">
+      <div class="research-block">
+        <h3>Access</h3>
+        <p>The archive is open to researchers, students, journalists, and the public. Collections can be browsed on-site or requested through our digital catalog.</p>
+        <ul>
+          <li>On-site reading room</li>
+          <li>Digital catalog access</li>
+          <li>Reproduction requests</li>
+          <li>Research consultations</li>
+        </ul>
+      </div>
+      <div class="research-block">
+        <h3>Location &amp; Hours</h3>
+        <p>The archive is located in the historic Pullman-Standard building on the industrial east side.</p>
+        <div class="research-hours">
+          TUES&ndash;SAT / 10:00&ndash;17:00<br>
+          SUN / BY APPOINTMENT<br>
+          MON / CLOSED
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION -->
+  <section class="section" id="mission">
+    <div class="section-label">PRESERVATION MISSION</div>
+    <div class="mission">
+      <div class="mission-mark">&ldquo;</div>
+      <blockquote>The Great Lakes built America&rsquo;s industrial backbone. These records are how we remember the hands that built it.</blockquote>
+      <p>The Great Lakes Industrial Archive was founded in 1987 to preserve the material record of manufacturing in the Great Lakes region. Our collection spans more than a century of industrial activity, from early foundries to modern automated production.</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="visit">
+    <div class="cta-inner">
+      <div class="section-label">VISIT</div>
+      <h2 class="cta-title">Come see the record<br>of what was built.</h2>
+      <p class="cta-text">Visit the archive or search our digital catalog. Research appointments available for deep collection access.</p>
+      <a href="#" class="cta-btn">PLAN YOUR VISIT</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>THE GREAT LAKES INDUSTRIAL ARCHIVE</span>
+    <span>EST 1987</span>
+    <span>&copy; 2026 GLIA</span>
+  </footer>
+
+</body>
+</html>

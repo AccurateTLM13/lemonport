@@ -92,6 +92,10 @@ function validateSpecimenRecord(record, seenIds) {
     errors.push(`Record ${record.id}: status must be one of ${STATUSES.join(", ")}.`);
   }
 
+  if (record.favorite !== undefined && typeof record.favorite !== "boolean") {
+    errors.push(`Record ${record.id}: favorite must be a boolean when provided.`);
+  }
+
   if (record.date && !/^\d{4}-\d{2}-\d{2}$/.test(record.date)) {
     errors.push(`Record ${record.id}: date must be YYYY-MM-DD.`);
   }
@@ -149,6 +153,13 @@ function validateSpecimens(data) {
     errors.push(...result.errors);
     warnings.push(...result.warnings);
   });
+
+  const publishedFavoriteCount = data.records.filter(
+    (record) => record && record.status === PUBLIC_STATUS && record.favorite === true
+  ).length;
+  if (publishedFavoriteCount > 8) {
+    warnings.push(`Favorites rail has ${publishedFavoriteCount} published records; consider keeping it to eight or fewer.`);
+  }
 
   return { errors, warnings };
 }
@@ -340,6 +351,55 @@ function renderCard(record, position) {
         </article>`;
 }
 
+function renderFavoriteCard(record, { isClone = false } = {}) {
+  const image = asText(record.image);
+  const keyboardIsolation = isClone ? ' tabindex="-1"' : "";
+  const media = image
+    ? `<img src="${escapeHtml(image)}" alt="Screenshot of ${escapeHtml(record.title)}" loading="eager" width="1440" height="900">`
+    : `<span class="favorites-card__no-image">NO IMAGE</span>`;
+  return `        <article class="favorites-card">
+          <a class="favorites-card__link" href="source/${escapeHtml(record.id)}.html" target="_blank" rel="noopener"${keyboardIsolation}>
+            <span class="favorites-card__media">${media}</span>
+            <span class="favorites-card__body">
+              <span class="favorites-card__badge">[ FAVORITE ]</span>
+              <span class="favorites-card__title">${escapeHtml(record.title)}</span>
+              <span class="favorites-card__meta"><span>${escapeHtml(asText(record.model))}</span><span>${escapeHtml(asText(record.skill))}</span></span>
+            </span>
+          </a>
+        </article>`;
+}
+
+function renderFavoritesRail(records) {
+  const favorites = records.filter((record) => record.favorite === true);
+  if (!favorites.length) return "";
+
+  const cards = favorites.map((record) => renderFavoriteCard(record)).join("\n");
+  const clonedCards = favorites.map((record) => renderFavoriteCard(record, { isClone: true })).join("\n");
+  const multiple = favorites.length > 1;
+  const control = multiple
+    ? `<button type="button" class="favorites-rail__toggle" data-favorites-toggle aria-pressed="false">PAUSE MOTION</button>`
+    : "";
+  const clone = multiple
+    ? `\n        <div class="favorites-rail__set favorites-rail__set--clone" data-favorites-clone aria-hidden="true" inert>\n${clonedCards}\n        </div>`
+    : "";
+
+  return `<section class="favorites-rail favorites-rail--${multiple ? "multiple" : "single"}" data-favorites-rail aria-labelledby="favorites-title">
+  <div class="favorites-rail__intro">
+    <p class="eyebrow">OPERATOR PICKS</p>
+    <h2 id="favorites-title">Favorites from the filing cabinet</h2>
+    <p class="favorites-rail__lede">Hand-marked in Studio. The operator may be biased.</p>
+    ${control}
+  </div>
+  <div class="favorites-rail__viewport" data-favorites-viewport tabindex="0" role="region" aria-label="Operator picks">
+    <div class="favorites-rail__track" data-favorites-track>
+      <div class="favorites-rail__set" data-favorites-set>
+${cards}
+      </div>${clone}
+    </div>
+  </div>
+</section>`;
+}
+
 function renderDrawer(record, position) {
   const tags = asTags(record.tags);
   const assets = Array.isArray(record.assets) ? record.assets.filter(asText) : [];
@@ -385,6 +445,7 @@ function renderIndexPage(data) {
   const records = publishable(data.records);
   const models = tallyBy(records, "model");
   const skills = tallyBy(records, "skill");
+  const favoritesRail = renderFavoritesRail(records);
 
   const stats = `
     <dl class="hero-stats">
@@ -466,6 +527,7 @@ ${masthead("SPECIMEN VAULT")}
   <p>Finished HTML outputs, filed exactly as they came off the bench. The point of the place is the specimen itself &mdash; click one and see how it actually looks in a browser. The file card tells you what went into it.</p>
 ${stats}
 </section>
+${favoritesRail}
 ${jumpNav}
 <section class="archive-note">
   <p><strong>What this is:</strong> a public filing cabinet for generated pages &mdash; every card opens the real file in your browser, with the prompt, model, and skill one INFO click away. <strong>What it is not:</strong> a leaderboard, a live demo host, or an endorsement of any model.</p>
@@ -523,6 +585,8 @@ module.exports = {
   validateSpecimens,
   sanitizeSpecimenHtml,
   applyAssetMap,
+  publishable,
+  renderFavoritesRail,
   buildSpecimens,
   asText
 };

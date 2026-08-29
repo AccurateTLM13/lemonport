@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NORTHLINE COFFEE</title>
+<style>
+  :root {
+    --bg: #EAEAE4;
+    --text: #1C1917;
+    --accent: #B04E35;
+    --line: rgba(28, 25, 23, 0.2);
+    --font-primary: 'Inter', Helvetica, -apple-system, sans-serif;
+    --font-mono: 'Space Mono', 'SF Mono', monospace;
+    --font-serif: 'Georgia', 'Times New Roman', serif;
+  }
+  
+  * { box-sizing: border-box; }
+  
+  html, body { overflow-x: hidden; }
+  body {
+    margin: 0; padding: 0;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-primary);
+    line-height: 1.4;
+    overflow-x: hidden;
+  }
+  
+  .mono { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; }
+  .serif { font-family: var(--font-serif); font-style: italic; }
+  
+  h1, h2, h3, h4 { font-weight: 500; margin: 0; letter-spacing: -0.02em; }
+  h1 { font-size: clamp(4rem, 10vw, 9rem); line-height: 0.85; max-width: 15ch; text-transform: uppercase; }
+  h2 { font-size: clamp(3rem, 6vw, 5rem); line-height: 1; }
+  
+  .header { 
+    display: flex; justify-content: space-between; padding: 1.5rem 2rem; 
+    border-bottom: 1px solid var(--text); position: sticky; top: 0; 
+    background: var(--bg); z-index: 100;
+  }
+  
+  .hero {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    min-height: 90vh;
+    border-bottom: 1px solid var(--text);
+  }
+  
+  .hero-text {
+    grid-column: 1 / 7;
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid var(--text);
+  }
+  
+  .hero-subtitle { font-size: clamp(1.5rem, 3vw, 2.5rem); line-height: 1.1; max-width: 15ch; }
+  
+  .hero-image-wrapper {
+    grid-column: 7 / 13;
+    padding: 2rem;
+    display: flex;
+  }
+  
+  .hero-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    mix-blend-mode: multiply;
+  }
+  
+  .feature-section {
+    display: grid; grid-template-columns: repeat(12, 1fr); 
+    border-bottom: 1px solid var(--text);
+  }
+  
+  .feature-title { 
+    grid-column: 1 / 5; 
+    padding: 4rem 2rem;
+    border-right: 1px solid var(--text);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .feature-specs { 
+    grid-column: 5 / 9; 
+    padding: 4rem 2rem;
+    border-right: 1px solid var(--text);
+  }
+  
+  .feature-notes { 
+    grid-column: 9 / 13; 
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .spec-row { 
+    display: flex; justify-content: space-between; 
+    border-bottom: 1px solid var(--line); 
+    padding: 1rem 0; 
+  }
+  .spec-row:last-child { border-bottom: none; }
+  
+  .spec-label { color: #666; }
+  .notes-list { font-size: clamp(2rem, 3vw, 3rem); line-height: 1.2; color: var(--accent); margin-top: auto; }
+  
+  .offerings { padding: 8rem 2rem; border-bottom: 1px solid var(--text); }
+  .offerings-header { display: flex; justify-content: space-between; margin-bottom: 4rem; border-bottom: 1px solid var(--text); padding-bottom: 1rem; }
+  
+  .offering-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  
+  .offering-card { 
+    display: flex; flex-direction: column; 
+    border: 1px solid var(--text);
+    background: var(--bg);
+  }
+  
+  .offering-card.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .offering-card.active .spec-row { border-color: rgba(255,255,255,0.2); }
+  .offering-card.active .spec-label { color: rgba(255,255,255,0.6); }
+  
+  .card-img-wrapper {
+    aspect-ratio: 1;
+    border-bottom: 1px solid var(--line);
+    padding: 0;
+  }
+  .card-img-wrapper img {
+    width: 100%; height: 100%; object-fit: cover; display: block; mix-blend-mode: multiply; filter: grayscale(100%);
+  }
+  
+  .offering-card.active .card-img-wrapper { border-bottom-color: rgba(255,255,255,0.2); }
+  .offering-card.active .card-img-wrapper img { mix-blend-mode: normal; filter: none; }
+  
+  .card-content { padding: 2rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between; }
+  
+  .card-title { font-size: clamp(1.5rem, 2vw, 2.5rem); margin: 1.5rem 0 3rem 0; }
+  
+  .philosophy { padding: 12rem 2rem; text-align: center; border-bottom: 1px solid var(--text); }
+  .philosophy p { font-size: clamp(2.5rem, 5vw, 5rem); max-width: 25ch; margin: 0 auto; line-height: 1.1; color: var(--accent); }
+  
+  .cta { display: flex; justify-content: space-between; align-items: flex-end; padding: 8rem 2rem; background: var(--bg); color: var(--text); }
+  .btn { display: inline-block; padding: 1.5rem 3rem; border: 1px solid var(--text); color: var(--text); text-decoration: none; transition: all 0.2s; font-size: 1.125rem; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; }
+  .btn:hover { background: var(--text); color: var(--bg); }
+  
+  @media (max-width: 1024px) {
+    .hero-text { grid-column: 1 / 13; border-right: none; border-bottom: 1px solid var(--text); min-height: 50vh; }
+    .hero-image-wrapper { grid-column: 1 / 13; min-height: 40vh; }
+    
+    .feature-title { grid-column: 1 / 13; border-right: none; border-bottom: 1px solid var(--text); }
+    .feature-specs { grid-column: 1 / 7; }
+    .feature-notes { grid-column: 7 / 13; }
+    
+    .offering-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  
+  @media (max-width: 768px) {
+    h1 { font-size: 14vw; word-break: break-word; }
+    .hero-text { padding: 3rem 1.5rem; }
+    .hero-subtitle { margin-top: 3rem; }
+    .hero-image-wrapper { padding: 1.5rem; }
+    
+    .feature-title, .feature-specs, .feature-notes { grid-column: 1 / 13; padding: 3rem 1.5rem; border-right: none; border-bottom: 1px solid var(--text); }
+    .feature-notes { border-bottom: none; }
+    
+    .offering-grid { grid-template-columns: 1fr; }
+    .offerings, .philosophy, .cta { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .cta { flex-direction: column; align-items: stretch; gap: 3rem; }
+    .btn { text-align: center; }
+  }
+</style>
+</head>
+<body>
+  <header class="header mono">
+    <span>NORTHLINE COFFEE</span>
+    <span>EST. 2026</span>
+  </header>
+  
+  <div class="hero">
+    <div class="hero-text">
+      <div class="mono">ROASTER / INDEPENDENT</div>
+      <div>
+        <h1>Northline<br>Coffee</h1>
+        <div class="subtitle serif hero-subtitle">Coffee with a known origin.</div>
+      </div>
+    </div>
+    <div class="hero-image-wrapper">
+      <img src="file:///C:/Users/johnp/.gemini/antigravity-ide/brain/109da52d-8291-4985-9c5c-b8e6f2abe88c/northline_coffee_hero_1787607333368.jpg" alt="Northline Coffee Presentation" />
+    </div>
+  </div>
+  
+  <div class="feature-section">
+    <div class="feature-title">
+      <div class="mono" style="margin-bottom: 3rem;">FEATURED RELEASE</div>
+      <h2 style="margin-top: auto;">LAS FLORES / 04</h2>
+    </div>
+    <div class="feature-specs mono">
+      <div class="spec-row"><span class="spec-label">ORIGIN</span><span>Huila, Colombia</span></div>
+      <div class="spec-row"><span class="spec-label">PRODUCER</span><span>Las Flores</span></div>
+      <div class="spec-row"><span class="spec-label">PROCESS</span><span>Washed</span></div>
+      <div class="spec-row"><span class="spec-label">VARIETY</span><span>Caturra</span></div>
+      <div class="spec-row"><span class="spec-label">ALTITUDE</span><span>1,850 MASL</span></div>
+      <div class="spec-row"><span class="spec-label">ROAST</span><span>Light</span></div>
+    </div>
+    <div class="feature-notes">
+      <div class="mono" style="margin-bottom: 3rem;">TASTING NOTES</div>
+      <div class="notes-list serif">
+        Red apple<br>
+        Caramel<br>
+        Citrus
+      </div>
+    </div>
+  </div>
+  
+  <div class="offerings">
+    <div class="offerings-header mono">
+      <span>CURRENT OFFERINGS</span>
+      <span>03 RELEASES</span>
+    </div>
+    <div class="offering-grid">
+      <div class="offering-card active">
+        <div class="card-img-wrapper">
+          <img src="file:///C:/Users/johnp/.gemini/antigravity-ide/brain/109da52d-8291-4985-9c5c-b8e6f2abe88c/northline_coffee_hero_1787607333368.jpg" alt="Las Flores Coffee" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="mono">RELEASE 04</div>
+            <h4 class="card-title">LAS FLORES</h4>
+          </div>
+          <div class="mono">
+            <div class="spec-row"><span class="spec-label">ORIGIN</span><span>COLOMBIA</span></div>
+            <div class="spec-row"><span class="spec-label">PROCESS</span><span>WASHED</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="offering-card">
+        <div class="card-img-wrapper">
+          <img src="file:///C:/Users/johnp/.gemini/antigravity-ide/brain/109da52d-8291-4985-9c5c-b8e6f2abe88c/coffee_placeholder_bag_1787608375934.jpg" alt="Placeholder Bag" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="mono" style="color: var(--accent);">RELEASE 05</div>
+            <h4 class="card-title">[ PLACEHOLDER ]</h4>
+          </div>
+          <div class="mono">
+            <div class="spec-row"><span class="spec-label">ORIGIN</span><span>[ PENDING ]</span></div>
+            <div class="spec-row"><span class="spec-label">PROCESS</span><span>[ PENDING ]</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="offering-card">
+        <div class="card-img-wrapper">
+          <img src="file:///C:/Users/johnp/.gemini/antigravity-ide/brain/109da52d-8291-4985-9c5c-b8e6f2abe88c/coffee_placeholder_beans_1787608384766.jpg" alt="Placeholder Beans" />
+        </div>
+        <div class="card-content">
+          <div>
+            <div class="mono" style="color: var(--accent);">RELEASE 06</div>
+            <h4 class="card-title">[ PLACEHOLDER ]</h4>
+          </div>
+          <div class="mono">
+            <div class="spec-row"><span class="spec-label">ORIGIN</span><span>[ PENDING ]</span></div>
+            <div class="spec-row"><span class="spec-label">PROCESS</span><span>[ PENDING ]</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="philosophy serif">
+    <p>We roast to reveal the inherent qualities of the origin, not to obscure them with process.</p>
+  </div>
+  
+  <div class="cta">
+    <h2>EXPLORE<br>THE SHOP</h2>
+    <a href="#" class="btn mono">VIEW ALL COFFEE</a>
+  </div>
+</body>
+</html>

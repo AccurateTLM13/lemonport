@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FIELDNOTE / DAILY 01 — A5 notebook, 192 dot-grid pages, 100 gsm paper, lay-flat binding, made in Japan.">
+  <title>FIELDNOTE — Daily 01</title>
+  <style data-system-form-inline="core.css">
+:root {
+  color-scheme: light;
+  --ease: cubic-bezier(.2, .75, .2, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  overflow-x: clip;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body,
+button,
+a {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  color: inherit;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 10px;
+  left: 10px;
+  padding: 12px 16px;
+  color: #fff;
+  background: #111;
+  transform: translateY(-160%);
+  transition: transform .2s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.site-header {
+  position: sticky;
+  z-index: 30;
+  top: 0;
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr) auto auto;
+  min-height: 64px;
+  border-bottom: 1px solid currentColor;
+  background: color-mix(in srgb, var(--page, #f2efe7) 92%, transparent);
+  backdrop-filter: blur(16px);
+}
+
+.site-header > * {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: 0 24px;
+}
+
+.brand {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.header-meta {
+  border-left: 1px solid currentColor;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.header-cta {
+  justify-content: center;
+  min-width: 150px;
+  border-left: 1px solid currentColor;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color .25s ease, background .25s ease;
+}
+
+.header-cta:hover,
+.header-cta:focus-visible {
+  color: var(--page, #f2efe7);
+  background: var(--ink, #111);
+}
+
+.eyebrow,
+.micro {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.section-index {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 58px;
+  padding: 0 28px;
+  border-top: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 220px;
+  min-height: 56px;
+  gap: 26px;
+  padding: 0 20px;
+  border: 1px solid currentColor;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: transform .25s var(--ease), color .25s ease, background .25s ease;
+}
+
+.button::after {
+  content: '↗';
+  font-size: 20px;
+  line-height: 1;
+}
+
+.button:hover,
+.button:focus-visible {
+  transform: translateY(-3px);
+}
+
+:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 4px;
+}
+
+.progress {
+  position: fixed;
+  z-index: 40;
+  top: 63px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  pointer-events: none;
+  transform: scaleX(var(--progress, 0));
+  transform-origin: left;
+  background: var(--signal, #f04b23);
+}
+
+.image-frame {
+  position: relative;
+  overflow: hidden;
+  background: #d7d2c5;
+}
+
+.image-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1s var(--ease), filter .5s ease;
+}
+
+.image-frame:hover img {
+  transform: scale(1.025);
+}
+
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .75s var(--ease), transform .75s var(--ease);
+}
+
+.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 760px) {
+  .site-header {
+    grid-template-columns: 1fr auto;
+    min-height: 56px;
+  }
+
+  .site-header > * {
+    padding: 0 16px;
+  }
+
+  .header-meta {
+    display: none;
+  }
+
+  .header-cta {
+    min-width: 110px;
+  }
+
+  .progress {
+    top: 55px;
+  }
+
+  .section-index {
+    min-height: 50px;
+    padding: 0 16px;
+  }
+
+  .button {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+</style>
+  <style data-system-form-inline="fieldnote.css">
+body.fieldnote {
+  --page: #f1ece1;
+  --ink: #121212;
+  --signal: #2148d8;
+  --bone: #ddd3bf;
+  --selected-cover: #121212;
+  color: var(--ink);
+  background: var(--page);
+}
+
+.fieldnote .header-cta {
+  color: var(--page);
+  background: var(--signal);
+}
+
+.fn-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(440px, 5fr);
+  min-height: calc(100vh - 64px);
+  border-bottom: 1px solid var(--ink);
+}
+
+.fn-hero__copy {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 760px;
+  padding: 36px 28px 32px;
+}
+
+.fn-hero h1 {
+  max-width: 6.5ch;
+  margin: 42px 0 0;
+  font-size: clamp(86px, 12vw, 198px);
+  font-weight: 900;
+  letter-spacing: -.085em;
+  line-height: .75;
+  text-transform: uppercase;
+}
+
+.fn-hero h1 em {
+  display: block;
+  margin-top: .28em;
+  color: var(--signal);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: .25em;
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: 1.05;
+  text-transform: none;
+}
+
+.fn-hero__foot {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+  gap: 32px;
+}
+
+.fn-hero__foot strong {
+  max-width: 12ch;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(25px, 3vw, 48px);
+  font-weight: 400;
+  letter-spacing: -.04em;
+  line-height: 1.04;
+}
+
+.fn-hero__foot p {
+  max-width: 35ch;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.fn-hero__image {
+  min-height: 760px;
+  border-left: 1px solid var(--ink);
+}
+
+.fn-hero__image::after {
+  content: 'A5 / 192 PAGES';
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  padding: 10px 12px;
+  color: var(--page);
+  background: var(--signal);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .13em;
+}
+
+.fn-product {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  min-height: 720px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.fn-product__identity {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px;
+  border-right: 1px solid var(--ink);
+}
+
+.fn-product__identity h2 {
+  max-width: 6ch;
+  margin: 0;
+  font-size: clamp(72px, 9vw, 150px);
+  font-weight: 900;
+  letter-spacing: -.085em;
+  line-height: .76;
+  text-transform: uppercase;
+}
+
+.fn-product__specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(4, 1fr);
+}
+
+.fn-product__specs > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 170px;
+  padding: 20px 24px;
+  border-right: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+
+.fn-product__specs > div:nth-child(even) {
+  border-right: 0;
+}
+
+.fn-product__specs > div:last-child {
+  grid-column: 1 / 3;
+  border-bottom: 0;
+  color: var(--page);
+  background: var(--signal);
+}
+
+.fn-product__specs dt {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.fn-product__specs dd {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(26px, 3.2vw, 52px);
+  letter-spacing: -.04em;
+  line-height: .95;
+}
+
+.page-system {
+  display: grid;
+  grid-template-columns: 8fr 4fr;
+  min-height: 750px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.page-system__copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px;
+  border-right: 1px solid var(--ink);
+}
+
+.page-system__copy h2 {
+  max-width: 11ch;
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(58px, 7vw, 116px);
+  font-weight: 400;
+  letter-spacing: -.06em;
+  line-height: .9;
+}
+
+.page-system__copy p {
+  max-width: 42ch;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.page-system__count {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px;
+  color: var(--page);
+  background: var(--signal);
+}
+
+.page-system__count strong {
+  font-size: clamp(112px, 13vw, 210px);
+  letter-spacing: -.095em;
+  line-height: .7;
+}
+
+.page-system__count span:last-child {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(30px, 3.5vw, 54px);
+  letter-spacing: -.04em;
+}
+
+.color-section {
+  background: var(--page);
+}
+
+.color-intro {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  min-height: 330px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.color-intro h2 {
+  align-self: end;
+  max-width: 9ch;
+  margin: 0;
+  padding: 28px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(58px, 7vw, 110px);
+  font-weight: 400;
+  letter-spacing: -.06em;
+  line-height: .86;
+}
+
+.color-intro__selected {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px;
+  border-left: 1px solid var(--ink);
+}
+
+.cover-chip {
+  width: 100%;
+  height: 96px;
+  background: var(--selected-cover);
+  transition: background .25s ease;
+}
+
+.color-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.color-option {
+  appearance: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 410px;
+  padding: 24px 26px;
+  border: 0;
+  border-right: 1px solid var(--ink);
+  border-radius: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.color-option:last-child {
+  border-right: 0;
+}
+
+.color-option[data-label='Black'] {
+  color: var(--page);
+  background: #121212;
+}
+
+.color-option[data-label='Bone'] {
+  background: var(--bone);
+}
+
+.color-option[data-label='Safety Orange'] {
+  background: #ef4d19;
+}
+
+.color-option strong {
+  font-size: clamp(44px, 5vw, 80px);
+  letter-spacing: -.06em;
+}
+
+.color-option[aria-pressed='true']::after {
+  content: 'Selected';
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 18px;
+  font-style: italic;
+}
+
+.fn-cta {
+  display: grid;
+  grid-template-columns: 9fr 3fr;
+  min-height: 650px;
+  color: var(--page);
+  background: var(--ink);
+}
+
+.fn-cta__title {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px;
+  border-right: 1px solid #5d5d5d;
+}
+
+.fn-cta h2 {
+  max-width: 8ch;
+  margin: 0;
+  font-size: clamp(78px, 10vw, 166px);
+  letter-spacing: -.085em;
+  line-height: .78;
+  text-transform: uppercase;
+}
+
+.fn-cta__action {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 28px;
+  padding: 28px;
+}
+
+.fn-cta__action p {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.fn-cta .button:hover,
+.fn-cta .button:focus-visible {
+  color: var(--ink);
+  background: var(--page);
+}
+
+.fn-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 22px 28px;
+}
+
+@media (max-width: 900px) {
+  .fn-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .fn-hero__copy {
+    min-height: 690px;
+  }
+
+  .fn-hero__image {
+    min-height: 500px;
+    border-top: 1px solid var(--ink);
+    border-left: 0;
+  }
+
+  .fn-product,
+  .page-system,
+  .color-intro,
+  .fn-cta {
+    grid-template-columns: 1fr;
+  }
+
+  .fn-product__identity,
+  .page-system__copy,
+  .fn-cta__title {
+    min-height: 500px;
+    border-right: 0;
+    border-bottom: 1px solid currentColor;
+  }
+
+  .page-system__count,
+  .color-intro__selected,
+  .fn-cta__action {
+    min-height: 300px;
+    border-left: 0;
+  }
+
+  .color-options {
+    grid-template-columns: 1fr;
+  }
+
+  .color-option {
+    min-height: 250px;
+    border-right: 0;
+    border-bottom: 1px solid var(--ink);
+  }
+}
+
+@media (max-width: 560px) {
+  .fn-hero__copy,
+  .fn-product__identity,
+  .page-system__copy,
+  .page-system__count,
+  .color-intro h2,
+  .color-intro__selected,
+  .color-option,
+  .fn-cta__title,
+  .fn-cta__action {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .fn-hero h1 {
+    font-size: clamp(66px, 22vw, 105px);
+  }
+
+  .fn-hero__foot {
+    grid-template-columns: 1fr;
+  }
+
+  .fn-product__specs {
+    grid-template-columns: 1fr;
+  }
+
+  .fn-product__specs > div,
+  .fn-product__specs > div:nth-child(even) {
+    min-height: 135px;
+    border-right: 0;
+  }
+
+  .fn-product__specs > div:last-child {
+    grid-column: auto;
+  }
+}
+
+</style>
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body class="fieldnote">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="progress" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#top">Fieldnote</a>
+    <div class="header-meta">Daily 01 · A5 notebook</div>
+    <a class="header-cta" href="#purchase">Purchase</a>
+  </header>
+
+  <main id="main">
+    <section class="fn-hero" id="top" aria-labelledby="fn-title">
+      <div class="fn-hero__copy">
+        <div>
+          <p class="eyebrow">Fieldnote / Daily 01</p>
+          <h1 id="fn-title">Make space for every day.<em>A page system for daily use.</em></h1>
+        </div>
+        <div class="fn-hero__foot" data-reveal>
+          <strong>A notebook organized to disappear behind the work.</strong>
+          <p>A5 format. 192 dot-grid pages. Lay-flat binding. Soft-touch cover. Made in Japan.</p>
+        </div>
+      </div>
+      <figure class="fn-hero__image image-frame">
+        <img src="../assets/f535c7e0/fieldnote-daily.webp" alt="Black A5 notebook arranged over an open bone dot-grid notebook with a safety orange cover sample">
+      </figure>
+    </section>
+
+    <div class="section-index"><span class="micro">01 / Product presentation</span><span class="micro">Daily 01</span></div>
+
+    <section class="fn-product" aria-labelledby="product-title">
+      <div class="fn-product__identity" data-reveal>
+        <p class="eyebrow">The object</p>
+        <h2 id="product-title">Daily 01</h2>
+      </div>
+      <dl class="fn-product__specs">
+        <div><dt>Format</dt><dd>A5 notebook</dd></div>
+        <div><dt>Pages</dt><dd>192</dd></div>
+        <div><dt>Interior</dt><dd>Dot grid</dd></div>
+        <div><dt>Paper</dt><dd>100 gsm</dd></div>
+        <div><dt>Binding</dt><dd>Lay-flat</dd></div>
+        <div><dt>Cover</dt><dd>Soft-touch</dd></div>
+        <div><dt>Origin</dt><dd>Made in Japan</dd></div>
+      </dl>
+    </section>
+
+    <div class="section-index"><span class="micro">02 / Interior page system</span><span class="micro">Open field / dot grid</span></div>
+
+    <section class="page-system" aria-labelledby="pages-title">
+      <div class="page-system__copy" data-reveal>
+        <p class="eyebrow">Paper and binding</p>
+        <h2 id="pages-title">One open field for writing, lists, sketches, and plans.</h2>
+        <p>Daily 01 combines 192 dot-grid pages with 100 gsm paper and a lay-flat binding, so both sides of a spread remain available.</p>
+      </div>
+      <div class="page-system__count">
+        <strong>192</strong>
+        <span>dot-grid pages</span>
+      </div>
+    </section>
+
+    <div class="section-index"><span class="micro">03 / Available colors</span><span class="micro">Black · Bone · Safety Orange</span></div>
+
+    <section class="color-section" aria-labelledby="colors-title">
+      <div class="color-intro">
+        <h2 id="colors-title">Choose the cover. Keep the page system.</h2>
+        <div class="color-intro__selected">
+          <p class="eyebrow">Selected cover</p>
+          <div class="cover-chip" aria-hidden="true"></div>
+          <strong data-cover-output>Black</strong>
+        </div>
+      </div>
+      <div class="color-options" aria-label="Choose a cover color">
+        <button class="color-option" type="button" data-cover="#121212" data-label="Black" aria-pressed="true"><span class="eyebrow">01</span><strong>Black</strong></button>
+        <button class="color-option" type="button" data-cover="#ddd3bf" data-label="Bone" aria-pressed="false"><span class="eyebrow">02</span><strong>Bone</strong></button>
+        <button class="color-option" type="button" data-cover="#ef4d19" data-label="Safety Orange" aria-pressed="false"><span class="eyebrow">03</span><strong>Safety Orange</strong></button>
+      </div>
+    </section>
+
+    <section class="fn-cta" id="purchase" aria-labelledby="purchase-title">
+      <div class="fn-cta__title">
+        <p class="eyebrow">04 / Purchase</p>
+        <h2 id="purchase-title">Carry Daily 01.</h2>
+      </div>
+      <div class="fn-cta__action">
+        <p>A5 · 192 pages · Made in Japan</p>
+        <a class="button" href="#top">Review Daily 01</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="fn-footer"><span class="micro">Fieldnote</span><span class="micro">Daily 01</span></footer>
+  <script src="site.js"></script>
+</body>
+</html>

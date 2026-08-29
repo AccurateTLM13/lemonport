@@ -1,0 +1,880 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="KINETIC FOUNDRY builds modular robotic work cells for factories that change.">
+  <title>KINETIC FOUNDRY — KF / CELL 04</title>
+  <style data-system-form-inline="core.css">
+:root {
+  color-scheme: light;
+  --ease: cubic-bezier(.2, .75, .2, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  overflow-x: clip;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body,
+button,
+a {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  color: inherit;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 10px;
+  left: 10px;
+  padding: 12px 16px;
+  color: #fff;
+  background: #111;
+  transform: translateY(-160%);
+  transition: transform .2s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.site-header {
+  position: sticky;
+  z-index: 30;
+  top: 0;
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr) auto auto;
+  min-height: 64px;
+  border-bottom: 1px solid currentColor;
+  background: color-mix(in srgb, var(--page, #f2efe7) 92%, transparent);
+  backdrop-filter: blur(16px);
+}
+
+.site-header > * {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: 0 24px;
+}
+
+.brand {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.header-meta {
+  border-left: 1px solid currentColor;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.header-cta {
+  justify-content: center;
+  min-width: 150px;
+  border-left: 1px solid currentColor;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color .25s ease, background .25s ease;
+}
+
+.header-cta:hover,
+.header-cta:focus-visible {
+  color: var(--page, #f2efe7);
+  background: var(--ink, #111);
+}
+
+.eyebrow,
+.micro {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.section-index {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 58px;
+  padding: 0 28px;
+  border-top: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 220px;
+  min-height: 56px;
+  gap: 26px;
+  padding: 0 20px;
+  border: 1px solid currentColor;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: transform .25s var(--ease), color .25s ease, background .25s ease;
+}
+
+.button::after {
+  content: '↗';
+  font-size: 20px;
+  line-height: 1;
+}
+
+.button:hover,
+.button:focus-visible {
+  transform: translateY(-3px);
+}
+
+:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 4px;
+}
+
+.progress {
+  position: fixed;
+  z-index: 40;
+  top: 63px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  pointer-events: none;
+  transform: scaleX(var(--progress, 0));
+  transform-origin: left;
+  background: var(--signal, #f04b23);
+}
+
+.image-frame {
+  position: relative;
+  overflow: hidden;
+  background: #d7d2c5;
+}
+
+.image-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1s var(--ease), filter .5s ease;
+}
+
+.image-frame:hover img {
+  transform: scale(1.025);
+}
+
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .75s var(--ease), transform .75s var(--ease);
+}
+
+.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 760px) {
+  .site-header {
+    grid-template-columns: 1fr auto;
+    min-height: 56px;
+  }
+
+  .site-header > * {
+    padding: 0 16px;
+  }
+
+  .header-meta {
+    display: none;
+  }
+
+  .header-cta {
+    min-width: 110px;
+  }
+
+  .progress {
+    top: 55px;
+  }
+
+  .section-index {
+    min-height: 50px;
+    padding: 0 16px;
+  }
+
+  .button {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+</style>
+  <style data-system-form-inline="kinetic.css">
+body.kinetic {
+  --page: #efede4;
+  --ink: #11110f;
+  --signal: #e74725;
+  color: var(--ink);
+  background: var(--page);
+}
+
+.kinetic .header-cta {
+  color: var(--page);
+  background: var(--ink);
+}
+
+.kf-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto 1fr auto;
+  min-height: calc(100vh - 64px);
+  border-bottom: 1px solid var(--ink);
+}
+
+.kf-hero__copy {
+  z-index: 2;
+  grid-column: 1 / 9;
+  grid-row: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 710px;
+  padding: 40px 28px 32px;
+}
+
+.kf-hero h1 {
+  max-width: 9ch;
+  margin: 30px 0 0;
+  font-size: clamp(76px, 10.8vw, 188px);
+  font-weight: 900;
+  letter-spacing: -.085em;
+  line-height: .78;
+  text-transform: uppercase;
+}
+
+.kf-hero h1 span {
+  display: block;
+}
+
+.kf-hero h1 span:nth-child(2) {
+  margin-left: .52em;
+}
+
+.kf-hero__statement {
+  display: grid;
+  grid-template-columns: minmax(280px, 1.1fr) minmax(250px, .7fr);
+  align-items: end;
+  gap: 50px;
+  max-width: 980px;
+}
+
+.kf-hero__statement strong {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(32px, 4vw, 66px);
+  font-weight: 400;
+  letter-spacing: -.04em;
+  line-height: 1.02;
+}
+
+.kf-hero__statement p {
+  max-width: 36ch;
+  margin: 0;
+  padding-left: 20px;
+  border-left: 2px solid var(--signal);
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.kf-hero__image {
+  grid-column: 8 / 13;
+  grid-row: 1 / 3;
+  min-height: 710px;
+  border-left: 1px solid var(--ink);
+}
+
+.kf-hero__image::after {
+  content: 'CELL 04';
+  position: absolute;
+  right: 20px;
+  bottom: 18px;
+  color: #fff;
+  font-size: clamp(40px, 6vw, 100px);
+  font-weight: 900;
+  letter-spacing: -.07em;
+  line-height: .8;
+}
+
+.kf-spec-strip {
+  z-index: 3;
+  grid-column: 1 / 13;
+  grid-row: 3;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-top: 1px solid var(--ink);
+  background: var(--page);
+}
+
+.kf-spec-strip > div {
+  min-height: 100px;
+  padding: 16px 18px;
+  border-right: 1px solid var(--ink);
+}
+
+.kf-spec-strip > div:last-child {
+  border-right: 0;
+  color: var(--page);
+  background: var(--signal);
+}
+
+.kf-spec-strip dt {
+  margin-bottom: 28px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.kf-spec-strip dd {
+  margin: 0;
+  font-size: clamp(18px, 2vw, 30px);
+  font-weight: 800;
+  letter-spacing: -.035em;
+}
+
+.kf-overview {
+  display: grid;
+  grid-template-columns: 4fr 8fr;
+  min-height: 720px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.kf-overview__intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 30px 28px 46px;
+  border-right: 1px solid var(--ink);
+}
+
+.kf-overview__intro h2 {
+  max-width: 8ch;
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(52px, 6vw, 102px);
+  font-weight: 400;
+  letter-spacing: -.055em;
+  line-height: .92;
+}
+
+.kf-overview__system {
+  position: relative;
+  overflow: hidden;
+  padding: 30px;
+  color: var(--page);
+  background: var(--ink);
+}
+
+.axis-figure {
+  position: absolute;
+  inset: 90px 6% 40px;
+}
+
+.axis-arm {
+  position: absolute;
+  top: 40%;
+  left: 5%;
+  width: 76%;
+  height: 4px;
+  transform: rotate(-12deg);
+  transform-origin: 0 50%;
+  background: var(--page);
+}
+
+.axis-arm::before,
+.axis-arm::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 66px;
+  height: 66px;
+  border: 4px solid var(--page);
+  border-radius: 50%;
+  background: var(--ink);
+  transform: translate(-50%, -50%);
+}
+
+.axis-arm::before {
+  left: 0;
+}
+
+.axis-arm::after {
+  left: 100%;
+}
+
+.axis-dots {
+  position: absolute;
+  inset: 0;
+}
+
+.axis-dots span {
+  position: absolute;
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border: 1px solid var(--page);
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.axis-dots span:nth-child(1) { left: 3%; top: 45%; }
+.axis-dots span:nth-child(2) { left: 20%; top: 35%; }
+.axis-dots span:nth-child(3) { left: 37%; top: 29%; }
+.axis-dots span:nth-child(4) { left: 54%; top: 25%; }
+.axis-dots span:nth-child(5) { left: 71%; top: 22%; }
+.axis-dots span:nth-child(6) { left: 87%; top: 19%; background: var(--signal); }
+
+.reach-line {
+  position: absolute;
+  right: 0;
+  bottom: 10%;
+  left: 4%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid var(--page);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+.kf-capabilities {
+  background: var(--page);
+}
+
+.capability-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.capability {
+  display: flex;
+  flex-direction: column;
+  min-height: 480px;
+  padding: 26px 28px 34px;
+  border-right: 1px solid var(--ink);
+}
+
+.capability:last-child {
+  border-right: 0;
+}
+
+.capability:nth-child(2) {
+  color: var(--page);
+  background: var(--ink);
+}
+
+.capability__number {
+  font-size: clamp(72px, 8vw, 132px);
+  font-weight: 900;
+  letter-spacing: -.08em;
+  line-height: .8;
+}
+
+.capability h3 {
+  margin: auto 0 10px;
+  font-size: 22px;
+  letter-spacing: -.03em;
+}
+
+.capability p {
+  max-width: 40ch;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.kf-deploy {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  min-height: 720px;
+  color: var(--page);
+  background: var(--signal);
+}
+
+.kf-deploy__title {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 30px 28px 40px;
+  border-right: 1px solid var(--ink);
+}
+
+.kf-deploy__title h2 {
+  max-width: 7ch;
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(86px, 12vw, 200px);
+  font-weight: 900;
+  letter-spacing: -.09em;
+  line-height: .76;
+  text-transform: uppercase;
+}
+
+.kf-deploy__steps {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  background: var(--page);
+  color: var(--ink);
+}
+
+.deploy-step {
+  display: grid;
+  grid-template-columns: 74px 1fr;
+  gap: 20px;
+  align-content: center;
+  padding: 28px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.deploy-step:last-child {
+  border-bottom: 0;
+}
+
+.deploy-step strong {
+  font-size: 36px;
+  letter-spacing: -.05em;
+}
+
+.deploy-step h3,
+.deploy-step p {
+  margin: 0;
+}
+
+.deploy-step h3 {
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+.deploy-step p {
+  max-width: 42ch;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.kf-cta {
+  min-height: 690px;
+  padding: 28px;
+  color: var(--page);
+  background: var(--ink);
+}
+
+.kf-cta h2 {
+  max-width: 10ch;
+  margin: 80px 0 56px;
+  font-size: clamp(72px, 11vw, 180px);
+  letter-spacing: -.085em;
+  line-height: .78;
+  text-transform: uppercase;
+}
+
+.kf-cta .button:hover,
+.kf-cta .button:focus-visible {
+  color: var(--ink);
+  background: var(--page);
+}
+
+.kf-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 28px;
+  border-top: 1px solid #57574f;
+  color: var(--page);
+  background: var(--ink);
+}
+
+@media (max-width: 900px) {
+  .kf-hero__copy {
+    grid-column: 1 / 13;
+    grid-row: 1;
+    min-height: 620px;
+    padding-bottom: 40px;
+  }
+
+  .kf-hero__image {
+    grid-column: 7 / 13;
+    grid-row: 2;
+    min-height: 460px;
+  }
+
+  .kf-hero__statement {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .kf-spec-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .kf-spec-strip > div:last-child {
+    grid-column: span 2;
+  }
+
+  .kf-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .kf-overview__intro {
+    min-height: 420px;
+    border-right: 0;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .kf-overview__system {
+    min-height: 560px;
+  }
+
+  .capability-grid,
+  .kf-deploy {
+    grid-template-columns: 1fr;
+  }
+
+  .capability {
+    min-height: 340px;
+    border-right: 0;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .kf-deploy__title {
+    min-height: 520px;
+    border-right: 0;
+    border-bottom: 1px solid var(--ink);
+  }
+}
+
+@media (max-width: 560px) {
+  .kf-hero__copy {
+    min-height: auto;
+    padding: 24px 16px 42px;
+  }
+
+  .kf-hero h1 {
+    margin-top: 24px;
+    font-size: clamp(62px, 15.5vw, 86px);
+  }
+
+  .kf-hero h1 span:nth-child(2) {
+    margin-left: 0;
+  }
+
+  .kf-hero__statement strong {
+    font-size: 34px;
+  }
+
+  .kf-hero__statement p {
+    font-size: 14px;
+  }
+
+  .kf-hero__image {
+    grid-column: 5 / 13;
+    min-height: 420px;
+  }
+
+  .kf-spec-strip dt {
+    margin-bottom: 18px;
+  }
+
+  .kf-spec-strip > div {
+    min-height: 88px;
+  }
+
+  .kf-overview__intro,
+  .kf-overview__system,
+  .kf-deploy__title,
+  .kf-cta {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .axis-dots span {
+    width: 34px;
+    height: 34px;
+  }
+
+  .axis-dots span:nth-child(2),
+  .axis-dots span:nth-child(4) {
+    display: none;
+  }
+
+  .kf-footer {
+    gap: 20px;
+    padding: 20px 16px;
+  }
+
+  .kf-cta h2 {
+    font-size: clamp(44px, 9vw, 62px);
+  }
+}
+
+</style>
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body class="kinetic">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="progress" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#top">Kinetic Foundry</a>
+    <div class="header-meta">KF / Cell 04 · Modular work cell</div>
+    <a class="header-cta" href="#contact">Contact</a>
+  </header>
+
+  <main id="main">
+    <section class="kf-hero" id="top" aria-labelledby="kf-title">
+      <div class="kf-hero__copy">
+        <div>
+          <p class="eyebrow">Automation / Reconfigurable production</p>
+          <h1 id="kf-title"><span>Kinetic</span><span>Foundry</span></h1>
+        </div>
+        <div class="kf-hero__statement" data-reveal>
+          <strong>Automation built for factories that change.</strong>
+          <p>Modular robotic work cells designed to be reconfigured as production demands evolve.</p>
+        </div>
+      </div>
+      <figure class="kf-hero__image image-frame">
+        <img src="../assets/892ca71e/kinetic-cell.webp" alt="Modular graphite robotic work cell in a small manufacturing shop">
+      </figure>
+      <dl class="kf-spec-strip" aria-label="KF Cell 04 key specifications">
+        <div><dt>Payload</dt><dd>35 kg</dd></div>
+        <div><dt>Reach</dt><dd>1,850 mm</dd></div>
+        <div><dt>Repeatability</dt><dd>±0.05 mm</dd></div>
+        <div><dt>Configuration</dt><dd>6-axis</dd></div>
+        <div><dt>Deployment</dt><dd>Modular</dd></div>
+      </dl>
+    </section>
+
+    <div class="section-index"><span class="micro">01 / Product overview</span><span class="micro">Architecture follows the cell</span></div>
+
+    <section class="kf-overview" aria-labelledby="overview-title">
+      <div class="kf-overview__intro" data-reveal>
+        <p class="eyebrow">KF / Cell 04</p>
+        <h2 id="overview-title">One cell. Built to change with the work.</h2>
+      </div>
+      <div class="kf-overview__system" aria-label="Six-axis configuration and 1,850 millimeter reach diagram">
+        <p class="eyebrow">Six axes / one working envelope</p>
+        <div class="axis-figure" aria-hidden="true">
+          <div class="axis-arm"></div>
+          <div class="axis-dots"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span></div>
+          <div class="reach-line"><span>Origin</span><span>Reach / 1,850 mm</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-index"><span class="micro">02 / Capabilities</span><span class="micro">Derived from supplied specifications</span></div>
+
+    <section class="kf-capabilities" aria-label="Three capabilities">
+      <div class="capability-grid">
+        <article class="capability" data-reveal>
+          <div class="capability__number">01</div>
+          <h3>Reconfigure</h3>
+          <p>Modular deployment allows the work cell to respond as production demands evolve.</p>
+        </article>
+        <article class="capability" data-reveal>
+          <div class="capability__number">02</div>
+          <h3>Reach</h3>
+          <p>A 1,850 mm reach defines the available working envelope around the cell.</p>
+        </article>
+        <article class="capability" data-reveal>
+          <div class="capability__number">03</div>
+          <h3>Repeat</h3>
+          <p>±0.05 mm repeatability organizes precise repeated motion across six axes.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="kf-deploy" aria-labelledby="deploy-title">
+      <div class="kf-deploy__title">
+        <p class="eyebrow">03 / Deployment process</p>
+        <h2 id="deploy-title">Change the cell, not the factory.</h2>
+      </div>
+      <div class="kf-deploy__steps">
+        <article class="deploy-step" data-reveal><strong>01</strong><div><h3>Define the task</h3><p>Begin with the production demand the cell needs to serve.</p></div></article>
+        <article class="deploy-step" data-reveal><strong>02</strong><div><h3>Configure the cell</h3><p>Arrange the modular work cell around the current task.</p></div></article>
+        <article class="deploy-step" data-reveal><strong>03</strong><div><h3>Reconfigure as work changes</h3><p>Adapt the deployment when production demands evolve.</p></div></article>
+      </div>
+    </section>
+
+    <section class="kf-cta" id="contact" aria-labelledby="contact-title">
+      <p class="eyebrow">04 / Final contact</p>
+      <h2 id="contact-title">Put Cell 04 into the conversation.</h2>
+      <a class="button" href="#top">Start with the specifications</a>
+    </section>
+  </main>
+
+  <footer class="kf-footer"><span class="micro">Kinetic Foundry</span><span class="micro">KF / Cell 04</span></footer>
+  <script src="site.js"></script>
+</body>
+</html>

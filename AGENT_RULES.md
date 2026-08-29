@@ -188,3 +188,10 @@ Rebuild the Specimen Vault index and record pages (follow with `node scripts/bui
 ```powershell
 node scripts/build-specimens.js
 ```
+
+Import the official SYSTEM//FORM specimen set (dry-run first; no source output is repaired or substituted):
+
+```powershell
+node scripts/import-systemform-specimens.js --source <SYSTEMFORM folder> --dry-run
+node scripts/import-systemform-specimens.js --source <SYSTEMFORM folder>
+```

@@ -1,0 +1,574 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#F2EDE3">
+<meta name="description" content="The Great Lakes Industrial Archive â€” a nonprofit archive preserving the documents, photographs, oral histories, and artifacts of Great Lakes manufacturing history. Established 1987.">
+<title>SYSTEM--FORM Test 03 â€” Civic Archive - ox-alpha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2EDE3;
+  --paper-deep:#EAE4D6;
+  --ink:#1B1810;
+  --ink-soft:#57503F;
+  --steel:#9DB3C4;
+  --steel-deep:#7C97AC;
+  --rule:#1B1810;
+  --rule-soft:rgba(27,24,16,.25);
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --sans:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --pad:clamp(20px,4vw,72px);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+[id]{scroll-margin-top:24px}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--steel);color:var(--ink)}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--steel-deep);outline-offset:3px}
+.label{
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+}
+.wrap{padding-inline:var(--pad)}
+
+/* masthead */
+.masthead{
+  padding:20px var(--pad) 18px;
+}
+.masthead-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:24px;
+  flex-wrap:wrap;
+}
+.masthead h1{
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  line-height:1.7;
+  max-width:34ch;
+}
+.masthead .est{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:15px;
+  color:var(--ink-soft);
+  white-space:nowrap;
+}
+.double-rule{
+  border-top:2px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+  height:5px;
+  margin-inline:var(--pad);
+}
+
+/* hero */
+.hero{
+  display:grid;
+  grid-template-columns:minmax(0,8fr) minmax(0,4fr);
+  border-bottom:1px solid var(--rule);
+}
+.hero-main{
+  padding:clamp(56px,8vw,140px) clamp(28px,4vw,80px) clamp(48px,6vw,110px) var(--pad);
+  border-right:1px solid var(--rule);
+}
+.hero-main .label{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.hero-main .label::before{content:"";width:34px;height:1px;background:var(--ink)}
+.hero-main h2{
+  font-family:var(--serif);
+  font-weight:500;
+  font-variation-settings:"opsz" 60;
+  font-size:clamp(40px,5.4vw,96px);
+  line-height:1.04;
+  letter-spacing:-.01em;
+  margin-top:30px;
+  max-width:19ch;
+  text-wrap:balance;
+}
+.hero-main h2 em{
+  font-style:italic;
+  font-weight:400;
+}
+.hero-side{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:48px;
+  padding:clamp(28px,4vw,64px) var(--pad) clamp(32px,4vw,64px);
+}
+.hero-side p{
+  font-family:var(--serif);
+  font-size:clamp(16px,1.35vw,19px);
+  line-height:1.6;
+  color:var(--ink-soft);
+  max-width:30ch;
+}
+.hero-side .seal{
+  align-self:flex-start;
+  border:1px solid var(--rule);
+  padding:18px 22px;
+  text-align:center;
+}
+.hero-side .seal b{
+  display:block;
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:30px;
+  letter-spacing:.02em;
+}
+.hero-side .seal span{
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+}
+.hero-side .seal i{
+  display:block;
+  width:100%;
+  height:4px;
+  background:var(--steel);
+  margin-top:12px;
+}
+
+/* collections ledger */
+.collections-head,.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:24px;
+  flex-wrap:wrap;
+  padding:18px var(--pad);
+  border-bottom:1px solid var(--rule);
+}
+.section-head h2{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+.section-head h2 b{color:var(--steel-deep);font-weight:700}
+.ledger ol{list-style:none}
+.ledger li{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:24px;
+  align-items:baseline;
+  padding:clamp(18px,2.4vw,30px) var(--pad);
+  border-bottom:1px solid var(--rule-soft);
+}
+.ledger li:last-child{border-bottom:1px solid var(--rule)}
+.ledger .kind{
+  display:flex;
+  align-items:baseline;
+  gap:16px;
+}
+.ledger .kind i{
+  font-style:normal;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.14em;
+  color:var(--steel-deep);
+  min-width:26px;
+}
+.ledger .kind b{
+  font-family:var(--serif);
+  font-weight:500;
+  font-variation-settings:"opsz" 60;
+  font-size:clamp(21px,2.4vw,34px);
+  letter-spacing:-.005em;
+}
+.ledger .count{
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:clamp(26px,3vw,44px);
+  font-variant-numeric:tabular-nums lining-nums;
+  letter-spacing:-.01em;
+}
+.ledger .count small{
+  font-family:var(--sans);
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  margin-left:10px;
+}
+.ledger .total{
+  display:flex;
+  justify-content:flex-end;
+  gap:14px;
+  align-items:baseline;
+  padding:16px var(--pad);
+  background:var(--paper-deep);
+  border-bottom:1px solid var(--rule);
+}
+.ledger .total span{
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+}
+.ledger .total b{
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:22px;
+  font-variant-numeric:tabular-nums lining-nums;
+}
+
+/* featured object */
+.object{
+  display:grid;
+  grid-template-columns:minmax(0,7fr) minmax(0,5fr);
+}
+.plate{
+  position:relative;
+  border-right:1px solid var(--rule);
+  min-height:clamp(300px,38vw,520px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--paper-deep);
+}
+.plate::after{
+  content:"";
+  position:absolute;
+  inset:18px;
+  border:1px solid var(--rule-soft);
+  pointer-events:none;
+}
+.plate figcaption{
+  text-align:center;
+  font-size:10.5px;
+  font-weight:600;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  line-height:2.2;
+}
+.plate figcaption b{color:var(--ink)}
+.object-record{display:flex;flex-direction:column}
+.object-record dl div{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:20px;
+  padding:16px clamp(24px,3vw,48px);
+  border-bottom:1px solid var(--rule-soft);
+}
+.object-record dl div:first-child{padding-top:clamp(24px,3vw,44px)}
+.object-record dt{
+  font-size:10.5px;
+  font-weight:600;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+}
+.object-record dd{
+  font-family:var(--serif);
+  font-style:italic;
+  color:var(--ink-soft);
+  font-size:15px;
+}
+.object-record .note{
+  padding:20px clamp(24px,3vw,48px) clamp(28px,3vw,44px);
+  margin-top:auto;
+}
+.object-record .note p{
+  font-size:13px;
+  color:var(--ink-soft);
+  max-width:36ch;
+}
+
+/* access */
+.access{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  border-bottom:1px solid var(--rule);
+}
+.access > div{
+  padding:clamp(28px,3.5vw,52px) clamp(24px,3vw,48px) clamp(32px,4vw,56px);
+  border-left:1px solid var(--rule-soft);
+}
+.access > div:first-child{border-left:0}
+.access h3{
+  font-family:var(--serif);
+  font-weight:500;
+  font-size:clamp(19px,1.8vw,26px);
+  margin:14px 0 10px;
+}
+.access p{font-size:14px;color:var(--ink-soft);max-width:34ch}
+.access a{border-bottom:1px solid var(--steel-deep)}
+.access a:hover{color:var(--steel-deep)}
+
+/* mission */
+.mission{
+  padding:clamp(64px,9vw,150px) var(--pad);
+  text-align:center;
+  border-bottom:1px solid var(--rule);
+}
+.mission p{
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:400;
+  font-size:clamp(24px,3.2vw,52px);
+  line-height:1.25;
+  max-width:26ch;
+  margin:0 auto;
+}
+.mission .label{
+  display:block;
+  margin-top:28px;
+}
+
+/* CTA */
+.visit{
+  display:block;
+  background:var(--ink);
+  color:var(--paper);
+  padding:clamp(40px,5.5vw,88px) var(--pad);
+}
+.visit .inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:32px;
+  flex-wrap:wrap;
+}
+.visit h2{
+  font-family:var(--serif);
+  font-weight:500;
+  font-variation-settings:"opsz" 60;
+  font-size:clamp(34px,4.6vw,76px);
+  line-height:1;
+  letter-spacing:-.01em;
+}
+.visit h2 em{font-style:italic;font-weight:400;color:var(--steel)}
+.visit p{
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  line-height:2.1;
+  opacity:.7;
+  text-align:right;
+}
+.visit:hover{background:#000}
+
+/* footer with cropped year */
+.footer-band{
+  position:relative;
+  overflow:hidden;
+  padding:clamp(28px,4vw,56px) var(--pad) 0;
+  min-height:clamp(160px,22vw,320px);
+}
+.footer-band .year{
+  position:absolute;
+  left:50%;
+  bottom:-.24em;
+  transform:translateX(-50%);
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:clamp(150px,24vw,420px);
+  line-height:1;
+  letter-spacing:-.02em;
+  color:transparent;
+  -webkit-text-stroke:1.5px var(--steel);
+  user-select:none;
+  pointer-events:none;
+  white-space:nowrap;
+}
+@supports not (-webkit-text-stroke:1px black){
+  .footer-band .year{color:rgba(157,179,196,.38)}
+}
+.footer-meta{
+  position:relative;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:24px;
+  flex-wrap:wrap;
+  z-index:1;
+}
+.footer-meta p{
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  line-height:2;
+}
+.footer-meta a{border-bottom:1px solid var(--steel-deep)}
+
+/* responsive */
+@media (max-width:900px){
+  .hero,.object{grid-template-columns:1fr}
+  .hero-main{border-right:0;border-bottom:1px solid var(--rule)}
+  .plate{border-right:0;border-bottom:1px solid var(--rule);min-height:280px}
+  .access{grid-template-columns:1fr}
+  .access > div{border-left:0;border-top:1px solid var(--rule-soft)}
+  .access > div:first-child{border-top:0}
+  .visit p{text-align:left}
+}
+@media (max-width:700px){
+  .footer-band{min-height:260px}
+  .hero-main > img{max-height:42vh !important}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead" id="top">
+  <div class="masthead-row">
+    <h1>The Great Lakes Industrial Archive</h1>
+    <span class="est">Established 1987</span>
+  </div>
+</header>
+<div class="double-rule" role="presentation"></div>
+
+<section class="hero" aria-label="Introduction">
+  <div class="hero-main">
+<img src="file:///C:/Users/johnp/.gemini/antigravity-ide/brain/109da52d-8291-4985-9c5c-b8e6f2abe88c/archive_hero_building_1787608393570.jpg" alt="The Great Lakes Industrial Archive building" style="width: 100%; max-height: 60vh; object-fit: cover; display: block; margin: 2rem 0;" />
+    <p class="label">A nonprofit public archive</p>
+    <h2>Industry remembered through <em>the people who built it.</em></h2>
+  </div>
+  <div class="hero-side">
+    <p>The Great Lakes Industrial Archive preserves the documents, photographs, oral histories, and physical artifacts of Great Lakes manufacturing history.</p>
+    <div class="seal" aria-label="Established 1987">
+      <span>In continuous</span>
+      <b>EST.&nbsp;1987</b>
+      <span>Custodianship</span>
+      <i role="presentation"></i>
+    </div>
+  </div>
+</section>
+
+<section class="collections" aria-labelledby="collections-title">
+  <div class="section-head" id="collections-title">
+    <h2><b>01 /</b> Collections</h2>
+    <span class="label">Catalogued holdings</span>
+  </div>
+  <div class="ledger">
+    <ol>
+      <li>
+        <span class="kind"><i>C-01</i><b>Photographs</b></span>
+        <span class="count">18,420<small>records</small></span>
+      </li>
+      <li>
+        <span class="kind"><i>C-02</i><b>Documents</b></span>
+        <span class="count">7,860<small>records</small></span>
+      </li>
+      <li>
+        <span class="kind"><i>C-03</i><b>Oral Histories</b></span>
+        <span class="count">614<small>records</small></span>
+      </li>
+      <li>
+        <span class="kind"><i>C-04</i><b>Physical Objects</b></span>
+        <span class="count">1,205<small>records</small></span>
+      </li>
+    </ol>
+    <div class="total">
+      <span>Total records</span>
+      <b>28,099</b>
+    </div>
+  </div>
+</section>
+
+<section class="object-section" aria-labelledby="object-title">
+  <div class="section-head" id="object-title">
+    <h2><b>02 /</b> Featured object</h2>
+    <span class="label">Record in process</span>
+  </div>
+  <div class="object">
+    <figure class="plate">
+      <figcaption>
+        Object plate<br>
+        <b>Awaiting photography</b>
+      </figcaption>
+    </figure>
+    <div class="object-record">
+      <dl>
+        <div><dt>Title</dt><dd>[ pending cataloguing ]</dd></div>
+        <div><dt>Date</dt><dd>[ pending cataloguing ]</dd></div>
+        <div><dt>Medium</dt><dd>[ pending cataloguing ]</dd></div>
+        <div><dt>Provenance</dt><dd>[ pending cataloguing ]</dd></div>
+        <div><dt>Accession no.</dt><dd>[ pending cataloguing ]</dd></div>
+      </dl>
+      <div class="note">
+        <p>Each accession is catalogued before public display. This record&rsquo;s details will be published as documentation completes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="access-section" aria-labelledby="access-title">
+  <div class="section-head" id="access-title">
+    <h2><b>03 /</b> Research &amp; access</h2>
+    <span class="label">Open to the public</span>
+  </div>
+  <div class="access">
+    <div>
+      <span class="label">Reading room</span>
+      <h3>On-site research</h3>
+      <p>Collections are available for consultation on site. Contact the archive to arrange a research visit.</p>
+    </div>
+    <div>
+      <span class="label">Reproductions</span>
+      <h3>Copies &amp; licensing</h3>
+      <p>Reproduction requests are considered where donor agreements and rights allow.</p>
+    </div>
+    <div>
+      <span class="label">Donations</span>
+      <h3>Add to the record</h3>
+      <p>Holding materials related to Great Lakes manufacturing? The archive accepts donations of documents, photographs, and objects.</p>
+    </div>
+  </div>
+</section>
+
+<section class="mission" aria-label="Preservation mission">
+  <p>An industry is not gone while its record is kept.</p>
+  <span class="label">Preservation mission / The Great Lakes Industrial Archive</span>
+</section>
+
+<a class="visit" id="visit" href="mailto:visits@greatlakesindustrial.example">
+  <div class="inner">
+    <h2>Plan a <em>visit.</em></h2>
+    <p>THE GREAT LAKES INDUSTRIAL ARCHIVE<br>RESEARCH APPOINTMENTS<br>visits@greatlakesindustrial.example</p>
+  </div>
+</a>
+
+<footer class="footer-band">
+  <div class="footer-meta">
+    <p>NONPROFIT / EST. 1987<br>DOCUMENTS &middot; PHOTOGRAPHS &middot; ORAL HISTORIES &middot; OBJECTS</p>
+    <p><a href="mailto:archive@greatlakesindustrial.example">archive@greatlakesindustrial.example</a></p>
+  </div>
+  <span class="year" aria-hidden="true">1987</span>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE GREAT LAKES INDUSTRIAL ARCHIVE — Civic Repository</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-archive: #f8f6f0;
+      --bg-card: #efebe2;
+      --bg-ledger: #f1eddf;
+      --border-dark: #1a1b1e;
+      --border-subtle: rgba(26, 27, 30, 0.16);
+      --border-strong: rgba(26, 27, 30, 0.4);
+      --text-main: #141517;
+      --text-muted: #50555e;
+      --text-faint: #808590;
+      --accent-ink: #182531;
+      --accent-steel: #2c4252;
+      --accent-steel-hover: #1e303d;
+      --font-serif: 'Newsreader', Georgia, serif;
+      --font-sans: 'Space Grotesk', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-archive);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* Accessibility Focus */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--accent-steel);
+      outline-offset: 2px;
+    }
+
+    /* Container Shell */
+    .archive-shell {
+      max-width: 1380px;
+      margin: 0 auto;
+      border-left: 1.5px solid var(--border-dark);
+      border-right: 1.5px solid var(--border-dark);
+      min-height: 100vh;
+      background: var(--bg-archive);
+      position: relative;
+    }
+
+    /* Institutional Header Rail */
+    .institution-rail {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      border-bottom: 1.5px solid var(--border-dark);
+      background: var(--bg-card);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .rail-cell {
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-right: 1px solid var(--border-subtle);
+    }
+
+    .rail-cell:last-child {
+      border-right: none;
+    }
+
+    /* Grid Layouts */
+    .archival-grid {
+      display: grid;
+    }
+
+    .grid-65-35 {
+      grid-template-columns: 1.6fr 1fr;
+    }
+
+    .grid-50-50 {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .grid-4-col {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .border-b {
+      border-bottom: 1.5px solid var(--border-dark);
+    }
+
+    .border-r {
+      border-right: 1.5px solid var(--border-dark);
+    }
+
+    /* Institutional Hero */
+    .hero-archive-pane {
+      padding: 72px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 48px;
+      background: var(--bg-archive);
+    }
+
+    .institutional-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent-steel);
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-headline {
+      font-family: var(--font-serif);
+      font-size: clamp(42px, 5.8vw, 80px);
+      font-weight: 500;
+      line-height: 1.0;
+      letter-spacing: -0.025em;
+      color: var(--text-main);
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent-steel);
+    }
+
+    .hero-mission-statement {
+      font-size: 19px;
+      line-height: 1.65;
+      color: var(--text-muted);
+      max-width: 580px;
+      border-left: 3px solid var(--border-dark);
+      padding-left: 24px;
+    }
+
+    /* Hero Aside Ledger */
+    .hero-aside-ledger {
+      background: var(--bg-card);
+      padding: 56px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+    .ledger-header {
+      border-bottom: 1.5px solid var(--border-dark);
+      padding-bottom: 18px;
+      margin-bottom: 24px;
+    }
+
+    .ledger-title {
+      font-family: var(--font-serif);
+      font-size: clamp(24px, 2.5vw, 30px);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .est-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      margin-top: 6px;
+    }
+
+    /* Collection Matrix Cards */
+    .record-count-card {
+      padding: 40px 32px;
+      border-right: 1.5px solid var(--border-dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 240px;
+      background: var(--bg-archive);
+      transition: background 0.15s ease;
+    }
+
+    .record-count-card:last-child {
+      border-right: none;
+    }
+
+    .record-count-card:hover {
+      background: var(--bg-card);
+    }
+
+    .record-type-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+
+    .record-number {
+      font-family: var(--font-serif);
+      font-size: clamp(34px, 3.8vw, 52px);
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .record-caption {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* Section Ribbon */
+    .section-ribbon {
+      background: var(--text-main);
+      color: #f8f6f0;
+      padding: 16px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* Featured Object Specimen Section */
+    .specimen-display-box {
+      padding: 56px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Specimen Archive Photo Frame */
+    .archive-photo-frame {
+      border: 1.5px solid var(--border-dark);
+      background: #ece7db;
+      position: relative;
+      overflow: hidden;
+      margin-top: 18px;
+    }
+
+    .archive-photo-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .archive-photo-caption {
+      padding: 8px 14px;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border-dark);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      text-transform: uppercase;
+    }
+
+    .specimen-meta-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 20px;
+    }
+
+    .specimen-meta-table tr {
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .specimen-meta-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .specimen-meta-table td {
+      padding: 12px 0;
+      vertical-align: middle;
+    }
+
+    .specimen-key {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      width: 38%;
+    }
+
+    .specimen-val {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .placeholder-callout {
+      border: 1.5px dashed var(--border-strong);
+      padding: 18px 22px;
+      background: var(--bg-card);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-top: 20px;
+    }
+
+    /* Research & Access Protocol */
+    .access-step-card {
+      padding: 48px 40px;
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 240px;
+    }
+
+    .access-step-card:last-child {
+      border-right: none;
+    }
+
+    .access-step-number {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-steel);
+      margin-bottom: 16px;
+      letter-spacing: 0.1em;
+    }
+
+    .access-step-title {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      color: var(--text-main);
+    }
+
+    .access-step-body {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* CTA Section */
+    .cta-archival-block {
+      background: var(--bg-card);
+      padding: 72px 56px;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .cta-btn-archival {
+      background: var(--border-dark);
+      color: #f8f6f0;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 20px 36px;
+      text-decoration: none;
+      display: inline-flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    }
+
+    .cta-btn-archival:hover {
+      background: var(--accent-steel);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 18px rgba(44, 66, 82, 0.35);
+    }
+
+    /* Footer */
+    .footer-archival {
+      padding: 36px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-top: 1.5px solid var(--border-dark);
+    }
+
+    @media (max-width: 1024px) {
+      .grid-65-35,
+      .grid-50-50,
+      .grid-4-col,
+      .cta-archival-block {
+        grid-template-columns: 1fr;
+      }
+      .border-r, .record-count-card, .access-step-card {
+        border-right: none;
+        border-bottom: 1.5px solid var(--border-dark);
+      }
+      .hero-archive-pane, .hero-aside-ledger, .specimen-display-box, .cta-archival-block {
+        padding: 48px 32px;
+      }
+      .section-ribbon, .footer-archival {
+        padding: 16px 32px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .institution-rail {
+        flex-direction: column;
+      }
+      .rail-cell {
+        border-right: none;
+        border-bottom: 1px solid var(--border-subtle);
+        padding: 10px 20px;
+      }
+      .hero-archive-pane, .hero-aside-ledger, .specimen-display-box, .cta-archival-block, .record-count-card, .access-step-card {
+        padding: 32px 20px;
+      }
+      .footer-archival {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="archive-shell">
+    
+    <!-- Institutional Top Rail -->
+    <header class="institution-rail">
+      <div class="rail-cell">
+        <span>THE GREAT LAKES INDUSTRIAL ARCHIVE</span>
+      </div>
+      <div class="rail-cell">
+        <span>CIVIC REPOSITORY // NONPROFIT INSTITUTION</span>
+      </div>
+      <div class="rail-cell">
+        <span>ESTABLISHED: 1987</span>
+      </div>
+      <div class="rail-cell" style="margin-left: auto;">
+        <a href="#research-access" style="color: var(--text-main); text-decoration: none; font-weight: 700;">[ RESEARCH ACCESS ]</a>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main>
+      <section class="archival-grid grid-65-35 border-b">
+        <div class="hero-archive-pane border-r">
+          <div>
+            <div class="institutional-tag">CIVIC PRESERVATION INSTITUTION</div>
+            <h1 class="hero-headline">
+              Industry remembered through the <em>people who built it.</em>
+            </h1>
+          </div>
+
+          <div class="hero-mission-statement">
+            Preserving primary historical records, labor testimony, technical documents, and manufactured artifacts across the Great Lakes industrial basin since 1987.
+          </div>
+
+          <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); letter-spacing: 0.12em; text-transform: uppercase;">
+            COLLECTION RECORD REGISTRY // PUBLIC REPOSITORY
+          </div>
+        </div>
+
+        <!-- Institutional Overview Aside -->
+        <div class="hero-aside-ledger">
+          <div>
+            <div class="ledger-header">
+              <h2 class="ledger-title">Institutional Ledger</h2>
+              <div class="est-badge">PERMANENT DEPOSITARY • EST. 1987</div>
+            </div>
+
+            <p style="font-size: 15px; line-height: 1.65; color: var(--text-muted); margin-bottom: 24px;">
+              The Great Lakes Industrial Archive operates as a dedicated regional archive collecting, conserving, and providing open research access to the documentary history of manufacturing workers, dockworkers, shipbuilders, and foundry communities.
+            </p>
+          </div>
+
+          <div style="border-top: 1px solid var(--border-subtle); padding-top: 18px; font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">
+            <div>GOVERNANCE: NONPROFIT CIVIC FOUNDATION</div>
+            <div style="margin-top: 4px; color: var(--text-main); font-weight: 700;">REGISTRATION: ESTABLISHED 1987</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Collections Overview (The 4 Record Totals) -->
+      <section>
+        <div class="section-ribbon">
+          <div><span>01</span> HOLDINGS MATRIX // CATALOG TOTALS</div>
+          <div>REGISTERED COLLECTIONS</div>
+        </div>
+
+        <div class="archival-grid grid-4-col border-b">
+          
+          <div class="record-count-card">
+            <div>
+              <div class="record-type-label">COLLECTION / 01</div>
+              <div class="record-number">18,420</div>
+            </div>
+            <div>
+              <strong style="font-size: 15px; display: block; margin-bottom: 6px;">Photographs</strong>
+              <p class="record-caption">Workplace portraits, factory floor series, shipyard construction, and municipal labor rallies.</p>
+            </div>
+          </div>
+
+          <div class="record-count-card">
+            <div>
+              <div class="record-type-label">COLLECTION / 02</div>
+              <div class="record-number">7,860</div>
+            </div>
+            <div>
+              <strong style="font-size: 15px; display: block; margin-bottom: 6px;">Documents</strong>
+              <p class="record-caption">Union charters, shift ledgers, equipment schematics, plant correspondence, and safety records.</p>
+            </div>
+          </div>
+
+          <div class="record-count-card">
+            <div>
+              <div class="record-type-label">COLLECTION / 03</div>
+              <div class="record-number">614</div>
+            </div>
+            <div>
+              <strong style="font-size: 15px; display: block; margin-bottom: 6px;">Oral Histories</strong>
+              <p class="record-caption">Audio recordings, transcripts, and worker testimonies across maritime and manufacturing trades.</p>
+            </div>
+          </div>
+
+          <div class="record-count-card">
+            <div>
+              <div class="record-type-label">COLLECTION / 04</div>
+              <div class="record-number">1,205</div>
+            </div>
+            <div>
+              <strong style="font-size: 15px; display: block; margin-bottom: 6px;">Physical Objects</strong>
+              <p class="record-caption">Tooling specimens, foundry patterns, safety badges, hand instruments, and manufactured parts.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Featured Archive Object & Preservation Mission -->
+      <section class="archival-grid grid-50-50 border-b">
+        
+        <!-- Featured Object -->
+        <div class="specimen-display-box border-r">
+          <div>
+            <div class="institutional-tag">CURATORIAL SPOTLIGHT</div>
+            <h2 style="font-family: var(--font-serif); font-size: 30px; font-weight: 600; margin-bottom: 10px;">
+              Featured Archive Object
+            </h2>
+            <p style="font-size: 15px; color: var(--text-muted); line-height: 1.6;">
+              A preserved physical artifact from our permanent manufacturing holdings, conserved and cataloged in accordance with archival standards.
+            </p>
+
+            <!-- Archival Photo Specimen -->
+            <div class="archive-photo-frame">
+              <img class="archive-photo-img" src="../assets/a807586e/great-lakes-archive-specimen.webp" alt="Conserved Great Lakes shipyard blueprints, brass navigation dial and calipers">
+              <div class="archive-photo-caption">
+                <span>CONSERVATION SPECIMEN // RECORD VAULT</span>
+                <span>CATALOG ENTRY REF-1987</span>
+              </div>
+            </div>
+
+            <table class="specimen-meta-table">
+              <tbody>
+                <tr>
+                  <td class="specimen-key">ACCESSION GROUP</td>
+                  <td class="specimen-val">Great Lakes Manufacturing Heritage</td>
+                </tr>
+                <tr>
+                  <td class="specimen-key">OBJECT CLASSIFICATION</td>
+                  <td class="specimen-val">Physical Object Holding</td>
+                </tr>
+                <tr>
+                  <td class="specimen-key">ARCHIVE ESTABLISHED</td>
+                  <td class="specimen-val">1987</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="placeholder-callout">
+            <strong style="color: var(--text-main);">[FEATURED OBJECT SPECIFICATION PLACEHOLDER]</strong><br>
+            Object accession number, donor attribution, and individual fabrication details are cataloged per accession protocol upon curator rotation.
+          </div>
+        </div>
+
+        <!-- Preservation Mission -->
+        <div class="specimen-display-box" style="background: var(--bg-card);">
+          <div>
+            <div class="institutional-tag">INSTITUTIONAL MANDATE</div>
+            <h2 style="font-family: var(--font-serif); font-size: 30px; font-weight: 600; margin-bottom: 12px;">
+              Preservation Mission
+            </h2>
+            <p style="font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 20px;">
+              The industrial transformation of the Great Lakes region was defined not simply by steel and machinery, but by the community of people whose labor built it. Our mission is to ensure that these primary historical records—fragile photographs, oral audio reels, and paper shift logs—are systematically preserved in archival conditions and made accessible to students, historians, and descendants.
+            </p>
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); border-top: 1px solid var(--border-subtle); padding-top: 16px;">
+            REPOSITORY CONSERVATION STANDARD: CLIMATE-CONTROLLED VAULT
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Research & Access Protocol -->
+      <section id="research-access">
+        <div class="section-ribbon">
+          <div><span>02</span> RESEARCH & ACCESS GUIDELINES</div>
+          <div>PUBLIC & SCHOLAR ACCESS</div>
+        </div>
+
+        <div class="archival-grid" style="grid-template-columns: repeat(3, 1fr); border-bottom: 1.5px solid var(--border-dark);">
+          <div class="access-step-card">
+            <div class="access-step-number">PROTOCOL / 01</div>
+            <h3 class="access-step-title">Catalog Inquiry</h3>
+            <p class="access-step-body">
+              Search the 28,100+ combined collection records across photographs, documents, oral audio records, and physical object registries.
+            </p>
+          </div>
+          <div class="access-step-card">
+            <div class="access-step-number">PROTOCOL / 02</div>
+            <h3 class="access-step-title">Reading Room Appointment</h3>
+            <p class="access-step-body">
+              Schedule an in-person research session to inspect primary non-circulating paper records and physical objects under archivist supervision.
+            </p>
+          </div>
+          <div class="access-step-card">
+            <div class="access-step-number">PROTOCOL / 03</div>
+            <h3 class="access-step-title">Reproduction & Licensing</h3>
+            <p class="access-step-body">
+              Request high-resolution digital scans and transcripts for academic, educational, civic exhibition, and publication purposes.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Visit & Contact CTA -->
+      <section class="cta-archival-block">
+        <div>
+          <div class="institutional-tag">VISIT & INQUIRY</div>
+          <h2 style="font-family: var(--font-serif); font-size: clamp(30px, 4vw, 44px); font-weight: 600; line-height: 1.05; margin-bottom: 14px;">
+            Conduct Archival Research
+          </h2>
+          <p style="color: var(--text-muted); font-size: 16px; max-width: 520px; line-height: 1.6;">
+            Contact the archive administration to schedule a reading room visit, deposit historical materials, or request remote research assistance.
+          </p>
+        </div>
+        <div style="text-align: right;">
+          <a href="mailto:archive@greatlakesarchive.example" class="cta-btn-archival">
+            <span>CONTACT ARCHIVIST</span>
+            <span style="margin-left: 20px;" aria-hidden="true">→</span>
+          </a>
+          <div style="font-family: var(--font-mono); font-size: 10px; color: var(--text-faint); margin-top: 12px; text-align: right; letter-spacing: 0.05em;">
+            NONPROFIT CIVIC ARCHIVE • OPEN TO THE PUBLIC
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-archival">
+      <div>THE GREAT LAKES INDUSTRIAL ARCHIVE © EST. 1987 — NONPROFIT PUBLIC ARCHIVE</div>
+      <div>SYSTEM//FORM EVALUATION SPECIMEN — SYSTEM MODE (RESTRAINED)</div>
+    </footer>
+
+  </div>
+</body>
+</html>

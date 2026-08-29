@@ -1,0 +1,503 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#F6F2E9">
+<meta name="description" content="FIELDNOTE DAILY 01 â€” an A5 notebook. 192 dot-grid pages on 100 gsm paper, lay-flat binding, soft-touch cover. Made in Japan.">
+<title>SYSTEM--FORM Test 05 - The Imitation Trap - ox-alpha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800;900&family=Newsreader:ital,opsz,wght@1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bone:#F6F2E9;
+  --bone-deep:#EEE8D9;
+  --ink:#17140E;
+  --ink-soft:#5D5546;
+  --indigo:#2B3FA5;
+  --rule:rgba(23,20,14,.85);
+  --rule-soft:rgba(23,20,14,.22);
+  --swatch-black:#161310;
+  --swatch-bone:#F0EADA;
+  --swatch-orange:#FF4B00;
+  --sans:"Hanken Grotesk","Helvetica Neue",Arial,sans-serif;
+  --serif:"Newsreader",Georgia,serif;
+  --pad:clamp(20px,4vw,64px);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+[id]{scroll-margin-top:24px}
+body{
+  background:var(--bone);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--indigo);color:var(--bone)}
+a{color:inherit;text-decoration:none}
+a:focus-visible{outline:2px solid var(--indigo);outline-offset:3px}
+.label{
+  font-size:10.5px;
+  font-weight:700;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+}
+
+/* top bar */
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:24px;
+  padding:18px var(--pad);
+  border-bottom:1px solid var(--rule);
+}
+.wordmark{
+  font-weight:900;
+  font-size:19px;
+  letter-spacing:-.01em;
+  text-transform:uppercase;
+}
+.wordmark span{color:var(--indigo)}
+.topnav{
+  display:flex;
+  gap:clamp(16px,3vw,42px);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+.topnav a:hover{color:var(--indigo)}
+
+/* hero */
+.hero{
+  display:grid;
+  grid-template-columns:minmax(0,7fr) minmax(0,5fr);
+  border-bottom:1px solid var(--rule);
+}
+.hero-main{
+  padding:clamp(44px,6vw,104px) clamp(28px,4vw,80px) clamp(40px,5vw,88px) var(--pad);
+  border-right:1px solid var(--rule);
+}
+.kicker{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:10.5px;
+  font-weight:700;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+}
+.kicker::before{content:"";width:34px;height:8px;background:var(--indigo)}
+h1{
+  margin-top:30px;
+  font-weight:900;
+  text-transform:uppercase;
+  font-size:clamp(64px,9vw,168px);
+  line-height:.85;
+  letter-spacing:-.03em;
+}
+h1 .daily{
+  display:block;
+  font-weight:500;
+  letter-spacing:.28em;
+  font-size:.16em;
+  margin-top:.35em;
+  color:var(--ink-soft);
+}
+.hero-main .statement{
+  margin-top:clamp(26px,3vw,44px);
+  max-width:38ch;
+  font-size:clamp(15px,1.3vw,19px);
+  color:var(--ink-soft);
+}
+.hero-main .statement b{color:var(--ink);font-weight:600}
+.hero-side{display:flex;flex-direction:column}
+.spec-head{
+  padding:clamp(20px,2.4vw,32px) clamp(24px,2.8vw,44px) 16px;
+  border-bottom:1px solid var(--rule);
+}
+.spec-list{flex:1;display:flex;flex-direction:column;justify-content:center}
+.spec-list dl div{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:20px;
+  padding:13px clamp(24px,2.8vw,44px);
+  border-bottom:1px solid var(--rule-soft);
+}
+.spec-list dl div:last-child{border-bottom:0}
+.spec-list dt{
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+}
+.spec-list dd{
+  font-weight:800;
+  font-size:15.5px;
+  text-align:right;
+  letter-spacing:-.005em;
+}
+.spec-foot{
+  border-top:1px solid var(--rule);
+  padding:16px clamp(24px,2.8vw,44px) 18px;
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+}
+.spec-foot b{font-size:12px;font-weight:800;letter-spacing:.06em}
+.spec-foot span{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:17px;
+  color:var(--indigo);
+}
+
+/* interruption band â€” the one deliberate violation */
+.interrupt{
+  overflow:hidden;
+  border-bottom:1px solid var(--rule);
+  background:var(--bone);
+}
+.interrupt p{
+  white-space:nowrap;
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:300;
+  font-variation-settings:"opsz" 72;
+  font-size:clamp(84px,13.5vw,240px);
+  line-height:1.08;
+  padding-left:var(--pad);
+  transform:translateY(.04em);
+}
+.interrupt p em{font-style:italic;color:var(--indigo)}
+
+/* presentation */
+.presentation{
+  display:grid;
+  grid-template-columns:minmax(0,6fr) minmax(0,6fr);
+  border-bottom:1px solid var(--rule);
+}
+.presentation-copy{
+  padding:clamp(36px,5vw,84px) clamp(28px,4vw,72px) clamp(36px,5vw,84px) var(--pad);
+  border-right:1px solid var(--rule);
+}
+.presentation-copy h2{
+  font-weight:900;
+  text-transform:uppercase;
+  font-size:clamp(30px,3.4vw,56px);
+  line-height:.98;
+  letter-spacing:-.02em;
+  max-width:14ch;
+}
+.presentation-copy h2 em{
+  font-style:normal;
+  color:var(--indigo);
+}
+.presentation-copy p{
+  margin-top:22px;
+  color:var(--ink-soft);
+  max-width:44ch;
+  font-size:15px;
+}
+.presentation-copy p b{color:var(--ink);font-weight:600}
+.paper-plate{
+  position:relative;
+  background:var(--bone-deep);
+  border-left:0;
+  padding:clamp(32px,4vw,72px) clamp(28px,4vw,72px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:22px;
+}
+.plate-sheet{
+  aspect-ratio:16/10;
+  border:1px solid var(--rule);
+  background-image:radial-gradient(circle,rgba(23,20,14,.34) 1px,transparent 1.4px);
+  background-size:15px 15px;
+  background-position:center;
+  box-shadow:0 1px 0 rgba(23,20,14,.25);
+}
+.plate-caption{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:16px;
+  flex-wrap:wrap;
+}
+.plate-caption .label{font-size:10px}
+.plate-caption i{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:16px;
+  color:var(--ink-soft);
+}
+
+/* page system */
+.system-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:24px;
+  flex-wrap:wrap;
+  padding:18px var(--pad);
+  border-bottom:1px solid var(--rule);
+}
+.system ol{list-style:none}
+.system li{
+  display:grid;
+  grid-template-columns:minmax(70px,120px) minmax(0,4fr) minmax(0,7fr);
+  gap:clamp(16px,3vw,48px);
+  align-items:baseline;
+  padding:clamp(22px,3vw,38px) var(--pad);
+  border-bottom:1px solid var(--rule-soft);
+}
+.system li:last-child{border-bottom:1px solid var(--rule)}
+.system .n{
+  font-weight:800;
+  font-size:13px;
+  letter-spacing:.14em;
+  color:var(--indigo);
+}
+.system .t{
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:-.01em;
+  font-size:clamp(19px,2vw,30px);
+}
+.system p{color:var(--ink-soft);font-size:15px;max-width:52ch}
+
+/* colors as information */
+.colors{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  border-bottom:1px solid var(--rule);
+}
+.swatch{
+  min-height:clamp(240px,34vw,480px);
+  position:relative;
+  padding:clamp(18px,2.5vw,32px);
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  border-right:1px solid var(--rule);
+}
+.swatch:last-child{border-right:0}
+.swatch .label{font-size:10px}
+.swatch b{
+  display:block;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:-.01em;
+  font-size:clamp(20px,2.4vw,36px);
+  line-height:1;
+  margin-top:10px;
+}
+.swatch-dark{background:var(--swatch-black);color:var(--bone)}
+.swatch-dark .label{color:rgba(246,242,233,.65)}
+.swatch-mid{background:var(--swatch-bone);color:var(--ink);box-shadow:inset 0 0 0 1px rgba(23,20,14,.28)}
+.swatch-signal{background:var(--swatch-orange);color:#1C0A02}
+.swatch-signal .label{color:rgba(28,10,2,.66)}
+
+/* CTA */
+.cta{
+  display:block;
+  background:var(--ink);
+  color:var(--bone);
+  padding:clamp(52px,7vw,124px) var(--pad);
+}
+.cta .inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:36px;
+  flex-wrap:wrap;
+}
+.cta h2{
+  font-weight:900;
+  text-transform:uppercase;
+  font-size:clamp(46px,7vw,132px);
+  line-height:.88;
+  letter-spacing:-.025em;
+  max-width:11ch;
+}
+.cta h2 em{
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:400;
+  text-transform:none;
+  letter-spacing:0;
+  color:#8FA0FF;
+}
+.cta p{
+  font-size:10.5px;
+  font-weight:700;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  line-height:2.2;
+  opacity:.75;
+}
+.cta:hover{background:var(--indigo)}
+
+/* footer */
+footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:24px;
+  flex-wrap:wrap;
+  padding:22px var(--pad);
+}
+footer p{font-size:10.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft)}
+
+/* responsive recomposition */
+@media (max-width:960px){
+  .hero-main > img{max-height:40vh !important}
+  .hero,.presentation{grid-template-columns:1fr}
+  .hero-main{border-right:0;border-bottom:1px solid var(--rule)}
+  .presentation-copy{border-right:0;border-bottom:1px solid var(--rule)}
+  .paper-plate{border-left:0}
+  .system li{grid-template-columns:minmax(48px,80px) minmax(0,1fr)}
+  .system p{grid-column:2}
+}
+@media (max-width:600px){
+  .topbar{flex-wrap:wrap;row-gap:8px;padding-block:12px}
+  .topnav{flex-wrap:wrap;row-gap:8px}
+  .colors{grid-template-columns:1fr}
+  .swatch{min-height:180px;border-right:0;border-bottom:1px solid var(--rule)}
+  .swatch:last-child{border-bottom:0}
+  .topnav{gap:12px;font-size:10px}
+  h1{font-size:clamp(56px,17vw,96px)}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<nav class="topbar" aria-label="Primary">
+  <a class="wordmark" href="#top">FIELD<span>NOTE</span></a>
+  <div class="topnav">
+    <a href="#specs">Specifications</a>
+    <a href="#interior">Interior</a>
+    <a href="#colors">Colors</a>
+    <a href="#order">Order</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-main">
+<img src="file:///C:/Users/johnp/.gemini/antigravity-ide/brain/109da52d-8291-4985-9c5c-b8e6f2abe88c/fieldnote_notebook_1787607362960.jpg" alt="FIELDNOTE DAILY 01 notebook" style="width: 100%; max-height: 60vh; object-fit: cover; display: block; margin: 2rem 0;" />
+    <p class="kicker">Personal notebooks &mdash; daily carry</p>
+    <h1>Fieldnote<span class="daily">Daily 01</span></h1>
+    <p class="statement">A quiet place for loud weeks. <b>192 dot-grid pages</b> bound to open flat and stay open, in a cover that shrugs off the bottom of a bag.</p>
+  </div>
+  <div class="hero-side" id="specs">
+    <p class="spec-head label">Specification / Daily 01</p>
+    <div class="spec-list">
+      <dl>
+        <div><dt>Format</dt><dd>A5</dd></div>
+        <div><dt>Pages</dt><dd>192</dd></div>
+        <div><dt>Paper</dt><dd>100 gsm</dd></div>
+        <div><dt>Page pattern</dt><dd>Dot grid</dd></div>
+        <div><dt>Binding</dt><dd>Lay-flat</dd></div>
+        <div><dt>Cover</dt><dd>Soft-touch</dd></div>
+        <div><dt>Made in</dt><dd>Japan</dd></div>
+      </dl>
+    </div>
+    <p class="spec-foot"><b>Daily 01</b><span>opens flat, stays open</span></p>
+  </div>
+</header>
+
+<section class="interrupt" aria-hidden="true">
+  <p>It lays <em>flat.</em></p>
+</section>
+
+<main>
+<section class="presentation" id="interior">
+  <div class="presentation-copy">
+    <p class="label" style="margin-bottom:20px">The interior</p>
+    <h2>Dot grid. Every page. <em>All 192.</em></h2>
+    <p>The dot grid gives structure without imposing it &mdash; guides for writing when you want them, invisible when you don&rsquo;t. Charts, margins, sketches, and longhand all share the same page without negotiation.</p>
+    <p>Underneath, <b>100 gsm paper</b> holds ink without ghosting through to the next page.</p>
+  </div>
+  <div class="paper-plate">
+    <div class="plate-sheet" role="img" aria-label="Specimen sheet showing the Daily 01 dot-grid page pattern"></div>
+    <div class="plate-caption">
+      <span class="label">Interior specimen / actual page pattern</span>
+      <i>one page, repeated 192 times</i>
+    </div>
+  </div>
+</section>
+
+<section class="system" aria-labelledby="system-title">
+  <div class="system-head" id="system-title">
+    <h2 class="label" style="color:var(--ink)">The page system</h2>
+    <span class="label">One pattern / three postures</span>
+  </div>
+  <ol>
+    <li>
+      <span class="n">01</span>
+      <span class="t">Write</span>
+      <p>Rows of dots keep lines of writing level without printing rules across the page.</p>
+    </li>
+    <li>
+      <span class="n">02</span>
+      <span class="t">Draw</span>
+      <p>Dots behave like light construction lines for perspective, form, and spacing.</p>
+    </li>
+    <li>
+      <span class="n">03</span>
+      <span class="t">Connect</span>
+      <p>Sketches and lists share one grid, so a page can hold a plan and its footnote together.</p>
+    </li>
+  </ol>
+</section>
+
+<section class="colors-block" aria-labelledby="colors-title">
+  <div class="system-head" id="colors-title">
+    <h2 class="label" style="color:var(--ink)">Available colors</h2>
+    <span class="label">Soft-touch cover / three ways</span>
+  </div>
+  <div class="colors">
+    <div class="swatch swatch-dark">
+      <span class="label">Color / 1</span>
+      <b>Black</b>
+    </div>
+    <div class="swatch swatch-mid">
+      <span class="label">Color / 2</span>
+      <b>Bone</b>
+    </div>
+    <div class="swatch swatch-signal">
+      <span class="label">Color / 3</span>
+      <b>Safety Orange</b>
+    </div>
+  </div>
+</section>
+
+<a class="cta" id="order" href="#order">
+  <div class="inner">
+    <h2>Order the<br>Daily 01 <em>&mdash; write it all down.</em></h2>
+    <p>FIELDNOTE / DAILY 01<br>A5 &middot; 192 PAGES &middot; DOT GRID<br>BLACK &middot; BONE &middot; SAFETY ORANGE</p>
+  </div>
+</a>
+
+<footer>
+  <span class="wordmark" style="font-size:15px">FIELD<span>NOTE</span></span>
+  <p>Made in Japan &middot; Lay-flat binding &middot; 100 gsm</p>
+</footer>
+</main>
+
+</body>
+</html>

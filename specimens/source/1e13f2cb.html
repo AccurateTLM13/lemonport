@@ -1,0 +1,865 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="NORTHLINE COFFEE — Coffee with a known origin. Featured release Las Flores / 04.">
+  <title>NORTHLINE COFFEE — Las Flores / 04</title>
+  <style data-system-form-inline="core.css">
+:root {
+  color-scheme: light;
+  --ease: cubic-bezier(.2, .75, .2, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  overflow-x: clip;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body,
+button,
+a {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  color: inherit;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 10px;
+  left: 10px;
+  padding: 12px 16px;
+  color: #fff;
+  background: #111;
+  transform: translateY(-160%);
+  transition: transform .2s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.site-header {
+  position: sticky;
+  z-index: 30;
+  top: 0;
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr) auto auto;
+  min-height: 64px;
+  border-bottom: 1px solid currentColor;
+  background: color-mix(in srgb, var(--page, #f2efe7) 92%, transparent);
+  backdrop-filter: blur(16px);
+}
+
+.site-header > * {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: 0 24px;
+}
+
+.brand {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.header-meta {
+  border-left: 1px solid currentColor;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.header-cta {
+  justify-content: center;
+  min-width: 150px;
+  border-left: 1px solid currentColor;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color .25s ease, background .25s ease;
+}
+
+.header-cta:hover,
+.header-cta:focus-visible {
+  color: var(--page, #f2efe7);
+  background: var(--ink, #111);
+}
+
+.eyebrow,
+.micro {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.section-index {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 58px;
+  padding: 0 28px;
+  border-top: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 220px;
+  min-height: 56px;
+  gap: 26px;
+  padding: 0 20px;
+  border: 1px solid currentColor;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: transform .25s var(--ease), color .25s ease, background .25s ease;
+}
+
+.button::after {
+  content: '↗';
+  font-size: 20px;
+  line-height: 1;
+}
+
+.button:hover,
+.button:focus-visible {
+  transform: translateY(-3px);
+}
+
+:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 4px;
+}
+
+.progress {
+  position: fixed;
+  z-index: 40;
+  top: 63px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  pointer-events: none;
+  transform: scaleX(var(--progress, 0));
+  transform-origin: left;
+  background: var(--signal, #f04b23);
+}
+
+.image-frame {
+  position: relative;
+  overflow: hidden;
+  background: #d7d2c5;
+}
+
+.image-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1s var(--ease), filter .5s ease;
+}
+
+.image-frame:hover img {
+  transform: scale(1.025);
+}
+
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .75s var(--ease), transform .75s var(--ease);
+}
+
+.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 760px) {
+  .site-header {
+    grid-template-columns: 1fr auto;
+    min-height: 56px;
+  }
+
+  .site-header > * {
+    padding: 0 16px;
+  }
+
+  .header-meta {
+    display: none;
+  }
+
+  .header-cta {
+    min-width: 110px;
+  }
+
+  .progress {
+    top: 55px;
+  }
+
+  .section-index {
+    min-height: 50px;
+    padding: 0 16px;
+  }
+
+  .button {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+</style>
+  <style data-system-form-inline="coffee.css">
+body.coffee {
+  --page: #f1e9dc;
+  --ink: #2a1712;
+  --signal: #8d2632;
+  --leaf: #666548;
+  color: var(--ink);
+  background: var(--page);
+}
+
+.coffee .site-header {
+  border-color: var(--ink);
+}
+
+.coffee .header-cta {
+  color: var(--page);
+  background: var(--signal);
+}
+
+.nl-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(420px, 5fr);
+  min-height: calc(100vh - 64px);
+  border-bottom: 1px solid var(--ink);
+}
+
+.nl-hero__copy {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 760px;
+  padding: 36px 28px 30px;
+}
+
+.nl-hero h1 {
+  max-width: 6.4ch;
+  margin: 60px 0 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(82px, 11vw, 186px);
+  font-weight: 400;
+  letter-spacing: -.075em;
+  line-height: .76;
+  text-transform: uppercase;
+}
+
+.nl-hero h1 em {
+  display: block;
+  margin-left: .7em;
+  color: var(--signal);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: .34em;
+  font-weight: 400;
+  letter-spacing: -.035em;
+  line-height: 1.1;
+  text-transform: none;
+}
+
+.nl-hero__foot {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+  gap: 32px;
+}
+
+.nl-hero__foot strong {
+  font-size: clamp(24px, 2.8vw, 46px);
+  letter-spacing: -.04em;
+  line-height: 1;
+}
+
+.nl-hero__foot p {
+  max-width: 35ch;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.nl-hero__image {
+  min-height: 760px;
+  border-left: 1px solid var(--ink);
+}
+
+.nl-hero__image::before {
+  content: 'LAS FLORES / 04';
+  position: absolute;
+  z-index: 1;
+  top: 22px;
+  left: 22px;
+  padding: 10px 12px;
+  color: var(--page);
+  background: var(--signal);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .13em;
+}
+
+.origin-card {
+  display: grid;
+  grid-template-columns: 4fr 5fr 3fr;
+  min-height: 660px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.origin-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px;
+  border-right: 1px solid var(--ink);
+}
+
+.origin-title h2 {
+  margin: 0;
+  color: var(--signal);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(64px, 7vw, 118px);
+  font-weight: 400;
+  letter-spacing: -.065em;
+  line-height: .84;
+}
+
+.origin-data {
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  border-right: 1px solid var(--ink);
+}
+
+.origin-data > div {
+  display: grid;
+  grid-template-columns: minmax(120px, .8fr) 1.5fr;
+  align-items: end;
+  gap: 20px;
+  padding: 14px 22px;
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 34%, transparent);
+}
+
+.origin-data > div:last-child {
+  border-bottom: 0;
+}
+
+.origin-data dt {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.origin-data dd {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(22px, 2.5vw, 40px);
+  letter-spacing: -.035em;
+  line-height: .95;
+}
+
+.altitude {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px;
+  color: var(--page);
+  background: var(--signal);
+}
+
+.altitude strong {
+  font-size: clamp(72px, 7vw, 126px);
+  letter-spacing: -.08em;
+  line-height: .72;
+}
+
+.altitude strong span {
+  display: block;
+  margin-top: 18px;
+  font-size: .17em;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.altitude::after {
+  content: '';
+  width: 120%;
+  height: 46%;
+  margin: 0 -10% -28px;
+  border-radius: 50% 50% 0 0;
+  background: var(--page);
+  clip-path: polygon(0 100%, 0 74%, 20% 46%, 38% 66%, 62% 20%, 82% 54%, 100% 32%, 100% 100%);
+}
+
+.tasting-band {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr 1fr 1fr;
+  min-height: 300px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.tasting-band > * {
+  padding: 26px 28px;
+  border-right: 1px solid var(--ink);
+}
+
+.tasting-band > *:last-child {
+  border-right: 0;
+}
+
+.tasting-band h2 {
+  align-self: start;
+  margin: 0;
+  font-size: clamp(42px, 5vw, 78px);
+  letter-spacing: -.055em;
+  line-height: .86;
+  text-transform: uppercase;
+}
+
+.taste {
+  display: flex;
+  align-items: flex-end;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(31px, 3.5vw, 58px);
+  letter-spacing: -.04em;
+}
+
+.taste:nth-child(3) {
+  color: var(--page);
+  background: var(--ink);
+}
+
+.nl-philosophy {
+  display: grid;
+  grid-template-columns: 8fr 4fr;
+  min-height: 700px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.nl-philosophy__statement {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px;
+  border-right: 1px solid var(--ink);
+}
+
+.nl-philosophy__statement h2 {
+  max-width: 10ch;
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(64px, 8vw, 132px);
+  font-weight: 400;
+  letter-spacing: -.07em;
+  line-height: .85;
+}
+
+.nl-philosophy__statement h2 em {
+  color: var(--signal);
+  font-weight: 400;
+}
+
+.nl-philosophy__copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 28px;
+  background: #ded3c1;
+}
+
+.nl-philosophy__copy p {
+  max-width: 30ch;
+  margin: 0;
+  font-size: clamp(22px, 2.4vw, 36px);
+  letter-spacing: -.03em;
+  line-height: 1.15;
+}
+
+.offering-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr 1fr;
+}
+
+.offering {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 560px;
+  padding: 24px 26px 30px;
+  border-right: 1px solid var(--ink);
+}
+
+.offering:last-child {
+  border-right: 0;
+}
+
+.offering:first-child {
+  color: var(--page);
+  background: var(--ink);
+}
+
+.offering h3 {
+  max-width: 8ch;
+  margin: auto 0 14px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(45px, 5vw, 80px);
+  font-weight: 400;
+  letter-spacing: -.055em;
+  line-height: .88;
+}
+
+.offering p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.placeholder-mark {
+  display: block;
+  width: 76px;
+  height: 76px;
+  margin-top: 40px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+
+.nl-cta {
+  display: grid;
+  grid-template-columns: 8fr 4fr;
+  min-height: 620px;
+  color: var(--page);
+  background: var(--signal);
+}
+
+.nl-cta__title {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px;
+  border-right: 1px solid var(--page);
+}
+
+.nl-cta h2 {
+  max-width: 8ch;
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(76px, 9vw, 150px);
+  font-weight: 400;
+  letter-spacing: -.075em;
+  line-height: .82;
+}
+
+.nl-cta__action {
+  display: flex;
+  align-items: flex-end;
+  padding: 28px;
+}
+
+.nl-cta .button:hover,
+.nl-cta .button:focus-visible {
+  color: var(--signal);
+  background: var(--page);
+}
+
+.nl-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 22px 28px;
+}
+
+@media (max-width: 900px) {
+  .nl-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .nl-hero__copy {
+    min-height: 650px;
+  }
+
+  .nl-hero__image {
+    min-height: 500px;
+    border-top: 1px solid var(--ink);
+    border-left: 0;
+  }
+
+  .origin-card {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .origin-title {
+    grid-column: span 2;
+    min-height: 410px;
+    border-right: 0;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .tasting-band {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .tasting-band > * {
+    min-height: 190px;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .nl-philosophy,
+  .nl-cta {
+    grid-template-columns: 1fr;
+  }
+
+  .nl-philosophy__statement,
+  .nl-cta__title {
+    min-height: 520px;
+    border-right: 0;
+    border-bottom: 1px solid currentColor;
+  }
+
+  .nl-philosophy__copy,
+  .nl-cta__action {
+    min-height: 300px;
+  }
+
+  .offering-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .offering {
+    min-height: 380px;
+    border-right: 0;
+    border-bottom: 1px solid var(--ink);
+  }
+}
+
+@media (max-width: 560px) {
+  .nl-hero__copy,
+  .origin-title,
+  .nl-philosophy__statement,
+  .nl-philosophy__copy,
+  .offering,
+  .nl-cta__title,
+  .nl-cta__action {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .nl-hero h1 {
+    max-width: none;
+    font-size: clamp(56px, 13.5vw, 74px);
+  }
+
+  .nl-hero__foot {
+    grid-template-columns: 1fr;
+  }
+
+  .nl-hero__image {
+    min-height: 380px;
+  }
+
+  .origin-card {
+    grid-template-columns: 1fr;
+  }
+
+  .origin-title {
+    grid-column: auto;
+  }
+
+  .origin-data {
+    border-right: 0;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .origin-data > div {
+    grid-template-columns: 90px 1fr;
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .altitude {
+    min-height: 360px;
+    padding: 22px 16px;
+  }
+
+  .tasting-band {
+    grid-template-columns: 1fr;
+  }
+
+  .tasting-band > * {
+    min-height: 140px;
+    padding-right: 16px;
+    padding-left: 16px;
+    border-right: 0;
+  }
+}
+
+</style>
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body class="coffee">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="progress" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#top">Northline Coffee</a>
+    <div class="header-meta">Independent specialty roaster</div>
+    <a class="header-cta" href="#shop">Shop release</a>
+  </header>
+
+  <main id="main">
+    <section class="nl-hero" id="top" aria-labelledby="nl-title">
+      <div class="nl-hero__copy">
+        <div>
+          <p class="eyebrow">Featured release / 04</p>
+          <h1 id="nl-title">Northline<em>Coffee with a known origin.</em></h1>
+        </div>
+        <div class="nl-hero__foot" data-reveal>
+          <strong>Huila, Colombia → your cup.</strong>
+          <p>Origin, producer, process, variety, altitude, and roast remain visible from release to release.</p>
+        </div>
+      </div>
+      <figure class="nl-hero__image image-frame">
+        <img src="../assets/1e13f2cb/northline-las-flores.webp" alt="Unbranded coffee bag, cup, beans, and red apple arranged on burgundy linen">
+      </figure>
+    </section>
+
+    <div class="section-index"><span class="micro">01 / Featured coffee</span><span class="micro">Las Flores / 04</span></div>
+
+    <section class="origin-card" aria-labelledby="origin-title">
+      <div class="origin-title" data-reveal>
+        <p class="eyebrow">Provenance before ornament</p>
+        <h2 id="origin-title">Las Flores / 04</h2>
+      </div>
+      <dl class="origin-data">
+        <div><dt>Origin</dt><dd>Huila, Colombia</dd></div>
+        <div><dt>Producer</dt><dd>Las Flores</dd></div>
+        <div><dt>Process</dt><dd>Washed</dd></div>
+        <div><dt>Variety</dt><dd>Caturra</dd></div>
+        <div><dt>Roast</dt><dd>Light</dd></div>
+        <div><dt>Release</dt><dd>04</dd></div>
+      </dl>
+      <div class="altitude" aria-label="Altitude 1,850 meters above sea level">
+        <p class="eyebrow">Altitude</p>
+        <strong>1,850 <span>MASL</span></strong>
+      </div>
+    </section>
+
+    <section class="tasting-band" aria-labelledby="tasting-title">
+      <h2 id="tasting-title">In the cup</h2>
+      <div class="taste">Red apple</div>
+      <div class="taste">Caramel</div>
+      <div class="taste">Citrus</div>
+    </section>
+
+    <section class="nl-philosophy" aria-labelledby="philosophy-title">
+      <div class="nl-philosophy__statement" data-reveal>
+        <p class="eyebrow">02 / Roasting philosophy</p>
+        <h2 id="philosophy-title">Roast to <em>reveal</em>, not to disguise.</h2>
+      </div>
+      <div class="nl-philosophy__copy">
+        <p>We keep the supplied story of a coffee in view: producer, place, process, variety, altitude, and roast.</p>
+      </div>
+    </section>
+
+    <div class="section-index"><span class="micro">03 / Available coffee</span><span class="micro">One named release / two honest placeholders</span></div>
+
+    <section class="offering-grid" aria-label="Three coffee offerings">
+      <article class="offering" data-reveal>
+        <p class="eyebrow">Available / Featured release</p>
+        <h3>Las Flores / 04</h3>
+        <p>Huila, Colombia · Washed Caturra · Light roast</p>
+      </article>
+      <article class="offering" data-reveal>
+        <p class="eyebrow">Placeholder / 02</p>
+        <span class="placeholder-mark" aria-hidden="true"></span>
+        <h3>Coffee name pending</h3>
+        <p>Origin and release details have not been supplied.</p>
+      </article>
+      <article class="offering" data-reveal>
+        <p class="eyebrow">Placeholder / 03</p>
+        <span class="placeholder-mark" aria-hidden="true"></span>
+        <h3>Coffee name pending</h3>
+        <p>Origin and release details have not been supplied.</p>
+      </article>
+    </section>
+
+    <section class="nl-cta" id="shop" aria-labelledby="shop-title">
+      <div class="nl-cta__title">
+        <p class="eyebrow">04 / Shop</p>
+        <h2 id="shop-title">Choose the coffee that can be named.</h2>
+      </div>
+      <div class="nl-cta__action"><a class="button" href="#top">View Las Flores / 04</a></div>
+    </section>
+  </main>
+
+  <footer class="nl-footer"><span class="micro">Northline Coffee</span><span class="micro">Coffee with a known origin</span></footer>
+  <script src="site.js"></script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIGNAL/26</title>
+<style>
+  :root {
+    --bg: #0A0A0A;
+    --text: #F4F4F4;
+    --accent: #39FF14;
+    --font: 'Helvetica Neue', 'Arial Black', sans-serif;
+    --line: rgba(57, 255, 20, 0.4);
+  }
+  
+  * { box-sizing: border-box; }
+  
+  html, body { overflow-x: hidden; }
+  body { 
+    margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); 
+    overflow-x: hidden; -webkit-font-smoothing: antialiased; 
+    border: 2px solid var(--accent); margin: 0.5rem; height: calc(100vh - 1rem); 
+    display: flex; flex-direction: column; overflow-y: auto;
+  }
+  
+  h1, h2, h3 { margin: 0; text-transform: uppercase; line-height: 0.85; letter-spacing: -0.04em; }
+  
+  .hero { 
+    height: auto; min-height: 85vh; padding-bottom: 6rem; 
+    display: flex; flex-direction: column; justify-content: space-between; 
+    padding: 2rem; border-bottom: 2px solid var(--accent); 
+    background: linear-gradient(rgba(10,10,10,0.5), rgba(10,10,10,0.9)), url('../assets/19384a8f/signal_festival_hero_1787607352874.webp') center/cover no-repeat;
+  }
+  
+  .hero-top { display: flex; justify-content: space-between; text-transform: uppercase; font-size: 1.25rem; font-weight: 700; color: var(--accent); letter-spacing: 0.05em; }
+  
+  .hero-title-wrap { margin-top: 2rem; margin-bottom: 4rem; }
+  h1 { font-size: clamp(6rem, 20vw, 24rem); transform: translateX(-0.5vw); }
+  
+  .hero-bottom { display: flex; justify-content: space-between; align-items: flex-end; margin-top: auto; }
+  .hero-statement { font-size: clamp(2.5rem, 5vw, 6rem); line-height: 0.9; max-width: 15ch; color: var(--text); font-weight: 700; text-transform: uppercase; letter-spacing: -0.02em; }
+  
+  .schedule { 
+    display: grid; grid-template-columns: repeat(12, 1fr); 
+    border-bottom: 2px solid var(--accent); 
+  }
+  
+  .day { grid-column: span 6; padding: 6rem 2rem; border-right: 2px solid var(--accent); display: flex; flex-direction: column; justify-content: flex-start; }
+  .day:last-child { border-right: none; }
+  
+  .day-title { font-size: clamp(4rem, 8vw, 10rem); margin: 0 0 6rem 0; color: var(--accent); }
+  
+  .set { display: flex; border-bottom: 2px solid var(--line); padding: 2.5rem 0; align-items: baseline; justify-content: space-between;}
+  .set:last-child { border-bottom: none; padding-bottom: 0; }
+  
+  .time { font-size: clamp(1.5rem, 3vw, 3rem); font-weight: 700; color: var(--accent); width: 20%; letter-spacing: 0.05em;}
+  .artist { font-size: clamp(2.5rem, 4.5vw, 6rem); font-weight: 700; text-transform: uppercase; text-align: left; width: 80%; letter-spacing: -0.02em; margin-left: 1rem;}
+  
+  .venue { padding: 12rem 2rem; text-align: center; border-bottom: 2px solid var(--accent); display: flex; flex-direction: column; justify-content: center; align-items: center; background: var(--bg);}
+  .venue h2 { font-size: clamp(5rem, 15vw, 20rem); color: var(--text); }
+  .venue p { font-size: clamp(1.5rem, 3vw, 4rem); text-transform: uppercase; color: var(--accent); margin: 2rem 0 0 0; font-weight: 700; letter-spacing: 0.1em;}
+  
+  .cta-section { display: flex; }
+  .btn { 
+    width: 100%; text-align: center; background: var(--accent); color: var(--bg); 
+    font-size: clamp(4rem, 8vw, 12rem); font-weight: 900; text-transform: uppercase; 
+    text-decoration: none; padding: 6rem 2rem; transition: background 0.2s, color 0.2s;
+    line-height: 0.85; letter-spacing: -0.04em; border: none;
+  }
+  .btn:hover, .btn:focus { background: var(--text); color: var(--bg); outline: none; }
+  
+  .footer { padding: 2rem; display: flex; justify-content: space-between; font-size: 1rem; text-transform: uppercase; font-weight: 700; border-top: 2px solid var(--accent); color: var(--accent); background: var(--bg); }
+  
+  @media (max-width: 1024px) {
+    .schedule { grid-template-columns: 1fr; }
+    .day { grid-column: 1 / -1; border-right: none; border-bottom: 2px solid var(--accent); }
+    .day:last-child { border-bottom: none; }
+    .hero-top { flex-direction: column; gap: 1rem; }
+  }
+  @media (max-width: 768px) {
+    .hero { padding: 1.5rem; }
+    .hero-statement { font-size: 8vw; }
+    .day { padding: 4rem 1.5rem; }
+    .set { flex-direction: column; align-items: flex-start; gap: 0.5rem; padding: 2rem 0; }
+    .artist { margin-left: 0; width: 100%; font-size: 11vw; }
+    .time { font-size: 5vw; width: 100%; margin-bottom: 0.5rem; }
+    .venue { padding: 8rem 1.5rem; }
+    .btn { padding: 4rem 1.5rem; }
+    .footer { flex-direction: column; gap: 1rem; font-size: 0.85rem; }
+  }
+</style>
+</head>
+<body>
+  <div class="hero">
+    <div class="hero-top">
+      <span>OCTOBER 16–17, 2026</span>
+      <span>DETROIT, MICHIGAN</span>
+    </div>
+    <div class="hero-title-wrap">
+      <h1>SIGNAL<br>/26</h1>
+    </div>
+    <div class="hero-bottom">
+      <div class="hero-statement">Two nights.<br>Six artists.<br>One room.</div>
+    </div>
+  </div>
+  
+  <div class="schedule">
+    <div class="day">
+      <h2 class="day-title">FRIDAY</h2>
+      <div class="set"><span class="time">21:00</span><span class="artist">MARA VOSS</span></div>
+      <div class="set"><span class="time">22:30</span><span class="artist">STATIC FIELD</span></div>
+      <div class="set"><span class="time">00:15</span><span class="artist">NULL/SET</span></div>
+    </div>
+    <div class="day">
+      <h2 class="day-title">SATURDAY</h2>
+      <div class="set"><span class="time">20:30</span><span class="artist">FORMANT</span></div>
+      <div class="set"><span class="time">22:00</span><span class="artist">LENA ARC</span></div>
+      <div class="set"><span class="time">23:45</span><span class="artist">PUBLIC MEMORY</span></div>
+    </div>
+  </div>
+  
+  <div class="venue">
+    <h2>DETROIT</h2>
+    <p>MICHIGAN — USA</p>
+  </div>
+  
+  <div class="cta-section">
+    <a href="#" class="btn">ACQUIRE TICKETS</a>
+  </div>
+  
+  <div class="footer">
+    <span>SIGNAL/26</span>
+    <span>INDEPENDENT ELECTRONIC MUSIC FESTIVAL</span>
+  </div>
+</body>
+</html>

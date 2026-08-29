@@ -1,0 +1,763 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SIGNAL/26 — Two nights, six artists, one room. October 16–17, 2026 in Detroit, Michigan.">
+  <title>SIGNAL/26 — Detroit · October 16–17, 2026</title>
+  <style data-system-form-inline="core.css">
+:root {
+  color-scheme: light;
+  --ease: cubic-bezier(.2, .75, .2, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  overflow-x: clip;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body,
+button,
+a {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  color: inherit;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 10px;
+  left: 10px;
+  padding: 12px 16px;
+  color: #fff;
+  background: #111;
+  transform: translateY(-160%);
+  transition: transform .2s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.site-header {
+  position: sticky;
+  z-index: 30;
+  top: 0;
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr) auto auto;
+  min-height: 64px;
+  border-bottom: 1px solid currentColor;
+  background: color-mix(in srgb, var(--page, #f2efe7) 92%, transparent);
+  backdrop-filter: blur(16px);
+}
+
+.site-header > * {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: 0 24px;
+}
+
+.brand {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.header-meta {
+  border-left: 1px solid currentColor;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.header-cta {
+  justify-content: center;
+  min-width: 150px;
+  border-left: 1px solid currentColor;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color .25s ease, background .25s ease;
+}
+
+.header-cta:hover,
+.header-cta:focus-visible {
+  color: var(--page, #f2efe7);
+  background: var(--ink, #111);
+}
+
+.eyebrow,
+.micro {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.section-index {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 58px;
+  padding: 0 28px;
+  border-top: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 220px;
+  min-height: 56px;
+  gap: 26px;
+  padding: 0 20px;
+  border: 1px solid currentColor;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: transform .25s var(--ease), color .25s ease, background .25s ease;
+}
+
+.button::after {
+  content: '↗';
+  font-size: 20px;
+  line-height: 1;
+}
+
+.button:hover,
+.button:focus-visible {
+  transform: translateY(-3px);
+}
+
+:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 4px;
+}
+
+.progress {
+  position: fixed;
+  z-index: 40;
+  top: 63px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  pointer-events: none;
+  transform: scaleX(var(--progress, 0));
+  transform-origin: left;
+  background: var(--signal, #f04b23);
+}
+
+.image-frame {
+  position: relative;
+  overflow: hidden;
+  background: #d7d2c5;
+}
+
+.image-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1s var(--ease), filter .5s ease;
+}
+
+.image-frame:hover img {
+  transform: scale(1.025);
+}
+
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .75s var(--ease), transform .75s var(--ease);
+}
+
+.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 760px) {
+  .site-header {
+    grid-template-columns: 1fr auto;
+    min-height: 56px;
+  }
+
+  .site-header > * {
+    padding: 0 16px;
+  }
+
+  .header-meta {
+    display: none;
+  }
+
+  .header-cta {
+    min-width: 110px;
+  }
+
+  .progress {
+    top: 55px;
+  }
+
+  .section-index {
+    min-height: 50px;
+    padding: 0 16px;
+  }
+
+  .button {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+</style>
+  <style data-system-form-inline="festival.css">
+body.festival {
+  --page: #f2efe7;
+  --ink: #0d0d0f;
+  --signal: #2756ff;
+  --heat: #ff4c24;
+  color: var(--page);
+  background: var(--ink);
+}
+
+.festival .site-header {
+  --page: #0d0d0f;
+  color: var(--page);
+  background: rgba(13, 13, 15, .92);
+}
+
+.festival .header-cta {
+  color: var(--ink);
+  background: var(--heat);
+}
+
+.signal-hero {
+  position: relative;
+  min-height: calc(100vh - 64px);
+  overflow: hidden;
+  border-bottom: 1px solid var(--page);
+  background: #08080a;
+}
+
+.signal-hero__image {
+  position: absolute;
+  inset: 0;
+}
+
+.signal-hero__image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0,0,0,.18), rgba(0,0,0,.1) 42%, rgba(0,0,0,.4));
+}
+
+.signal-hero__copy {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 8fr 4fr;
+  grid-template-rows: 1fr auto;
+  min-height: calc(100vh - 64px);
+}
+
+.signal-hero__title {
+  grid-column: 1 / 3;
+  align-self: start;
+  padding: 24px 26px;
+}
+
+.signal-hero h1 {
+  margin: 22px 0 0;
+  font-size: clamp(112px, 14.5vw, 250px);
+  font-weight: 900;
+  letter-spacing: -.095em;
+  line-height: .68;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.signal-hero h1 span {
+  color: var(--heat);
+}
+
+.signal-hero__manifesto {
+  align-self: end;
+  min-height: 250px;
+  padding: 30px 26px;
+  border-top: 1px solid var(--page);
+  background: rgba(13, 13, 15, .76);
+}
+
+.signal-hero__manifesto p {
+  max-width: 14ch;
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(42px, 5.2vw, 88px);
+  letter-spacing: -.05em;
+  line-height: .95;
+}
+
+.signal-hero__event {
+  align-self: end;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 250px;
+  border-top: 1px solid var(--page);
+  border-left: 1px solid var(--page);
+  background: var(--signal);
+}
+
+.signal-hero__event > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 26px;
+  border-right: 1px solid var(--page);
+}
+
+.signal-hero__event > div:last-child {
+  border-right: 0;
+}
+
+.signal-hero__event strong {
+  font-size: clamp(50px, 6vw, 104px);
+  letter-spacing: -.075em;
+  line-height: .75;
+}
+
+.signal-schedule {
+  color: var(--ink);
+  background: var(--page);
+}
+
+.festival .section-index {
+  color: var(--page);
+  border-color: var(--page);
+  background: var(--ink);
+}
+
+.schedule-days {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.schedule-day {
+  border-right: 1px solid var(--ink);
+}
+
+.schedule-day:last-child {
+  border-right: 0;
+}
+
+.schedule-day h2 {
+  display: flex;
+  justify-content: space-between;
+  min-height: 190px;
+  margin: 0;
+  padding: 26px;
+  font-size: clamp(76px, 9vw, 144px);
+  letter-spacing: -.085em;
+  line-height: .8;
+  text-transform: uppercase;
+}
+
+.schedule-day h2 span {
+  align-self: flex-end;
+  font-size: .18em;
+  letter-spacing: .03em;
+}
+
+.schedule-row {
+  display: grid;
+  grid-template-columns: 125px 1fr;
+  align-items: baseline;
+  min-height: 150px;
+  padding: 22px 26px;
+  border-top: 1px solid var(--ink);
+  transition: color .2s ease, background .2s ease;
+}
+
+.schedule-row:hover {
+  color: var(--page);
+  background: var(--signal);
+}
+
+.schedule-row time {
+  font-size: clamp(18px, 2vw, 30px);
+  font-weight: 400;
+}
+
+.schedule-row strong {
+  font-size: clamp(32px, 4vw, 68px);
+  letter-spacing: -.055em;
+  line-height: .92;
+  text-transform: uppercase;
+}
+
+.schedule-day:nth-child(2) h2,
+.schedule-day:nth-child(2) .schedule-row:nth-child(odd) {
+  background: #d9e0ff;
+}
+
+.lineup {
+  min-height: 620px;
+  padding: 30px 26px 50px;
+  color: var(--page);
+  background: var(--ink);
+}
+
+.lineup-list {
+  margin: 70px 0 0;
+  font-size: clamp(54px, 8.4vw, 140px);
+  font-weight: 900;
+  letter-spacing: -.075em;
+  line-height: .78;
+  text-transform: uppercase;
+}
+
+.lineup-list span {
+  color: var(--heat);
+}
+
+.signal-place {
+  display: grid;
+  grid-template-columns: 8fr 4fr;
+  min-height: 650px;
+  color: var(--ink);
+  background: var(--page);
+  border-bottom: 1px solid var(--ink);
+}
+
+.signal-place__title {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px;
+  border-right: 1px solid var(--ink);
+}
+
+.signal-place h2 {
+  max-width: 7ch;
+  margin: 0;
+  font-size: clamp(78px, 11vw, 180px);
+  letter-spacing: -.09em;
+  line-height: .75;
+  text-transform: uppercase;
+}
+
+.signal-place__note {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 28px;
+  color: var(--page);
+  background: var(--heat);
+}
+
+.signal-place__note strong {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(34px, 4vw, 64px);
+  font-weight: 400;
+  letter-spacing: -.04em;
+  line-height: 1;
+}
+
+.signal-place__note p {
+  max-width: 30ch;
+  margin: 22px 0 0;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.signal-cta {
+  display: grid;
+  grid-template-columns: 9fr 3fr;
+  min-height: 680px;
+  background: var(--signal);
+}
+
+.signal-cta__title {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px;
+  border-right: 1px solid var(--page);
+}
+
+.signal-cta h2 {
+  max-width: 7ch;
+  margin: 0;
+  font-size: clamp(88px, 13vw, 210px);
+  letter-spacing: -.095em;
+  line-height: .72;
+  text-transform: uppercase;
+}
+
+.signal-cta__action {
+  display: flex;
+  align-items: flex-end;
+  padding: 28px;
+}
+
+.signal-cta .button:hover,
+.signal-cta .button:focus-visible {
+  color: var(--signal);
+  background: var(--page);
+}
+
+.signal-footer {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  color: var(--page);
+  background: var(--ink);
+}
+
+.signal-footer > * {
+  padding: 24px 28px;
+  border-right: 1px solid #5e5e63;
+}
+
+.signal-footer > *:last-child {
+  border-right: 0;
+}
+
+@media (max-width: 900px) {
+  .signal-hero__copy {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto auto;
+  }
+
+  .signal-hero__title {
+    grid-column: 1;
+  }
+
+  .signal-hero h1 {
+    font-size: clamp(100px, 24vw, 210px);
+  }
+
+  .signal-hero__event {
+    border-left: 0;
+  }
+
+  .schedule-days,
+  .signal-place,
+  .signal-cta {
+    grid-template-columns: 1fr;
+  }
+
+  .schedule-day {
+    border-right: 0;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .signal-place__title,
+  .signal-cta__title {
+    min-height: 520px;
+    border-right: 0;
+    border-bottom: 1px solid currentColor;
+  }
+
+  .signal-place__note,
+  .signal-cta__action {
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 560px) {
+  .signal-hero h1 {
+    font-size: clamp(68px, 18vw, 98px);
+  }
+
+  .signal-hero__title,
+  .signal-hero__manifesto,
+  .signal-place__title,
+  .signal-place__note,
+  .signal-cta__title,
+  .signal-cta__action,
+  .lineup {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .signal-hero__manifesto {
+    min-height: 210px;
+  }
+
+  .signal-hero__event {
+    grid-template-columns: 1fr 1fr;
+    min-height: 190px;
+  }
+
+  .signal-hero__event > div {
+    padding: 16px;
+  }
+
+  .schedule-day h2 {
+    min-height: 140px;
+    padding: 20px 16px;
+  }
+
+  .schedule-row {
+    grid-template-columns: 78px 1fr;
+    min-height: 118px;
+    padding: 18px 16px;
+  }
+
+  .lineup {
+    min-height: 500px;
+  }
+
+  .signal-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .signal-footer > * {
+    padding: 16px;
+    border-right: 0;
+    border-bottom: 1px solid #5e5e63;
+  }
+}
+
+</style>
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body class="festival">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="progress" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#top">Signal/26</a>
+    <div class="header-meta">October 16–17, 2026 · Detroit, Michigan</div>
+    <a class="header-cta" href="#tickets">Tickets</a>
+  </header>
+
+  <main id="main">
+    <section class="signal-hero" id="top" aria-labelledby="signal-title">
+      <figure class="signal-hero__image image-frame">
+        <img src="../assets/74dafbd5/signal-room.webp" alt="Independent electronic music performance in a dark brick room under blue and red stage lights">
+      </figure>
+      <div class="signal-hero__copy">
+        <div class="signal-hero__title">
+          <p class="eyebrow">Detroit, Michigan / Two days</p>
+          <h1 id="signal-title">Signal<span>/26</span></h1>
+        </div>
+        <div class="signal-hero__manifesto" data-reveal><p>Two nights. Six artists. One room.</p></div>
+        <div class="signal-hero__event" data-reveal>
+          <div><span class="eyebrow">October</span><strong>16</strong><span class="micro">Friday</span></div>
+          <div><span class="eyebrow">October</span><strong>17</strong><span class="micro">Saturday</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-index"><span class="micro">01 / Complete schedule</span><span class="micro">Detroit / 2026</span></div>
+
+    <section class="signal-schedule" aria-label="Complete festival schedule">
+      <div class="schedule-days">
+        <article class="schedule-day">
+          <h2>Fri <span>October 16</span></h2>
+          <div class="schedule-row"><time datetime="2026-10-16T21:00">21:00</time><strong>Mara Voss</strong></div>
+          <div class="schedule-row"><time datetime="2026-10-16T22:30">22:30</time><strong>Static Field</strong></div>
+          <div class="schedule-row"><time datetime="2026-10-17T00:15">00:15</time><strong>Null/Set</strong></div>
+        </article>
+        <article class="schedule-day">
+          <h2>Sat <span>October 17</span></h2>
+          <div class="schedule-row"><time datetime="2026-10-17T20:30">20:30</time><strong>Formant</strong></div>
+          <div class="schedule-row"><time datetime="2026-10-17T22:00">22:00</time><strong>Lena Arc</strong></div>
+          <div class="schedule-row"><time datetime="2026-10-17T23:45">23:45</time><strong>Public Memory</strong></div>
+        </article>
+      </div>
+    </section>
+
+    <div class="section-index"><span class="micro">02 / Artist lineup</span><span class="micro">Six artists / One room</span></div>
+
+    <section class="lineup" aria-labelledby="lineup-title">
+      <p class="eyebrow" id="lineup-title">Artist lineup</p>
+      <p class="lineup-list" data-reveal>Mara Voss <span>·</span> Static Field <span>·</span> Null/Set <span>·</span> Formant <span>·</span> Lena Arc <span>·</span> Public Memory</p>
+    </section>
+
+    <section class="signal-place" aria-labelledby="place-title">
+      <div class="signal-place__title" data-reveal>
+        <p class="eyebrow">03 / Place</p>
+        <h2 id="place-title">Detroit, Michigan.</h2>
+      </div>
+      <div class="signal-place__note">
+        <strong>One room.</strong>
+        <p>No venue name, address, or additional location detail has been supplied.</p>
+      </div>
+    </section>
+
+    <section class="signal-cta" id="tickets" aria-labelledby="tickets-title">
+      <div class="signal-cta__title">
+        <p class="eyebrow">04 / Tickets</p>
+        <h2 id="tickets-title">Take a night. Take both.</h2>
+      </div>
+      <div class="signal-cta__action"><a class="button" href="#event-info">Event information</a></div>
+    </section>
+  </main>
+
+  <footer class="signal-footer" id="event-info">
+    <span class="micro">Signal/26</span>
+    <span class="micro">October 16–17, 2026</span>
+    <span class="micro">Detroit, Michigan</span>
+  </footer>
+  <script src="site.js"></script>
+</body>
+</html>

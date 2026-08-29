@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KINETIC FOUNDRY — Modular Robotic Work Cells</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #090a0c;
+      --bg-surface: #101216;
+      --bg-panel: #16181e;
+      --bg-highlight: #1d2129;
+      --border-subtle: #21252e;
+      --border-medium: #323846;
+      --border-strong: #4a5368;
+      --border-accent: #ff4d00;
+      --signal-orange: #ff4d00;
+      --signal-orange-dim: rgba(255, 77, 0, 0.12);
+      --signal-orange-glow: rgba(255, 77, 0, 0.35);
+      --signal-amber: #ffaa00;
+      --text-primary: #f4f6fa;
+      --text-secondary: #9098a8;
+      --text-tertiary: #586070;
+      --text-muted: #3d4452;
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'Space Grotesk', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* Accessibility Focus */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--signal-orange);
+      outline-offset: 2px;
+    }
+
+    /* Structural Shell */
+    .system-shell {
+      border-left: 1.5px solid var(--border-medium);
+      border-right: 1.5px solid var(--border-medium);
+      max-width: 1440px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: linear-gradient(to right, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 120px 100%;
+      position: relative;
+    }
+
+    /* Top Operational Bar */
+    .operational-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      border-bottom: 1.5px solid var(--border-medium);
+      background: var(--bg-surface);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .operational-block {
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-right: 1px solid var(--border-subtle);
+    }
+
+    .operational-block:last-child {
+      border-right: none;
+    }
+
+    .signal-pip {
+      width: 7px;
+      height: 7px;
+      background: var(--signal-orange);
+      box-shadow: 0 0 8px var(--signal-orange-glow);
+      display: inline-block;
+    }
+
+    .nav-anchor {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.15s ease, background 0.15s ease;
+      padding: 6px 12px;
+      border: 1px solid transparent;
+    }
+
+    .nav-anchor:hover {
+      color: var(--signal-orange);
+      border-color: var(--signal-orange);
+      background: var(--signal-orange-dim);
+    }
+
+    /* Sectional Divisions */
+    .division-row {
+      display: grid;
+      border-bottom: 1.5px solid var(--border-medium);
+    }
+
+    .col-split-60-40 {
+      grid-template-columns: 1.55fr 1fr;
+    }
+
+    .col-split-3 {
+      grid-template-columns: 1.3fr 1fr 1fr;
+    }
+
+    .cell-zone {
+      padding: 48px;
+      border-right: 1px solid var(--border-subtle);
+      position: relative;
+    }
+
+    .cell-zone:last-child {
+      border-right: none;
+    }
+
+    /* Notation & Structural Tags */
+    .notation-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .notation-tag::before {
+      content: "";
+      display: inline-block;
+      width: 14px;
+      height: 2px;
+      background: var(--signal-orange);
+    }
+
+    /* Hero Section */
+    .hero-container {
+      display: grid;
+      grid-template-columns: 1.55fr 1fr;
+      border-bottom: 1.5px solid var(--border-medium);
+      background: var(--bg-primary);
+    }
+
+    .hero-left {
+      padding: 64px 56px;
+      border-right: 1.5px solid var(--border-medium);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 40px;
+      position: relative;
+    }
+
+    .brand-title {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-title span {
+      color: var(--signal-orange);
+    }
+
+    .hero-lead-title {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 5.5vw, 72px);
+      font-weight: 900;
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      margin-top: 16px;
+    }
+
+    .hero-lead-title .outline-text {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--text-primary);
+    }
+
+    .hero-prose {
+      font-size: 18px;
+      line-height: 1.55;
+      color: var(--text-secondary);
+      max-width: 580px;
+      border-left: 3px solid var(--signal-orange);
+      padding-left: 24px;
+    }
+
+    /* Hero Specimen Image Block */
+    .hero-photo-strip {
+      border: 1px solid var(--border-medium);
+      background: #060709;
+      position: relative;
+      overflow: hidden;
+      margin-top: 12px;
+    }
+
+    .hero-photo-img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      display: block;
+      filter: contrast(1.05) brightness(0.95);
+    }
+
+    .hero-photo-tag {
+      position: absolute;
+      bottom: 12px;
+      left: 14px;
+      background: rgba(9, 10, 12, 0.9);
+      border: 1px solid var(--border-medium);
+      padding: 4px 10px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .hero-right {
+      background: var(--bg-surface);
+      padding: 40px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+    /* Model Spec Box */
+    .model-header-block {
+      border-bottom: 2px solid var(--signal-orange);
+      padding-bottom: 18px;
+    }
+
+    .model-id-massive {
+      font-family: var(--font-mono);
+      font-size: clamp(36px, 4vw, 48px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .model-subline {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--signal-orange);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-top: 8px;
+    }
+
+    /* Spec Ledger Grid */
+    .spec-ledger-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      margin-top: 16px;
+    }
+
+    .spec-ledger-table tr {
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .spec-ledger-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .spec-ledger-table td {
+      padding: 13px 0;
+      vertical-align: middle;
+    }
+
+    .spec-key {
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      width: 48%;
+    }
+
+    .spec-val {
+      color: var(--text-primary);
+      font-weight: 700;
+      font-size: 14px;
+      text-align: right;
+    }
+
+    .spec-val.accent {
+      color: var(--signal-orange);
+    }
+
+    /* Kinematic Schematic Canvas */
+    .schematic-wrapper {
+      background: #060709;
+      border: 1px solid var(--border-medium);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .schematic-svg {
+      width: 100%;
+      height: 220px;
+      display: block;
+    }
+
+    .schematic-caption {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-tertiary);
+      margin-top: 14px;
+      border-top: 1px dashed var(--border-subtle);
+      padding-top: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* Section Ribbon Header */
+    .section-ribbon {
+      background: var(--bg-panel);
+      padding: 16px 48px;
+      border-bottom: 1.5px solid var(--border-medium);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .section-ribbon .index-num {
+      color: var(--signal-orange);
+      font-weight: 800;
+      margin-right: 8px;
+    }
+
+    /* Full Tech Spec Matrix */
+    .matrix-section {
+      background: var(--bg-surface);
+      border-bottom: 1.5px solid var(--border-medium);
+    }
+
+    .matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .matrix-cell {
+      padding: 32px 28px;
+      border-right: 1px solid var(--border-subtle);
+      transition: background 0.15s ease;
+    }
+
+    .matrix-cell:last-child {
+      border-right: none;
+    }
+
+    .matrix-cell:hover {
+      background: var(--bg-highlight);
+    }
+
+    .matrix-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .matrix-value {
+      font-family: var(--font-mono);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.1;
+    }
+
+    .matrix-value small {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      margin-left: 4px;
+    }
+
+    /* Capabilities Modules */
+    .capability-card {
+      padding: 48px 40px;
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 380px;
+      position: relative;
+      background: var(--bg-primary);
+      transition: background 0.2s ease;
+    }
+
+    .capability-card:hover {
+      background: var(--bg-surface);
+    }
+
+    .capability-card:last-child {
+      border-right: none;
+    }
+
+    .card-top-id {
+      font-family: var(--font-mono);
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-muted);
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+
+    .card-title {
+      font-family: var(--font-body);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .card-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    .card-footer-spec {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 18px;
+      margin-top: 28px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-secondary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Process / Deployment Section */
+    .process-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      border-bottom: 1.5px solid var(--border-medium);
+      background: var(--bg-surface);
+    }
+
+    .process-step {
+      padding: 48px 40px;
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 280px;
+    }
+
+    .process-step:last-child {
+      border-right: none;
+    }
+
+    .step-marker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--signal-orange);
+      background: var(--signal-orange-dim);
+      border: 1px solid var(--signal-orange);
+      display: inline-block;
+      padding: 4px 10px;
+      margin-bottom: 24px;
+      letter-spacing: 0.1em;
+    }
+
+    .step-heading {
+      font-family: var(--font-body);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+
+    .step-body {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* Final CTA Section */
+    .cta-container {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      border-bottom: 1.5px solid var(--border-medium);
+      background: #07080a;
+    }
+
+    .cta-content {
+      padding: 72px 56px;
+      border-right: 1.5px solid var(--border-medium);
+    }
+
+    .cta-headline {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 4.5vw, 54px);
+      font-weight: 900;
+      line-height: 1.02;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+
+    .cta-form-pane {
+      padding: 56px 48px;
+      background: var(--bg-panel);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .btn-action {
+      background: var(--signal-orange);
+      color: #000000;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 20px 32px;
+      border: 1.5px solid var(--signal-orange);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-decoration: none;
+      transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    }
+
+    .btn-action:hover {
+      background: #ff6622;
+      box-shadow: 0 4px 20px rgba(255, 77, 0, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .btn-action:active {
+      transform: translateY(0);
+    }
+
+    /* System Footer */
+    .system-footer {
+      padding: 36px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-tertiary);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--bg-primary);
+    }
+
+    @media (max-width: 1024px) {
+      .hero-container,
+      .col-split-3,
+      .process-container,
+      .cta-container {
+        grid-template-columns: 1fr;
+      }
+      .matrix-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .matrix-cell:nth-child(3) {
+        border-right: none;
+      }
+      .hero-left, .cta-content {
+        border-right: none;
+        border-bottom: 1.5px solid var(--border-medium);
+        padding: 48px 32px;
+      }
+      .hero-right, .cta-form-pane {
+        padding: 40px 32px;
+      }
+      .capability-card, .process-step {
+        border-right: none;
+        border-bottom: 1px solid var(--border-subtle);
+        padding: 40px 32px;
+        min-height: auto;
+      }
+      .section-ribbon, .system-footer {
+        padding: 16px 32px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .matrix-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .matrix-cell:nth-child(2n) {
+        border-right: none;
+      }
+      .operational-bar {
+        flex-direction: column;
+      }
+      .operational-block {
+        border-right: none;
+        border-bottom: 1px solid var(--border-subtle);
+        padding: 10px 20px;
+      }
+      .hero-left, .hero-right, .cta-content, .cta-form-pane, .capability-card, .process-step {
+        padding: 32px 20px;
+      }
+      .system-footer {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="system-shell">
+    
+    <!-- Operational Top Rail -->
+    <header class="operational-bar">
+      <div class="operational-block">
+        <span class="signal-pip" aria-hidden="true"></span>
+        <span>SYSTEM // KINETIC FOUNDRY</span>
+      </div>
+      <div class="operational-block">
+        <span>DOMAIN: INDUSTRIAL ROBOTICS</span>
+      </div>
+      <div class="operational-block">
+        <span>MODEL: KF / CELL 04</span>
+      </div>
+      <div class="operational-block" style="margin-left: auto;">
+        <a href="#contact" class="nav-anchor">[ INITIATE DEPLOYMENT ]</a>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main>
+      <section class="hero-container">
+        <div class="hero-left">
+          <div>
+            <div class="brand-title">
+              <span>●</span> KINETIC FOUNDRY / AUTONOMOUS WORK CELLS
+            </div>
+            <div class="notation-tag" style="margin-top: 24px;">ENGINEERING MANDATE</div>
+            <h1 class="hero-lead-title">
+              Automation built for factories
+              <span class="outline-text">that change.</span>
+            </h1>
+          </div>
+          
+          <div class="hero-prose">
+            Modular robotic work cells designed to be reconfigured as production demands evolve. Engineered for small and mid-sized manufacturing facilities requiring rapid changeover without dedicated line teardown.
+          </div>
+
+          <!-- Integrated Specimen Photo -->
+          <div class="hero-photo-strip">
+            <img class="hero-photo-img" src="../assets/f310fc9b/kf-cell-04-robot.webp" alt="Kinetic Foundry KF / CELL 04 modular 6-axis work cell in manufacturing bay">
+            <div class="hero-photo-tag">SPECIMEN VIEW // KF-04 ROBOTIC WORK CELL</div>
+          </div>
+
+          <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); letter-spacing: 0.12em; text-transform: uppercase;">
+            CELL DATUM // ARTICULATED WORKSPACE CLASS 04
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div>
+            <div class="model-header-block">
+              <div class="notation-tag">SPECIFICATION ANCHOR</div>
+              <div class="model-id-massive">KF / CELL 04</div>
+              <div class="model-subline">MODULAR 6-AXIS ARTICULATED WORK CELL</div>
+            </div>
+
+            <table class="spec-ledger-table">
+              <tbody>
+                <tr>
+                  <td class="spec-key">PAYLOAD CAPACITY</td>
+                  <td class="spec-val accent">35 kg</td>
+                </tr>
+                <tr>
+                  <td class="spec-key">HORIZONTAL REACH</td>
+                  <td class="spec-val">1,850 mm</td>
+                </tr>
+                <tr>
+                  <td class="spec-key">POSITION REPEATABILITY</td>
+                  <td class="spec-val">±0.05 mm</td>
+                </tr>
+                <tr>
+                  <td class="spec-key">KINEMATIC AXES</td>
+                  <td class="spec-val">6-AXIS</td>
+                </tr>
+                <tr>
+                  <td class="spec-key">DEPLOYMENT FORMAT</td>
+                  <td class="spec-val accent">MODULAR DOCKING</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Product Reach Envelope Schematic -->
+          <div class="schematic-wrapper">
+            <div class="notation-tag" style="margin-bottom: 10px;">KINEMATIC REACH ENVELOPE / 1,850 MM</div>
+            <svg class="schematic-svg" viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kinematic reach diagram for KF / CELL 04">
+              <!-- Radial Grid -->
+              <circle cx="200" cy="170" r="140" stroke="#21252e" stroke-width="1" stroke-dasharray="3 3" />
+              <circle cx="200" cy="170" r="95" stroke="#21252e" stroke-width="1" stroke-dasharray="3 3" />
+              <circle cx="200" cy="170" r="45" stroke="#21252e" stroke-width="1" />
+              
+              <!-- Baseline & Axes -->
+              <line x1="30" y1="170" x2="370" y2="170" stroke="#323846" stroke-width="1.5" />
+              <line x1="200" y1="20" x2="200" y2="170" stroke="#323846" stroke-width="1" stroke-dasharray="2 2" />
+              
+              <!-- Kinematic Arm Geometry -->
+              <path d="M 200 170 L 200 120 L 265 65 L 320 85" stroke="#ff4d00" stroke-width="2.5" stroke-linecap="square" />
+              
+              <!-- Axis Joints -->
+              <circle cx="200" cy="170" r="6" fill="#ff4d00" />
+              <circle cx="200" cy="120" r="4" fill="#f4f6fa" stroke="#ff4d00" stroke-width="2" />
+              <circle cx="265" cy="65" r="4" fill="#f4f6fa" stroke="#ff4d00" stroke-width="2" />
+              <circle cx="320" cy="85" r="3.5" fill="#ff4d00" />
+              
+              <!-- Reach Arc Dimension -->
+              <path d="M 60 170 A 140 140 0 0 1 340 170" stroke="#ff4d00" stroke-width="1" stroke-opacity="0.45" />
+              <text x="208" y="38" fill="#9098a8" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600">R1850 mm WORKING RADIUS</text>
+              <text x="312" y="105" fill="#ff4d00" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700">PAYLOAD: 35 KG</text>
+              <text x="135" y="186" fill="#586070" font-family="'JetBrains Mono', monospace" font-size="8">ORIGIN: BASE (J1)</text>
+              <text x="260" y="186" fill="#586070" font-family="'JetBrains Mono', monospace" font-size="8">REPEATABILITY: ±0.05 MM</text>
+            </svg>
+            <div class="schematic-caption">
+              <span>TRUE SCALE 1:20 KINEMATIC BOUNDARY</span>
+              <span>DATUM: J1 BASE FLANGE</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Master Specification Strip -->
+      <section class="matrix-section">
+        <div class="section-ribbon">
+          <div><span class="index-num">01</span> PRIMARY SPECIFICATION MATRIX</div>
+          <div>UNIT SPECIFICATION // KF-04</div>
+        </div>
+        <div class="matrix-grid">
+          <div class="matrix-cell">
+            <div class="matrix-label">PAYLOAD</div>
+            <div class="matrix-value">35<small>kg</small></div>
+          </div>
+          <div class="matrix-cell">
+            <div class="matrix-label">MAX REACH</div>
+            <div class="matrix-value">1,850<small>mm</small></div>
+          </div>
+          <div class="matrix-cell">
+            <div class="matrix-label">REPEATABILITY</div>
+            <div class="matrix-value">±0.05<small>mm</small></div>
+          </div>
+          <div class="matrix-cell">
+            <div class="matrix-label">STRUCTURE</div>
+            <div class="matrix-value">6<small>AXIS</small></div>
+          </div>
+          <div class="matrix-cell">
+            <div class="matrix-label">ARCHITECTURE</div>
+            <div class="matrix-value" style="color: var(--signal-orange);">MODULAR</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Capabilities Section -->
+      <section>
+        <div class="section-ribbon">
+          <div><span class="index-num">02</span> WORK CELL CAPABILITIES</div>
+          <div>CORE OPERATIONAL ADVANTAGES</div>
+        </div>
+        <div class="division-row col-split-3">
+          <div class="capability-card">
+            <div>
+              <div class="card-top-id">CAP / 01</div>
+              <h2 class="card-title">Rapid Cell Reconfiguration</h2>
+              <p class="card-desc">
+                Engineered with standardized mechanical datum points and quick-release utility couplings, enabling single-shift relocation and redeployment between machining, assembly, and tending bays.
+              </p>
+            </div>
+            <div class="card-footer-spec">
+              <span>INTERFACE</span>
+              <span style="color: var(--text-primary); font-weight: 600;">STANDARDIZED MODULAR FLANGE</span>
+            </div>
+          </div>
+
+          <div class="capability-card">
+            <div>
+              <div class="card-top-id">CAP / 02</div>
+              <h2 class="card-title">High-Tolerance 6-Axis Motion</h2>
+              <p class="card-desc">
+                Maintains strict ±0.05 mm repeatability across the entire 1,850 mm working envelope, providing the precision required for tight-tolerance CNC load/unload, part inspection, and mechanical fastening.
+              </p>
+            </div>
+            <div class="card-footer-spec">
+              <span>TOLERANCE</span>
+              <span style="color: var(--signal-orange); font-weight: 700;">±0.05 MM REPEATABILITY</span>
+            </div>
+          </div>
+
+          <div class="capability-card">
+            <div>
+              <div class="card-top-id">CAP / 03</div>
+              <h2 class="card-title">Adaptive Factory Integration</h2>
+              <p class="card-desc">
+                Constructed specifically for small and mid-sized factory footprints where floor layouts cannot remain static. Integrates directly into existing physical plant workflows without rigid civil floor anchors.
+              </p>
+            </div>
+            <div class="card-footer-spec">
+              <span>FOOTPRINT</span>
+              <span style="color: var(--text-primary); font-weight: 600;">COMPACT RECONFIGURABLE</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Deployment Sequence -->
+      <section>
+        <div class="section-ribbon">
+          <div><span class="index-num">03</span> DEPLOYMENT SEQUENCE</div>
+          <div>STANDARDIZED WORKFLOW</div>
+        </div>
+        <div class="process-container">
+          <div class="process-step">
+            <div>
+              <span class="step-marker">STAGE 01</span>
+              <h3 class="step-heading">Spatial & Kinematic Planning</h3>
+              <p class="step-body">
+                Work cell envelope mapped against current tooling stations using the 1,850 mm radial reach perimeter to ensure obstacle clearance and ergonomic operator crossover.
+              </p>
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); margin-top: 24px;">
+              PHASE: 1,850 MM ENVELOPE AUDIT
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div>
+              <span class="step-marker">STAGE 02</span>
+              <h3 class="step-heading">Physical Docking & Alignment</h3>
+              <p class="step-body">
+                The modular work cell base locks into mechanical reference points. Precision leveling secures repeatability within the ±0.05 mm specification.
+              </p>
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); margin-top: 24px;">
+              PHASE: BASE REFERENCE LOCK
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div>
+              <span class="step-marker">STAGE 03</span>
+              <h3 class="step-heading">Production Changeover</h3>
+              <p class="step-body">
+                6-axis motion programs indexed to batch recipes. Rapid tool changeover allows the cell to transition between different part runs as factory demand shifts.
+              </p>
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); margin-top: 24px;">
+              PHASE: 6-AXIS RECIPE INDEXING
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact CTA Section -->
+      <section class="cta-container" id="contact">
+        <div class="cta-content">
+          <div class="notation-tag">DEPLOYMENT INQUIRY</div>
+          <h2 class="cta-headline">Deploy Modular Automation to Your Facility</h2>
+          <p style="color: var(--text-secondary); font-size: 17px; max-width: 540px; line-height: 1.6;">
+            Consult with our engineering team on integrating the <strong>KF / CELL 04</strong> modular work cell into your existing manufacturing operations.
+          </p>
+        </div>
+        <div class="cta-form-pane">
+          <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); margin-bottom: 18px; text-transform: uppercase; letter-spacing: 0.08em;">
+            SPECIFICATION: KF / CELL 04 (35 KG / 1850 MM)
+          </div>
+          <a href="mailto:engineering@kineticfoundry.example" class="btn-action">
+            <span>REQUEST TECHNICAL SPEC SHEET</span>
+            <span aria-hidden="true">→</span>
+          </a>
+          <div style="font-family: var(--font-mono); font-size: 10px; color: var(--text-tertiary); margin-top: 16px; text-align: center; letter-spacing: 0.05em;">
+            DIRECT FACTORY SPECIFICATION PROTOCOL
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Structural Footer -->
+    <footer class="system-footer">
+      <div>KINETIC FOUNDRY © 2026 — MODULAR FACTORY AUTOMATION</div>
+      <div>SYSTEM//FORM EVALUATION SPECIMEN — FACTORY MODE</div>
+    </footer>
+
+  </div>
+</body>
+</html>

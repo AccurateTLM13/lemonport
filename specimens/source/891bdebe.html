@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIELDNOTE — A notebook built for writing</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink: #1a1917;
+    --paper: #f8f6f1;
+    --warm: #ede9e0;
+    --rule: #d8d4cb;
+    --muted: #918c83;
+    --sans: 'Helvetica Neue', Arial, sans-serif;
+    --display: 'Georgia', 'Times New Roman', serif;
+    --body: 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  html { font-size: 16px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    padding: 1.25rem 2rem;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    position: sticky;
+    top: 0;
+    background: var(--paper);
+    z-index: 10;
+  }
+
+  @media (min-width: 960px) { .header { padding: 1.25rem 3rem; } }
+
+  .header-brand {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .header-nav {
+    display: flex;
+    gap: 1.25rem;
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .header-nav a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.15s;
+    padding: 0.2rem 0;
+    border-bottom: 1px solid transparent;
+  }
+
+  .header-nav a:hover { color: var(--ink); border-bottom-color: var(--ink); }
+
+  @media (max-width: 639px) {
+    .header-nav { gap: 0.75rem; font-size: 0.5rem; }
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 5rem 2rem 4rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  @media (min-width: 960px) { .hero { padding: 7rem 3rem 5rem; } }
+
+  .hero-inner { max-width: 900px; }
+
+  .hero-eyebrow {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  .hero-title {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(3.5rem, 9vw, 7rem);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-rule {
+    width: 70px;
+    height: 2px;
+    background: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-sub {
+    font-family: var(--body);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #666;
+    max-width: 440px;
+  }
+
+  /* ── SCALE INTERRUPT ── */
+  .scale-interrupt {
+    padding: 4rem 2rem;
+    border-bottom: 1px solid var(--rule);
+    overflow: hidden;
+  }
+
+  @media (min-width: 960px) { .scale-interrupt { padding: 5rem 3rem; } }
+
+  .scale-interrupt-inner {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .scale-interrupt-num {
+    font-family: var(--display);
+    font-size: clamp(5rem, 14vw, 12rem);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  .scale-interrupt-label {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  /* ── SECTION ── */
+  .section { padding: 4rem 2rem; border-bottom: 1px solid var(--rule); }
+  @media (min-width: 960px) { .section { padding: 5rem 3rem; } }
+
+  .section-label {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 0.55rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* ── PRODUCT HERO ── */
+  .product-hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  @media (min-width: 960px) {
+    .product-hero { grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  }
+
+  .product-display {
+    aspect-ratio: 3/4;
+    background: var(--warm);
+    border: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.25rem;
+    position: relative;
+    max-height: 500px;
+  }
+
+  .product-display-label {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 0.5rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .product-display-shape {
+    width: 110px;
+    height: 150px;
+    border: 2px solid var(--ink);
+    position: relative;
+  }
+
+  .product-display-shape::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    border: 1px solid var(--rule);
+  }
+
+  .product-display-dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    background: var(--ink);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .product-name {
+    font-family: var(--display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+
+  .product-name .num { color: var(--muted); }
+
+  .product-tagline {
+    font-family: var(--body);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #666;
+    max-width: 380px;
+    margin-bottom: 2rem;
+  }
+
+  /* ── SPEC LIST ── */
+  .spec-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .spec-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .spec-key {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .spec-val {
+    font-family: var(--body);
+    font-size: 0.9rem;
+    text-align: right;
+  }
+
+  /* ── INTERIOR ── */
+  .interior {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  @media (min-width: 640px) { .interior { grid-template-columns: 1fr 1fr 1fr; } }
+
+  .interior-block {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  @media (min-width: 640px) {
+    .interior-block { padding: 0 1.5rem; border-bottom: none; border-right: 1px solid var(--rule); }
+    .interior-block:first-child { padding-left: 0; }
+    .interior-block:last-child { border-right: none; padding-right: 0; }
+  }
+
+  .interior-block h3 {
+    font-family: var(--display);
+    font-size: 1.15rem;
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+  }
+
+  .interior-block p {
+    font-size: 0.88rem;
+    line-height: 1.75;
+    color: #666;
+  }
+
+  .interior-visual {
+    margin-top: 1rem;
+    height: 70px;
+    background: var(--warm);
+    border: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .interior-dots {
+    display: grid;
+    grid-template-columns: repeat(14, 1fr);
+    gap: 5px;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    align-content: center;
+  }
+
+  .interior-dots span {
+    width: 2.5px;
+    height: 2.5px;
+    background: var(--rule);
+    border-radius: 50%;
+    justify-self: center;
+  }
+
+  /* ── COLORS ── */
+  .colors {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  @media (min-width: 640px) { .colors { grid-template-columns: 1fr 1fr 1fr; } }
+
+  .color-swatch {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .color-swatch { padding: 0 1.5rem; border-bottom: none; border-right: 1px solid var(--rule); }
+    .color-swatch:first-child { padding-left: 0; }
+    .color-swatch:last-child { border-right: none; padding-right: 0; }
+  }
+
+  .swatch-field {
+    width: 100%;
+    aspect-ratio: 2/1;
+    border: 1px solid var(--rule);
+  }
+
+  .swatch-field.black { background: #1a1917; }
+  .swatch-field.bone { background: #ede9e0; }
+  .swatch-field.orange { background: #e84a1c; }
+
+  .swatch-name {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ── CTA ── */
+  .cta {
+    padding: 5rem 2rem;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  @media (min-width: 960px) { .cta { padding: 6rem 3rem; } }
+
+  .cta-inner { max-width: 600px; }
+
+  .cta .section-label { color: rgba(248,246,241,0.3); }
+  .cta .section-label::after { background: rgba(248,246,241,0.1); }
+
+  .cta-title {
+    font-family: var(--display);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(248,246,241,0.5);
+    margin-bottom: 2rem;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--paper);
+    padding: 0.9rem 2.5rem;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .cta-btn:hover { background: var(--warm); transform: translateY(-1px); }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 1.5rem 2rem;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem;
+    font-family: var(--sans);
+    font-size: 0.5rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-brand">FIELDNOTE</div>
+    <nav class="header-nav">
+      <a href="#product">Product</a>
+      <a href="#specs">Specs</a>
+      <a href="#interior">Interior</a>
+      <a href="#colors">Colors</a>
+      <a href="#purchase">Purchase</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">NOTEBOOKS</div>
+      <h1 class="hero-title">FIELDNOTE</h1>
+      <div class="hero-rule"></div>
+      <p class="hero-sub">A notebook built for writing. Designed in restraint, made in Japan, finished to a standard that rewards daily use.</p>
+    </div>
+  </section>
+
+  <!-- SCALE INTERRUPT -->
+  <div class="scale-interrupt">
+    <div class="scale-interrupt-inner">
+      <div class="scale-interrupt-num">192</div>
+      <div class="scale-interrupt-label">pages</div>
+    </div>
+  </div>
+
+  <!-- PRODUCT -->
+  <section class="section" id="product">
+    <div class="section-label">PRODUCT</div>
+    <div class="product-hero">
+      <div class="product-display">
+        <div class="product-display-label">A5 / DOT GRID</div>
+        <div class="product-display-shape">
+          <div class="product-display-dot"></div>
+        </div>
+        <div class="product-display-label">LAY-FLAT BINDING</div>
+      </div>
+      <div>
+        <div class="product-name">DAILY <span class="num">/ 01</span></div>
+        <p class="product-tagline">An A5 notebook with dot grid pages, lay-flat binding, and a soft-touch cover. Designed for daily writing, sketching, and planning.</p>
+        <div class="spec-list" id="specs">
+          <div class="spec-row">
+            <div class="spec-key">FORMAT</div>
+            <div class="spec-val">A5</div>
+          </div>
+          <div class="spec-row">
+            <div class="spec-key">PAGES</div>
+            <div class="spec-val">192</div>
+          </div>
+          <div class="spec-row">
+            <div class="spec-key">GRID</div>
+            <div class="spec-val">Dot Grid</div>
+          </div>
+          <div class="spec-row">
+            <div class="spec-key">PAPER</div>
+            <div class="spec-val">100 gsm</div>
+          </div>
+          <div class="spec-row">
+            <div class="spec-key">BINDING</div>
+            <div class="spec-val">Lay-Flat</div>
+          </div>
+          <div class="spec-row">
+            <div class="spec-key">COVER</div>
+            <div class="spec-val">Soft-Touch</div>
+          </div>
+          <div class="spec-row">
+            <div class="spec-key">ORIGIN</div>
+            <div class="spec-val">Made in Japan</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERIOR -->
+  <section class="section" id="interior">
+    <div class="section-label">INTERIOR / PAGE SYSTEM</div>
+    <div class="interior">
+      <div class="interior-block">
+        <h3>Dot Grid</h3>
+        <p>A 5mm dot grid printed in light gray. Guides without constraining. Works for writing, drawing, diagrams, and layout.</p>
+        <div class="interior-visual">
+          <div class="interior-dots">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+      <div class="interior-block">
+        <h3>100 gsm Paper</h3>
+        <p>Weighted for fountain pens, fineliners, and light marker. Minimal show-through. Smooth enough for fast writing.</p>
+      </div>
+      <div class="interior-block">
+        <h3>Lay-Flat Binding</h3>
+        <p>Sewn binding that opens to a full 180 degrees. No spring-back. The notebook stays open where you leave it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLORS -->
+  <section class="section" id="colors">
+    <div class="section-label">AVAILABLE COLORS</div>
+    <div class="colors">
+      <div class="color-swatch">
+        <div class="swatch-field black"></div>
+        <div class="swatch-name">Black</div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-field bone"></div>
+        <div class="swatch-name">Bone</div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-field orange"></div>
+        <div class="swatch-name">Safety Orange</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="purchase">
+    <div class="cta-inner">
+      <div class="section-label">PURCHASE</div>
+      <h2 class="cta-title">Start writing.</h2>
+      <p class="cta-text">FIELDNOTE DAILY / 01. A5, 192 pages, dot grid, 100 gsm, lay-flat binding. Made in Japan.</p>
+      <a href="#" class="cta-btn">BUY NOW</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>FIELDNOTE</span>
+    <span>MADE IN JAPAN</span>
+    <span>&copy; 2026 FIELDNOTE</span>
+  </footer>
+
+</body>
+</html>

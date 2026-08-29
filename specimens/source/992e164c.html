@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NORTHLINE COFFEE — Las Flores / 04. Huila, Colombia. Washed Caturra. 1,850 MASL. Light roast. Red apple, caramel, citrus." />
+  <title>NORTHLINE COFFEE — Las Flores / 04</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #1c140f; --paper: #f3eadc; --field: #e7d8c2; --cherry: #7a2e22; --roast: #3a2418;
+      --display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+      --editorial: "Fraunces", Georgia, serif;
+      --gutter: clamp(1rem, 2.4vw, 2.2rem); --header-h: 3.2rem;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; overflow-x: clip; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+    body {
+      margin: 0; background: var(--paper); color: var(--ink);
+      font-family: var(--display); font-size: 1.05rem; line-height: 1.5;
+      -webkit-font-smoothing: antialiased; overflow-x: clip;
+    }
+    a { color: inherit; }
+    :focus-visible { outline: 2px solid var(--cherry); outline-offset: 3px; }
+    [id] { scroll-margin-top: calc(var(--header-h) + 0.4rem); }
+    .skip { position: absolute; left: 0.75rem; top: -5rem; z-index: 40; background: var(--ink); color: var(--paper); padding: 0.55rem 0.85rem; }
+    .skip:focus { top: 0.75rem; }
+    main > img { display: none !important; }
+    .label { font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; }
+    header {
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+      padding: 0.7rem var(--gutter); border-bottom: 1px solid var(--ink);
+      position: sticky; top: 0; z-index: 12; background: var(--paper);
+    }
+    header nav { display: flex; gap: 1.25rem; justify-content: center; flex-wrap: wrap; }
+    header nav a { text-decoration: none; }
+    header nav a:hover { text-decoration: underline; }
+    header .shop {
+      justify-self: end; text-decoration: none; background: var(--ink); color: var(--paper);
+      padding: 0.55rem 0.95rem; min-height: 44px; display: inline-flex; align-items: center;
+    }
+    header .shop:hover { background: var(--cherry); }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(13rem, 0.85fr);
+      grid-template-rows: 1fr auto;
+      min-height: calc(100dvh - var(--header-h));
+    }
+    .hero-main {
+      padding: var(--gutter); display: grid; grid-template-rows: auto 1fr auto;
+      min-width: 0; overflow: hidden;
+    }
+    .hero-main h1 { margin: 0; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; }
+    .release-name {
+      font-size: clamp(4.6rem, 14vw, 11.2rem); font-weight: 700; line-height: 0.76;
+      letter-spacing: -0.06em; text-transform: uppercase; margin: 0 -0.12em 0 -0.04em; align-self: end;
+    }
+    .origin-line {
+      font-family: var(--editorial); font-size: clamp(1.4rem, 2.4vw, 2rem);
+      font-style: italic; font-weight: 400; margin: 1.3rem 0 0; max-width: 16ch; line-height: 1.18;
+    }
+    .hero-side {
+      position: relative; overflow: hidden; border-left: 1px solid var(--ink);
+      color: var(--paper); display: grid; grid-template-rows: auto 1fr auto; min-height: 16rem;
+    }
+    .hero-side img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .hero-side .veil {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(58,36,24,0.3), rgba(58,36,24,0.84));
+      pointer-events: none;
+    }
+    .hero-side .meta, .hero-side .lot, .lot-caption { position: relative; z-index: 2; }
+    .hero-side .meta { display: flex; justify-content: space-between; padding: 0.95rem var(--gutter); }
+    .lot {
+      font-size: clamp(9rem, 26vw, 18rem); font-weight: 700; line-height: 0.68;
+      letter-spacing: -0.09em; margin: 0 -16% 0 6%; align-self: center;
+    }
+    .lot-caption { padding: 0.95rem var(--gutter); margin: 0; }
+
+    .facts {
+      grid-column: 1 / -1; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
+      border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink);
+    }
+    .fact { padding: 1.1rem var(--gutter) 1.3rem; border-right: 1px solid var(--ink); min-width: 0; }
+    .fact:last-child { border-right: 0; }
+    .fact dt { margin: 0 0 0.6rem; }
+    .fact dd { margin: 0; font-size: clamp(0.98rem, 1.5vw, 1.3rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
+
+    .tasting {
+      display: grid; grid-template-columns: auto 1fr 1fr 1fr;
+      border-bottom: 1px solid var(--ink);
+    }
+    .tasting-index {
+      writing-mode: vertical-rl; transform: rotate(180deg);
+      padding: 1rem 0.6rem; border-right: 1px solid var(--ink);
+      display: flex; align-items: center; background: var(--field);
+    }
+    .note {
+      padding: 1.5rem var(--gutter); border-right: 1px solid var(--ink);
+      min-height: 7.2rem; display: flex; flex-direction: column; justify-content: flex-end; gap: 0.5rem;
+    }
+    .note:last-child { border-right: 0; }
+    .note strong {
+      font-family: var(--editorial); font-size: clamp(1.6rem, 2.7vw, 2.45rem);
+      font-weight: 400; font-style: italic; letter-spacing: -0.02em;
+    }
+    .origin-field { margin: 0; overflow: hidden; border-bottom: 1px solid var(--ink); min-width: 0; }
+    .origin-field img { display: block; width: 100%; aspect-ratio: 16/7; object-fit: cover; max-height: min(34vh, 20rem); }
+
+    .split { display: grid; grid-template-columns: 0.92fr 1.08fr; border-bottom: 1px solid var(--ink); }
+    .split article { padding: clamp(1.6rem, 3vw, 2.5rem) var(--gutter); }
+    .split article:first-child { border-right: 1px solid var(--ink); }
+    .split h2 { font-size: clamp(1.75rem, 3.2vw, 2.7rem); letter-spacing: -0.04em; line-height: 0.95; margin: 0.3rem 0 1rem; text-transform: uppercase; }
+    .split p { max-width: 46ch; margin: 0 0 0.85rem; }
+    .split p.serif { font-family: var(--editorial); font-size: 1.2rem; line-height: 1.38; font-style: italic; }
+    .altitude { font-size: clamp(4.2rem, 10vw, 7.6rem); font-weight: 700; line-height: 0.78; letter-spacing: -0.065em; margin: 1.4rem 0 0.3rem; }
+
+    .still { margin: 0; overflow: hidden; border-bottom: 1px solid var(--ink); }
+    .still img { display: block; width: 100%; aspect-ratio: 16/7; object-fit: cover; max-height: min(32vh, 18rem); }
+
+    .offerings { display: grid; grid-template-columns: 1.5fr 0.9fr 0.9fr; border-bottom: 1px solid var(--ink); }
+    .offering {
+      padding: 1.5rem var(--gutter) 1.9rem; border-right: 1px solid var(--ink);
+      min-height: 17rem; display: grid; grid-template-rows: auto auto 1fr auto; gap: 0.65rem; min-width: 0;
+    }
+    .offering:last-child { border-right: 0; }
+    .offering.featured { background: var(--cherry); color: var(--paper); }
+    .offering h3 { font-size: clamp(1.45rem, 2.6vw, 2.3rem); margin: 0; letter-spacing: -0.04em; text-transform: uppercase; line-height: 0.9; }
+    .offering p { margin: 0; max-width: 28ch; font-size: 0.94rem; }
+    .placeholder-mark { display: inline-block; border: 1px solid currentColor; padding: 0.15rem 0.45rem; letter-spacing: 0.12em; font-size: 0.6875rem; text-transform: uppercase; width: max-content; }
+
+    .cta { display: grid; grid-template-columns: 1fr minmax(14rem, 0.42fr); min-height: 42vh; }
+    .cta-copy { padding: clamp(2rem, 4vw, 3.2rem) var(--gutter); display: flex; flex-direction: column; justify-content: flex-end; border-right: 1px solid var(--ink); }
+    .cta-copy h2 { font-size: clamp(2.4rem, 6.2vw, 5.2rem); line-height: 0.86; letter-spacing: -0.05em; text-transform: uppercase; margin: 0 0 0.85rem; max-width: 12ch; }
+    .cta-action { background: var(--roast); color: var(--paper); display: flex; flex-direction: column; justify-content: center; padding: var(--gutter); gap: 1rem; }
+    .cta-action a {
+      background: var(--paper); color: var(--ink); text-decoration: none; padding: 1rem 1.15rem;
+      font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; text-align: center;
+      min-height: 44px; display: flex; align-items: center; justify-content: center;
+    }
+    .cta-action a:hover { background: var(--cherry); color: var(--paper); }
+    footer { display: flex; justify-content: space-between; gap: 1rem; padding: 0.85rem var(--gutter); border-top: 1px solid var(--ink); }
+
+    @media (max-width: 900px) {
+      header { grid-template-columns: 1fr auto; }
+      header nav { grid-column: 1 / -1; justify-content: flex-start; }
+      .hero { grid-template-columns: 1fr; min-height: 0; }
+      .hero-side { border-left: 0; border-bottom: 1px solid var(--ink); min-height: 14rem; }
+      .release-name { font-size: clamp(3.4rem, 18vw, 5.8rem); }
+      .facts { grid-template-columns: 1fr 1fr; }
+      .fact:nth-child(2n) { border-right: 0; }
+      .fact:nth-child(-n+4) { border-bottom: 1px solid var(--ink); }
+      .split, .offerings, .cta { grid-template-columns: 1fr; }
+      .split article:first-child, .offering, .cta-copy { border-right: 0; border-bottom: 1px solid var(--ink); }
+      .offering { min-height: 0; }
+    }
+    @media (max-width: 620px) {
+      .facts { grid-template-columns: 1fr; }
+      .fact { border-right: 0; border-bottom: 1px solid var(--ink); display: grid; grid-template-columns: 8rem 1fr; align-items: baseline; padding: 0.8rem var(--gutter); }
+      .fact dt { margin: 0; }
+      .tasting { grid-template-columns: 1fr; }
+      .tasting-index { writing-mode: horizontal-tb; transform: none; border-right: 0; border-bottom: 1px solid var(--ink); padding: 0.65rem var(--gutter); }
+      .note { border-right: 0; border-bottom: 1px solid var(--ink); min-height: 0; flex-direction: row; justify-content: space-between; align-items: baseline; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header>
+    <strong class="label">Northline Coffee</strong>
+    <nav class="label" aria-label="Primary">
+      <a href="#release">Las Flores / 04</a>
+      <a href="#origin">Origin</a>
+      <a href="#offerings">Offerings</a>
+    </nav>
+    <a class="shop label" href="#shop">Shop</a>
+  </header>
+
+  <main id="content">
+    <section class="hero" aria-labelledby="release-title">
+      <div class="hero-main">
+        <h1>Northline Coffee</h1>
+        <p class="release-name" id="release-title">Las<br />Flores</p>
+        <p class="origin-line">Coffee with a known origin.</p>
+      </div>
+      <aside class="hero-side" aria-label="Featured lot">
+        <img src="../assets/992e164c/nl-beans.webp" alt="Light-roast coffee beans and a cup on cream cloth" width="1152" height="1536" />
+        <span class="veil" aria-hidden="true"></span>
+        <div class="meta">
+          <span class="label">Featured release</span>
+          <span class="label">Lot 04</span>
+        </div>
+        <p class="lot" aria-hidden="true">04</p>
+        <p class="lot-caption label">Huila, Colombia · Washed · Light</p>
+      </aside>
+      <section id="release" class="facts" aria-label="Las Flores specifications">
+        <div class="fact"><dl><dt class="label">Origin</dt><dd>Huila, Colombia</dd></dl></div>
+        <div class="fact"><dl><dt class="label">Producer</dt><dd>Las Flores</dd></dl></div>
+        <div class="fact"><dl><dt class="label">Process</dt><dd>Washed</dd></dl></div>
+        <div class="fact"><dl><dt class="label">Variety</dt><dd>Caturra</dd></dl></div>
+        <div class="fact"><dl><dt class="label">Roast</dt><dd>Light</dd></dl></div>
+      </section>
+    </section>
+
+    <section class="tasting" aria-label="Tasting notes">
+      <div class="tasting-index label">Tasting</div>
+      <div class="note"><span class="label">Note 01</span><strong>Red apple</strong></div>
+      <div class="note"><span class="label">Note 02</span><strong>Caramel</strong></div>
+      <div class="note"><span class="label">Note 03</span><strong>Citrus</strong></div>
+    </section>
+
+    <figure class="origin-field">
+      <img src="../assets/992e164c/nl-huila.webp" alt="Coffee trees on a hillside in Huila, Colombia" width="1536" height="1152" />
+    </figure>
+
+    <section id="origin" class="split">
+      <article aria-labelledby="origin-title">
+        <p class="label" style="margin:0;">Origin</p>
+        <h2 id="origin-title">Huila, at altitude.</h2>
+        <p class="serif">Las Flores grows Caturra in Huila, Colombia. The lot is washed and roasted light.</p>
+        <p class="altitude">1,850</p>
+        <p class="label" style="margin:0;">MASL · altitude of this lot</p>
+      </article>
+      <article aria-labelledby="roast-title">
+        <p class="label" style="margin:0;">Roasting</p>
+        <h2 id="roast-title">Roast in service of origin.</h2>
+        <p class="serif">A light roast is used so the known origin remains readable in the cup—not covered by it.</p>
+        <p>Northline buys coffee that can be named: place, producer, process, variety, height. The roast is the last recorded decision, not the first story.</p>
+        <p>Las Flores / 04 is offered as that record: Huila, washed Caturra, 1,850 metres, tasted as red apple, caramel, and citrus.</p>
+      </article>
+    </section>
+
+    <figure class="still">
+      <img src="../assets/992e164c/nl-apple-still.webp" alt="Coffee bag, cup, beans, and a red apple on linen" width="1536" height="1152" />
+    </figure>
+
+    <section id="offerings" class="offerings" aria-labelledby="offerings-title">
+      <article class="offering featured">
+        <p class="label" style="margin:0;" id="offerings-title">Available now</p>
+        <h3>Las Flores / 04</h3>
+        <p>Huila, Colombia. Producer Las Flores. Washed Caturra at 1,850 MASL. Light roast. Red apple / caramel / citrus.</p>
+        <p class="label">Featured release</p>
+      </article>
+      <article class="offering">
+        <p class="placeholder-mark">Placeholder</p>
+        <h3>Offering 02</h3>
+        <p>Origin, producer, process, variety, altitude, and roast have not been supplied for this offering.</p>
+        <p class="label">Content not specified</p>
+      </article>
+      <article class="offering">
+        <p class="placeholder-mark">Placeholder</p>
+        <h3>Offering 03</h3>
+        <p></p>
+        <p class="label">Awaiting origin record</p>
+      </article>
+    </section>
+
+    <section id="shop" class="cta" aria-labelledby="shop-title">
+      <div class="cta-copy">
+        <p class="label" style="margin:0 0 0.75rem;">Shop</p>
+        <h2 id="shop-title">Buy the coffee that can be named.</h2>
+        <p>Las Flores / 04 is the current release. The other two offerings await origin records.</p>
+      </div>
+      <div class="cta-action">
+        <a href="#release">Request Las Flores / 04</a>
+        <p class="label" style="margin:0; text-align:center;">Featured lot · Huila · washed · light</p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <span class="label">Northline Coffee</span>
+    <span class="label">Las Flores / 04</span>
+  </footer>
+</body>
+</html>

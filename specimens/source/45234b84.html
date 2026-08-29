@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIELDNOTE / DAILY 01 — Structured Personal Notebook</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-canvas: #faf8f5;
+      --bg-surface: #f1eee7;
+      --bg-panel: #e7e3d9;
+      --bg-ink: #141518;
+      --border-ink: #141518;
+      --border-light: rgba(20, 21, 24, 0.16);
+      --border-medium: rgba(20, 21, 24, 0.4);
+      --text-ink: #141518;
+      --text-muted: #585c66;
+      --text-faint: #8e939e;
+      --font-display: 'Syne', sans-serif;
+      --font-primary: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-canvas);
+      color: var(--text-ink);
+      font-family: var(--font-primary);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* Accessibility Focus */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--border-ink);
+      outline-offset: 2px;
+    }
+
+    /* Container Shell */
+    .fieldnote-shell {
+      max-width: 1400px;
+      margin: 0 auto;
+      border-left: 2px solid var(--border-ink);
+      border-right: 2px solid var(--border-ink);
+      min-height: 100vh;
+      background: var(--bg-canvas);
+      position: relative;
+    }
+
+    /* Top Structural Navigation */
+    .masthead-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      border-bottom: 2px solid var(--border-ink);
+      background: var(--bg-surface);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .nav-segment {
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-right: 1px solid var(--border-light);
+    }
+
+    .nav-segment:last-child {
+      border-right: none;
+    }
+
+    .solid-bullet {
+      width: 6px;
+      height: 6px;
+      background: var(--text-ink);
+      display: inline-block;
+    }
+
+    /* Structural Grid Rows */
+    .structure-row {
+      display: grid;
+    }
+
+    .grid-60-40 {
+      grid-template-columns: 1.5fr 1fr;
+    }
+
+    .grid-50-50 {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .grid-3-col {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .border-b-ink {
+      border-bottom: 2px solid var(--border-ink);
+    }
+
+    .border-r-ink {
+      border-right: 2px solid var(--border-ink);
+    }
+
+    /* Hero Section */
+    .hero-core-pane {
+      padding: 72px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 48px;
+      background: var(--bg-canvas);
+    }
+
+    .category-label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .hero-model-title {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 7vw, 96px);
+      font-weight: 900;
+      line-height: 0.90;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      color: var(--text-ink);
+    }
+
+    .hero-model-title span {
+      display: block;
+      color: var(--text-muted);
+    }
+
+    .hero-summary-copy {
+      font-size: 19px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      max-width: 540px;
+      border-left: 3px solid var(--border-ink);
+      padding-left: 24px;
+    }
+
+    /* Hero Spec Ledger */
+    .hero-spec-pane {
+      background: var(--bg-surface);
+      padding: 48px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+    .spec-pane-header {
+      border-bottom: 2px solid var(--border-ink);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+
+    .spec-header-title {
+      font-family: var(--font-display);
+      font-size: clamp(24px, 2.5vw, 30px);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    /* Specifications Table */
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .specs-table tr {
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .specs-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .specs-table td {
+      padding: 13px 0;
+      vertical-align: middle;
+    }
+
+    .spec-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      width: 45%;
+    }
+
+    .spec-value {
+      font-weight: 700;
+      color: var(--text-ink);
+      text-align: right;
+    }
+
+    /* Section Ribbon Header */
+    .section-header-ribbon {
+      background: var(--bg-ink);
+      color: #faf8f5;
+      padding: 16px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .section-index-num {
+      margin-right: 12px;
+      opacity: 0.6;
+    }
+
+    /* Product Presentation & Physicality */
+    .presentation-card {
+      padding: 56px 48px;
+      position: relative;
+    }
+
+    .presentation-title {
+      font-family: var(--font-display);
+      font-size: clamp(26px, 2.8vw, 34px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .presentation-body {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    /* Notebook Photo Frame */
+    .notebook-photo-frame {
+      border: 1.5px solid var(--border-ink);
+      background: #ece8e0;
+      position: relative;
+      overflow: hidden;
+      margin-top: 20px;
+    }
+
+    .notebook-photo-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .notebook-photo-caption {
+      padding: 8px 14px;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-ink);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Interior & Page System Card */
+    .dot-grid-spec-box {
+      background: var(--bg-canvas);
+      border: 1.5px solid var(--border-ink);
+      padding: 28px;
+      margin-top: 24px;
+    }
+
+    .dot-grid-lead {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Color Swatch Modules */
+    .color-swatch-card {
+      padding: 48px 40px;
+      border-right: 2px solid var(--border-ink);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 320px;
+      transition: background 0.15s ease;
+    }
+
+    .color-swatch-card:last-child {
+      border-right: none;
+    }
+
+    .color-swatch-card:hover {
+      background: var(--bg-surface);
+    }
+
+    .swatch-visual-block {
+      width: 100%;
+      height: 140px;
+      border: 2px solid var(--border-ink);
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .swatch-black {
+      background-color: #1a1a1c;
+    }
+
+    .swatch-bone {
+      background-color: #f1ede4;
+    }
+
+    .swatch-orange {
+      background-color: #ff5500;
+    }
+
+    .swatch-name {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .swatch-finish-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* Purchase CTA Bar */
+    .purchase-cta-container {
+      background: var(--bg-surface);
+      padding: 72px 56px;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .cta-big-title {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 4.5vw, 56px);
+      font-weight: 900;
+      line-height: 1.0;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+
+    .btn-purchase-fieldnote {
+      background: var(--bg-ink);
+      color: #faf8f5;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 22px 40px;
+      text-decoration: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 2px solid var(--border-ink);
+      transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    }
+
+    .btn-purchase-fieldnote:hover {
+      background: #faf8f5;
+      color: var(--bg-ink);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(20, 21, 24, 0.25);
+    }
+
+    /* Footer */
+    .fieldnote-footer {
+      padding: 36px 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-top: 2px solid var(--border-ink);
+    }
+
+    @media (max-width: 1024px) {
+      .grid-60-40,
+      .grid-50-50,
+      .grid-3-col,
+      .purchase-cta-container {
+        grid-template-columns: 1fr;
+      }
+      .border-r-ink, .color-swatch-card {
+        border-right: none;
+        border-bottom: 2px solid var(--border-ink);
+      }
+      .hero-core-pane, .hero-spec-pane, .presentation-card, .purchase-cta-container {
+        padding: 48px 32px;
+      }
+      .section-header-ribbon, .fieldnote-footer {
+        padding: 16px 32px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .masthead-nav {
+        flex-direction: column;
+      }
+      .nav-segment {
+        border-right: none;
+        border-bottom: 1px solid var(--border-light);
+        padding: 10px 20px;
+      }
+      .hero-core-pane, .hero-spec-pane, .presentation-card, .purchase-cta-container, .color-swatch-card {
+        padding: 32px 20px;
+      }
+      .fieldnote-footer {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="fieldnote-shell">
+    
+    <!-- Masthead Navigation Bar -->
+    <header class="masthead-nav">
+      <div class="nav-segment">
+        <span class="solid-bullet" aria-hidden="true"></span>
+        <span>FIELDNOTE COMPANY</span>
+      </div>
+      <div class="nav-segment">
+        <span>EDITION: DAILY 01</span>
+      </div>
+      <div class="nav-segment">
+        <span>PROVENANCE: MADE IN JAPAN</span>
+      </div>
+      <div class="nav-segment" style="margin-left: auto;">
+        <a href="#purchase" style="color: var(--text-ink); text-decoration: none;">ORDER DAILY 01 →</a>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main>
+      <section class="structure-row grid-60-40 border-b-ink">
+        <div class="hero-core-pane border-r-ink">
+          <div>
+            <div class="category-label">PERSONAL NOTEBOOK SPECIFICATION</div>
+            <h1 class="hero-model-title">
+              FIELDNOTE
+              <span>DAILY 01</span>
+            </h1>
+          </div>
+
+          <p class="hero-summary-copy">
+            A structured daily personal notebook crafted with 192 numbered pages of 100 gsm paper, lay-flat thread binding, and a soft-touch protective cover. Fabricated in Japan for daily writing and drafting.
+          </p>
+
+          <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.12em; color: var(--text-muted); text-transform: uppercase;">
+            PHYSICAL ARCHITECTURE // STANDARD A5 FORMAT
+          </div>
+        </div>
+
+        <!-- Spec Ledger Pane -->
+        <div class="hero-spec-pane">
+          <div>
+            <div class="spec-pane-header">
+              <div class="category-label" style="margin-bottom: 6px;">CORE SPECIFICATION</div>
+              <h2 class="spec-header-title">DAILY 01 MATRIX</h2>
+            </div>
+
+            <table class="specs-table">
+              <tbody>
+                <tr>
+                  <td class="spec-label">FORMAT</td>
+                  <td class="spec-value">A5 Notebook</td>
+                </tr>
+                <tr>
+                  <td class="spec-label">PAGE COUNT</td>
+                  <td class="spec-value">192 Pages</td>
+                </tr>
+                <tr>
+                  <td class="spec-label">INTERIOR GRID</td>
+                  <td class="spec-value">Dot Grid</td>
+                </tr>
+                <tr>
+                  <td class="spec-label">PAPER WEIGHT</td>
+                  <td class="spec-value">100 gsm</td>
+                </tr>
+                <tr>
+                  <td class="spec-label">BINDING METHOD</td>
+                  <td class="spec-value">Lay-flat</td>
+                </tr>
+                <tr>
+                  <td class="spec-label">COVER FINISH</td>
+                  <td class="spec-value">Soft-touch</td>
+                </tr>
+                <tr>
+                  <td class="spec-label">MANUFACTURE</td>
+                  <td class="spec-value">Made in Japan</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="margin-top: 24px; border-top: 1px solid var(--border-light); padding-top: 16px; font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+            AVAILABLE IN THREE EDITIONS: BLACK / BONE / SAFETY ORANGE
+          </div>
+        </div>
+      </section>
+
+      <!-- Product Presentation & Interior System -->
+      <section>
+        <div class="section-header-ribbon">
+          <div><span class="section-index-num">01</span> PHYSICAL SYSTEM & CRAFTSMANSHIP</div>
+          <div>STRUCTURAL SPECIFICATIONS</div>
+        </div>
+
+        <div class="structure-row grid-50-50 border-b-ink">
+          
+          <!-- Product Presentation -->
+          <div class="presentation-card border-r-ink">
+            <div>
+              <div class="category-label">ENGINEERED BINDING & COVER</div>
+              <h2 class="presentation-title">Lay-Flat Thread Binding</h2>
+              <p class="presentation-body">
+                Engineered with exposed spine Smyth-sewn lay-flat binding that opens to a completely level 180-degree surface on any desk. The soft-touch cover offers durable protection against daily handling while preserving tactile warmth.
+              </p>
+            </div>
+
+            <!-- Integrated Notebook Specimen Photo -->
+            <div class="notebook-photo-frame">
+              <img class="notebook-photo-img" src="../assets/45234b84/fieldnote-daily-01-notebook.webp" alt="Fieldnote Daily 01 A5 notebook laying flat open at 180 degrees showing dot grid paper on wooden desk">
+              <div class="notebook-photo-caption">
+                <span>PHYSICAL SPECIMEN // 180° LAY-FLAT BINDING</span>
+                <span>SUBSTRATE: 100 GSM</span>
+              </div>
+            </div>
+
+            <div style="border-top: 1px solid var(--border-light); padding-top: 16px; margin-top: 20px; font-size: 12px; font-weight: 700; color: var(--text-ink); text-transform: uppercase;">
+              PROVENANCE: MADE IN JAPAN
+            </div>
+          </div>
+
+          <!-- Interior / Page-System Explanation -->
+          <div class="presentation-card" style="background: var(--bg-surface);">
+            <div>
+              <div class="category-label">PAGE SYSTEM & SUBSTRATE</div>
+              <h2 class="presentation-title">100 GSM Dot Grid Paper</h2>
+              <p class="presentation-body">
+                192 pages constructed from heavyweight 100 gsm paper designed to eliminate fountain pen bleed-through and ghosting. The subtle dot grid provides unobtrusive spatial structure for diagrams, notes, and technical sketches.
+              </p>
+            </div>
+            
+            <div class="dot-grid-spec-box">
+              <div class="dot-grid-lead">
+                <span>SUBSTRATE SPECIFICATION</span>
+                <span>100 GSM WEIGHT</span>
+              </div>
+              <div style="font-size: 13px; color: var(--text-muted); line-height: 1.55;">
+                Engineered dot pattern spacing supports both structured typographic lineation and freeform visual composition across all 192 numbered pages.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Available Colors -->
+      <section>
+        <div class="section-header-ribbon">
+          <div><span class="section-index-num">02</span> COVER PALETTE SELECTION</div>
+          <div>THREE COLORWAYS</div>
+        </div>
+
+        <div class="structure-row grid-3-col border-b-ink">
+          
+          <!-- Black Colorway -->
+          <div class="color-swatch-card">
+            <div>
+              <div class="swatch-visual-block swatch-black"></div>
+              <h3 class="swatch-name">Black</h3>
+              <div class="swatch-finish-tag">Soft-touch finish</div>
+            </div>
+            <div style="margin-top: 24px; border-top: 1px solid var(--border-light); padding-top: 14px; font-size: 11px; font-weight: 700; color: var(--text-muted);">
+              COLORWAY 01 // DEEP OBSIDIAN
+            </div>
+          </div>
+
+          <!-- Bone Colorway -->
+          <div class="color-swatch-card">
+            <div>
+              <div class="swatch-visual-block swatch-bone"></div>
+              <h3 class="swatch-name">Bone</h3>
+              <div class="swatch-finish-tag">Soft-touch finish</div>
+            </div>
+            <div style="margin-top: 24px; border-top: 1px solid var(--border-light); padding-top: 14px; font-size: 11px; font-weight: 700; color: var(--text-muted);">
+              COLORWAY 02 // NATURAL WARM BONE
+            </div>
+          </div>
+
+          <!-- Safety Orange Colorway -->
+          <div class="color-swatch-card">
+            <div>
+              <div class="swatch-visual-block swatch-orange"></div>
+              <h3 class="swatch-name">Safety Orange</h3>
+              <div class="swatch-finish-tag">Soft-touch finish</div>
+            </div>
+            <div style="margin-top: 24px; border-top: 1px solid var(--border-light); padding-top: 14px; font-size: 11px; font-weight: 700; color: var(--text-muted);">
+              COLORWAY 03 // HIGH-VISIBILITY SIGNAL
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Purchase CTA Section -->
+      <section class="purchase-cta-container" id="purchase">
+        <div>
+          <div class="category-label">ORDER PRODUCTION RUN</div>
+          <h2 class="cta-big-title">Acquire FIELDNOTE DAILY 01</h2>
+          <p style="font-size: 16px; color: var(--text-muted); max-width: 520px; line-height: 1.6;">
+            Select your preferred cover colorway in Black, Bone, or Safety Orange. Each notebook includes 192 dot grid pages on 100 gsm Japanese paper.
+          </p>
+        </div>
+        <div style="text-align: right;">
+          <a href="#order-daily-01" class="btn-purchase-fieldnote">
+            <span>PURCHASE DAILY 01</span>
+            <span aria-hidden="true">→</span>
+          </a>
+          <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); margin-top: 14px; text-transform: uppercase;">
+            STANDARD A5 FORMAT • MADE IN JAPAN
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="fieldnote-footer">
+      <div>FIELDNOTE COMPANY © 2026 — JAPANESE STATIONERY ARCHITECTURE</div>
+      <div>SYSTEM//FORM SPECIMEN — THE IMITATION TRAP PROOF (ZERO SURFACE CRUTCHES)</div>
+    </footer>
+
+  </div>
+</body>
+</html>

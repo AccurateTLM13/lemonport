@@ -380,14 +380,14 @@ function saveSpecimens(data) {
   backupFile(specimensFile);
   fs.mkdirSync(path.dirname(specimensFile), { recursive: true });
   fs.writeFileSync(specimensFile, `${JSON.stringify({ ...data, updatedAt: new Date().toISOString() }, null, 2)}\n`);
-  buildSpecimens();
+  const buildResult = buildSpecimens();
   // Converge the vault index meta with content/seo.json after every rebuild.
   try {
     buildSeo();
   } catch (error) {
     console.error("SEO sync after specimen rebuild failed:", error.message);
   }
-  return loadSpecimens();
+  return { ...loadSpecimens(), buildWarnings: buildResult.warnings };
 }
 
 function uniqueSpecimenId(records) {
@@ -415,6 +415,13 @@ function normalizeSpecimen(body, existing = null, records = []) {
       throw new Error("Score must be a number between 0 and 100.");
     }
   }
+  let favorite = existing?.favorite === true;
+  if (Object.prototype.hasOwnProperty.call(body, "favorite")) {
+    if (typeof body.favorite !== "boolean") {
+      throw new Error("Favorite must be a boolean.");
+    }
+    favorite = body.favorite;
+  }
   const specimen = {
     ...(existing || {}),
     id: existing?.id || uniqueSpecimenId(records),
@@ -429,6 +436,7 @@ function normalizeSpecimen(body, existing = null, records = []) {
       : String(body.tags ?? existing?.tags ?? "").split(",").map((tag) => tag.trim()).filter(Boolean),
     status,
     score,
+    favorite,
     image: String(body.image ?? existing?.image ?? "").trim(),
     assets: Array.isArray(existing?.assets) ? existing.assets.filter((asset) => specimenAsText(asset).startsWith("/specimens/assets/")) : [],
     assetMap: Array.isArray(existing?.assetMap) ? existing.assetMap : []
@@ -482,7 +490,8 @@ async function createSpecimen(request, response) {
   const saved = saveSpecimens(data);
   sendJson(response, 201, {
     specimen: saved.records.find((item) => item.id === specimen.id),
-    records: saved.records
+    records: saved.records,
+    warnings: saved.buildWarnings || []
   });
 }
 
@@ -506,7 +515,7 @@ async function updateSpecimen(request, response, id) {
   }
   data.records[index] = updated;
   const saved = saveSpecimens(data);
-  sendJson(response, 200, { specimen: saved.records[index], records: saved.records });
+  sendJson(response, 200, { specimen: saved.records[index], records: saved.records, warnings: saved.buildWarnings || [] });
 }
 
 function deleteSpecimen(response, id) {

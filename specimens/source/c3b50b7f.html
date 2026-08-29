@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIGNAL/26 — Electronic Music Festival // Detroit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-void: #050505;
+      --bg-dark: #0e0e10;
+      --bg-surface: #151619;
+      --signal-yellow: #d9ff00;
+      --signal-yellow-dim: rgba(217, 255, 0, 0.12);
+      --signal-yellow-glow: rgba(217, 255, 0, 0.4);
+      --signal-white: #f5f5f7;
+      --border-stark: #282a30;
+      --border-medium: #3c4049;
+      --border-signal: #d9ff00;
+      --text-main: #ffffff;
+      --text-dim: #7d828d;
+      --text-muted: #4e535e;
+      --font-massive: 'Syne', sans-serif;
+      --font-body: 'Space Grotesk', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-void);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* Accessibility Focus */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--signal-yellow);
+      outline-offset: 2px;
+    }
+
+    /* Container Shell */
+    .festival-shell {
+      max-width: 1440px;
+      margin: 0 auto;
+      border-left: 2px solid var(--border-stark);
+      border-right: 2px solid var(--border-stark);
+      min-height: 100vh;
+      background: var(--bg-void);
+      position: relative;
+    }
+
+    /* Top Running Marquee Rail */
+    .signal-header-rail {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      border-bottom: 2px solid var(--border-stark);
+      background: var(--bg-dark);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .signal-cell {
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-right: 1px solid var(--border-stark);
+    }
+
+    .signal-cell:last-child {
+      border-right: none;
+    }
+
+    .signal-marker-box {
+      width: 9px;
+      height: 9px;
+      background: var(--signal-yellow);
+      display: inline-block;
+      box-shadow: 0 0 10px var(--signal-yellow-glow);
+    }
+
+    /* Massive Hero Section */
+    .festival-hero-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      border-bottom: 2px solid var(--border-stark);
+    }
+
+    .hero-signal-core {
+      padding: 72px 56px;
+      border-right: 2px solid var(--border-stark);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 48px;
+      background: #080809;
+    }
+
+    .festival-id-giant {
+      font-family: var(--font-massive);
+      font-size: clamp(60px, 11vw, 144px);
+      font-weight: 900;
+      line-height: 0.88;
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+      color: var(--signal-white);
+    }
+
+    .festival-id-giant span {
+      color: var(--signal-yellow);
+    }
+
+    .festival-statement-strip {
+      font-family: var(--font-massive);
+      font-size: clamp(20px, 3vw, 34px);
+      font-weight: 800;
+      line-height: 1.15;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      color: var(--signal-yellow);
+      background: rgba(217, 255, 0, 0.06);
+      border-left: 5px solid var(--signal-yellow);
+      padding: 24px 28px;
+    }
+
+    /* Hero Side Specimen Box */
+    .hero-meta-panel {
+      padding: 56px 40px;
+      background: var(--bg-dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+    .event-meta-ledger {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      margin-top: 16px;
+    }
+
+    .event-meta-ledger tr {
+      border-bottom: 1px solid var(--border-stark);
+    }
+
+    .event-meta-ledger tr:last-child {
+      border-bottom: none;
+    }
+
+    .event-meta-ledger td {
+      padding: 16px 0;
+    }
+
+    .ledger-key {
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      width: 38%;
+    }
+
+    .ledger-val {
+      color: var(--signal-white);
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .ledger-val.highlight {
+      color: var(--signal-yellow);
+    }
+
+    /* Banner Strips */
+    .signal-banner-strip {
+      background: var(--signal-yellow);
+      color: #000000;
+      padding: 16px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* Schedule Timeline Section */
+    .schedule-grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 2px solid var(--border-stark);
+    }
+
+    .day-column {
+      padding: 56px 48px;
+      border-right: 2px solid var(--border-stark);
+    }
+
+    .day-column:last-child {
+      border-right: none;
+    }
+
+    .day-header-box {
+      border-bottom: 2px solid var(--border-stark);
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .day-title {
+      font-family: var(--font-massive);
+      font-size: clamp(32px, 3.5vw, 44px);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+    }
+
+    .day-date-tag {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--signal-yellow);
+      letter-spacing: 0.1em;
+    }
+
+    /* Timeline Slot Rows */
+    .slot-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 26px 12px;
+      border-bottom: 1px solid var(--border-stark);
+      transition: background 0.15s ease, padding-left 0.15s ease;
+    }
+
+    .slot-row:hover {
+      background: rgba(217, 255, 0, 0.05);
+      padding-left: 18px;
+    }
+
+    .slot-time {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--signal-yellow);
+      letter-spacing: 0.05em;
+      min-width: 100px;
+    }
+
+    .slot-artist {
+      font-family: var(--font-massive);
+      font-size: clamp(24px, 2.5vw, 34px);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      color: var(--signal-white);
+      text-align: right;
+    }
+
+    /* Lineup Roster Block */
+    .lineup-matrix-section {
+      border-bottom: 2px solid var(--border-stark);
+      background: var(--bg-dark);
+    }
+
+    .lineup-artist-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .artist-cell {
+      padding: 48px 40px;
+      border-right: 1px solid var(--border-stark);
+      border-bottom: 1px solid var(--border-stark);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 220px;
+      transition: background 0.15s ease;
+    }
+
+    .artist-cell:hover {
+      background: var(--bg-surface);
+    }
+
+    .artist-cell:nth-child(3n) {
+      border-right: none;
+    }
+
+    .artist-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .artist-name-bold {
+      font-family: var(--font-massive);
+      font-size: clamp(24px, 2.2vw, 32px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--signal-white);
+    }
+
+    /* Venue & Information Area */
+    .venue-info-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      border-bottom: 2px solid var(--border-stark);
+    }
+
+    .venue-pane {
+      padding: 56px 48px;
+      border-right: 2px solid var(--border-stark);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .venue-lead-text {
+      font-family: var(--font-massive);
+      font-size: clamp(28px, 3.2vw, 38px);
+      font-weight: 800;
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      color: var(--signal-white);
+    }
+
+    /* Venue Room Photo Frame */
+    .venue-photo-frame {
+      border: 1px solid var(--border-stark);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .venue-photo-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      filter: contrast(1.1) brightness(0.9);
+    }
+
+    .venue-photo-tag {
+      position: absolute;
+      bottom: 10px;
+      left: 12px;
+      background: rgba(5, 5, 5, 0.9);
+      border: 1px solid var(--border-stark);
+      padding: 4px 10px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--signal-yellow);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* Ticket CTA Pane */
+    .ticket-cta-pane {
+      padding: 56px 48px;
+      background: #08080a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .btn-ticket-signal {
+      background: var(--signal-yellow);
+      color: #000000;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 24px 36px;
+      text-decoration: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+    }
+
+    .btn-ticket-signal:hover {
+      filter: brightness(1.08);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 24px rgba(217, 255, 0, 0.45);
+    }
+
+    /* Event Information Footer */
+    .event-footer {
+      padding: 36px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--bg-void);
+    }
+
+    @media (max-width: 1024px) {
+      .festival-hero-grid,
+      .schedule-grid-2col,
+      .lineup-artist-strip,
+      .venue-info-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-signal-core, .day-column, .venue-pane, .artist-cell {
+        border-right: none;
+        border-bottom: 2px solid var(--border-stark);
+        padding: 48px 32px;
+      }
+      .artist-cell:nth-child(3n) {
+        border-bottom: 1px solid var(--border-stark);
+      }
+      .signal-banner-strip, .event-footer {
+        padding: 16px 32px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .signal-header-rail {
+        flex-direction: column;
+      }
+      .signal-cell {
+        border-right: none;
+        border-bottom: 1px solid var(--border-stark);
+        padding: 10px 20px;
+      }
+      .hero-signal-core, .hero-meta-panel, .day-column, .venue-pane, .ticket-cta-pane, .artist-cell {
+        padding: 32px 20px;
+      }
+      .slot-row {
+        flex-direction: column;
+        gap: 6px;
+        align-items: flex-start;
+      }
+      .slot-artist {
+        text-align: left;
+      }
+      .event-footer {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="festival-shell">
+    
+    <!-- Top Signal Rail -->
+    <header class="signal-header-rail">
+      <div class="signal-cell">
+        <span class="signal-marker-box" aria-hidden="true"></span>
+        <span>SIGNAL/26 ELECTRONIC MUSIC FESTIVAL</span>
+      </div>
+      <div class="signal-cell">
+        <span>OCTOBER 16–17, 2026</span>
+      </div>
+      <div class="signal-cell">
+        <span>DETROIT, MICHIGAN</span>
+      </div>
+      <div class="signal-cell" style="margin-left: auto;">
+        <a href="#tickets" style="color: var(--signal-yellow); text-decoration: none; font-weight: 700;">[ ACCESS TICKETS ]</a>
+      </div>
+    </header>
+
+    <!-- Massive Signal Hero -->
+    <main>
+      <section class="festival-hero-grid">
+        <div class="hero-signal-core">
+          <div>
+            <div style="font-family: var(--font-mono); font-size: 12px; color: var(--signal-yellow); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 18px; font-weight: 700;">
+              INDEPENDENT TWO-DAY ELECTRONIC CONVERGENCE
+            </div>
+            <h1 class="festival-id-giant">
+              SIGNAL<span>/26</span>
+            </h1>
+          </div>
+
+          <div class="festival-statement-strip">
+            Two nights. Six artists. One room.
+          </div>
+
+          <div style="font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); letter-spacing: 0.12em; text-transform: uppercase;">
+            SCHEDULE TIMELINE // DETROIT, MICHIGAN
+          </div>
+        </div>
+
+        <!-- Hero Metadata Column -->
+        <div class="hero-meta-panel">
+          <div>
+            <div style="border-bottom: 2px solid var(--signal-yellow); padding-bottom: 14px; margin-bottom: 24px;">
+              <span style="font-family: var(--font-mono); font-size: 10px; color: var(--signal-yellow); letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700;">EVENT PARAMETERS</span>
+              <div style="font-family: var(--font-massive); font-size: 26px; font-weight: 800; text-transform: uppercase; margin-top: 4px;">EDITION DOSSIER</div>
+            </div>
+
+            <table class="event-meta-ledger">
+              <tbody>
+                <tr>
+                  <td class="ledger-key">PROGRAM</td>
+                  <td class="ledger-val">SIGNAL/26</td>
+                </tr>
+                <tr>
+                  <td class="ledger-key">DATES</td>
+                  <td class="ledger-val highlight">OCTOBER 16–17, 2026</td>
+                </tr>
+                <tr>
+                  <td class="ledger-key">LOCATION</td>
+                  <td class="ledger-val">DETROIT, MICHIGAN</td>
+                </tr>
+                <tr>
+                  <td class="ledger-key">VENUE FORMAT</td>
+                  <td class="ledger-val">ONE ROOM</td>
+                </tr>
+                <tr>
+                  <td class="ledger-key">CURATION</td>
+                  <td class="ledger-val highlight">SIX ARTISTS</td>
+                </tr>
+                <tr>
+                  <td class="ledger-key">DURATION</td>
+                  <td class="ledger-val">TWO NIGHTS</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="margin-top: 24px; border-top: 1px solid var(--border-stark); padding-top: 18px; font-family: var(--font-mono); font-size: 11px; color: var(--text-dim);">
+            DETROIT INDEPENDENT ELECTRONIC PRODUCTION
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Banner: Running Order -->
+      <section class="signal-banner-strip">
+        <div><span>01</span> FESTIVAL SCHEDULE // PERFORMANCE TIMELINE</div>
+        <div>STRICT RUNNING ORDER</div>
+      </section>
+
+      <!-- 2-Day Complete Schedule Grid -->
+      <section class="schedule-grid-2col">
+        
+        <!-- Friday Schedule -->
+        <div class="day-column">
+          <div class="day-header-box">
+            <div>
+              <div class="day-date-tag">OCTOBER 16, 2026</div>
+              <h2 class="day-title">Friday</h2>
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); font-weight: 700;">NIGHT 01</div>
+          </div>
+
+          <div class="schedule-list">
+            <div class="slot-row">
+              <div class="slot-time">21:00</div>
+              <div class="slot-artist">MARA VOSS</div>
+            </div>
+            <div class="slot-row">
+              <div class="slot-time">22:30</div>
+              <div class="slot-artist">STATIC FIELD</div>
+            </div>
+            <div class="slot-row" style="border-bottom: none;">
+              <div class="slot-time">00:15</div>
+              <div class="slot-artist">NULL/SET</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Saturday Schedule -->
+        <div class="day-column">
+          <div class="day-header-box">
+            <div>
+              <div class="day-date-tag">OCTOBER 17, 2026</div>
+              <h2 class="day-title">Saturday</h2>
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); font-weight: 700;">NIGHT 02</div>
+          </div>
+
+          <div class="schedule-list">
+            <div class="slot-row">
+              <div class="slot-time">20:30</div>
+              <div class="slot-artist">FORMANT</div>
+            </div>
+            <div class="slot-row">
+              <div class="slot-time">22:00</div>
+              <div class="slot-artist">LENA ARC</div>
+            </div>
+            <div class="slot-row" style="border-bottom: none;">
+              <div class="slot-time">23:45</div>
+              <div class="slot-artist">PUBLIC MEMORY</div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Section Banner: Artist Lineup -->
+      <section class="signal-banner-strip" style="background: var(--bg-dark); color: var(--signal-yellow); border-bottom: 2px solid var(--border-stark);">
+        <div><span>02</span> COMPLETE ARTIST LINEUP</div>
+        <div>SIX PERFORMANCES</div>
+      </section>
+
+      <!-- Artist Lineup Matrix -->
+      <section class="lineup-matrix-section">
+        <div class="lineup-artist-strip">
+          <div class="artist-cell">
+            <span class="artist-num">ARTIST // 01 • FRI 21:00</span>
+            <div class="artist-name-bold">MARA VOSS</div>
+            <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-dim);">DETROIT // NIGHT 01</span>
+          </div>
+
+          <div class="artist-cell">
+            <span class="artist-num">ARTIST // 02 • FRI 22:30</span>
+            <div class="artist-name-bold">STATIC FIELD</div>
+            <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-dim);">DETROIT // NIGHT 01</span>
+          </div>
+
+          <div class="artist-cell">
+            <span class="artist-num">ARTIST // 03 • FRI 00:15</span>
+            <div class="artist-name-bold">NULL/SET</div>
+            <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-dim);">DETROIT // NIGHT 01</span>
+          </div>
+
+          <div class="artist-cell">
+            <span class="artist-num">ARTIST // 04 • SAT 20:30</span>
+            <div class="artist-name-bold">FORMANT</div>
+            <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-dim);">DETROIT // NIGHT 02</span>
+          </div>
+
+          <div class="artist-cell">
+            <span class="artist-num">ARTIST // 05 • SAT 22:00</span>
+            <div class="artist-name-bold">LENA ARC</div>
+            <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-dim);">DETROIT // NIGHT 02</span>
+          </div>
+
+          <div class="artist-cell">
+            <span class="artist-num">ARTIST // 06 • SAT 23:45</span>
+            <div class="artist-name-bold">PUBLIC MEMORY</div>
+            <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-dim);">DETROIT // NIGHT 02</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Venue & Location Information -->
+      <section class="venue-info-grid">
+        <div class="venue-pane">
+          <div>
+            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--signal-yellow); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 14px; font-weight: 700;">
+              SPACE CONFIGURATION
+            </div>
+            <h2 class="venue-lead-text">
+              Detroit, Michigan<br>One Room.
+            </h2>
+            <p style="color: var(--text-dim); font-size: 16px; line-height: 1.65; max-width: 520px; margin-bottom: 20px;">
+              A unified acoustic space in Detroit, Michigan. Two nights programmed with continuous sequential sound across six live electronic artists.
+            </p>
+          </div>
+
+          <!-- Integrated Venue Atmosphere Photo -->
+          <div class="venue-photo-frame">
+            <img class="venue-photo-img" src="../assets/c3b50b7f/signal-26-detroit-room.webp" alt="Atmospheric brutalist acoustic room in Detroit for SIGNAL/26 electronic music festival">
+            <div class="venue-photo-tag">ACOUSTIC SPACE // DETROIT, MICHIGAN</div>
+          </div>
+        </div>
+
+        <!-- Ticket CTA Area -->
+        <div class="ticket-cta-pane" id="tickets">
+          <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 18px; letter-spacing: 0.1em; font-weight: 600;">
+            PASS ACCESS // OCTOBER 16–17, 2026
+          </div>
+          <a href="#register" class="btn-ticket-signal">
+            <span>SECURE FESTIVAL ENTRY</span>
+            <span aria-hidden="true">→</span>
+          </a>
+          <div style="font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); margin-top: 16px; text-transform: uppercase; letter-spacing: 0.05em;">
+            TWO NIGHTS • SIX ARTISTS • ONE ROOM
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Event Information Footer -->
+    <footer class="event-footer">
+      <div>SIGNAL/26 © OCTOBER 16–17, 2026 — DETROIT, MICHIGAN</div>
+      <div>SYSTEM//FORM EVALUATION SPECIMEN — SIGNAL MODE</div>
+    </footer>
+
+  </div>
+</body>
+</html>

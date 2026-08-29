@@ -88,7 +88,7 @@
     {
       "id": "c4f3e77a",
       "title": "Rivet Supply Co",
-      "model": "muse-spark-1.2",
+      "model": "Muse Spark 1.2",
       "skill": "working-print",
       "prompt": "Create the RIVET SUPPLY CO. product-launch landing page using:\n\n1. the supplied active design skill as the governing visual language,\n2. the Landing Page Artifact Standard as the functional and medium-level constraint system,\n3. the RIVET SUPPLY CO. brief as the project-specific source of truth.\n\nDo not introduce a second visual system outside the active design skill. The artifact standard governs usability, responsive behavior, hierarchy, interaction, and landing-page requirements; it does not override the design skill's visual grammar.\n\nBuild a polished, complete landing page rather than a style sample or component inventory.\n\nPrioritize:\n\n- strong product hierarchy\n- commercially useful information\n- clear primary shopping action\n- material and construction credibility\n- product imagery treated as specimens or objects of inspection\n- meaningful variation in scale, density, and composition\n- responsive behavior that preserves the intended hierarchy\n\nInclude all required content from the brief. You may create plausible fictional product names, item numbers, prices, specifications, shipping language, and supporting copy where the brief leaves those details open.\n\nAvoid generic ecommerce defaults, repeated rounded cards, conventional Shopify composition, artificial heritage styling, and visual decisions that are not justified by the active design skill.\n\nThe final artifact should unmistakably express the supplied design skill while still functioning as a clear, persuasive landing page.",
       "notes": "",
@@ -104,7 +104,8 @@
       "assetMap": [],
       "source": "/specimens/source/c4f3e77a.html",
       "createdAt": "2026-08-24T00:59:06.747Z",
-      "updatedAt": "2026-08-24T00:59:29.624Z"
+      "updatedAt": "2026-08-29T18:51:25.429Z",
+      "favorite": false
     },
     {
       "id": "6629fde1",
@@ -132,9 +133,1125 @@
         }
       ],
       "createdAt": "2026-08-26T16:26:57.405Z",
-      "updatedAt": "2026-08-28T01:28:21.396Z",
-      "source": "/specimens/source/6629fde1.html"
+      "updatedAt": "2026-08-29T18:53:07.652Z",
+      "source": "/specimens/source/6629fde1.html",
+      "favorite": true
+    },
+    {
+      "id": "79ce20b9",
+      "title": "Northline Coffee",
+      "model": "Gemini 3.1 Pro",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page website for **NORTHLINE COFFEE**, a fictional independent specialty coffee roaster.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**NORTHLINE COFFEE**\n\n**Coffee with a known origin.**\n\nFeatured release:\n\n**LAS FLORES / 04**\n\nOrigin: Huila, Colombia  \nProducer: Las Flores  \nProcess: Washed  \nVariety: Caturra  \nAltitude: 1,850 MASL  \nRoast: Light\n\nTasting notes:\n\nRed apple / caramel / citrus\n\nInclude:\n\n- hero\n- featured coffee\n- origin information\n- roasting philosophy\n- three available coffee offerings\n- shop CTA\n\nFor the other two coffee offerings, use clearly marked placeholder content rather than inventing factual origins or specifications.\n\n### Direction\n\nDo not make the company feel industrial.\n\nDo not use factory, machine, robotics, diagnostic, system-status, engineering, or manufacturing language simply to satisfy the design style.\n\nFind SYSTEM//FORM inside the **real informational structure of coffee**: origin, process, variety, altitude, roast, product, and provenance.\n\nAvoid generic specialty-coffee minimalism.\n\n### Evaluation target\n\nIf SYSTEM//FORM is truly transferable, this should remain recognizably SYSTEM//FORM while feeling unquestionably like a coffee brand.",
+      "notes": "SOURCE HOLD: original referenced files were not available in the supplied kit; no substitute was used. Missing original image filenames: northline_coffee_hero_1787607333368.jpg, coffee_placeholder_bag_1787608375934.jpg, coffee_placeholder_beans_1787608384766.jpg.",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-02",
+        "coffee-roaster"
+      ],
+      "status": "Ready",
+      "score": null,
+      "source": "/specimens/source/79ce20b9.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T18:33:03.627Z",
+      "assets": [],
+      "assetMap": [],
+      "favorite": false,
+      "image": "/specimens/images/79ce20b9.webp"
+    },
+    {
+      "id": "e15cfb4d",
+      "title": "Great Lakes Industrial Archive",
+      "model": "Gemini 3.1 Pro",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a homepage for **THE GREAT LAKES INDUSTRIAL ARCHIVE**, a fictional nonprofit archive preserving documents, photographs, oral histories, and physical artifacts related to Great Lakes manufacturing history.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**THE GREAT LAKES INDUSTRIAL ARCHIVE**\n\n**Industry remembered through the people who built it.**\n\nCollections:\n\nPhotographs — 18,420 records  \nDocuments — 7,860 records  \nOral Histories — 614 records  \nPhysical Objects — 1,205 records\n\nEstablished: 1987\n\nInclude:\n\n- institutional hero\n- collection overview\n- featured archive object\n- research/access information\n- preservation mission\n- visit/contact CTA\n\nUse placeholder labeling for any featured object's details that have not been supplied.\n\n### Direction\n\nUse SYSTEM mode as the primary expression.\n\nThis should feel scholarly, archival, contemporary, and authoritative—not like robotics branding.\n\nAvoid excessive signal colors, fake measurements, machinery diagrams, fake catalog identifiers, and unnecessary technical decoration.\n\nAllow typography, information organization, proportion, rules, and negative space to carry most of the identity.\n\n### Evaluation target\n\nThis tests whether SYSTEM//FORM can become restrained without disappearing.",
+      "notes": "SOURCE HOLD: original referenced files were not available in the supplied kit; no substitute was used. Missing original image filenames: archive_hero_building_1787608393570.jpg, archive_featured_object_1787607343574.jpg.",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-03",
+        "civic-archive"
+      ],
+      "status": "Ready",
+      "score": null,
+      "source": "/specimens/source/e15cfb4d.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T18:33:26.257Z",
+      "assets": [],
+      "assetMap": [],
+      "favorite": false,
+      "image": "/specimens/images/e15cfb4d.webp"
+    },
+    {
+      "id": "19384a8f",
+      "title": "SIGNAL/26",
+      "model": "Gemini 3.1 Pro",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a promotional landing page for **SIGNAL/26**, a fictional two-day independent electronic music festival.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Event information\n\n**SIGNAL/26**\n\nOctober 16–17, 2026  \nDetroit, Michigan\n\nFriday:\n\n21:00 — MARA VOSS  \n22:30 — STATIC FIELD  \n00:15 — NULL/SET\n\nSaturday:\n\n20:30 — FORMANT  \n22:00 — LENA ARC  \n23:45 — PUBLIC MEMORY\n\nTwo nights. Six artists. One room.\n\nInclude:\n\n- dominant festival hero\n- complete schedule\n- artist lineup\n- venue-information area using only the supplied location\n- ticket CTA\n- event-information footer\n\n### Direction\n\nUse SIGNAL mode as the primary expression.\n\nTreat schedule, sequence, time, date, lineup, and typography as the informational system.\n\nBe aggressive with scale and composition.\n\nDo not turn it into a fake computer terminal, nightclub cyberpunk interface, or futuristic HUD.\n\nDo not invent ticket prices, venue names, sponsors, addresses, or additional event details.\n\n### Evaluation target\n\nThis tests whether SYSTEM//FORM can become highly expressive while retaining information integrity and structural discipline.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-04",
+        "music-festival"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/19384a8f.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [
+        "/specimens/assets/19384a8f/signal_festival_hero_1787607352874.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "signal_festival_hero_1787607352874.jpg",
+          "to": "../assets/19384a8f/signal_festival_hero_1787607352874.webp"
+        }
+      ],
+      "image": "/specimens/images/19384a8f.webp"
+    },
+    {
+      "id": "c39e093e",
+      "title": "FIELDNOTE / DAILY 01",
+      "model": "Gemini 3.1 Pro",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page website for **FIELDNOTE**, a fictional personal notebook company.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Product\n\n**FIELDNOTE / DAILY 01**\n\nA5 notebook  \n192 pages  \nDot grid  \n100 gsm paper  \nLay-flat binding  \nSoft-touch cover  \nMade in Japan\n\nAvailable colors:\n\nBlack  \nBone  \nSafety Orange\n\nInclude:\n\n- hero\n- product presentation\n- specifications\n- interior/page-system explanation\n- available colors\n- purchase CTA\n\n### Critical constraint\n\nDo **not** use any of the following:\n\n- monospace typography\n- orange as the primary accent\n- halftone\n- grid backgrounds\n- registration marks\n- crosshairs\n- measurement ticks\n- fake coordinates\n- brackets around labels\n- fake status information\n- engineering diagrams\n- warning stripes\n- technical-interface styling\n\nYou may still use the supplied factual specifications as content.\n\n### Objective\n\nProduce a design that remains unmistakably governed by SYSTEM//FORM through:\n\n- hierarchy\n- scale tension\n- spatial organization\n- functional division\n- information encoding\n- controlled asymmetry\n- negative space\n- typography\n- deliberate interruption\n\n### Evaluation target\n\nThis is the critical test.\n\nIf the result stops feeling like SYSTEM//FORM because its familiar surface ingredients were prohibited, the skill has not yet proven its underlying grammar.\n\nDo not compensate by finding visual substitutes for the prohibited ingredients.\n\nSolve the composition structurally.",
+      "notes": "SOURCE HOLD: original referenced files were not available in the supplied kit; no substitute was used. Missing original image filenames: fieldnote_notebook_1787607362960.jpg.",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-05",
+        "imitation-trap"
+      ],
+      "status": "Ready",
+      "score": null,
+      "source": "/specimens/source/c39e093e.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [],
+      "assetMap": []
+    },
+    {
+      "id": "f310fc9b",
+      "title": "Kinetic Foundry",
+      "model": "Gemini 3.7 Flash",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page landing page for **KINETIC FOUNDRY**, a fictional industrial robotics company that builds modular robotic work cells for small and mid-sized manufacturers.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**KINETIC FOUNDRY**\n\n**Automation built for factories that change.**\n\nModular robotic work cells designed to be reconfigured as production demands evolve.\n\n**KF / CELL 04**\n\nPayload: 35 kg  \nReach: 1,850 mm  \nRepeatability: ±0.05 mm  \nConfiguration: 6-axis  \nDeployment: Modular\n\nInclude:\n\n- hero\n- product overview\n- technical specifications\n- three capabilities\n- deployment/process section\n- final contact CTA\n\n### Direction\n\nDo not imitate a conventional robotics or SaaS website.\n\nThe product and its real specifications should become part of the visual architecture.\n\nUse technical graphics only where they communicate actual supplied information.\n\nDo not invent additional specifications, certifications, performance claims, customers, statistics, coordinates, or operational data.\n\n### Evaluation target\n\nThis is SYSTEM//FORM operating on its natural subject matter.\n\nThe result should demonstrate the design system without relying on generic futuristic, cyberpunk, or industrial-tech tropes.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-01",
+        "industrial-robotics"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/f310fc9b.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [
+        "/specimens/assets/f310fc9b/kf-cell-04-robot.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "kf-cell-04-robot.jpg",
+          "to": "../assets/f310fc9b/kf-cell-04-robot.webp"
+        }
+      ],
+      "image": "/specimens/images/f310fc9b.webp"
+    },
+    {
+      "id": "3e044040",
+      "title": "Northline Coffee",
+      "model": "Gemini 3.7 Flash",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page website for **NORTHLINE COFFEE**, a fictional independent specialty coffee roaster.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**NORTHLINE COFFEE**\n\n**Coffee with a known origin.**\n\nFeatured release:\n\n**LAS FLORES / 04**\n\nOrigin: Huila, Colombia  \nProducer: Las Flores  \nProcess: Washed  \nVariety: Caturra  \nAltitude: 1,850 MASL  \nRoast: Light\n\nTasting notes:\n\nRed apple / caramel / citrus\n\nInclude:\n\n- hero\n- featured coffee\n- origin information\n- roasting philosophy\n- three available coffee offerings\n- shop CTA\n\nFor the other two coffee offerings, use clearly marked placeholder content rather than inventing factual origins or specifications.\n\n### Direction\n\nDo not make the company feel industrial.\n\nDo not use factory, machine, robotics, diagnostic, system-status, engineering, or manufacturing language simply to satisfy the design style.\n\nFind SYSTEM//FORM inside the **real informational structure of coffee**: origin, process, variety, altitude, roast, product, and provenance.\n\nAvoid generic specialty-coffee minimalism.\n\n### Evaluation target\n\nIf SYSTEM//FORM is truly transferable, this should remain recognizably SYSTEM//FORM while feeling unquestionably like a coffee brand.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-02",
+        "coffee-roaster"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/3e044040.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [
+        "/specimens/assets/3e044040/northline-las-flores.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "northline-las-flores.jpg",
+          "to": "../assets/3e044040/northline-las-flores.webp"
+        }
+      ],
+      "image": "/specimens/images/3e044040.webp"
+    },
+    {
+      "id": "a807586e",
+      "title": "Great Lakes Industrial Archive",
+      "model": "Gemini 3.7 Flash",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a homepage for **THE GREAT LAKES INDUSTRIAL ARCHIVE**, a fictional nonprofit archive preserving documents, photographs, oral histories, and physical artifacts related to Great Lakes manufacturing history.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**THE GREAT LAKES INDUSTRIAL ARCHIVE**\n\n**Industry remembered through the people who built it.**\n\nCollections:\n\nPhotographs — 18,420 records  \nDocuments — 7,860 records  \nOral Histories — 614 records  \nPhysical Objects — 1,205 records\n\nEstablished: 1987\n\nInclude:\n\n- institutional hero\n- collection overview\n- featured archive object\n- research/access information\n- preservation mission\n- visit/contact CTA\n\nUse placeholder labeling for any featured object's details that have not been supplied.\n\n### Direction\n\nUse SYSTEM mode as the primary expression.\n\nThis should feel scholarly, archival, contemporary, and authoritative—not like robotics branding.\n\nAvoid excessive signal colors, fake measurements, machinery diagrams, fake catalog identifiers, and unnecessary technical decoration.\n\nAllow typography, information organization, proportion, rules, and negative space to carry most of the identity.\n\n### Evaluation target\n\nThis tests whether SYSTEM//FORM can become restrained without disappearing.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-03",
+        "civic-archive"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/a807586e.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T18:52:37.860Z",
+      "assets": [
+        "/specimens/assets/a807586e/great-lakes-archive-specimen.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "great-lakes-archive-specimen.jpg",
+          "to": "../assets/a807586e/great-lakes-archive-specimen.webp"
+        }
+      ],
+      "image": "/specimens/images/a807586e.webp",
+      "favorite": false
+    },
+    {
+      "id": "c3b50b7f",
+      "title": "SIGNAL/26",
+      "model": "Gemini 3.7 Flash",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a promotional landing page for **SIGNAL/26**, a fictional two-day independent electronic music festival.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Event information\n\n**SIGNAL/26**\n\nOctober 16–17, 2026  \nDetroit, Michigan\n\nFriday:\n\n21:00 — MARA VOSS  \n22:30 — STATIC FIELD  \n00:15 — NULL/SET\n\nSaturday:\n\n20:30 — FORMANT  \n22:00 — LENA ARC  \n23:45 — PUBLIC MEMORY\n\nTwo nights. Six artists. One room.\n\nInclude:\n\n- dominant festival hero\n- complete schedule\n- artist lineup\n- venue-information area using only the supplied location\n- ticket CTA\n- event-information footer\n\n### Direction\n\nUse SIGNAL mode as the primary expression.\n\nTreat schedule, sequence, time, date, lineup, and typography as the informational system.\n\nBe aggressive with scale and composition.\n\nDo not turn it into a fake computer terminal, nightclub cyberpunk interface, or futuristic HUD.\n\nDo not invent ticket prices, venue names, sponsors, addresses, or additional event details.\n\n### Evaluation target\n\nThis tests whether SYSTEM//FORM can become highly expressive while retaining information integrity and structural discipline.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-04",
+        "music-festival"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/c3b50b7f.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T18:52:25.068Z",
+      "assets": [
+        "/specimens/assets/c3b50b7f/signal-26-detroit-room.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "signal-26-detroit-room.jpg",
+          "to": "../assets/c3b50b7f/signal-26-detroit-room.webp"
+        }
+      ],
+      "image": "/specimens/images/c3b50b7f.webp",
+      "favorite": true
+    },
+    {
+      "id": "45234b84",
+      "title": "FIELDNOTE / DAILY 01",
+      "model": "Gemini 3.7 Flash",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page website for **FIELDNOTE**, a fictional personal notebook company.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Product\n\n**FIELDNOTE / DAILY 01**\n\nA5 notebook  \n192 pages  \nDot grid  \n100 gsm paper  \nLay-flat binding  \nSoft-touch cover  \nMade in Japan\n\nAvailable colors:\n\nBlack  \nBone  \nSafety Orange\n\nInclude:\n\n- hero\n- product presentation\n- specifications\n- interior/page-system explanation\n- available colors\n- purchase CTA\n\n### Critical constraint\n\nDo **not** use any of the following:\n\n- monospace typography\n- orange as the primary accent\n- halftone\n- grid backgrounds\n- registration marks\n- crosshairs\n- measurement ticks\n- fake coordinates\n- brackets around labels\n- fake status information\n- engineering diagrams\n- warning stripes\n- technical-interface styling\n\nYou may still use the supplied factual specifications as content.\n\n### Objective\n\nProduce a design that remains unmistakably governed by SYSTEM//FORM through:\n\n- hierarchy\n- scale tension\n- spatial organization\n- functional division\n- information encoding\n- controlled asymmetry\n- negative space\n- typography\n- deliberate interruption\n\n### Evaluation target\n\nThis is the critical test.\n\nIf the result stops feeling like SYSTEM//FORM because its familiar surface ingredients were prohibited, the skill has not yet proven its underlying grammar.\n\nDo not compensate by finding visual substitutes for the prohibited ingredients.\n\nSolve the composition structurally.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-05",
+        "imitation-trap"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/45234b84.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [
+        "/specimens/assets/45234b84/fieldnote-daily-01-notebook.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "fieldnote-daily-01-notebook.jpg",
+          "to": "../assets/45234b84/fieldnote-daily-01-notebook.webp"
+        }
+      ],
+      "image": "/specimens/images/45234b84.webp"
+    },
+    {
+      "id": "c3d0cffb",
+      "title": "Kinetic Foundry",
+      "model": "GPT-5.6 Sol",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page landing page for **KINETIC FOUNDRY**, a fictional industrial robotics company that builds modular robotic work cells for small and mid-sized manufacturers.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**KINETIC FOUNDRY**\n\n**Automation built for factories that change.**\n\nModular robotic work cells designed to be reconfigured as production demands evolve.\n\n**KF / CELL 04**\n\nPayload: 35 kg  \nReach: 1,850 mm  \nRepeatability: ±0.05 mm  \nConfiguration: 6-axis  \nDeployment: Modular\n\nInclude:\n\n- hero\n- product overview\n- technical specifications\n- three capabilities\n- deployment/process section\n- final contact CTA\n\n### Direction\n\nDo not imitate a conventional robotics or SaaS website.\n\nThe product and its real specifications should become part of the visual architecture.\n\nUse technical graphics only where they communicate actual supplied information.\n\nDo not invent additional specifications, certifications, performance claims, customers, statistics, coordinates, or operational data.\n\n### Evaluation target\n\nThis is SYSTEM//FORM operating on its natural subject matter.\n\nThe result should demonstrate the design system without relying on generic futuristic, cyberpunk, or industrial-tech tropes.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-01",
+        "industrial-robotics"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/c3d0cffb.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T18:12:35.343Z",
+      "assets": [],
+      "assetMap": [],
+      "image": "/specimens/images/c3d0cffb.webp",
+      "favorite": true
+    },
+    {
+      "id": "c1d7aa84",
+      "title": "Northline Coffee",
+      "model": "GPT-5.6 Sol",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page website for **NORTHLINE COFFEE**, a fictional independent specialty coffee roaster.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**NORTHLINE COFFEE**\n\n**Coffee with a known origin.**\n\nFeatured release:\n\n**LAS FLORES / 04**\n\nOrigin: Huila, Colombia  \nProducer: Las Flores  \nProcess: Washed  \nVariety: Caturra  \nAltitude: 1,850 MASL  \nRoast: Light\n\nTasting notes:\n\nRed apple / caramel / citrus\n\nInclude:\n\n- hero\n- featured coffee\n- origin information\n- roasting philosophy\n- three available coffee offerings\n- shop CTA\n\nFor the other two coffee offerings, use clearly marked placeholder content rather than inventing factual origins or specifications.\n\n### Direction\n\nDo not make the company feel industrial.\n\nDo not use factory, machine, robotics, diagnostic, system-status, engineering, or manufacturing language simply to satisfy the design style.\n\nFind SYSTEM//FORM inside the **real informational structure of coffee**: origin, process, variety, altitude, roast, product, and provenance.\n\nAvoid generic specialty-coffee minimalism.\n\n### Evaluation target\n\nIf SYSTEM//FORM is truly transferable, this should remain recognizably SYSTEM//FORM while feeling unquestionably like a coffee brand.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-02",
+        "coffee-roaster"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/c1d7aa84.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T18:13:15.477Z",
+      "assets": [
+        "/specimens/assets/c1d7aa84/northline-coffee.webp",
+        "/specimens/assets/c1d7aa84/coffee-placeholder-bag.webp",
+        "/specimens/assets/c1d7aa84/coffee-placeholder-beans.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "northline-coffee.jpg",
+          "to": "../assets/c1d7aa84/northline-coffee.webp"
+        },
+        {
+          "from": "coffee-placeholder-bag.jpg",
+          "to": "../assets/c1d7aa84/coffee-placeholder-bag.webp"
+        },
+        {
+          "from": "coffee-placeholder-beans.jpg",
+          "to": "../assets/c1d7aa84/coffee-placeholder-beans.webp"
+        }
+      ],
+      "image": "/specimens/images/c1d7aa84.webp",
+      "favorite": false
+    },
+    {
+      "id": "4568d66c",
+      "title": "Great Lakes Industrial Archive",
+      "model": "GPT-5.6 Sol",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a homepage for **THE GREAT LAKES INDUSTRIAL ARCHIVE**, a fictional nonprofit archive preserving documents, photographs, oral histories, and physical artifacts related to Great Lakes manufacturing history.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**THE GREAT LAKES INDUSTRIAL ARCHIVE**\n\n**Industry remembered through the people who built it.**\n\nCollections:\n\nPhotographs — 18,420 records  \nDocuments — 7,860 records  \nOral Histories — 614 records  \nPhysical Objects — 1,205 records\n\nEstablished: 1987\n\nInclude:\n\n- institutional hero\n- collection overview\n- featured archive object\n- research/access information\n- preservation mission\n- visit/contact CTA\n\nUse placeholder labeling for any featured object's details that have not been supplied.\n\n### Direction\n\nUse SYSTEM mode as the primary expression.\n\nThis should feel scholarly, archival, contemporary, and authoritative—not like robotics branding.\n\nAvoid excessive signal colors, fake measurements, machinery diagrams, fake catalog identifiers, and unnecessary technical decoration.\n\nAllow typography, information organization, proportion, rules, and negative space to carry most of the identity.\n\n### Evaluation target\n\nThis tests whether SYSTEM//FORM can become restrained without disappearing.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-03",
+        "civic-archive"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/4568d66c.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T18:13:36.837Z",
+      "assets": [],
+      "assetMap": [],
+      "image": "/specimens/images/4568d66c.webp",
+      "favorite": true
+    },
+    {
+      "id": "f6446273",
+      "title": "SIGNAL/26",
+      "model": "GPT-5.6 Sol",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a promotional landing page for **SIGNAL/26**, a fictional two-day independent electronic music festival.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Event information\n\n**SIGNAL/26**\n\nOctober 16–17, 2026  \nDetroit, Michigan\n\nFriday:\n\n21:00 — MARA VOSS  \n22:30 — STATIC FIELD  \n00:15 — NULL/SET\n\nSaturday:\n\n20:30 — FORMANT  \n22:00 — LENA ARC  \n23:45 — PUBLIC MEMORY\n\nTwo nights. Six artists. One room.\n\nInclude:\n\n- dominant festival hero\n- complete schedule\n- artist lineup\n- venue-information area using only the supplied location\n- ticket CTA\n- event-information footer\n\n### Direction\n\nUse SIGNAL mode as the primary expression.\n\nTreat schedule, sequence, time, date, lineup, and typography as the informational system.\n\nBe aggressive with scale and composition.\n\nDo not turn it into a fake computer terminal, nightclub cyberpunk interface, or futuristic HUD.\n\nDo not invent ticket prices, venue names, sponsors, addresses, or additional event details.\n\n### Evaluation target\n\nThis tests whether SYSTEM//FORM can become highly expressive while retaining information integrity and structural discipline.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-04",
+        "music-festival"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/f6446273.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T18:12:42.517Z",
+      "assets": [],
+      "assetMap": [],
+      "image": "/specimens/images/f6446273.webp",
+      "favorite": false
+    },
+    {
+      "id": "f8d9b093",
+      "title": "FIELDNOTE / DAILY 01",
+      "model": "GPT-5.6 Sol",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page website for **FIELDNOTE**, a fictional personal notebook company.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Product\n\n**FIELDNOTE / DAILY 01**\n\nA5 notebook  \n192 pages  \nDot grid  \n100 gsm paper  \nLay-flat binding  \nSoft-touch cover  \nMade in Japan\n\nAvailable colors:\n\nBlack  \nBone  \nSafety Orange\n\nInclude:\n\n- hero\n- product presentation\n- specifications\n- interior/page-system explanation\n- available colors\n- purchase CTA\n\n### Critical constraint\n\nDo **not** use any of the following:\n\n- monospace typography\n- orange as the primary accent\n- halftone\n- grid backgrounds\n- registration marks\n- crosshairs\n- measurement ticks\n- fake coordinates\n- brackets around labels\n- fake status information\n- engineering diagrams\n- warning stripes\n- technical-interface styling\n\nYou may still use the supplied factual specifications as content.\n\n### Objective\n\nProduce a design that remains unmistakably governed by SYSTEM//FORM through:\n\n- hierarchy\n- scale tension\n- spatial organization\n- functional division\n- information encoding\n- controlled asymmetry\n- negative space\n- typography\n- deliberate interruption\n\n### Evaluation target\n\nThis is the critical test.\n\nIf the result stops feeling like SYSTEM//FORM because its familiar surface ingredients were prohibited, the skill has not yet proven its underlying grammar.\n\nDo not compensate by finding visual substitutes for the prohibited ingredients.\n\nSolve the composition structurally.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-05",
+        "imitation-trap"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/f8d9b093.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T18:13:48.533Z",
+      "assets": [
+        "/specimens/assets/f8d9b093/fieldnote-notebook.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "fieldnote-notebook.jpg",
+          "to": "../assets/f8d9b093/fieldnote-notebook.webp"
+        }
+      ],
+      "image": "/specimens/images/f8d9b093.webp",
+      "favorite": false
+    },
+    {
+      "id": "892ca71e",
+      "title": "Kinetic Foundry",
+      "model": "GPT-5.6 Sol",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page landing page for **KINETIC FOUNDRY**, a fictional industrial robotics company that builds modular robotic work cells for small and mid-sized manufacturers.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**KINETIC FOUNDRY**\n\n**Automation built for factories that change.**\n\nModular robotic work cells designed to be reconfigured as production demands evolve.\n\n**KF / CELL 04**\n\nPayload: 35 kg  \nReach: 1,850 mm  \nRepeatability: ±0.05 mm  \nConfiguration: 6-axis  \nDeployment: Modular\n\nInclude:\n\n- hero\n- product overview\n- technical specifications\n- three capabilities\n- deployment/process section\n- final contact CTA\n\n### Direction\n\nDo not imitate a conventional robotics or SaaS website.\n\nThe product and its real specifications should become part of the visual architecture.\n\nUse technical graphics only where they communicate actual supplied information.\n\nDo not invent additional specifications, certifications, performance claims, customers, statistics, coordinates, or operational data.\n\n### Evaluation target\n\nThis is SYSTEM//FORM operating on its natural subject matter.\n\nThe result should demonstrate the design system without relying on generic futuristic, cyberpunk, or industrial-tech tropes.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-01",
+        "industrial-robotics"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/892ca71e.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [
+        "/specimens/assets/892ca71e/kinetic-cell.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "kinetic-cell.png",
+          "to": "../assets/892ca71e/kinetic-cell.webp"
+        }
+      ],
+      "image": "/specimens/images/892ca71e.webp"
+    },
+    {
+      "id": "1e13f2cb",
+      "title": "Northline Coffee",
+      "model": "GPT-5.6 Sol",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page website for **NORTHLINE COFFEE**, a fictional independent specialty coffee roaster.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**NORTHLINE COFFEE**\n\n**Coffee with a known origin.**\n\nFeatured release:\n\n**LAS FLORES / 04**\n\nOrigin: Huila, Colombia  \nProducer: Las Flores  \nProcess: Washed  \nVariety: Caturra  \nAltitude: 1,850 MASL  \nRoast: Light\n\nTasting notes:\n\nRed apple / caramel / citrus\n\nInclude:\n\n- hero\n- featured coffee\n- origin information\n- roasting philosophy\n- three available coffee offerings\n- shop CTA\n\nFor the other two coffee offerings, use clearly marked placeholder content rather than inventing factual origins or specifications.\n\n### Direction\n\nDo not make the company feel industrial.\n\nDo not use factory, machine, robotics, diagnostic, system-status, engineering, or manufacturing language simply to satisfy the design style.\n\nFind SYSTEM//FORM inside the **real informational structure of coffee**: origin, process, variety, altitude, roast, product, and provenance.\n\nAvoid generic specialty-coffee minimalism.\n\n### Evaluation target\n\nIf SYSTEM//FORM is truly transferable, this should remain recognizably SYSTEM//FORM while feeling unquestionably like a coffee brand.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-02",
+        "coffee-roaster"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/1e13f2cb.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [
+        "/specimens/assets/1e13f2cb/northline-las-flores.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "northline-las-flores.png",
+          "to": "../assets/1e13f2cb/northline-las-flores.webp"
+        }
+      ],
+      "image": "/specimens/images/1e13f2cb.webp"
+    },
+    {
+      "id": "22714ed2",
+      "title": "Great Lakes Industrial Archive",
+      "model": "GPT-5.6 Sol",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a homepage for **THE GREAT LAKES INDUSTRIAL ARCHIVE**, a fictional nonprofit archive preserving documents, photographs, oral histories, and physical artifacts related to Great Lakes manufacturing history.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**THE GREAT LAKES INDUSTRIAL ARCHIVE**\n\n**Industry remembered through the people who built it.**\n\nCollections:\n\nPhotographs — 18,420 records  \nDocuments — 7,860 records  \nOral Histories — 614 records  \nPhysical Objects — 1,205 records\n\nEstablished: 1987\n\nInclude:\n\n- institutional hero\n- collection overview\n- featured archive object\n- research/access information\n- preservation mission\n- visit/contact CTA\n\nUse placeholder labeling for any featured object's details that have not been supplied.\n\n### Direction\n\nUse SYSTEM mode as the primary expression.\n\nThis should feel scholarly, archival, contemporary, and authoritative—not like robotics branding.\n\nAvoid excessive signal colors, fake measurements, machinery diagrams, fake catalog identifiers, and unnecessary technical decoration.\n\nAllow typography, information organization, proportion, rules, and negative space to carry most of the identity.\n\n### Evaluation target\n\nThis tests whether SYSTEM//FORM can become restrained without disappearing.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-03",
+        "civic-archive"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/22714ed2.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [
+        "/specimens/assets/22714ed2/great-lakes-handling.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "great-lakes-handling.png",
+          "to": "../assets/22714ed2/great-lakes-handling.webp"
+        }
+      ],
+      "image": "/specimens/images/22714ed2.webp"
+    },
+    {
+      "id": "74dafbd5",
+      "title": "SIGNAL/26",
+      "model": "GPT-5.6 Sol",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a promotional landing page for **SIGNAL/26**, a fictional two-day independent electronic music festival.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Event information\n\n**SIGNAL/26**\n\nOctober 16–17, 2026  \nDetroit, Michigan\n\nFriday:\n\n21:00 — MARA VOSS  \n22:30 — STATIC FIELD  \n00:15 — NULL/SET\n\nSaturday:\n\n20:30 — FORMANT  \n22:00 — LENA ARC  \n23:45 — PUBLIC MEMORY\n\nTwo nights. Six artists. One room.\n\nInclude:\n\n- dominant festival hero\n- complete schedule\n- artist lineup\n- venue-information area using only the supplied location\n- ticket CTA\n- event-information footer\n\n### Direction\n\nUse SIGNAL mode as the primary expression.\n\nTreat schedule, sequence, time, date, lineup, and typography as the informational system.\n\nBe aggressive with scale and composition.\n\nDo not turn it into a fake computer terminal, nightclub cyberpunk interface, or futuristic HUD.\n\nDo not invent ticket prices, venue names, sponsors, addresses, or additional event details.\n\n### Evaluation target\n\nThis tests whether SYSTEM//FORM can become highly expressive while retaining information integrity and structural discipline.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-04",
+        "music-festival"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/74dafbd5.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [
+        "/specimens/assets/74dafbd5/signal-room.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "signal-room.png",
+          "to": "../assets/74dafbd5/signal-room.webp"
+        }
+      ],
+      "image": "/specimens/images/74dafbd5.webp"
+    },
+    {
+      "id": "f535c7e0",
+      "title": "FIELDNOTE / DAILY 01",
+      "model": "GPT-5.6 Sol",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page website for **FIELDNOTE**, a fictional personal notebook company.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Product\n\n**FIELDNOTE / DAILY 01**\n\nA5 notebook  \n192 pages  \nDot grid  \n100 gsm paper  \nLay-flat binding  \nSoft-touch cover  \nMade in Japan\n\nAvailable colors:\n\nBlack  \nBone  \nSafety Orange\n\nInclude:\n\n- hero\n- product presentation\n- specifications\n- interior/page-system explanation\n- available colors\n- purchase CTA\n\n### Critical constraint\n\nDo **not** use any of the following:\n\n- monospace typography\n- orange as the primary accent\n- halftone\n- grid backgrounds\n- registration marks\n- crosshairs\n- measurement ticks\n- fake coordinates\n- brackets around labels\n- fake status information\n- engineering diagrams\n- warning stripes\n- technical-interface styling\n\nYou may still use the supplied factual specifications as content.\n\n### Objective\n\nProduce a design that remains unmistakably governed by SYSTEM//FORM through:\n\n- hierarchy\n- scale tension\n- spatial organization\n- functional division\n- information encoding\n- controlled asymmetry\n- negative space\n- typography\n- deliberate interruption\n\n### Evaluation target\n\nThis is the critical test.\n\nIf the result stops feeling like SYSTEM//FORM because its familiar surface ingredients were prohibited, the skill has not yet proven its underlying grammar.\n\nDo not compensate by finding visual substitutes for the prohibited ingredients.\n\nSolve the composition structurally.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-05",
+        "imitation-trap"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/f535c7e0.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [
+        "/specimens/assets/f535c7e0/fieldnote-daily.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "fieldnote-daily.png",
+          "to": "../assets/f535c7e0/fieldnote-daily.webp"
+        }
+      ],
+      "image": "/specimens/images/f535c7e0.webp"
+    },
+    {
+      "id": "50300941",
+      "title": "Kinetic Foundry",
+      "model": "Cursor Grok 4.6",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page landing page for **KINETIC FOUNDRY**, a fictional industrial robotics company that builds modular robotic work cells for small and mid-sized manufacturers.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**KINETIC FOUNDRY**\n\n**Automation built for factories that change.**\n\nModular robotic work cells designed to be reconfigured as production demands evolve.\n\n**KF / CELL 04**\n\nPayload: 35 kg  \nReach: 1,850 mm  \nRepeatability: ±0.05 mm  \nConfiguration: 6-axis  \nDeployment: Modular\n\nInclude:\n\n- hero\n- product overview\n- technical specifications\n- three capabilities\n- deployment/process section\n- final contact CTA\n\n### Direction\n\nDo not imitate a conventional robotics or SaaS website.\n\nThe product and its real specifications should become part of the visual architecture.\n\nUse technical graphics only where they communicate actual supplied information.\n\nDo not invent additional specifications, certifications, performance claims, customers, statistics, coordinates, or operational data.\n\n### Evaluation target\n\nThis is SYSTEM//FORM operating on its natural subject matter.\n\nThe result should demonstrate the design system without relying on generic futuristic, cyberpunk, or industrial-tech tropes.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-01",
+        "industrial-robotics"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/50300941.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [
+        "/specimens/assets/50300941/kf-cell-hero.webp",
+        "/specimens/assets/50300941/kf-cell-wrist.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "kf-cell-hero.png",
+          "to": "../assets/50300941/kf-cell-hero.webp"
+        },
+        {
+          "from": "kf-cell-wrist.png",
+          "to": "../assets/50300941/kf-cell-wrist.webp"
+        }
+      ],
+      "image": "/specimens/images/50300941.webp"
+    },
+    {
+      "id": "992e164c",
+      "title": "Northline Coffee",
+      "model": "Cursor Grok 4.6",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page website for **NORTHLINE COFFEE**, a fictional independent specialty coffee roaster.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**NORTHLINE COFFEE**\n\n**Coffee with a known origin.**\n\nFeatured release:\n\n**LAS FLORES / 04**\n\nOrigin: Huila, Colombia  \nProducer: Las Flores  \nProcess: Washed  \nVariety: Caturra  \nAltitude: 1,850 MASL  \nRoast: Light\n\nTasting notes:\n\nRed apple / caramel / citrus\n\nInclude:\n\n- hero\n- featured coffee\n- origin information\n- roasting philosophy\n- three available coffee offerings\n- shop CTA\n\nFor the other two coffee offerings, use clearly marked placeholder content rather than inventing factual origins or specifications.\n\n### Direction\n\nDo not make the company feel industrial.\n\nDo not use factory, machine, robotics, diagnostic, system-status, engineering, or manufacturing language simply to satisfy the design style.\n\nFind SYSTEM//FORM inside the **real informational structure of coffee**: origin, process, variety, altitude, roast, product, and provenance.\n\nAvoid generic specialty-coffee minimalism.\n\n### Evaluation target\n\nIf SYSTEM//FORM is truly transferable, this should remain recognizably SYSTEM//FORM while feeling unquestionably like a coffee brand.",
+      "notes": "",
+      "date": "2026-08-21",
+      "tags": [
+        "system-form",
+        "test-02",
+        "coffee-roaster"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/992e164c.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T18:12:15.608Z",
+      "assets": [
+        "/specimens/assets/992e164c/nl-beans.webp",
+        "/specimens/assets/992e164c/nl-huila.webp",
+        "/specimens/assets/992e164c/nl-apple-still.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "nl-beans.png",
+          "to": "../assets/992e164c/nl-beans.webp"
+        },
+        {
+          "from": "nl-huila.png",
+          "to": "../assets/992e164c/nl-huila.webp"
+        },
+        {
+          "from": "nl-apple-still.png",
+          "to": "../assets/992e164c/nl-apple-still.webp"
+        }
+      ],
+      "image": "/specimens/images/992e164c.webp",
+      "favorite": true
+    },
+    {
+      "id": "109914cf",
+      "title": "Great Lakes Industrial Archive",
+      "model": "Cursor Grok 4.6",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a homepage for **THE GREAT LAKES INDUSTRIAL ARCHIVE**, a fictional nonprofit archive preserving documents, photographs, oral histories, and physical artifacts related to Great Lakes manufacturing history.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**THE GREAT LAKES INDUSTRIAL ARCHIVE**\n\n**Industry remembered through the people who built it.**\n\nCollections:\n\nPhotographs — 18,420 records  \nDocuments — 7,860 records  \nOral Histories — 614 records  \nPhysical Objects — 1,205 records\n\nEstablished: 1987\n\nInclude:\n\n- institutional hero\n- collection overview\n- featured archive object\n- research/access information\n- preservation mission\n- visit/contact CTA\n\nUse placeholder labeling for any featured object's details that have not been supplied.\n\n### Direction\n\nUse SYSTEM mode as the primary expression.\n\nThis should feel scholarly, archival, contemporary, and authoritative—not like robotics branding.\n\nAvoid excessive signal colors, fake measurements, machinery diagrams, fake catalog identifiers, and unnecessary technical decoration.\n\nAllow typography, information organization, proportion, rules, and negative space to carry most of the identity.\n\n### Evaluation target\n\nThis tests whether SYSTEM//FORM can become restrained without disappearing.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-03",
+        "civic-archive"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/109914cf.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T18:42:27.957Z",
+      "assets": [
+        "/specimens/assets/109914cf/gl-reading-table.webp",
+        "/specimens/assets/109914cf/gl-factory-print.webp",
+        "/specimens/assets/109914cf/gl-object-placeholder.webp",
+        "/specimens/assets/109914cf/gl-handling.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "gl-reading-table.png",
+          "to": "../assets/109914cf/gl-reading-table.webp"
+        },
+        {
+          "from": "gl-factory-print.png",
+          "to": "../assets/109914cf/gl-factory-print.webp"
+        },
+        {
+          "from": "gl-object-placeholder.png",
+          "to": "../assets/109914cf/gl-object-placeholder.webp"
+        },
+        {
+          "from": "gl-handling.png",
+          "to": "../assets/109914cf/gl-handling.webp"
+        }
+      ],
+      "image": "/specimens/images/109914cf.webp",
+      "favorite": true
+    },
+    {
+      "id": "f0041f6d",
+      "title": "SIGNAL/26",
+      "model": "Cursor Grok 4.6",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a promotional landing page for **SIGNAL/26**, a fictional two-day independent electronic music festival.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Event information\n\n**SIGNAL/26**\n\nOctober 16–17, 2026  \nDetroit, Michigan\n\nFriday:\n\n21:00 — MARA VOSS  \n22:30 — STATIC FIELD  \n00:15 — NULL/SET\n\nSaturday:\n\n20:30 — FORMANT  \n22:00 — LENA ARC  \n23:45 — PUBLIC MEMORY\n\nTwo nights. Six artists. One room.\n\nInclude:\n\n- dominant festival hero\n- complete schedule\n- artist lineup\n- venue-information area using only the supplied location\n- ticket CTA\n- event-information footer\n\n### Direction\n\nUse SIGNAL mode as the primary expression.\n\nTreat schedule, sequence, time, date, lineup, and typography as the informational system.\n\nBe aggressive with scale and composition.\n\nDo not turn it into a fake computer terminal, nightclub cyberpunk interface, or futuristic HUD.\n\nDo not invent ticket prices, venue names, sponsors, addresses, or additional event details.\n\n### Evaluation target\n\nThis tests whether SYSTEM//FORM can become highly expressive while retaining information integrity and structural discipline.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-04",
+        "music-festival"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/f0041f6d.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [
+        "/specimens/assets/f0041f6d/sig-room-night.webp",
+        "/specimens/assets/f0041f6d/sig-detroit-night.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "sig-room-night.png",
+          "to": "../assets/f0041f6d/sig-room-night.webp"
+        },
+        {
+          "from": "sig-detroit-night.png",
+          "to": "../assets/f0041f6d/sig-detroit-night.webp"
+        }
+      ],
+      "image": "/specimens/images/f0041f6d.webp"
+    },
+    {
+      "id": "98426100",
+      "title": "FIELDNOTE / DAILY 01",
+      "model": "Cursor Grok 4.6",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page website for **FIELDNOTE**, a fictional personal notebook company.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Product\n\n**FIELDNOTE / DAILY 01**\n\nA5 notebook  \n192 pages  \nDot grid  \n100 gsm paper  \nLay-flat binding  \nSoft-touch cover  \nMade in Japan\n\nAvailable colors:\n\nBlack  \nBone  \nSafety Orange\n\nInclude:\n\n- hero\n- product presentation\n- specifications\n- interior/page-system explanation\n- available colors\n- purchase CTA\n\n### Critical constraint\n\nDo **not** use any of the following:\n\n- monospace typography\n- orange as the primary accent\n- halftone\n- grid backgrounds\n- registration marks\n- crosshairs\n- measurement ticks\n- fake coordinates\n- brackets around labels\n- fake status information\n- engineering diagrams\n- warning stripes\n- technical-interface styling\n\nYou may still use the supplied factual specifications as content.\n\n### Objective\n\nProduce a design that remains unmistakably governed by SYSTEM//FORM through:\n\n- hierarchy\n- scale tension\n- spatial organization\n- functional division\n- information encoding\n- controlled asymmetry\n- negative space\n- typography\n- deliberate interruption\n\n### Evaluation target\n\nThis is the critical test.\n\nIf the result stops feeling like SYSTEM//FORM because its familiar surface ingredients were prohibited, the skill has not yet proven its underlying grammar.\n\nDo not compensate by finding visual substitutes for the prohibited ingredients.\n\nSolve the composition structurally.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-05",
+        "imitation-trap"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/98426100.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [
+        "/specimens/assets/98426100/fn-cover-black.webp",
+        "/specimens/assets/98426100/fn-open-spread.webp",
+        "/specimens/assets/98426100/fn-three-covers.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "fn-cover-black.png",
+          "to": "../assets/98426100/fn-cover-black.webp"
+        },
+        {
+          "from": "fn-open-spread.png",
+          "to": "../assets/98426100/fn-open-spread.webp"
+        },
+        {
+          "from": "fn-three-covers.png",
+          "to": "../assets/98426100/fn-three-covers.webp"
+        }
+      ],
+      "image": "/specimens/images/98426100.webp"
+    },
+    {
+      "id": "7ee1c4fe",
+      "title": "Kinetic Foundry",
+      "model": "MiMo v2.5",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page landing page for **KINETIC FOUNDRY**, a fictional industrial robotics company that builds modular robotic work cells for small and mid-sized manufacturers.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**KINETIC FOUNDRY**\n\n**Automation built for factories that change.**\n\nModular robotic work cells designed to be reconfigured as production demands evolve.\n\n**KF / CELL 04**\n\nPayload: 35 kg  \nReach: 1,850 mm  \nRepeatability: ±0.05 mm  \nConfiguration: 6-axis  \nDeployment: Modular\n\nInclude:\n\n- hero\n- product overview\n- technical specifications\n- three capabilities\n- deployment/process section\n- final contact CTA\n\n### Direction\n\nDo not imitate a conventional robotics or SaaS website.\n\nThe product and its real specifications should become part of the visual architecture.\n\nUse technical graphics only where they communicate actual supplied information.\n\nDo not invent additional specifications, certifications, performance claims, customers, statistics, coordinates, or operational data.\n\n### Evaluation target\n\nThis is SYSTEM//FORM operating on its natural subject matter.\n\nThe result should demonstrate the design system without relying on generic futuristic, cyberpunk, or industrial-tech tropes.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-01",
+        "industrial-robotics"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/7ee1c4fe.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [
+        "/specimens/assets/7ee1c4fe/kinetic_foundry_hero_1787607324325.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "kinetic_foundry_hero_1787607324325.jpg",
+          "to": "../assets/7ee1c4fe/kinetic_foundry_hero_1787607324325.webp"
+        }
+      ],
+      "image": "/specimens/images/7ee1c4fe.webp"
+    },
+    {
+      "id": "05b18919",
+      "title": "Northline Coffee",
+      "model": "MiMo v2.5",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page website for **NORTHLINE COFFEE**, a fictional independent specialty coffee roaster.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**NORTHLINE COFFEE**\n\n**Coffee with a known origin.**\n\nFeatured release:\n\n**LAS FLORES / 04**\n\nOrigin: Huila, Colombia  \nProducer: Las Flores  \nProcess: Washed  \nVariety: Caturra  \nAltitude: 1,850 MASL  \nRoast: Light\n\nTasting notes:\n\nRed apple / caramel / citrus\n\nInclude:\n\n- hero\n- featured coffee\n- origin information\n- roasting philosophy\n- three available coffee offerings\n- shop CTA\n\nFor the other two coffee offerings, use clearly marked placeholder content rather than inventing factual origins or specifications.\n\n### Direction\n\nDo not make the company feel industrial.\n\nDo not use factory, machine, robotics, diagnostic, system-status, engineering, or manufacturing language simply to satisfy the design style.\n\nFind SYSTEM//FORM inside the **real informational structure of coffee**: origin, process, variety, altitude, roast, product, and provenance.\n\nAvoid generic specialty-coffee minimalism.\n\n### Evaluation target\n\nIf SYSTEM//FORM is truly transferable, this should remain recognizably SYSTEM//FORM while feeling unquestionably like a coffee brand.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-02",
+        "coffee-roaster"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/05b18919.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [],
+      "assetMap": [],
+      "image": "/specimens/images/05b18919.webp"
+    },
+    {
+      "id": "6f086ced",
+      "title": "Great Lakes Industrial Archive",
+      "model": "MiMo v2.5",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a homepage for **THE GREAT LAKES INDUSTRIAL ARCHIVE**, a fictional nonprofit archive preserving documents, photographs, oral histories, and physical artifacts related to Great Lakes manufacturing history.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**THE GREAT LAKES INDUSTRIAL ARCHIVE**\n\n**Industry remembered through the people who built it.**\n\nCollections:\n\nPhotographs — 18,420 records  \nDocuments — 7,860 records  \nOral Histories — 614 records  \nPhysical Objects — 1,205 records\n\nEstablished: 1987\n\nInclude:\n\n- institutional hero\n- collection overview\n- featured archive object\n- research/access information\n- preservation mission\n- visit/contact CTA\n\nUse placeholder labeling for any featured object's details that have not been supplied.\n\n### Direction\n\nUse SYSTEM mode as the primary expression.\n\nThis should feel scholarly, archival, contemporary, and authoritative—not like robotics branding.\n\nAvoid excessive signal colors, fake measurements, machinery diagrams, fake catalog identifiers, and unnecessary technical decoration.\n\nAllow typography, information organization, proportion, rules, and negative space to carry most of the identity.\n\n### Evaluation target\n\nThis tests whether SYSTEM//FORM can become restrained without disappearing.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-03",
+        "civic-archive"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/6f086ced.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [],
+      "assetMap": [],
+      "image": "/specimens/images/6f086ced.webp"
+    },
+    {
+      "id": "fcc9d370",
+      "title": "SIGNAL/26",
+      "model": "MiMo v2.5",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a promotional landing page for **SIGNAL/26**, a fictional two-day independent electronic music festival.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Event information\n\n**SIGNAL/26**\n\nOctober 16–17, 2026  \nDetroit, Michigan\n\nFriday:\n\n21:00 — MARA VOSS  \n22:30 — STATIC FIELD  \n00:15 — NULL/SET\n\nSaturday:\n\n20:30 — FORMANT  \n22:00 — LENA ARC  \n23:45 — PUBLIC MEMORY\n\nTwo nights. Six artists. One room.\n\nInclude:\n\n- dominant festival hero\n- complete schedule\n- artist lineup\n- venue-information area using only the supplied location\n- ticket CTA\n- event-information footer\n\n### Direction\n\nUse SIGNAL mode as the primary expression.\n\nTreat schedule, sequence, time, date, lineup, and typography as the informational system.\n\nBe aggressive with scale and composition.\n\nDo not turn it into a fake computer terminal, nightclub cyberpunk interface, or futuristic HUD.\n\nDo not invent ticket prices, venue names, sponsors, addresses, or additional event details.\n\n### Evaluation target\n\nThis tests whether SYSTEM//FORM can become highly expressive while retaining information integrity and structural discipline.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-04",
+        "music-festival"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/fcc9d370.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [],
+      "assetMap": [],
+      "image": "/specimens/images/fcc9d370.webp"
+    },
+    {
+      "id": "891bdebe",
+      "title": "FIELDNOTE / DAILY 01",
+      "model": "MiMo v2.5",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page website for **FIELDNOTE**, a fictional personal notebook company.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Product\n\n**FIELDNOTE / DAILY 01**\n\nA5 notebook  \n192 pages  \nDot grid  \n100 gsm paper  \nLay-flat binding  \nSoft-touch cover  \nMade in Japan\n\nAvailable colors:\n\nBlack  \nBone  \nSafety Orange\n\nInclude:\n\n- hero\n- product presentation\n- specifications\n- interior/page-system explanation\n- available colors\n- purchase CTA\n\n### Critical constraint\n\nDo **not** use any of the following:\n\n- monospace typography\n- orange as the primary accent\n- halftone\n- grid backgrounds\n- registration marks\n- crosshairs\n- measurement ticks\n- fake coordinates\n- brackets around labels\n- fake status information\n- engineering diagrams\n- warning stripes\n- technical-interface styling\n\nYou may still use the supplied factual specifications as content.\n\n### Objective\n\nProduce a design that remains unmistakably governed by SYSTEM//FORM through:\n\n- hierarchy\n- scale tension\n- spatial organization\n- functional division\n- information encoding\n- controlled asymmetry\n- negative space\n- typography\n- deliberate interruption\n\n### Evaluation target\n\nThis is the critical test.\n\nIf the result stops feeling like SYSTEM//FORM because its familiar surface ingredients were prohibited, the skill has not yet proven its underlying grammar.\n\nDo not compensate by finding visual substitutes for the prohibited ingredients.\n\nSolve the composition structurally.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-05",
+        "imitation-trap"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/891bdebe.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [],
+      "assetMap": [],
+      "image": "/specimens/images/891bdebe.webp"
+    },
+    {
+      "id": "7c9d16db",
+      "title": "Kinetic Foundry",
+      "model": "Muse Spark 1.2",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page landing page for **KINETIC FOUNDRY**, a fictional industrial robotics company that builds modular robotic work cells for small and mid-sized manufacturers.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**KINETIC FOUNDRY**\n\n**Automation built for factories that change.**\n\nModular robotic work cells designed to be reconfigured as production demands evolve.\n\n**KF / CELL 04**\n\nPayload: 35 kg  \nReach: 1,850 mm  \nRepeatability: ±0.05 mm  \nConfiguration: 6-axis  \nDeployment: Modular\n\nInclude:\n\n- hero\n- product overview\n- technical specifications\n- three capabilities\n- deployment/process section\n- final contact CTA\n\n### Direction\n\nDo not imitate a conventional robotics or SaaS website.\n\nThe product and its real specifications should become part of the visual architecture.\n\nUse technical graphics only where they communicate actual supplied information.\n\nDo not invent additional specifications, certifications, performance claims, customers, statistics, coordinates, or operational data.\n\n### Evaluation target\n\nThis is SYSTEM//FORM operating on its natural subject matter.\n\nThe result should demonstrate the design system without relying on generic futuristic, cyberpunk, or industrial-tech tropes.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-01",
+        "industrial-robotics"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/7c9d16db.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [
+        "/specimens/assets/7c9d16db/photo-1581091226825-a6a2a5aee158.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "photo-1581091226825-a6a2a5aee158",
+          "to": "../assets/7c9d16db/photo-1581091226825-a6a2a5aee158.webp"
+        }
+      ],
+      "image": "/specimens/images/7c9d16db.webp"
+    },
+    {
+      "id": "6aa98cce",
+      "title": "Northline Coffee",
+      "model": "Muse Spark 1.2",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page website for **NORTHLINE COFFEE**, a fictional independent specialty coffee roaster.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**NORTHLINE COFFEE**\n\n**Coffee with a known origin.**\n\nFeatured release:\n\n**LAS FLORES / 04**\n\nOrigin: Huila, Colombia  \nProducer: Las Flores  \nProcess: Washed  \nVariety: Caturra  \nAltitude: 1,850 MASL  \nRoast: Light\n\nTasting notes:\n\nRed apple / caramel / citrus\n\nInclude:\n\n- hero\n- featured coffee\n- origin information\n- roasting philosophy\n- three available coffee offerings\n- shop CTA\n\nFor the other two coffee offerings, use clearly marked placeholder content rather than inventing factual origins or specifications.\n\n### Direction\n\nDo not make the company feel industrial.\n\nDo not use factory, machine, robotics, diagnostic, system-status, engineering, or manufacturing language simply to satisfy the design style.\n\nFind SYSTEM//FORM inside the **real informational structure of coffee**: origin, process, variety, altitude, roast, product, and provenance.\n\nAvoid generic specialty-coffee minimalism.\n\n### Evaluation target\n\nIf SYSTEM//FORM is truly transferable, this should remain recognizably SYSTEM//FORM while feeling unquestionably like a coffee brand.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-02",
+        "coffee-roaster"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/6aa98cce.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [
+        "/specimens/assets/6aa98cce/photo-1447933601403-0c6688de566e.webp",
+        "/specimens/assets/6aa98cce/photo-1509042239860-f550ce710b93.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "photo-1447933601403-0c6688de566e",
+          "to": "../assets/6aa98cce/photo-1447933601403-0c6688de566e.webp"
+        },
+        {
+          "from": "photo-1509042239860-f550ce710b93",
+          "to": "../assets/6aa98cce/photo-1509042239860-f550ce710b93.webp"
+        }
+      ],
+      "image": "/specimens/images/6aa98cce.webp"
+    },
+    {
+      "id": "b7c8c42d",
+      "title": "Great Lakes Industrial Archive",
+      "model": "Muse Spark 1.2",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a homepage for **THE GREAT LAKES INDUSTRIAL ARCHIVE**, a fictional nonprofit archive preserving documents, photographs, oral histories, and physical artifacts related to Great Lakes manufacturing history.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**THE GREAT LAKES INDUSTRIAL ARCHIVE**\n\n**Industry remembered through the people who built it.**\n\nCollections:\n\nPhotographs — 18,420 records  \nDocuments — 7,860 records  \nOral Histories — 614 records  \nPhysical Objects — 1,205 records\n\nEstablished: 1987\n\nInclude:\n\n- institutional hero\n- collection overview\n- featured archive object\n- research/access information\n- preservation mission\n- visit/contact CTA\n\nUse placeholder labeling for any featured object's details that have not been supplied.\n\n### Direction\n\nUse SYSTEM mode as the primary expression.\n\nThis should feel scholarly, archival, contemporary, and authoritative—not like robotics branding.\n\nAvoid excessive signal colors, fake measurements, machinery diagrams, fake catalog identifiers, and unnecessary technical decoration.\n\nAllow typography, information organization, proportion, rules, and negative space to carry most of the identity.\n\n### Evaluation target\n\nThis tests whether SYSTEM//FORM can become restrained without disappearing.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-03",
+        "civic-archive"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/b7c8c42d.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [
+        "/specimens/assets/b7c8c42d/photo-1565849904461-04a58ad377e0.webp",
+        "/specimens/assets/b7c8c42d/photo-1504328345606-18bbc8c9d7d1.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "photo-1565849904461-04a58ad377e0",
+          "to": "../assets/b7c8c42d/photo-1565849904461-04a58ad377e0.webp"
+        },
+        {
+          "from": "photo-1504328345606-18bbc8c9d7d1",
+          "to": "../assets/b7c8c42d/photo-1504328345606-18bbc8c9d7d1.webp"
+        }
+      ],
+      "image": "/specimens/images/b7c8c42d.webp"
+    },
+    {
+      "id": "6c7a6289",
+      "title": "SIGNAL/26",
+      "model": "Muse Spark 1.2",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a promotional landing page for **SIGNAL/26**, a fictional two-day independent electronic music festival.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Event information\n\n**SIGNAL/26**\n\nOctober 16–17, 2026  \nDetroit, Michigan\n\nFriday:\n\n21:00 — MARA VOSS  \n22:30 — STATIC FIELD  \n00:15 — NULL/SET\n\nSaturday:\n\n20:30 — FORMANT  \n22:00 — LENA ARC  \n23:45 — PUBLIC MEMORY\n\nTwo nights. Six artists. One room.\n\nInclude:\n\n- dominant festival hero\n- complete schedule\n- artist lineup\n- venue-information area using only the supplied location\n- ticket CTA\n- event-information footer\n\n### Direction\n\nUse SIGNAL mode as the primary expression.\n\nTreat schedule, sequence, time, date, lineup, and typography as the informational system.\n\nBe aggressive with scale and composition.\n\nDo not turn it into a fake computer terminal, nightclub cyberpunk interface, or futuristic HUD.\n\nDo not invent ticket prices, venue names, sponsors, addresses, or additional event details.\n\n### Evaluation target\n\nThis tests whether SYSTEM//FORM can become highly expressive while retaining information integrity and structural discipline.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-04",
+        "music-festival"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/6c7a6289.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [
+        "/specimens/assets/6c7a6289/photo-1492684223066-81342ee5ff30.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "photo-1492684223066-81342ee5ff30",
+          "to": "../assets/6c7a6289/photo-1492684223066-81342ee5ff30.webp"
+        }
+      ],
+      "image": "/specimens/images/6c7a6289.webp"
+    },
+    {
+      "id": "76561253",
+      "title": "FIELDNOTE / DAILY 01",
+      "model": "Muse Spark 1.2",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page website for **FIELDNOTE**, a fictional personal notebook company.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Product\n\n**FIELDNOTE / DAILY 01**\n\nA5 notebook  \n192 pages  \nDot grid  \n100 gsm paper  \nLay-flat binding  \nSoft-touch cover  \nMade in Japan\n\nAvailable colors:\n\nBlack  \nBone  \nSafety Orange\n\nInclude:\n\n- hero\n- product presentation\n- specifications\n- interior/page-system explanation\n- available colors\n- purchase CTA\n\n### Critical constraint\n\nDo **not** use any of the following:\n\n- monospace typography\n- orange as the primary accent\n- halftone\n- grid backgrounds\n- registration marks\n- crosshairs\n- measurement ticks\n- fake coordinates\n- brackets around labels\n- fake status information\n- engineering diagrams\n- warning stripes\n- technical-interface styling\n\nYou may still use the supplied factual specifications as content.\n\n### Objective\n\nProduce a design that remains unmistakably governed by SYSTEM//FORM through:\n\n- hierarchy\n- scale tension\n- spatial organization\n- functional division\n- information encoding\n- controlled asymmetry\n- negative space\n- typography\n- deliberate interruption\n\n### Evaluation target\n\nThis is the critical test.\n\nIf the result stops feeling like SYSTEM//FORM because its familiar surface ingredients were prohibited, the skill has not yet proven its underlying grammar.\n\nDo not compensate by finding visual substitutes for the prohibited ingredients.\n\nSolve the composition structurally.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-05",
+        "imitation-trap"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/76561253.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [
+        "/specimens/assets/76561253/photo-1516410529446-2c777cb7366d.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "photo-1516410529446-2c777cb7366d",
+          "to": "../assets/76561253/photo-1516410529446-2c777cb7366d.webp"
+        }
+      ],
+      "image": "/specimens/images/76561253.webp"
+    },
+    {
+      "id": "45f2b64e",
+      "title": "Kinetic Foundry",
+      "model": "ox-alpha",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page landing page for **KINETIC FOUNDRY**, a fictional industrial robotics company that builds modular robotic work cells for small and mid-sized manufacturers.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**KINETIC FOUNDRY**\n\n**Automation built for factories that change.**\n\nModular robotic work cells designed to be reconfigured as production demands evolve.\n\n**KF / CELL 04**\n\nPayload: 35 kg  \nReach: 1,850 mm  \nRepeatability: ±0.05 mm  \nConfiguration: 6-axis  \nDeployment: Modular\n\nInclude:\n\n- hero\n- product overview\n- technical specifications\n- three capabilities\n- deployment/process section\n- final contact CTA\n\n### Direction\n\nDo not imitate a conventional robotics or SaaS website.\n\nThe product and its real specifications should become part of the visual architecture.\n\nUse technical graphics only where they communicate actual supplied information.\n\nDo not invent additional specifications, certifications, performance claims, customers, statistics, coordinates, or operational data.\n\n### Evaluation target\n\nThis is SYSTEM//FORM operating on its natural subject matter.\n\nThe result should demonstrate the design system without relying on generic futuristic, cyberpunk, or industrial-tech tropes.",
+      "notes": "",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-01",
+        "industrial-robotics"
+      ],
+      "status": "Published",
+      "score": null,
+      "source": "/specimens/source/45f2b64e.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [
+        "/specimens/assets/45f2b64e/kinetic_foundry_hero_1787607324325.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "kinetic_foundry_hero_1787607324325.jpg",
+          "to": "../assets/45f2b64e/kinetic_foundry_hero_1787607324325.webp"
+        }
+      ],
+      "image": "/specimens/images/45f2b64e.webp"
+    },
+    {
+      "id": "95395a7a",
+      "title": "Northline Coffee",
+      "model": "ox-alpha",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page website for **NORTHLINE COFFEE**, a fictional independent specialty coffee roaster.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**NORTHLINE COFFEE**\n\n**Coffee with a known origin.**\n\nFeatured release:\n\n**LAS FLORES / 04**\n\nOrigin: Huila, Colombia  \nProducer: Las Flores  \nProcess: Washed  \nVariety: Caturra  \nAltitude: 1,850 MASL  \nRoast: Light\n\nTasting notes:\n\nRed apple / caramel / citrus\n\nInclude:\n\n- hero\n- featured coffee\n- origin information\n- roasting philosophy\n- three available coffee offerings\n- shop CTA\n\nFor the other two coffee offerings, use clearly marked placeholder content rather than inventing factual origins or specifications.\n\n### Direction\n\nDo not make the company feel industrial.\n\nDo not use factory, machine, robotics, diagnostic, system-status, engineering, or manufacturing language simply to satisfy the design style.\n\nFind SYSTEM//FORM inside the **real informational structure of coffee**: origin, process, variety, altitude, roast, product, and provenance.\n\nAvoid generic specialty-coffee minimalism.\n\n### Evaluation target\n\nIf SYSTEM//FORM is truly transferable, this should remain recognizably SYSTEM//FORM while feeling unquestionably like a coffee brand.",
+      "notes": "SOURCE HOLD: original referenced files were not available in the supplied kit; no substitute was used. Missing original image filenames: northline_coffee_hero_1787607333368.jpg, coffee_placeholder_bag_1787608375934.jpg, coffee_placeholder_beans_1787608384766.jpg.",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-02",
+        "coffee-roaster"
+      ],
+      "status": "Ready",
+      "score": null,
+      "source": "/specimens/source/95395a7a.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T18:43:00.553Z",
+      "assets": [],
+      "assetMap": [],
+      "favorite": false,
+      "image": "/specimens/images/95395a7a.webp"
+    },
+    {
+      "id": "11e9a798",
+      "title": "Great Lakes Industrial Archive",
+      "model": "ox-alpha",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a homepage for **THE GREAT LAKES INDUSTRIAL ARCHIVE**, a fictional nonprofit archive preserving documents, photographs, oral histories, and physical artifacts related to Great Lakes manufacturing history.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Required content\n\n**THE GREAT LAKES INDUSTRIAL ARCHIVE**\n\n**Industry remembered through the people who built it.**\n\nCollections:\n\nPhotographs — 18,420 records  \nDocuments — 7,860 records  \nOral Histories — 614 records  \nPhysical Objects — 1,205 records\n\nEstablished: 1987\n\nInclude:\n\n- institutional hero\n- collection overview\n- featured archive object\n- research/access information\n- preservation mission\n- visit/contact CTA\n\nUse placeholder labeling for any featured object's details that have not been supplied.\n\n### Direction\n\nUse SYSTEM mode as the primary expression.\n\nThis should feel scholarly, archival, contemporary, and authoritative—not like robotics branding.\n\nAvoid excessive signal colors, fake measurements, machinery diagrams, fake catalog identifiers, and unnecessary technical decoration.\n\nAllow typography, information organization, proportion, rules, and negative space to carry most of the identity.\n\n### Evaluation target\n\nThis tests whether SYSTEM//FORM can become restrained without disappearing.",
+      "notes": "SOURCE HOLD: original referenced files were not available in the supplied kit; no substitute was used. Missing original image filenames: archive_hero_building_1787608393570.jpg.",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-03",
+        "civic-archive"
+      ],
+      "status": "Ready",
+      "score": null,
+      "source": "/specimens/source/11e9a798.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [],
+      "assetMap": []
+    },
+    {
+      "id": "a9d4058e",
+      "title": "SIGNAL/26",
+      "model": "ox-alpha",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a promotional landing page for **SIGNAL/26**, a fictional two-day independent electronic music festival.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Event information\n\n**SIGNAL/26**\n\nOctober 16–17, 2026  \nDetroit, Michigan\n\nFriday:\n\n21:00 — MARA VOSS  \n22:30 — STATIC FIELD  \n00:15 — NULL/SET\n\nSaturday:\n\n20:30 — FORMANT  \n22:00 — LENA ARC  \n23:45 — PUBLIC MEMORY\n\nTwo nights. Six artists. One room.\n\nInclude:\n\n- dominant festival hero\n- complete schedule\n- artist lineup\n- venue-information area using only the supplied location\n- ticket CTA\n- event-information footer\n\n### Direction\n\nUse SIGNAL mode as the primary expression.\n\nTreat schedule, sequence, time, date, lineup, and typography as the informational system.\n\nBe aggressive with scale and composition.\n\nDo not turn it into a fake computer terminal, nightclub cyberpunk interface, or futuristic HUD.\n\nDo not invent ticket prices, venue names, sponsors, addresses, or additional event details.\n\n### Evaluation target\n\nThis tests whether SYSTEM//FORM can become highly expressive while retaining information integrity and structural discipline.",
+      "notes": "SOURCE HOLD: original referenced files were not available in the supplied kit; no substitute was used.",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-04",
+        "music-festival"
+      ],
+      "status": "Ready",
+      "score": null,
+      "source": "/specimens/source/a9d4058e.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T17:08:20.872Z",
+      "assets": [
+        "/specimens/assets/a9d4058e/signal_festival_hero_1787607352874.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "signal_festival_hero_1787607352874.jpg",
+          "to": "../assets/a9d4058e/signal_festival_hero_1787607352874.webp"
+        }
+      ]
+    },
+    {
+      "id": "c97dbdee",
+      "title": "FIELDNOTE / DAILY 01",
+      "model": "ox-alpha",
+      "skill": "SYSTEM//FORM",
+      "prompt": "Create a single-page website for **FIELDNOTE**, a fictional personal notebook company.\n\nUse the supplied SYSTEM//FORM skill as the governing design system.\n\n### Product\n\n**FIELDNOTE / DAILY 01**\n\nA5 notebook  \n192 pages  \nDot grid  \n100 gsm paper  \nLay-flat binding  \nSoft-touch cover  \nMade in Japan\n\nAvailable colors:\n\nBlack  \nBone  \nSafety Orange\n\nInclude:\n\n- hero\n- product presentation\n- specifications\n- interior/page-system explanation\n- available colors\n- purchase CTA\n\n### Critical constraint\n\nDo **not** use any of the following:\n\n- monospace typography\n- orange as the primary accent\n- halftone\n- grid backgrounds\n- registration marks\n- crosshairs\n- measurement ticks\n- fake coordinates\n- brackets around labels\n- fake status information\n- engineering diagrams\n- warning stripes\n- technical-interface styling\n\nYou may still use the supplied factual specifications as content.\n\n### Objective\n\nProduce a design that remains unmistakably governed by SYSTEM//FORM through:\n\n- hierarchy\n- scale tension\n- spatial organization\n- functional division\n- information encoding\n- controlled asymmetry\n- negative space\n- typography\n- deliberate interruption\n\n### Evaluation target\n\nThis is the critical test.\n\nIf the result stops feeling like SYSTEM//FORM because its familiar surface ingredients were prohibited, the skill has not yet proven its underlying grammar.\n\nDo not compensate by finding visual substitutes for the prohibited ingredients.\n\nSolve the composition structurally.",
+      "notes": "SOURCE HOLD: original referenced files were not available in the supplied kit; no substitute was used. Missing original image filenames: fieldnote_notebook_1787607362960.jpg.",
+      "date": "",
+      "tags": [
+        "system-form",
+        "test-05",
+        "imitation-trap"
+      ],
+      "status": "Ready",
+      "score": null,
+      "source": "/specimens/source/c97dbdee.html",
+      "createdAt": "2026-08-29T17:08:20.872Z",
+      "updatedAt": "2026-08-29T18:44:08.419Z",
+      "assets": [],
+      "assetMap": [],
+      "favorite": false,
+      "image": "/specimens/images/c97dbdee.webp"
     }
   ],
-  "updatedAt": "2026-08-28T01:28:21.409Z"
+  "updatedAt": "2026-08-29T18:53:07.658Z"
 }

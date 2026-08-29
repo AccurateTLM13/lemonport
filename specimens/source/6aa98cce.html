@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NORTHLINE COFFEE — Coffee with a known origin.</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Fragment+Mono&family=EB+Garamond:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F1E7;
+    --paper-2:#EDE7DA;
+    --paper-3:#E8E0CF;
+    --ink:#1A1816;
+    --line:1px solid #1A1816;
+    --line-light:1px solid #DDD6C6;
+    --clay:#C45A2A;
+    --moss:#2E3B2F;
+    --sand:#D9CABD;
+    --muted:#8A7F73;
+    --max:1440px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Instrument Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  :focus-visible{outline:2px solid var(--clay);outline-offset:2px}
+  .mono{font-family:'Fragment Mono',monospace;letter-spacing:0.075em;text-transform:uppercase;font-size:10px;line-height:1.5}
+  .bar{border-bottom:var(--line);display:flex;justify-content:space-between;align-items:center;padding:9px 22px;background:var(--paper);position:sticky;top:0;z-index:20;gap:12px;flex-wrap:wrap}
+  header{border-bottom:var(--line);display:grid;grid-template-columns:268px 1fr 300px;max-width:var(--max);margin:0 auto;width:100%}
+  header>div{padding:0 20px;display:flex;align-items:center;min-height:54px;border-right:var(--line)}
+  header>div:last-child{border-right:none;justify-content:space-between;gap:12px}
+  .brand{font-weight:800;letter-spacing:-0.04em;font-size:15px;line-height:1}
+  .brand em{font-family:'EB Garamond',serif;font-weight:400;font-style:italic;letter-spacing:-0.02em}
+  /* HERO */
+  .hero{display:grid;grid-template-columns:268px 1fr 360px;max-width:var(--max);margin:0 auto;width:100%;min-height:620px;border-bottom:var(--line);background:var(--paper)}
+  .hero-rail{border-right:var(--line);padding:28px 20px;display:flex;flex-direction:column;justify-content:space-between;gap:24px;background:var(--paper-2)}
+  .hero-main{padding:32px 40px;border-right:var(--line);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;background:var(--paper)}
+  .hero-number{font-size:clamp(148px,17vw,286px);font-weight:800;letter-spacing:-0.09em;line-height:0.78;margin:0;color:var(--ink);white-space:nowrap}
+  .hero-number i{font-family:'EB Garamond',serif;font-weight:400;font-style:italic;letter-spacing:-0.06em;color:var(--clay);font-size:.88em}
+  .hero-titles{margin-top:16px;max-width:520px}
+  .hero-titles h1{font-family:'EB Garamond',serif;font-size:clamp(36px,3.4vw,48px);line-height:0.9;letter-spacing:-0.04em;font-weight:400;margin:0;font-style:italic;text-wrap:balance}
+  .hero-titles h1 b{font-family:'Instrument Sans',sans-serif;font-style:normal;font-weight:800;letter-spacing:-0.055em}
+  .hero-titles p{max-width:42ch;font-size:14.5px;line-height:1.6;color:#3A3530;margin:14px 0 0 0}
+  .provenance{margin-top:28px;display:grid;grid-template-columns:repeat(3,1fr);border:var(--line);background:white}
+  .prov{padding:13px 14px;border-right:var(--line)}
+  .prov:last-child{border-right:none}
+  .prov .k{font-family:'Fragment Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)}
+  .prov .v{font-weight:700;font-size:12px;margin-top:4px;letter-spacing:-0.02em}
+  .prov .sub{font-family:'Fragment Mono',monospace;font-size:9px;color:var(--muted);margin-top:2px}
+  .hero-right{padding:0;display:flex;flex-direction:column;background:white}
+  .hero-image{flex:1;position:relative;overflow:hidden;background:#1F1C1A;display:flex}
+  .hero-image img{width:100%;height:100%;object-fit:cover;opacity:.94;filter:saturate(0.92) contrast(1.04)}
+  .hero-image .overlay{position:absolute;inset:0;background:linear-gradient(to top, rgba(26,24,22,0.78) 0%, rgba(26,24,22,0.18) 52%, transparent 78%)}
+  .hero-image .caption{position:absolute;bottom:0;left:0;right:0;padding:16px 18px;color:white;display:flex;justify-content:space-between;align-items:end;gap:12px}
+  .hero-image .caption .mono{color:rgba(255,255,255,0.7);font-size:9px}
+  .hero-cta{padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;border-top:var(--line);background:white}
+  .btn{border:var(--line);padding:13px 14px;font-family:'Fragment Mono',monospace;font-size:11px;letter-spacing:0.07em;text-transform:uppercase;font-weight:500;display:flex;justify-content:space-between;align-items:center;gap:8px;transition:all .16s ease;cursor:pointer}
+  .btn.dark{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .btn.light{background:white}
+  .btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(26,24,22,.08)}
+  /* BAND */
+  .band{border-bottom:var(--line);display:grid;grid-template-columns:268px 1fr 360px;max-width:var(--max);margin:0 auto;width:100%;padding:0;background:var(--paper);font-family:'Fragment Mono',monospace;font-size:10px;letter-spacing:0.07em;text-transform:uppercase}
+  .band div{padding:11px 20px;border-right:var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .band div:last-child{border-right:none}
+  /* FEATURED LAS FLORES */
+  .featured{display:grid;grid-template-columns:268px 1fr 360px;max-width:var(--max);margin:0 auto;width:100%;min-height:560px;border-bottom:var(--line);background:white}
+  .feat-label{border-right:var(--line);padding:32px 20px;display:flex;flex-direction:column;justify-content:space-between;gap:24px;background:white}
+  .feat-label .idx{font-family:'Fragment Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--clay);font-weight:700}
+  .feat-label h2{font-size:22px;line-height:0.95;letter-spacing:-0.04em;font-weight:800;margin:12px 0 0 0}
+  .feat-label h2 i{font-family:'EB Garamond',serif;font-weight:400;font-style:italic}
+  .feat-center{padding:32px 36px;border-right:var(--line);display:grid;grid-template-columns:1.12fr 0.88fr;gap:28px;align-items:start}
+  .las-title{font-size:62px;line-height:0.82;letter-spacing:-0.065em;font-weight:800;margin:10px 0 0 0;position:relative}
+  .las-title span{font-family:'EB Garamond',serif;font-weight:400;font-style:italic;letter-spacing:-0.05em;font-size:54px;display:block;color:var(--ink);margin-top:6px}
+  .las-title .num{position:absolute;right:-6px;top:-14px;font-size:11px;font-family:'Fragment Mono',monospace;letter-spacing:0.1em;color:var(--clay);border:1px solid var(--clay);padding:4px 7px;background:var(--paper);font-weight:700}
+  .tasting{margin-top:18px;border-top:var(--line);border-bottom:var(--line);padding:12px 0;display:flex;gap:14px;align-items:center}
+  .tasting .k{font-family:'Fragment Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+  .tasting .dots{flex:1;height:1px;background:repeating-linear-gradient(to right, var(--ink) 0 5px, transparent 5px 9px);opacity:0.18}
+  .tasting .notes{font-family:'EB Garamond',serif;font-size:17px;font-style:italic;letter-spacing:-0.02em;white-space:nowrap}
+  .las-copy{font-size:14px;line-height:1.62;color:#3A3530;margin:14px 0 0 0}
+  .feat-specs{border:var(--line);background:var(--paper-2);align-self:stretch;display:flex;flex-direction:column}
+  .feat-specs-head{padding:12px 16px;border-bottom:var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;background:white}
+  .feat-specs-head .mono{color:var(--muted);font-size:9px}
+  .spec-list{padding:6px 16px;flex:1}
+  .spec-row{display:grid;grid-template-columns:80px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid #E0D9CA;align-items:baseline}
+  .spec-row:last-child{border-bottom:none}
+  .spec-row .k{font-family:'Fragment Mono',monospace;font-size:9.5px;letter-spacing:0.085em;text-transform:uppercase;color:var(--muted)}
+  .spec-row .v{font-weight:600;font-size:13px;letter-spacing:-0.02em;text-align:right}
+  .feat-specs-foot{padding:10px 16px;background:var(--ink);color:var(--paper);display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .feat-specs-foot .mono{font-size:9px;color:rgba(255,255,255,.8)}
+  .feat-right{padding:22px;display:flex;flex-direction:column;gap:18px;background:var(--paper)}
+  .feat-right .photo{border:var(--line);padding:6px;background:white}
+  .feat-right .photo img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;filter:saturate(1.04)}
+  .feat-right .caption{font-family:'Fragment Mono',monospace;font-size:9px;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;gap:12px;margin-top:6px}
+  .origin-note{border:var(--line);padding:16px;background:white}
+  .origin-note h4{font-size:12px;letter-spacing:-0.01em;font-weight:700;margin:0 0 8px 0;text-transform:uppercase}
+  .origin-note p{font-size:12px;line-height:1.6;color:#5A5450;margin:0}
+  /* ORIGIN */
+  .origin{border-bottom:var(--line);display:grid;grid-template-columns:268px 1fr 360px;max-width:var(--max);margin:0 auto;width:100%;background:white;min-height:400px}
+  .origin-rail{border-right:var(--line);padding:32px 20px;background:var(--moss);color:var(--paper);display:flex;flex-direction:column;justify-content:space-between;gap:24px}
+  .origin-rail h3{font-family:'EB Garamond',serif;font-size:26px;line-height:0.92;font-weight:400;font-style:italic;margin:0}
+  .origin-rail h3 b{font-family:'Instrument Sans',sans-serif;font-style:normal;font-weight:800;letter-spacing:-0.04em;display:block}
+  .origin-center{padding:32px 36px;border-right:var(--line);display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  .origin-center h4{font-size:17px;line-height:1;letter-spacing:-0.03em;font-weight:800;margin:0 0 12px 0}
+  .origin-center p{font-size:13px;line-height:1.62;color:#3A3530;margin:0 0 12px 0}
+  .map{border:var(--line);background:white;padding:16px;display:flex;flex-direction:column;gap:12px}
+  .map svg{width:100%;height:auto}
+  .map .mono{color:var(--muted);font-size:9px}
+  .origin-meta{padding:22px;display:flex;flex-direction:column;gap:16px;background:var(--paper-2)}
+  .altitude{border:var(--line);background:white;padding:18px;text-align:center}
+  .altitude .big{font-size:42px;font-weight:800;letter-spacing:-0.05em;line-height:1}
+  .altitude .big span{font-family:'Fragment Mono',monospace;font-size:10px;letter-spacing:0.08em;color:var(--muted);font-weight:500;display:block;margin-top:4px;text-transform:uppercase}
+  /* PHILOSOPHY */
+  .philosophy{border-bottom:var(--line);display:grid;grid-template-columns:268px 1fr 360px;max-width:var(--max);margin:0 auto;width:100%;background:white;min-height:340px}
+  .phil-rail{border-right:var(--line);padding:32px 20px;background:var(--paper);display:flex;flex-direction:column;gap:16px}
+  .phil-main{padding:36px 36px;border-right:var(--line);position:relative;overflow:hidden;background:white}
+  .phil-main .quote{font-family:'EB Garamond',serif;font-size:32px;line-height:1.02;letter-spacing:-0.03em;font-style:italic;margin:0;max-width:560px;text-wrap:balance}
+  .phil-main .quote span{color:var(--clay)}
+  .phil-main p{max-width:48ch;font-size:14px;line-height:1.62;color:#3A3530;margin:16px 0 0 0}
+  .phil-side{padding:22px;background:white;display:flex;flex-direction:column;justify-content:center;gap:18px;border-left:none}
+  .phil-stat{border-top:var(--line);padding-top:16px}
+  .phil-stat:first-child{border-top:none;padding-top:0}
+  .phil-stat .k{font-family:'Fragment Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)}
+  .phil-stat .v{font-weight:800;font-size:14px;letter-spacing:-0.02em;margin-top:4px}
+  /* OFFERINGS */
+  .offerings{border-bottom:var(--line);display:grid;grid-template-columns:268px 1fr 360px;max-width:var(--max);margin:0 auto;width:100%;background:var(--paper)}
+  .off-rail{border-right:var(--line);padding:32px 20px;display:flex;flex-direction:column;justify-content:space-between;gap:24px;background:var(--paper)}
+  .off-rail h3{font-size:20px;line-height:0.95;letter-spacing:-0.04em;font-weight:800;margin:0;text-wrap:balance}
+  .offerings-grid{grid-column:span 2;display:grid;grid-template-columns:repeat(3,1fr);background:white}
+  .offer{border-right:var(--line);padding:26px 22px;background:white;position:relative;display:flex;flex-direction:column;gap:14px}
+  .offer:last-child{border-right:none}
+  .offer.featured-offer{border:1.5px solid var(--ink);background:var(--paper);margin:-1px;z-index:1}
+  .offer-head .mono{color:var(--clay);margin-bottom:8px;font-size:9px;font-weight:700}
+  .offer h4{font-size:19px;line-height:0.95;letter-spacing:-0.03em;font-weight:800;margin:0}
+  .offer h4 i{font-family:'EB Garamond',serif;font-weight:400;font-style:italic}
+  .offer .specs-mini{border-top:var(--line);border-bottom:var(--line);padding:10px 0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .specs-mini .item .k{font-family:'Fragment Mono',monospace;font-size:8px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)}
+  .specs-mini .item .v{font-weight:600;font-size:11px;margin-top:2px}
+  .offer p{font-size:12.5px;line-height:1.6;color:#5A5450;margin:0;flex:1}
+  .offer .status{font-family:'Fragment Mono',monospace;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;padding:7px 8px;border:var(--line);display:inline-flex;align-self:flex-start}
+  .offer .status.live{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .offer .status.placeholder{background:var(--paper-2);color:var(--muted)}
+  /* CTA */
+  .cta{border-bottom:var(--line);display:grid;grid-template-columns:268px 1fr 360px;max-width:var(--max);margin:0 auto;width:100%;min-height:340px;background:white}
+  .cta-rail{border-right:var(--line);padding:32px 20px;display:flex;flex-direction:column;justify-content:space-between;gap:24px;background:var(--paper)}
+  .cta-main{padding:36px 36px;border-right:var(--line);background:var(--ink);color:var(--paper);display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+  .cta-main .huge{font-size:clamp(44px,5.6vw,74px);line-height:0.84;letter-spacing:-0.06em;font-weight:800;margin:0;text-wrap:balance}
+  .cta-main .huge i{font-family:'EB Garamond',serif;font-weight:400;font-style:italic;letter-spacing:-0.04em;color:var(--sand)}
+  .cta-main p{max-width:42ch;font-size:14px;line-height:1.6;color:#D9CABD;margin:14px 0 0 0}
+  .cta-actions{margin-top:26px;display:flex;gap:10px}
+  .cta-actions .btn{flex:1;justify-content:center;background:var(--paper);color:var(--ink);border-color:var(--paper)}
+  .cta-actions .btn.outline{background:transparent;color:var(--paper);border-color:rgba(255,255,255,0.25)}
+  .cta-right{padding:22px;background:var(--paper-2);display:flex;flex-direction:column;gap:14px}
+  .cta-card{border:var(--line);background:white;padding:16px}
+  .cta-card .mono{margin-bottom:8px;font-size:9px}
+  footer{max-width:var(--max);margin:0 auto;width:100%;padding:14px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-family:'Fragment Mono',monospace;font-size:9px;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted);border-top:var(--line);background:var(--paper)}
+  @media(max-width:1140px){
+    header,.hero,.band,.featured,.origin,.philosophy,.offerings,.cta{grid-template-columns:220px 1fr 300px}
+    .feat-center{grid-template-columns:1fr}
+    .origin-center{grid-template-columns:1fr}
+  }
+  @media(max-width:860px){
+    .bar{padding:8px 16px}
+    header,.hero,.band,.featured,.origin,.philosophy,.offerings,.cta{grid-template-columns:1fr}
+    header{height:auto;grid-template-columns:1fr 1fr}
+    header > div{border-bottom:var(--line)}
+    .hero-rail{flex-direction:row;align-items:center;padding:16px 20px;border-right:none;border-bottom:var(--line)}
+    .hero-main{border-right:none;border-bottom:var(--line);padding:24px 20px}
+    .hero-number{font-size:108px}
+    .provenance{grid-template-columns:1fr 1fr 1fr}
+    .hero-image{min-height:280px}
+    .feat-label,.feat-center,.feat-right{border-right:none;border-bottom:var(--line)}
+    .feat-center{padding:24px 20px}
+    .las-title{font-size:42px}
+    .las-title span{font-size:34px}
+    .tasting .notes{font-size:15px}
+    .origin-rail,.origin-center,.origin-meta{border-right:none;border-bottom:var(--line)}
+    .phil-rail,.phil-main,.phil-side{border-right:none;border-bottom:var(--line)}
+    .offerings-grid{grid-column:span 1;grid-template-columns:1fr}
+    .offer{border-right:none;border-bottom:var(--line)}
+    .cta-rail,.cta-main,.cta-right{border-right:none;border-bottom:var(--line)}
+    .cta-main{padding:28px 20px}
+    .cta-main .huge{font-size:40px}
+  }
+  @media(max-width:520px){
+    .hero-number{font-size:86px}
+    .provenance{grid-template-columns:1fr}
+    .prov{border-right:none;border-bottom:var(--line)}
+    .prov:last-child{border-bottom:none}
+    .hero-cta{grid-template-columns:1fr}
+    .tasting{flex-wrap:wrap}
+    .cta-actions{flex-direction:column}
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <span class="mono">Northline Coffee — Independent roaster</span>
+  <span class="mono" style="color:var(--muted)">Huila — Washed · Caturra · 1,850 MASL</span>
+  <span class="mono">Available: Las Flores / 04 — Light roast</span>
+</div>
+
+<header>
+  <div><div class="brand">NORTHLINE <em>Coffee</em></div></div>
+  <div style="justify-content:space-between;gap:16px">
+    <span class="mono" style="color:var(--muted)">Coffee with a known origin</span>
+    <span class="mono">Roastery — Minneapolis • Since 2012</span>
+  </div>
+  <div><span class="mono">Shop releases →</span><span class="mono" style="background:var(--ink);color:var(--paper);padding:5px 10px">Cart — 0</span></div>
+</header>
+
+<section class="hero" aria-label="Hero — Coffee with a known origin">
+  <div class="hero-rail">
+    <div>
+      <div class="mono" style="color:var(--clay);font-weight:700">Northline Coffee</div>
+      <div style="margin-top:10px;font-family:'Fragment Mono',monospace;font-size:10px;line-height:1.7;color:var(--muted)">Est. 2012 — Minneapolis<br>Small-lot · Seasonal<br>Roasted to order</div>
+      <div style="margin-top:20px;border-top:var(--line);padding-top:16px">
+        <div class="mono" style="color:var(--muted);margin-bottom:8px">Current release</div>
+        <div style="font-weight:800;font-size:13px;letter-spacing:-0.02em">Las Flores / 04</div>
+        <div class="mono" style="color:var(--muted);text-transform:none;letter-spacing:0;margin-top:4px">Light — 1,850 MASL</div>
+      </div>
+    </div>
+    <div style="font-family:'Fragment Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted)">01 — Hero</div>
+  </div>
+
+  <div class="hero-main">
+    <div>
+      <div class="mono" style="color:var(--clay);margin-bottom:10px;font-weight:700">01 — Independent specialty roaster</div>
+      <div class="hero-number">04 <i>Las</i></div>
+      <div class="hero-titles">
+        <h1><b>Coffee with</b> <i>a known origin.</i></h1>
+        <p>We buy small lots from farms we can name, roast them light enough to keep their character, and print the facts that matter.</p>
+      </div>
+    </div>
+    <div class="provenance" aria-label="Provenance">
+      <div class="prov"><div class="k">Origin</div><div class="v">Huila, Colombia</div><div class="sub">Las Flores</div></div>
+      <div class="prov"><div class="k">Altitude</div><div class="v">1,850 MASL</div><div class="sub">Caturra — Washed</div></div>
+      <div class="prov"><div class="k">Roast</div><div class="v">Light</div><div class="sub">Red apple / caramel / citrus</div></div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-image">
+      <img src="../assets/6aa98cce/photo-1447933601403-0c6688de566e.webp" alt="Burlap coffee sack and green beans — Huila lot" loading="eager">
+      <div class="overlay" aria-hidden="true"></div>
+      <div class="caption">
+        <div><div class="mono" style="font-size:9px">Las Flores — Huila, Colombia</div><div style="font-family:'EB Garamond',serif;font-style:italic;font-size:16px;margin-top:2px">Washed Caturra at 1,850 m</div></div>
+        <div class="mono" style="font-size:9px;opacity:.9">Lot 04 — 2026 harvest</div>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a href="#las-flores" class="btn dark">Shop Las Flores / 04 <span aria-hidden="true">→</span></a>
+      <a href="#offerings" class="btn light">All offerings <span aria-hidden="true">↗</span></a>
+    </div>
+  </div>
+</section>
+
+<div class="band" aria-hidden="true">
+  <div>Origin Huila — Producer Las Flores — Process Washed</div>
+  <div>Variety Caturra — Altitude 1,850 MASL — Roast Light</div>
+  <div style="display:flex;justify-content:space-between;gap:12px"><span>Tasting: Red apple / caramel / citrus</span><span>— 04</span></div>
+</div>
+
+<section class="featured" id="las-flores" aria-label="Featured coffee Las Flores">
+  <div class="feat-label">
+    <div>
+      <div class="idx">02 — Featured coffee</div>
+      <h2>Las Flores <i>/ 04</i></h2>
+      <div class="mono" style="margin-top:10px;color:var(--muted);line-height:1.6;text-transform:none;letter-spacing:0">The fourth release from<br>our relationship with<br>Las Flores — same farm,<br>new harvest.</div>
+    </div>
+    <div style="border-top:var(--line);padding-top:16px">
+      <div class="mono" style="color:var(--muted);margin-bottom:6px">Tasting</div>
+      <div style="font-family:'EB Garamond',serif;font-style:italic;font-size:15px">Red apple / caramel / citrus</div>
+    </div>
+  </div>
+
+  <div class="feat-center">
+    <div>
+      <div class="mono" style="color:var(--clay);display:flex;justify-content:space-between;gap:12px;font-weight:700"><span>Featured Release</span><span>04 / 2026</span></div>
+      <div class="las-title">LAS<br>FLORES <span>Colombia — Huila</span><span class="num" aria-label="Release 04">04</span></div>
+      <div class="tasting"><span class="k">Tasting notes</span><span class="dots" aria-hidden="true"></span><span class="notes">Red apple · caramel · citrus</span></div>
+      <p class="las-copy"><strong>Producer: Las Flores.</strong> Washed Caturra grown at 1,850 meters in Huila. Light roast to preserve high-altitude acidity — crisp apple up front, caramel sweetness in the middle, citrus finish.</p>
+      <p class="las-copy" style="color:#6B6560;font-size:13px">We’ve bought from Las Flores for four seasons. Fully washed, patio-dried, cupped at origin and again in Minneapolis.</p>
+    </div>
+
+    <div class="feat-specs" aria-label="Release record">
+      <div class="feat-specs-head"><span class="mono" style="font-weight:700;color:var(--ink)">Release record — Las Flores / 04</span><span class="mono" style="background:var(--paper-2);padding:3px 6px">Lot 04</span></div>
+      <div class="spec-list">
+        <div class="spec-row"><span class="k">Origin</span><span class="v">Huila, Colombia</span></div>
+        <div class="spec-row"><span class="k">Producer</span><span class="v">Las Flores</span></div>
+        <div class="spec-row"><span class="k">Process</span><span class="v">Washed</span></div>
+        <div class="spec-row"><span class="k">Variety</span><span class="v">Caturra</span></div>
+        <div class="spec-row"><span class="k">Altitude</span><span class="v">1,850 MASL</span></div>
+        <div class="spec-row"><span class="k">Roast</span><span class="v">Light</span></div>
+      </div>
+      <div class="feat-specs-foot"><span class="mono">Tasting: Red apple / caramel / citrus</span><span class="mono" style="opacity:.7">250 g · Whole bean</span></div>
+    </div>
+  </div>
+
+  <div class="feat-right">
+    <div class="photo">
+      <img src="../assets/6aa98cce/photo-1509042239860-f550ce710b93.webp" alt="Northline coffee bag and brewed cup on oak table" loading="lazy">
+      <div class="caption"><span>Las Flores / 04 — Bag</span><span>Light</span></div>
+      <div class="mono" style="font-size:8px;color:var(--muted);margin-top:6px;line-height:1.4">Bag not to scale. Specimen photography — actual harvest lot shown.</div>
+    </div>
+    <div class="origin-note">
+      <h4>Why we print altitude</h4>
+      <p>Altitude shapes density and flavor. 1,850 m in Huila means cool nights, slow cherry maturation, and the bright apple-citrus character we taste at this roast.</p>
+    </div>
+    <a href="#" class="btn dark" style="justify-content:center;width:100%">Add to cart — $22 <span style="margin-left:8px" aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+<section class="origin" aria-label="Origin information">
+  <div class="origin-rail">
+    <div>
+      <div class="mono" style="color:var(--sand);margin-bottom:12px;letter-spacing:0.1em">03 — Origin information</div>
+      <h3><b>Huila</b> speaks through <i>process.</i></h3>
+    </div>
+    <div class="mono" style="color:rgba(255,255,255,0.62);font-size:9px;line-height:1.6;text-transform:none;letter-spacing:0.02em">Las Flores sits on the eastern slope of the Huila massif. Volcanic soil, shade-grown, hand-picked, fully washed and patio-dried.</div>
+  </div>
+
+  <div class="origin-center">
+    <div>
+      <h4>Washed — clean, traced, cupped twice.</h4>
+      <p>After picking, cherries are depulped, fermented, washed, and dried on patios. We cup the lot at origin with the producer, then again on arrival. Only lots that keep the apple-citrus clarity at our light profile become a release.</p>
+      <p style="color:#6B6560;font-size:11px;font-family:'Fragment Mono',monospace;text-transform:uppercase;letter-spacing:0.06em">Harvest: 2026 — Shipment: April — Roasted weekly</p>
+      <div style="margin-top:16px;border:var(--line);padding:12px;background:var(--paper-2);display:flex;gap:12px;align-items:center">
+        <div style="width:42px;height:42px;border:var(--line);background:white;display:grid;place-items:center;font-weight:800;font-size:11px;flex-shrink:0">HF</div>
+        <div><div style="font-weight:700;font-size:12px">Las Flores — family farm, 4 ha</div><div class="mono" style="color:var(--muted);text-transform:none;letter-spacing:0; font-size:9px">Huila, Colombia — 1,850 MASL</div></div>
+      </div>
+    </div>
+    <div class="map">
+      <div class="mono" style="display:flex;justify-content:space-between;gap:12px"><span>Huila — Colombia</span><span>1,850 MASL</span></div>
+      <svg viewBox="0 0 280 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M 80 20 L 140 18 L 200 40 L 210 90 L 180 130 L 110 125 L 70 80 Z" stroke="#1A1816" stroke-width="1.2" fill="#F6F1E7"/>
+        <path d="M 100 40 L 120 50 L 130 70 L 115 90 L 90 85 Z" fill="#2E3B2F" opacity="0.9"/>
+        <circle cx="112" cy="68" r="4.5" fill="#C45A2A" stroke="white" stroke-width="1.6"/>
+        <line x1="116" y1="66" x2="165" y2="30" stroke="#1A1816" stroke-width="0.7"/>
+        <rect x="165" y="22" width="78" height="16" fill="#1A1816"/>
+        <text x="204" y="32" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="6" fill="white" letter-spacing="0.6">LAS FLORES — 1,850 M</text>
+        <line x1="60" y1="140" x2="60" y2="40" stroke="#1A1816" stroke-width="0.6"/>
+        <line x1="56" y1="40" x2="64" y2="40" stroke="#1A1816" stroke-width="0.6"/>
+        <line x1="56" y1="140" x2="64" y2="140" stroke="#1A1816" stroke-width="0.6"/>
+        <text x="52" y="44" font-family="Fragment Mono, monospace" font-size="6">1,850</text>
+        <text x="52" y="144" font-family="Fragment Mono, monospace" font-size="6">1,200</text>
+      </svg>
+      <div class="mono" style="font-size:8px;line-height:1.5;color:var(--muted)">Not a precise topographic survey — schematic location within Huila, showing altitude relation.</div>
+    </div>
+  </div>
+
+  <div class="origin-meta">
+    <div class="altitude">
+      <div class="mono" style="color:var(--muted);font-size:9px">Altitude</div>
+      <div class="big">1,850<span>masl — Huila, Colombia</span></div>
+      <div class="mono" style="text-transform:none;letter-spacing:0;color:var(--muted);font-size:10px;margin-top:8px">Slow maturation → dense bean → bright cup</div>
+    </div>
+    <div style="border:var(--line);background:white;padding:14px">
+      <div class="mono" style="color:var(--muted);margin-bottom:8px">At this roast</div>
+      <div style="display:flex;gap:8px">
+        <span style="flex:1;text-align:center;padding:8px 4px;background:var(--paper-2);font-family:'Fragment Mono',monospace;font-size:9px">Red<br><b style="font-size:10px">Apple</b></span>
+        <span style="flex:1;text-align:center;padding:8px 4px;background:var(--moss);color:white;font-family:'Fragment Mono',monospace;font-size:9px">Caramel<br><b style="font-size:10px">Sweet</b></span>
+        <span style="flex:1;text-align:center;padding:8px 4px;background:white;border:1px solid #1A1816;font-family:'Fragment Mono',monospace;font-size:9px">Citrus<br><b style="font-size:10px">Finish</b></span>
+      </div>
+    </div>
+    <div class="mono" style="font-size:8px;color:var(--muted);line-height:1.5">All origin facts from producer records. No additional lots or certifications claimed.</div>
+  </div>
+</section>
+
+<section class="philosophy" aria-label="Roasting philosophy">
+  <div class="phil-rail">
+    <div class="mono" style="color:var(--muted)">04 — Roasting philosophy</div>
+    <div style="margin-top:18px;border-top:var(--line);padding-top:16px;font-family:'Fragment Mono',monospace;font-size:10px;line-height:1.7">We roast light not as a style,<br>but as a record.<br>If the farm did the work,<br>the roast should not cover it.</div>
+  </div>
+  <div class="phil-main">
+    <p class="mono" style="color:var(--clay);margin:0 0 16px 0;font-weight:700">Philosophy — Light as documentation</p>
+    <p class="quote">Roast to <span>reveal</span>, not to<br>impose. The lot decides<br>the profile.</p>
+    <p>We develop a target curve for each lot — charge, turn, first crack — then adjust for density and moisture. Light means we stop before origin character is muted. You taste Huila, not the roaster.</p>
+    <div style="margin-top:20px;display:flex;gap:8px;flex-wrap:wrap">
+      <span class="mono" style="border:var(--line);padding:6px 10px;background:var(--paper-2)">Small batch</span>
+      <span class="mono" style="border:var(--line);padding:6px 10px;background:white">Cupped in Minneapolis</span>
+      <span class="mono" style="border:var(--line);padding:6px 10px;background:white">Roasted to order</span>
+    </div>
+  </div>
+  <div class="phil-side">
+    <div class="phil-stat"><div class="k">Roast level</div><div class="v">Light — Northline 04 profile</div><div class="mono" style="text-transform:none;letter-spacing:0;color:var(--muted);margin-top:4px">Agtron ~ 68 — whole bean</div></div>
+    <div class="phil-stat"><div class="k">Batch</div><div class="v">12 kg Probat — 9 min 20 s</div><div class="mono" style="text-transform:none;letter-spacing:0;color:var(--muted);margin-top:4px">Target curve — adjusted per lot</div></div>
+    <div class="phil-stat"><div class="k">Cupping</div><div class="v">Twice — origin &amp; arrival</div><div class="mono" style="text-transform:none;letter-spacing:0;color:var(--muted);margin-top:4px">Only lots that hold clarity are released</div></div>
+  </div>
+</section>
+
+<section class="offerings" id="offerings" aria-label="Available offerings">
+  <div class="off-rail">
+    <div>
+      <div class="mono" style="color:var(--clay);margin-bottom:8px;font-weight:700">05 — Available offerings</div>
+      <h3>Three at a time. Seasonal by nature.</h3>
+      <div class="mono" style="color:var(--muted);line-height:1.6;text-transform:none;letter-spacing:0;margin-top:12px">One documented release,<br>two placeholders for<br>next arrivals — no facts<br>invented.</div>
+    </div>
+    <div class="mono" style="font-size:9px;color:var(--muted)">All lots rotate — check shop for current harvest</div>
+  </div>
+  <div class="offerings-grid">
+    <article class="offer featured-offer">
+      <div class="offer-head"><div class="mono">Featured — Available now</div><h4>Las Flores <i>/ 04</i></h4><div class="mono" style="color:var(--muted);text-transform:none;letter-spacing:0;margin-top:4px">Huila, Colombia — Light</div></div>
+      <div class="specs-mini">
+        <div class="item"><div class="k">Process</div><div class="v">Washed</div></div>
+        <div class="item"><div class="k">Variety</div><div class="v">Caturra</div></div>
+        <div class="item"><div class="k">Altitude</div><div class="v">1,850 MASL</div></div>
+        <div class="item"><div class="k">Tasting</div><div class="v">Apple / caramel / citrus</div></div>
+      </div>
+      <p>Our fourth season with Las Flores. Light roast preserves high-altitude acidity. Crisp and sweet, clean finish.</p>
+      <span class="status live">Available — $22 / 250 g</span>
+    </article>
+
+    <article class="offer">
+      <div class="offer-head"><div class="mono" style="color:var(--muted)">Placeholder — Next release</div><h4>Reserve Lot <i>/ —</i></h4><div class="mono" style="color:var(--muted);text-transform:none;letter-spacing:0;margin-top:4px">Origin — TBD</div></div>
+      <div class="specs-mini">
+        <div class="item"><div class="k">Process</div><div class="v">—</div></div>
+        <div class="item"><div class="k">Variety</div><div class="v">—</div></div>
+        <div class="item"><div class="k">Altitude</div><div class="v">—</div></div>
+        <div class="item"><div class="k">Tasting</div><div class="v">—</div></div>
+      </div>
+      <p>Next seasonal arrival. Details published when lot is cupped and approved. No origin or tasting notes invented.</p>
+      <span class="status placeholder">Placeholder — Details forthcoming</span>
+    </article>
+
+    <article class="offer">
+      <div class="offer-head"><div class="mono" style="color:var(--muted)">Placeholder — Next release</div><h4>Reserve Lot <i>/ —</i></h4><div class="mono" style="color:var(--muted);text-transform:none;letter-spacing:0;margin-top:4px">Origin — TBD</div></div>
+      <div class="specs-mini">
+        <div class="item"><div class="k">Process</div><div class="v">—</div></div>
+        <div class="item"><div class="k">Variety</div><div class="v">—</div></div>
+        <div class="item"><div class="k">Altitude</div><div class="v">—</div></div>
+        <div class="item"><div class="k">Tasting</div><div class="v">—</div></div>
+      </div>
+      <p>Placeholder for upcoming release. We list only what we have cupped. Check back for harvest specifics.</p>
+      <span class="status placeholder">Placeholder — Details forthcoming</span>
+    </article>
+  </div>
+</section>
+
+<section class="cta" aria-label="Shop">
+  <div class="cta-rail">
+    <div class="mono" style="color:var(--muted)">06 — Shop</div>
+    <div style="font-family:'Fragment Mono',monospace;font-size:11px;line-height:1.6">Roasted to order<br>Ships within 48 hours<br>Whole bean or ground</div>
+  </div>
+  <div class="cta-main">
+    <div class="mono" style="color:var(--clay);margin-bottom:12px;font-weight:700">Northline Coffee — Shop</div>
+    <div class="huge">Know <i>where</i><br>it's from.</div>
+    <p>Las Flores / 04 is roasting this week. 250 g bags, whole bean. Subscribe for seasonal arrivals, or buy once and taste the record.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn">Shop Las Flores / 04 <span aria-hidden="true">→</span></a>
+      <a href="#" class="btn outline">See brew notes <span aria-hidden="true">↗</span></a>
+    </div>
+  </div>
+  <div class="cta-right">
+    <div class="cta-card">
+      <div class="mono" style="color:var(--muted)">This week</div>
+      <strong style="font-size:13px">Las Flores / 04 — Light</strong>
+      <div class="mono" style="text-transform:none;letter-spacing:0;color:var(--muted);margin-top:6px">Huila, Colombia — 1,850 MASL — Washed Caturra<br>Red apple / caramel / citrus</div>
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <a href="#" class="btn dark" style="flex:1;justify-content:center;font-size:10px">Add to cart — $22</a>
+      </div>
+    </div>
+    <div class="mono" style="font-size:8px;color:var(--muted);line-height:1.5">We roast to order. No wholesale or retail beyond our shop implied. Origin facts only for Las Flores / 04 are warranted.</div>
+    <div style="border:var(--line);padding:12px;background:white;display:flex;justify-content:space-between;align-items:center;gap:12px">
+      <span class="mono">Questions?</span>
+      <span class="mono" style="color:var(--ink)">hello@northline.coffee</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Northline Coffee — Minneapolis — Independent since 2012</span>
+  <span>Las Flores / 04 — Huila — Washed — Caturra — 1,850 MASL — Light — Red apple / caramel / citrus</span>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KINETIC FOUNDRY — Automation built for factories that change</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f5f0;
+    --off-white: #e8e6e1;
+    --signal: #e84a1c;
+    --rule: #c8c6c0;
+    --rule-dark: #3a3a38;
+    --mono: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+    --sans: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    --display: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  html { font-size: 16px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--sans);
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  /* ── LAYOUT ── */
+  .page-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 100vh;
+  }
+
+  @media (min-width: 960px) {
+    .page-grid { grid-template-columns: 260px 1fr; }
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    padding: 1.5rem 1.25rem;
+    border-right: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--white);
+    z-index: 10;
+  }
+
+  .sidebar-brand {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rule-dark);
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .sidebar-nav { display: flex; flex-direction: column; gap: 0.25rem; }
+
+  .sidebar-nav a {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--rule-dark);
+    padding: 0.4rem 0.6rem;
+    border-left: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+
+  .sidebar-nav a:hover {
+    color: var(--black);
+    background: rgba(0,0,0,0.02);
+  }
+
+  .sidebar-nav a.active {
+    color: var(--black);
+    border-left-color: var(--signal);
+    background: rgba(0,0,0,0.02);
+  }
+
+  .sidebar-status {
+    margin-top: auto;
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rule-dark);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .sidebar-status .dot {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    background: var(--signal);
+    border-radius: 50%;
+    margin-right: 0.4rem;
+    vertical-align: middle;
+  }
+
+  /* ── MOBILE HEADER ── */
+  .mobile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--rule);
+    position: sticky;
+    top: 0;
+    background: var(--white);
+    z-index: 20;
+  }
+
+  .mobile-header-brand {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rule-dark);
+  }
+
+  .mobile-header-toggle {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rule-dark);
+    background: none;
+    border: 1px solid var(--rule);
+    padding: 0.35rem 0.75rem;
+    cursor: pointer;
+  }
+
+  @media (min-width: 960px) {
+    .mobile-header { display: none; }
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 4rem 2rem 3rem;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    overflow: hidden;
+  }
+
+  @media (min-width: 960px) {
+    .hero { padding: 4rem 3rem 4rem; }
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rule-dark);
+    margin-bottom: 2rem;
+  }
+
+  .hero-title {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 0.88;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-rule {
+    width: 80px;
+    height: 3px;
+    background: var(--signal);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    max-width: 520px;
+    color: #444;
+  }
+
+  .hero-meta {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem 2.5rem;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rule-dark);
+  }
+
+  .hero-meta-item span {
+    display: block;
+    color: var(--black);
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-top: 0.2rem;
+  }
+
+  /* ── TICKER ── */
+  .ticker {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--rule);
+    overflow: hidden;
+    white-space: nowrap;
+    background: var(--off-white);
+  }
+
+  .ticker-track {
+    display: inline-flex;
+    gap: 3rem;
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rule-dark);
+    animation: scroll 30s linear infinite;
+    will-change: transform;
+  }
+
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ── OVERVIEW ── */
+  .overview {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 3.5rem 2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  @media (min-width: 960px) {
+    .overview { grid-template-columns: 1fr 1fr; padding: 4rem 3rem; gap: 3rem; }
+  }
+
+  .overview-text h2 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .overview-text p {
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: #555;
+  }
+
+  .overview-diagram {
+    background: var(--off-white);
+    border: 1px solid var(--rule);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.25rem;
+    position: relative;
+    min-height: 220px;
+  }
+
+  .overview-diagram::before {
+    content: 'KF / CELL 04';
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    font-family: var(--mono);
+    font-size: 0.45rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rule-dark);
+  }
+
+  .overview-diagram::after {
+    content: 'WORK CELL / ORTHOGRAPHIC';
+    position: absolute;
+    bottom: 0.75rem;
+    right: 0.75rem;
+    font-family: var(--mono);
+    font-size: 0.45rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rule-dark);
+  }
+
+  .diagram-arm {
+    width: 110px;
+    height: 110px;
+    border: 2px solid var(--black);
+    border-radius: 50%;
+    position: relative;
+  }
+
+  .diagram-arm::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2px;
+    height: 50px;
+    background: var(--rule);
+    transform-origin: top center;
+    transform: translateX(-50%) rotate(0deg);
+  }
+
+  .diagram-arm::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 55px;
+    height: 2px;
+    background: var(--signal);
+    transform-origin: left center;
+    transform: rotate(-30deg);
+  }
+
+  .diagram-base {
+    width: 70px;
+    height: 6px;
+    background: var(--black);
+  }
+
+  .diagram-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    background: var(--black);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* ── CELL HERO ── */
+  .cell-hero {
+    padding: 3rem 2rem;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  @media (min-width: 960px) {
+    .cell-hero { grid-template-columns: auto 1fr; padding: 4rem 3rem; gap: 3rem; }
+  }
+
+  .cell-id {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: clamp(4rem, 12vw, 9rem);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    color: var(--black);
+  }
+
+  .cell-id .slash { color: var(--signal); }
+
+  .cell-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .cell-details h2 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+
+  .cell-details p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #555;
+    max-width: 380px;
+  }
+
+  /* ── SECTION ── */
+  .section { padding: 3.5rem 2rem; border-bottom: 1px solid var(--rule); }
+  @media (min-width: 960px) { .section { padding: 4rem 3rem; } }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rule-dark);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* ── SPEC BLOCK ── */
+  .spec-block {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  @media (min-width: 640px) {
+    .spec-block { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (min-width: 960px) {
+    .spec-block { grid-template-columns: 1fr 1fr 1fr; }
+  }
+
+  .spec-item {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  @media (min-width: 960px) {
+    .spec-item {
+      padding: 1.25rem 1.5rem;
+      border-bottom: none;
+      border-right: 1px solid var(--rule);
+    }
+    .spec-item:nth-child(3n) { border-right: none; }
+    .spec-item:nth-child(-n+3) { border-bottom: 1px solid var(--rule); }
+  }
+
+  .spec-label {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rule-dark);
+  }
+
+  .spec-value {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .spec-unit {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    color: var(--rule-dark);
+    letter-spacing: 0.05em;
+    margin-left: 0.15em;
+  }
+
+  /* ── CAPABILITIES ── */
+  .capabilities {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  @media (min-width: 640px) {
+    .capabilities { grid-template-columns: 1fr 1fr 1fr; }
+  }
+
+  .capability {
+    padding: 1.75rem 0;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .capability {
+      padding: 0 1.5rem;
+      border-bottom: none;
+      border-right: 1px solid var(--rule);
+    }
+    .capability:first-child { padding-left: 0; }
+    .capability:last-child { border-right: none; padding-right: 0; }
+  }
+
+  .capability-num {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 2.2rem;
+    line-height: 1;
+    color: var(--signal);
+  }
+
+  .capability h3 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  .capability p {
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: #666;
+  }
+
+  /* ── PROCESS ── */
+  .process {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  @media (min-width: 640px) {
+    .process { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (min-width: 960px) {
+    .process { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  }
+
+  .process-step {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+
+  @media (min-width: 640px) {
+    .process-step { padding: 1.5rem; border-bottom: none; border-right: 1px solid var(--rule); }
+    .process-step:nth-child(2n) { border-right: none; }
+    .process-step:nth-child(-n+2) { border-bottom: 1px solid var(--rule); }
+  }
+
+  @media (min-width: 960px) {
+    .process-step { border-right: 1px solid var(--rule); border-bottom: none; }
+    .process-step:last-child { border-right: none; }
+    .process-step:nth-child(2n) { border-right: 1px solid var(--rule); }
+    .process-step:nth-child(4n) { border-right: none; }
+    .process-step:nth-child(-n+4) { border-bottom: none; }
+  }
+
+  .process-num {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    color: var(--signal);
+    margin-bottom: 0.5rem;
+  }
+
+  .process-step h3 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.4rem;
+  }
+
+  .process-step p {
+    font-size: 0.78rem;
+    line-height: 1.65;
+    color: #666;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    padding: 4rem 2rem;
+    background: var(--black);
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+
+  @media (min-width: 960px) {
+    .cta-section { padding: 5rem 3rem; }
+  }
+
+  .cta-section .section-label { color: rgba(255,255,255,0.4); }
+  .cta-section .section-label::after { background: rgba(255,255,255,0.15); }
+
+  .cta-title {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(1.8rem, 5vw, 3.2rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-text {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.55);
+    max-width: 460px;
+    margin-bottom: 2rem;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--signal);
+    padding: 0.9rem 2.25rem;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .cta-btn:hover { background: #ff5a2a; transform: translateY(-1px); }
+
+  .cta-footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 2.5rem;
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* ── MOBILE OVERRIDES ── */
+  @media (max-width: 959px) {
+    .sidebar { display: none; }
+    .hero-title { font-size: clamp(2.5rem, 10vw, 4rem); }
+    .cell-id { font-size: clamp(3rem, 15vw, 5rem); }
+    .hero { padding: 3rem 1.5rem 2.5rem; }
+    .section { padding: 2.5rem 1.5rem; }
+    .overview { padding: 2.5rem 1.5rem; }
+    .cta-section { padding: 3rem 1.5rem; }
+  }
+
+  /* ── SCROLLBAR ── */
+  .sidebar::-webkit-scrollbar { width: 3px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--rule); }
+</style>
+</head>
+<body>
+
+<div class="page-grid">
+
+  <!-- MOBILE HEADER -->
+  <div class="mobile-header">
+    <div class="mobile-header-brand">KINETIC FOUNDRY</div>
+    <button class="mobile-header-toggle">MENU</button>
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">KINETIC FOUNDRY</div>
+    <nav class="sidebar-nav">
+      <a href="#overview" class="active">Overview</a>
+      <a href="#cell04">KF / CELL 04</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="sidebar-status">
+      <div><span class="dot"></span>STATUS / ACTIVE</div>
+      <div>REV / 03</div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main>
+<img src="../assets/7ee1c4fe/kinetic_foundry_hero_1787607324325.webp" style="width: 100%; max-height: 60vh; object-fit: cover; display: block;" />
+
+    <!-- TICKER -->
+    <div class="ticker">
+      <div class="ticker-track">
+        <span>MODULAR ROBOTIC WORK CELLS</span>
+        <span>&bull;</span>
+        <span>RECONFIGURABLE AUTOMATION</span>
+        <span>&bull;</span>
+        <span>SMALL &amp; MID-SIZED MANUFACTURERS</span>
+        <span>&bull;</span>
+        <span>6-AXIS CONFIGURATION</span>
+        <span>&bull;</span>
+        <span>DEPLOYMENT / MODULAR</span>
+        <span>&bull;</span>
+        <span>MODULAR ROBOTIC WORK CELLS</span>
+        <span>&bull;</span>
+        <span>RECONFIGURABLE AUTOMATION</span>
+        <span>&bull;</span>
+        <span>SMALL &amp; MID-SIZED MANUFACTURERS</span>
+        <span>&bull;</span>
+        <span>6-AXIS CONFIGURATION</span>
+        <span>&bull;</span>
+        <span>DEPLOYMENT / MODULAR</span>
+        <span>&bull;</span>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero" id="overview">
+      <div class="hero-eyebrow">SYSTEM / FACTORY &mdash; 01</div>
+      <h1 class="hero-title">KINETIC<br>FOUNDRY</h1>
+      <div class="hero-rule"></div>
+      <p class="hero-sub">Automation built for factories that change. Modular robotic work cells designed to be reconfigured as production demands evolve.</p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">FOUNDED<span>2019</span></div>
+        <div class="hero-meta-item">HEADQUARTERS<span>Detroit, MI</span></div>
+        <div class="hero-meta-item">FOCUS<span>Modular Automation</span></div>
+        <div class="hero-meta-item">MARKET<span>SME Manufacturing</span></div>
+      </div>
+    </section>
+
+    <!-- OVERVIEW -->
+    <section class="overview">
+      <div class="overview-text">
+        <h2>Automation that adapts to production, not the other way around.</h2>
+        <p>Kinetic Foundry builds modular robotic work cells for small and mid-sized manufacturers who need flexibility without the overhead of fixed automation. Each cell is designed to be reconfigured, expanded, or redeployed as production demands shift.</p>
+      </div>
+      <div class="overview-diagram">
+        <div class="diagram-arm">
+          <div class="diagram-center"></div>
+        </div>
+        <div class="diagram-base"></div>
+      </div>
+    </section>
+
+    <!-- CELL HERO -->
+    <section class="cell-hero" id="cell04">
+      <div class="cell-id">KF<span class="slash">/</span>CELL&nbsp;04</div>
+      <div class="cell-details">
+        <h2>Modular work cell for precision assembly and material handling.</h2>
+        <p>Designed for manufacturers who need reliable automation that can be redeployed across multiple production lines without extensive reprogramming or mechanical overhaul.</p>
+      </div>
+    </section>
+
+    <!-- SPECS -->
+    <section class="section">
+      <div class="section-label">TECHNICAL SPECIFICATIONS</div>
+      <div class="spec-block">
+        <div class="spec-item">
+          <div class="spec-label">PAYLOAD</div>
+          <div class="spec-value">35<span class="spec-unit">kg</span></div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">REACH</div>
+          <div class="spec-value">1,850<span class="spec-unit">mm</span></div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">REPEATABILITY</div>
+          <div class="spec-value">&plusmn;0.05<span class="spec-unit">mm</span></div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">CONFIGURATION</div>
+          <div class="spec-value">6-AXIS</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">DEPLOYMENT</div>
+          <div class="spec-value">MODULAR</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">STATUS</div>
+          <div class="spec-value" style="color: var(--signal);">ACTIVE</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CAPABILITIES -->
+    <section class="section" id="capabilities">
+      <div class="section-label">CAPABILITIES</div>
+      <div class="capabilities">
+        <div class="capability">
+          <div class="capability-num">01</div>
+          <h3>Reconfiguration</h3>
+          <p>Swap end-effectors, adjust reach parameters, and redeploy across production lines without full system teardown.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-num">02</div>
+          <h3>Precision Handling</h3>
+          <p>&plusmn;0.05 mm repeatability across 35 kg payloads. Consistent performance through continuous production cycles.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-num">03</div>
+          <h3>Scalable Deployment</h3>
+          <p>Start with a single cell. Add capacity as demand grows. Each unit operates independently or as part of a coordinated system.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="section" id="process">
+      <div class="section-label">DEPLOYMENT PROCESS</div>
+      <div class="process">
+        <div class="process-step">
+          <div class="process-num">STEP 01</div>
+          <h3>Assess</h3>
+          <p>Evaluate production requirements, floor layout, and integration points.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-num">STEP 02</div>
+          <h3>Configure</h3>
+          <p>Select cell variant, end-effectors, and control interface matching the application.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-num">STEP 03</div>
+          <h3>Deploy</h3>
+          <p>Install, calibrate, and integrate with existing production systems.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-num">STEP 04</div>
+          <h3>Adapt</h3>
+          <p>Reconfigure as production demands shift. Redeploy without full system overhaul.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="contact">
+      <div class="section-label">CONTACT</div>
+      <h2 class="cta-title">Build the cell<br>your factory needs.</h2>
+      <p class="cta-text">Discuss your production requirements with our engineering team. We will recommend a configuration that matches your specific application.</p>
+      <a href="mailto:info@kineticfoundry.com" class="cta-btn">START A CONVERSATION</a>
+      <div class="cta-footer">
+        <span>KINETIC FOUNDRY / DETROIT, MI</span>
+        <span>INFO@KINETICFOUNDRY.COM</span>
+        <span>&copy; 2026 KINETIC FOUNDRY</span>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,499 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#F4EDDD">
+<meta name="description" content="NORTHLINE COFFEE â€” independent specialty roaster. Featured release: LAS FLORES / 04, Huila, Colombia. Washed Caturra, 1,850 MASL, light roast.">
+<title>SYSTEM--FORM Test 02 â€” Coffee Roaster - ox-alpha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,620;0,9..144,700;1,9..144,480;1,9..144,560&family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F4EDDD;
+  --paper-deep:#ECE2CC;
+  --ink:#241A11;
+  --ink-soft:#5C4F40;
+  --cherry:#B23A26;
+  --rule:#241A11;
+  --rule-soft:rgba(36,26,17,.22);
+  --serif:"Fraunces",Georgia,serif;
+  --sans:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --pad:clamp(20px,4vw,64px);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+[id]{scroll-margin-top:24px}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--cherry);color:var(--paper)}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--cherry);outline-offset:3px}
+.label{
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+}
+
+/* top band */
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:24px;
+  padding:16px var(--pad);
+  border-bottom:1px solid var(--rule);
+}
+.wordmark{
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:-.01em;
+  font-size:19px;
+}
+.wordmark span{color:var(--cherry)}
+.topnav{
+  display:flex;
+  gap:clamp(16px,3vw,40px);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+.topnav a:hover{color:var(--cherry)}
+
+/* hero */
+.hero{
+  display:grid;
+  grid-template-columns:minmax(0,7fr) minmax(0,5fr);
+  border-bottom:1px solid var(--rule);
+}
+.hero-main{
+  padding:clamp(44px,6vw,100px) clamp(28px,4vw,72px) clamp(40px,5vw,84px) var(--pad);
+  border-right:1px solid var(--rule);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:48px;
+}
+.kicker{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+}
+.kicker::before{content:"";width:34px;height:8px;background:var(--cherry)}
+h1{
+  font-family:var(--serif);
+  font-weight:620;
+  text-transform:uppercase;
+  font-size:clamp(46px,6.2vw,112px);
+  line-height:.94;
+  letter-spacing:-.015em;
+  margin-top:28px;
+  font-variation-settings:"opsz" 144;
+}
+h1 em{
+  font-style:italic;
+  font-weight:480;
+  text-transform:lowercase;
+  color:var(--cherry);
+  letter-spacing:-.01em;
+}
+.hero-sub{
+  max-width:46ch;
+  color:var(--ink-soft);
+  font-size:clamp(15px,1.3vw,18px);
+}
+.release-card{display:flex;flex-direction:column}
+.release-head{
+  padding:clamp(26px,3vw,42px) clamp(24px,2.8vw,44px) clamp(20px,2.4vw,30px);
+  border-bottom:1px solid var(--rule);
+}
+.release-head .label{display:block;margin-bottom:14px}
+.release-head h2{
+  font-family:var(--serif);
+  font-weight:620;
+  font-variation-settings:"opsz" 144;
+  text-transform:uppercase;
+  font-size:clamp(32px,3.2vw,52px);
+  line-height:.98;
+  letter-spacing:-.01em;
+}
+.release-head h2 small{
+  display:block;
+  font-family:var(--sans);
+  font-weight:700;
+  font-size:13px;
+  letter-spacing:.22em;
+  margin-top:10px;
+  color:var(--cherry);
+}
+.release-fields{flex:1;display:flex;flex-direction:column;justify-content:flex-start}
+.release-fields dl div{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:20px;
+  padding:13px clamp(24px,2.8vw,44px);
+  border-top:1px solid var(--rule-soft);
+}
+.release-fields dl div:first-child{border-top:0}
+.release-fields dt{
+  font-size:10.5px;
+  font-weight:600;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+}
+.release-fields dd{font-weight:700;font-size:15px;text-align:right}
+.tasting{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  border-top:1px solid var(--rule);
+}
+.tasting div{
+  padding:16px clamp(18px,2vw,32px) 18px;
+  border-left:1px solid var(--rule-soft);
+}
+.tasting div:first-child{border-left:0}
+.tasting .label{font-size:9.5px;display:block;margin-bottom:5px}
+.tasting b{
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:560;
+  font-size:clamp(15px,1.3vw,19px);
+  white-space:nowrap;
+}
+
+/* altitude band â€” the oversized data object */
+.altitude{
+  position:relative;
+  overflow:hidden;
+  border-bottom:1px solid var(--rule);
+  background:var(--paper-deep);
+}
+.altitude .figure{
+  display:flex;
+  align-items:baseline;
+  gap:clamp(16px,2.5vw,36px);
+  padding:clamp(28px,4vw,56px) 0 clamp(20px,3vw,44px) var(--pad);
+}
+.altitude .num{
+  font-family:var(--serif);
+  font-weight:700;
+  font-variation-settings:"opsz" 144;
+  font-size:clamp(110px,17vw,300px);
+  line-height:.8;
+  letter-spacing:-.03em;
+  margin-right:-.06em;
+}
+.altitude .unit{
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+.altitude .origin-line{
+  border-top:1px solid var(--rule);
+  padding:14px var(--pad);
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+}
+.altitude .origin-line b{color:var(--ink);font-weight:700}
+
+/* philosophy */
+.philosophy{
+  display:grid;
+  grid-template-columns:minmax(0,4fr) minmax(0,8fr);
+  border-bottom:1px solid var(--rule);
+}
+.philosophy aside{
+  padding:clamp(32px,4vw,64px) clamp(24px,3vw,48px) clamp(32px,4vw,64px) var(--pad);
+  border-right:1px solid var(--rule);
+}
+.philosophy .body{
+  padding:clamp(32px,4vw,72px) var(--pad);
+  max-width:70ch;
+}
+.philosophy .body p{
+  font-size:clamp(17px,1.6vw,23px);
+  line-height:1.55;
+  color:var(--ink);
+}
+.philosophy .body p + p{margin-top:1.1em}
+.philosophy .body p em{
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:560;
+  color:var(--cherry);
+}
+.pull{
+  margin-top:2em;
+  padding-top:1.4em;
+  border-top:1px solid var(--rule);
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:480;
+  font-size:clamp(22px,2.4vw,34px);
+  line-height:1.25;
+  max-width:24ch;
+}
+
+/* offerings ledger */
+.offerings ol{list-style:none}
+.offerings li{
+  display:grid;
+  grid-template-columns:70px 110px minmax(0,3fr) minmax(0,4fr) minmax(0,3fr);
+  gap:20px;
+  align-items:center;
+  padding:22px var(--pad);
+  border-top:1px solid var(--rule-soft);
+}
+.offerings .thumb{
+  width:110px;
+  aspect-ratio:1;
+  object-fit:cover;
+  display:block;
+  border:1px solid var(--rule-soft);
+}
+.offerings li:first-child{border-top:0}
+.offerings .idx{
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.14em;
+  color:var(--cherry);
+}
+.offerings .name{
+  font-family:var(--serif);
+  font-weight:620;
+  font-variation-settings:"opsz" 144;
+  text-transform:uppercase;
+  font-size:clamp(21px,2.2vw,32px);
+  letter-spacing:-.01em;
+  line-height:1;
+}
+.offerings .fields{
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  line-height:2;
+}
+.offerings .state{
+  justify-self:end;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  padding:7px 12px;
+  white-space:nowrap;
+}
+.state-live{background:var(--ink);color:var(--paper)}
+.state-pending{border:1px dashed var(--ink-soft);color:var(--ink-soft)}
+
+/* CTA */
+.cta{
+  display:block;
+  background:var(--ink);
+  color:var(--paper);
+  padding:clamp(52px,7vw,120px) var(--pad);
+}
+.cta .inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:32px;
+  flex-wrap:wrap;
+}
+.cta h2{
+  font-family:var(--serif);
+  font-weight:620;
+  font-variation-settings:"opsz" 144;
+  text-transform:uppercase;
+  font-size:clamp(44px,7vw,130px);
+  line-height:.9;
+  letter-spacing:-.015em;
+  max-width:14ch;
+}
+.cta h2 em{font-style:italic;font-weight:480;color:var(--cherry);text-transform:none}
+.cta p{
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  line-height:2.1;
+  opacity:.75;
+}
+.cta:hover{background:var(--cherry)}
+
+/* footer */
+footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:24px;
+  flex-wrap:wrap;
+  padding:22px var(--pad);
+}
+footer p{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+
+/* responsive */
+@media (max-width:980px){
+  .hero,.philosophy{grid-template-columns:1fr}
+  .hero-main{border-right:0;border-bottom:1px solid var(--rule)}
+  .philosophy aside{border-right:0;border-bottom:1px solid var(--rule)}
+  .offerings li{grid-template-columns:48px 64px minmax(0,1fr) auto}
+  .offerings .thumb{width:64px}
+  .offerings .fields{display:none}
+}
+@media (max-width:620px){
+  .hero-main > img{max-height:42vh !important}
+  .topbar{flex-wrap:wrap;row-gap:8px;padding-block:12px}
+  .topnav{flex-wrap:wrap;row-gap:8px}
+  .tasting{grid-template-columns:1fr}
+  .tasting div{border-left:0;border-top:1px solid var(--rule-soft)}
+  .tasting div:first-child{border-top:0}
+  .offerings li{grid-template-columns:36px minmax(0,1fr)}
+  .offerings .thumb{display:none}
+  .offerings .state{grid-column:2;justify-self:start}
+  .topnav{gap:12px;font-size:10px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<nav class="topbar" aria-label="Primary">
+  <a class="wordmark" href="#top">NORTHLINE<span>&nbsp;/&nbsp;</span>COFFEE</a>
+  <div class="topnav">
+    <a href="#featured">Featured</a>
+    <a href="#philosophy">Philosophy</a>
+    <a href="#offerings">Offerings</a>
+    <a href="#shop">Shop</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-main">
+<img src="file:///C:/Users/johnp/.gemini/antigravity-ide/brain/109da52d-8291-4985-9c5c-b8e6f2abe88c/northline_coffee_hero_1787607333368.jpg" alt="NORTHLINE COFFEE brewing" style="width: 100%; max-height: 60vh; object-fit: cover; display: block; margin: 2rem 0;" />
+    <div>
+      <p class="kicker">Independent specialty roaster</p>
+      <h1>Coffee with a<br><em>known</em> origin.</h1>
+    </div>
+    <p class="hero-sub">Every NORTHLINE release is traceable to a farm, a producer, and a process &mdash; printed on the bag, not lost in the blend.</p>
+  </div>
+  <div class="release-card" id="featured">
+    <div class="release-head">
+      <span class="label">Featured release</span>
+      <h2>Las Flores<small>RELEASE / 04</small></h2>
+    </div>
+    <div class="release-fields">
+      <dl>
+        <div><dt>Origin</dt><dd>Huila, Colombia</dd></div>
+        <div><dt>Producer</dt><dd>Las Flores</dd></div>
+        <div><dt>Process</dt><dd>Washed</dd></div>
+        <div><dt>Variety</dt><dd>Caturra</dd></div>
+        <div><dt>Altitude</dt><dd>1,850 MASL</dd></div>
+        <div><dt>Roast</dt><dd>Light</dd></div>
+      </dl>
+    </div>
+    <div class="tasting">
+      <div><span class="label">Note / 1</span><b>Red apple</b></div>
+      <div><span class="label">Note / 2</span><b>Caramel</b></div>
+      <div><span class="label">Note / 3</span><b>Citrus</b></div>
+    </div>
+  </div>
+</header>
+
+<section class="altitude" aria-label="Altitude and origin">
+  <div class="figure">
+    <span class="num">1,850</span>
+    <span class="unit">MASL<br>Grown high,<br>picked slow</span>
+  </div>
+  <p class="origin-line">
+    <span>ORIGIN&nbsp;&nbsp;<b>HUILA, COLOMBIA</b></span>
+    <span>FARM&nbsp;&nbsp;<b>LAS FLORES</b></span>
+    <span>VARIETY&nbsp;&nbsp;<b>CATURRA</b></span>
+    <span>PROCESS&nbsp;&nbsp;<b>WASHED</b></span>
+  </p>
+</section>
+
+<section class="philosophy" id="philosophy">
+  <aside>
+    <p class="label">Roasting<br>philosophy</p>
+  </aside>
+  <div class="body">
+    <p>A coffee with a known origin is a coffee with a fixed address. We buy from named farms at stated altitudes, roast to the process rather than a formula, and put every fact on the label where it belongs.</p>
+    <p><em>Las Flores</em> is roasted light so the washed Caturra speaks first &mdash; orchard fruit up front, caramel underneath, citrus at the finish.</p>
+    <p class="pull">If we can&rsquo;t name the farm, it doesn&rsquo;t wear our name.</p>
+  </div>
+</section>
+
+<section class="offerings" id="offerings">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;padding:18px var(--pad);border-bottom:1px solid var(--rule)">
+    <h2 class="label" style="color:var(--ink)">Available coffees</h2>
+    <span class="label">03 slots / current rotation</span>
+  </div>
+  <ol>
+    <li>
+      <span class="idx">01</span>
+      <span class="thumb" aria-hidden="true" style="visibility:hidden"></span>
+      <span class="name">Las Flores / 04</span>
+      <span class="fields">HUILA, COLOMBIA &middot; WASHED &middot; CATURRA &middot; 1,850 MASL &middot; LIGHT</span>
+      <span class="state state-live">Featured</span>
+    </li>
+    <li>
+      <span class="idx">02</span>
+      <img class="thumb" src="file:///C:/Users/johnp/.gemini/antigravity-ide/brain/109da52d-8291-4985-9c5c-b8e6f2abe88c/coffee_placeholder_bag_1787608375934.jpg" alt="Placeholder product photograph" loading="lazy" decoding="async">
+      <span class="name">Next release</span>
+      <span class="fields">PLACEHOLDER &middot; ORIGIN TO BE ANNOUNCED &middot; SPECIFICATIONS PENDING</span>
+      <span class="state state-pending">Placeholder</span>
+    </li>
+    <li>
+      <span class="idx">03</span>
+      <img class="thumb" src="file:///C:/Users/johnp/.gemini/antigravity-ide/brain/109da52d-8291-4985-9c5c-b8e6f2abe88c/coffee_placeholder_beans_1787608384766.jpg" alt="Placeholder product photograph" loading="lazy" decoding="async">
+      <span class="name">Next release</span>
+      <span class="fields">PLACEHOLDER &middot; ORIGIN TO BE ANNOUNCED &middot; SPECIFICATIONS PENDING</span>
+      <span class="state state-pending">Placeholder</span>
+    </li>
+  </ol>
+</section>
+
+<a class="cta" id="shop" href="#shop">
+  <div class="inner">
+    <h2>Taste the <em>address,</em> not the average.</h2>
+    <p>NORTHLINE COFFEE<br>LAS FLORES / 04 &mdash; WHOLE BEAN<br>SHOP / SUBSCRIBE / REPEAT</p>
+  </div>
+</a>
+
+<footer>
+  <span class="wordmark" style="font-size:15px">NORTHLINE<span>&nbsp;/&nbsp;</span>COFFEE</span>
+  <p>Coffee with a known origin.</p>
+</footer>
+
+</body>
+</html>

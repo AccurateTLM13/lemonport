@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The Great Lakes Industrial Archive. Established 1987. Photographs 18,420. Documents 7,860. Oral histories 614. Physical objects 1,205." />
+  <title>The Great Lakes Industrial Archive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #1b1d1f; --paper: #f4efe6; --steel: #5e6d7a; --rule: #1b1d1f;
+      --serif: "Source Serif 4", Georgia, serif;
+      --sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+      --gutter: clamp(1.1rem, 2.8vw, 2.6rem);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; overflow-x: clip; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+    body {
+      margin: 0; background: var(--paper); color: var(--ink);
+      font-family: var(--sans); font-size: 1.05rem; line-height: 1.55;
+      -webkit-font-smoothing: antialiased; overflow-x: clip;
+    }
+    a { color: inherit; }
+    :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+    [id] { scroll-margin-top: 0.75rem; }
+    .skip { position: absolute; left: 0.75rem; top: -5rem; z-index: 30; background: var(--ink); color: var(--paper); padding: 0.55rem 0.85rem; }
+    .skip:focus { top: 0.75rem; }
+    main > img { display: none !important; }
+    .kicker { font-size: 0.6875rem; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 500; }
+    header {
+      display: grid; grid-template-columns: minmax(0, 1.4fr) auto minmax(0, 1fr);
+      align-items: baseline; gap: 0.75rem 1.25rem;
+      padding: 1rem var(--gutter); border-bottom: 1px solid var(--rule);
+    }
+    header nav { display: flex; gap: 1.35rem; flex-wrap: wrap; }
+    header nav a { text-decoration: none; }
+    header nav a:hover { text-decoration: underline; }
+    header .est { justify-self: end; color: var(--steel); }
+
+    .hero {
+      display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.8fr);
+      min-height: calc(100dvh - 4.4rem); border-bottom: 1px solid var(--rule);
+    }
+    .hero-copy {
+      padding: clamp(2.1rem, 6vh, 4.2rem) var(--gutter) var(--gutter);
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .hero h1 {
+      font-family: var(--serif); font-size: clamp(2.4rem, 6vw, 5rem);
+      font-weight: 400; line-height: 1.02; letter-spacing: -0.032em;
+      margin: 0 0 2.1rem; max-width: 11ch;
+    }
+    .statement {
+      font-family: var(--serif); font-size: clamp(1.28rem, 2.1vw, 1.75rem);
+      font-style: italic; font-weight: 400; line-height: 1.28; max-width: 20ch; margin: 0;
+    }
+    .hero-void {
+      position: relative; overflow: hidden; border-left: 1px solid var(--rule);
+      display: flex; flex-direction: column; justify-content: space-between; padding: var(--gutter);
+    }
+    .hero-void img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .hero-void .veil {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(244,239,230,0.2), rgba(244,239,230,0.9));
+      pointer-events: none;
+    }
+    .hero-void .lead, .hero-void .year { position: relative; z-index: 2; }
+    .lead { margin: 0; max-width: 26ch; color: var(--steel); font-size: 0.98rem; }
+    .year {
+      font-family: var(--serif); font-size: clamp(5.5rem, 14vw, 10.5rem);
+      line-height: 0.76; letter-spacing: -0.055em; margin: 0 -0.1em 0 0; align-self: flex-end;
+    }
+
+    .collections {
+      display: grid; grid-template-columns: auto 1.7fr 1fr 1fr 1fr;
+      border-bottom: 1px solid var(--rule);
+    }
+    .col-index {
+      writing-mode: vertical-rl; transform: rotate(180deg);
+      padding: 1.25rem 0.65rem; border-right: 1px solid var(--rule);
+      display: flex; align-items: center;
+    }
+    .col {
+      padding: 1.9rem var(--gutter) 2.1rem; border-right: 1px solid var(--rule);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      min-height: 22rem; gap: 1.3rem; min-width: 0;
+    }
+    .col:last-child { border-right: 0; }
+    .count { font-family: var(--serif); font-size: clamp(1.9rem, 3.6vw, 3rem); font-weight: 400; letter-spacing: -0.04em; line-height: 0.9; margin: 0; }
+    .col.primary .count { font-size: clamp(3.6rem, 8vw, 6.4rem); }
+    .col h2 { margin: 0; font-size: 1rem; font-weight: 500; }
+    .col p { margin: 0; font-size: 0.9rem; color: var(--steel); }
+
+    .holdings-photo { margin: 0; overflow: hidden; border-bottom: 1px solid var(--rule); }
+    .holdings-photo img { display: block; width: 100%; aspect-ratio: 16/7; object-fit: cover; max-height: min(34vh, 20rem); }
+
+    .object-row { display: grid; grid-template-columns: 1.05fr 0.95fr; border-bottom: 1px solid var(--rule); }
+    .featured, .access { padding: clamp(1.6rem, 3vw, 2.4rem) var(--gutter); min-height: 18rem; }
+    .featured { border-right: 1px solid var(--rule); }
+    .ph { display: inline-block; border: 1px solid var(--ink); padding: 0.12rem 0.45rem; font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; }
+    h3.section-title {
+      font-family: var(--serif); font-size: clamp(1.65rem, 2.6vw, 2.25rem);
+      font-weight: 400; letter-spacing: -0.03em; margin: 0.4rem 0 1rem; line-height: 1.15;
+    }
+    .specimen { position: relative; margin-top: 1.6rem; border: 1px solid var(--rule); min-height: 13rem; overflow: hidden; }
+    .specimen img { display: block; width: 100%; height: 100%; min-height: 13rem; object-fit: cover; }
+    .specimen .kicker { position: absolute; left: 0.85rem; bottom: 0.85rem; background: var(--paper); padding: 0.2rem 0.5rem; }
+    .access p, .featured p { max-width: 48ch; }
+
+    .mission { display: grid; grid-template-columns: minmax(10rem, 0.62fr) 1.38fr; border-bottom: 1px solid var(--rule); }
+    .mission-label { padding: clamp(1.6rem, 3vw, 2.4rem) var(--gutter); border-right: 1px solid var(--rule); }
+    .mission-copy { padding: clamp(1.6rem, 3vw, 2.4rem) var(--gutter); max-width: 62ch; }
+    .mission-copy p:first-of-type { font-family: var(--serif); font-size: 1.3rem; font-style: italic; line-height: 1.4; }
+
+    .visit { display: grid; grid-template-columns: 1.25fr 0.75fr; min-height: 40vh; }
+    .visit-copy {
+      padding: clamp(2rem, 4vw, 3.1rem) var(--gutter); border-right: 1px solid var(--rule);
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .visit-copy h2 {
+      font-family: var(--serif); font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 400; letter-spacing: -0.035em; line-height: 1.05; margin: 0 0 0.85rem; max-width: 11ch;
+    }
+    .visit-action { padding: clamp(1.5rem, 3vw, 2.2rem) var(--gutter); display: flex; flex-direction: column; justify-content: center; gap: 1rem; }
+    .visit-action label { display: flex; flex-direction: column; gap: 0.3rem; }
+    .visit-action input {
+      background: transparent; border: 0; border-bottom: 1px solid var(--rule);
+      padding: 0.5rem 0; font: inherit; border-radius: 0; width: 100%;
+    }
+    .visit-action input:focus { outline: none; border-bottom-width: 2px; }
+    .visit-action button {
+      background: var(--ink); color: var(--paper); border: 0; padding: 0.9rem 1.2rem;
+      min-height: 44px; cursor: pointer; font: inherit; align-self: flex-start;
+    }
+    .visit-action button:hover { background: var(--steel); }
+    footer { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem var(--gutter); border-top: 1px solid var(--rule); color: var(--steel); }
+
+    @media (max-width: 960px) {
+      header { grid-template-columns: 1fr auto; }
+      header nav { grid-column: 1 / -1; }
+      .hero, .object-row, .mission, .visit { grid-template-columns: 1fr; }
+      .hero { min-height: 0; }
+      .hero-void, .featured, .mission-label, .visit-copy { border-left: 0; border-right: 0; border-bottom: 1px solid var(--rule); }
+      .hero-void { min-height: 14rem; }
+      .collections { grid-template-columns: 1fr 1fr; }
+      .col-index { grid-column: 1 / -1; writing-mode: horizontal-tb; transform: none; border-right: 0; border-bottom: 1px solid var(--rule); padding: 0.7rem var(--gutter); }
+      .col.primary { grid-column: 1 / -1; border-bottom: 1px solid var(--rule); min-height: 11rem; }
+      .col { min-height: 11rem; }
+      .col:nth-child(4) { border-right: 0; }
+    }
+    @media (max-width: 560px) {
+      .collections { grid-template-columns: 1fr; }
+      .col, .col.primary { grid-column: auto; border-right: 0; border-bottom: 1px solid var(--rule); min-height: 0; flex-direction: row; justify-content: space-between; align-items: baseline; }
+      .col.primary .count { font-size: clamp(2.5rem, 14vw, 3.4rem); }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header>
+    <strong class="kicker">The Great Lakes Industrial Archive</strong>
+    <nav class="kicker" aria-label="Primary">
+      <a href="#collections">Collections</a>
+      <a href="#research">Research</a>
+      <a href="#visit">Visit</a>
+    </nav>
+    <span class="kicker est">Established 1987</span>
+  </header>
+
+  <main id="content">
+    <section class="hero" aria-labelledby="site-title">
+      <div class="hero-copy">
+        <h1 id="site-title">The Great Lakes Industrial Archive</h1>
+        <p class="statement">Industry remembered through the people who built it.</p>
+      </div>
+      <aside class="hero-void">
+        <img src="../assets/109914cf/gl-reading-table.webp" alt="Archival table with photographs, folders, and a tape box" width="1152" height="1536" />
+        <span class="veil" aria-hidden="true"></span>
+        <p class="lead">Photographs, documents, oral histories, and physical objects from Great Lakes manufacturing, held since 1987.</p>
+        <p class="year">1987</p>
+      </aside>
+    </section>
+
+    <section id="collections" class="collections" aria-labelledby="collections-title">
+      <div class="col-index kicker" id="collections-title">Holdings</div>
+      <article class="col primary"><p class="count">18,420</p><div><h2>Photographs</h2><p>Records</p></div></article>
+      <article class="col"><p class="count">7,860</p><div><h2>Documents</h2><p>Records</p></div></article>
+      <article class="col"><p class="count">614</p><div><h2>Oral Histories</h2><p>Records</p></div></article>
+      <article class="col"><p class="count">1,205</p><div><h2>Physical Objects</h2><p>Records</p></div></article>
+    </section>
+
+    <figure class="holdings-photo">
+      <img src="../assets/109914cf/gl-factory-print.webp" alt="Archival photograph of a factory floor" width="1536" height="1152" />
+    </figure>
+
+    <section class="object-row">
+      <article class="featured" aria-labelledby="featured-title">
+        <p class="ph">Placeholder</p>
+        <h3 class="section-title" id="featured-title">Featured archive object</h3>
+        <p>Object title, maker, date, medium, and collection number have not been supplied.</p>
+        <div class="specimen">
+          <img src="../assets/109914cf/gl-object-placeholder.webp" alt="Unidentified industrial object; catalog details not specified" width="1536" height="1152" />
+          <span class="kicker">Specimen field · details not specified</span>
+        </div>
+      </article>
+      <article class="access" id="research" aria-labelledby="access-title">
+        <p class="kicker" style="margin:0;">Research and access</p>
+        <h3 class="section-title" id="access-title">The collections may be consulted.</h3>
+        <p>Photographs, documents, oral histories, and physical objects are held for research. Hours, appointment rules, and reproduction policy have not been supplied here; write to request access.</p>
+        <p>The archive’s work is to keep the record usable: 18,420 photographs, 7,860 documents, 614 oral histories, 1,205 objects.</p>
+        <figure style="margin:1.4rem 0 0; overflow:hidden; border:1px solid var(--rule);">
+          <img src="../assets/109914cf/gl-handling.webp" alt="Cotton-gloved hands holding a factory photograph at a research table" width="1536" height="1152" style="display:block;width:100%;aspect-ratio:4/3;object-fit:cover;" />
+        </figure>
+      </article>
+    </section>
+
+    <section class="mission" aria-labelledby="mission-title">
+      <div class="mission-label">
+        <p class="kicker" style="margin:0;">Preservation</p>
+        <h3 class="section-title" id="mission-title">Mission</h3>
+      </div>
+      <div class="mission-copy">
+        <p>Industry remembered through the people who built it.</p>
+        <p>The Great Lakes Industrial Archive preserves documents, photographs, oral histories, and physical artifacts related to Great Lakes manufacturing history. Established in 1987, it treats those records as evidence of labour, not as decoration for industry.</p>
+        <p>Preservation here means keeping names, places of work, and the material record available to the public that still lives among the lakes.</p>
+      </div>
+    </section>
+
+    <section id="visit" class="visit" aria-labelledby="visit-title">
+      <div class="visit-copy">
+        <p class="kicker" style="margin:0 0 0.7rem;">Visit / Contact</p>
+        <h2 id="visit-title">Ask to see the record.</h2>
+        <p>A street address and public hours have not been supplied. Inquiries may be directed through the contact request.</p>
+      </div>
+      <form class="visit-action" action="#visit" method="get">
+        <label><span class="kicker">Name</span><input type="text" name="name" autocomplete="name" required /></label>
+        <label><span class="kicker">Research interest</span><input type="text" name="interest" required /></label>
+        <button class="kicker" type="submit">Request a visit</button>
+        <p class="kicker" style="margin:0;">Est. 1987 · four collections</p>
+      </form>
+    </section>
+  </main>
+  <footer>
+    <span class="kicker">The Great Lakes Industrial Archive</span>
+    <span class="kicker">Established 1987</span>
+  </footer>
+</body>
+</html>

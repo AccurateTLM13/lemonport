@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SIGNAL/26 — October 16–17, 2026, Detroit, Michigan. Two nights. Six artists. One room." />
+  <title>SIGNAL/26 — Detroit, October 16–17</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Schibsted+Grotesk:wght@500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0d0d0d; --paper: #f4f1ea; --signal: #d6ff3c;
+      --display: "Schibsted Grotesk", ui-sans-serif, system-ui, sans-serif;
+      --editorial: "Instrument Serif", Georgia, serif;
+      --gutter: clamp(0.9rem, 2vw, 1.7rem); --header-h: 3.1rem;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; overflow-x: clip; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+    body {
+      margin: 0; background: var(--ink); color: var(--paper);
+      font-family: var(--display); line-height: 1.3;
+      -webkit-font-smoothing: antialiased; overflow-x: clip;
+    }
+    a { color: inherit; }
+    :focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
+    [id] { scroll-margin-top: calc(var(--header-h) + 0.35rem); }
+    .skip { position: absolute; left: 0.75rem; top: -5rem; z-index: 50; background: var(--signal); color: var(--ink); padding: 0.55rem 0.85rem; }
+    .skip:focus { top: 0.75rem; }
+    main > img { display: none !important; }
+    .micro { font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; }
+    header {
+      display: grid; grid-template-columns: 1fr auto auto; gap: 0.75rem 1.15rem; align-items: center;
+      padding: 0.6rem var(--gutter); border-bottom: 1px solid var(--paper);
+      position: sticky; top: 0; z-index: 12; background: var(--ink);
+    }
+    header nav { display: flex; gap: 1.15rem; flex-wrap: wrap; }
+    header a { text-decoration: none; }
+    header nav a:hover { color: var(--signal); }
+    .tix { background: var(--signal); color: var(--ink); padding: 0.5rem 0.9rem; min-height: 44px; display: inline-flex; align-items: center; }
+    .tix:hover { background: var(--paper); }
+
+    .hero {
+      position: relative; overflow: hidden; border-bottom: 1px solid var(--paper);
+      min-height: calc(100dvh - var(--header-h));
+      display: grid; grid-template-rows: auto 1fr auto;
+    }
+    .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 38%; }
+    .hero-veil {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(13,13,13,0.28), rgba(13,13,13,0.78));
+      pointer-events: none;
+    }
+    .hero-meta, .wordmark, .hero-foot { position: relative; z-index: 2; }
+    .hero-meta { display: flex; justify-content: space-between; gap: 1rem; padding: 0.95rem var(--gutter); }
+    .wordmark {
+      font-size: clamp(6.8rem, 24vw, 19rem); font-weight: 900; line-height: 0.7;
+      letter-spacing: -0.075em; margin: 0 -6vw -8vh -0.06em; text-transform: uppercase; user-select: none;
+    }
+    .wordmark em { font-style: normal; color: var(--signal); }
+    .hero-foot { display: grid; grid-template-columns: 1.35fr 1fr; border-top: 1px solid var(--paper); }
+    .hero-foot p { margin: 0; padding: 1.15rem var(--gutter); }
+    .hero-foot .line { font-family: var(--editorial); font-size: clamp(1.45rem, 3vw, 2.2rem); font-style: italic; line-height: 1.15; }
+    .hero-foot .where { border-left: 1px solid var(--paper); display: flex; flex-direction: column; justify-content: center; gap: 0.3rem; }
+
+    .schedule { display: grid; grid-template-columns: auto 1fr 1fr; border-bottom: 1px solid var(--paper); }
+    .sched-index {
+      writing-mode: vertical-rl; transform: rotate(180deg);
+      padding: 1.15rem 0.65rem; border-right: 1px solid var(--paper);
+      display: flex; align-items: center; background: var(--signal); color: var(--ink);
+    }
+    .night { border-right: 1px solid var(--paper); }
+    .night:last-child { border-right: 0; }
+    .night-head { display: flex; justify-content: space-between; padding: 0.9rem var(--gutter); border-bottom: 1px solid var(--paper); }
+    .sets { list-style: none; margin: 0; padding: 0; }
+    .set {
+      display: grid; grid-template-columns: 6.75rem minmax(0, 1fr);
+      border-bottom: 1px solid #2e2e2e; min-height: 7.4rem; align-items: end;
+    }
+    .set:last-child { border-bottom: 0; }
+    .set time { padding: 1rem var(--gutter); font-size: 0.98rem; font-weight: 700; letter-spacing: -0.03em; }
+    .set .artist {
+      padding: 0.5rem var(--gutter) 0.85rem 0;
+      font-size: clamp(1.8rem, 4.1vw, 3.7rem); font-weight: 900;
+      letter-spacing: -0.05em; line-height: 0.86; text-transform: uppercase; margin: 0; overflow: hidden;
+    }
+
+    .lineup { overflow: hidden; border-bottom: 1px solid var(--paper); padding: 1.15rem 0 0; }
+    .lineup-head { display: flex; justify-content: space-between; padding: 0 var(--gutter) 0.85rem; }
+    .line-row {
+      font-size: clamp(2.2rem, 8.2vw, 6.2rem); font-weight: 900; letter-spacing: -0.055em;
+      line-height: 0.84; text-transform: uppercase; white-space: nowrap;
+      padding: 0.05em 0 0.12em var(--gutter); border-top: 1px solid #2e2e2e;
+    }
+    .line-row span { color: var(--signal); }
+
+    .venue { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 1fr); border-bottom: 1px solid var(--paper); }
+    .venue-photo { margin: 0; min-width: 0; overflow: hidden; border-right: 1px solid var(--paper); min-height: 14rem; }
+    .venue-photo img { display: block; width: 100%; height: 100%; min-height: 14rem; object-fit: cover; }
+    .venue article { padding: clamp(1.5rem, 3vw, 2.3rem) var(--gutter); min-height: 14rem; }
+    .venue article:nth-of-type(1) { border-right: 1px solid var(--paper); }
+    .venue h2 { font-size: clamp(1.9rem, 4.4vw, 3.4rem); letter-spacing: -0.045em; line-height: 0.9; text-transform: uppercase; margin: 0.35rem 0 0.9rem; }
+    .venue p.serif { font-family: var(--editorial); font-size: 1.28rem; font-style: italic; margin: 0; max-width: 20ch; line-height: 1.25; }
+
+    .tickets { display: grid; grid-template-columns: 1.25fr 0.75fr; min-height: 38vh; }
+    .tickets-copy { padding: clamp(1.7rem, 3.4vw, 2.7rem) var(--gutter); display: flex; flex-direction: column; justify-content: flex-end; border-right: 1px solid var(--paper); }
+    .tickets-copy h2 { font-size: clamp(2.6rem, 7.2vw, 5.6rem); line-height: 0.8; letter-spacing: -0.055em; text-transform: uppercase; margin: 0 0 0.85rem; }
+    .tickets-action { background: var(--signal); color: var(--ink); display: flex; flex-direction: column; justify-content: center; padding: var(--gutter); gap: 1rem; }
+    .tickets-action a {
+      font-size: clamp(1.2rem, 2.5vw, 1.75rem); font-weight: 900; text-transform: uppercase;
+      letter-spacing: -0.03em; text-decoration: none; text-align: center; padding: 1rem;
+      min-height: 48px; border: 1px solid var(--ink); display: flex; align-items: center; justify-content: center;
+    }
+    .tickets-action a:hover { background: var(--ink); color: var(--signal); }
+    footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem 1.25rem; padding: 1rem var(--gutter); border-top: 1px solid var(--paper); }
+
+    @media (max-width: 900px) {
+      header { grid-template-columns: 1fr auto; }
+      header nav { grid-column: 1 / -1; }
+      .hero { min-height: 78vh; }
+      .hero-foot, .schedule, .venue, .tickets { grid-template-columns: 1fr; }
+      .hero-foot .where, .night, .venue article:nth-of-type(1), .tickets-copy { border-left: 0; border-right: 0; border-top: 1px solid var(--paper); }
+      .venue-photo { border-right: 0; border-bottom: 1px solid var(--paper); min-height: 12rem; }
+      .sched-index { writing-mode: horizontal-tb; transform: none; border-right: 0; border-bottom: 1px solid var(--paper); padding: 0.65rem var(--gutter); }
+      .set { grid-template-columns: 5.1rem minmax(0, 1fr); min-height: 5.5rem; }
+      .wordmark { font-size: clamp(5.2rem, 28vw, 8.6rem); margin: 0 -8vw -4vh; }
+    }
+    @media (max-width: 520px) {
+      .hero-meta { flex-direction: column; gap: 0.25rem; }
+      .set .artist { font-size: clamp(1.5rem, 8vw, 2.1rem); }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header>
+    <strong class="micro">Signal/26</strong>
+    <nav class="micro" aria-label="Primary">
+      <a href="#schedule">Schedule</a>
+      <a href="#lineup">Lineup</a>
+      <a href="#venue">Place</a>
+    </nav>
+    <a class="tix micro" href="#tickets">Tickets</a>
+  </header>
+
+  <main id="content">
+    <section class="hero" aria-labelledby="fest-title">
+      <img class="hero-bg" src="../assets/f0041f6d/sig-room-night.webp" alt="Crowd in a dark warehouse room facing a DJ booth" width="1536" height="864" />
+      <span class="hero-veil" aria-hidden="true"></span>
+      <div class="hero-meta">
+        <span class="micro">October 16–17, 2026</span>
+        <span class="micro">Detroit, Michigan</span>
+      </div>
+      <h1 class="wordmark" id="fest-title">Signal<em>/26</em></h1>
+      <div class="hero-foot">
+        <p class="line">Two nights. Six artists. One room.</p>
+        <p class="where">
+          <span class="micro">Independent electronic music</span>
+          <span>Friday 16 · Saturday 17 · October 2026</span>
+        </p>
+      </div>
+    </section>
+
+    <section id="schedule" class="schedule" aria-labelledby="sched-title">
+      <div class="sched-index micro" id="sched-title">Complete schedule</div>
+      <div class="night">
+        <div class="night-head"><span class="micro">Friday</span><span class="micro">16 October</span></div>
+        <ol class="sets">
+          <li class="set"><time datetime="2026-10-16T21:00">21:00</time><p class="artist">Mara Voss</p></li>
+          <li class="set"><time datetime="2026-10-16T22:30">22:30</time><p class="artist">Static Field</p></li>
+          <li class="set"><time datetime="2026-10-17T00:15">00:15</time><p class="artist">Null/Set</p></li>
+        </ol>
+      </div>
+      <div class="night">
+        <div class="night-head"><span class="micro">Saturday</span><span class="micro">17 October</span></div>
+        <ol class="sets">
+          <li class="set"><time datetime="2026-10-17T20:30">20:30</time><p class="artist">Formant</p></li>
+          <li class="set"><time datetime="2026-10-17T22:00">22:00</time><p class="artist">Lena Arc</p></li>
+          <li class="set"><time datetime="2026-10-17T23:45">23:45</time><p class="artist">Public Memory</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="lineup" class="lineup" aria-labelledby="lineup-title">
+      <div class="lineup-head">
+        <h2 class="micro" id="lineup-title">Artist lineup</h2>
+        <span class="micro">Six artists</span>
+      </div>
+      <p class="line-row">Mara Voss <span>/</span> Static Field <span>/</span> Null/Set</p>
+      <p class="line-row">Formant <span>/</span> Lena Arc <span>/</span> Public Memory</p>
+    </section>
+
+    <section id="venue" class="venue">
+      <figure class="venue-photo">
+        <img src="../assets/f0041f6d/sig-detroit-night.webp" alt="Night street in Detroit, Michigan" width="1536" height="1152" />
+      </figure>
+      <article aria-labelledby="place-title">
+        <p class="micro" style="margin:0;">Place</p>
+        <h2 id="place-title">Detroit, Michigan</h2>
+        <p class="serif">One room. Two nights. The address has not been supplied.</p>
+      </article>
+      <article aria-labelledby="when-title">
+        <p class="micro" style="margin:0;">When</p>
+        <h2 id="when-title">Oct 16–17</h2>
+        <p class="serif">Friday into Saturday, Saturday into night. Independent electronic music.</p>
+      </article>
+    </section>
+
+    <section id="tickets" class="tickets" aria-labelledby="tix-title">
+      <div class="tickets-copy">
+        <p class="micro" style="margin:0 0 0.75rem;">Admission</p>
+        <h2 id="tix-title">Take a night.</h2>
+        <p>Ticket prices have not been supplied. Request admission for SIGNAL/26.</p>
+      </div>
+      <div class="tickets-action">
+        <a href="#schedule">Request tickets</a>
+        <p class="micro" style="margin:0; text-align:center;">October 16–17, 2026 · Detroit</p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <span class="micro">SIGNAL/26</span>
+    <span class="micro">October 16–17, 2026</span>
+    <span class="micro">Detroit, Michigan</span>
+  </footer>
+</body>
+</html>

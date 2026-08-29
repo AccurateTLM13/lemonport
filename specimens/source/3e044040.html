@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NORTHLINE COFFEE — Coffee with a Known Origin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-canvas: #f7f4ed;
+      --bg-card: #eee9df;
+      --bg-dark: #141312;
+      --bg-tinted: #eae4d8;
+      --border-dark: #1c1b19;
+      --border-light: rgba(28, 27, 25, 0.16);
+      --border-strong: rgba(28, 27, 25, 0.38);
+      --accent-terracotta: #c44d2d;
+      --accent-terracotta-hover: #a93c1f;
+      --accent-ochre: #b57a22;
+      --text-main: #1c1b19;
+      --text-muted: #5e5952;
+      --text-faint: #8f8980;
+      --font-display: 'Fraunces', Georgia, serif;
+      --font-sans: 'Space Grotesk', sans-serif;
+      --font-data: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-canvas);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* Accessibility Focus */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--accent-terracotta);
+      outline-offset: 2px;
+    }
+
+    /* Container Shell */
+    .roaster-shell {
+      max-width: 1400px;
+      margin: 0 auto;
+      border-left: 1.5px solid var(--border-dark);
+      border-right: 1.5px solid var(--border-dark);
+      min-height: 100vh;
+      background-color: var(--bg-canvas);
+      position: relative;
+    }
+
+    /* Top Masthead Rail */
+    .masthead-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      border-bottom: 1.5px solid var(--border-dark);
+      background: var(--bg-card);
+      font-family: var(--font-data);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .masthead-col {
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-right: 1px solid var(--border-light);
+    }
+
+    .masthead-col:last-child {
+      border-right: none;
+    }
+
+    .origin-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-terracotta);
+      display: inline-block;
+    }
+
+    /* Structural Grid System */
+    .structure-grid {
+      display: grid;
+    }
+
+    .grid-split-60-40 {
+      grid-template-columns: 1.45fr 1fr;
+    }
+
+    .grid-split-50-50 {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .grid-split-3 {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .border-b-solid {
+      border-bottom: 1.5px solid var(--border-dark);
+    }
+
+    .border-r-solid {
+      border-right: 1.5px solid var(--border-dark);
+    }
+
+    /* Hero Panel */
+    .hero-panel {
+      padding: 64px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 40px;
+      background: var(--bg-canvas);
+    }
+
+    .category-stamp {
+      font-family: var(--font-data);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent-terracotta);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .category-stamp::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background: var(--border-strong);
+      max-width: 140px;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(42px, 6vw, 84px);
+      font-weight: 700;
+      line-height: 0.94;
+      letter-spacing: -0.03em;
+      color: var(--text-main);
+    }
+
+    .hero-title em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent-terracotta);
+    }
+
+    .hero-summary-prose {
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      max-width: 540px;
+      border-left: 3px solid var(--accent-terracotta);
+      padding-left: 24px;
+    }
+
+    /* Hero Photo Presentation Box */
+    .coffee-hero-photo-wrap {
+      border: 1.5px solid var(--border-dark);
+      background: #ece7dd;
+      position: relative;
+      overflow: hidden;
+      margin-top: 12px;
+    }
+
+    .coffee-hero-img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .coffee-photo-tag {
+      position: absolute;
+      bottom: 12px;
+      left: 14px;
+      background: rgba(247, 244, 237, 0.92);
+      border: 1px solid var(--border-dark);
+      padding: 4px 10px;
+      font-family: var(--font-data);
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Featured Coffee Visual Specimen Card */
+    .featured-specimen-pane {
+      background: var(--bg-card);
+      padding: 48px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .specimen-header {
+      border-bottom: 1.5px solid var(--border-dark);
+      padding-bottom: 18px;
+      margin-bottom: 20px;
+    }
+
+    .specimen-lot-tag {
+      font-family: var(--font-data);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--accent-terracotta);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .specimen-name {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 3.5vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      margin-top: 4px;
+    }
+
+    /* Provenance Ledger Table */
+    .provenance-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .provenance-table tr {
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .provenance-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .provenance-table td {
+      padding: 12px 0;
+      vertical-align: middle;
+    }
+
+    .table-key {
+      font-family: var(--font-data);
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      width: 38%;
+    }
+
+    .table-val {
+      font-weight: 600;
+      color: var(--text-main);
+      text-align: right;
+    }
+
+    .table-val.accent {
+      color: var(--accent-terracotta);
+      font-weight: 700;
+    }
+
+    /* Tasting Notes Pill Strip */
+    .tasting-block {
+      margin-top: 20px;
+      padding: 18px;
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-light);
+    }
+
+    .tasting-label {
+      font-family: var(--font-data);
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .tasting-notes-flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tasting-pill {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-style: italic;
+      background: var(--bg-card);
+      padding: 6px 14px;
+      border: 1.5px solid var(--border-strong);
+      color: var(--text-main);
+    }
+
+    /* Section Ribbon Header */
+    .section-banner {
+      background: var(--bg-dark);
+      color: #f7f4ed;
+      padding: 16px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-data);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .section-banner .marker {
+      color: var(--accent-terracotta);
+      font-weight: 800;
+      margin-right: 8px;
+    }
+
+    /* Origin Deep Dive Section */
+    .origin-cell {
+      padding: 56px 48px;
+      position: relative;
+    }
+
+    .altitude-diagram-wrap {
+      background: #ede8dc;
+      border: 1px solid var(--border-light);
+      padding: 24px;
+      margin-top: 24px;
+    }
+
+    .altitude-scale-svg {
+      width: 100%;
+      height: 180px;
+      display: block;
+    }
+
+    /* Roasting Philosophy Block */
+    .philosophy-pane {
+      padding: 56px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--bg-card);
+    }
+
+    .quote-lead {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 2.5vw, 28px);
+      line-height: 1.35;
+      color: var(--text-main);
+      margin-bottom: 24px;
+    }
+
+    .philosophy-body {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    /* 3 Coffees Catalog Grid */
+    .offering-card {
+      padding: 48px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 440px;
+      background: var(--bg-canvas);
+      border-right: 1.5px solid var(--border-dark);
+      transition: background 0.15s ease;
+    }
+
+    .offering-card:last-child {
+      border-right: none;
+    }
+
+    .offering-card.featured-card {
+      background: #faf8f5;
+    }
+
+    .offering-card.placeholder-card {
+      background: #f1eee7;
+    }
+
+    .lot-badge {
+      font-family: var(--font-data);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-terracotta);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .lot-title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text-main);
+    }
+
+    .lot-specs-list {
+      list-style: none;
+      font-family: var(--font-data);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .lot-specs-list li {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px dotted var(--border-light);
+      padding-bottom: 4px;
+    }
+
+    .placeholder-stamp {
+      font-family: var(--font-data);
+      font-size: 11px;
+      color: var(--text-faint);
+      border: 1.5px dashed var(--border-strong);
+      padding: 18px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 20px 0;
+      line-height: 1.5;
+    }
+
+    /* CTA Section */
+    .cta-ribbon-block {
+      background: var(--bg-dark);
+      color: #f7f4ed;
+      padding: 72px 56px;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .cta-heading-serif {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4.5vw, 56px);
+      font-weight: 700;
+      line-height: 1.02;
+      margin-bottom: 16px;
+    }
+
+    .btn-shop-provenance {
+      background: var(--accent-terracotta);
+      color: #ffffff;
+      font-family: var(--font-data);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 22px 36px;
+      text-decoration: none;
+      display: inline-flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1.5px solid var(--accent-terracotta);
+      transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    }
+
+    .btn-shop-provenance:hover {
+      background: var(--accent-terracotta-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(196, 77, 45, 0.35);
+    }
+
+    /* Footer */
+    .footer-provenance {
+      padding: 36px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-data);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-top: 1.5px solid var(--border-dark);
+    }
+
+    @media (max-width: 1024px) {
+      .grid-split-60-40,
+      .grid-split-50-50,
+      .grid-split-3,
+      .cta-ribbon-block {
+        grid-template-columns: 1fr;
+      }
+      .border-r-solid, .offering-card {
+        border-right: none;
+        border-bottom: 1.5px solid var(--border-dark);
+      }
+      .hero-panel, .featured-specimen-pane, .origin-cell, .philosophy-pane, .offering-card, .cta-ribbon-block {
+        padding: 48px 32px;
+      }
+      .section-banner, .footer-provenance {
+        padding: 16px 32px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .masthead-strip {
+        flex-direction: column;
+      }
+      .masthead-col {
+        border-right: none;
+        border-bottom: 1px solid var(--border-light);
+        padding: 10px 20px;
+      }
+      .hero-panel, .featured-specimen-pane, .origin-cell, .philosophy-pane, .offering-card, .cta-ribbon-block {
+        padding: 32px 20px;
+      }
+      .footer-provenance {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="roaster-shell">
+    
+    <!-- Top Provenance Masthead -->
+    <header class="masthead-strip">
+      <div class="masthead-col">
+        <span class="origin-dot" aria-hidden="true"></span>
+        <span>NORTHLINE COFFEE ROASTERS</span>
+      </div>
+      <div class="masthead-col">
+        <span>ESTATE SOURCING & PROVENANCE</span>
+      </div>
+      <div class="masthead-col">
+        <span>CURRENT RELEASE: LAS FLORES / 04</span>
+      </div>
+      <div class="masthead-col" style="margin-left: auto;">
+        <a href="#offerings" style="color: var(--text-main); text-decoration: none; font-weight: 700;">[ ORDER ROAST LOT ]</a>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main>
+      <section class="structure-grid grid-split-60-40 border-b-solid">
+        <div class="hero-panel border-r-solid">
+          <div>
+            <div class="category-stamp">INDEPENDENT SPECIALTY ROASTER</div>
+            <h1 class="hero-title">
+              Coffee with a <em>known origin.</em>
+            </h1>
+          </div>
+
+          <p class="hero-summary-prose">
+            Every roast begins with exact geographic and agricultural provenance. We document the elevation, botanical variety, processing method, and producer for every offering we release.
+          </p>
+
+          <!-- Integrated Product Photo -->
+          <div class="coffee-hero-photo-wrap">
+            <img class="coffee-hero-img" src="../assets/3e044040/northline-las-flores.webp" alt="Northline Coffee Las Flores 04 bag with fresh whole roasted beans on stone surface">
+            <div class="coffee-photo-tag">HARVEST LOT SPECIMEN // LAS FLORES / 04</div>
+          </div>
+
+          <div style="font-family: var(--font-data); font-size: 11px; color: var(--text-muted); letter-spacing: 0.12em; text-transform: uppercase;">
+            SINGLE ESTATE SELECTION // HUILA, COLOMBIA
+          </div>
+        </div>
+
+        <!-- Featured Lot Specimen Pane -->
+        <div class="featured-specimen-pane">
+          <div>
+            <div class="specimen-header">
+              <div class="specimen-lot-tag">FEATURED HARVEST LOT</div>
+              <div class="specimen-name">LAS FLORES / 04</div>
+            </div>
+
+            <table class="provenance-table">
+              <tbody>
+                <tr>
+                  <td class="table-key">ORIGIN</td>
+                  <td class="table-val">Huila, Colombia</td>
+                </tr>
+                <tr>
+                  <td class="table-key">PRODUCER</td>
+                  <td class="table-val">Las Flores</td>
+                </tr>
+                <tr>
+                  <td class="table-key">PROCESS</td>
+                  <td class="table-val">Washed</td>
+                </tr>
+                <tr>
+                  <td class="table-key">VARIETY</td>
+                  <td class="table-val">Caturra</td>
+                </tr>
+                <tr>
+                  <td class="table-key">ALTITUDE</td>
+                  <td class="table-val accent">1,850 MASL</td>
+                </tr>
+                <tr>
+                  <td class="table-key">ROAST PROFILE</td>
+                  <td class="table-val">Light</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Tasting Notes -->
+            <div class="tasting-block">
+              <div class="tasting-label">CERTIFIED TASTING NOTES</div>
+              <div class="tasting-notes-flow">
+                <span class="tasting-pill">Red apple</span>
+                <span class="tasting-pill">Caramel</span>
+                <span class="tasting-pill">Citrus</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px; font-family: var(--font-data); font-size: 11px; color: var(--text-muted); display: flex; justify-content: space-between; border-top: 1px solid var(--border-light); padding-top: 14px;">
+            <span>BATCH ROAST: LIGHT</span>
+            <span>MOISTURE LOSS: CONTROLLED</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Origin Deep Dive & Roasting Philosophy -->
+      <section class="structure-grid grid-split-50-50 border-b-solid">
+        <!-- Origin Details -->
+        <div class="origin-cell border-r-solid">
+          <div class="category-stamp">TERROIR & ELEVATION</div>
+          <h2 style="font-family: var(--font-display); font-size: 32px; font-weight: 700; margin-bottom: 16px;">
+            Huila High-Altitude Micro-Climate
+          </h2>
+          <p style="color: var(--text-muted); font-size: 15px; line-height: 1.65; margin-bottom: 20px;">
+            Grown at 1,850 meters above sea level by the Las Flores estate in Huila, Colombia. High diurnal temperature swings decelerate coffee cherry maturation, condensing natural sugars and yielding clean red apple acidity and caramel sweetness.
+          </p>
+
+          <!-- Altitude Graphic System -->
+          <div class="altitude-diagram-wrap">
+            <div class="tasting-label">ELEVATION PROFILE // MASL BAND</div>
+            <svg class="altitude-scale-svg" viewBox="0 0 400 160" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Elevation contour showing Las Flores at 1,850 MASL">
+              <!-- Elevation Mountain Contour -->
+              <path d="M 30 140 L 160 50 L 270 20 L 370 140 Z" fill="rgba(196, 77, 45, 0.09)" stroke="#1c1b19" stroke-width="1.5" />
+              
+              <!-- Elevation Contour Lines -->
+              <line x1="30" y1="120" x2="370" y2="120" stroke="rgba(28,27,25,0.16)" stroke-dasharray="3 3" />
+              <line x1="60" y1="80" x2="340" y2="80" stroke="rgba(28,27,25,0.16)" stroke-dasharray="3 3" />
+              <line x1="120" y1="40" x2="300" y2="40" stroke="rgba(28,27,25,0.16)" stroke-dasharray="3 3" />
+              
+              <!-- Altitude Marker for 1,850 MASL -->
+              <circle cx="240" cy="35" r="5.5" fill="#c44d2d" />
+              <line x1="240" y1="35" x2="240" y2="140" stroke="#c44d2d" stroke-width="1.5" stroke-dasharray="2 2" />
+              
+              <text x="250" y="38" fill="#c44d2d" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="bold">LAS FLORES: 1,850 MASL</text>
+              <text x="40" y="125" fill="#8f8980" font-family="'JetBrains Mono', monospace" font-size="9">1,200 MASL</text>
+              <text x="70" y="85" fill="#8f8980" font-family="'JetBrains Mono', monospace" font-size="9">1,500 MASL</text>
+              <text x="130" y="45" fill="#8f8980" font-family="'JetBrains Mono', monospace" font-size="9">1,800 MASL</text>
+              <text x="35" y="152" fill="#5e5952" font-family="'JetBrains Mono', monospace" font-size="9">HUILA VALLEY</text>
+              <text x="275" y="152" fill="#5e5952" font-family="'JetBrains Mono', monospace" font-size="9">CORDILLERA CENTRAL</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Roasting Philosophy -->
+        <div class="philosophy-pane">
+          <div>
+            <div class="category-stamp">ROASTING METHODOLOGY</div>
+            <div class="quote-lead">
+              “We roast lightly to reveal the work of the producer, not the imprint of the roaster.”
+            </div>
+            <p class="philosophy-body">
+              Our roasting philosophy is strictly light and development-focused. We calibrate time and airflow to preserve the native organic acids, floral aromatics, and terroir clarity cultivated at origin. By refusing to mask defects with dark roast development, every bag remains an authentic reflection of its harvest lot.
+            </p>
+          </div>
+
+          <div style="border-top: 1px solid var(--border-light); padding-top: 20px; margin-top: 24px; font-family: var(--font-data); font-size: 11px; color: var(--text-muted);">
+            <div>BATCH PROFILING: LIGHT ROAST SPECIFICATION</div>
+            <div style="margin-top: 4px; color: var(--text-main); font-weight: 700;">VARIETAL FIDELITY: CATURRA / FULL WASHED</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3 Available Offerings Matrix -->
+      <section id="offerings">
+        <div class="section-banner">
+          <div><span class="marker">03</span> ROASTER RELEASE MATRIX</div>
+          <div>CURRENT OFFERINGS</div>
+        </div>
+
+        <div class="structure-grid grid-split-3 border-b-solid">
+          
+          <!-- Offering 01: Las Flores / 04 -->
+          <div class="offering-card featured-card">
+            <div>
+              <div class="lot-badge">RELEASE LOT / 04</div>
+              <h3 class="lot-title">LAS FLORES / 04</h3>
+              <ul class="lot-specs-list">
+                <li><span>ORIGIN</span> <strong>Huila, Colombia</strong></li>
+                <li><span>PRODUCER</span> <strong>Las Flores</strong></li>
+                <li><span>PROCESS</span> <strong>Washed</strong></li>
+                <li><span>VARIETY</span> <strong>Caturra</strong></li>
+                <li><span>ALTITUDE</span> <strong style="color: var(--accent-terracotta);">1,850 MASL</strong></li>
+                <li><span>ROAST</span> <strong>Light</strong></li>
+              </ul>
+              <div class="tasting-notes-flow">
+                <span class="tasting-pill" style="font-size: 13px;">Red apple</span>
+                <span class="tasting-pill" style="font-size: 13px;">Caramel</span>
+                <span class="tasting-pill" style="font-size: 13px;">Citrus</span>
+              </div>
+            </div>
+            <div style="margin-top: 32px; border-top: 1.5px solid var(--border-dark); padding-top: 16px;">
+              <a href="#order" style="display: block; text-align: center; background: var(--border-dark); color: #fff; text-decoration: none; font-family: var(--font-data); font-size: 12px; padding: 14px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.08em; transition: background 0.15s ease;">SELECT LOT 04 →</a>
+            </div>
+          </div>
+
+          <!-- Offering 02: Clearly Marked Placeholder -->
+          <div class="offering-card placeholder-card">
+            <div>
+              <div class="lot-badge" style="color: var(--text-faint);">RELEASE LOT / [PLACEHOLDER P-02]</div>
+              <h3 class="lot-title" style="color: var(--text-muted);">[COFFEE OFFERING 02]</h3>
+              <div class="placeholder-stamp">
+                [ UPCOMING LOT RESERVED — ORIGIN & SPECIFICATIONS PENDING HARVEST ARRIVAL ]
+              </div>
+              <ul class="lot-specs-list" style="opacity: 0.65;">
+                <li><span>ORIGIN</span> <strong>[SPECIFICATION PENDING]</strong></li>
+                <li><span>PRODUCER</span> <strong>[SPECIFICATION PENDING]</strong></li>
+                <li><span>PROCESS</span> <strong>[SPECIFICATION PENDING]</strong></li>
+                <li><span>VARIETY</span> <strong>[SPECIFICATION PENDING]</strong></li>
+                <li><span>ALTITUDE</span> <strong>[SPECIFICATION PENDING]</strong></li>
+                <li><span>ROAST</span> <strong>Light</strong></li>
+              </ul>
+            </div>
+            <div style="margin-top: 32px; border-top: 1.5px dashed var(--border-strong); padding-top: 16px; text-align: center; font-family: var(--font-data); font-size: 11px; color: var(--text-faint);">
+              [ HARVEST LOT IN TRANSIT ]
+            </div>
+          </div>
+
+          <!-- Offering 03: Clearly Marked Placeholder -->
+          <div class="offering-card placeholder-card">
+            <div>
+              <div class="lot-badge" style="color: var(--text-faint);">RELEASE LOT / [PLACEHOLDER P-03]</div>
+              <h3 class="lot-title" style="color: var(--text-muted);">[COFFEE OFFERING 03]</h3>
+              <div class="placeholder-stamp">
+                [ UPCOMING LOT RESERVED — ORIGIN & SPECIFICATIONS PENDING HARVEST ARRIVAL ]
+              </div>
+              <ul class="lot-specs-list" style="opacity: 0.65;">
+                <li><span>ORIGIN</span> <strong>[SPECIFICATION PENDING]</strong></li>
+                <li><span>PRODUCER</span> <strong>[SPECIFICATION PENDING]</strong></li>
+                <li><span>PROCESS</span> <strong>[SPECIFICATION PENDING]</strong></li>
+                <li><span>VARIETY</span> <strong>[SPECIFICATION PENDING]</strong></li>
+                <li><span>ALTITUDE</span> <strong>[SPECIFICATION PENDING]</strong></li>
+                <li><span>ROAST</span> <strong>Light</strong></li>
+              </ul>
+            </div>
+            <div style="margin-top: 32px; border-top: 1.5px dashed var(--border-strong); padding-top: 16px; text-align: center; font-family: var(--font-data); font-size: 11px; color: var(--text-faint);">
+              [ HARVEST LOT IN TRANSIT ]
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Shop CTA Section -->
+      <section class="cta-ribbon-block" id="order">
+        <div>
+          <div class="category-stamp" style="color: var(--accent-terracotta);">ORDER DIRECT FROM THE ROASTERY</div>
+          <h2 class="cta-heading-serif">Experience Coffee with True Provenance.</h2>
+          <p style="color: #a8a49c; font-size: 17px; max-width: 520px; line-height: 1.6;">
+            Order freshly roasted whole bean packages of <strong>LAS FLORES / 04</strong>, roasted to order with complete harvest documentation on every bag.
+          </p>
+        </div>
+        <div style="text-align: right;">
+          <a href="#order" class="btn-shop-provenance">
+            <span>SHOP LAS FLORES / 04</span>
+            <span style="margin-left: 20px;" aria-hidden="true">→</span>
+          </a>
+          <div style="font-family: var(--font-data); font-size: 10px; color: #8e8980; margin-top: 14px; text-align: right; text-transform: uppercase; letter-spacing: 0.05em;">
+            PACKAGED IN RESEALABLE VALVE POUCHES
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-provenance">
+      <div>NORTHLINE COFFEE © 2026 — INDEPENDENT SPECIALTY COFFEE ROASTERS</div>
+      <div>SYSTEM//FORM SPECIMEN — NON-INDUSTRIAL SUBJECT TRANSFER</div>
+    </footer>
+
+  </div>
+</body>
+</html>

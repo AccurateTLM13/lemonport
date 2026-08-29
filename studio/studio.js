@@ -3490,6 +3490,7 @@
             <h3>${escapeHtml(specimen.title)}</h3>
             <p>${escapeHtml(specimen.model)} &middot; ${escapeHtml(specimen.skill)}</p>
             <span class="junk-tool-row__badge vault-status vault-status--${escapeHtml(String(specimen.status || "draft").toLowerCase())}">${escapeHtml(specimen.status || "Draft")}</span>
+            ${specimen.favorite === true ? '<span class="junk-tool-row__badge vault-favorite-badge">[ FAVORITE ]</span>' : ""}
           </div>
           <div class="junk-tool-row__actions">
             <button type="button" data-vault-edit="${escapeHtml(specimen.id)}">Edit</button>
@@ -3509,6 +3510,7 @@
     vaultForm.elements.skill.value = specimen.skill || "";
     vaultForm.elements.date.value = specimen.date || "";
     vaultForm.elements.status.value = specimen.status || "Draft";
+    vaultForm.elements.favorite.checked = specimen.favorite === true;
     vaultForm.elements.score.value = specimen.score === null || specimen.score === undefined ? "" : String(specimen.score);
     vaultForm.elements.tags.value = Array.isArray(specimen.tags) ? specimen.tags.join(", ") : "";
     vaultForm.elements.prompt.value = specimen.prompt || "";
@@ -3578,6 +3580,7 @@
         skill: vaultForm.elements.skill.value.trim(),
         date: vaultForm.elements.date.value,
         status: vaultForm.elements.status.value,
+        favorite: vaultForm.elements.favorite.checked,
         score: vaultForm.elements.score.value === "" ? null : Number(vaultForm.elements.score.value),
         tags: vaultForm.elements.tags.value.split(",").map((tag) => tag.trim()).filter(Boolean),
         prompt: vaultForm.elements.prompt.value,
@@ -3611,7 +3614,8 @@
       resetVaultForm();
       if (vaultAssetsNote) vaultAssetsNote.hidden = true;
       if (vaultImageNote) vaultImageNote.hidden = true;
-      setStatus(`Vault rebuilt. ${vaultSpecimens.filter((item) => item.status === "Published").length} specimen(s) on public display.`);
+      const buildWarnings = Array.isArray(created.warnings) ? created.warnings : [];
+      setStatus(`Vault rebuilt. ${vaultSpecimens.filter((item) => item.status === "Published").length} specimen(s) on public display.`, buildWarnings);
     } catch (error) {
       showError(error);
     } finally {

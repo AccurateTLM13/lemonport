@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE GREAT LAKES INDUSTRIAL ARCHIVE</title>
+<style>
+  :root {
+    --bg: #F0EDE5;
+    --text: #1C1C1A;
+    --blue: #3A5B72;
+    --line: rgba(28,28,26,0.25);
+    --font-heading: 'Helvetica Neue', 'Arial', sans-serif;
+    --font-body: 'Georgia', 'Times New Roman', serif;
+    --font-meta: 'Space Mono', 'SF Mono', monospace;
+  }
+  
+  * { box-sizing: border-box; }
+  
+  html, body { overflow-x: hidden; }
+  body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--text);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  .mono { font-family: var(--font-meta); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; }
+  .sans { font-family: var(--font-heading); text-transform: uppercase; }
+  
+  h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; margin: 0; line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; }
+  
+  .header { display: flex; justify-content: space-between; padding: 1.5rem 2rem; border-bottom: 1px solid var(--text); background: var(--bg); position: sticky; top: 0; z-index: 100;}
+  
+  .hero {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    border-bottom: 1px solid var(--text);
+    min-height: 85vh;
+  }
+  
+  .hero-title {
+    grid-column: 1 / 7;
+    padding: 6rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid var(--text);
+  }
+  
+  .hero-title h1 {
+    font-size: clamp(4rem, 8vw, 8rem);
+    line-height: 0.9;
+  }
+  
+  .subtitle { font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.1; font-style: italic; max-width: 15ch; color: var(--blue); margin-top: 4rem; }
+  
+  .hero-image {
+    grid-column: 7 / 13;
+    padding: 2rem;
+    display: flex;
+  }
+  .hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    mix-blend-mode: multiply;
+  }
+  
+  .collections { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--text); }
+  .coll-item { padding: 4rem 2rem; border-right: 1px solid var(--text); display: flex; flex-direction: column; justify-content: space-between; }
+  .coll-item:last-child { border-right: none; }
+  
+  .coll-num { font-size: clamp(3.5rem, 5vw, 6rem); letter-spacing: -0.04em; margin-bottom: 1.5rem; color: var(--text); line-height: 0.9; font-family: var(--font-heading); }
+  .coll-label { color: var(--blue); }
+  
+  .featured { display: grid; grid-template-columns: repeat(12, 1fr); border-bottom: 1px solid var(--text); }
+  
+  .featured-image-wrapper {
+    grid-column: 1 / 8;
+    border-right: 1px solid var(--text);
+    padding: 2rem;
+    background: #E4E0D6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .featured-image-wrapper img {
+    width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+  }
+  
+  .featured-details { 
+    grid-column: 8 / 13;
+    padding: 6rem 2rem;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  
+  .detail-row { display: flex; justify-content: space-between; padding: 1.5rem 0; border-bottom: 1px solid var(--line); font-size: 0.85rem; color: var(--text); align-items: baseline; }
+  .detail-row:last-child { border-bottom: none; }
+  
+  .mission { padding: 12rem 2rem; text-align: center; border-bottom: 1px solid var(--text); }
+  .mission p { font-size: clamp(2.5rem, 5vw, 5rem); max-width: 25ch; margin: 0 auto; line-height: 1.1; font-style: italic; }
+  
+  .footer { display: grid; grid-template-columns: repeat(12, 1fr); }
+  .footer-col { padding: 6rem 2rem; border-right: 1px solid var(--text); display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; }
+  .footer-col:last-child { border-right: none; }
+  .footer-col.col-1 { grid-column: 1 / 7; }
+  .footer-col.col-2 { grid-column: 7 / 13; }
+  
+  .footer h2 { font-size: 2.5rem; margin-bottom: 2rem; }
+  .footer p { font-size: 1.25rem; line-height: 1.5; max-width: 40ch; margin-bottom: 3rem; }
+  
+  .cta-btn { display: inline-block; padding: 1.5rem 3rem; border: 1px solid var(--text); color: var(--bg); background: var(--text); text-decoration: none; transition: all 0.2s; font-size: 1rem; }
+  .cta-btn:hover { background: transparent; color: var(--text); }
+  
+  @media (max-width: 1024px) {
+    .hero-title { grid-column: 1 / 13; border-right: none; border-bottom: 1px solid var(--text); min-height: 50vh; }
+    .hero-image { grid-column: 1 / 13; min-height: 40vh; }
+    .collections { grid-template-columns: repeat(2, 1fr); }
+    .coll-item:nth-child(2) { border-right: none; }
+    .coll-item:nth-child(1), .coll-item:nth-child(2) { border-bottom: 1px solid var(--text); }
+    
+    .featured-image-wrapper { grid-column: 1 / 13; border-right: none; border-bottom: 1px solid var(--text); padding: 1.5rem; }
+    .featured-details { grid-column: 1 / 13; }
+    
+    .footer-col.col-1 { grid-column: 1 / 13; border-right: none; border-bottom: 1px solid var(--text); }
+    .footer-col.col-2 { grid-column: 1 / 13; }
+  }
+  
+  @media (max-width: 768px) {
+    .header { padding: 1rem 1.5rem; flex-wrap: wrap; gap: 1rem; }
+    .hero-title { padding: 4rem 1.5rem; }
+    h1 { font-size: 15vw; word-break: break-word; }
+    .hero-image { padding: 1.5rem; }
+    .collections { grid-template-columns: 1fr; }
+    .coll-item { border-right: none !important; border-bottom: 1px solid var(--text); padding: 3rem 1.5rem; }
+    .coll-item:last-child { border-bottom: none; }
+    .featured-details { padding: 4rem 1.5rem; }
+    .mission { padding: 8rem 1.5rem; }
+    .footer-col { padding: 4rem 1.5rem; }
+    .detail-row { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+    .cta-btn { width: 100%; text-align: center; }
+  }
+</style>
+</head>
+<body>
+  <header class="header mono">
+    <span>INSTITUTIONAL REPOSITORY</span>
+    <span>ESTABLISHED 1987</span>
+  </header>
+  
+  <div class="hero">
+    <div class="hero-title">
+      <h1>The Great Lakes<br>Industrial<br>Archive</h1>
+      <p class="subtitle">Industry remembered through the people who built it.</p>
+    </div>
+    <div class="hero-image">
+      <img src="file:///C:/Users/johnp/.gemini/antigravity-ide/brain/109da52d-8291-4985-9c5c-b8e6f2abe88c/archive_hero_building_1787608393570.jpg" alt="The Great Lakes Industrial Archive Building" />
+    </div>
+  </div>
+  
+  <div class="collections">
+    <div class="coll-item"><span class="coll-num">18,420</span><span class="coll-label mono">Photographs</span></div>
+    <div class="coll-item"><span class="coll-num">7,860</span><span class="coll-label mono">Documents</span></div>
+    <div class="coll-item"><span class="coll-num">614</span><span class="coll-label mono">Oral Histories</span></div>
+    <div class="coll-item"><span class="coll-num">1,205</span><span class="coll-label mono">Physical Objects</span></div>
+  </div>
+  
+  <div class="featured">
+    <div class="featured-image-wrapper">
+      <img src="file:///C:/Users/johnp/.gemini/antigravity-ide/brain/109da52d-8291-4985-9c5c-b8e6f2abe88c/archive_featured_object_1787607343574.jpg" alt="Featured Archive Object" />
+    </div>
+    <div class="featured-details">
+      <div>
+        <div class="mono" style="margin-bottom: 2rem; color: var(--blue);">FEATURED ARCHIVAL OBJECT</div>
+        <h2 style="font-size: clamp(2rem, 3vw, 3rem); margin-bottom: 3rem;">[ OBJECT TITLE PLACEHOLDER ]</h2>
+      </div>
+      <div class="mono">
+        <div class="detail-row"><span class="sans" style="opacity: 0.6;">ACCESSION NO.</span><span>[ 2026.04.12 ]</span></div>
+        <div class="detail-row"><span class="sans" style="opacity: 0.6;">DATE</span><span>[ YYYY ]</span></div>
+        <div class="detail-row"><span class="sans" style="opacity: 0.6;">LOCATION</span><span>[ ORIGIN LOCATION ]</span></div>
+        <div class="detail-row"><span class="sans" style="opacity: 0.6;">MATERIAL</span><span>[ MATERIAL TYPE ]</span></div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="mission">
+    <p>The Archive is dedicated to the preservation and accessible study of manufacturing heritage, prioritizing primary source documentation and direct accounts of industrial labor.</p>
+  </div>
+  
+  <div class="footer">
+    <div class="footer-col col-1">
+      <div>
+        <h2>RESEARCH & ACCESS</h2>
+        <p>The reading room and physical collections are open to researchers, historians, and the public by appointment. Digital collections are accessible at all times.</p>
+      </div>
+      <a href="#" class="cta-btn mono">REQUEST ACCESS</a>
+    </div>
+    <div class="footer-col col-2">
+      <div>
+        <h2>VISIT & CONTACT</h2>
+        <p>Plan a visit to the physical archive or contact the curatorial staff for collection inquiries. Address and hours provided upon request.</p>
+      </div>
+      <a href="#" class="cta-btn mono">PLAN YOUR VISIT</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -2260,6 +2260,14 @@ button:disabled {
   color: #2c5c33;
 }
 
+.vault-favorite-badge {
+  margin-left: 6px;
+  padding: 3px 5px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
 .vault-status--draft,
 .vault-status--ready,
 .vault-status--hidden,
