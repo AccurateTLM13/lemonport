@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MORROW EDITIONS — Books, journals and printed works</title>
+<meta name="description" content="MORROW EDITIONS is an independent publisher of books, journals, photography monographs, essays and limited-edition printed works.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#eee8dc;
+  --ground-light:#f6f1e8;
+  --ink:#171510;
+  --ink-soft:#5f594f;
+  --thread:rgba(23,21,16,.16);
+  --thread-soft:rgba(23,21,16,.085);
+  --clay:#9e4f36;
+  --indigo:#263d56;
+  --moss:#69745a;
+  --straw:#c9aa64;
+  --char:#25231f;
+
+  --tracks:12;
+  --track-gap:clamp(8px,1vw,18px);
+  --edge:clamp(18px,4vw,64px);
+
+  --tight:clamp(24px,3vw,46px);
+  --neutral:clamp(56px,6vw,96px);
+  --loose:clamp(104px,11vw,180px);
+
+  --mast:64px;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+html,body{overflow-x:clip}
+body{
+  margin:0;
+  padding-top:var(--mast);
+  background:var(--ground);
+  color:var(--ink);
+  font-family:"Inter Tight",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:15px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+h1,h2,h3,h4,p,dl,dd,dt,figure,ul,ol{margin:0}
+ul{list-style:none;padding:0}
+::selection{background:var(--clay);color:#f6f1e8}
+
+:focus-visible{outline:2px solid var(--clay);outline-offset:3px}
+.skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--ink);color:var(--ground);padding:12px 18px;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.skip:focus{left:12px;top:12px}
+
+/* ---------- woven field ---------- */
+.field{
+  display:grid;
+  grid-template-columns:repeat(var(--tracks),minmax(0,1fr));
+  column-gap:var(--track-gap);
+  row-gap:var(--rg,var(--tight));
+  padding-inline:var(--edge);
+  position:relative;
+  scroll-margin-top:calc(var(--mast) + 20px);
+}
+.run{grid-column:var(--cs,1)/var(--ce,13);grid-row:var(--r,auto);min-width:0}
+.sub{display:grid;grid-template-columns:repeat(var(--tracks),minmax(0,1fr));column-gap:var(--track-gap);row-gap:var(--rgg,10px);min-width:0}
+.bleed{margin-inline:calc(var(--edge) * -1);padding-inline:calc(var(--edge) * 2)}
+
+/* ---------- type ---------- */
+.serif{font-family:"Instrument Serif",Georgia,serif;font-weight:400}
+.d1{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:clamp(48px,7.4vw,126px);line-height:.9;letter-spacing:-.022em}
+.d2{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:clamp(31px,4.2vw,66px);line-height:.98;letter-spacing:-.018em}
+.d3{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:clamp(23px,2.3vw,36px);line-height:1.06;letter-spacing:-.01em}
+.d4{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:clamp(19px,1.55vw,25px);line-height:1.16}
+.it{font-style:italic}
+.lab{font-size:11px;line-height:1.35;letter-spacing:.16em;text-transform:uppercase;font-weight:500;color:var(--ink-soft)}
+.lab--ink{color:var(--ink)}
+.lab--clay{color:var(--clay)}
+.num{font-variant-numeric:tabular-nums}
+.p{font-size:15px;line-height:1.62;color:var(--ink-soft)}
+.p--ink{color:var(--ink)}
+.p--sm{font-size:13.5px;line-height:1.58}
+.p--lg{font-size:clamp(16px,1.35vw,19px);line-height:1.6;color:var(--ink)}
+.soft{color:var(--ink-soft)}
+.rule{height:1px;background:var(--thread);min-width:0}
+.rule--soft{background:var(--thread-soft)}
+.rule--off{margin-right:calc(var(--edge) * -1)}
+.rule--ink{background:var(--ink)}
+
+/* ---------- edges / selvage ---------- */
+.mast{
+  position:fixed;top:0;left:0;right:0;z-index:80;
+  display:grid;grid-template-columns:repeat(var(--tracks),minmax(0,1fr));
+  column-gap:var(--track-gap);align-items:center;
+  padding:16px var(--edge);
+  background:rgba(238,232,220,.94);
+  backdrop-filter:saturate(140%) blur(10px);
+  -webkit-backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid var(--thread-soft);
+  transition:padding 260ms var(--ease),border-color 260ms var(--ease),background 260ms var(--ease);
+}
+.mast.is-tight{padding-top:9px;padding-bottom:9px;border-bottom-color:var(--thread);background:rgba(238,232,220,.97)}
+.mast__brand{grid-column:1/4;display:flex;align-items:baseline;gap:10px;min-width:0}
+.mark{display:flex;align-items:baseline;gap:6px;font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap}
+.mark i{width:7px;height:7px;background:var(--clay);display:inline-block;transform:translateY(-1px)}
+.mark span{color:var(--ink-soft);font-weight:500;letter-spacing:.16em}
+.mast__nav{grid-column:4/10;display:flex;flex-wrap:wrap;gap:clamp(10px,1.5vw,26px);align-items:baseline;min-width:0}
+.mast__nav a{font-size:12.5px;font-weight:500;letter-spacing:.03em;padding-top:6px;padding-bottom:6px;border-bottom:1px solid transparent;transition:border-color 160ms var(--ease),color 160ms var(--ease)}
+.mast__nav a:hover,.mast__nav a[aria-current="true"]{border-bottom-color:var(--ink)}
+.mast__aside{grid-column:10/13;display:flex;justify-content:flex-end;align-items:center;gap:14px;min-width:0}
+.mast__issue{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mast__act{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--ink);padding:7px 12px;white-space:nowrap;transition:background 160ms var(--ease),color 160ms var(--ease)}
+.mast__act:hover{background:var(--ink);color:var(--ground)}
+
+.rail{
+  position:fixed;left:calc(var(--edge) - 21px);top:50%;transform:translateY(-50%);
+  width:13px;height:min(56vh,470px);z-index:40;display:none;
+  flex-direction:column;align-items:center;gap:14px;
+}
+.rail__lab{
+  writing-mode:vertical-rl;transform:rotate(180deg);
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);
+  white-space:nowrap;transition:color 240ms var(--ease);
+}
+.rail__track{flex:1;width:1px;background:var(--thread);position:relative}
+.rail__fill{position:absolute;top:0;left:0;width:1px;background:var(--clay);height:0%}
+@media (min-width:1280px){.rail{display:flex}}
+
+.edge-note{
+  writing-mode:vertical-rl;transform:rotate(180deg);
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);
+  align-self:start;justify-self:end;white-space:nowrap;
+}
+
+/* ---------- photography ---------- */
+.ph{position:relative;overflow:hidden;background:#e2dbcb;aspect-ratio:var(--ar,4/3)}
+.ph img{width:100%;height:100%;object-fit:cover;object-position:var(--op,50% 50%);filter:grayscale(1) contrast(1.06)}
+.ph::after{content:"";position:absolute;inset:0;background:var(--ground);mix-blend-mode:multiply;opacity:.1;pointer-events:none}
+.cap{margin-top:9px;font-size:11.5px;line-height:1.45;color:var(--ink-soft);max-width:46ch}
+
+/* ---------- bound actions ---------- */
+.act{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  border:1px solid var(--ink);padding:13px 16px;
+  transition:background 160ms var(--ease),color 160ms var(--ease),border-color 160ms var(--ease);
+  white-space:nowrap;
+}
+.act i{font-style:normal;transform:translateY(-.5px)}
+.act:hover{background:var(--ink);color:var(--ground)}
+.act--solid{background:var(--clay);border-color:var(--clay);color:#f7f2e9}
+.act--solid:hover{background:var(--char);border-color:var(--char);color:#f7f2e9}
+.act--light{border-color:rgba(238,232,220,.42);color:var(--ground)}
+.act--light:hover{background:var(--ground);color:var(--indigo)}
+.act--wide{width:100%;justify-content:space-between}
+.acts{display:flex;flex-wrap:wrap;gap:10px}
+.link{
+  display:inline-flex;align-items:baseline;gap:9px;font-size:11px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;border-bottom:1px solid var(--thread);padding-bottom:5px;
+  transition:border-color 180ms var(--ease),color 180ms var(--ease);
+}
+.link:hover{border-bottom-color:var(--ink)}
+.link i{font-style:normal}
+
+/* ---------- book objects ---------- */
+.book{
+  position:relative;aspect-ratio:var(--bar,.72);
+  background:linear-gradient(104deg,#f5f0e7 0%,#ece5d7 56%,#ded4c0 100%);
+  box-shadow:0 30px 64px -36px rgba(23,21,16,.6),0 1px 0 rgba(255,255,255,.55) inset;
+  overflow:hidden;
+}
+.book::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:12px;
+  background:linear-gradient(90deg,#c6bca6,#e9e1d1 68%,#f4efe6);
+  box-shadow:1px 0 0 rgba(23,21,16,.09);
+}
+.book__face{
+  position:relative;height:100%;width:100%;display:flex;flex-direction:column;justify-content:space-between;gap:1em;
+  padding:clamp(16px,2.2vw,32px) clamp(14px,1.8vw,26px) clamp(14px,1.8vw,24px) clamp(24px,3vw,44px);
+}
+.book__frame{position:absolute;inset:11px 11px 11px 21px;border:1px solid rgba(23,21,16,.13);pointer-events:none}
+.book__top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft)}
+.book__title{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(20px,2.5vw,38px);line-height:1.02;letter-spacing:-.015em}
+.book__line{height:1px;background:var(--clay);width:38px;margin:12px 0}
+.book__sub{font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-size:clamp(12px,1.05vw,16px);line-height:1.25;color:var(--ink-soft)}
+.book__foot{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);display:flex;justify-content:space-between;gap:10px}
+.book--dark{background:linear-gradient(104deg,#33302a,#1b1915);color:var(--ground)}
+.book--dark .book__frame{border-color:rgba(238,232,220,.16)}
+.book--dark .book__top,.book--dark .book__foot{color:rgba(238,232,220,.62)}
+.book--dark .book__sub{color:rgba(238,232,220,.72)}
+.book__plate{position:relative;flex:1;min-height:0;overflow:hidden;margin:2px 0}
+.book__plate img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.1) brightness(.92)}
+.book__band{background:var(--clay);color:#f7f2e9;padding:5px 9px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;align-self:flex-start}
+.book__stitches{position:absolute;left:5px;top:22%;display:grid;gap:26px}
+.book__stitches i{width:4px;height:4px;border-radius:50%;background:#b3a894;box-shadow:0 1px 0 rgba(255,255,255,.6)}
+.book__no{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(40px,6vw,86px);line-height:.82;letter-spacing:-.03em}
+
+/* ---------- spread objects ---------- */
+.spread{
+  display:grid;grid-template-columns:1fr 1px 1fr;
+  background:linear-gradient(90deg,#efe9de,#faf6ee 50%,#ece5d8);
+  box-shadow:0 24px 54px -34px rgba(23,21,16,.55);
+  aspect-ratio:var(--sar,1.44);overflow:hidden;
+}
+.spread__gutter{background:linear-gradient(90deg,rgba(23,21,16,.24),rgba(23,21,16,0) 70%)}
+.spread__page{position:relative;min-width:0;padding:clamp(10px,1.2vw,20px);display:flex;flex-direction:column;gap:.55em}
+.spread__plate{position:relative;flex:1;min-height:0;overflow:hidden;background:#ddd5c4}
+.spread__plate img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.04)}
+.spread__txt{font-size:clamp(9px,.82vw,11.5px);line-height:1.5;color:var(--ink-soft)}
+.spread__h{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(13px,1.15vw,18px);line-height:1.12}
+.spread__folio{display:flex;justify-content:space-between;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-top:auto;padding-top:6px}
+.spread__v{writing-mode:vertical-rl;transform:rotate(180deg);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+
+/* ---------- open shed ---------- */
+.shed{display:grid;grid-template-rows:0fr;transition:grid-template-rows 340ms var(--ease)}
+.shed>div{overflow:hidden;min-height:0;visibility:hidden;transition:visibility 0s linear 340ms}
+.is-open>.shed,.shed.is-open{grid-template-rows:1fr}
+.is-open>.shed>div,.shed.is-open>div{visibility:visible;transition-delay:0s}
+.shed__in{padding-top:16px}
+
+/* ---------- section: featured ---------- */
+.featured{padding-block:clamp(46px,6vw,96px) var(--loose);row-gap:clamp(18px,2.4vw,38px);--cs:1}
+.h-eyebrow{grid-column:1/5;grid-row:1}
+.h-meta{grid-column:8/13;grid-row:1;text-align:right;align-self:start}
+.h-title{grid-column:1/10;grid-row:2;margin-top:clamp(14px,2.6vw,44px)}
+.h-sub{grid-column:3/11;grid-row:3;font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-size:clamp(19px,2.1vw,34px);line-height:1.22;color:var(--ink)}
+.h-cover{grid-column:1/4;grid-row:4;align-self:end}
+.h-photo{grid-column:5/13;grid-row:4;align-self:end;margin-right:calc(var(--edge) * -1);height:clamp(260px,42vh,470px);--ar:auto}
+.h-photo img{height:100%}
+.h-register{grid-column:1/13;grid-row:5;margin-top:clamp(26px,3.4vw,58px);border-top:1px solid var(--ink);padding-top:16px}
+.h-copy{grid-column:2/6}
+.h-specs{grid-column:6/9;display:grid;grid-template-columns:auto 1fr;column-gap:12px;row-gap:6px;align-content:start}
+.h-specs dt{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap}
+.h-specs dd{font-size:12.5px;color:var(--ink)}
+.h-price{grid-column:9/10;font-family:"Instrument Serif",Georgia,serif;font-size:clamp(30px,3vw,46px);line-height:1;align-self:start}
+.h-actions{grid-column:10/13;display:flex;flex-direction:column;gap:9px;align-items:flex-end}
+.h-detail{grid-column:1/13;grid-row:6}
+.h-order{grid-column:1/13;grid-row:7}
+.order{display:flex;flex-wrap:wrap;gap:clamp(10px,2vw,32px);align-items:flex-end;border-top:1px solid var(--thread);padding-top:16px}
+.order__opt{display:flex;flex-direction:column;gap:6px;min-width:190px;flex:1 1 190px}
+.order__price{font-family:"Instrument Serif",Georgia,serif;font-size:26px;line-height:1}
+.det{display:grid;grid-template-columns:repeat(var(--tracks),minmax(0,1fr));column-gap:var(--track-gap);row-gap:22px;border-top:1px solid var(--thread);padding-top:20px}
+.det__a{grid-column:var(--cs,1)/var(--ce,5);grid-row:var(--r,auto)}
+.det__b{grid-column:var(--cs,5)/var(--ce,9);grid-row:var(--r,auto)}
+.det__c{grid-column:var(--cs,1)/var(--ce,7);grid-row:var(--r,auto)}
+.det__d{grid-column:var(--cs,7)/var(--ce,12);grid-row:var(--r,auto)}
+.det h4{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);font-weight:500;margin-bottom:10px}
+.det__list li{display:flex;gap:12px;padding:7px 0;border-bottom:1px solid var(--thread-soft);font-size:13px}
+.det__list li span:first-child{font-variant-numeric:tabular-nums;color:var(--ink-soft);min-width:34px}
+.press{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(17px,1.5vw,23px);line-height:1.3}
+
+/* ---------- section: releases ---------- */
+.releases{padding-block:var(--neutral) var(--loose);row-gap:clamp(30px,3.6vw,62px)}
+.rel-head{grid-column:1/4;grid-row:1}
+.rel-statement{grid-column:4/10;grid-row:1;font-family:"Instrument Serif",Georgia,serif;font-size:clamp(18px,1.7vw,27px);line-height:1.28}
+.rel-count{grid-column:11/13;grid-row:1;text-align:right}
+.rel-rule{grid-column:1/13;grid-row:2}
+.rec{grid-column:1/-1;grid-row:var(--r,auto);display:grid;grid-template-columns:repeat(var(--tracks),minmax(0,1fr));column-gap:var(--track-gap);row-gap:12px}
+.rec__title{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(22px,2.1vw,33px);line-height:1.06;letter-spacing:-.012em}
+.rec__meta{font-size:12.5px;color:var(--ink-soft);letter-spacing:.01em}
+.rec__price{font-family:"Instrument Serif",Georgia,serif;font-size:20px}
+.rec__note{font-size:13px;line-height:1.55;color:var(--ink-soft);max-width:44ch}
+.rec__avail{display:inline-flex;align-items:center;gap:7px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.dot{width:6px;height:6px;background:var(--moss);display:inline-block}
+.dot--clay{background:var(--clay)}
+.dot--straw{background:var(--straw)}
+.dot--out{background:none;box-shadow:inset 0 0 0 1px var(--ink-soft)}
+.rec--major{padding-top:18px;border-top:1px solid var(--thread-soft);transition:border-color 220ms var(--ease)}
+.rec--major:hover,.rec--major:focus-within{border-top-color:var(--ink)}
+.rec--minor{grid-column:var(--cs,1)/var(--ce,13);padding-top:14px;border-top:1px solid var(--thread-soft);row-gap:9px;transition:border-color 220ms var(--ease)}
+.rec--minor:hover,.rec--minor:focus-within{border-top-color:var(--ink)}
+.rec--major .rec__fig{grid-column:7/13;grid-row:1/3;--ar:16/11}
+.rec--major .rec__head{grid-column:1/6;grid-row:1;align-self:end}
+.rec--major .rec__body{grid-column:1/6;grid-row:2}
+.rec--alt .rec__fig{grid-column:1/6;grid-row:1/3;--ar:16/11}
+.rec--alt .rec__head{grid-column:7/13;grid-row:1;align-self:end}
+.rec--alt .rec__body{grid-column:7/13;grid-row:2}
+.rec--minor .rec__fig{grid-column:1/-1;grid-row:1;--ar:16/10}
+.rec--minor .rec__head{grid-column:1/-1;grid-row:2}
+.rec--minor .rec__body{grid-column:1/-1;grid-row:3}
+.rec--minor .rec__shed{grid-column:1/-1;grid-row:4}
+.rec__more{
+  font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  display:inline-flex;gap:7px;align-items:flex-end;border-bottom:1px solid var(--thread);padding-bottom:6px;
+  min-height:24px;align-self:start;transition:border-color 180ms var(--ease);
+}
+.rec__more:hover{border-bottom-color:var(--ink)}
+.rec__more[aria-expanded="true"]{border-bottom-color:var(--clay);color:var(--clay)}
+.rel-more{grid-column:10/13;grid-row:6;justify-self:end;align-self:end}
+
+/* ---------- section: journal ---------- */
+.journal{padding-block:var(--neutral) var(--loose);row-gap:clamp(34px,4vw,70px)}
+.j-head{grid-column:1/4;grid-row:1}
+.j-statement{grid-column:4/10;grid-row:1;font-size:15px;line-height:1.6;color:var(--ink-soft);max-width:52ch}
+.j-all{grid-column:10/13;grid-row:1;justify-self:end;align-self:end}
+.j-rule{grid-column:1/13;grid-row:2}
+.story{grid-column:1/13;grid-row:var(--r,auto);display:grid;grid-template-columns:repeat(var(--tracks),minmax(0,1fr));column-gap:var(--track-gap);row-gap:12px;align-items:start}
+.story__t{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(26px,3vw,48px);line-height:1.02;letter-spacing:-.018em}
+.story__t a{border-bottom:1px solid transparent;transition:border-color 200ms var(--ease)}
+.story__t a:hover{border-bottom-color:var(--ink)}
+.story__meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);align-items:baseline}
+.story__kind{color:var(--clay)}
+.story__x{font-size:14px;line-height:1.55;color:var(--ink-soft);max-width:48ch}
+.s1 .story__t{grid-column:1/8;grid-row:1}
+.s1 .story__meta{grid-column:1/8;grid-row:2}
+.s1 .story__x{grid-column:1/7;grid-row:3}
+.s1 .story__fig{grid-column:8/13;grid-row:1/3;--ar:4/5}
+.s1 .story__cap{grid-column:8/13;grid-row:3}
+.s2 .story__fig{grid-column:1/7;grid-row:1/3;--ar:5/4}
+.s2 .story__cap{grid-column:1/6;grid-row:3}
+.s2 .story__t{grid-column:7/13;grid-row:1;align-self:end}
+.s2 .story__meta{grid-column:7/13;grid-row:2}
+.s2 .story__x{grid-column:7/12;grid-row:3}
+.s3 .story__kind{grid-column:1/3;grid-row:1;align-self:start;padding-top:.5em}
+.s3 .story__t{grid-column:3/9;grid-row:1}
+.s3 .story__meta{grid-column:3/9;grid-row:2}
+.s3 .story__x{grid-column:3/9;grid-row:3}
+.s3 .story__fig{grid-column:10/13;grid-row:1/3;--ar:3/4}
+.s3 .story__cap{grid-column:10/13;grid-row:3}
+.s4 .story__t{grid-column:1/4;grid-row:1}
+.s4 .story__meta{grid-column:1/4;grid-row:2}
+.s4 .story__fig{grid-column:4/13;grid-row:1/4;--ar:16/9}
+.s4 .story__cap{grid-column:4/11;grid-row:4}
+
+/* ---------- section: after the quarry ---------- */
+.quarry{padding-block:var(--neutral) var(--loose);row-gap:clamp(30px,3.4vw,58px)}
+.break{grid-column:1/13;grid-row:1;margin-inline:calc(var(--edge) * -1);position:relative;min-height:clamp(360px,62vh,660px);display:grid;align-items:end;overflow:hidden;background:#1b1915}
+.break__img{position:absolute;inset:0}
+.break__img img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.08) brightness(.92)}
+.break::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,21,16,.62) 0%,rgba(23,21,16,.18) 42%,rgba(23,21,16,.82) 100%)}
+.break__in{position:relative;z-index:2;display:grid;grid-template-columns:repeat(var(--tracks),minmax(0,1fr));column-gap:var(--track-gap);row-gap:14px;padding:clamp(28px,4vw,64px) var(--edge);color:var(--ground);width:100%}
+.break__eyebrow{grid-column:1/5;grid-row:1}
+.break__eyebrow .lab{color:rgba(238,232,220,.72)}
+.break__t{grid-column:1/10;grid-row:2;font-family:"Instrument Serif",Georgia,serif;font-size:clamp(46px,8vw,132px);line-height:.88;letter-spacing:-.026em}
+.break__sub{grid-column:1/8;grid-row:3;font-family:"Instrument Serif",Georgia,serif;font-style:italic;font-size:clamp(17px,1.8vw,28px);line-height:1.24;color:rgba(238,232,220,.9)}
+.break__cap{grid-column:8/13;grid-row:4;text-align:right;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(238,232,220,.7);align-self:end}
+.q-cover{grid-column:1/4;grid-row:2;align-self:start}
+.q-essay{grid-column:5/9;grid-row:2}
+.q-essay h3{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(25px,2.5vw,40px);line-height:1.06;letter-spacing:-.014em;margin-bottom:16px}
+.q-essay p{font-size:14.5px;line-height:1.65;color:var(--ink-soft);max-width:46ch}
+.q-essay p+p{margin-top:13px}
+.q-specs{grid-column:10/12;grid-row:2;align-self:start}
+.q-specs dl{display:grid;grid-template-columns:auto 1fr;column-gap:12px;row-gap:8px;border-top:1px solid var(--ink);padding-top:12px}
+.q-specs dt{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap;padding-top:2px}
+.q-specs dd{font-size:12.5px;text-align:right}
+.q-note{grid-column:1/4;grid-row:3;align-self:start}
+.q-note blockquote{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(17px,1.5vw,24px);line-height:1.3;margin:0}
+.q-note figcaption{margin-top:12px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.q-edge{grid-column:12/13;grid-row:2/4;justify-self:end}
+.q-spreads{grid-column:5/12;grid-row:3;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));column-gap:var(--track-gap);row-gap:14px;align-items:start}
+.q-spreads .spread{grid-column:span 4}
+.q-spreads .spread--b{grid-column:span 3;--sar:1.16;margin-top:clamp(10px,2vw,34px)}
+.q-more{grid-column:5/12;grid-row:4}
+.q-more__grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));column-gap:var(--track-gap);row-gap:14px;padding-top:18px}
+.q-more__grid .spread{grid-column:span 4}
+.q-more__grid .spread--c{grid-column:span 3;--sar:1.02}
+.q-buy{grid-column:1/13;grid-row:5;border-top:1px solid var(--ink);padding-top:18px;display:grid;grid-template-columns:repeat(var(--tracks),minmax(0,1fr));column-gap:var(--track-gap);row-gap:16px;align-items:end}
+.q-buy__info{grid-column:1/6}
+.q-buy__price{grid-column:6/8;font-family:"Instrument Serif",Georgia,serif;font-size:clamp(30px,3vw,46px);line-height:1}
+.q-buy__acts{grid-column:8/13;display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+
+/* ---------- section: journal no 04 ---------- */
+.issue{
+  background:var(--indigo);color:var(--ground);
+  padding-block:var(--loose) var(--neutral);row-gap:clamp(26px,3vw,48px);
+}
+.issue .lab{color:rgba(238,232,220,.66)}
+.issue .rule{background:rgba(238,232,220,.2)}
+.i-cover{grid-column:1/4;grid-row:1}
+.i-theme{grid-column:4/10;grid-row:1;align-self:center}
+.i-theme__no{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(238,232,220,.66)}
+.i-theme__t{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(48px,7vw,116px);line-height:.88;letter-spacing:-.026em;margin-top:8px}
+.i-theme__note{font-size:14px;line-height:1.62;color:rgba(238,232,220,.82);max-width:44ch;margin-top:16px}
+.i-side{grid-column:10/13;grid-row:1;align-self:center;display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.i-side dl{display:grid;grid-template-columns:auto 1fr;column-gap:12px;row-gap:6px;width:100%;border-top:1px solid rgba(238,232,220,.24);padding-top:12px}
+.i-side dt{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(238,232,220,.6);white-space:nowrap;padding-top:2px}
+.i-side dd{font-size:12.5px;text-align:right}
+.i-rule{grid-column:1/13;grid-row:2}
+.i-contents{grid-column:1/13;grid-row:3}
+.crow{
+  grid-column:1/-1;display:grid;grid-template-columns:repeat(var(--tracks),minmax(0,1fr));
+  column-gap:var(--track-gap);row-gap:10px;align-items:baseline;
+  border-top:1px solid rgba(238,232,220,.18);padding:14px 0;
+}
+.crow:last-child{border-bottom:1px solid rgba(238,232,220,.18)}
+.crow__no{grid-column:1/2;font-variant-numeric:tabular-nums;font-size:11px;letter-spacing:.14em;color:rgba(238,232,220,.6)}
+.crow__t{grid-column:2/8;font-family:"Instrument Serif",Georgia,serif;font-size:clamp(19px,1.7vw,27px);line-height:1.1}
+.crow__by{grid-column:8/11;font-size:12.5px;color:rgba(238,232,220,.74)}
+.crow__pg{grid-column:11/12;font-size:11px;letter-spacing:.1em;color:rgba(238,232,220,.6);font-variant-numeric:tabular-nums;text-align:right}
+.crow__btn{grid-column:12/13;justify-self:end;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(238,232,220,.32);padding-bottom:6px;min-height:24px;display:inline-flex;align-items:flex-end;transition:border-color 180ms var(--ease),color 180ms var(--ease)}
+.crow__btn:hover{border-bottom-color:var(--ground)}
+.crow__btn[aria-expanded="true"]{color:var(--straw);border-bottom-color:var(--straw)}
+.crow__shed{grid-column:1/-1}
+.crow__abs{font-size:13.5px;line-height:1.6;color:rgba(238,232,220,.8);max-width:62ch;border-left:1px solid var(--straw);padding-left:16px}
+.i-foot{grid-column:1/13;grid-row:4;display:grid;grid-template-columns:repeat(var(--tracks),minmax(0,1fr));column-gap:var(--track-gap);row-gap:12px;align-items:start}
+.i-foot__lab{grid-column:1/3}
+.i-foot__list{grid-column:3/13;font-size:13px;line-height:1.7;color:rgba(238,232,220,.82)}
+
+/* ---------- section: archive ---------- */
+.archive{background:var(--ground-light);padding-block:var(--neutral) var(--neutral);row-gap:0}
+.a-head{grid-column:1/4;grid-row:1}
+.a-statement{grid-column:4/10;grid-row:1;font-size:15px;line-height:1.6;color:var(--ink-soft);max-width:48ch}
+.a-count{grid-column:11/13;grid-row:1;text-align:right;font-variant-numeric:tabular-nums}
+.a-controls{grid-column:1/13;grid-row:2;display:grid;grid-template-columns:repeat(var(--tracks),minmax(0,1fr));column-gap:var(--track-gap);row-gap:14px;align-items:center;border-top:1px solid var(--thread);padding-top:14px;margin-top:clamp(20px,2.2vw,34px)}
+.a-filters{grid-column:1/10;display:flex;flex-wrap:wrap;gap:6px 0;align-items:baseline}
+.a-filters button{  font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);
+  padding:4px 14px;min-height:24px;display:inline-flex;align-items:center;border-left:1px solid var(--thread-soft);transition:color 160ms var(--ease)
+}
+.a-filters button:first-child{border-left:0;padding-left:0}
+.a-filters button:hover{color:var(--ink)}
+.a-filters button[aria-pressed="true"]{color:var(--clay);font-weight:600}
+.a-sort{grid-column:10/13;display:flex;gap:12px;justify-content:flex-end;align-items:baseline}
+.a-sort button{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);padding-bottom:5px;border-bottom:1px solid transparent;min-height:24px;display:inline-flex;align-items:flex-end}
+.a-sort button[aria-pressed="true"]{color:var(--ink);border-bottom-color:var(--ink)}
+.arow{
+  grid-column:1/-1;display:grid;grid-template-columns:repeat(var(--tracks),minmax(0,1fr));
+  column-gap:var(--track-gap);row-gap:8px;align-items:baseline;
+  border-top:1px solid var(--thread-soft);padding:13px 0;
+  transition:background 200ms var(--ease);
+}
+.arow:hover{background:rgba(23,21,16,.028)}
+.arow--head{border-top:1px solid var(--ink);padding-top:10px;padding-bottom:10px;margin-top:clamp(14px,1.6vw,22px)}
+.arow--head:hover{background:none}
+.arow__y{grid-column:1/2;font-size:12.5px;font-variant-numeric:tabular-nums;color:var(--ink-soft)}
+.arow__t{grid-column:2/6;font-family:"Instrument Serif",Georgia,serif;font-size:clamp(16px,1.35vw,21px);line-height:1.14}
+.arow__a{grid-column:6/8;font-size:12.5px;color:var(--ink-soft)}
+.arow__s{grid-column:8/10;font-size:12.5px;color:var(--ink-soft)}
+.arow__f{grid-column:10/12;font-size:12.5px;color:var(--ink-soft)}
+.arow__v{grid-column:12/13;display:inline-flex;align-items:baseline;gap:7px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.arow__btn{grid-column:2/6;justify-self:start;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid var(--thread);padding-bottom:6px;min-height:24px;display:inline-flex;align-items:flex-end}
+.arow__btn:hover{border-bottom-color:var(--ink)}
+.arow__btn[aria-expanded="true"]{color:var(--clay);border-bottom-color:var(--clay)}
+.arow__shed{grid-column:2/13}
+.arow__note{font-size:13px;line-height:1.55;color:var(--ink-soft);max-width:70ch;border-left:1px solid var(--thread);padding-left:14px}
+.arow[hidden]{display:none}
+.a-foot{grid-column:1/13;grid-row:auto;border-top:1px solid var(--thread);padding-top:14px;margin-top:clamp(18px,2vw,28px);font-size:11.5px;line-height:1.55;color:var(--ink-soft)}
+@keyframes rethread{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.is-rethread{animation:rethread 320ms var(--ease) both}
+
+/* ---------- section: about ---------- */
+.about{padding-block:var(--loose) var(--loose);row-gap:clamp(24px,3vw,48px)}
+.ab-head{grid-column:1/3;grid-row:1}
+.ab-st{grid-column:3/12;grid-row:1;font-family:"Instrument Serif",Georgia,serif;font-size:clamp(24px,2.9vw,46px);line-height:1.08;letter-spacing:-.016em}
+.ab-fig{grid-column:1/3;grid-row:2/4;--ar:3/4;align-self:start}
+.ab-p1{grid-column:4/8;grid-row:2}
+.ab-p2{grid-column:4/8;grid-row:3}
+.ab-list{grid-column:9/13;grid-row:2}
+.ab-list li{display:flex;gap:12px;padding:9px 0;border-top:1px solid var(--thread-soft);font-size:13px;line-height:1.45}
+.ab-list li span{font-size:10px;letter-spacing:.14em;color:var(--ink-soft);min-width:20px;font-variant-numeric:tabular-nums;padding-top:2px}
+.ab-dist{grid-column:4/9;grid-row:4}
+.ab-stock{grid-column:9/13;grid-row:4;border-top:1px solid var(--thread);padding-top:12px}
+.ab-stock li{display:flex;justify-content:space-between;gap:14px;padding:7px 0;border-bottom:1px solid var(--thread-soft);font-size:12.5px}
+.ab-stock li span{color:var(--ink-soft)}
+
+/* ---------- section: subscribe ---------- */
+.subscribe{padding-block:var(--neutral) var(--loose);row-gap:clamp(20px,2.4vw,36px)}
+.su-head{grid-column:1/3;grid-row:1}
+.su-t{grid-column:3/9;grid-row:1;font-family:"Instrument Serif",Georgia,serif;font-size:clamp(28px,3.4vw,54px);line-height:1;letter-spacing:-.02em}
+.su-form{grid-column:3/9;grid-row:2}
+.su-meta{grid-column:10/13;grid-row:2;align-self:end}
+.su-meta li{padding:7px 0;border-top:1px solid var(--thread-soft);font-size:12.5px;color:var(--ink-soft)}
+.su-fine{grid-column:3/9;grid-row:3;font-size:11.5px;color:var(--ink-soft)}
+.field-row{display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap}
+.input{
+  flex:1 1 240px;min-width:200px;font:inherit;font-size:15px;color:var(--ink);
+  background:transparent;border:0;border-bottom:1px solid var(--thread);padding:10px 0;
+}
+.input::placeholder{color:var(--ink-soft);opacity:.8}
+.input:focus{outline:0;border-bottom-color:var(--ink)}
+.su-status{font-size:12.5px;color:var(--clay);margin-top:12px;min-height:1.2em}
+
+/* ---------- footer ---------- */
+.foot{background:var(--char);color:var(--ground);padding-block:var(--neutral) 0;row-gap:clamp(26px,3vw,48px)}
+.foot .lab{color:rgba(238,232,220,.6)}
+.foot .rule{background:rgba(238,232,220,.18)}
+.f-brand{grid-column:1/5;grid-row:1}
+.f-brand__w{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(30px,3.4vw,54px);line-height:.96;letter-spacing:-.02em;margin-top:10px}
+.f-st{grid-column:6/9;grid-row:1;font-size:13.5px;line-height:1.6;color:rgba(238,232,220,.78);align-self:end}
+.f-stock{grid-column:10/13;grid-row:1;font-size:12.5px;line-height:1.7;color:rgba(238,232,220,.78);align-self:end}
+.f-nav{grid-column:1/13;grid-row:2;display:grid;grid-template-columns:repeat(var(--tracks),minmax(0,1fr));column-gap:var(--track-gap);row-gap:26px}
+.f-g1{grid-column:1/4}
+.f-g2{grid-column:4/6}
+.f-g3{grid-column:6/9}
+.f-g4{grid-column:9/13}
+.f-nav h4{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(238,232,220,.55);font-weight:500;margin-bottom:12px}
+.f-nav li{padding:5px 0}
+.f-nav a{font-size:13.5px;color:rgba(238,232,220,.9);border-bottom:1px solid transparent;transition:border-color 180ms var(--ease)}
+.f-nav a:hover{border-bottom-color:rgba(238,232,220,.9)}
+.f-base{grid-column:1/13;grid-row:3;display:grid;grid-template-columns:repeat(var(--tracks),minmax(0,1fr));column-gap:var(--track-gap);row-gap:14px;border-top:1px solid rgba(238,232,220,.18);padding-top:18px}
+.f-info{grid-column:1/6;font-size:11.5px;line-height:1.6;color:rgba(238,232,220,.66)}
+.f-colo{grid-column:6/10;font-size:11.5px;line-height:1.6;color:rgba(238,232,220,.66)}
+.f-rights{grid-column:10/13;font-size:11.5px;line-height:1.6;color:rgba(238,232,220,.66);text-align:right}
+.f-end{grid-column:1/13;grid-row:4;height:3px;background:var(--clay);margin-top:clamp(26px,3vw,44px)}
+
+/* ---------- responsive re-weaving: tablet, 8 tracks ---------- */
+@media (max-width:1080px){
+  :root{--tracks:8;--mast:60px}
+  .run{grid-column:var(--ts,1)/var(--te,9)}
+  .sub,.rec,.story,.det,.q-buy,.i-foot,.a-controls,.f-nav,.f-base{grid-template-columns:repeat(8,minmax(0,1fr))}
+  .arow,.crow{grid-template-columns:repeat(8,minmax(0,1fr))}
+
+  .mast__brand{grid-column:1/3}
+  .mast__nav{grid-column:3/7}
+  .mast__aside{grid-column:7/9}
+  .mast__issue{display:none}
+  .det__a{grid-column:var(--ts,1)/var(--te,5)}
+  .det__b{grid-column:var(--ts,5)/var(--te,9)}
+  .det__c{grid-column:var(--ts,1)/var(--te,5)}
+  .det__d{grid-column:var(--ts,5)/var(--te,9)}
+  .rec--minor{grid-column:var(--ts,1)/var(--te,9)}
+
+  .h-eyebrow{grid-column:1/4;grid-row:1}
+  .h-meta{grid-column:5/9;grid-row:1}
+  .h-title{grid-column:1/9;grid-row:2}
+  .h-sub{grid-column:2/8;grid-row:3}
+  .h-cover{grid-column:1/4;grid-row:4}
+  .h-photo{grid-column:4/9;grid-row:4;height:clamp(240px,34vh,380px)}
+  .h-register{grid-column:1/9;grid-row:5}
+  .h-copy{grid-column:1/4}
+  .h-specs{grid-column:4/7}
+  .h-price{grid-column:7/8}
+  .h-actions{grid-column:8/9;flex-direction:column}
+  .h-detail{grid-column:1/9;grid-row:6}
+  .h-order{grid-column:1/9;grid-row:7}
+  .det__c1{grid-column:1/5}
+  .det__c2{grid-column:5/9}
+
+  .rel-head{grid-column:1/3;grid-row:1}
+  .rel-statement{grid-column:3/7;grid-row:1}
+  .rel-count{grid-column:7/9;grid-row:1}
+  .rel-rule{grid-column:1/9;grid-row:2}
+  .rec--major .rec__fig{grid-column:5/9;grid-row:1/3}
+  .rec--major .rec__head{grid-column:1/5;grid-row:1}
+  .rec--major .rec__body{grid-column:1/5;grid-row:2}
+  .rec--alt .rec__fig{grid-column:1/4;grid-row:1/3}
+  .rec--alt .rec__head{grid-column:4/9;grid-row:1}
+  .rec--alt .rec__body{grid-column:4/9;grid-row:2}
+  .rec--minor .rec__fig{grid-column:1/-1}
+  .story{grid-column:1/-1}
+
+  .j-head{grid-column:1/3;grid-row:1}
+  .j-statement{grid-column:3/7;grid-row:1}
+  .j-all{grid-column:7/9;grid-row:1}
+  .j-rule{grid-column:1/9;grid-row:2}
+  .s1 .story__t{grid-column:1/6;grid-row:1}
+  .s1 .story__meta{grid-column:1/6;grid-row:2}
+  .s1 .story__x{grid-column:1/5;grid-row:3}
+  .s1 .story__fig{grid-column:6/9;grid-row:1/3}
+  .s1 .story__cap{grid-column:6/9;grid-row:3}
+  .s2 .story__fig{grid-column:1/5;grid-row:1/3}
+  .s2 .story__cap{grid-column:1/4;grid-row:3}
+  .s2 .story__t{grid-column:5/9;grid-row:1}
+  .s2 .story__meta{grid-column:5/9;grid-row:2}
+  .s2 .story__x{grid-column:5/9;grid-row:3}
+  .s3 .story__kind{grid-column:1/2;grid-row:1}
+  .s3 .story__t{grid-column:2/6;grid-row:1}
+  .s3 .story__meta{grid-column:2/6;grid-row:2}
+  .s3 .story__x{grid-column:2/6;grid-row:3}
+  .s3 .story__fig{grid-column:7/9;grid-row:1/3}
+  .s3 .story__cap{grid-column:7/9;grid-row:3}
+  .s4 .story__t{grid-column:1/3;grid-row:1}
+  .s4 .story__meta{grid-column:1/3;grid-row:2}
+  .s4 .story__fig{grid-column:3/9;grid-row:1/4}
+  .s4 .story__cap{grid-column:3/8;grid-row:4}
+
+  .break{grid-column:1/9}
+  .break__eyebrow{grid-column:1/4}
+  .break__t{grid-column:1/9}
+  .break__sub{grid-column:1/7}
+  .break__cap{grid-column:6/9;grid-row:4}
+  .q-cover{grid-column:1/3;grid-row:2}
+  .q-essay{grid-column:3/7;grid-row:2}
+  .q-specs{grid-column:7/9;grid-row:2}
+  .q-edge{display:none}
+  .q-note{grid-column:1/3;grid-row:3}
+  .q-spreads{grid-column:3/9;grid-row:3;grid-template-columns:repeat(6,minmax(0,1fr))}
+  .q-spreads .spread{grid-column:span 3}
+  .q-spreads .spread--b{--sar:1.2}
+  .q-more{grid-column:3/9;grid-row:4}
+  .q-more__grid{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .q-more__grid .spread{grid-column:span 3;margin-top:0}
+  .q-buy{grid-column:1/9;grid-row:5}
+  .q-buy__info{grid-column:1/4}
+  .q-buy__price{grid-column:4/5}
+  .q-buy__acts{grid-column:5/9}
+
+  .i-cover{grid-column:1/3;grid-row:1}
+  .i-theme{grid-column:3/9;grid-row:1}
+  .i-side{grid-column:3/9;grid-row:2;flex-direction:row;align-items:flex-end;justify-content:space-between;gap:clamp(18px,3vw,44px);flex-wrap:wrap}
+  .i-side dl{flex:1 1 340px;grid-template-columns:auto 1fr auto 1fr auto 1fr;border-top:0;padding-top:0;border-bottom:1px solid rgba(238,232,220,.24);padding-bottom:12px}
+  .i-side dt{padding-top:1px}
+  .i-side .acts{flex-direction:row;align-items:center}
+  .i-rule{grid-column:1/9;grid-row:3}
+  .i-contents{grid-column:1/9;grid-row:4}
+  .crow__no{grid-column:1/2}
+  .crow__t{grid-column:2/6}
+  .crow__by{grid-column:6/8}
+  .crow__pg{grid-column:8/9}
+  .crow__btn{grid-column:1/3;grid-row:2;justify-self:start;margin-top:8px}
+  .crow__shed{grid-column:1/-1;grid-row:3}
+  .i-foot{grid-column:1/9;grid-row:5}
+  .i-foot__lab{grid-column:1/3}
+  .i-foot__list{grid-column:3/9}
+
+  .a-head{grid-column:1/3;grid-row:1}
+  .a-statement{grid-column:3/7;grid-row:1}
+  .a-count{grid-column:7/9;grid-row:1}
+  .a-controls{grid-column:1/9;grid-row:2}
+  .a-filters{grid-column:1/6}
+  .a-sort{grid-column:6/9}
+  .arow__y{grid-column:1/2}
+  .arow__t{grid-column:2/5}
+  .arow__a{grid-column:5/6}
+  .arow__s{grid-column:6/7}
+  .arow__f{grid-column:7/8}
+  .arow__v{grid-column:8/9}
+  .arow__btn{grid-column:2/5}
+  .arow__shed{grid-column:2/9}
+  .a-foot{grid-column:1/9}
+
+  .ab-head{grid-column:1/2;grid-row:1}
+  .ab-st{grid-column:2/9;grid-row:1}
+  .ab-fig{grid-column:1/3;grid-row:2/4}
+  .ab-p1{grid-column:3/6;grid-row:2}
+  .ab-p2{grid-column:3/6;grid-row:3}
+  .ab-list{grid-column:6/9;grid-row:2}
+  .ab-dist{grid-column:3/7;grid-row:4}
+  .ab-stock{grid-column:7/9;grid-row:4}
+
+  .su-head{grid-column:1/2;grid-row:1}
+  .su-t{grid-column:2/7;grid-row:1}
+  .su-form{grid-column:2/7;grid-row:2}
+  .su-meta{grid-column:7/9;grid-row:2}
+  .su-fine{grid-column:2/7;grid-row:3}
+  .rel-more{grid-column:2/8;grid-row:7;justify-self:start}
+
+  .f-brand{grid-column:1/4;grid-row:1}
+  .f-st{grid-column:4/6;grid-row:1}
+  .f-stock{grid-column:6/9;grid-row:1}
+  .f-nav{grid-column:1/9;grid-row:2}
+  .f-g1{grid-column:1/3}
+  .f-g2{grid-column:3/5}
+  .f-g3{grid-column:5/7}
+  .f-g4{grid-column:7/9}
+  .f-base{grid-column:1/9;grid-row:3}
+  .f-info{grid-column:1/5}
+  .f-colo{grid-column:5/7}
+  .f-rights{grid-column:7/9}
+  .f-end{grid-column:1/9;grid-row:4}
+}
+
+/* ---------- archive register: intermediate re-weave, 8 tracks, two lines ---------- */
+@media (max-width:900px) and (min-width:701px){
+  .arow__y{grid-column:1/2;grid-row:1}
+  .arow__t{grid-column:2/5;grid-row:1}
+  .arow__v{grid-column:5/9;grid-row:1;justify-self:end}
+  .arow__a{grid-column:2/5;grid-row:2}
+  .arow__s{grid-column:5/7;grid-row:2}
+  .arow__f{grid-column:7/9;grid-row:2;text-align:right}
+  .arow__btn{grid-column:2/5;grid-row:3}
+  .arow__shed{grid-column:2/9;grid-row:4}
+}
+
+/* ---------- touch: controls keep the bound-action language, sized for fingers ---------- */
+@media (hover:none),(max-width:900px){
+  .act{padding-block:15px;min-height:44px}
+  .mast__nav a{min-height:40px;display:inline-flex;align-items:center}
+  .mast__act{min-height:40px;display:inline-flex;align-items:center}
+  .link,.rec__more,.crow__btn,.arow__btn{min-height:40px;align-items:flex-end;padding-bottom:9px}
+  .a-filters button,.a-sort button{min-height:40px;display:inline-flex;align-items:center}
+  .a-filters button:first-child{border-left:0}
+  .a-sort button{min-width:46px;justify-content:center}
+  .f-nav a{display:inline-block;padding-block:11px}
+  .book__top,.book__foot{font-size:10px}
+}
+
+/* ---------- responsive re-weaving: mobile, 4 tracks ---------- */
+@media (max-width:700px){
+  :root{--tracks:4;--mast:96px;--edge:20px}
+  body{padding-top:122px}
+  .det__a,.det__b,.det__c,.det__d{grid-column:1/-1;grid-row:var(--mr,var(--r,auto))}
+  .rec--minor{grid-column:1/-1;grid-row:var(--mr,var(--r,auto))}
+  .rec{grid-row:var(--mr,var(--r,auto))}
+  .story{grid-column:1/-1;grid-row:var(--mr,var(--r,auto))}
+  .mast{grid-template-columns:repeat(4,minmax(0,1fr));row-gap:8px;padding:12px var(--edge)}
+  .mast__brand{grid-column:1/5}
+  .mast__nav{grid-column:1/5;gap:14px;overflow-x:auto;flex-wrap:nowrap;padding-bottom:2px;scrollbar-width:none}
+  .mast__nav::-webkit-scrollbar{display:none}
+  .mast__aside{grid-column:1/5;justify-content:space-between}
+  .mast__issue{display:block}
+  .run{grid-column:var(--ms,1)/var(--me,5)}
+  .sub,.rec,.story,.det,.q-buy,.i-foot,.a-controls,.f-nav,.f-base,.q-spreads,.q-more__grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .arow,.crow,.break__in{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .rail{display:none}
+  .d1{font-size:clamp(40px,13vw,64px)}
+
+  .h-eyebrow{grid-column:1/5;grid-row:1}
+  .h-meta{grid-column:1/5;grid-row:2;text-align:left}
+  .h-title{grid-column:1/5;grid-row:3}
+  .h-sub{grid-column:1/5;grid-row:4}
+  .h-cover{grid-column:1/4;grid-row:5;max-width:300px}
+  .h-photo{grid-column:1/5;grid-row:6;height:auto;--ar:4/3;margin-right:0}
+  .h-register{grid-column:1/5;grid-row:7}
+  .h-copy{grid-column:1/5}
+  .h-specs{grid-column:2/5;margin-top:14px}
+  .h-price{grid-column:1/3;margin-top:14px}
+  .h-actions{grid-column:3/5;align-items:stretch;margin-top:14px}
+  .h-actions .act{width:100%;justify-content:center}
+  .h-detail{grid-column:1/5;grid-row:8}
+  .h-order{grid-column:1/5;grid-row:9}
+  .det__c1{grid-column:1/5}
+  .det__c2{grid-column:1/5}
+
+  .rel-head{grid-column:1/5;grid-row:1}
+  .rel-statement{grid-column:1/5;grid-row:2}
+  .rel-count{grid-column:1/5;grid-row:3;text-align:left}
+  .rel-rule{grid-column:1/5;grid-row:4}
+  .rec--major .rec__fig,.rec--alt .rec__fig{grid-column:1/5;grid-row:1;--ar:4/3}
+  .rec--major .rec__head,.rec--alt .rec__head{grid-column:1/5;grid-row:2}
+  .rec--major .rec__body,.rec--alt .rec__body{grid-column:1/5;grid-row:3}
+  .rec--minor .rec__head,.rec--minor .rec__body,.rec--minor .rec__shed{grid-column:2/5}
+  .rec--minor{grid-column:1/-1;grid-row:var(--mr,var(--r,auto))}
+
+  .j-head{grid-column:1/5;grid-row:1}
+  .j-statement{grid-column:1/5;grid-row:2}
+  .j-all{grid-column:2/5;grid-row:3;justify-self:start}
+  .j-rule{grid-column:1/5;grid-row:4}
+  .s1 .story__t{grid-column:1/5;grid-row:1}
+  .s1 .story__meta{grid-column:1/5;grid-row:2}
+  .s1 .story__fig{grid-column:1/5;grid-row:3;--ar:4/3}
+  .s1 .story__cap{grid-column:1/5;grid-row:4}
+  .s1 .story__x{grid-column:1/5;grid-row:5}
+  .s2 .story__t{grid-column:2/5;grid-row:1}
+  .s2 .story__meta{grid-column:2/5;grid-row:2}
+  .s2 .story__fig{grid-column:1/5;grid-row:3;--ar:4/3}
+  .s2 .story__cap{grid-column:1/5;grid-row:4}
+  .s2 .story__x{grid-column:2/5;grid-row:5}
+  .s3 .story__kind{grid-column:1/3;grid-row:1}
+  .s3 .story__t{grid-column:1/4;grid-row:2}
+  .s3 .story__meta{grid-column:1/4;grid-row:3}
+  .s3 .story__fig{grid-column:2/5;grid-row:4;--ar:4/3}
+  .s3 .story__cap{grid-column:2/5;grid-row:5}
+  .s3 .story__x{grid-column:1/4;grid-row:6}
+  .s4 .story__t{grid-column:1/4;grid-row:1}
+  .s4 .story__meta{grid-column:1/4;grid-row:2}
+  .s4 .story__fig{grid-column:1/5;grid-row:3;--ar:16/10}
+  .s4 .story__cap{grid-column:2/5;grid-row:4}
+
+  .break{grid-column:1/5;min-height:clamp(320px,54vh,460px)}
+  .break__eyebrow{grid-column:1/5}
+  .break__t{grid-column:1/5;grid-row:2}
+  .break__sub{grid-column:1/5;grid-row:3}
+  .break__cap{grid-column:1/5;grid-row:4;text-align:left}
+  .q-cover{grid-column:1/4;grid-row:2;max-width:280px}
+  .q-essay{grid-column:1/5;grid-row:3}
+  .q-specs{grid-column:1/5;grid-row:4}
+  .q-note{grid-column:1/5;grid-row:5}
+  .q-spreads{grid-column:1/5;grid-row:6}
+  .q-spreads .spread,.q-spreads .spread--b{grid-column:1/5;margin-top:0}
+  .q-more{grid-column:1/5;grid-row:7}
+  .q-more__grid .spread{grid-column:1/5}
+  .q-buy{grid-column:1/5;grid-row:8}
+  .q-buy__info{grid-column:1/5}
+  .q-buy__price{grid-column:1/2}
+  .q-buy__acts{grid-column:2/5;justify-content:flex-start}
+
+  .i-cover{grid-column:1/4;grid-row:1;max-width:280px}
+  .i-theme{grid-column:1/5;grid-row:2}
+  .i-side{grid-column:1/5;grid-row:3}
+  .i-side dl{grid-template-columns:auto 1fr}
+  .i-side dd{text-align:right}
+  .i-rule{grid-column:1/5;grid-row:4}
+  .i-contents{grid-column:1/5;grid-row:5}
+  .crow__no{grid-column:1/2}
+  .crow__t{grid-column:2/5}
+  .crow__by{grid-column:2/5;grid-row:2}
+  .crow__pg{grid-column:1/5;grid-row:3;text-align:left}
+  .crow__btn{grid-column:1/5;grid-row:4;justify-self:start}
+  .crow__shed{grid-column:1/5;grid-row:5}
+  .i-foot{grid-column:1/5;grid-row:6}
+  .i-foot__lab{grid-column:1/5}
+  .i-foot__list{grid-column:1/5}
+
+  .a-head{grid-column:1/5;grid-row:1}
+  .a-statement{grid-column:1/5;grid-row:2}
+  .a-count{grid-column:1/5;grid-row:3;text-align:left}
+  .a-controls{grid-column:1/5;grid-row:4}
+  .a-filters{grid-column:1/5}
+  .a-sort{grid-column:1/5;justify-content:flex-start}
+  .arow__y{grid-column:1/2}
+  .arow__t{grid-column:2/5}
+  .arow__a{grid-column:2/5;grid-row:2}
+  .arow__s{grid-column:2/4;grid-row:3}
+  .arow__f{grid-column:4/5;grid-row:3;text-align:right}
+  .arow__v{grid-column:2/5;grid-row:4}
+  .arow__btn{grid-column:2/5;grid-row:5}
+  .arow__shed{grid-column:1/5;grid-row:6}
+  .arow--head{display:none}
+  .a-foot{grid-column:1/5}
+
+  .ab-head{grid-column:1/5;grid-row:1}
+  .ab-st{grid-column:1/5;grid-row:2}
+  .ab-fig{grid-column:1/4;grid-row:3;max-width:300px}
+  .ab-p1{grid-column:1/5;grid-row:4}
+  .ab-p2{grid-column:1/5;grid-row:5}
+  .ab-list{grid-column:1/5;grid-row:6}
+  .ab-dist{grid-column:1/5;grid-row:7}
+  .ab-stock{grid-column:1/5;grid-row:8}
+
+  .su-head{grid-column:1/5;grid-row:1}
+  .su-t{grid-column:1/5;grid-row:2}
+  .su-form{grid-column:1/5;grid-row:3}
+  .su-meta{grid-column:1/4;grid-row:4}
+  .su-fine{grid-column:1/5;grid-row:5}
+  .field-row{flex-direction:column;align-items:stretch}
+  .input{min-width:0}
+  .a-filters{gap:6px}
+  .a-filters button{
+    border:1px solid var(--thread);border-left:1px solid var(--thread);
+    padding:9px 11px;min-height:40px;
+  }
+  .a-filters button:first-child{border-left:1px solid var(--thread)}
+  .book__top,.book__foot{font-size:10px}
+  .book__title{font-size:clamp(19px,5.4vw,30px)}
+  .spread__txt{font-size:clamp(10px,3vw,12px)}
+  .spread__folio{font-size:9.5px}
+
+  .f-brand{grid-column:1/5;grid-row:1}
+  .f-st{grid-column:1/5;grid-row:2}
+  .f-stock{grid-column:1/5;grid-row:3}
+  .f-nav{grid-column:1/5;grid-row:4}
+  .f-g1{grid-column:1/3}
+  .f-g2{grid-column:3/5}
+  .f-g3{grid-column:1/3}
+  .f-g4{grid-column:3/5}
+  .f-base{grid-column:1/5;grid-row:5}
+  .f-info{grid-column:1/5}
+  .f-colo{grid-column:1/5}
+  .f-rights{grid-column:1/5;text-align:left}
+  .f-end{grid-column:1/5;grid-row:6}
+  .rel-more{grid-column:1/-1;grid-row:11;justify-self:start}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition-duration:.001ms !important;animation:none !important;scroll-behavior:auto !important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#featured">Skip to content</a>
+
+<aside class="rail" aria-hidden="true">
+  <span class="rail__lab" data-rail-label>01 — Featured release</span>
+  <span class="rail__track"><span class="rail__fill" data-rail-fill></span></span>
+</aside>
+
+<header class="mast" data-mast>
+  <div class="mast__brand">
+    <span class="mark"><i></i>Morrow<span>Editions</span></span>
+  </div>
+  <nav class="mast__nav" aria-label="Primary">
+    <a href="#releases">Publications</a>
+    <a href="#journal">Journal</a>
+    <a href="#issue-04">Issue 04</a>
+    <a href="#archive">Archive</a>
+    <a href="#about">About</a>
+  </nav>
+  <div class="mast__aside">
+    <span class="mast__issue">Nº 04 — Maintenance</span>
+    <a class="mast__act" href="#subscribe">Subscribe</a>
+  </div>
+</header>
+
+<main>
+
+<!-- 01 — FEATURED RELEASE -->
+<section class="field featured" id="featured" data-label="01 — Featured release" aria-labelledby="featured-title">
+  <p class="lab h-eyebrow">01 — Featured release</p>
+  <p class="lab num h-meta">Hardbound / 248 pages / 2026</p>
+
+  <h1 class="d1 h-title" id="featured-title">The Quiet<br>Structure</h1>
+  <p class="h-sub">Architecture, Routine, and the Rooms We Keep</p>
+
+  <div class="h-cover">
+    <div class="book" style="--bar:.72" role="img" aria-label="Cover of The Quiet Structure, edited by Mara Vale">
+      <span class="book__frame"></span>
+      <div class="book__face">
+        <div class="book__top"><span>Morrow</span><span>MMXXVI</span></div>
+        <div>
+          <h2 class="book__title">The Quiet Structure</h2>
+          <span class="book__line"></span>
+          <p class="book__sub">Architecture, Routine,<br>and the Rooms We Keep</p>
+        </div>
+        <div class="book__foot"><span>Edited by Mara Vale</span><span>248 pp</span></div>
+      </div>
+    </div>
+  </div>
+
+  <figure class="ph h-photo">
+    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1800&q=80" alt="A quiet interior: a room with plain walls and low daylight" fetchpriority="high">
+  </figure>
+
+  <div class="h-register sub">
+    <p class="p p--lg h-copy">A study of ordinary spaces and the structures that quietly shape daily life.</p>
+    <dl class="h-specs">
+      <dt>Edited by</dt><dd>Mara Vale</dd>
+      <dt>Format</dt><dd>Hardbound, 240 × 170 mm</dd>
+      <dt>Extent</dt><dd class="num">248 pages, 92 plates</dd>
+      <dt>Published</dt><dd class="num">March 2026</dd>
+      <dt>ISBN</dt><dd class="num">978-1-936-40211-6</dd>
+    </dl>
+    <p class="h-price num">$68</p>
+    <div class="h-actions">
+      <button class="act act--solid" type="button" data-toggle="detail" aria-expanded="false" aria-controls="detail-shed">Purchase <i>→</i></button>
+      <button class="act" type="button" data-toggle="pub" aria-expanded="false" aria-controls="pub-shed">View Publication</button>
+    </div>
+  </div>
+
+  <div class="h-order" id="detail-shed" data-panel="detail">
+    <div class="shed"><div><div class="shed__in">
+      <div class="order">
+        <div class="order__opt">
+          <span class="lab">Hardbound — first printing</span>
+          <span class="order__price num">$68</span>
+          <span class="p p--sm">248 pages, 92 plates. Shipped from Providence within three days.</span>
+          <button class="act" type="button" data-add="The Quiet Structure — Hardbound">Add to order</button>
+        </div>
+        <div class="order__opt">
+          <span class="lab">Limited edition of 100 — signed</span>
+          <span class="order__price num">$140</span>
+          <span class="p p--sm">Clothbound, numbered, with one accompanying silver gelatin print.</span>
+          <button class="act" type="button" data-add="The Quiet Structure — Limited edition">Add to order</button>
+        </div>
+        <div class="order__opt">
+          <span class="lab">Trade &amp; wholesale</span>
+          <span class="p p--sm">Bookshops and institutions order directly through our trade terms.</span>
+          <a class="link" href="#about">Request terms <i>→</i></a>
+        </div>
+      </div>
+      <p class="su-status" data-status aria-live="polite"></p>
+    </div></div></div>
+  </div>
+
+  <div class="h-detail" id="pub-shed" data-panel="pub">
+    <div class="shed"><div><div class="shed__in">
+      <div class="det">
+        <div class="det__a" style="--cs:1;--ce:5;--ts:1;--te:5;--ms:1;--me:5;--r:1;--mr:1">
+          <h4>Contents</h4>
+          <ul class="det__list">
+            <li><span>01</span><span>Rooms in Use</span></li>
+            <li><span>02</span><span>The Plan as Habit</span></li>
+            <li><span>03</span><span>Thresholds and Their Work</span></li>
+            <li><span>04</span><span>Light, Maintenance, Repair</span></li>
+            <li><span>05</span><span>Twelve Houses</span></li>
+            <li><span>06</span><span>Afterword: Keeping</span></li>
+          </ul>
+        </div>
+        <div class="det__b" style="--cs:5;--ce:9;--ts:5;--te:9;--ms:1;--me:5;--r:1;--mr:2">
+          <h4>Contributors</h4>
+          <ul class="det__list">
+            <li><span></span><span>Mara Vale — editor</span></li>
+            <li><span></span><span>Joseph Anand — essays</span></li>
+            <li><span></span><span>Leah Mercer — photographs</span></li>
+            <li><span></span><span>Ines Halvard — drawings</span></li>
+          </ul>
+          <h4 style="margin-top:22px">Production</h4>
+          <p class="p p--sm">Printed in an edition of 1,200 by Versa Press. Bound in Wicopy cloth over board, with a sewn binding and a foil-blocked spine.</p>
+        </div>
+        <div class="det__c" style="--cs:1;--ce:7;--ts:1;--te:5;--ms:1;--me:5;--r:2;--mr:3">
+          <h4>Note</h4>
+          <p class="press">“Vale has assembled a book that treats the ordinary room as a document. Nothing here is remarkable, and that is precisely the argument.”</p>
+          <p class="p p--sm" style="margin-top:12px">— <em>Review of Books</em>, March 2026</p>
+        </div>
+        <div class="det__d" style="--cs:7;--ce:12;--ts:5;--te:9;--ms:1;--me:5;--r:2;--mr:4">
+          <h4>Also available as</h4>
+          <ul class="det__list">
+            <li><span></span><span>Digital edition — PDF and EPUB, $28</span></li>
+            <li><span></span><span>Limited edition of 100 — signed, $140</span></li>
+            <li><span></span><span>Print set — two plates, edition of 40</span></li>
+          </ul>
+        </div>
+      </div>
+    </div></div></div>
+  </div>
+</section>
+
+<!-- 02 — CURRENT RELEASES -->
+<section class="field releases" id="releases" data-label="02 — Current releases" aria-labelledby="releases-title">
+  <p class="lab rel-head">02 — Current releases</p>
+  <h2 class="rel-statement" id="releases-title">Six titles in print, from architecture and photography to the working notes we publish twice a year.</h2>
+  <p class="lab num rel-count">06 titles / 2025—2026</p>
+  <div class="rule rel-rule"></div>
+
+  <article class="rec rec--major" style="--r:3;--mr:5">
+    <figure class="ph rec__fig"><img loading="lazy" src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1500&q=80" alt="Ridgeline and open ground photographed in flat daylight"></figure>
+    <div class="rec__head">
+      <h3 class="rec__title">After the Quarry</h3>
+    </div>
+    <div class="rec__body">
+      <p class="rec__meta">Photography / Elena Ross / 2026</p>
+      <p class="rec__meta" style="margin-top:6px">Clothbound, 176 pages, 82 duotone plates</p>
+      <div class="acts" style="margin-top:14px">
+        <span class="rec__price num">$85</span>
+        <span class="rec__avail"><i class="dot"></i>In print</span>
+        <a class="link" href="#after-the-quarry" style="margin-left:auto">Feature <i>→</i></a>
+      </div>
+      <button class="rec__more" type="button" data-toggle aria-expanded="false" style="margin-top:14px">Note <i>+</i></button>
+      <div class="shed"><div><div class="shed__in"><p class="rec__note">Eighty-two duotone plates made across six years in disused limestone sites in Indiana and Tennessee.</p></div></div></div>
+    </div>
+  </article>
+
+  <article class="rec rec--major rec--alt" style="--r:4;--mr:6">
+    <figure class="ph rec__fig"><img loading="lazy" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1400&q=80" alt="Multi-storey building facades seen from street level"></figure>
+    <div class="rec__head">
+      <h3 class="rec__title">The Quiet Structure</h3>
+    </div>
+    <div class="rec__body">
+      <p class="rec__meta">Architecture / Edited by Mara Vale / 2026</p>
+      <p class="rec__meta" style="margin-top:6px">Hardbound, 248 pages, 92 plates</p>
+      <div class="acts" style="margin-top:14px">
+        <span class="rec__price num">$68</span>
+        <span class="rec__avail"><i class="dot"></i>In print</span>
+        <a class="link" href="#featured" style="margin-left:auto">Details <i>→</i></a>
+      </div>
+      <button class="rec__more" type="button" data-toggle aria-expanded="false" style="margin-top:14px">Note <i>+</i></button>
+      <div class="shed"><div><div class="shed__in"><p class="rec__note">Fourteen essays and ninety-two plates on the rooms people actually live in.</p></div></div></div>
+    </div>
+  </article>
+
+  <article class="rec rec--minor" style="--r:5;--mr:7;--cs:1;--ce:5;--ts:1;--te:4;--ms:1;--me:5">
+    <figure class="ph rec__fig" style="--ar:16/10"><img loading="lazy" src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=900&q=80" alt="A single chair photographed against a plain wall"></figure>
+    <div class="rec__head"><h3 class="rec__title">Useful Objects</h3></div>
+    <div class="rec__body">
+      <p class="rec__meta">Design / Tomas Wren / 2025</p>
+      <div class="acts" style="margin-top:10px"><span class="rec__price num">$42</span><span class="rec__avail"><i class="dot dot--clay"></i>Second printing</span></div>
+      <button class="rec__more" type="button" data-toggle aria-expanded="false" style="margin-top:12px">Note <i>+</i></button>
+    </div>
+    <div class="rec__shed">
+      <div class="shed"><div><div class="shed__in"><p class="rec__note">A catalogue of forty-two everyday objects, drawn to scale and annotated by the people who made them.</p></div></div></div>
+    </div>
+  </article>
+
+  <article class="rec rec--minor" style="--r:5;--mr:8;--cs:6;--ce:8;--ts:4;--te:6;--ms:1;--me:5">
+    <div class="rec__head"><h3 class="rec__title">Weathered Ground</h3></div>
+    <div class="rec__body">
+      <p class="rec__meta">Landscape &amp; Place<br>Ines Halvard / 2025<br>Hardbound, 208 pages</p>
+      <div class="acts" style="margin-top:10px"><span class="rec__price num">$54</span></div>
+      <span class="rec__avail" style="margin-top:10px"><i class="dot"></i>In print</span>
+      <button class="rec__more" type="button" data-toggle aria-expanded="false" style="margin-top:12px">Note <i>+</i></button>
+    </div>
+    <div class="rec__shed">
+      <div class="shed"><div><div class="shed__in"><p class="rec__note">Field writing and photographs from four coastlines, recorded across three winters.</p></div></div></div>
+    </div>
+  </article>
+
+  <article class="rec rec--minor" style="--r:5;--mr:9;--cs:9;--ce:13;--ts:6;--te:9;--ms:1;--me:5">
+    <figure class="ph rec__fig" style="--ar:16/10"><img loading="lazy" src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80" alt="A working interior with tables and tools in daylight"></figure>
+    <div class="rec__head"><h3 class="rec__title">Working Rooms</h3></div>
+    <div class="rec__body">
+      <p class="rec__meta">Creative Practice / MORROW Studio / 2025</p>
+      <div class="acts" style="margin-top:10px"><span class="rec__price num">$36</span><span class="rec__avail"><i class="dot dot--straw"></i>Reprint due</span></div>
+      <button class="rec__more" type="button" data-toggle aria-expanded="false" style="margin-top:12px">Note <i>+</i></button>
+    </div>
+    <div class="rec__shed">
+      <div class="shed"><div><div class="shed__in"><p class="rec__note">Twenty-six studios visited, photographed and interviewed over a single year.</p></div></div></div>
+    </div>
+  </article>
+
+  <article class="rec rec--minor" style="--r:6;--mr:10;--cs:3;--ce:9;--ts:2;--te:8;--ms:1;--me:5">
+    <div class="rec__head"><h3 class="rec__title">Field Notes Nº 04</h3></div>
+    <div class="rec__body">
+      <p class="rec__meta">Journal / Summer 2026 / Saddle-stitched, 64 pages</p>
+      <div class="acts" style="margin-top:10px"><span class="rec__price num">$18</span><span class="rec__avail"><i class="dot"></i>In print</span></div>
+      <button class="rec__more" type="button" data-toggle aria-expanded="false" style="margin-top:12px">Note <i>+</i></button>
+    </div>
+    <div class="rec__shed">
+      <div class="shed"><div><div class="shed__in">
+        <div style="display:flex;gap:clamp(14px,2vw,28px);flex-wrap:wrap;align-items:flex-start">
+          <div class="book" style="--bar:.72;width:clamp(120px,14vw,170px);flex:none">
+            <span class="book__frame"></span>
+            <span class="book__stitches"><i></i><i></i><i></i></span>
+            <div class="book__face">
+              <div class="book__top"><span>Field Notes</span><span>Nº 04</span></div>
+              <div><h4 class="book__title" style="font-size:clamp(15px,1.5vw,22px)">Working Papers</h4></div>
+              <div class="book__foot"><span>Morrow</span><span>64 pp</span></div>
+            </div>
+          </div>
+          <p class="rec__note" style="flex:1 1 220px">Working papers from the MORROW studio: proofs, correspondence, and two essays that were not finished in time for Issue 04.</p>
+        </div>
+      </div></div></div>
+    </div>
+  </article>
+
+  <div class="rel-more">
+    <a class="link" href="#archive">Archive, 2019—2026 <i>→</i></a>
+  </div>
+</section>
+
+<!-- 03 — JOURNAL -->
+<section class="field journal" id="journal" data-label="03 — Journal" aria-labelledby="journal-title">
+  <p class="lab j-head">03 — Journal</p>
+  <p class="j-statement" id="journal-title">Essays, conversations, studio visits and visual studies, published online between issues.</p>
+  <div class="j-all"><a class="link" href="#issue-04">All stories <i>→</i></a></div>
+  <div class="rule j-rule"></div>
+
+  <article class="story s1" style="--r:3;--mr:5">
+    <h3 class="story__t"><a href="#journal">The chair nobody notices</a></h3>
+    <p class="story__meta"><span class="story__kind">Essay</span><span>Sofia Brandt</span><span class="num">14 June 2026</span><span class="num">1,900 words</span></p>
+    <p class="story__x">On anonymous furniture, repeated use, and the objects that quietly outlive the people who designed them.</p>
+    <figure class="ph story__fig"><img loading="lazy" src="https://images.unsplash.com/photo-1540932239986-30128078f3c5?auto=format&fit=crop&w=1000&q=80" alt="A worn chair in a corner, photographed close"></figure>
+    <p class="cap story__cap">A stacking chair, maker unknown, photographed in a village hall in Oxfordshire.</p>
+  </article>
+
+  <article class="story s2" style="--r:4;--mr:6">
+    <figure class="ph story__fig"><img loading="lazy" src="https://images.unsplash.com/photo-1416339306562-f3d12fefd36f?auto=format&fit=crop&w=1500&q=80" alt="An empty interior with rows of windows"></figure>
+    <p class="cap story__cap">Mill building, Lowell, Massachusetts — January 2026.</p>
+    <h3 class="story__t"><a href="#journal">A building after everyone leaves</a></h3>
+    <p class="story__meta"><span class="story__kind">Photography</span><span>Leah Mercer</span><span class="num">2 June 2026</span><span class="num">24 plates</span></p>
+    <p class="story__x">A mill photographed across the winter after production stopped, with the machines still in place.</p>
+  </article>
+
+  <article class="story s3" style="--r:5;--mr:7">
+    <p class="lab story__kind">Conversation</p>
+    <h3 class="story__t"><a href="#journal">What a workshop keeps</a></h3>
+    <p class="story__meta"><span>Elias North</span><span class="num">19 May 2026</span><span class="num">2,400 words</span></p>
+    <p class="story__x">The industrial designer on tooling, repair, and the value of keeping things longer than is strictly efficient.</p>
+    <figure class="ph story__fig"><img loading="lazy" src="https://images.unsplash.com/photo-1531973576160-7125cd663d86?auto=format&fit=crop&w=900&q=80" alt="Hand tools arranged on a workshop bench"></figure>
+    <p class="cap story__cap">North's bench, unchanged in layout since 1998.</p>
+  </article>
+
+  <article class="story s4" style="--r:6;--mr:8">
+    <h3 class="story__t"><a href="#journal">Stone, water, repetition</a></h3>
+    <p class="story__meta"><span class="story__kind">Notes</span><span>Field</span><span class="num">4 May 2026</span><span class="num">900 words</span></p>
+    <figure class="ph story__fig"><img loading="lazy" src="https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&w=1800&q=80" alt="Water moving over rock in a cut channel"></figure>
+    <p class="cap story__cap">The same cut face, photographed each spring between 2020 and 2026.</p>
+  </article>
+</section>
+
+<!-- 04 — PUBLICATION FEATURE: AFTER THE QUARRY -->
+<section class="field quarry" id="after-the-quarry" data-label="04 — After the Quarry" aria-labelledby="quarry-title">
+  <div class="break">
+    <div class="break__img">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=2400&q=82" alt="A wide rocky landscape with a low ridge and open sky">
+    </div>
+    <div class="break__in">
+      <p class="lab break__eyebrow">04 — Publication feature</p>
+      <h2 class="break__t" id="quarry-title">After the<br>Quarry</h2>
+      <p class="break__sub">Photographs by Elena Ross, 2019—2025</p>
+      <p class="break__cap num">Cut face, Bedford County, Tennessee — 2023, plate 41</p>
+    </div>
+  </div>
+
+  <div class="q-cover">
+    <div class="book book--dark" style="--bar:.72" role="img" aria-label="Cover of After the Quarry by Elena Ross">
+      <span class="book__frame"></span>
+      <div class="book__face">
+        <div class="book__top"><span>Morrow</span><span>2026</span></div>
+        <div class="book__plate"><img loading="lazy" src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=900&q=80" alt="A ridgeline in fog, printed as a duotone plate"></div>
+        <div>
+          <h3 class="book__title">After the Quarry</h3>
+          <p class="book__sub">Elena Ross</p>
+        </div>
+        <div class="book__foot"><span>82 plates</span><span>176 pp</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-essay">
+    <h3>Six years in places that stopped working.</h3>
+    <p>Elena Ross began photographing disused limestone quarries in 2019, intending to document industry. What she found instead was weather. The cut faces had already begun to soften; water had found the old channels and was doing the slow work of regrading them.</p>
+    <p>The book follows fourteen sites across Indiana and Tennessee, returning to several of them every spring. Plates are sequenced by return rather than by geography, so the reader notices the same wall twice and sees what a year has done to it.</p>
+    <p>Two short essays — one by the photographer, one by the geologist Ruth Achebe — sit between the plate sections, and a folded index at the back records every visit: date, weather, exposure, and what had changed.</p>
+  </div>
+
+  <div class="q-specs">
+    <dl>
+      <dt>Format</dt><dd>280 × 220 mm</dd>
+      <dt>Binding</dt><dd>Cloth over board</dd>
+      <dt>Extent</dt><dd class="num">176 pages</dd>
+      <dt>Plates</dt><dd class="num">82 duotone</dd>
+      <dt>Edition</dt><dd class="num">750 numbered</dd>
+      <dt>Published</dt><dd class="num">February 2026</dd>
+      <dt>ISBN</dt><dd class="num">978-1-936-40198-0</dd>
+      <dt>Price</dt><dd class="num">$85</dd>
+    </dl>
+    <div class="rule rule--off" style="margin-top:16px;background:var(--thread)"></div>
+  </div>
+
+  <p class="edge-note q-edge">Edition of 750 — 214 copies remaining</p>
+
+  <figure class="q-note">
+    <blockquote>I went looking for industry and found weather. The sites were already changing before I arrived; the camera only recorded how slowly.</blockquote>
+    <figcaption>Elena Ross — photographer's note</figcaption>
+  </figure>
+
+  <div class="q-spreads">
+    <div class="spread" role="img" aria-label="Interior spread, plates 12 and 13">
+      <div class="spread__page">
+        <div class="spread__plate"><img loading="lazy" src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=900&q=80" alt="A cut face of rock with a scree slope below"></div>
+        <p class="spread__folio"><span>12</span><span>Plate 12</span></p>
+      </div>
+      <div class="spread__gutter"></div>
+      <div class="spread__page">
+        <div class="spread__plate"><img loading="lazy" src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=900&q=80" alt="Water standing in a flooded cutting"></div>
+        <p class="spread__folio"><span>Plate 13</span><span>13</span></p>
+      </div>
+    </div>
+    <div class="spread spread--b" role="img" aria-label="Interior spread, plates 58 and 59">
+      <div class="spread__page">
+        <div class="spread__plate"><img loading="lazy" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=80" alt="A high ridge and scree photographed from below" style="object-position:80% 50%"></div>
+        <p class="spread__folio"><span>58</span><span>Plate 58</span></p>
+      </div>
+      <div class="spread__gutter"></div>
+      <div class="spread__page">
+        <h4 class="spread__h">Fourteen sites, forty-one returns</h4>
+        <p class="spread__txt">Index of visits, spring 2019 to autumn 2025. Each entry records date, weather, exposure and the change observed since the previous visit.</p>
+        <p class="spread__folio"><span>Plate 59</span><span>59</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-more">
+    <button class="link" type="button" data-toggle="spreads" aria-expanded="false" aria-controls="spreads-shed">View more spreads <i>+</i></button>
+    <div class="shed" id="spreads-shed" data-panel="spreads"><div><div class="shed__in">
+      <div class="q-more__grid">
+        <div class="spread" role="img" aria-label="Interior spread, plates 30 and 31">
+          <div class="spread__page">
+            <div class="spread__plate"><img loading="lazy" src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80" alt="A quarry face in low cloud" style="object-position:30% 50%"></div>
+            <p class="spread__folio"><span>30</span><span>Plate 30</span></p>
+          </div>
+          <div class="spread__gutter"></div>
+          <div class="spread__page">
+            <div class="spread__plate"><img loading="lazy" src="https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&w=800&q=80" alt="Water running across stone" style="object-position:60% 40%"></div>
+            <p class="spread__folio"><span>Plate 31</span><span>31</span></p>
+          </div>
+        </div>
+        <div class="spread spread--c" role="img" aria-label="Single page, plate 76">
+          <div class="spread__page">
+            <div class="spread__plate"><img loading="lazy" src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=800&q=80" alt="A narrow cutting with grass returning" style="object-position:70% 60%"></div>
+            <p class="spread__folio"><span>76</span><span>Plate 76</span></p>
+          </div>
+          <div class="spread__gutter"></div>
+          <div class="spread__page">
+            <p class="spread__v">Section four</p>
+            <p class="spread__txt">“The last site was the hardest to leave. There was nothing left to photograph except the way the light came in.”</p>
+            <p class="spread__folio"><span>Plate 77</span><span>77</span></p>
+          </div>
+        </div>
+      </div>
+    </div></div></div>
+  </div>
+
+  <div class="q-buy">
+    <div class="q-buy__info">
+      <p class="p p--sm">Edition of 750 numbered copies, of which 214 remain. A separate edition of 25, each with one silver gelatin print made by the photographer, is available directly from MORROW.</p>
+    </div>
+    <p class="q-buy__price num">$85</p>
+    <div class="q-buy__acts">
+      <button class="act act--solid" type="button" data-add="After the Quiet — After the Quarry">Purchase <i>→</i></button>
+      <button class="act" type="button" data-add="After the Quarry — inspection copy">Request inspection copy</button>
+    </div>
+  </div>
+</section>
+
+<!-- 05 — MORROW JOURNAL NO. 04 -->
+<section class="field issue bleed" id="issue-04" data-label="05 — Journal Nº 04" aria-labelledby="issue-title">
+  <div class="i-cover">
+    <div class="book" style="--bar:.72" role="img" aria-label="Cover of MORROW Journal number 4, Maintenance">
+      <span class="book__frame"></span>
+      <div class="book__face">
+        <div class="book__top"><span>Morrow Journal</span><span>Nº 04</span></div>
+        <div>
+          <p class="book__no">04</p>
+          <span class="book__line"></span>
+          <h3 class="book__title">Maintenance</h3>
+        </div>
+        <div class="book__foot"><span class="book__band">Summer 2026</span><span>192 pp</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="i-theme">
+    <p class="i-theme__no">MORROW Journal Nº 04</p>
+    <h2 class="i-theme__t" id="issue-title">Maintenance</h2>
+    <p class="i-theme__note">An issue about what happens after the work is finished: the repairs, the reprints, the buildings that only survive because somebody keeps them.</p>
+  </div>
+
+  <div class="i-side">
+    <dl>
+      <dt>Published</dt><dd class="num">12 May 2026</dd>
+      <dt>Extent</dt><dd class="num">192 pages</dd>
+      <dt>Printed</dt><dd>Offset, saddle-stitched</dd>
+      <dt>Price</dt><dd class="num">$22</dd>
+      <dt>ISSN</dt><dd class="num">2769-0114</dd>
+    </dl>
+    <div class="acts" style="flex-direction:column;gap:9px">
+      <button class="act act--light" type="button">Read Issue <i>→</i></button>
+      <button class="act act--light" type="button" data-add="MORROW Journal Nº 04">Purchase print edition</button>
+    </div>
+  </div>
+
+  <div class="rule i-rule"></div>
+
+  <div class="i-contents sub">
+    <div class="crow">
+      <p class="crow__no num">01</p>
+      <h3 class="crow__t">The Work After the Work</h3>
+      <p class="crow__by">Mara Vale</p>
+      <p class="crow__pg num">pp. 8—34</p>
+      <button class="crow__btn" type="button" data-toggle aria-expanded="false">Abstract</button>
+      <div class="crow__shed"><div class="shed"><div><div class="shed__in"><p class="crow__abs">A short history of MORROW's own backlist: what it costs to keep a title in print, and why we reprint rather than replace.</p></div></div></div></div>
+    </div>
+    <div class="crow">
+      <p class="crow__no num">02</p>
+      <h3 class="crow__t">Keeping a Building Alive</h3>
+      <p class="crow__by">Joseph Anand</p>
+      <p class="crow__pg num">pp. 36—62</p>
+      <button class="crow__btn" type="button" data-toggle aria-expanded="false">Abstract</button>
+      <div class="crow__shed"><div class="shed"><div><div class="shed__in"><p class="crow__abs">Forty years of maintenance records from a single civic building in Leuven, read as a design document.</p></div></div></div></div>
+    </div>
+    <div class="crow">
+      <p class="crow__no num">03</p>
+      <h3 class="crow__t">Repair as Design</h3>
+      <p class="crow__by">Elias North in conversation</p>
+      <p class="crow__pg num">pp. 64—88</p>
+      <button class="crow__btn" type="button" data-toggle aria-expanded="false">Abstract</button>
+      <div class="crow__shed"><div class="shed"><div><div class="shed__in"><p class="crow__abs">The industrial designer on designing for the third owner, and on the drawings you make for a repair that has not happened yet.</p></div></div></div></div>
+    </div>
+    <div class="crow">
+      <p class="crow__no num">04</p>
+      <h3 class="crow__t">Notes from the Bindery</h3>
+      <p class="crow__by">Sofia Brandt</p>
+      <p class="crow__pg num">pp. 90—118</p>
+      <button class="crow__btn" type="button" data-toggle aria-expanded="false">Abstract</button>
+      <div class="crow__shed"><div class="shed"><div><div class="shed__in"><p class="crow__abs">Four days in Ghent with the binders who sewed Issue 03, recorded in photographs and marginal notes.</p></div></div></div></div>
+    </div>
+    <div class="crow">
+      <p class="crow__no num">05</p>
+      <h3 class="crow__t">Ten Objects Repaired More Than Once</h3>
+      <p class="crow__by">Tomas Wren</p>
+      <p class="crow__pg num">pp. 120—146</p>
+      <button class="crow__btn" type="button" data-toggle aria-expanded="false">Abstract</button>
+      <div class="crow__shed"><div class="shed"><div><div class="shed__in"><p class="crow__abs">A photographic inventory of household things repaired repeatedly until repair itself became the object's most legible feature.</p></div></div></div></div>
+    </div>
+  </div>
+
+  <div class="i-foot">
+    <p class="lab i-foot__lab">Contributors</p>
+    <p class="i-foot__list">Sofia Brandt, Joseph Anand, Leah Mercer, Ines Halvard, Tomas Wren, Elias North, Ruth Achebe, Mara Vale. Design by MORROW Studio. Typeset in Instrument Serif and Inter Tight. Printed by Die Keure, Bruges.</p>
+  </div>
+</section>
+
+<!-- 06 — ARCHIVE -->
+<section class="field archive bleed" id="archive" data-label="06 — Archive" aria-labelledby="archive-title">
+  <p class="lab a-head">06 — Archive</p>
+  <p class="a-statement" id="archive-title">Twelve titles, 2019 to 2026. Formats, availability and printing history.</p>
+  <p class="lab num a-count"><span data-count>12</span> of 12 shown</p>
+
+  <div class="a-controls">
+    <div class="a-filters" role="group" aria-label="Filter by subject">
+      <button type="button" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" data-filter="Architecture" aria-pressed="false">Architecture</button>
+      <button type="button" data-filter="Photography" aria-pressed="false">Photography</button>
+      <button type="button" data-filter="Design" aria-pressed="false">Design</button>
+      <button type="button" data-filter="Place" aria-pressed="false">Place</button>
+      <button type="button" data-filter="Practice" aria-pressed="false">Practice</button>
+      <button type="button" data-filter="Journal" aria-pressed="false">Journal</button>
+      <button type="button" data-filter="Essays" aria-pressed="false">Essays</button>
+    </div>
+    <div class="a-sort" role="group" aria-label="Sort archive">
+      <button type="button" data-sort="new" aria-pressed="true">Newest</button>
+      <button type="button" data-sort="old" aria-pressed="false">Oldest</button>
+      <button type="button" data-sort="title" aria-pressed="false">A—Z</button>
+    </div>
+  </div>
+
+  <div class="arow arow--head" aria-hidden="true">
+    <span class="arow__y lab">Year</span>
+    <span class="arow__t lab">Title</span>
+    <span class="arow__a lab">Author / editor</span>
+    <span class="arow__s lab">Subject</span>
+    <span class="arow__f lab">Format</span>
+    <span class="arow__v lab">Availability</span>
+  </div>
+
+  <div class="arow" data-year="2026" data-title="The Quiet Structure" data-subject="Architecture">
+    <span class="arow__y num">2026</span>
+    <h3 class="arow__t">The Quiet Structure</h3>
+    <span class="arow__a">Mara Vale, editor</span>
+    <span class="arow__s">Architecture</span>
+    <span class="arow__f">Hardbound</span>
+    <span class="arow__v"><i class="dot"></i>In print</span>
+    <button class="arow__btn" type="button" data-toggle aria-expanded="false">Printing note</button>
+    <div class="arow__shed"><div class="shed"><div><div class="shed__in"><p class="arow__note">First printing of 1,200, March 2026. Second printing under consideration for autumn 2026.</p></div></div></div></div>
+  </div>
+
+  <div class="arow" data-year="2026" data-title="After the Quarry" data-subject="Photography">
+    <span class="arow__y num">2026</span>
+    <h3 class="arow__t">After the Quarry</h3>
+    <span class="arow__a">Elena Ross</span>
+    <span class="arow__s">Photography</span>
+    <span class="arow__f">Clothbound</span>
+    <span class="arow__v"><i class="dot"></i>In print</span>
+    <button class="arow__btn" type="button" data-toggle aria-expanded="false">Printing note</button>
+    <div class="arow__shed"><div class="shed"><div><div class="shed__in"><p class="arow__note">Edition of 750, February 2026. 214 copies remaining. 25 further copies with an original print.</p></div></div></div></div>
+  </div>
+
+  <div class="arow" data-year="2026" data-title="Field Notes Nº 04" data-subject="Journal">
+    <span class="arow__y num">2026</span>
+    <h3 class="arow__t">Field Notes Nº 04</h3>
+    <span class="arow__a">MORROW Studio</span>
+    <span class="arow__s">Journal</span>
+    <span class="arow__f">Saddle-stitched</span>
+    <span class="arow__v"><i class="dot"></i>In print</span>
+    <button class="arow__btn" type="button" data-toggle aria-expanded="false">Printing note</button>
+    <div class="arow__shed"><div class="shed"><div><div class="shed__in"><p class="arow__note">Printing of 600, June 2026. Distributed with subscriptions and through selected shops.</p></div></div></div></div>
+  </div>
+
+  <div class="arow" data-year="2025" data-title="Useful Objects" data-subject="Design">
+    <span class="arow__y num">2025</span>
+    <h3 class="arow__t">Useful Objects</h3>
+    <span class="arow__a">Tomas Wren</span>
+    <span class="arow__s">Design</span>
+    <span class="arow__f">Softbound</span>
+    <span class="arow__v"><i class="dot dot--clay"></i>Second printing</span>
+    <button class="arow__btn" type="button" data-toggle aria-expanded="false">Printing note</button>
+    <div class="arow__shed"><div class="shed"><div><div class="shed__in"><p class="arow__note">Second printing of 800, January 2026, with four additional plates and a corrected index.</p></div></div></div></div>
+  </div>
+
+  <div class="arow" data-year="2025" data-title="Weathered Ground" data-subject="Place">
+    <span class="arow__y num">2025</span>
+    <h3 class="arow__t">Weathered Ground</h3>
+    <span class="arow__a">Ines Halvard</span>
+    <span class="arow__s">Landscape &amp; Place</span>
+    <span class="arow__f">Hardbound</span>
+    <span class="arow__v"><i class="dot"></i>In print</span>
+    <button class="arow__btn" type="button" data-toggle aria-expanded="false">Printing note</button>
+    <div class="arow__shed"><div class="shed"><div><div class="shed__in"><p class="arow__note">Printing of 1,000, October 2025. Printed in Ghent on uncoated stock.</p></div></div></div></div>
+  </div>
+
+  <div class="arow" data-year="2025" data-title="Working Rooms" data-subject="Practice">
+    <span class="arow__y num">2025</span>
+    <h3 class="arow__t">Working Rooms</h3>
+    <span class="arow__a">MORROW Studio</span>
+    <span class="arow__s">Creative Practice</span>
+    <span class="arow__f">Softbound</span>
+    <span class="arow__v"><i class="dot dot--straw"></i>Reprint due</span>
+    <button class="arow__btn" type="button" data-toggle aria-expanded="false">Printing note</button>
+    <div class="arow__shed"><div class="shed"><div><div class="shed__in"><p class="arow__note">First printing of 900 exhausted. Reprint scheduled for late 2026; waiting list open.</p></div></div></div></div>
+  </div>
+
+  <div class="arow" data-year="2024" data-title="Interior Weather" data-subject="Architecture">
+    <span class="arow__y num">2024</span>
+    <h3 class="arow__t">Interior Weather</h3>
+    <span class="arow__a">Adam Frey</span>
+    <span class="arow__s">Architecture</span>
+    <span class="arow__f">Hardbound</span>
+    <span class="arow__v"><i class="dot dot--out"></i>Out of print</span>
+    <button class="arow__btn" type="button" data-toggle aria-expanded="false">Printing note</button>
+    <div class="arow__shed"><div class="shed"><div><div class="shed__in"><p class="arow__note">Printing of 700, 2024, now exhausted. A revised edition is planned for 2027.</p></div></div></div></div>
+  </div>
+
+  <div class="arow" data-year="2024" data-title="A House in Six Winters" data-subject="Architecture">
+    <span class="arow__y num">2024</span>
+    <h3 class="arow__t">A House in Six Winters</h3>
+    <span class="arow__a">Nadia Okonjo</span>
+    <span class="arow__s">Architecture</span>
+    <span class="arow__f">Clothbound</span>
+    <span class="arow__v"><i class="dot"></i>In print</span>
+    <button class="arow__btn" type="button" data-toggle aria-expanded="false">Printing note</button>
+    <div class="arow__shed"><div class="shed"><div><div class="shed__in"><p class="arow__note">Printing of 500, November 2024. 96 copies remaining.</p></div></div></div></div>
+  </div>
+
+  <div class="arow" data-year="2023" data-title="Common Tools" data-subject="Design">
+    <span class="arow__y num">2023</span>
+    <h3 class="arow__t">Common Tools</h3>
+    <span class="arow__a">Tomas Wren</span>
+    <span class="arow__s">Design</span>
+    <span class="arow__f">Softbound</span>
+    <span class="arow__v"><i class="dot dot--out"></i>Archive only</span>
+    <button class="arow__btn" type="button" data-toggle aria-expanded="false">Printing note</button>
+    <div class="arow__shed"><div class="shed"><div><div class="shed__in"><p class="arow__note">Printing of 600, 2023. No further editions planned; reference copies held at the MORROW studio.</p></div></div></div></div>
+  </div>
+
+  <div class="arow" data-year="2022" data-title="Ground Truth (Field Notes Nº 01)" data-subject="Journal">
+    <span class="arow__y num">2022</span>
+    <h3 class="arow__t">Ground Truth (Field Notes Nº 01)</h3>
+    <span class="arow__a">MORROW Studio</span>
+    <span class="arow__s">Journal</span>
+    <span class="arow__f">Saddle-stitched</span>
+    <span class="arow__v"><i class="dot dot--out"></i>Archive only</span>
+    <button class="arow__btn" type="button" data-toggle aria-expanded="false">Printing note</button>
+    <div class="arow__shed"><div class="shed"><div><div class="shed__in"><p class="arow__note">Printing of 300, 2022. Digital edition available to subscribers.</p></div></div></div></div>
+  </div>
+
+  <div class="arow" data-year="2021" data-title="Small Pressures" data-subject="Essays">
+    <span class="arow__y num">2021</span>
+    <h3 class="arow__t">Small Pressures</h3>
+    <span class="arow__a">Ruth Achebe</span>
+    <span class="arow__s">Essays</span>
+    <span class="arow__f">Softbound</span>
+    <span class="arow__v"><i class="dot dot--out"></i>Out of print</span>
+    <button class="arow__btn" type="button" data-toggle aria-expanded="false">Printing note</button>
+    <div class="arow__shed"><div class="shed"><div><div class="shed__in"><p class="arow__note">Printing of 500, 2021. Reprinted twice; no further editions planned.</p></div></div></div></div>
+  </div>
+
+  <div class="arow" data-year="2019" data-title="Before the Quarry" data-subject="Photography">
+    <span class="arow__y num">2019</span>
+    <h3 class="arow__t">Before the Quarry</h3>
+    <span class="arow__a">Elena Ross</span>
+    <span class="arow__s">Photography</span>
+    <span class="arow__f">Clothbound</span>
+    <span class="arow__v"><i class="dot dot--out"></i>Archive only</span>
+    <button class="arow__btn" type="button" data-toggle aria-expanded="false">Printing note</button>
+    <div class="arow__shed"><div class="shed"><div><div class="shed__in"><p class="arow__note">MORROW's first title. Printing of 200, 2019. Occasionally available secondhand.</p></div></div></div></div>
+  </div>
+
+  <p class="a-foot">Availability updated 12 June 2026. Out-of-print and archive titles are listed for reference; the MORROW studio holds reference copies of every title published since 2019.</p>
+</section>
+
+<!-- 07 — ABOUT -->
+<section class="field about" id="about" data-label="07 — About" aria-labelledby="about-title">
+  <p class="lab ab-head">07 — About</p>
+  <h2 class="ab-st" id="about-title">MORROW EDITIONS works with writers, photographers, artists, architects and designers to produce carefully edited physical and digital publications.</h2>
+
+  <figure class="ph ab-fig"><img loading="lazy" src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1000&q=80" alt="A studio interior with a long work table"></figure>
+
+  <div class="ab-p1">
+    <p class="p">We are an independent publisher. Each title begins with a conversation and is edited, designed and produced in close collaboration with the people who made the work — usually over one to two years, occasionally longer.</p>
+  </div>
+  <div class="ab-p2">
+    <p class="p">Print runs are small, between 200 and 1,200 copies, which allows us to spend time on paper, binding and reproduction rather than on volume. We remain editorially independent: no title is published to support anything other than itself.</p>
+  </div>
+
+  <ul class="ab-list">
+    <li><span>01</span><span>Independent publishing since 2019, based in Providence.</span></li>
+    <li><span>02</span><span>Small print runs, printed in the United States and Belgium.</span></li>
+    <li><span>03</span><span>Close collaboration with every author, photographer and designer.</span></li>
+    <li><span>04</span><span>Thoughtful book production: sewn bindings, uncoated stock, duotone reproduction.</span></li>
+    <li><span>05</span><span>Editorial independence; no sponsored titles.</span></li>
+    <li><span>06</span><span>Distributed through selected shops and directly through MORROW.</span></li>
+  </ul>
+
+  <div class="ab-dist">
+    <p class="p p--lg">Titles are distributed through selected bookshops and institutions, and directly through MORROW. Subscriptions, back issues and limited editions ship from Providence.</p>
+    <div class="acts" style="margin-top:18px">
+      <a class="link" href="#subscribe">New release announcements <i>→</i></a>
+      <a class="link" href="#archive">Submission guidelines <i>→</i></a>
+    </div>
+  </div>
+
+  <ul class="ab-stock">
+    <li><span>Printed Matter</span><span>New York</span></li>
+    <li><span>Do You Read Me?!</span><span>Berlin</span></li>
+    <li><span>Halle 14</span><span>Leipzig</span></li>
+    <li><span>Index</span><span>Melbourne</span></li>
+    <li><span>Bookshop Borde</span><span>Providence</span></li>
+  </ul>
+</section>
+
+<!-- 08 — SUBSCRIBE -->
+<section class="field subscribe" id="subscribe" data-label="08 — Subscribe" aria-labelledby="subscribe-title">
+  <p class="lab su-head">08 — New releases</p>
+  <h2 class="su-t" id="subscribe-title">Announcements,<br>four times a year.</h2>
+
+  <form class="su-form" data-subscribe novalidate>
+    <div class="field-row">
+      <label class="lab" for="email" style="flex:0 0 auto;padding-bottom:12px">Email</label>
+      <input class="input" id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="name@studio.com" required>
+      <button class="act act--solid" type="submit">Subscribe <i>→</i></button>
+    </div>
+    <p class="su-status" data-sub-status role="status"></p>
+  </form>
+
+  <ul class="su-meta">
+    <li>New publication announcements</li>
+    <li>Journal issues, twice yearly</li>
+    <li>Events and readings</li>
+    <li>Limited editions and print sets</li>
+  </ul>
+
+  <p class="su-fine">We send four messages a year and nothing else. Unsubscribe in one click.</p>
+</section>
+
+</main>
+
+<footer class="field foot bleed">
+  <div class="f-brand">
+    <span class="lab">MORROW EDITIONS</span>
+    <p class="f-brand__w">Books, journals<br>and printed works</p>
+  </div>
+  <p class="f-st">An independent publisher working with writers, photographers, architects and designers. Established 2019 in Providence, Rhode Island.</p>
+  <p class="f-stock">Printed Matter, New York<br>Do You Read Me?!, Berlin<br>Halle 14, Leipzig<br>Index, Melbourne<br>Bookshop Borde, Providence</p>
+
+  <nav class="f-nav" aria-label="Footer">
+    <div class="f-g1">
+      <h4>Publications</h4>
+      <ul>
+        <li><a href="#releases">Books</a></li>
+        <li><a href="#issue-04">Journals</a></li>
+        <li><a href="#featured">Limited editions</a></li>
+        <li><a href="#archive">Out of print</a></li>
+      </ul>
+    </div>
+    <div class="f-g2">
+      <h4>Journal</h4>
+      <ul>
+        <li><a href="#issue-04">Current issue</a></li>
+        <li><a href="#journal">Journal archive</a></li>
+        <li><a href="#about">Submissions</a></li>
+      </ul>
+    </div>
+    <div class="f-g3">
+      <h4>MORROW</h4>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#about">Authors</a></li>
+        <li><a href="#about">Stockists</a></li>
+        <li><a href="#about">Contact</a></li>
+        <li><a href="#about">Instagram</a></li>
+      </ul>
+    </div>
+    <div class="f-g4">
+      <h4>Orders</h4>
+      <ul>
+        <li><a href="#subscribe">Shipping</a></li>
+        <li><a href="#subscribe">Returns</a></li>
+        <li><a href="#about">Trade &amp; wholesale</a></li>
+        <li><a href="#subscribe">Terms</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="f-base">
+    <p class="f-info">MORROW EDITIONS, 41 Alder Street, Providence, Rhode Island 02906. Orders and enquiries: editions@morrow.example. All titles printed in short runs in the United States and Belgium.</p>
+    <p class="f-colo">Set in Instrument Serif and Inter Tight. Plates reproduced in duotone. This page was composed on a twelve-track field, re-woven at eight and four.</p>
+    <p class="f-rights">© 2026 MORROW EDITIONS.<br>All rights reserved.<br>Instagram — @morroweditions</p>
+  </div>
+
+  <div class="f-end" aria-hidden="true"></div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* masthead tightening */
+  var mast = document.querySelector("[data-mast]");
+  var fill = document.querySelector("[data-rail-fill]");
+  var railLabel = document.querySelector("[data-rail-label]");
+  var ticking = false;
+
+  function onScroll() {
+    if (mast) mast.classList.toggle("is-tight", window.scrollY > 40);
+    if (fill) {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var pct = max > 0 ? Math.min(100, (window.scrollY / max) * 100) : 0;
+      fill.style.height = pct.toFixed(2) + "%";
+    }
+    ticking = false;
+  }
+  window.addEventListener("scroll", function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(onScroll); }
+  }, { passive: true });
+  onScroll();
+
+  /* selvage rail: current run + masthead index */
+  var sections = Array.prototype.slice.call(document.querySelectorAll("[data-label]"));
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll(".mast__nav a"));
+  if ("IntersectionObserver" in window && sections.length && railLabel) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        railLabel.textContent = e.target.getAttribute("data-label");
+        var id = e.target.id;
+        navLinks.forEach(function (a) {
+          a.setAttribute("aria-current", a.getAttribute("href") === "#" + id ? "true" : "false");
+        });
+      });
+    }, { rootMargin: "-45% 0px -45% 0px", threshold: 0 });
+    sections.forEach(function (s) { io.observe(s); });
+  }
+
+  /* open shed toggles: expansion happens inside the weave */
+  function findShed(btn) {
+    var node = btn.parentElement;
+    while (node && node !== document.body) {
+      var shed = node.querySelector(".shed");
+      if (shed && !btn.closest(".shed")) return shed;
+      node = node.parentElement;
+    }
+    return null;
+  }
+
+  document.addEventListener("click", function (ev) {
+    var btn = ev.target.closest("[data-toggle]");
+    if (!btn) return;
+    var controlled = btn.getAttribute("aria-controls");
+    var shed = null;
+    if (controlled) {
+      var target = document.getElementById(controlled);
+      if (target) shed = target.classList.contains("shed") ? target : target.querySelector(".shed");
+    }
+    if (!shed) shed = findShed(btn);
+    if (!shed) return;
+    var open = btn.getAttribute("aria-expanded") === "true";
+    btn.setAttribute("aria-expanded", open ? "false" : "true");
+    shed.classList.toggle("is-open", !open);
+    var mark = btn.querySelector("i");
+    if (mark && (mark.textContent === "+" || mark.textContent === "—")) {
+      mark.textContent = open ? "+" : "—";
+    }
+  });
+
+  /* order actions */
+  document.addEventListener("click", function (ev) {
+    var add = ev.target.closest("[data-add]");
+    if (!add) return;
+    var status = document.querySelector("[data-status]");
+    if (status) status.textContent = add.getAttribute("data-add") + " — added to order. One copy.";
+  });
+
+  /* newsletter */
+  var form = document.querySelector("[data-subscribe]");
+  if (form) {
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var out = form.querySelector("[data-sub-status]");
+      var input = form.querySelector("#email");
+      var value = (input.value || "").trim();
+      if (!value || value.indexOf("@") < 1) {
+        out.textContent = "Please enter an email address.";
+        input.focus();
+        return;
+      }
+      out.textContent = "Thank you. Announcements will be sent to " + value + " four times a year.";
+      form.querySelector(".field-row").hidden = true;
+    });
+  }
+
+  /* archive: filter, sort, re-thread */
+  var archive = document.querySelector("#archive");
+  if (archive) {
+    var rows = Array.prototype.slice.call(archive.querySelectorAll(".arow[data-year]"));
+    var count = archive.querySelector("[data-count]");
+    var current = "all";
+    var sort = "new";
+
+    function compare(a, b, mode) {
+      if (mode === "title") return a.dataset.title.localeCompare(b.dataset.title);
+      var ya = Number(a.dataset.year), yb = Number(b.dataset.year);
+      if (ya === yb) return a.dataset.title.localeCompare(b.dataset.title);
+      return mode === "new" ? yb - ya : ya - yb;
+    }
+
+    function apply(animate) {
+      var shown = 0;
+      rows.forEach(function (row) {
+        var match = current === "all" || row.dataset.subject === current;
+        row.hidden = !match;
+        if (match) shown++;
+        if (!match) {
+          var openShed = row.querySelector(".shed");
+          if (openShed) openShed.classList.remove("is-open");
+          var openBtn = row.querySelector("[data-toggle]");
+          if (openBtn) openBtn.setAttribute("aria-expanded", "false");
+        }
+      });
+
+      var ordered = rows.filter(function (r) { return !r.hidden; })
+                        .sort(function (a, b) { return compare(a, b, sort); });
+      var head = archive.querySelector(".arow--head");
+      for (var i = ordered.length - 1; i >= 0; i--) {
+        archive.insertBefore(ordered[i], head ? head.nextElementSibling : archive.firstChild);
+        if (animate) {
+          ordered[i].classList.remove("is-rethread");
+          void ordered[i].offsetWidth;
+          ordered[i].classList.add("is-rethread");
+        }
+      }
+      if (count) count.textContent = String(shown);
+    }
+
+    archive.addEventListener("click", function (ev) {
+      var f = ev.target.closest("[data-filter]");
+      if (f) {
+        current = f.getAttribute("data-filter");
+        archive.querySelectorAll("[data-filter]").forEach(function (b) {
+          b.setAttribute("aria-pressed", String(b === f));
+        });
+        apply(true);
+        return;
+      }
+      var s = ev.target.closest("[data-sort]");
+      if (s) {
+        sort = s.getAttribute("data-sort");
+        archive.querySelectorAll("[data-sort]").forEach(function (b) {
+          b.setAttribute("aria-pressed", String(b === s));
+        });
+        apply(true);
+      }
+    });
+
+    apply(false);
+  }
+})();
+</script>
+</body>
+</html>
+
+
+
+
+
