@@ -19,5 +19,10 @@ window.galleryCategories = [
     "slug": "memetic-warfare",
     "label": "Memetic Warfare",
     "path": "/memetic-warfare/"
+  },
+  {
+    "slug": "mydjourney-explorations",
+    "label": "Mydjourney Explorations",
+    "path": "/archive/?category=mydjourney-explorations"
   }
 ];

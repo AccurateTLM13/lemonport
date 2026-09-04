@@ -1,6 +1,30 @@
 {
   "externalTools": [
     {
+      "id": "skill-issue",
+      "name": "Skill Issue",
+      "description": "Your coding agent has patience. This skill doesn't. Pushes coding agents toward smaller fixes, less unnecessary architecture, and working code over theory.",
+      "image": "/images/junk/skill-issue.webp",
+      "url": "https://github.com/AccurateTLM13/skill-issue",
+      "affiliate": false
+    },
+    {
+      "id": "localhost-watchdog",
+      "name": "Localhost Watchdog",
+      "description": "A Windows-first local dev server scanner and supervisor with proof-gated lifecycle management, safe graceful stops, and zero blind kill commands.",
+      "image": "/images/junk/external-localhost-watchdog.webp",
+      "url": "https://github.com/AccurateTLM13/localhost-watchdog",
+      "affiliate": false
+    },
+    {
+      "id": "yoink",
+      "name": "Yoink",
+      "description": "Offline-first Chrome extension for full-page scrolling captures, multi-tab window grabs, and responsive viewports with zero external servers.",
+      "image": "/images/junk/external-yoink-2.webp",
+      "url": "https://github.com/AccurateTLM13/yoink",
+      "affiliate": false
+    },
+    {
       "id": "recoded88",
       "name": "Rec0deD:88",
       "description": "Play retro games online in your browser. Leaves Lemonteed, behaves accordingly.",

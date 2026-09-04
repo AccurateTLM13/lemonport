@@ -207,8 +207,8 @@ To support concurrent work streams and seamless handoffs between agent runs:
 ### External Junk Drawer Tools (Completed)
 
 * **Completed:** Added the `content/junk-drawer.json` source of truth, public-card builder, and local Studio/API wiring for external tools with name, description, URL, WebP image uploads, and affiliate disclosure.
-* **Codebase state:** Existing External Finds content is represented in the new source file. Studio save operations rebuild `junk-drawer/index.html`; invalid API payloads are rejected, full checks pass, and browser verification found no console errors.
-* **Next steps:** Add external tools through Studio as needed.
+* **Codebase state:** `content/junk-drawer.json` contains five external tools, including the three added developer repositories: **Skill Issue** (`https://github.com/AccurateTLM13/skill-issue`), **Localhost Watchdog** (`https://github.com/AccurateTLM13/localhost-watchdog`), and **Yoink** (`https://github.com/AccurateTLM13/yoink`), each paired with dedicated high-fidelity WebP preview images in `/images/junk/` (`skill-issue.webp`, `localhost-watchdog.webp`, `yoink.webp`). Rebuilt `junk-drawer/index.html` via `scripts/build-junk-drawer.js`. All checks and media health validations pass with zero missing referenced images.
+* **Next steps:** Add or curate additional external tools through Studio or `content/junk-drawer.json` as needed.
 
 ### Studio SEO Manager (Completed)
 

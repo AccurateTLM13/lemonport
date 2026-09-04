@@ -27,5 +27,13 @@
     "path": "/memetic-warfare/",
     "visible": true,
     "createdAt": "2026-05-10T20:26:16.799Z"
+  },
+  {
+    "slug": "mydjourney-explorations",
+    "label": "Mydjourney Explorations",
+    "prefix": "myd",
+    "path": "",
+    "visible": true,
+    "createdAt": "2026-09-03T23:13:57.154Z"
   }
 ]

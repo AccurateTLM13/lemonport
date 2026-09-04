@@ -1350,7 +1350,26 @@
       "source": "/specimens/source/6476328f.html",
       "createdAt": "2026-09-01T02:42:32.747Z",
       "updatedAt": "2026-09-01T02:42:33.059Z"
+    },
+    {
+      "id": "79267e81",
+      "title": "AERA",
+      "model": "GPT-5.6 Sol",
+      "skill": "Field Contours Design Primitive",
+      "prompt": "",
+      "notes": "",
+      "date": "2026-09-03",
+      "tags": [],
+      "status": "Published",
+      "score": null,
+      "favorite": false,
+      "image": "/specimens/images/79267e81.webp",
+      "assets": [],
+      "assetMap": [],
+      "source": "/specimens/source/79267e81.html",
+      "createdAt": "2026-09-04T00:32:45.053Z",
+      "updatedAt": "2026-09-04T00:32:45.515Z"
     }
   ],
-  "updatedAt": "2026-09-01T02:42:33.067Z"
+  "updatedAt": "2026-09-04T00:32:45.523Z"
 }
