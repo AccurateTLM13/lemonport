@@ -8,6 +8,7 @@
 .cursor/
 .agents/
 .gstack/
+.orchestration-local/
 # Local model benchmark harness — never commit or deploy
 .benchmark/
 agents/
