@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "project": "Lemonteed",
+  "status": "idle",
+  "track": null,
+  "objective": null,
+  "target": null,
+  "phase": "Intake",
+  "workerSequence": [],
+  "currentWorkerIndex": null,
+  "completedWorkers": [],
+  "blocker": null,
+  "lastResult": null,
+  "validationCommands": [
+    "node scripts/content-validation.js",
+    "node scripts/check.js",
+    "node scripts/site-completion-audit.js"
+  ],
+  "constraints": [
+    "Preserve the static public-site architecture.",
+    "Use plain HTML, CSS, and JavaScript for the public site.",
+    "Keep Studio local/private.",
+    "Do not modify generated files directly.",
+    "Use source-of-truth content files when content changes.",
+    "Do not deploy without explicit owner approval."
+  ],
+  "updatedAt": null
+}
