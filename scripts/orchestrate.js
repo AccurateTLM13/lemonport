@@ -33,6 +33,31 @@ const TRACKS = {
 const VALID_STATUSES = new Set(['idle', 'active', 'blocked', 'complete']);
 const VALID_BLOCK_VERDICTS = new Set(['BLOCKED', 'HUMAN_DECISION']);
 
+function nonEmptyString(value) {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
+function expectedWorkerSequence(track) {
+  return TRACKS[track].map(([phase, worker]) => ({ phase, worker }));
+}
+
+function sequenceMatches(state) {
+  const expected = expectedWorkerSequence(state.track);
+  const actual = state.workerSequence;
+  if (JSON.stringify(actual) === JSON.stringify(expected)) return true;
+
+  if (state.track === 'feature-build-track') {
+    const conditionalDesign = [
+      expected[0],
+      { phase: 'Design', worker: 'DESIGN_WORKER.md' },
+      ...expected.slice(1)
+    ];
+    return JSON.stringify(actual) === JSON.stringify(conditionalDesign);
+  }
+
+  return false;
+}
+
 function die(message) {
   console.error(`orchestrate: ${message}`);
   process.exit(1);
@@ -53,16 +78,58 @@ function validateState(state) {
   if (!Array.isArray(state.constraints)) die('state.constraints must be an array');
   if (!Array.isArray(state.validationCommands)) die('state.validationCommands must be an array');
 
+  if (!state.constraints.every(nonEmptyString)) die('state.constraints must contain non-empty strings');
+  if (!state.validationCommands.every(nonEmptyString)) die('state.validationCommands must contain non-empty strings');
+  if (!nonEmptyString(state.phase)) die('state.phase must be a non-empty string');
+  if (state.updatedAt !== null && !nonEmptyString(state.updatedAt)) die('state.updatedAt must be null or a non-empty string');
+  if (state.blocker !== null && !nonEmptyString(state.blocker)) die('state.blocker must be null or a non-empty string');
+  if (state.lastResult !== null) {
+    if (!state.lastResult || typeof state.lastResult !== 'object' || Array.isArray(state.lastResult)) {
+      die('state.lastResult must be null or an object');
+    }
+    if (!nonEmptyString(state.lastResult.verdict) || !nonEmptyString(state.lastResult.summary)) {
+      die('state.lastResult requires non-empty verdict and summary');
+    }
+  }
+
   if (state.track !== null && !TRACKS[state.track]) die(`invalid state.track: ${state.track}`);
 
   if (state.status === 'idle') {
-    if (state.currentWorkerIndex !== null) die('idle state cannot have currentWorkerIndex');
+    if (
+      state.objective !== null ||
+      state.target !== null ||
+      state.track !== null ||
+      state.phase !== 'Intake' ||
+      state.workerSequence.length ||
+      state.completedWorkers.length ||
+      state.currentWorkerIndex !== null ||
+      state.blocker !== null ||
+      state.lastResult !== null
+    ) {
+      die('idle state must be reset to the canonical Intake shape');
+    }
     return state;
   }
 
-  if (!state.objective || typeof state.objective !== 'string') die(`${state.status} state requires objective`);
-  if (!state.target || typeof state.target !== 'string') die(`${state.status} state requires target`);
+  if (!nonEmptyString(state.objective)) die(`${state.status} state requires a non-empty objective`);
+  if (!nonEmptyString(state.target)) die(`${state.status} state requires a non-empty target`);
   if (!state.track || !TRACKS[state.track]) die(`${state.status} state requires a supported track`);
+  if (!sequenceMatches(state)) die(`${state.status} state has an unexpected workerSequence`);
+
+  for (let i = 0; i < state.completedWorkers.length; i += 1) {
+    const completed = state.completedWorkers[i];
+    const expected = state.workerSequence[i];
+    if (
+      !completed ||
+      typeof completed !== 'object' ||
+      completed.phase !== expected.phase ||
+      completed.worker !== expected.worker ||
+      !nonEmptyString(completed.summary) ||
+      !nonEmptyString(completed.completedAt)
+    ) {
+      die('state.completedWorkers contains a malformed or out-of-order entry');
+    }
+  }
 
   if (state.status === 'active' || state.status === 'blocked') {
     if (!state.workerSequence.length) die(`${state.status} state requires a non-empty workerSequence`);
@@ -74,10 +141,20 @@ function validateState(state) {
     if (!worker || typeof worker.phase !== 'string' || typeof worker.worker !== 'string') {
       die('current worker entry is malformed');
     }
+    if (state.completedWorkers.length !== state.currentWorkerIndex) {
+      die(`${state.status} state completedWorkers must match the current worker index`);
+    }
+    if (state.status === 'active' && state.blocker !== null) die('active state cannot have a blocker');
+    if (state.status === 'blocked' && !nonEmptyString(state.blocker)) die('blocked state requires a blocker');
   }
 
-  if (state.status === 'complete' && state.currentWorkerIndex !== null) {
-    die('complete state must have currentWorkerIndex=null');
+  if (state.status === 'complete') {
+    if (state.currentWorkerIndex !== null) die('complete state must have currentWorkerIndex=null');
+    if (state.phase !== 'Handoff') die('complete state must have phase=Handoff');
+    if (state.completedWorkers.length !== state.workerSequence.length) {
+      die('complete state must contain a completed entry for every worker');
+    }
+    if (state.blocker !== null) die('complete state cannot have a blocker');
   }
 
   return state;
@@ -158,9 +235,11 @@ function start(state, args) {
   const goal = args.goal;
   const target = args.target;
   const track = args.track;
-  if (!goal || !target || !track) die('start requires --goal, --target, and --track');
+  if (!nonEmptyString(goal) || !nonEmptyString(target) || !nonEmptyString(track)) {
+    die('start requires non-empty --goal, --target, and --track values');
+  }
   if (!TRACKS[track]) die(`unsupported track: ${track}`);
-  if ((state.status === 'active' || state.status === 'blocked') && !args.force) {
+  if ((state.status === 'active' || state.status === 'blocked') && args.force !== true) {
     die(`cannot replace status=${state.status} objective without --force`);
   }
 
@@ -295,8 +374,10 @@ function runAdapter(args) {
   const adapterPath = path.join(ROOT, 'scripts', 'orchestrator-adapter.js');
   if (!fs.existsSync(adapterPath)) die('missing scripts/orchestrator-adapter.js');
   const forwarded = ['run'];
-  if (args.all) forwarded.push('--all');
-  if (args['allow-dirty']) forwarded.push('--allow-dirty');
+  if (args.all === true) forwarded.push('--all');
+  if (args['allow-dirty'] === true) forwarded.push('--allow-dirty');
+  if (args.escalate === true) forwarded.push('--escalate');
+  if (args.escalate !== undefined && args.escalate !== true) die('--escalate is a flag and takes no value');
   execFileSync(process.execPath, [adapterPath, ...forwarded], {
     cwd: ROOT,
     stdio: 'inherit',
@@ -305,6 +386,7 @@ function runAdapter(args) {
 }
 
 function usage() {
+  console.log('  run [--escalate] selects the explicitly configured escalation model');
   console.log(`Lemonteed orchestration runtime\n\nCommands:\n  status\n  start --goal "..." --target "..." --track <track> [--force]\n  next\n  run [--all] [--allow-dirty]\n  complete --summary "..." [--design-required true|false]\n  block --reason "..." [--verdict BLOCKED|HUMAN_DECISION]\n  unblock\n\nTracks:\n  ${Object.keys(TRACKS).join('\n  ')}\n`);
 }
 

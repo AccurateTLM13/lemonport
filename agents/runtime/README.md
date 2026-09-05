@@ -54,26 +54,35 @@ The owner owns:
 ## Requirements
 
 - Node.js with built-in `fetch` support (Node 18+; Lemonteed local tooling already targets modern Node).
-- Codex CLI installed and authenticated (`codex --version` must succeed).
-- `OPENAI_API_KEY` for the default orchestrator provider.
+- Codex CLI installed and authenticated. The adapter resolves `CODEX_CLI_PATH` first, then the configured `CODEX_CLI_PATH` in `CODEX_HOME/config.toml`, then one unambiguous platform installation. It records the resolved executable and version.
 
-Default orchestrator model: `gpt-5.6-sol`.
+Default transport for planner, worker, and reviewer: `codex-cli`.
+Default planner, worker, and reviewer model: `gpt-5.6-luna`.
+The optional `openai-api` provider remains available for planner/reviewer only and requires `OPENAI_API_KEY` when explicitly selected.
 
 Override with:
 
 ```bash
-set ORCHESTRATOR_MODEL=gpt-5.6-sol
+set ORCHESTRATOR_PROVIDER=codex-cli
+set ORCHESTRATOR_MODEL=gpt-5.6-luna
+set REVIEWER_PROVIDER=codex-cli
+set REVIEWER_MODEL=gpt-5.6-luna
+set WORKER_PROVIDER=codex-cli
+set WORKER_MODEL=gpt-5.6-luna
+set ORCHESTRATOR_ESCALATION_MODEL=gpt-5.6-terra
+set ORCHESTRATOR_MAX_MODEL=gpt-5.6-luna
 set ORCHESTRATOR_REASONING=high
 set ORCHESTRATOR_MAX_REPAIRS=2
+set CODEX_CLI_PATH=C:\Users\<user>\AppData\Local\OpenAI\Codex\bin\<version>\codex.exe
 ```
 
 On PowerShell use `$env:NAME="value"`; on macOS/Linux use `export NAME=value`.
 
-`CODEX_ARGS_JSON` can override the Codex CLI argument prefix. The default is:
+`CODEX_ARGS_JSON` is retained as a compatibility check and must remain the safe default:
 
-```json
-["exec"]
-```
+`["exec"]`. The adapter owns the model, sandbox, output-schema, and output-file flags and rejects overrides that could weaken those boundaries.
+
+The adapter uses Luna for all roles by default. `run --escalate` explicitly selects the configured Terra escalation model for planner/reviewer. Automatic Sol usage and silent model fallback are prohibited. Planner and reviewer use `--sandbox read-only`, `--ephemeral`, and schema-backed final output; the worker uses `--sandbox workspace-write` and receives only the generated contract plus repository instructions.
 
 Example:
 
@@ -107,10 +116,22 @@ Run one worker through planner → Codex → reviewer:
 node scripts/orchestrate.js run
 ```
 
+Use the explicit configured escalation path only when needed:
+
+```bash
+node scripts/orchestrate.js run --escalate
+```
+
 Run continuously through the remaining pipeline until complete, blocked, or awaiting a human decision:
 
 ```bash
 node scripts/orchestrate.js run --all
+```
+
+Run the dependency-free mocked transport/runtime checks:
+
+```bash
+node scripts/test-orchestration-runtime.js
 ```
 
 The adapter refuses unrelated dirty worktrees by default. Use `--allow-dirty` only when the existing changes are intentional and understood.

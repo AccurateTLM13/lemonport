@@ -70,6 +70,7 @@ npx wrangler dev --local --port 8788 --config mdr-api/wrangler.toml
 | `node scripts/build-artifact-pages.js` | Generate static pages for all published artifacts + update sitemap |
 | `node scripts/build-junk-drawer.js` | Rebuild external Junk Drawer cards |
 | `node scripts/build-specimens.js` | Rebuild Specimen Vault index + record pages |
+| `node scripts/test-orchestration-runtime.js` | Run mocked Lemonteed planner/worker/reviewer transport and state-transition checks |
 | `node scripts/import-systemform-specimens.js --source <SYSTEMFORM folder> [--dry-run]` | Import the official SYSTEM//FORM five-test/eight-model set into the Specimen Vault; localizes exact imagery as WebP and fails closed on unlisted missing originals |
 | `node scripts/generate-og-images.js` | Generate psychology-driven branded 1200×630 WebP OG cards |
 | `node scripts/build-seo.js` | Sync SEO metadata and patch HTML files in place |
