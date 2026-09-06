@@ -168,7 +168,7 @@ function validateSpecimens(data) {
 
 const SPECIMEN_CSP =
   "default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; " +
-  "font-src * data:; media-src * data:; script-src 'none'; connect-src 'none'; " +
+  "font-src * data:; media-src * data:; script-src 'unsafe-inline'; connect-src 'none'; " +
   "object-src 'none'; base-uri 'none'; form-action 'none'";
 
 function escapeRegExp(value) {

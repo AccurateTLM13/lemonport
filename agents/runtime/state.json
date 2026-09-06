@@ -1,13 +1,30 @@
 {
   "schemaVersion": 1,
   "project": "Lemonteed",
-  "status": "idle",
-  "track": null,
-  "objective": null,
-  "target": null,
-  "phase": "Intake",
-  "workerSequence": [],
-  "currentWorkerIndex": null,
+  "status": "active",
+  "track": "feature-build-track",
+  "objective": "Improve the Specimen Vault filtering experience so visitors can find specimens faster and understand active filters clearly",
+  "target": "/specimens/",
+  "phase": "Structure",
+  "workerSequence": [
+    {
+      "phase": "Structure",
+      "worker": "STRUCTURE_WORKER.md"
+    },
+    {
+      "phase": "Implementation",
+      "worker": "IMPLEMENTATION_WORKER.md"
+    },
+    {
+      "phase": "Experience Review",
+      "worker": "EXPERIENCE_DIRECTOR.md"
+    },
+    {
+      "phase": "QA",
+      "worker": "QA_WORKER.md"
+    }
+  ],
+  "currentWorkerIndex": 0,
   "completedWorkers": [],
   "blocker": null,
   "lastResult": null,
@@ -24,5 +41,5 @@
     "Use source-of-truth content files when content changes.",
     "Do not deploy without explicit owner approval."
   ],
-  "updatedAt": null
+  "updatedAt": "2026-09-06T01:41:49.476Z"
 }

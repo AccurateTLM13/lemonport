@@ -1369,7 +1369,28 @@
       "source": "/specimens/source/79267e81.html",
       "createdAt": "2026-09-04T00:32:45.053Z",
       "updatedAt": "2026-09-04T00:34:17.927Z"
+    },
+    {
+      "id": "b3835c7e",
+      "title": "NORTHSTAR -AI Operations Studio",
+      "model": "GPT-5.6 Sol",
+      "skill": "Prompt Only",
+      "prompt": "Do not use any skills or resource files that you have access too. Treat this as the first time you have seen this prompt. However you are an elite website designer who excels in complex HTML, CSS, and JS prototype websites. You make the top the Web Agencies around the world tremble when they learn you are working with a competitor. You will design a website from only the prompt below. Showcase those elite skills.\n\\---\nPrompt:\nCreate a premium single-page website for **NORTHSTAR**, a small AI operations studio that helps established companies redesign internal workflows around AI.\n\nThis is not a generic AI agency.\n\nNORTHSTAR works directly with company leadership and operating teams to identify repetitive work, redesign workflows, build internal AI systems, and integrate them into existing operations.\n\nThey deliberately work with only a small number of clients at a time.\n\n### Goal\n\nDesign a website that makes NORTHSTAR feel like an elite specialist consultancy whose engagements could reasonably cost **$100,000+**.\n\nThe page itself should remain simple.\n\nThe challenge is to create perceived value through clarity, restraint, typography, storytelling, and presentation rather than sheer volume of content.\n\n### Positioning\n\nCore headline idea:\n\n**Your company already has enough AI tools.**\n**What it needs is a better operating system.**\n\nNORTHSTAR does not sell AI experimentation.\n\nThey redesign how work gets done.\n\nPotential themes:\n\n- operational intelligence\n- orchestration\n- leverage\n- systems thinking\n- decision infrastructure\n- humans directing increasingly capable machines\n\nWrite sophisticated but concise copy.\n\nAvoid buzzword soup.\n\n### Visual Direction\n\nCreate something that feels:\n\n- editorial\n- intelligent\n- slightly experimental\n- extremely polished\n- technical without looking like a developer tool\n- modern without depending on neon gradients\n\nYou may invent a distinctive visual motif or graphic system that represents orchestration, workflow, routing, intelligence, or connected systems.\n\nThe motif should feel proprietary to the brand.\n\nDo not use generic glowing AI brains, robots, circuit boards, or stock futuristic imagery.\n\n### Structure\n\nCreate a concise landing page containing roughly:\n\n- navigation\n- major hero composition\n- positioning statement\n- visual explanation of how NORTHSTAR works\n- 3–4 areas of intervention\n- one short example engagement or transformation\n- selective credibility/proof\n- strong engagement CTA\n- footer\n\nThe page should not feel like a template made from stacked cards.\n\nUse editorial layouts, spatial hierarchy, oversized type, diagrams, rules, imagery, or other design devices instead.\n\n### Details\n\nInvent realistic copy and sample metrics where needed, but clearly present hypothetical case-study information as illustrative rather than claiming it is factual.\n\nInclude enough content to make the company feel real without bloating the page.\n\n### Build Requirements\n\nBuild the complete responsive landing page with:\n\n- HTML\n- CSS\n- vanilla JavaScript if useful\n\nUse high-quality remote imagery only if the art direction benefits from it.\n\nThe website should look exceptional on both desktop and mobile.\n\nNo explanation.\n\nNo design rationale.\n\nNo questions.\n\nReturn the finished working website.",
+      "notes": "",
+      "date": "2026-09-06",
+      "tags": [
+        "landing-page"
+      ],
+      "status": "Published",
+      "score": null,
+      "favorite": true,
+      "image": "/specimens/images/b3835c7e.webp",
+      "assets": [],
+      "assetMap": [],
+      "source": "/specimens/source/b3835c7e.html",
+      "createdAt": "2026-09-06T20:54:36.174Z",
+      "updatedAt": "2026-09-06T20:54:36.727Z"
     }
   ],
-  "updatedAt": "2026-09-04T00:34:17.943Z"
+  "updatedAt": "2026-09-06T20:54:36.735Z"
 }

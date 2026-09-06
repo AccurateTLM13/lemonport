@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https: http:; img-src * data:; font-src * data:; media-src * data:; script-src 'unsafe-inline'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="NORTHSTAR is a specialist AI operations studio that redesigns internal workflows, builds AI systems, and integrates them into real operations." />
+  <title>NORTHSTAR — AI Operations Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#141510;
+      --paper:#efede5;
+      --paper-2:#e5e2d8;
+      --white:#f7f6f1;
+      --muted:#8c8b82;
+      --line:rgba(20,21,16,.17);
+      --line-dark:rgba(247,246,241,.18);
+      --signal:#ef6a45;
+      --sage:#bcc4b7;
+      --max:1540px;
+      --gutter:clamp(20px,3.2vw,58px);
+      --ease:cubic-bezier(.22,1,.36,1);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:var(--ink)}
+    body{
+      margin:0;
+      background:var(--paper);
+      color:var(--ink);
+      font-family:"Instrument Sans",sans-serif;
+      font-feature-settings:"ss01" 1,"tnum" 1;
+      text-rendering:optimizeLegibility;
+      -webkit-font-smoothing:antialiased;
+    }
+    body::selection{background:var(--signal);color:var(--ink)}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    svg{display:block}
+
+    .shell{width:min(calc(100% - 2*var(--gutter)),var(--max));margin-inline:auto}
+    .rule{border-top:1px solid var(--line)}
+    .kicker{
+      margin:0;
+      font-size:11px;
+      line-height:1;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-weight:650;
+    }
+    .eyebrow-row{display:flex;align-items:center;gap:12px}
+    .eyebrow-row::before{content:"";width:28px;height:1px;background:currentColor;opacity:.35}
+
+    .site-nav{
+      position:fixed;
+      inset:0 0 auto;
+      z-index:50;
+      height:78px;
+      color:var(--white);
+      mix-blend-mode:difference;
+      pointer-events:none;
+    }
+    .nav-inner{
+      height:100%;
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      align-items:center;
+      gap:24px;
+      pointer-events:auto;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      width:max-content;
+      font-size:15px;
+      font-weight:700;
+      letter-spacing:.08em;
+    }
+    .brand-mark{width:15px;height:15px;position:relative;flex:none}
+    .brand-mark::before,.brand-mark::after{content:"";position:absolute;background:currentColor;left:50%;top:50%;transform:translate(-50%,-50%)}
+    .brand-mark::before{width:15px;height:1px}
+    .brand-mark::after{width:1px;height:15px}
+    .brand-mark i,.brand-mark b{position:absolute;left:50%;top:50%;width:1px;height:11px;background:currentColor;transform-origin:center}
+    .brand-mark i{transform:translate(-50%,-50%) rotate(45deg)}
+    .brand-mark b{transform:translate(-50%,-50%) rotate(-45deg)}
+    .nav-links{display:flex;gap:28px;font-size:12px;letter-spacing:.06em}
+    .nav-links a{position:relative}
+    .nav-links a::after{content:"";position:absolute;left:0;right:100%;bottom:-5px;height:1px;background:currentColor;transition:right .35s var(--ease)}
+    .nav-links a:hover::after,.nav-links a:focus-visible::after{right:0}
+    .nav-cta{justify-self:end;font-size:12px;letter-spacing:.06em;display:flex;align-items:center;gap:8px}
+    .nav-cta .arrow{transition:transform .25s var(--ease)}
+    .nav-cta:hover .arrow{transform:translateX(4px)}
+
+    .hero{
+      min-height:100svh;
+      background:var(--ink);
+      color:var(--white);
+      display:flex;
+      align-items:flex-end;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-grid{
+      width:100%;
+      min-height:100svh;
+      display:grid;
+      grid-template-columns:minmax(0,1.26fr) minmax(420px,.74fr);
+      align-items:stretch;
+      gap:0;
+      padding-top:78px;
+    }
+    .hero-copy{
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      padding:clamp(70px,8vw,120px) clamp(30px,4vw,72px) clamp(48px,6vw,84px) 0;
+      border-right:1px solid var(--line-dark);
+      position:relative;
+      z-index:2;
+    }
+    .hero-copy::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:78px;
+      width:1px;
+      height:clamp(80px,12vw,180px);
+      background:var(--line-dark);
+    }
+    .hero h1{
+      margin:0;
+      max-width:1010px;
+      font-size:clamp(58px,7.45vw,132px);
+      line-height:.88;
+      letter-spacing:-.058em;
+      font-weight:560;
+      text-wrap:balance;
+    }
+    .hero h1 em{
+      font-family:"Newsreader",serif;
+      font-weight:400;
+      font-style:italic;
+      letter-spacing:-.045em;
+      color:var(--sage);
+    }
+    .hero-sub{
+      margin-top:clamp(32px,4vw,58px);
+      display:grid;
+      grid-template-columns:150px minmax(0,520px);
+      gap:clamp(20px,3vw,44px);
+      align-items:start;
+    }
+    .hero-sub p{margin:0;font-size:clamp(16px,1.15vw,20px);line-height:1.45;color:rgba(247,246,241,.74);max-width:38ch}
+    .hero-index{color:rgba(247,246,241,.45);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding-top:5px}
+
+    .hero-system{
+      position:relative;
+      min-height:600px;
+      overflow:hidden;
+      background:radial-gradient(circle at 70% 42%,rgba(188,196,183,.06),transparent 42%);
+    }
+    .system-title{
+      position:absolute;
+      top:30px;
+      left:32px;
+      right:32px;
+      display:flex;
+      justify-content:space-between;
+      color:rgba(247,246,241,.47);
+      font-size:10px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      z-index:3;
+    }
+    .route-field{position:absolute;inset:0;width:100%;height:100%}
+    .route-field .grid-line{stroke:rgba(247,246,241,.075);stroke-width:1}
+    .route-field .route{stroke:rgba(247,246,241,.38);stroke-width:1.25;fill:none;vector-effect:non-scaling-stroke}
+    .route-field .route.bold{stroke:rgba(188,196,183,.78);stroke-width:1.5}
+    .route-field .route.active{stroke:var(--signal);stroke-width:1.6;stroke-dasharray:2 12;animation:route 12s linear infinite}
+    .route-field .node{fill:var(--ink);stroke:rgba(247,246,241,.65);stroke-width:1.2;vector-effect:non-scaling-stroke}
+    .route-field .node.signal{fill:var(--signal);stroke:var(--signal)}
+    .route-field text{fill:rgba(247,246,241,.6);font-family:"Instrument Sans",sans-serif;font-size:12px;letter-spacing:.04em}
+    .route-field .tiny{font-size:10px;fill:rgba(247,246,241,.35);letter-spacing:.11em}
+    .route-field .halo{fill:none;stroke:rgba(239,106,69,.34);stroke-width:1;animation:pulse 3.4s ease-out infinite;transform-box:fill-box;transform-origin:center}
+    @keyframes route{to{stroke-dashoffset:-196}}
+    @keyframes pulse{0%{transform:scale(.9);opacity:0}25%{opacity:.9}100%{transform:scale(2.1);opacity:0}}
+    .system-note{
+      position:absolute;
+      right:32px;
+      bottom:34px;
+      width:min(250px,58%);
+      font-size:12px;
+      line-height:1.4;
+      color:rgba(247,246,241,.49);
+      border-top:1px solid var(--line-dark);
+      padding-top:12px;
+    }
+
+    .statement{padding:clamp(120px,14vw,220px) 0 clamp(90px,10vw,150px);background:var(--paper)}
+    .statement-grid{display:grid;grid-template-columns:180px minmax(0,1fr);gap:clamp(30px,7vw,120px);align-items:start}
+    .statement .label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#5f605a;padding-top:16px}
+    .statement blockquote{margin:0;max-width:1170px;font-size:clamp(42px,5.7vw,96px);line-height:.97;letter-spacing:-.045em;font-weight:520}
+    .statement blockquote .soft{font-family:"Newsreader",serif;font-weight:400;font-style:italic;color:#777b73}
+    .statement-note{margin-top:50px;margin-left:auto;max-width:520px;font-size:17px;line-height:1.55;color:#5e6058}
+
+    .process{padding:0 0 clamp(110px,13vw,200px);background:var(--paper)}
+    .process-head{display:grid;grid-template-columns:1fr 1fr;gap:50px;padding:34px 0 44px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);align-items:end}
+    .process-head h2{margin:0;font-size:clamp(28px,3.2vw,52px);font-weight:560;letter-spacing:-.035em}
+    .process-head p{margin:0 0 4px auto;max-width:520px;font-size:15px;line-height:1.5;color:#696b63}
+    .process-visual{position:relative;display:grid;grid-template-columns:repeat(4,1fr);min-height:430px;border-bottom:1px solid var(--line)}
+    .process-step{padding:34px 26px 46px 0;position:relative;display:flex;flex-direction:column;justify-content:space-between;min-width:0}
+    .process-step + .process-step{padding-left:26px;border-left:1px solid var(--line)}
+    .step-num{display:flex;align-items:center;justify-content:space-between;color:#85867e;font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+    .step-node{width:10px;height:10px;border:1px solid #565850;border-radius:50%;background:var(--paper);position:relative;z-index:2}
+    .step-node::before{content:"";position:absolute;inset:3px;border-radius:50%;background:transparent;transition:background .3s ease}
+    .process-step:hover .step-node::before{background:var(--signal)}
+    .process-step h3{margin:0 0 10px;font-size:clamp(28px,3vw,46px);letter-spacing:-.04em;font-weight:550}
+    .process-step p{margin:0;max-width:29ch;font-size:14px;line-height:1.5;color:#686a62}
+    .process-line{position:absolute;top:38px;left:0;right:0;height:1px;background:#aaa99f;pointer-events:none}
+    .process-line::after{content:"";position:absolute;left:0;top:-1px;width:25%;height:3px;background:var(--signal);transition:width .45s var(--ease)}
+    .process-visual[data-stage="2"] .process-line::after{width:50%}
+    .process-visual[data-stage="3"] .process-line::after{width:75%}
+    .process-visual[data-stage="4"] .process-line::after{width:100%}
+
+    .interventions{background:var(--ink);color:var(--white);padding:clamp(90px,11vw,160px) 0}
+    .interventions-head{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:end;margin-bottom:70px}
+    .interventions-head h2{margin:0;font-size:clamp(52px,7vw,112px);line-height:.9;letter-spacing:-.055em;font-weight:540}
+    .interventions-head p{margin:0 0 7px auto;max-width:430px;color:rgba(247,246,241,.57);font-size:15px;line-height:1.55}
+    .intervention-row{
+      display:grid;
+      grid-template-columns:80px minmax(220px,.78fr) minmax(320px,1.22fr) 34px;
+      gap:24px;
+      align-items:start;
+      padding:30px 0 32px;
+      border-top:1px solid var(--line-dark);
+      transition:padding-left .35s var(--ease),background .35s var(--ease);
+    }
+    .intervention-row:last-child{border-bottom:1px solid var(--line-dark)}
+    .intervention-row:hover{padding-left:16px;background:rgba(255,255,255,.018)}
+    .i-num{font-size:11px;color:rgba(247,246,241,.35);letter-spacing:.12em}
+    .intervention-row h3{margin:0;font-size:clamp(23px,2.3vw,38px);font-weight:500;letter-spacing:-.025em}
+    .intervention-row p{margin:3px 0 0;max-width:620px;color:rgba(247,246,241,.56);font-size:14px;line-height:1.55}
+    .i-arrow{font-size:22px;color:rgba(247,246,241,.35);transform:translateY(-4px);transition:transform .3s var(--ease),color .3s}
+    .intervention-row:hover .i-arrow{transform:translate(5px,-4px);color:var(--signal)}
+
+    .case{background:var(--white);padding:clamp(110px,13vw,190px) 0}
+    .case-top{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+    .case-title .kicker{color:#73756c}
+    .case-title h2{margin:26px 0 0;font-size:clamp(40px,5vw,84px);line-height:.94;letter-spacing:-.047em;font-weight:540;max-width:12ch}
+    .case-summary{padding-top:28px;border-top:1px solid var(--line)}
+    .case-summary p{margin:0;font-size:clamp(18px,1.5vw,23px);line-height:1.5;max-width:52ch}
+    .case-summary small{display:block;margin-top:18px;color:#777970;font-size:11px;letter-spacing:.06em}
+    .flow-compare{margin-top:85px;display:grid;grid-template-columns:1fr 90px 1fr;align-items:stretch;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .flow-side{padding:32px 0 44px}
+    .flow-side.after{padding-left:34px}
+    .flow-side.before{padding-right:34px}
+    .flow-tag{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#7b7d75;margin-bottom:34px}
+    .flow-chain{display:grid;grid-template-columns:1fr;gap:0}
+    .chain-row{display:grid;grid-template-columns:36px 1fr auto;gap:16px;align-items:center;padding:15px 0;border-top:1px solid rgba(20,21,16,.11)}
+    .chain-row:last-child{border-bottom:1px solid rgba(20,21,16,.11)}
+    .chain-row span:first-child{font-size:10px;color:#878981}
+    .chain-row strong{font-size:14px;font-weight:550}
+    .chain-row em{font-size:11px;font-style:normal;color:#8b8c84;text-align:right}
+    .flow-middle{border-left:1px solid var(--line);border-right:1px solid var(--line);display:flex;align-items:center;justify-content:center}
+    .flow-middle span{width:40px;height:40px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;font-size:18px;color:var(--signal)}
+    .metrics{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line)}
+    .metric{padding:28px 26px 28px 0;min-height:140px}
+    .metric + .metric{border-left:1px solid var(--line);padding-left:26px}
+    .metric strong{display:block;font-size:clamp(34px,4vw,64px);font-weight:520;letter-spacing:-.05em}
+    .metric span{display:block;margin-top:10px;font-size:12px;line-height:1.4;color:#73756d;max-width:24ch}
+
+    .proof{background:var(--paper-2);padding:clamp(100px,11vw,160px) 0}
+    .proof-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(50px,9vw,150px)}
+    .proof-left h2{margin:0;font-size:clamp(40px,4.5vw,72px);line-height:.96;letter-spacing:-.04em;font-weight:540;max-width:9ch}
+    .proof-left p{margin:28px 0 0;max-width:36ch;font-size:15px;line-height:1.55;color:#66685f}
+    .proof-list{border-top:1px solid var(--line)}
+    .proof-item{display:grid;grid-template-columns:130px 1fr;gap:26px;padding:25px 0;border-bottom:1px solid var(--line)}
+    .proof-item span{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#7a7c73;padding-top:3px}
+    .proof-item strong{font-size:clamp(20px,2vw,30px);font-weight:520;letter-spacing:-.02em;max-width:24ch}
+    .sectors{margin-top:80px;padding-top:26px;border-top:1px solid var(--line);display:grid;grid-template-columns:130px 1fr;gap:26px}
+    .sectors > span{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#7a7c73}
+    .sector-list{display:flex;flex-wrap:wrap;gap:10px 26px;font-size:14px;color:#54564e}
+
+    .cta{background:var(--signal);color:var(--ink);padding:clamp(110px,14vw,210px) 0 44px;position:relative;overflow:hidden}
+    .cta::before{content:"";position:absolute;width:56vw;max-width:800px;aspect-ratio:1;border:1px solid rgba(20,21,16,.15);border-radius:50%;right:-20vw;top:-10vw}
+    .cta::after{content:"";position:absolute;width:34vw;max-width:500px;aspect-ratio:1;border:1px solid rgba(20,21,16,.15);border-radius:50%;right:-8vw;top:4vw}
+    .cta-inner{position:relative;z-index:2}
+    .cta h2{margin:22px 0 0;font-size:clamp(58px,8.2vw,142px);line-height:.84;letter-spacing:-.061em;font-weight:570;max-width:10ch}
+    .cta h2 em{font-family:"Newsreader",serif;font-style:italic;font-weight:400}
+    .cta-bottom{margin-top:75px;display:grid;grid-template-columns:1fr auto;gap:30px;align-items:end;padding-top:26px;border-top:1px solid rgba(20,21,16,.27)}
+    .cta-bottom p{margin:0;max-width:510px;font-size:15px;line-height:1.5}
+    .cta-link{display:inline-flex;align-items:center;gap:20px;font-size:15px;font-weight:650;border-bottom:1px solid currentColor;padding-bottom:6px}
+    .cta-link .arrow{transition:transform .3s var(--ease)}
+    .cta-link:hover .arrow{transform:translateX(6px)}
+
+    footer{background:var(--ink);color:var(--white);padding:34px 0 44px}
+    .footer-grid{display:grid;grid-template-columns:1fr auto auto;gap:40px;align-items:center}
+    .footer-grid p{margin:0;color:rgba(247,246,241,.42);font-size:11px;letter-spacing:.07em}
+    .footer-grid a{font-size:11px;color:rgba(247,246,241,.68)}
+
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+    .reveal.is-visible{opacity:1;transform:none}
+
+    @media (max-width: 1100px){
+      .hero-grid{grid-template-columns:1fr 420px}
+      .hero h1{font-size:clamp(64px,8vw,100px)}
+      .hero-sub{grid-template-columns:110px 1fr}
+      .intervention-row{grid-template-columns:56px minmax(180px,.7fr) minmax(280px,1.3fr) 30px}
+    }
+
+    @media (max-width: 900px){
+      .site-nav{height:68px}
+      .nav-inner{grid-template-columns:1fr auto}
+      .nav-links{display:none}
+      .hero-grid{grid-template-columns:1fr;min-height:auto;padding-top:68px}
+      .hero-copy{min-height:76svh;border-right:0;border-bottom:1px solid var(--line-dark);padding-right:0;padding-top:90px}
+      .hero-copy::before{top:68px}
+      .hero-system{min-height:520px}
+      .hero-sub{grid-template-columns:90px 1fr}
+      .statement-grid{grid-template-columns:1fr;gap:30px}
+      .statement .label{padding-top:0}
+      .statement blockquote{font-size:clamp(44px,8vw,78px)}
+      .process-head{grid-template-columns:1fr;gap:18px}
+      .process-head p{margin-left:0}
+      .process-visual{grid-template-columns:1fr 1fr}
+      .process-step:nth-child(3){border-left:0;border-top:1px solid var(--line);padding-left:0}
+      .process-step:nth-child(4){border-top:1px solid var(--line)}
+      .process-line{display:none}
+      .interventions-head{grid-template-columns:1fr;gap:28px}
+      .interventions-head p{margin-left:0}
+      .intervention-row{grid-template-columns:44px 1fr 30px;gap:18px}
+      .intervention-row p{grid-column:2/4;margin-top:-4px}
+      .case-top{grid-template-columns:1fr;gap:44px}
+      .case-summary{padding-top:24px}
+      .flow-compare{grid-template-columns:1fr}
+      .flow-side.before{padding-right:0}
+      .flow-side.after{padding-left:0;border-top:1px solid var(--line)}
+      .flow-middle{display:none}
+      .proof-grid{grid-template-columns:1fr;gap:55px}
+      .proof-left h2{max-width:12ch}
+    }
+
+    @media (max-width: 620px){
+      :root{--gutter:20px}
+      .site-nav{height:62px}
+      .nav-cta{font-size:11px}
+      .brand{font-size:13px}
+      .hero-grid{padding-top:62px}
+      .hero-copy{min-height:72svh;padding:78px 0 36px}
+      .hero-copy::before{top:62px;height:70px}
+      .hero h1{font-size:clamp(54px,17vw,84px);line-height:.9}
+      .hero-sub{grid-template-columns:1fr;gap:12px;margin-top:34px}
+      .hero-index{padding-top:0}
+      .hero-sub p{font-size:16px;max-width:31ch}
+      .hero-system{min-height:460px;margin-inline:calc(-1*var(--gutter));width:calc(100% + 2*var(--gutter))}
+      .system-title{left:20px;right:20px;top:22px}
+      .system-note{right:20px;bottom:22px;width:63%}
+      .statement{padding:100px 0 80px}
+      .statement blockquote{font-size:clamp(42px,13.5vw,67px)}
+      .statement-note{font-size:15px;margin-top:36px}
+      .process{padding-bottom:100px}
+      .process-head{padding:26px 0 32px}
+      .process-visual{grid-template-columns:1fr}
+      .process-step{min-height:270px;padding:24px 0 28px}
+      .process-step + .process-step{border-left:0;border-top:1px solid var(--line);padding-left:0}
+      .process-step p{max-width:34ch}
+      .interventions{padding:90px 0}
+      .interventions-head{margin-bottom:48px}
+      .interventions-head h2{font-size:clamp(56px,17vw,82px)}
+      .intervention-row{grid-template-columns:34px 1fr 20px;padding:24px 0}
+      .intervention-row:hover{padding-left:0}
+      .intervention-row h3{font-size:28px}
+      .case{padding:92px 0}
+      .case-title h2{font-size:clamp(48px,14vw,72px)}
+      .flow-compare{margin-top:54px}
+      .chain-row{grid-template-columns:28px 1fr;gap:10px}
+      .chain-row em{grid-column:2;text-align:left;margin-top:-7px}
+      .metrics{grid-template-columns:1fr}
+      .metric + .metric{border-left:0;border-top:1px solid var(--line);padding-left:0}
+      .metric{min-height:118px;padding:24px 0}
+      .proof{padding:90px 0}
+      .proof-item{grid-template-columns:1fr;gap:8px}
+      .sectors{grid-template-columns:1fr;gap:14px;margin-top:60px}
+      .cta{padding:105px 0 34px}
+      .cta h2{font-size:clamp(62px,18vw,94px)}
+      .cta-bottom{grid-template-columns:1fr;gap:38px;margin-top:55px}
+      .cta-link{width:max-content}
+      .footer-grid{grid-template-columns:1fr 1fr;gap:20px}
+      .footer-grid p{grid-column:1/-1}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto}
+      *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+      .reveal{opacity:1;transform:none}
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Primary navigation">
+    <div class="shell nav-inner">
+      <a class="brand" href="#top" aria-label="Northstar home"><span class="brand-mark" aria-hidden="true"><i></i><b></b></span>NORTHSTAR</a>
+      <div class="nav-links" aria-label="Section navigation">
+        <a href="#method">Method</a>
+        <a href="#interventions">Interventions</a>
+        <a href="#example">Example</a>
+        <a href="#about">Approach</a>
+      </div>
+      <a class="nav-cta" href="#contact">Start a conversation <span class="arrow">→</span></a>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div class="hero-copy reveal">
+          <h1>Your company already has enough AI tools. What it needs is a better <em>operating system.</em></h1>
+          <div class="hero-sub">
+            <div class="hero-index">AI operations studio</div>
+            <p>NORTHSTAR redesigns how work moves through your company—then builds the AI systems, decision layers, and operating routines to make that new model real.</p>
+          </div>
+        </div>
+
+        <div class="hero-system" aria-label="Abstract orchestration map">
+          <div class="system-title"><span>Operating model / 01</span><span>Route active</span></div>
+          <svg class="route-field" viewBox="0 0 720 900" role="img" aria-label="A routing diagram showing work moving from inputs through an operating layer to teams and systems">
+            <line class="grid-line" x1="120" y1="0" x2="120" y2="900"/>
+            <line class="grid-line" x1="360" y1="0" x2="360" y2="900"/>
+            <line class="grid-line" x1="600" y1="0" x2="600" y2="900"/>
+            <line class="grid-line" x1="0" y1="190" x2="720" y2="190"/>
+            <line class="grid-line" x1="0" y1="450" x2="720" y2="450"/>
+            <line class="grid-line" x1="0" y1="710" x2="720" y2="710"/>
+
+            <path class="route" d="M88 220 C190 220 215 315 320 315"/>
+            <path class="route" d="M88 366 C192 366 205 315 320 315"/>
+            <path class="route bold" d="M320 315 C397 315 387 240 470 240"/>
+            <path class="route" d="M320 315 C409 315 393 392 470 392"/>
+            <path class="route active" d="M320 315 C418 315 420 566 520 566 C602 566 606 488 668 488"/>
+            <path class="route" d="M470 240 C566 240 567 165 668 165"/>
+            <path class="route" d="M470 392 C575 392 559 488 668 488"/>
+            <path class="route" d="M470 392 C573 392 560 675 668 675"/>
+
+            <circle class="node" cx="88" cy="220" r="7"/>
+            <circle class="node" cx="88" cy="366" r="7"/>
+            <circle class="node" cx="320" cy="315" r="10"/>
+            <circle class="node" cx="470" cy="240" r="7"/>
+            <circle class="node" cx="470" cy="392" r="7"/>
+            <circle class="node signal" cx="520" cy="566" r="8"/>
+            <circle class="halo" cx="520" cy="566" r="12"/>
+            <circle class="node" cx="668" cy="165" r="7"/>
+            <circle class="node" cx="668" cy="488" r="7"/>
+            <circle class="node" cx="668" cy="675" r="7"/>
+
+            <text class="tiny" x="55" y="197">INPUT</text>
+            <text x="55" y="251">REQUESTS</text>
+            <text x="55" y="397">SIGNALS</text>
+            <text class="tiny" x="284" y="285">NORTHSTAR LAYER</text>
+            <text x="270" y="344">OPERATING LOGIC</text>
+            <text x="438" y="220">DECISION</text>
+            <text x="438" y="422">EXECUTION</text>
+            <text class="tiny" x="488" y="600">HUMAN DIRECTED</text>
+            <text x="616" y="145">TEAMS</text>
+            <text x="608" y="468">SYSTEMS</text>
+            <text x="608" y="655">RECORD</text>
+          </svg>
+          <div class="system-note">The goal is not more automation. It is a company that knows what should be automated, what should stay human, and how the two coordinate.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="statement">
+      <div class="shell statement-grid reveal">
+        <div class="label">Position / 02</div>
+        <div>
+          <blockquote>AI changes the economics of work. Most companies respond by adding tools. We redesign the <span class="soft">system around the work.</span></blockquote>
+          <p class="statement-note">That means changing handoffs, approval paths, information flow, decision rights, and the operating routines around increasingly capable machines.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="process" id="method">
+      <div class="shell">
+        <div class="process-head reveal">
+          <h2>From workflow archaeology to operating leverage.</h2>
+          <p>We work inside the real operating environment: existing people, software, controls, constraints, and incentives. The system has to survive Monday morning.</p>
+        </div>
+        <div class="process-visual reveal" id="processVisual" data-stage="1">
+          <div class="process-line" aria-hidden="true"></div>
+          <article class="process-step" data-stage="1">
+            <div class="step-num"><span>01 / Observe</span><span class="step-node"></span></div>
+            <div><h3>Find the drag.</h3><p>Map where work repeats, stalls, fragments, or depends on hidden tribal knowledge.</p></div>
+          </article>
+          <article class="process-step" data-stage="2">
+            <div class="step-num"><span>02 / Model</span><span class="step-node"></span></div>
+            <div><h3>Redesign the flow.</h3><p>Recompose the work around decision quality, machine capability, and human judgment.</p></div>
+          </article>
+          <article class="process-step" data-stage="3">
+            <div class="step-num"><span>03 / Build</span><span class="step-node"></span></div>
+            <div><h3>Create the system.</h3><p>Build internal AI workflows, interfaces, agents, evaluations, and guardrails around the new model.</p></div>
+          </article>
+          <article class="process-step" data-stage="4">
+            <div class="step-num"><span>04 / Embed</span><span class="step-node"></span></div>
+            <div><h3>Change the operation.</h3><p>Integrate into your stack, train the operating team, establish baselines, and improve from evidence.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="interventions" id="interventions">
+      <div class="shell">
+        <div class="interventions-head reveal">
+          <h2>Where we intervene.</h2>
+          <p>Not innovation theater. We focus on operating surfaces where better system design creates durable leverage.</p>
+        </div>
+        <div class="reveal">
+          <article class="intervention-row">
+            <div class="i-num">01</div>
+            <h3>Knowledge work</h3>
+            <p>Research, synthesis, drafting, analysis, retrieval, preparation, and the expensive coordination surrounding them.</p>
+            <div class="i-arrow">↗</div>
+          </article>
+          <article class="intervention-row">
+            <div class="i-num">02</div>
+            <h3>Decision infrastructure</h3>
+            <p>Turn scattered context into structured decision support: the right evidence, routed to the right person, at the right moment.</p>
+            <div class="i-arrow">↗</div>
+          </article>
+          <article class="intervention-row">
+            <div class="i-num">03</div>
+            <h3>Operational orchestration</h3>
+            <p>Rebuild handoffs across teams, systems, and AI so work progresses with less coordination overhead and fewer invisible queues.</p>
+            <div class="i-arrow">↗</div>
+          </article>
+          <article class="intervention-row">
+            <div class="i-num">04</div>
+            <h3>AI operating governance</h3>
+            <p>Define where models can act, where humans decide, how outputs are evaluated, and how the system gets safer as it becomes more capable.</p>
+            <div class="i-arrow">↗</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="case" id="example">
+      <div class="shell">
+        <div class="case-top reveal">
+          <div class="case-title">
+            <div class="kicker eyebrow-row">Illustrative engagement / 03</div>
+            <h2>From weekly reporting ritual to live decision system.</h2>
+          </div>
+          <div class="case-summary">
+            <p>A fictional multi-location services company had seven people spending two days each week assembling operating reports from email, spreadsheets, and business systems. Leadership still received the answer late.</p>
+            <small>Illustrative example. Metrics are hypothetical and shown to explain engagement structure, not to claim a client result.</small>
+          </div>
+        </div>
+
+        <div class="flow-compare reveal">
+          <div class="flow-side before">
+            <div class="flow-tag">Before / fragmented workflow</div>
+            <div class="flow-chain">
+              <div class="chain-row"><span>01</span><strong>Export operating data</strong><em>6 systems</em></div>
+              <div class="chain-row"><span>02</span><strong>Reconcile spreadsheets</strong><em>manual</em></div>
+              <div class="chain-row"><span>03</span><strong>Chase missing context</strong><em>email / chat</em></div>
+              <div class="chain-row"><span>04</span><strong>Draft weekly narrative</strong><em>analyst</em></div>
+              <div class="chain-row"><span>05</span><strong>Leadership review</strong><em>Friday PM</em></div>
+            </div>
+          </div>
+          <div class="flow-middle" aria-hidden="true"><span>→</span></div>
+          <div class="flow-side after">
+            <div class="flow-tag">After / redesigned operation</div>
+            <div class="flow-chain">
+              <div class="chain-row"><span>01</span><strong>Structured system pull</strong><em>scheduled</em></div>
+              <div class="chain-row"><span>02</span><strong>AI exception analysis</strong><em>evaluated</em></div>
+              <div class="chain-row"><span>03</span><strong>Human review of anomalies</strong><em>targeted</em></div>
+              <div class="chain-row"><span>04</span><strong>Decision brief generated</strong><em>on demand</em></div>
+              <div class="chain-row"><span>05</span><strong>Leadership acts</strong><em>same day</em></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="metrics reveal" aria-label="Illustrative impact metrics">
+          <div class="metric"><strong>−68%</strong><span>illustrative reduction in reporting labor</span></div>
+          <div class="metric"><strong>2d → 2h</strong><span>illustrative time from data close to decision brief</span></div>
+          <div class="metric"><strong>1 system</strong><span>shared operating logic instead of seven recurring manual rituals</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="proof" id="about">
+      <div class="shell proof-grid reveal">
+        <div class="proof-left">
+          <h2>Small by design.</h2>
+          <p>NORTHSTAR is built for senior teams that want direct involvement, real operating change, and systems that fit the company they actually have.</p>
+        </div>
+        <div>
+          <div class="proof-list">
+            <div class="proof-item"><span>Capacity</span><strong>Two to four active engagements at a time.</strong></div>
+            <div class="proof-item"><span>Partner model</span><strong>Senior practitioners stay inside the work from diagnosis through implementation.</strong></div>
+            <div class="proof-item"><span>Technology</span><strong>We build around your operating reality—not a preferred stack.</strong></div>
+            <div class="proof-item"><span>Measurement</span><strong>Baseline first. System second. Claims only after evidence.</strong></div>
+          </div>
+          <div class="sectors">
+            <span>Typical contexts</span>
+            <div class="sector-list"><span>Manufacturing</span><span>Financial operations</span><span>Multi-location services</span><span>Enterprise knowledge teams</span><span>Customer operations</span><span>Internal shared services</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <div class="shell cta-inner reveal">
+        <div class="kicker eyebrow-row">Engagement / 04</div>
+        <h2>Bring us the workflow that <em>should not exist.</em></h2>
+        <div class="cta-bottom">
+          <p>We start with one operating problem worth fixing—not a company-wide AI transformation deck.</p>
+          <a class="cta-link" href="mailto:hello@northstar.studio">hello@northstar.studio <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-grid">
+      <p>© 2026 NORTHSTAR / AI OPERATIONS STUDIO / FICTIONAL CONCEPT</p>
+      <a href="#top">Back to top</a>
+      <a href="mailto:hello@northstar.studio">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (!reduceMotion) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+      } else {
+        document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'));
+      }
+
+      const process = document.getElementById('processVisual');
+      if (process && !reduceMotion) {
+        process.querySelectorAll('.process-step').forEach((step) => {
+          const stage = step.dataset.stage;
+          step.addEventListener('mouseenter', () => process.dataset.stage = stage);
+          step.addEventListener('focusin', () => process.dataset.stage = stage);
+        });
+      }
+
+      document.querySelectorAll('a[href^="#"]').forEach((link) => {
+        link.addEventListener('click', (e) => {
+          const target = document.querySelector(link.getAttribute('href'));
+          if (!target) return;
+          e.preventDefault();
+          target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
