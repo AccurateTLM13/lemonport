@@ -68,6 +68,12 @@ Codex must end with a structured result block:
 
 A worker `completed` claim is not a pipeline PASS. Only the orchestrator can issue the verdict after checking the contract and evidence.
 
+## Repository Inspection
+
+- Prefer `rg` for repository inspection, but missing `rg` or `rg.exe` is not a blocker. Use `node scripts/repository-search.js --pattern <pattern> --path <path>`, which falls back to `git grep`, PowerShell `Select-String`, then Node filesystem traversal.
+- Keep search values as process arguments and never interpolate untrusted values into shell commands.
+- Structure and QA evidence must include concrete paths, line numbers, command results, and residual risk. Report BLOCKED only when all safe inspection methods fail or required evidence cannot be gathered.
+
 ## Orchestrator Verdict
 
 The orchestrator returns exactly one of:

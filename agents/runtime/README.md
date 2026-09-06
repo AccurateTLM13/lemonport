@@ -86,6 +86,8 @@ The adapter uses Luna for all roles by default. `run --escalate` explicitly sele
 
 For transport-only verification, `node scripts/orchestrator-adapter.js smoke-planner` runs a read-only planner invocation and `node scripts/orchestrator-adapter.js smoke-reviewer` runs a read-only reviewer invocation against a harmless in-memory fixture. Neither command executes a worker or advances runtime state.
 
+Repository inspection is portable: `node scripts/repository-search.js --pattern <pattern> --path <path>` prefers `rg`, then falls back to `git grep`, PowerShell `Select-String`, and Node traversal. Missing `rg` alone must not block Structure or QA work; those workers still need concrete paths, line numbers, command results, and sufficient evidence.
+
 Example:
 
 ```bash

@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
 const adapter = require('./orchestrator-adapter.js');
+const repositorySearch = require('./repository-search.js');
 
 const ROOT = adapter.ROOT;
 const STATE_PATH = path.join(ROOT, 'agents', 'runtime', 'state.json');
@@ -143,6 +144,58 @@ function testPureTransportBoundaries() {
   assert(args.includes('--output-schema') && args.includes('--output-last-message'));
 }
 
+function unavailableResult() {
+  return { status: null, signal: null, stdout: '', stderr: '', error: { code: 'ENOENT', message: 'not found' } };
+}
+
+function testRepositorySearchFallbacks() {
+  const run = (mode) => (command) => {
+    if (command === 'rg.exe' && mode === 'rg') return { status: 0, signal: null, stdout: 'scripts/example.js:1:match\n', stderr: '', error: null };
+    if (command === 'git' && mode === 'git') return { status: 0, signal: null, stdout: 'scripts/example.js:2:match\n', stderr: '', error: null };
+    if (command === 'powershell.exe' && mode === 'powershell') return { status: 0, signal: null, stdout: 'C:\\repo\\scripts\\example.js:3:match\n', stderr: '', error: null };
+    return unavailableResult();
+  };
+
+  assert.strictEqual(repositorySearch.searchRepository({ root: ROOT, pattern: 'match', platform: 'win32', runner: run('rg') }).method, 'rg');
+  assert.strictEqual(repositorySearch.searchRepository({ root: ROOT, pattern: 'match', platform: 'win32', runner: run('git') }).method, 'git-grep');
+  assert.strictEqual(repositorySearch.searchRepository({ root: ROOT, pattern: 'match', platform: 'win32', runner: run('powershell') }).method, 'powershell-select-string');
+
+  let observed = null;
+  const untrustedPattern = 'literal; Remove-Item -Recurse';
+  repositorySearch.searchRepository({
+    root: ROOT,
+    pattern: untrustedPattern,
+    platform: 'win32',
+    runner(command, args, options) {
+      observed = { command, args, options };
+      return { status: 0, signal: null, stdout: '', stderr: '', error: null };
+    }
+  });
+  assert.strictEqual(observed.options.shell, false);
+  assert(observed.args.includes(untrustedPattern));
+  assert.throws(() => repositorySearch.searchRepository({ root: ROOT, pattern: 'match', path: '..', platform: 'win32', runner: run('rg') }), /inside the repository root/);
+
+  const nodeFallback = repositorySearch.searchRepository({
+    root: ROOT,
+    pattern: 'function executeCodex',
+    path: 'scripts',
+    platform: 'win32',
+    runner: run('none')
+  });
+  assert.strictEqual(nodeFallback.method, 'node');
+  assert.match(nodeFallback.output, /scripts\/orchestrator-adapter\.js:/);
+
+  assert.throws(() => repositorySearch.searchRepository({
+    root: ROOT,
+    pattern: 'match',
+    platform: 'win32',
+    runner: run('none'),
+    fileSystem: {
+      readdirSync() { throw Object.assign(new Error('filesystem unavailable'), { code: 'EACCES' }); }
+    }
+  }), (error) => error.code === 'SEARCH_UNAVAILABLE' && error.blocked === true);
+}
+
 function testPlannerAndReviewerSuccess() {
   resetState();
   startQa();
@@ -223,6 +276,7 @@ function testRepairHumanBlocked() {
 function main() {
   try {
     testPureTransportBoundaries();
+    testRepositorySearchFallbacks();
     writeMockCli();
     testPlannerAndReviewerSuccess();
     testPlannerFailure();
