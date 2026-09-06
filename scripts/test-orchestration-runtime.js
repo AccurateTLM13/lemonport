@@ -11,7 +11,9 @@ const ROOT = adapter.ROOT;
 const STATE_PATH = path.join(ROOT, 'agents', 'runtime', 'state.json');
 const LOCAL_DIR = path.join(ROOT, '.orchestration-local');
 const MOCK_CLI = path.join(LOCAL_DIR, 'mock-codex-cli.js');
+const REVIEW_INPUT_CAPTURE = path.join(LOCAL_DIR, 'mock-review-input.txt');
 const originalState = fs.readFileSync(STATE_PATH, 'utf8');
+const originalStateObject = JSON.parse(originalState);
 
 function expectThrow(fn, pattern) {
   assert.throws(fn, pattern);
@@ -37,7 +39,9 @@ function writeMockCli() {
     "  process.exit(0);",
     "}",
     "if (prompt.startsWith('You are the Lemonteed orchestration reviewer.')) {",
+    "  if (process.env.MOCK_REVIEW_EXIT) fail('reviewer mock failure', Number(process.env.MOCK_REVIEW_EXIT));",
     "  if (process.env.MOCK_REVIEW_MALFORMED) { if (outputPath) fs.writeFileSync(outputPath, '{malformed'); process.exit(0); }",
+    "  if (process.env.MOCK_CAPTURE_REVIEW_INPUT) fs.writeFileSync(process.env.MOCK_CAPTURE_REVIEW_INPUT, prompt);",
     "  const reviewFile = process.env.MOCK_REVIEW_FILE;",
     "  let index = 0;",
     "  if (reviewFile && fs.existsSync(reviewFile)) index = Number(fs.readFileSync(reviewFile, 'utf8'));",
@@ -47,8 +51,10 @@ function writeMockCli() {
     "  writeOutput({ verdict, summary: 'Mock reviewer result', reason: 'Mock evidence result', designRequired: null, repairInstructions: verdict === 'REPAIR' ? ['Run the mock repair.'] : [], humanQuestion: verdict === 'HUMAN_DECISION' ? 'Confirm the mock decision.' : null });",
     "  process.exit(0);",
     "}",
+    "if (process.env.MOCK_WORKER_SLEEP_MS) { const until = Date.now() + Number(process.env.MOCK_WORKER_SLEEP_MS); while (Date.now() < until) {} }",
     "if (process.env.MOCK_WORKER_EXIT) fail('worker mock failure', Number(process.env.MOCK_WORKER_EXIT));",
-    "writeOutput({ result: 'worker complete', evidence: ['mock'] });",
+    "if (process.env.MOCK_HUGE_OUTPUT) { process.stdout.write('s'.repeat(900000)); process.stderr.write('e'.repeat(900000)); }",
+    "writeOutput({ status: 'completed', summary: 'worker complete', filesChanged: ['scripts/example.js'], commandsRun: ['node scripts/example.js'], verification: [{ check: 'mock', result: 'pass', evidence: 'mock verification' }], scopeDeviations: [], residualRisks: ['mock risk'], blockers: [], recommendedNextAction: '' });",
     "process.stdout.write('mock worker complete\\\\n');",
     "process.exit(0);"
   ].join('\n');
@@ -85,11 +91,12 @@ function resetState() {
   fs.writeFileSync(STATE_PATH, originalState);
   const reviewFile = path.join(LOCAL_DIR, 'mock-review-count.txt');
   if (fs.existsSync(reviewFile)) fs.unlinkSync(reviewFile);
+  if (fs.existsSync(REVIEW_INPUT_CAPTURE)) fs.unlinkSync(REVIEW_INPUT_CAPTURE);
 }
 
 function startQa() {
   const result = runNode(path.join(ROOT, 'scripts', 'orchestrate.js'), [
-    'start', '--goal', 'Mock orchestration task', '--target', '/mock/', '--track', 'qa-review-track'
+    'start', '--goal', 'Mock orchestration task', '--target', '/mock/', '--track', 'qa-review-track', '--force'
   ]);
   assert.strictEqual(result.status, 0, result.stderr);
 }
@@ -104,6 +111,152 @@ function assertStatus(expected) {
   const state = JSON.parse(result.stdout);
   assert.strictEqual(state.status, expected, result.stdout);
   return state;
+}
+
+function reviewerFixture() {
+  return {
+    packet: {
+      state: {
+        objective: 'Fixture objective',
+        target: '/fixture/',
+        track: 'qa-review-track',
+        phase: 'QA',
+        currentWorker: { phase: 'QA', worker: 'QA_WORKER.md' },
+        constraints: ['Keep the public architecture static.']
+      }
+    },
+    contract: {
+      taskId: 'fixture-task',
+      worker: 'QA_WORKER.md',
+      mission: 'Verify the fixture',
+      currentState: 'Fixture state',
+      inScope: ['scripts/example.js'],
+      outOfScope: ['Deployment'],
+      requirements: ['Run the fixture check.'],
+      acceptanceCriteria: ['The fixture check passes.'],
+      verification: ['node scripts/example.js'],
+      evidenceRequired: ['Worker result and git evidence'],
+      stopConditions: ['Stop on missing evidence.'],
+      codexPrompt: 'Run the fixture check and return the Worker Result.'
+    },
+    evidence: {
+      branch: 'orchestration-runtime-v1',
+      head: 'abc1234',
+      status: ' M scripts/example.js',
+      diffCheck: 'clean',
+      diffStat: ' scripts/example.js | 1 +',
+      changedFiles: ['scripts/example.js'],
+      diff: 'diff --git a/scripts/example.js b/scripts/example.js\n+fixture',
+      diffTruncated: false,
+      untrackedFiles: [],
+      untrackedTruncated: false
+    }
+  };
+}
+
+function successfulWorkerResult(overrides = {}) {
+  return {
+    exitCode: 0,
+    signal: null,
+    stdout: '',
+    stderr: '',
+    stdoutTruncated: false,
+    stderrTruncated: false,
+    finalOutput: JSON.stringify({
+      status: 'completed',
+      summary: 'Fixture complete',
+      filesChanged: ['scripts/example.js'],
+      commandsRun: ['node scripts/example.js'],
+      verification: [{ check: 'fixture', result: 'pass', evidence: 'fixture passed' }],
+      scopeDeviations: [],
+      residualRisks: [],
+      blockers: [],
+      recommendedNextAction: ''
+    }),
+    finalOutputTruncated: false,
+    parsedWorkerFinalResult: {
+      status: 'completed',
+      summary: 'Fixture complete',
+      filesChanged: ['scripts/example.js'],
+      commandsRun: ['node scripts/example.js'],
+      verification: [{ check: 'fixture', result: 'pass', evidence: 'fixture passed' }],
+      scopeDeviations: [],
+      residualRisks: [],
+      blockers: [],
+      recommendedNextAction: ''
+    },
+    workerFinalResultParseError: null,
+    error: null,
+    timedOut: false,
+    provider: 'codex-cli',
+    requestedModel: 'gpt-5.6-luna',
+    ...overrides
+  };
+}
+
+function readCapturedReviewerInput() {
+  const prompt = fs.readFileSync(REVIEW_INPUT_CAPTURE, 'utf8');
+  const begin = prompt.indexOf('INPUT_JSON_BEGIN\n') + 'INPUT_JSON_BEGIN\n'.length;
+  const end = prompt.lastIndexOf('\nINPUT_JSON_END');
+  assert(begin > 0 && end > begin, 'reviewer input markers missing');
+  return JSON.parse(prompt.slice(begin, end));
+}
+
+function testReviewerPayloadBoundaries() {
+  const fixture = reviewerFixture();
+  const hugeWorker = successfulWorkerResult({
+    stdout: 'stdout-noise-'.repeat(80000),
+    stderr: 'stderr-noise-'.repeat(80000)
+  });
+  const payload = adapter.buildReviewerPayload(fixture.packet, fixture.contract, hugeWorker, fixture.evidence);
+  const prepared = adapter.compactReviewerInput(payload, 250000);
+  assert(prepared.serializedChars <= 250000);
+  assert.strictEqual(prepared.compacted, false);
+  assert.deepStrictEqual(prepared.payload.parsedWorkerFinalResult, hugeWorker.parsedWorkerFinalResult);
+  assert(!prepared.input.includes('stdout-noise-'));
+  assert(!prepared.input.includes('stderr-noise-'));
+  assert(!prepared.input.includes('workerOutput'));
+  assert(!prepared.input.includes('commandResults'));
+
+  const failedWorker = successfulWorkerResult({
+    exitCode: 7,
+    parsedWorkerFinalResult: null,
+    workerFinalResultParseError: 'worker final result was not valid JSON',
+    finalOutput: '',
+    stdout: 'stdout-prefix-'.repeat(4000),
+    stderr: 'stderr-prefix-'.repeat(4000),
+    error: 'worker failed'
+  });
+  const failedPayload = adapter.buildReviewerPayload(fixture.packet, fixture.contract, failedWorker, fixture.evidence);
+  const failedText = JSON.stringify(failedPayload);
+  assert(failedText.includes('stderr-prefix-'));
+  assert(failedPayload.workerDiagnostics.stderrTail.length < failedWorker.stderr.length);
+  assert(failedPayload.workerDiagnostics.stdoutTail.length < failedWorker.stdout.length);
+
+  const diff = adapter.boundedDiffText('diff-line\n'.repeat(30000), 10000);
+  assert.strictEqual(diff.truncated, true);
+  assert.match(diff.text, /\[diff truncated\]/);
+
+  const largeOptional = adapter.buildReviewerPayload(
+    fixture.packet,
+    fixture.contract,
+    failedWorker,
+    { ...fixture.evidence, diff: 'diff-line\n'.repeat(30000), diffTruncated: true, untrackedFiles: Array.from({ length: 20 }, (_, index) => ({ path: `file-${index}.txt`, size: 10000, content: 'untracked\n'.repeat(2000) })) }
+  );
+  const compactA = adapter.compactReviewerInput(largeOptional, 8000);
+  const compactB = adapter.compactReviewerInput(largeOptional, 8000);
+  assert(compactA.compacted);
+  assert(compactA.serializedChars <= 8000);
+  assert.strictEqual(compactA.input, compactB.input);
+  assert(compactA.compactionSteps.length > 0);
+
+  const irreducible = adapter.buildReviewerPayload(
+    fixture.packet,
+    { ...fixture.contract, codexPrompt: 'critical-contract-'.repeat(1000) },
+    hugeWorker,
+    fixture.evidence
+  );
+  expectThrow(() => adapter.compactReviewerInput(irreducible, 1024), /exceeds configured budget/);
 }
 
 function testPureTransportBoundaries() {
@@ -215,6 +368,29 @@ function testPlannerAndReviewerSuccess() {
   assert.match(review._meta.invocation.codexCliVersion, /mock-codex-cli/);
 }
 
+function testReviewerReceivesCompactPayload() {
+  resetState();
+  startQa();
+  const result = runAdapter({ MOCK_HUGE_OUTPUT: '1', MOCK_CAPTURE_REVIEW_INPUT: REVIEW_INPUT_CAPTURE });
+  assert.strictEqual(result.status, 0, result.stderr + result.stdout);
+  assertStatus('complete');
+  const input = readCapturedReviewerInput();
+  assert.strictEqual(input.objective, 'Mock orchestration task');
+  assert.strictEqual(input.currentWorker.worker, 'QA_WORKER.md');
+  assert.strictEqual(input.taskContract.worker, 'QA_WORKER.md');
+  assert.strictEqual(input.parsedWorkerFinalResult.status, 'completed');
+  assert.deepStrictEqual(input.filesChanged.reportedByWorker, ['scripts/example.js']);
+  assert(Array.isArray(input.filesChanged.detectedByGit));
+  assert(!Object.prototype.hasOwnProperty.call(input, 'packet'));
+  assert(!Object.prototype.hasOwnProperty.call(input, 'workerOutput'));
+  assert(!Object.prototype.hasOwnProperty.call(input, 'commandResults'));
+  assert(!Object.prototype.hasOwnProperty.call(input, 'stdout'));
+  assert(!Object.prototype.hasOwnProperty.call(input, 'stderr'));
+  const review = JSON.parse(fs.readFileSync(path.join(LOCAL_DIR, 'review-0.json'), 'utf8'));
+  assert(review._meta.reviewerInput.serializedChars <= 250000);
+  assert.strictEqual(review._meta.reviewerInput.compacted, false);
+}
+
 function testPlannerFailure() {
   resetState();
   startQa();
@@ -227,8 +403,9 @@ function testReviewerMalformed() {
   resetState();
   startQa();
   const result = runAdapter({ MOCK_REVIEW_MALFORMED: '1' });
-  assert.notStrictEqual(result.status, 0);
-  assertStatus('active');
+  assert.strictEqual(result.status, 0, result.stderr + result.stdout);
+  assertStatus('blocked');
+  assert.match(result.stderr, /Reviewer transport failure/);
 }
 
 function testUnavailableModel() {
@@ -249,9 +426,29 @@ function testWorkerFailureAndTimeout() {
 
   resetState();
   startQa();
-  const timeout = runAdapter({ MOCK_SLEEP_MS: '1100', ORCHESTRATOR_CODEX_TIMEOUT_MS: '1000' });
-  assert.notStrictEqual(timeout.status, 0);
-  assertStatus('active');
+  const timeout = runAdapter({ MOCK_WORKER_SLEEP_MS: '1100', ORCHESTRATOR_CODEX_TIMEOUT_MS: '1000' });
+  assert.strictEqual(timeout.status, 0, timeout.stderr + timeout.stdout);
+  assertStatus('blocked');
+}
+
+function testReviewerTransportAndBudgetFailures() {
+  resetState();
+  startQa();
+  const transport = runAdapter({ MOCK_REVIEW_EXIT: '9' });
+  assert.strictEqual(transport.status, 0, transport.stderr + transport.stdout);
+  assertStatus('blocked');
+  assert.match(transport.stderr, /Reviewer transport failure/);
+  assert.doesNotMatch(transport.stderr, /orchestrator-adapter\.js:\d+/);
+  assert(fs.existsSync(path.join(LOCAL_DIR, 'codex-0.json')));
+  assert(fs.existsSync(path.join(LOCAL_DIR, 'evidence-0.json')));
+
+  resetState();
+  startQa();
+  const overBudget = runAdapter({ ORCHESTRATOR_MAX_REVIEWER_INPUT_CHARS: '1024' });
+  assert.strictEqual(overBudget.status, 0, overBudget.stderr + overBudget.stdout);
+  const state = assertStatus('blocked');
+  assert.match(state.blocker, /reviewer input exceeds configured budget/i);
+  assert.match(overBudget.stderr, /Reviewer transport failure/);
 }
 
 function testRepairHumanBlocked() {
@@ -277,17 +474,20 @@ function main() {
   try {
     testPureTransportBoundaries();
     testRepositorySearchFallbacks();
+    testReviewerPayloadBoundaries();
     writeMockCli();
     testPlannerAndReviewerSuccess();
+    testReviewerReceivesCompactPayload();
     testPlannerFailure();
     testReviewerMalformed();
     testUnavailableModel();
     testWorkerFailureAndTimeout();
+    testReviewerTransportAndBudgetFailures();
     testRepairHumanBlocked();
     resetState();
     const finalState = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
-    assert.strictEqual(finalState.status, 'idle');
-    assert.strictEqual(finalState.phase, 'Intake');
+    assert.strictEqual(finalState.status, originalStateObject.status);
+    assert.strictEqual(finalState.phase, originalStateObject.phase);
     console.log('orchestration runtime mocked tests: PASS');
   } finally {
     fs.writeFileSync(STATE_PATH, originalState);

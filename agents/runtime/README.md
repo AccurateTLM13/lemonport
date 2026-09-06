@@ -11,8 +11,8 @@ The runtime does not replace `agents/PIPELINE.md`, `agents/SHARED_CONTEXT.md`, t
 3. Compile an orchestrator packet.
 4. The orchestrator model converts that packet into a focused Codex work order.
 5. Codex executes only that work order.
-6. The adapter captures Codex output plus git evidence.
-7. The orchestrator reviews the evidence and returns `PASS`, `REPAIR`, `BLOCKED`, or `HUMAN_DECISION`.
+6. The adapter captures worker output plus git evidence and compiles a bounded reviewer evidence package.
+7. The orchestrator reviews the compact package and returns `PASS`, `REPAIR`, `BLOCKED`, or `HUMAN_DECISION`.
 8. `PASS` advances state; `REPAIR` automatically generates a bounded repair contract; the other verdicts stop the pipeline.
 9. Continue until the current worker is accepted or, with `--all`, until the pipeline completes or hits a stop condition.
 
@@ -73,6 +73,7 @@ set ORCHESTRATOR_ESCALATION_MODEL=gpt-5.6-terra
 set ORCHESTRATOR_MAX_MODEL=gpt-5.6-luna
 set ORCHESTRATOR_REASONING=high
 set ORCHESTRATOR_MAX_REPAIRS=2
+set ORCHESTRATOR_MAX_REVIEWER_INPUT_CHARS=250000
 set CODEX_CLI_PATH=C:\Users\<user>\AppData\Local\OpenAI\Codex\bin\<version>\codex.exe
 ```
 
@@ -158,7 +159,11 @@ Local adapter audit artifacts are written to:
 .orchestration-local/
 ```
 
-This folder is gitignored. It contains the last packet, generated task contracts, Codex stdout/stderr, git evidence, and reviewer verdicts so an orchestration failure can be inspected without polluting the repository.
+This folder is gitignored. It contains the last packet, generated task contracts, worker stdout/stderr, git evidence, and reviewer verdicts so an orchestration failure can be inspected without polluting the repository.
+
+The reviewer does not receive those raw worker streams or the full planner/session context. It receives one compact package containing the objective, target, track, phase, current worker, relevant constraints, the generated task contract, the parsed worker result, worker-reported evidence, git identity/status, diff checks, changed filenames, a bounded diff, and bounded untracked-file evidence. Failed workers additionally provide bounded stderr/stdout tails only.
+
+`ORCHESTRATOR_MAX_REVIEWER_INPUT_CHARS` defaults to `250000`. The adapter measures the serialized reviewer package before transport and deterministically compacts optional previews when necessary. Acceptance criteria, the generated contract, parsed worker result, verification, changed files, and git identity are preserved. If the required evidence still cannot fit, the adapter records a concise `BLOCKED` result without invoking the reviewer. A reviewer transport or structured-output failure likewise preserves the worker/evidence audits, blocks the current worker without advancing it, and exits cleanly.
 
 ## Repair Policy
 

@@ -32,9 +32,26 @@ const REASONING = (process.env.ORCHESTRATOR_REASONING || 'high').trim();
 const MAX_REPAIRS = Number(process.env.ORCHESTRATOR_MAX_REPAIRS || 2);
 const MAX_DIFF_CHARS = Number(process.env.ORCHESTRATOR_MAX_DIFF_CHARS || 120000);
 const MAX_CODEX_OUTPUT_CHARS = Number(process.env.ORCHESTRATOR_MAX_CODEX_OUTPUT_CHARS || 2000000);
+const MAX_REVIEWER_INPUT_CHARS = Number(process.env.ORCHESTRATOR_MAX_REVIEWER_INPUT_CHARS || 250000);
+const MAX_UNTRACKED_FILES = Number(process.env.ORCHESTRATOR_MAX_UNTRACKED_FILES || 50);
+const MAX_UNTRACKED_FILE_CHARS = Number(process.env.ORCHESTRATOR_MAX_UNTRACKED_FILE_CHARS || 20000);
+const MAX_UNTRACKED_TOTAL_CHARS = Number(process.env.ORCHESTRATOR_MAX_UNTRACKED_TOTAL_CHARS || 60000);
 const API_TIMEOUT_MS = Number(process.env.ORCHESTRATOR_API_TIMEOUT_MS || 120000);
 const CODEX_TIMEOUT_MS = Number(process.env.ORCHESTRATOR_CODEX_TIMEOUT_MS || 1800000);
 const MAX_REASON_CHARS = 20000;
+const REVIEWER_DIAGNOSTIC_TAIL_CHARS = 12000;
+
+const WORKER_RESULT_FIELDS = [
+  'status',
+  'summary',
+  'filesChanged',
+  'commandsRun',
+  'verification',
+  'scopeDeviations',
+  'residualRisks',
+  'blockers',
+  'recommendedNextAction'
+];
 
 let ACTIVE_PLANNER_MODEL = null;
 let ACTIVE_REVIEWER_MODEL = null;
@@ -123,6 +140,53 @@ function writeAudit(name, value) {
 function boundedText(value, limit) {
   const text = String(value || '');
   return text.length > limit ? `${text.slice(0, limit)}\n[truncated]` : text;
+}
+
+function boundedTailText(value, limit) {
+  const text = String(value || '');
+  if (text.length <= limit) return text;
+  return `[tail truncated] original_chars=${text.length}\n${text.slice(-limit)}`;
+}
+
+function boundedDiffText(value, limit) {
+  const text = String(value || '');
+  if (text.length <= limit) return { text, truncated: false };
+
+  const marker = `\n[diff truncated] original_chars=${text.length}; retained_head_and_tail\n`;
+  if (marker.length >= limit) return { text: marker.slice(0, limit), truncated: true };
+
+  const available = limit - marker.length;
+  const headLength = Math.ceil(available * 0.7);
+  const tailLength = available - headLength;
+  return {
+    text: `${text.slice(0, headLength)}${marker}${text.slice(-tailLength)}`,
+    truncated: true
+  };
+}
+
+function parseWorkerFinalResult(finalOutput) {
+  const text = String(finalOutput || '').trim();
+  if (!text) return { value: null, error: 'worker returned no final result' };
+  try {
+    const value = JSON.parse(text);
+    if (!value || typeof value !== 'object' || Array.isArray(value)) {
+      return { value: null, error: 'worker final result must be a JSON object' };
+    }
+    return { value, error: null };
+  } catch (error) {
+    return { value: null, error: `worker final result was not valid JSON: ${error.message}` };
+  }
+}
+
+function projectWorkerFinalResult(value) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+  const projected = {};
+  for (const field of WORKER_RESULT_FIELDS) {
+    if (Object.prototype.hasOwnProperty.call(value, field)) projected[field] = value[field];
+  }
+  const omittedFields = Object.keys(value).filter((field) => !WORKER_RESULT_FIELDS.includes(field));
+  if (omittedFields.length) projected._omittedFields = omittedFields;
+  return projected;
 }
 
 function runNode(args, options = {}) {
@@ -599,6 +663,7 @@ function executeCodex(contract, runner = spawnSync, cliInfo = null) {
     killSignal: 'SIGTERM'
   });
   const finalOutput = fs.existsSync(outputPath) ? fs.readFileSync(outputPath, 'utf8') : '';
+  const parsedFinalResult = parseWorkerFinalResult(finalOutput);
   return {
     exitCode: result.status,
     signal: result.signal || null,
@@ -608,6 +673,8 @@ function executeCodex(contract, runner = spawnSync, cliInfo = null) {
     stderrTruncated: Boolean(result.stderr && String(result.stderr).length > MAX_CODEX_OUTPUT_CHARS),
     finalOutput: boundedText(finalOutput, MAX_CODEX_OUTPUT_CHARS),
     finalOutputTruncated: finalOutput.length > MAX_CODEX_OUTPUT_CHARS,
+    parsedWorkerFinalResult: parsedFinalResult.value,
+    workerFinalResultParseError: parsedFinalResult.error,
     error: result.error ? result.error.message : null,
     timedOut: Boolean(result.error && result.error.code === 'ETIMEDOUT'),
     role: 'worker',
@@ -628,9 +695,10 @@ function collectUntrackedEvidence() {
   }
 
   const names = listed.split('\n').filter(Boolean);
-  const untrackedTruncated = names.length > 50;
+  const untrackedTruncated = names.length > MAX_UNTRACKED_FILES;
   const untrackedFiles = [];
-  for (const name of names.slice(0, 50)) {
+  let totalChars = 0;
+  for (const name of names.slice(0, MAX_UNTRACKED_FILES)) {
     const absolute = path.resolve(ROOT, name);
     if (!absolute.startsWith(`${ROOT}${path.sep}`)) {
       untrackedFiles.push({ path: name, unavailable: true });
@@ -644,27 +712,65 @@ function collectUntrackedEvidence() {
         continue;
       }
       const stats = fs.statSync(realPath);
-      if (!stats.isFile() || stats.size > MAX_DIFF_CHARS) {
-        untrackedFiles.push({ path: name, size: stats.size, truncated: true });
+      if (!stats.isFile()) {
+        untrackedFiles.push({ path: name, size: stats.size, unavailable: true });
         continue;
       }
-      const content = fs.readFileSync(realPath, 'utf8');
-      untrackedFiles.push({ path: name, size: stats.size, content });
+
+      const remainingChars = MAX_UNTRACKED_TOTAL_CHARS - totalChars;
+      if (remainingChars <= 0) {
+        untrackedFiles.push({
+          path: name,
+          size: stats.size,
+          truncated: true,
+          content: '[untracked file content omitted: evidence budget exhausted]'
+        });
+        continue;
+      }
+
+      const contentLimit = Math.min(MAX_UNTRACKED_FILE_CHARS, remainingChars);
+      const bytePreviewLimit = Math.max(contentLimit * 4, contentLimit + 1);
+      const raw = fs.readFileSync(realPath);
+      const preview = raw.length > bytePreviewLimit
+        ? raw.subarray(0, bytePreviewLimit).toString('utf8')
+        : raw.toString('utf8');
+      const truncated = raw.length > bytePreviewLimit || preview.length > contentLimit;
+      const content = truncated
+        ? `${preview.slice(0, contentLimit)}\n[untracked file truncated] original_bytes=${stats.size}`
+        : preview;
+      totalChars += content.length;
+      untrackedFiles.push({ path: name, size: stats.size, content, truncated });
     } catch {
       untrackedFiles.push({ path: name, unavailable: true });
     }
+  }
+  if (names.length > MAX_UNTRACKED_FILES) {
+    untrackedFiles.push({
+      path: '[additional untracked files omitted]',
+      truncated: true,
+      content: `count=${names.length - MAX_UNTRACKED_FILES}`
+    });
   }
   return { untrackedFiles, untrackedUnavailable: false, untrackedTruncated };
 }
 
 function collectEvidence() {
   const diff = git('diff', 'HEAD', '--', '.', ':(exclude)agents/runtime/state.json');
-  const diffTruncated = diff.length > MAX_DIFF_CHARS;
+  const boundedDiff = boundedDiffText(diff, MAX_DIFF_CHARS);
   const status = git('status', '--short');
   const implementationStatus = status.startsWith('[git unavailable:')
     ? status
     : status.split('\n').filter(Boolean).filter((line) => !line.endsWith(' agents/runtime/state.json') && !line.includes('.orchestration-local/')).join('\n');
   const untrackedEvidence = collectUntrackedEvidence();
+  const trackedChangedFiles = git('diff', 'HEAD', '--name-only', '--', '.', ':(exclude)agents/runtime/state.json')
+    .split('\n')
+    .filter(Boolean);
+  const changedFiles = [...new Set([
+    ...trackedChangedFiles,
+    ...untrackedEvidence.untrackedFiles
+      .map((file) => file.path)
+      .filter((file) => !file.startsWith('['))
+  ])];
   return {
     branch: git('branch', '--show-current'),
     head: git('rev-parse', 'HEAD'),
@@ -672,8 +778,9 @@ function collectEvidence() {
     implementationStatus,
     diffCheck: git('diff', 'HEAD', '--check', '--', '.', ':(exclude)agents/runtime/state.json') || 'clean',
     diffStat: git('diff', 'HEAD', '--stat', '--', '.', ':(exclude)agents/runtime/state.json'),
-    diffTruncated,
-    diff: diffTruncated ? `${diff.slice(0, MAX_DIFF_CHARS)}\n[diff truncated]` : diff,
+    changedFiles,
+    diffTruncated: boundedDiff.truncated,
+    diff: boundedDiff.text,
     ...untrackedEvidence
   };
 }
@@ -691,7 +798,250 @@ function evidenceIsComplete(evidence) {
 }
 
 function codexSucceeded(result) {
-  return result && result.exitCode === 0 && !result.signal && !result.error && !result.timedOut && !result.stdoutTruncated && !result.stderrTruncated;
+  const parsedWorker = parsedWorkerResultFrom(result);
+  return Boolean(result && result.exitCode === 0 && !result.signal && !result.error && !result.timedOut && !result.stdoutTruncated && !result.stderrTruncated && !result.finalOutputTruncated && !parsedWorker.error && workerFinalResultIsComplete(parsedWorker.value));
+}
+
+function workerEvidenceField(workerResult, field) {
+  return workerResult && Object.prototype.hasOwnProperty.call(workerResult, field)
+    ? workerResult[field]
+    : [];
+}
+
+function workerFinalResultIsComplete(value) {
+  return Boolean(
+    value &&
+    typeof value === 'object' &&
+    !Array.isArray(value) &&
+    typeof value.status === 'string' &&
+    typeof value.summary === 'string' &&
+    Array.isArray(value.filesChanged) &&
+    Array.isArray(value.commandsRun) &&
+    Array.isArray(value.verification) &&
+    Array.isArray(value.scopeDeviations) &&
+    Array.isArray(value.residualRisks) &&
+    Array.isArray(value.blockers) &&
+    typeof value.recommendedNextAction === 'string'
+  );
+}
+
+function parsedWorkerResultFrom(codexResult) {
+  if (Object.prototype.hasOwnProperty.call(codexResult || {}, 'parsedWorkerFinalResult')) {
+    return {
+      value: codexResult.parsedWorkerFinalResult,
+      error: codexResult.workerFinalResultParseError || null
+    };
+  }
+  return parseWorkerFinalResult(codexResult && codexResult.finalOutput);
+}
+
+function buildReviewerPayload(packet, contract, codexResult, evidence) {
+  const parsedWorker = parsedWorkerResultFrom(codexResult);
+  const workerResult = projectWorkerFinalResult(parsedWorker.value);
+  const missingWorkerEvidence = WORKER_RESULT_FIELDS
+    .filter((field) => !parsedWorker.value || !Object.prototype.hasOwnProperty.call(parsedWorker.value, field));
+  const payload = {
+    reviewerPayloadVersion: 1,
+    objective: packet.state.objective,
+    target: packet.state.target,
+    track: packet.state.track,
+    phase: packet.state.phase,
+    currentWorker: packet.state.currentWorker,
+    repositoryConstraints: packet.state.constraints,
+    taskContract: contract,
+    parsedWorkerFinalResult: workerResult,
+    workerFinalResultParseError: parsedWorker.error,
+    workerFinalResultComplete: workerFinalResultIsComplete(parsedWorker.value),
+    filesChanged: {
+      reportedByWorker: workerEvidenceField(parsedWorker.value, 'filesChanged'),
+      detectedByGit: evidence.changedFiles || []
+    },
+    commandsRun: workerEvidenceField(parsedWorker.value, 'commandsRun'),
+    verificationResults: workerEvidenceField(parsedWorker.value, 'verification'),
+    scopeDeviations: workerEvidenceField(parsedWorker.value, 'scopeDeviations'),
+    residualRisks: workerEvidenceField(parsedWorker.value, 'residualRisks'),
+    blockers: workerEvidenceField(parsedWorker.value, 'blockers'),
+    missingWorkerEvidence,
+    workerExecution: {
+      provider: codexResult.provider || WORKER_PROVIDER,
+      requestedModel: codexResult.requestedModel || WORKER_MODEL,
+      exitStatus: codexResult.exitCode,
+      signal: codexResult.signal || null,
+      timedOut: Boolean(codexResult.timedOut),
+      error: codexResult.error || null,
+      finalResultTruncated: Boolean(codexResult.finalOutputTruncated)
+    },
+    git: {
+      branch: evidence.branch,
+      head: evidence.head,
+      status: evidence.status,
+      implementationStatus: evidence.implementationStatus,
+      diffCheck: evidence.diffCheck,
+      diffStat: evidence.diffStat,
+      changedFiles: evidence.changedFiles || [],
+      diff: evidence.diff,
+      diffTruncated: Boolean(evidence.diffTruncated),
+      untrackedFiles: evidence.untrackedFiles || [],
+      untrackedTruncated: Boolean(evidence.untrackedTruncated)
+    }
+  };
+
+  if (!codexSucceeded(codexResult)) {
+    payload.workerDiagnostics = buildWorkerDiagnostics(codexResult);
+  }
+
+  return payload;
+}
+
+function buildWorkerDiagnostics(codexResult) {
+  return {
+    exitStatus: codexResult.exitCode,
+    signal: codexResult.signal || null,
+    timedOut: Boolean(codexResult.timedOut),
+    error: codexResult.error || null,
+    stderrTail: boundedTailText(codexResult.stderr, REVIEWER_DIAGNOSTIC_TAIL_CHARS),
+    stdoutTail: boundedTailText(codexResult.stdout, Math.floor(REVIEWER_DIAGNOSTIC_TAIL_CHARS / 2))
+  };
+}
+
+function cloneJson(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
+function serialiseReviewerPayload(payload) {
+  return JSON.stringify(payload, null, 2);
+}
+
+function compactUntrackedFiles(files, perFileLimit, totalLimit, metadataOnly = false) {
+  let used = 0;
+  return (Array.isArray(files) ? files : []).map((file) => {
+    const compacted = { path: file.path };
+    if (file.size !== undefined) compacted.size = file.size;
+    if (file.unavailable) compacted.unavailable = true;
+    if (file.truncated) compacted.truncated = true;
+    if (metadataOnly) {
+      if (file.content) compacted.content = '[untracked file content omitted by reviewer budget]';
+      return compacted;
+    }
+    if (typeof file.content !== 'string') return compacted;
+    const available = Math.max(0, Math.min(perFileLimit, totalLimit - used));
+    if (!available) {
+      compacted.truncated = true;
+      compacted.content = '[untracked file content omitted by reviewer budget]';
+      return compacted;
+    }
+    const content = file.content.length > available
+      ? `${file.content.slice(0, available)}\n[untracked file truncated by reviewer budget]`
+      : file.content;
+    compacted.content = content;
+    compacted.truncated = Boolean(file.truncated || file.content.length > available);
+    used += content.length;
+    return compacted;
+  });
+}
+
+function setBoundedReviewerDiff(payload, limit) {
+  const bounded = boundedDiffText(payload.git.diff, limit);
+  payload.git.diff = bounded.text;
+  payload.git.diffTruncated = Boolean(payload.git.diffTruncated || bounded.truncated);
+}
+
+function setBoundedReviewerStatus(payload, limit) {
+  const status = String(payload.git.status || '');
+  payload.git.status = status.length > limit
+    ? `${status.slice(0, limit)}\n[git status truncated by reviewer budget]`
+    : status;
+}
+
+function compactReviewerInput(payload, budget = MAX_REVIEWER_INPUT_CHARS) {
+  let current = cloneJson(payload);
+  const initialInput = serialiseReviewerPayload(current);
+  const compactionSteps = [];
+
+  const result = () => {
+    const input = serialiseReviewerPayload(current);
+    return { payload: current, input, serializedChars: input.length };
+  };
+  if (initialInput.length <= budget) {
+    return {
+      ...result(),
+      budget,
+      initialSerializedChars: initialInput.length,
+      compacted: false,
+      compactionSteps
+    };
+  }
+
+  const apply = (name, transform) => {
+    current = cloneJson(current);
+    transform(current);
+    compactionSteps.push(name);
+    return result();
+  };
+
+  let measured = apply('bound optional diff, untracked content, status, and failed-worker diagnostics', (next) => {
+    setBoundedReviewerDiff(next, Math.min(MAX_DIFF_CHARS, 80000));
+    next.git.untrackedFiles = compactUntrackedFiles(next.git.untrackedFiles, 8000, 24000);
+    setBoundedReviewerStatus(next, 12000);
+    if (next.workerDiagnostics) {
+      next.workerDiagnostics.stderrTail = boundedTailText(next.workerDiagnostics.stderrTail, 4000);
+      next.workerDiagnostics.stdoutTail = boundedTailText(next.workerDiagnostics.stdoutTail, 2000);
+    }
+  });
+  if (measured.input.length <= budget) return { ...measured, budget, initialSerializedChars: initialInput.length, compacted: true, compactionSteps };
+
+  measured = apply('reduce optional evidence previews', (next) => {
+    setBoundedReviewerDiff(next, 40000);
+    next.git.untrackedFiles = compactUntrackedFiles(next.git.untrackedFiles, 2000, 8000);
+    if (next.workerDiagnostics) {
+      next.workerDiagnostics.stderrTail = boundedTailText(next.workerDiagnostics.stderrTail, 2000);
+      next.workerDiagnostics.stdoutTail = '';
+    }
+  });
+  if (measured.input.length <= budget) return { ...measured, budget, initialSerializedChars: initialInput.length, compacted: true, compactionSteps };
+
+  measured = apply('retain untracked metadata and a small bounded diff', (next) => {
+    next.git.untrackedFiles = compactUntrackedFiles(next.git.untrackedFiles, 0, 0, true);
+    setBoundedReviewerDiff(next, 16000);
+    if (next.workerDiagnostics) next.workerDiagnostics.stderrTail = boundedTailText(next.workerDiagnostics.stderrTail, 1000);
+  });
+  if (measured.input.length <= budget) return { ...measured, budget, initialSerializedChars: initialInput.length, compacted: true, compactionSteps };
+
+  measured = apply('retain explicit truncation markers only for optional previews', (next) => {
+    next.git.untrackedFiles = next.git.untrackedFiles.map((file) => ({
+      path: file.path,
+      ...(file.size === undefined ? {} : { size: file.size }),
+      ...(file.unavailable ? { unavailable: true } : {}),
+      ...(file.truncated ? { truncated: true } : {})
+    }));
+    setBoundedReviewerDiff(next, 4000);
+    if (next.workerDiagnostics) next.workerDiagnostics.stderrTail = boundedTailText(next.workerDiagnostics.stderrTail, 1000);
+  });
+  if (measured.input.length <= budget) return { ...measured, budget, initialSerializedChars: initialInput.length, compacted: true, compactionSteps };
+
+  measured = apply('minimise optional evidence while retaining markers and git identity', (next) => {
+    next.git.untrackedFiles = next.git.untrackedFiles.map((file) => ({
+      path: file.path,
+      ...(file.size === undefined ? {} : { size: file.size }),
+      ...(file.unavailable ? { unavailable: true } : {}),
+      ...(file.truncated ? { truncated: true } : {})
+    }));
+    setBoundedReviewerDiff(next, 1000);
+    setBoundedReviewerStatus(next, 4000);
+    if (next.workerDiagnostics) next.workerDiagnostics.stderrTail = boundedTailText(next.workerDiagnostics.stderrTail, 500);
+  });
+  if (measured.input.length <= budget) return { ...measured, budget, initialSerializedChars: initialInput.length, compacted: true, compactionSteps };
+
+  const final = result();
+  const error = new Error(`reviewer input exceeds configured budget after deterministic compaction: ${final.serializedChars} > ${budget} characters`);
+  error.code = 'REVIEWER_INPUT_OVER_BUDGET';
+  error.reviewerInput = {
+    budget,
+    initialSerializedChars: initialInput.length,
+    serializedChars: final.serializedChars,
+    compactionSteps
+  };
+  throw error;
 }
 
 function validateReview(review, packet) {
@@ -726,26 +1076,35 @@ function validateReview(review, packet) {
 async function reviewWork(packet, contract, codexResult, evidence) {
   const instructions = [
     'You are the Lemonteed orchestration reviewer.',
-    'You are read-only. Judge the Codex work against the original packet and task contract, not against Codex self-claims.',
-    'The input contains the actual worker output, command results, and git evidence. Treat worker completion claims as untrusted.',
+    'You are read-only. Judge the worker against the generated task contract and the compact runtime evidence, not against worker self-claims.',
+    'The input deliberately excludes normal worker stdout, stderr, session transcripts, echoed prompts, repository instructions, and planner context.',
+    'Use the parsed worker final result, actual git identity, changed files, commands, verification, bounded diff, and bounded untracked evidence. A truncation marker means the omitted material was not fully reviewed.',
+    'If the worker invocation failed, use only the bounded diagnostic tails and classify the runtime conservatively.',
     'Do not approve deployment, merge, push, publishing, or public-architecture changes; classify those as HUMAN_DECISION or BLOCKED.',
     'Use PASS only when the evidence supports the acceptance criteria and scope boundaries.',
     'Use REPAIR for bounded correctable failures, BLOCKED for external/technical blockers, and HUMAN_DECISION for product, destructive, deployment, or ambiguous authority decisions.',
     'For feature-build-track Structure phase, designRequired MUST be true when the feature includes meaningful visitor/operator UI or interaction-state design, otherwise false. For every other phase return null.'
   ].join('\n');
 
-  const input = JSON.stringify({ packet, taskContract: contract, workerOutput: codexResult, commandResults: codexResult, gitEvidence: evidence }, null, 2);
+  const prepared = compactReviewerInput(buildReviewerPayload(packet, contract, codexResult, evidence));
   const reviewed = await invokeStructured({
     role: 'reviewer',
     provider: REVIEWER_PROVIDER,
     model: ACTIVE_REVIEWER_MODEL,
     instructions,
-    input,
+    input: prepared.input,
     schemaName: 'lemonteed_review_verdict',
     schema: reviewSchema
   });
   validateReview(reviewed.output, packet);
   if (reviewed.invocation) reviewed.invocation.verdict = reviewed.output.verdict;
+  reviewed.reviewerInput = {
+    budget: prepared.budget,
+    serializedChars: prepared.serializedChars,
+    initialSerializedChars: prepared.initialSerializedChars,
+    compacted: prepared.compacted,
+    compactionSteps: prepared.compactionSteps
+  };
   return reviewed;
 }
 
@@ -769,10 +1128,34 @@ function completeFromReview(packet, review) {
   return true;
 }
 
+function conciseReviewerFailure(error) {
+  const message = error && error.message ? error.message : String(error || 'unknown reviewer failure');
+  return boundedText(message.replace(/\s*at\s+.*$/s, '').trim(), 4000);
+}
+
+function blockReviewerTransportFailure(attempt, error, codexResult, evidence) {
+  const reason = `Reviewer transport failure: ${conciseReviewerFailure(error)}`;
+  writeAudit(`reviewer-failure-${attempt}.json`, {
+    verdict: 'BLOCKED',
+    reason,
+    workerAudit: `codex-${attempt}.json`,
+    evidenceAudit: `evidence-${attempt}.json`,
+    workerDiagnostics: codexSucceeded(codexResult) ? null : buildWorkerDiagnostics(codexResult),
+    reviewerInput: error && error.reviewerInput ? error.reviewerInput : null
+  });
+  console.error(`[reviewer] ${reason}`);
+  runNode(['block', '--reason', boundedText(reason, MAX_REASON_CHARS), '--verdict', 'BLOCKED']);
+  return { terminal: true, verdict: 'BLOCKED' };
+}
+
 function preflight(allowDirty) {
   validateBoundedInteger(MAX_REPAIRS, 'ORCHESTRATOR_MAX_REPAIRS', 0, 10);
   validateBoundedInteger(MAX_DIFF_CHARS, 'ORCHESTRATOR_MAX_DIFF_CHARS', 1, 10000000);
   validateBoundedInteger(MAX_CODEX_OUTPUT_CHARS, 'ORCHESTRATOR_MAX_CODEX_OUTPUT_CHARS', 1024, 10000000);
+  validateBoundedInteger(MAX_REVIEWER_INPUT_CHARS, 'ORCHESTRATOR_MAX_REVIEWER_INPUT_CHARS', 1024, 1048576);
+  validateBoundedInteger(MAX_UNTRACKED_FILES, 'ORCHESTRATOR_MAX_UNTRACKED_FILES', 1, 1000);
+  validateBoundedInteger(MAX_UNTRACKED_FILE_CHARS, 'ORCHESTRATOR_MAX_UNTRACKED_FILE_CHARS', 1, 1000000);
+  validateBoundedInteger(MAX_UNTRACKED_TOTAL_CHARS, 'ORCHESTRATOR_MAX_UNTRACKED_TOTAL_CHARS', 1, 10000000);
   validateBoundedInteger(API_TIMEOUT_MS, 'ORCHESTRATOR_API_TIMEOUT_MS', 1000, 3600000);
   validateBoundedInteger(CODEX_TIMEOUT_MS, 'ORCHESTRATOR_CODEX_TIMEOUT_MS', 1000, 7200000);
   parseCodexArgs();
@@ -877,6 +1260,7 @@ async function reviewerSmoke() {
   writeAudit('smoke-reviewer.json', {
     verdict: reviewed.output,
     invocation: reviewed.invocation,
+    reviewerInput: reviewed.reviewerInput,
     evidence
   });
   return reviewed.output;
@@ -901,9 +1285,22 @@ async function runWorker() {
     writeAudit(`evidence-${attempt}.json`, evidence);
 
     console.log(`[reviewer] reviewing evidence with ${ACTIVE_REVIEWER_MODEL} via ${REVIEWER_PROVIDER}`);
-    const reviewed = await reviewWork(packet, contract, codexResult, evidence);
+    let reviewed;
+    try {
+      reviewed = await reviewWork(packet, contract, codexResult, evidence);
+    } catch (error) {
+      return blockReviewerTransportFailure(attempt, error, codexResult, evidence);
+    }
     const review = reviewed.output;
-    writeAudit(`review-${attempt}.json`, { ...review, _meta: { responseId: reviewed.responseId || null, usage: reviewed.usage || null, invocation: reviewed.invocation } });
+    writeAudit(`review-${attempt}.json`, {
+      ...review,
+      _meta: {
+        responseId: reviewed.responseId || null,
+        usage: reviewed.usage || null,
+        invocation: reviewed.invocation,
+        reviewerInput: reviewed.reviewerInput
+      }
+    });
     console.log(`[orchestrator] verdict: ${review.verdict} — ${review.summary}`);
 
     if (review.verdict === 'PASS') {
@@ -1005,6 +1402,11 @@ module.exports = {
   taskSchema,
   reviewSchema,
   boundedText,
+  boundedTailText,
+  boundedDiffText,
+  parseWorkerFinalResult,
+  projectWorkerFinalResult,
+  workerFinalResultIsComplete,
   chooseCodexCandidate,
   normaliseCodexExecutable,
   parseStructuredJson,
@@ -1017,6 +1419,11 @@ module.exports = {
   validateReview,
   invokeCodexCli,
   executeCodex,
+  collectUntrackedEvidence,
+  collectEvidence,
+  buildReviewerPayload,
+  compactReviewerInput,
+  reviewWork,
   resolveCodexExecutable,
   getCodexVersion,
   configureModel,
