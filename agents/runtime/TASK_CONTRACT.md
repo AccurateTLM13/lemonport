@@ -50,6 +50,10 @@ Codex must end with a structured result block:
 {
   "status": "completed | blocked | partial",
   "summary": "short factual summary",
+  "deliverable": {
+    "type": "phase-compatible machine-readable type",
+    "content": "complete substantive output owned by the current worker"
+  },
   "filesChanged": [],
   "commandsRun": [],
   "verification": [
@@ -65,6 +69,10 @@ Codex must end with a structured result block:
   "recommendedNextAction": ""
 }
 ```
+
+`deliverable.content` is the work. `summary` is only a short synopsis and cannot replace the deliverable. The adapter validates a phase-compatible type and non-empty content before allowing a worker result to advance. Stable types are `structure-handoff`, `content-handoff`, `design-handoff`, `implementation-report`, `experience-review`, and `qa-report`.
+
+The worker must return exactly one structured JSON result. Do not put the substantive handoff in prose outside that result. `verification`, `commandsRun`, and `filesChanged` are evidence about the deliverable, not substitutes for it.
 
 A worker `completed` claim is not a pipeline PASS. Only the orchestrator can issue the verdict after checking the contract and evidence.
 

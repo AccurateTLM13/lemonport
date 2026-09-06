@@ -12,13 +12,14 @@ The implementation worker owns code and file changes.
 
 ## Output
 
-Provide:
+Return `deliverable.type = "implementation-report"` and place the complete substantive report in `deliverable.content`. `summary` is only a short synopsis. The deliverable must provide:
 
 - Files changed.
 - Behavior implemented.
 - Commands run.
 - Validation result.
-- Remaining risks.
+- Important behavior and implementation boundaries.
+- Remaining implementation-specific residual concerns.
 
 ## Lemonteed Checks
 

@@ -10,7 +10,7 @@ The runtime does not replace `agents/PIPELINE.md`, `agents/SHARED_CONTEXT.md`, t
 2. Read repository rules, shared context, selected track, current state, and the active worker contract.
 3. Compile an orchestrator packet.
 4. The orchestrator model converts that packet into a focused Codex work order.
-5. Codex executes only that work order.
+5. Codex executes only that work order and returns one structured Worker Result with the phase-owned deliverable in `deliverable.content`.
 6. The adapter captures worker output plus git evidence and compiles a bounded reviewer evidence package.
 7. The orchestrator reviews the compact package and returns `PASS`, `REPAIR`, `BLOCKED`, or `HUMAN_DECISION`. Reviewer schemas are phase-aware: `feature-build-track` Structure requires boolean `designRequired`; every other phase requires `designRequired: null`.
 8. `PASS` advances state; `REPAIR` automatically generates a bounded repair contract; the other verdicts stop the pipeline.
@@ -73,6 +73,7 @@ set ORCHESTRATOR_ESCALATION_MODEL=gpt-5.6-terra
 set ORCHESTRATOR_MAX_MODEL=gpt-5.6-luna
 set ORCHESTRATOR_REASONING=high
 set ORCHESTRATOR_MAX_REPAIRS=2
+set ORCHESTRATOR_MAX_WORKER_DELIVERABLE_CHARS=120000
 set ORCHESTRATOR_MAX_REVIEWER_INPUT_CHARS=250000
 set CODEX_CLI_PATH=C:\Users\<user>\AppData\Local\OpenAI\Codex\bin\<version>\codex.exe
 ```
@@ -169,9 +170,18 @@ Local adapter audit artifacts are written to:
 
 This folder is gitignored. It contains the last packet, generated task contracts, worker stdout/stderr, git evidence, and reviewer verdicts so an orchestration failure can be inspected without polluting the repository.
 
-The reviewer does not receive those raw worker streams or the full planner/session context. It receives one compact package containing the objective, target, track, phase, current worker, relevant constraints, the generated task contract, the parsed worker result, worker-reported evidence, git identity/status, diff checks, changed filenames, a bounded diff, and bounded untracked-file evidence. Failed workers additionally provide bounded stderr/stdout tails only. Successful workers never send full stdout, stderr, session transcripts, echoed prompts, or startup noise.
+The structured Worker Result separates the work from its proof:
 
-`ORCHESTRATOR_MAX_REVIEWER_INPUT_CHARS` defaults to `250000`. The adapter measures the serialized reviewer package before transport and deterministically compacts optional previews when necessary. Acceptance criteria, the generated contract, parsed worker result, verification, changed files, and git identity are preserved. If the required evidence still cannot fit, the adapter records a concise `BLOCKED` result without invoking the reviewer. Reviewer failures are classified as `TRANSPORT_FAILURE`, `STRUCTURED_OUTPUT_FAILURE`, `REVIEWER_CONTRACT_FAILURE`, or `REVIEWER_VERDICT`; malformed or contract-invalid output gets one reviewer-only retry with the violation called out. A transport failure or second invalid response preserves worker/evidence audits, blocks the current worker without advancing it, and exits cleanly.
+- `summary` is a short factual synopsis.
+- `deliverable.type` is phase-compatible (`structure-handoff`, `content-handoff`, `design-handoff`, `implementation-report`, `experience-review`, or `qa-report`).
+- `deliverable.content` is the complete substantive handoff required by the current worker contract.
+- `filesChanged`, `commandsRun`, and `verification` are evidence about that deliverable.
+
+The reviewer does not receive those raw worker streams or the full planner/session context. It receives one compact package containing the objective, target, track, phase, current worker, relevant constraints, the generated task contract, `parsedWorkerFinalResult.deliverable`, the worker summary, worker-reported evidence, git identity/status, diff checks, changed filenames, a bounded diff, and bounded untracked-file evidence. Failed workers additionally provide bounded stderr/stdout tails only. Successful workers never send full stdout, stderr, session transcripts, echoed prompts, or startup noise.
+
+`ORCHESTRATOR_MAX_REVIEWER_INPUT_CHARS` defaults to `250000`. The adapter measures the serialized reviewer package before transport and deterministically compacts optional previews when necessary. Acceptance criteria, the generated contract, parsed worker result, verification, changed files, and git identity are preserved. If the required evidence still cannot fit, the adapter records a concise `BLOCKED` result without invoking the reviewer. Reviewer failures are classified as `TRANSPORT_FAILURE`, `STRUCTURED_OUTPUT_FAILURE`, `REVIEWER_CONTRACT_FAILURE`, `REVIEWER_INPUT_FAILURE`, or `REVIEWER_VERDICT`; malformed or contract-invalid output gets one reviewer-only retry with the violation called out. A transport failure or second invalid response preserves worker/evidence audits, blocks the current worker without advancing it, and exits cleanly.
+
+The adapter validates the worker deliverable before reviewer transport. A successful worker invocation with a missing, empty, or wrong-phase deliverable is a `WORKER_PROTOCOL_FAILURE`; it blocks without consuming a normal worker repair attempt. Preserved legacy worker output can be migrated when a complete substantive handoff is unambiguously present before the legacy JSON result. The original audit remains intact and a compact migration audit is emitted when resume uses that evidence.
 
 ## Repair Policy
 

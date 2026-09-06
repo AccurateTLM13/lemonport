@@ -12,12 +12,14 @@ The QA worker owns verification, regression checks, and release readiness.
 
 ## Output
 
-Provide:
+Return `deliverable.type = "qa-report"` and place the complete substantive report in `deliverable.content`. `summary` is only a short synopsis. The deliverable must provide:
 
 - Commands run.
 - Manual checks.
 - Pass/fail result.
 - Issues found, ordered by severity.
+- Regressions and residual risk.
+- Readiness conclusion.
 - Recommended next action.
 
 ## Default Commands

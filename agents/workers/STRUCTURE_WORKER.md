@@ -12,11 +12,13 @@ The structure worker maps the system before build work begins.
 
 ## Output
 
-Provide:
+Return `deliverable.type = "structure-handoff"` and place the complete substantive handoff in `deliverable.content`. `summary` is only a short synopsis. The deliverable must provide:
 
 - Scope summary.
 - Files likely involved.
 - Files to avoid.
+- Repository architecture, boundaries, and data flow.
+- Source-of-truth and generated-file boundaries.
 - Validation commands.
 - Structural risks.
 

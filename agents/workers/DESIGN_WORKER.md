@@ -11,12 +11,17 @@ The design worker owns visual direction, layout quality, interaction fit, and re
 
 ## Output
 
-Provide:
+Return `deliverable.type = "design-handoff"` and place the complete substantive handoff in `deliverable.content`. `summary` is only a short synopsis. The deliverable must provide:
 
 - Design intent.
-- Layout and interaction recommendations.
-- Mobile/responsive notes.
+- Layout specification and interaction specification.
+- Relevant interaction states, including active-filter behavior when applicable.
+- Accessibility behavior.
+- Mobile/responsive behavior.
+- Progressive-enhancement behavior.
+- Implementation boundaries and implementation readiness.
 - Risks around clarity, clutter, or inconsistency.
+- Unresolved owner/product decisions.
 
 ## Lemonteed Checks
 

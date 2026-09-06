@@ -33,6 +33,7 @@ const REASONING = (process.env.ORCHESTRATOR_REASONING || 'high').trim();
 const MAX_REPAIRS = Number(process.env.ORCHESTRATOR_MAX_REPAIRS || 2);
 const MAX_DIFF_CHARS = Number(process.env.ORCHESTRATOR_MAX_DIFF_CHARS || 120000);
 const MAX_CODEX_OUTPUT_CHARS = Number(process.env.ORCHESTRATOR_MAX_CODEX_OUTPUT_CHARS || 2000000);
+const MAX_WORKER_DELIVERABLE_CHARS = Number(process.env.ORCHESTRATOR_MAX_WORKER_DELIVERABLE_CHARS || 120000);
 const MAX_REVIEWER_INPUT_CHARS = Number(process.env.ORCHESTRATOR_MAX_REVIEWER_INPUT_CHARS || 250000);
 const MAX_UNTRACKED_FILES = Number(process.env.ORCHESTRATOR_MAX_UNTRACKED_FILES || 50);
 const MAX_UNTRACKED_FILE_CHARS = Number(process.env.ORCHESTRATOR_MAX_UNTRACKED_FILE_CHARS || 20000);
@@ -48,12 +49,14 @@ const FAILURE_CLASSES = Object.freeze({
   STRUCTURED_OUTPUT_FAILURE: 'STRUCTURED_OUTPUT_FAILURE',
   REVIEWER_CONTRACT_FAILURE: 'REVIEWER_CONTRACT_FAILURE',
   REVIEWER_INPUT_FAILURE: 'REVIEWER_INPUT_FAILURE',
+  WORKER_PROTOCOL_FAILURE: 'WORKER_PROTOCOL_FAILURE',
   REVIEWER_VERDICT: 'REVIEWER_VERDICT'
 });
 
 const WORKER_RESULT_FIELDS = [
   'status',
   'summary',
+  'deliverable',
   'filesChanged',
   'commandsRun',
   'verification',
@@ -62,6 +65,24 @@ const WORKER_RESULT_FIELDS = [
   'blockers',
   'recommendedNextAction'
 ];
+
+const DELIVERABLE_TYPES = Object.freeze({
+  Structure: 'structure-handoff',
+  Content: 'content-handoff',
+  Design: 'design-handoff',
+  Implementation: 'implementation-report',
+  'Experience Review': 'experience-review',
+  QA: 'qa-report'
+});
+
+const DELIVERABLE_GUIDANCE = Object.freeze({
+  Structure: 'Include the repository architecture, boundaries, data flow, source-of-truth files, generated-file boundaries, validation surface, and structural risks required by the Structure Worker.',
+  Content: 'Include the requested content, copy, information structure, source-of-truth implications, and content risks required by the Content Worker.',
+  Design: 'Include design intent, layout specification, interaction specification, relevant interaction states, active-filter behavior when applicable, accessibility behavior, responsive/mobile behavior, progressive-enhancement behavior, implementation boundaries, risks, unresolved owner/product decisions, and implementation readiness.',
+  Implementation: 'Describe implementation completed, important behavior, files and boundaries changed, verification, and implementation-specific residual concerns. Git evidence remains authoritative for actual changes.',
+  'Experience Review': 'Include usability and experience review findings, severity or priority, disposition, unresolved issues, and the recommendation for continuation, revision, or QA.',
+  QA: 'Include QA findings, commands and manual checks, regressions, failures or passes, residual risk, and the readiness conclusion.'
+});
 
 let ACTIVE_PLANNER_MODEL = null;
 let ACTIVE_REVIEWER_MODEL = null;
@@ -82,6 +103,34 @@ function classifiedError(failureClass, message, details = {}) {
 
 function errorFailureClass(error) {
   return error && error.failureClass ? error.failureClass : FAILURE_CLASSES.TRANSPORT_FAILURE;
+}
+
+function deliverableTypeForPhase(phase) {
+  return DELIVERABLE_TYPES[phase] || null;
+}
+
+function deliverableTypeForPacket(packet) {
+  return deliverableTypeForPhase(packet && packet.state ? packet.state.phase : null);
+}
+
+function deliverableTypeForWorker(contract) {
+  const worker = contract && contract.worker;
+  return {
+    'STRUCTURE_WORKER.md': DELIVERABLE_TYPES.Structure,
+    'CONTENT_WORKER.md': DELIVERABLE_TYPES.Content,
+    'DESIGN_WORKER.md': DELIVERABLE_TYPES.Design,
+    'IMPLEMENTATION_WORKER.md': DELIVERABLE_TYPES.Implementation,
+    'EXPERIENCE_DIRECTOR.md': DELIVERABLE_TYPES['Experience Review'],
+    'QA_WORKER.md': DELIVERABLE_TYPES.QA
+  }[worker] || null;
+}
+
+function deliverableContractInstruction(packet) {
+  const phase = packet && packet.state ? packet.state.phase : null;
+  const type = deliverableTypeForPhase(phase);
+  const guidance = DELIVERABLE_GUIDANCE[phase];
+  if (!type || !guidance) return '';
+  return `Required worker protocol: place the complete substantive ${phase} handoff in deliverable.content, use deliverable.type "${type}", and do not substitute summary or prose outside the structured result. ${guidance}`;
 }
 
 function validateBoundedInteger(value, name, minimum, maximum) {
@@ -234,6 +283,38 @@ function projectWorkerFinalResult(value) {
   const omittedFields = Object.keys(value).filter((field) => !WORKER_RESULT_FIELDS.includes(field));
   if (omittedFields.length) projected._omittedFields = omittedFields;
   return projected;
+}
+
+function workerFinalResultValidationError(value, expectedType = null) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return 'worker final result must be an object';
+  if (!['completed', 'blocked', 'partial'].includes(value.status)) return 'worker final result has an invalid status';
+  if (typeof value.summary !== 'string' || !value.summary.trim()) return 'worker final result summary must be non-empty';
+  if (!value.deliverable || typeof value.deliverable !== 'object' || Array.isArray(value.deliverable)) {
+    return 'worker final result deliverable is required';
+  }
+  if (!Object.values(DELIVERABLE_TYPES).includes(value.deliverable.type)) {
+    return 'worker final result deliverable.type is not recognized';
+  }
+  if (expectedType && value.deliverable.type !== expectedType) {
+    return `worker final result deliverable.type must be ${expectedType}`;
+  }
+  if (typeof value.deliverable.content !== 'string' || !value.deliverable.content.trim()) {
+    return 'worker final result deliverable.content must be non-empty';
+  }
+  if (value.deliverable.content.length > MAX_WORKER_DELIVERABLE_CHARS) {
+    return `worker final result deliverable.content exceeds ${MAX_WORKER_DELIVERABLE_CHARS} characters`;
+  }
+  for (const field of ['filesChanged', 'commandsRun', 'verification', 'scopeDeviations', 'residualRisks', 'blockers']) {
+    if (!Array.isArray(value[field])) return `worker final result ${field} must be an array`;
+  }
+  if (typeof value.recommendedNextAction !== 'string') return 'worker final result recommendedNextAction must be a string';
+  return null;
+}
+
+function validateWorkerFinalResult(value, expectedType = null) {
+  const message = workerFinalResultValidationError(value, expectedType);
+  if (message) throw classifiedError(FAILURE_CLASSES.WORKER_PROTOCOL_FAILURE, message);
+  return value;
 }
 
 function runNode(args, options = {}) {
@@ -614,6 +695,52 @@ const taskSchema = {
   ]
 };
 
+const workerResultSchema = {
+  type: 'object',
+  additionalProperties: false,
+  properties: {
+    status: { type: 'string', enum: ['completed', 'blocked', 'partial'] },
+    summary: { type: 'string', minLength: 1 },
+    deliverable: {
+      type: 'object',
+      additionalProperties: false,
+      properties: {
+        type: { type: 'string', enum: Object.values(DELIVERABLE_TYPES) },
+        content: { type: 'string', minLength: 1, maxLength: MAX_WORKER_DELIVERABLE_CHARS }
+      },
+      required: ['type', 'content']
+    },
+    filesChanged: { type: 'array', items: { type: 'string' } },
+    commandsRun: { type: 'array', items: { type: 'string' } },
+    verification: { type: 'array', items: { type: 'object' } },
+    scopeDeviations: { type: 'array', items: { type: 'string' } },
+    residualRisks: { type: 'array', items: { type: 'string' } },
+    blockers: { type: 'array', items: { type: 'string' } },
+    recommendedNextAction: { type: 'string' }
+  },
+  required: [...WORKER_RESULT_FIELDS]
+};
+
+function workerResultSchemaFor(packet, contract = null) {
+  const expectedType = deliverableTypeForPacket(packet) || deliverableTypeForWorker(contract);
+  return {
+    ...workerResultSchema,
+    properties: {
+      ...workerResultSchema.properties,
+      deliverable: {
+        ...workerResultSchema.properties.deliverable,
+        properties: {
+          ...workerResultSchema.properties.deliverable.properties,
+          type: {
+            type: 'string',
+            enum: expectedType ? [expectedType] : Object.values(DELIVERABLE_TYPES)
+          }
+        }
+      }
+    }
+  };
+}
+
 const reviewSchema = {
   type: 'object',
   additionalProperties: false,
@@ -660,6 +787,19 @@ function validateTaskContract(output, packet) {
   if (output.worker !== packet.state.currentWorker.worker) {
     throw new Error('planner task contract worker does not match the runtime packet');
   }
+  const deliverableInstruction = deliverableContractInstruction(packet);
+  if (deliverableInstruction && !/deliverable\.content/i.test(output.codexPrompt)) {
+    output.codexPrompt = `${output.codexPrompt.trim()}\n\n${deliverableInstruction}`;
+  }
+  if (deliverableInstruction && !output.requirements.some((item) => /deliverable\.content/i.test(item))) {
+    output.requirements.push(deliverableInstruction);
+  }
+  if (deliverableInstruction && !output.acceptanceCriteria.some((item) => /deliverable\.content/i.test(item))) {
+    output.acceptanceCriteria.push(`The structured worker result contains a complete non-empty ${deliverableTypeForPacket(packet)} in deliverable.content.`);
+  }
+  if (deliverableInstruction && !output.evidenceRequired.some((item) => /deliverable\.content/i.test(item))) {
+    output.evidenceRequired.push('The complete substantive worker handoff is present in deliverable.content; summary is only a synopsis.');
+  }
 }
 
 async function createContract(packet, repairContext = null) {
@@ -669,7 +809,7 @@ async function createContract(packet, repairContext = null) {
     'Preserve repository constraints and worker boundaries. Do not broaden scope.',
     'Never instruct Codex to deploy, merge, push, publish, or change public Lemonteed architecture; owner approval remains required.',
     'The codexPrompt must be complete enough to execute without the human re-explaining context.',
-    'Require concrete evidence, exact commands, changed files, and explicit stop conditions.',
+    'Require concrete evidence, exact commands, changed files, explicit stop conditions, and a complete substantive phase deliverable in deliverable.content. The short summary must not substitute for that deliverable.',
     repairContext ? 'This is a repair pass. Address only the reviewer-identified failures; preserve already-correct work.' : ''
   ].filter(Boolean).join('\n');
 
@@ -692,8 +832,9 @@ function readText(rel) {
   return fs.existsSync(file) ? fs.readFileSync(file, 'utf8').trim() : '';
 }
 
-function workerPrompt(contract) {
+function workerPrompt(contract, packet = null) {
   const workerPath = path.join('agents', 'workers', contract.worker);
+  const deliverableInstruction = deliverableContractInstruction(packet) || `Place the complete substantive phase output in deliverable.content and use the phase-compatible deliverable.type for ${contract.worker}. Summary is only a short synopsis.`;
   return [
     'You are the Lemonteed Codex worker. Execute only the task contract below.',
     'You may modify repository files within the contract scope using the workspace-write sandbox.',
@@ -703,6 +844,8 @@ function workerPrompt(contract) {
     'Use node scripts/repository-search.js --pattern <pattern> --path <path> for portable repository search; it falls back in order to git grep, PowerShell Select-String, then Node filesystem traversal.',
     'Pass search values as process arguments. Do not interpolate untrusted task values into shell commands.',
     'Structure and QA work must include concrete repository paths, line numbers, command results, and residual risk. If every safe inspection method fails or required evidence cannot be gathered, report BLOCKED with the exact failure.',
+    'Return exactly one JSON object matching the structured Worker Result schema. Do not put the substantive handoff in summary or prose outside the JSON object.',
+    deliverableInstruction,
     'TASK_CONTRACT_BEGIN',
     JSON.stringify(contract, null, 2),
     'TASK_CONTRACT_END',
@@ -715,22 +858,30 @@ function workerPrompt(contract) {
   ].join('\n');
 }
 
-function executeCodex(contract, runner = spawnSync, cliInfo = null) {
+function executeCodex(contract, runner = spawnSync, cliInfo = null, packet = null) {
   const info = cliInfo || ensureCliInfo();
   const id = `worker-${Date.now()}-${INVOCATION_COUNTER += 1}`;
+  const schemaPath = path.join(LOCAL_DIR, `${id}.schema.json`);
   const outputPath = path.join(LOCAL_DIR, `${id}.output.txt`);
-  const args = buildCodexArgs({ role: 'worker', model: WORKER_MODEL, sandbox: 'workspace-write', outputPath });
+  fs.writeFileSync(schemaPath, `${JSON.stringify(workerResultSchemaFor(packet, contract), null, 2)}\n`);
+  const args = buildCodexArgs({ role: 'worker', model: WORKER_MODEL, sandbox: 'workspace-write', schemaPath, outputPath });
   const result = runner(info.command, [...info.argsPrefix, ...args], {
     cwd: ROOT,
     encoding: 'utf8',
     env: safeCliEnvironment(),
-    input: workerPrompt(contract),
+    input: workerPrompt(contract, packet),
     maxBuffer: MAX_CODEX_OUTPUT_CHARS,
     timeout: CODEX_TIMEOUT_MS,
     killSignal: 'SIGTERM'
   });
   const finalOutput = fs.existsSync(outputPath) ? fs.readFileSync(outputPath, 'utf8') : '';
   const parsedFinalResult = parseWorkerFinalResult(finalOutput);
+  const expectedDeliverableType = deliverableTypeForPacket(packet) || deliverableTypeForWorker(contract);
+  const validationError = parsedFinalResult.extracted
+    ? 'worker final result must be exactly one JSON object without surrounding prose'
+    : (parsedFinalResult.value
+      ? workerFinalResultValidationError(parsedFinalResult.value, expectedDeliverableType)
+      : null);
   return {
     exitCode: result.status,
     signal: result.signal || null,
@@ -742,6 +893,9 @@ function executeCodex(contract, runner = spawnSync, cliInfo = null) {
     finalOutputTruncated: finalOutput.length > MAX_CODEX_OUTPUT_CHARS,
     parsedWorkerFinalResult: parsedFinalResult.value,
     workerFinalResultParseError: parsedFinalResult.error,
+    workerFinalResultExtracted: parsedFinalResult.extracted,
+    workerFinalResultValidationError: validationError,
+    expectedDeliverableType,
     error: result.error ? result.error.message : null,
     timedOut: Boolean(result.error && result.error.code === 'ETIMEDOUT'),
     role: 'worker',
@@ -933,13 +1087,16 @@ function validatePreservedCompatibility({ state, packet, contract, codexResult, 
   if (packet.repository && packet.repository.branch !== evidence.branch) {
     throw preservedEvidenceFailure('packet and preserved evidence branches differ');
   }
-  if (packet.repository && packet.repository.head !== evidence.head) {
-    throw preservedEvidenceFailure('packet and preserved evidence HEADs differ');
-  }
   if (evidence.branch !== currentBranch) {
     throw preservedEvidenceFailure(`preserved branch ${evidence.branch} does not match current branch ${currentBranch}`);
   }
   let headCompatibility = 'exact';
+  if (packet.repository && packet.repository.head !== evidence.head) {
+    if (!evidenceHasNoWorkerChanges(evidence)) {
+      throw preservedEvidenceFailure('packet and preserved evidence HEADs differ while worker changes are present');
+    }
+    headCompatibility = 'packet-baseline-only-no-worker-changes';
+  }
   if (evidence.head !== currentHead) {
     if (!evidenceHasNoWorkerChanges(evidence)) {
       throw preservedEvidenceFailure(`preserved HEAD ${evidence.head} differs from current HEAD ${currentHead} and worker changes are present`);
@@ -952,13 +1109,64 @@ function validatePreservedCompatibility({ state, packet, contract, codexResult, 
   return { headCompatibility, currentBranch, currentHead };
 }
 
-function enrichPreservedWorkerResult(rawResult) {
+function legacyDeliverableContent(finalOutput, expectedType) {
+  const text = String(finalOutput || '').trim();
+  if (!text || !expectedType) return null;
+  const fenced = /```(?:json)?\s*([\s\S]*?)\s*```/gi;
+  let match;
+  let resultFenceIndex = -1;
+  while ((match = fenced.exec(text))) {
+    try {
+      const candidate = JSON.parse(match[1]);
+      if (candidate && typeof candidate === 'object' && !Array.isArray(candidate) && typeof candidate.status === 'string' && typeof candidate.summary === 'string' && Array.isArray(candidate.filesChanged)) {
+        resultFenceIndex = match.index;
+      }
+    } catch {
+      // Ignore prose/code fences and keep looking for the legacy Worker Result.
+    }
+  }
+  if (resultFenceIndex <= 0) return null;
+  const narrative = text.slice(0, resultFenceIndex).trim();
+  if (narrative.length < 600) return null;
+  const markers = {
+    'structure-handoff': ['Inspected', 'Current mechanism', 'Minimal implementation boundary', 'Risks'],
+    'content-handoff': ['content', 'copy', 'structure', 'source'],
+    'design-handoff': ['Design handoff', 'Proposed interaction', 'State model', 'Responsive direction', 'Accessibility', 'Minimal implementation boundary', 'Risks'],
+    'implementation-report': ['implemented', 'behavior', 'files', 'verification', 'residual'],
+    'experience-review': ['Experience', 'Critical issues', 'polish', 'disposition', 'Recommendation'],
+    'qa-report': ['Commands', 'Manual checks', 'Pass', 'regression', 'readiness']
+  }[expectedType] || [];
+  const markerCount = markers.filter((marker) => new RegExp(marker, 'i').test(narrative)).length;
+  return markerCount >= 3 ? narrative : null;
+}
+
+function enrichPreservedWorkerResult(rawResult, packet, contract) {
   const result = cloneJson(rawResult);
   const parsed = parseWorkerFinalResult(result.finalOutput);
   if (!result.parsedWorkerFinalResult || result.workerFinalResultParseError) {
     result.parsedWorkerFinalResult = parsed.value;
     result.workerFinalResultParseError = parsed.error;
   }
+  const expectedDeliverableType = deliverableTypeForPacket(packet) || deliverableTypeForWorker(contract);
+  if (result.parsedWorkerFinalResult && !result.parsedWorkerFinalResult.deliverable) {
+    const content = legacyDeliverableContent(result.finalOutput, expectedDeliverableType);
+    if (content) {
+      result.parsedWorkerFinalResult = {
+        ...result.parsedWorkerFinalResult,
+        deliverable: { type: expectedDeliverableType, content }
+      };
+      result.workerFinalResultParseError = null;
+      result.deliverableMigration = {
+        source: 'worker final narrative before legacy JSON result',
+        type: expectedDeliverableType,
+        contentChars: content.length
+      };
+    }
+  }
+  result.expectedDeliverableType = expectedDeliverableType;
+  result.workerFinalResultValidationError = result.parsedWorkerFinalResult
+    ? workerFinalResultValidationError(result.parsedWorkerFinalResult, expectedDeliverableType)
+    : null;
   return result;
 }
 
@@ -1000,7 +1208,7 @@ function loadPreservedEvidence({ strict = true } = {}) {
       const packet = readJsonFile(auditPath('packet.json'), 'packet audit');
       const contract = stripAuditMeta(readJsonFile(auditPath(candidate.contract), 'contract audit'));
       const rawWorker = readJsonFile(auditPath(candidate.worker), 'worker audit');
-      const codexResult = enrichPreservedWorkerResult(rawWorker);
+      const codexResult = enrichPreservedWorkerResult(rawWorker, packet, contract);
       const evidence = readJsonFile(auditPath(candidate.evidence), 'evidence audit');
       const state = currentRuntimeState();
       const compatibility = validatePreservedCompatibility({ state, packet, contract, codexResult, evidence });
@@ -1041,6 +1249,16 @@ function writePreservedWorkerManifest(attempt, packet, contract, evidence) {
   });
 }
 
+function writeDeliverableMigrationAudit(preserved) {
+  if (!preserved || !preserved.codexResult || !preserved.codexResult.deliverableMigration) return;
+  writeAudit(`codex-${preserved.attempt}.deliverable-migration.json`, {
+    sourceAudit: `codex-${preserved.attempt}.json`,
+    packetAudit: 'packet.json',
+    migration: preserved.codexResult.deliverableMigration,
+    deliverable: preserved.codexResult.parsedWorkerFinalResult.deliverable
+  });
+}
+
 function evidenceIsComplete(evidence) {
   const unavailable = (value) => typeof value === 'string' && value.startsWith('[git unavailable:');
   return ['branch', 'head', 'status', 'implementationStatus', 'diffCheck', 'diffStat', 'diff']
@@ -1055,7 +1273,7 @@ function evidenceIsComplete(evidence) {
 
 function codexSucceeded(result) {
   const parsedWorker = parsedWorkerResultFrom(result);
-  return Boolean(result && result.exitCode === 0 && !result.signal && !result.error && !result.timedOut && !result.stdoutTruncated && !result.stderrTruncated && !result.finalOutputTruncated && !parsedWorker.error && workerFinalResultIsComplete(parsedWorker.value));
+  return Boolean(result && result.exitCode === 0 && !result.signal && !result.error && !result.timedOut && !result.stdoutTruncated && !result.stderrTruncated && !result.finalOutputTruncated && !parsedWorker.error && workerFinalResultIsComplete(parsedWorker.value, result.expectedDeliverableType || null));
 }
 
 function workerEvidenceField(workerResult, field) {
@@ -1064,28 +1282,15 @@ function workerEvidenceField(workerResult, field) {
     : [];
 }
 
-function workerFinalResultIsComplete(value) {
-  return Boolean(
-    value &&
-    typeof value === 'object' &&
-    !Array.isArray(value) &&
-    typeof value.status === 'string' &&
-    typeof value.summary === 'string' &&
-    Array.isArray(value.filesChanged) &&
-    Array.isArray(value.commandsRun) &&
-    Array.isArray(value.verification) &&
-    Array.isArray(value.scopeDeviations) &&
-    Array.isArray(value.residualRisks) &&
-    Array.isArray(value.blockers) &&
-    typeof value.recommendedNextAction === 'string'
-  );
+function workerFinalResultIsComplete(value, expectedType = null) {
+  return workerFinalResultValidationError(value, expectedType) === null;
 }
 
 function parsedWorkerResultFrom(codexResult) {
   if (Object.prototype.hasOwnProperty.call(codexResult || {}, 'parsedWorkerFinalResult')) {
     return {
       value: codexResult.parsedWorkerFinalResult,
-      error: codexResult.workerFinalResultParseError || null
+      error: codexResult.workerFinalResultParseError || codexResult.workerFinalResultValidationError || null
     };
   }
   return parseWorkerFinalResult(codexResult && codexResult.finalOutput);
@@ -1093,6 +1298,7 @@ function parsedWorkerResultFrom(codexResult) {
 
 function buildReviewerPayload(packet, contract, codexResult, evidence) {
   const parsedWorker = parsedWorkerResultFrom(codexResult);
+  const expectedDeliverableType = deliverableTypeForPacket(packet) || deliverableTypeForWorker(contract);
   const workerResult = projectWorkerFinalResult(parsedWorker.value);
   const missingWorkerEvidence = WORKER_RESULT_FIELDS
     .filter((field) => !parsedWorker.value || !Object.prototype.hasOwnProperty.call(parsedWorker.value, field));
@@ -1107,7 +1313,8 @@ function buildReviewerPayload(packet, contract, codexResult, evidence) {
     taskContract: contract,
     parsedWorkerFinalResult: workerResult,
     workerFinalResultParseError: parsedWorker.error,
-    workerFinalResultComplete: workerFinalResultIsComplete(parsedWorker.value),
+    workerFinalResultComplete: workerFinalResultIsComplete(parsedWorker.value, expectedDeliverableType),
+    expectedDeliverableType,
     filesChanged: {
       reportedByWorker: workerEvidenceField(parsedWorker.value, 'filesChanged'),
       detectedByGit: evidence.changedFiles || []
@@ -1125,7 +1332,8 @@ function buildReviewerPayload(packet, contract, codexResult, evidence) {
       signal: codexResult.signal || null,
       timedOut: Boolean(codexResult.timedOut),
       error: codexResult.error || null,
-      finalResultTruncated: Boolean(codexResult.finalOutputTruncated)
+      finalResultTruncated: Boolean(codexResult.finalOutputTruncated),
+      expectedDeliverableType
     },
     git: {
       branch: evidence.branch,
@@ -1335,7 +1543,7 @@ async function reviewWork(packet, contract, codexResult, evidence, retryContext 
     'You are the Lemonteed orchestration reviewer.',
     'You are read-only. Judge the worker against the generated task contract and the compact runtime evidence, not against worker self-claims.',
     'The input deliberately excludes normal worker stdout, stderr, session transcripts, echoed prompts, repository instructions, and planner context.',
-    'Use the parsed worker final result, actual git identity, changed files, commands, verification, bounded diff, and bounded untracked evidence. A truncation marker means the omitted material was not fully reviewed.',
+    'Use the parsed worker final result, especially worker.deliverable.content, together with the short summary, actual git identity, changed files, commands, verification, bounded diff, and bounded untracked evidence. The deliverable is the substantive work; summary is only a synopsis. A truncation marker means the omitted material was not fully reviewed.',
     'If the worker invocation failed, use only the bounded diagnostic tails and classify the runtime conservatively.',
     'Do not approve deployment, merge, push, publishing, or public-architecture changes; classify those as HUMAN_DECISION or BLOCKED.',
     'Use PASS only when the evidence supports the acceptance criteria and scope boundaries.',
@@ -1468,6 +1676,20 @@ function writeReviewAudit(attempt, reviewed) {
 }
 
 async function processReview(packet, contract, codexResult, evidence, attempt) {
+  const parsedWorker = parsedWorkerResultFrom(codexResult);
+  if (codexResult && codexResult.exitCode === 0 && parsedWorker.error) {
+    const protocolError = classifiedError(FAILURE_CLASSES.WORKER_PROTOCOL_FAILURE, parsedWorker.error);
+    writeAudit(`worker-protocol-failure-${attempt}.json`, {
+      verdict: 'BLOCKED',
+      failureClass: protocolError.failureClass,
+      reason: protocolError.message,
+      workerAudit: `codex-${attempt}.json`,
+      evidenceAudit: `evidence-${attempt}.json`
+    });
+    console.error(`[worker] ${protocolError.failureClass}: ${protocolError.message}`);
+    runNode(['block', '--reason', boundedText(`${protocolError.failureClass}: ${protocolError.message}`, MAX_REASON_CHARS), '--verdict', 'BLOCKED']);
+    return { terminal: true, verdict: 'BLOCKED' };
+  }
   console.log(`[reviewer] reviewing evidence with ${ACTIVE_REVIEWER_MODEL} via ${REVIEWER_PROVIDER}`);
   let reviewed;
   try {
@@ -1630,6 +1852,18 @@ async function reviewerSmoke() {
     stdout: '',
     stderr: '',
     finalOutput: JSON.stringify({ result: 'no worker executed; harmless reviewer fixture' }),
+    parsedWorkerFinalResult: {
+      status: 'completed',
+      summary: 'No worker executed; harmless reviewer fixture',
+      deliverable: { type: 'qa-report', content: 'Transport smoke fixture; no implementation work was requested.' },
+      filesChanged: [],
+      commandsRun: [],
+      verification: [],
+      scopeDeviations: [],
+      residualRisks: [],
+      blockers: [],
+      recommendedNextAction: ''
+    },
     stdoutTruncated: false,
     stderrTruncated: false,
     finalOutputTruncated: false,
@@ -1661,7 +1895,7 @@ async function runWorker(repairContext = null, packetOverride = null, startingAt
     writeAudit(`contract-${attempt}.json`, { ...contract, _meta: { responseId: planned.responseId || null, usage: planned.usage || null, invocation: planned.invocation } });
 
     console.log(`[codex] executing ${contract.taskId}: ${contract.mission} with ${WORKER_MODEL}`);
-    const codexResult = executeCodex(contract);
+    const codexResult = executeCodex(contract, spawnSync, null, packet);
     writeAudit(`codex-${attempt}.json`, codexResult);
 
     const evidence = collectEvidence();
@@ -1687,6 +1921,7 @@ function reportPreservedEvidenceBlock(error) {
 
 async function resumeCurrentWorker(preserved = null) {
   const evidence = preserved || loadPreservedEvidence({ strict: true });
+  writeDeliverableMigrationAudit(evidence);
   const state = currentRuntimeState();
   if (state.status === 'blocked') runNode(['unblock']);
 
@@ -1780,6 +2015,8 @@ if (require.main === module) {
 module.exports = {
   ROOT,
   taskSchema,
+  workerResultSchema,
+  workerResultSchemaFor,
   reviewSchema,
   reviewerSchemaFor,
   requiresDesignDecision,
@@ -1789,6 +2026,7 @@ module.exports = {
   boundedDiffText,
   parseWorkerFinalResult,
   projectWorkerFinalResult,
+  validateWorkerFinalResult,
   workerFinalResultIsComplete,
   chooseCodexCandidate,
   normaliseCodexExecutable,
@@ -1811,6 +2049,7 @@ module.exports = {
   loadPreservedEvidence,
   validatePreservedCompatibility,
   evidenceHasNoWorkerChanges,
+  legacyDeliverableContent,
   processReview,
   resumeCurrentWorker,
   resolveCodexExecutable,

@@ -11,12 +11,13 @@ The experience director reviews the result as a visitor, editor, or operator exp
 
 ## Output
 
-Provide:
+Return `deliverable.type = "experience-review"` and place the complete substantive review in `deliverable.content`. `summary` is only a short synopsis. The deliverable must provide:
 
 - Experience verdict.
 - Critical issues.
 - High-value polish items.
 - Deferrable ideas.
+- Findings and disposition for each material issue.
 - Recommendation: continue, revise, or send to QA.
 
 ## Lemonteed Checks

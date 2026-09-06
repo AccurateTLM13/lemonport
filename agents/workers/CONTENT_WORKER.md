@@ -12,11 +12,12 @@ The content worker owns copy, metadata, editorial hierarchy, and source-of-truth
 
 ## Output
 
-Provide:
+Return `deliverable.type = "content-handoff"` and place the complete substantive handoff in `deliverable.content`. `summary` is only a short synopsis. The deliverable must provide:
 
 - Content changes made or recommended.
 - Source files touched.
 - Generated files that need rebuilds.
+- Requested copy, content structure, and editorial hierarchy.
 - Editorial risks or open questions.
 
 ## Lemonteed Checks

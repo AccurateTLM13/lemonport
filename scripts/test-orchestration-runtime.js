@@ -67,7 +67,9 @@ function writeMockCli() {
     "bump(process.env.MOCK_WORKER_COUNT_FILE);",
     "if (process.env.MOCK_WORKER_EXIT) fail('worker mock failure', Number(process.env.MOCK_WORKER_EXIT));",
     "if (process.env.MOCK_HUGE_OUTPUT) { process.stdout.write('s'.repeat(900000)); process.stderr.write('e'.repeat(900000)); }",
-    "writeOutput({ status: 'completed', summary: 'worker complete', filesChanged: ['scripts/example.js'], commandsRun: ['node scripts/example.js'], verification: [{ check: 'mock', result: 'pass', evidence: 'mock verification' }], scopeDeviations: [], residualRisks: ['mock risk'], blockers: [], recommendedNextAction: '' });",
+    "const deliverableMatch = prompt.match(/use deliverable\\.type \\\"([^\\\"]+)\\\"/);",
+    "const deliverableType = deliverableMatch ? deliverableMatch[1] : 'qa-report';",
+    "writeOutput({ status: 'completed', summary: 'worker complete', ...(process.env.MOCK_WORKER_NO_DELIVERABLE ? {} : { deliverable: { type: deliverableType, content: 'Mock substantive phase deliverable with the required worker handoff.' } }), filesChanged: ['scripts/example.js'], commandsRun: ['node scripts/example.js'], verification: [{ check: 'mock', result: 'pass', evidence: 'mock verification' }], scopeDeviations: [], residualRisks: ['mock risk'], blockers: [], recommendedNextAction: '' });",
     "process.stdout.write('mock worker complete\\\\n');",
     "process.exit(0);"
   ].join('\n');
@@ -213,6 +215,7 @@ function successfulWorkerResult(overrides = {}) {
     finalOutput: JSON.stringify({
       status: 'completed',
       summary: 'Fixture complete',
+      deliverable: { type: 'qa-report', content: 'Fixture substantive QA deliverable.' },
       filesChanged: ['scripts/example.js'],
       commandsRun: ['node scripts/example.js'],
       verification: [{ check: 'fixture', result: 'pass', evidence: 'fixture passed' }],
@@ -225,6 +228,7 @@ function successfulWorkerResult(overrides = {}) {
     parsedWorkerFinalResult: {
       status: 'completed',
       summary: 'Fixture complete',
+      deliverable: { type: 'qa-report', content: 'Fixture substantive QA deliverable.' },
       filesChanged: ['scripts/example.js'],
       commandsRun: ['node scripts/example.js'],
       verification: [{ check: 'fixture', result: 'pass', evidence: 'fixture passed' }],
@@ -290,6 +294,179 @@ function testPhaseAwareReviewerSchemas() {
     assert.doesNotThrow(() => adapter.validateReview(reviewResult(), packet));
     expectThrow(() => adapter.validateReview(reviewResult({ designRequired: true }), packet), /outside feature Structure/);
   }
+}
+
+function testWorkerDeliverableProtocol() {
+  const phases = [
+    ['Structure', 'STRUCTURE_WORKER.md', 'structure-handoff'],
+    ['Content', 'CONTENT_WORKER.md', 'content-handoff'],
+    ['Design', 'DESIGN_WORKER.md', 'design-handoff'],
+    ['Implementation', 'IMPLEMENTATION_WORKER.md', 'implementation-report'],
+    ['Experience Review', 'EXPERIENCE_DIRECTOR.md', 'experience-review'],
+    ['QA', 'QA_WORKER.md', 'qa-report']
+  ];
+  for (const [phase, worker, type] of phases) {
+    const packet = packetForPhase('feature-build-track', phase, worker);
+    const result = successfulWorkerResult({
+      parsedWorkerFinalResult: {
+        ...successfulWorkerResult().parsedWorkerFinalResult,
+        deliverable: { type, content: `Complete ${type} handoff.` }
+      }
+    });
+    assert.strictEqual(adapter.workerFinalResultIsComplete(result.parsedWorkerFinalResult, type), true);
+    assert.strictEqual(adapter.workerResultSchemaFor(packet, { worker }).properties.deliverable.properties.type.enum[0], type);
+    const payload = adapter.buildReviewerPayload(packet, { ...reviewerFixture().contract, worker }, result, reviewerFixture().evidence);
+    assert.deepStrictEqual(payload.parsedWorkerFinalResult.deliverable, result.parsedWorkerFinalResult.deliverable);
+  }
+
+  const design = packetForPhase('feature-build-track', 'Design', 'DESIGN_WORKER.md');
+  const summaryOnly = { ...successfulWorkerResult().parsedWorkerFinalResult };
+  delete summaryOnly.deliverable;
+  assert.strictEqual(adapter.workerFinalResultIsComplete(summaryOnly, 'design-handoff'), false);
+  assert.throws(() => adapter.validateWorkerFinalResult(summaryOnly, 'design-handoff'), /deliverable is required/);
+  assert.strictEqual(adapter.workerFinalResultIsComplete({
+    ...summaryOnly,
+    deliverable: { type: 'qa-report', content: 'Wrong phase.' }
+  }, 'design-handoff'), false);
+  assert.throws(() => adapter.validateWorkerFinalResult({
+    ...summaryOnly,
+    deliverable: { type: 'qa-report', content: 'Wrong phase.' }
+  }, 'design-handoff'), /must be design-handoff/);
+
+  const large = successfulWorkerResult({
+    parsedWorkerFinalResult: {
+      ...successfulWorkerResult().parsedWorkerFinalResult,
+      deliverable: { type: 'design-handoff', content: 'D'.repeat(90000) }
+    }
+  });
+  const largePayload = adapter.buildReviewerPayload(design, reviewerFixture().contract, large, reviewerFixture().evidence);
+  const prepared = adapter.compactReviewerInput(largePayload, 250000);
+  assert(prepared.serializedChars <= 250000);
+  assert.strictEqual(prepared.payload.parsedWorkerFinalResult.deliverable.content.length, 90000);
+  assert(!prepared.input.includes('stdout-noise-'));
+}
+
+function makeLegacyDesignFinalOutput() {
+  const narrative = [
+    '## Complete Design Handoff',
+    '',
+    '### Design intent',
+    'Keep the archive practical and inspectable.',
+    '',
+    '### Layout and interaction',
+    'Use a filter toolbar, active states, and a no-match state.',
+    '',
+    '### Responsive direction',
+    'Stack controls on mobile and preserve the static archive.',
+    '',
+    '### Accessibility',
+    'Use visible labels, live status, and safe focus behavior.',
+    '',
+    '### Implementation boundaries and risks',
+    'Scope changes to the generator, vault behavior, and vault styles.'
+  ].join('\n');
+  const detail = 'Repository-grounded detail. '.repeat(30);
+  const result = {
+    status: 'completed',
+    summary: 'Design handoff completed',
+    filesChanged: [],
+    commandsRun: [],
+    verification: [],
+    scopeDeviations: [],
+    residualRisks: [],
+    blockers: [],
+    recommendedNextAction: ''
+  };
+  return `${narrative}\n\n${detail}\n\n\`\`\`json\n${JSON.stringify(result, null, 2)}\n\`\`\``;
+}
+
+function testLegacyDesignDeliverableMigration() {
+  const legacy = makeLegacyDesignFinalOutput();
+  const content = adapter.legacyDeliverableContent(legacy, 'design-handoff');
+  assert(content);
+  assert.match(content, /Design intent/);
+  assert.strictEqual(adapter.workerFinalResultIsComplete({
+    status: 'completed',
+    summary: 'Design handoff completed',
+    deliverable: { type: 'design-handoff', content },
+    filesChanged: [],
+    commandsRun: [],
+    verification: [],
+    scopeDeviations: [],
+    residualRisks: [],
+    blockers: [],
+    recommendedNextAction: ''
+  }, 'design-handoff'), true);
+}
+
+function testPreservedDesignResumeWithMigration() {
+  resetState();
+  startFeatureStructure();
+  const completedStructure = runNode(path.join(ROOT, 'scripts', 'orchestrate.js'), [
+    'complete', '--summary', 'Structure fixture complete', '--design-required', 'true'
+  ]);
+  assert.strictEqual(completedStructure.status, 0, completedStructure.stderr);
+  const packet = JSON.parse(runNode(path.join(ROOT, 'scripts', 'orchestrate.js'), ['next']).stdout);
+  const contract = {
+    taskId: 'legacy-design-fixture',
+    worker: 'DESIGN_WORKER.md',
+    mission: 'Review the preserved Design handoff',
+    currentState: 'Preserved Design evidence is available.',
+    inScope: ['Specimen Vault filtering design'],
+    outOfScope: ['Implementation'],
+    requirements: ['Preserve the substantive Design handoff.'],
+    acceptanceCriteria: ['The Design deliverable is complete.'],
+    verification: ['Review the preserved evidence.'],
+    evidenceRequired: ['deliverable.content'],
+    stopConditions: ['Stop on incompatible evidence.'],
+    codexPrompt: 'Review the preserved Design evidence and return the Worker Result.'
+  };
+  const branch = gitValue('branch', '--show-current');
+  const head = gitValue('rev-parse', 'HEAD');
+  const worker = successfulWorkerResult({
+    finalOutput: makeLegacyDesignFinalOutput(),
+    parsedWorkerFinalResult: {
+      ...successfulWorkerResult().parsedWorkerFinalResult,
+      summary: 'Design handoff completed'
+    },
+    workerFinalResultParseError: 'legacy result did not include deliverable'
+  });
+  delete worker.parsedWorkerFinalResult.deliverable;
+  const evidence = {
+    branch,
+    head,
+    status: ' M agents/runtime/state.json',
+    implementationStatus: '',
+    diffCheck: 'clean',
+    diffStat: '',
+    changedFiles: [],
+    diffTruncated: false,
+    diff: '',
+    untrackedFiles: [],
+    untrackedTruncated: false
+  };
+  fs.writeFileSync(path.join(LOCAL_DIR, 'packet.json'), `${JSON.stringify(packet, null, 2)}\n`);
+  fs.writeFileSync(path.join(LOCAL_DIR, 'contract-0.json'), `${JSON.stringify({ ...contract, _meta: {} }, null, 2)}\n`);
+  fs.writeFileSync(path.join(LOCAL_DIR, 'codex-0.json'), `${JSON.stringify(worker, null, 2)}\n`);
+  fs.writeFileSync(path.join(LOCAL_DIR, 'evidence-0.json'), `${JSON.stringify(evidence, null, 2)}\n`);
+  fs.writeFileSync(path.join(LOCAL_DIR, 'preserved-worker.json'), `${JSON.stringify({
+    version: 1,
+    attempt: 0,
+    packetAudit: 'packet.json',
+    contractAudit: 'contract-0.json',
+    workerAudit: 'codex-0.json',
+    evidenceAudit: 'evidence-0.json'
+  }, null, 2)}\n`);
+
+  const result = runAdapterCommand('resume', {
+    MOCK_REVIEW_COUNT_FILE: counterPath('mock-review-count-env.txt')
+  });
+  assert.strictEqual(result.status, 0, result.stderr + result.stdout);
+  const state = assertStatus('active');
+  assert.strictEqual(state.phase, 'Implementation');
+  assert.strictEqual(counterValue('mock-review-count-env.txt'), 1);
+  assert.strictEqual(counterValue('mock-worker-count.txt'), 0);
+  assert(fs.existsSync(path.join(LOCAL_DIR, 'codex-0.deliverable-migration.json')));
 }
 
 function testPreservedEvidenceCompatibility() {
@@ -638,6 +815,23 @@ function testSecondReviewerContractFailureBlocksCleanly() {
   assert.doesNotMatch(state.blocker, /transport/i);
 }
 
+function testWorkerProtocolFailureDoesNotConsumeRepairBudget() {
+  resetState();
+  startQa();
+  const result = runAdapter({
+    MOCK_WORKER_NO_DELIVERABLE: '1',
+    MOCK_PLANNER_COUNT_FILE: counterPath('mock-planner-count.txt'),
+    MOCK_WORKER_COUNT_FILE: counterPath('mock-worker-count.txt'),
+    MOCK_REVIEW_COUNT_FILE: counterPath('mock-review-count-env.txt')
+  });
+  assert.strictEqual(result.status, 0, result.stderr + result.stdout);
+  const state = assertStatus('blocked');
+  assert.match(state.blocker, /WORKER_PROTOCOL_FAILURE/);
+  assert.strictEqual(counterValue('mock-planner-count.txt'), 1);
+  assert.strictEqual(counterValue('mock-worker-count.txt'), 1);
+  assert.strictEqual(counterValue('mock-review-count-env.txt'), 0);
+}
+
 function testFeatureStructureRequiresDesignBoolean() {
   resetState();
   startFeatureStructure();
@@ -712,6 +906,8 @@ function main() {
     testPureTransportBoundaries();
     testRepositorySearchFallbacks();
     testPhaseAwareReviewerSchemas();
+    testWorkerDeliverableProtocol();
+    testLegacyDesignDeliverableMigration();
     testPreservedEvidenceCompatibility();
     testReviewerPayloadBoundaries();
     writeMockCli();
@@ -725,7 +921,9 @@ function main() {
     testReviewerOnlyRetryPassesWithoutWorkerRerun();
     testReviewerOnlyRetryRepairRunsRepairWorkerOnce();
     testSecondReviewerContractFailureBlocksCleanly();
+    testWorkerProtocolFailureDoesNotConsumeRepairBudget();
     testFeatureStructureRequiresDesignBoolean();
+    testPreservedDesignResumeWithMigration();
     testResumeUsesPreservedWorkerEvidence();
     testRunAllResumesPreservedWorkerEvidence();
     testRepairHumanBlocked();
