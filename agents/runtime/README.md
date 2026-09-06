@@ -82,7 +82,9 @@ On PowerShell use `$env:NAME="value"`; on macOS/Linux use `export NAME=value`.
 
 `["exec"]`. The adapter owns the model, sandbox, output-schema, and output-file flags and rejects overrides that could weaken those boundaries.
 
-The adapter uses Luna for all roles by default. `run --escalate` explicitly selects the configured Terra escalation model for planner/reviewer. Automatic Sol usage and silent model fallback are prohibited. Planner and reviewer use `--sandbox read-only`, `--ephemeral`, and schema-backed final output; the worker uses `--sandbox workspace-write` and receives only the generated contract plus repository instructions.
+The adapter uses Luna for all roles by default. `run --escalate` explicitly selects the configured Terra escalation model for planner/reviewer. Automatic Sol usage and silent model fallback are prohibited. Planner and reviewer use `--sandbox read-only`, `--ephemeral`, and schema-backed final output; the worker uses `--sandbox workspace-write` and receives only the generated contract plus repository instructions. The adapter loads the authenticated Codex user profile so Codex CLI account transport works without `OPENAI_API_KEY`; explicit model, sandbox, approval, and output-schema flags remain adapter-owned.
+
+For transport-only verification, `node scripts/orchestrator-adapter.js smoke-planner` runs a read-only planner invocation and `node scripts/orchestrator-adapter.js smoke-reviewer` runs a read-only reviewer invocation against a harmless in-memory fixture. Neither command executes a worker or advances runtime state.
 
 Example:
 

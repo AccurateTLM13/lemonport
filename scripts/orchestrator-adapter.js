@@ -296,7 +296,6 @@ function buildCodexArgs({ role, model, sandbox, schemaPath = null, outputPath = 
     '--model', model,
     '--sandbox', sandbox,
     '--ephemeral',
-    '--ignore-user-config',
     '--cd', ROOT,
     '--color', 'never'
   ];
@@ -784,6 +783,101 @@ function preflight(allowDirty) {
   }
 }
 
+function smokePacket() {
+  return {
+    runtimePacketVersion: 1,
+    role: 'Lemonteed orchestration transport smoke test',
+    instruction: 'Convert this harmless packet into a no-op task contract. Do not modify files.',
+    state: {
+      project: 'Lemonteed',
+      objective: 'Verify authenticated Codex CLI planner/reviewer transport only',
+      target: '/orchestration-runtime/',
+      track: 'qa-review-track',
+      phase: 'QA',
+      currentWorker: { phase: 'QA', worker: 'QA_WORKER.md' },
+      completedWorkers: [],
+      constraints: ['Read-only smoke test', 'No worker execution', 'No repository changes'],
+      validationCommands: [],
+      lastResult: null
+    },
+    repository: {
+      branch: git('branch', '--show-current'),
+      head: git('rev-parse', 'HEAD'),
+      status: git('status', '--short')
+    },
+    context: {
+      source: 'adapter smoke test',
+      notes: 'The generated contract must be harmless and scoped to transport verification.'
+    }
+  };
+}
+
+function smokeContract() {
+  return {
+    taskId: 'transport-smoke-contract',
+    worker: 'QA_WORKER.md',
+    mission: 'Verify orchestration transport without changing the repository',
+    currentState: 'Repository state is supplied as read-only evidence.',
+    inScope: ['Transport verification only'],
+    outOfScope: ['All file changes', 'Deployment', 'Merge', 'Push', 'Publish'],
+    requirements: ['Treat this as a no-op review fixture.'],
+    acceptanceCriteria: ['The reviewer receives complete structured evidence.'],
+    verification: ['Review the supplied git evidence.'],
+    evidenceRequired: ['Actual git evidence from the adapter'],
+    stopConditions: ['Stop if evidence is incomplete or the transport is unavailable.'],
+    codexPrompt: 'Do not execute a worker. This is a reviewer-only transport smoke test.'
+  };
+}
+
+function ensureCodexCliSmokeProvider() {
+  if (ORCHESTRATOR_PROVIDER !== 'codex-cli' || REVIEWER_PROVIDER !== 'codex-cli') {
+    throw new Error('smoke commands require ORCHESTRATOR_PROVIDER and REVIEWER_PROVIDER to be codex-cli');
+  }
+}
+
+async function plannerSmoke() {
+  ensureCodexCliSmokeProvider();
+  const packet = smokePacket();
+  const planned = await createContract(packet);
+  writeAudit('smoke-planner.json', {
+    contract: planned.output,
+    invocation: planned.invocation
+  });
+  return planned.output;
+}
+
+async function reviewerSmoke() {
+  ensureCodexCliSmokeProvider();
+  const packet = smokePacket();
+  const contract = smokeContract();
+  const workerOutput = {
+    role: 'worker',
+    provider: 'codex-cli',
+    requestedModel: WORKER_MODEL,
+    exitCode: 0,
+    signal: null,
+    stdout: '',
+    stderr: '',
+    finalOutput: JSON.stringify({ result: 'no worker executed; harmless reviewer fixture' }),
+    stdoutTruncated: false,
+    stderrTruncated: false,
+    finalOutputTruncated: false,
+    error: null,
+    timedOut: false,
+    verdict: null,
+    actualExecutable: CLI_INFO.actualExecutable,
+    codexCliVersion: CLI_INFO.version
+  };
+  const evidence = collectEvidence();
+  const reviewed = await reviewWork(packet, contract, workerOutput, evidence);
+  writeAudit('smoke-reviewer.json', {
+    verdict: reviewed.output,
+    invocation: reviewed.invocation,
+    evidence
+  });
+  return reviewed.output;
+}
+
 async function runWorker() {
   const packet = JSON.parse(runNode(['next']));
   writeAudit('packet.json', packet);
@@ -862,13 +956,23 @@ async function runWorker() {
 async function main() {
   const args = argsFrom(process.argv.slice(2));
   const command = args._[0] || 'run';
-  if (command !== 'run') die(`unsupported command: ${command}`);
+  if (!['run', 'smoke-planner', 'smoke-reviewer'].includes(command)) die(`unsupported command: ${command}`);
   if (args.escalate !== undefined && args.escalate !== true) die('--escalate is a flag and takes no value');
   if (args['allow-dirty'] !== undefined && args['allow-dirty'] !== true) die('--allow-dirty is a flag and takes no value');
   if (args.all !== undefined && args.all !== true) die('--all is a flag and takes no value');
+  if (command !== 'run' && (args.escalate === true || args.all === true)) die('smoke commands do not support --escalate or --all');
   configureModel(args.escalate === true);
   preflight(args['allow-dirty'] === true);
   ensureLocalDir();
+
+  if (command === 'smoke-planner') {
+    console.log(JSON.stringify(await plannerSmoke()));
+    return;
+  }
+  if (command === 'smoke-reviewer') {
+    console.log(JSON.stringify(await reviewerSmoke()));
+    return;
+  }
 
   let count = 0;
   while (true) {

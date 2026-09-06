@@ -139,6 +139,7 @@ function testPureTransportBoundaries() {
   assert.strictEqual(adapter.safeCliEnvironment().OPENAI_API_KEY, undefined);
   const args = adapter.buildCodexArgs({ role: 'planner', model: 'gpt-5.6-luna', sandbox: 'read-only', schemaPath: 'schema.json', outputPath: 'output.json' });
   assert(args.includes('--sandbox') && args.includes('read-only'));
+  assert(!args.includes('--ignore-user-config'));
   assert(args.includes('--output-schema') && args.includes('--output-last-message'));
 }
 
