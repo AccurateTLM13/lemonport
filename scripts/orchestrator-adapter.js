@@ -8,6 +8,7 @@ const { spawnSync, execFileSync } = require('child_process');
 const ROOT = path.resolve(__dirname, '..');
 const LOCAL_DIR = path.join(ROOT, '.orchestration-local');
 const ORCHESTRATE = path.join(ROOT, 'scripts', 'orchestrate.js');
+const STATE_PATH = path.join(ROOT, 'agents', 'runtime', 'state.json');
 
 const DEFAULT_MODEL = 'gpt-5.6-luna';
 const DEFAULT_ESCALATION_MODEL = 'gpt-5.6-terra';
@@ -40,6 +41,15 @@ const API_TIMEOUT_MS = Number(process.env.ORCHESTRATOR_API_TIMEOUT_MS || 120000)
 const CODEX_TIMEOUT_MS = Number(process.env.ORCHESTRATOR_CODEX_TIMEOUT_MS || 1800000);
 const MAX_REASON_CHARS = 20000;
 const REVIEWER_DIAGNOSTIC_TAIL_CHARS = 12000;
+const REVIEWER_RETRY_LIMIT = 1;
+
+const FAILURE_CLASSES = Object.freeze({
+  TRANSPORT_FAILURE: 'TRANSPORT_FAILURE',
+  STRUCTURED_OUTPUT_FAILURE: 'STRUCTURED_OUTPUT_FAILURE',
+  REVIEWER_CONTRACT_FAILURE: 'REVIEWER_CONTRACT_FAILURE',
+  REVIEWER_INPUT_FAILURE: 'REVIEWER_INPUT_FAILURE',
+  REVIEWER_VERDICT: 'REVIEWER_VERDICT'
+});
 
 const WORKER_RESULT_FIELDS = [
   'status',
@@ -61,6 +71,17 @@ let INVOCATION_COUNTER = 0;
 function die(message) {
   console.error(`orchestrator-adapter: ${message}`);
   process.exit(1);
+}
+
+function classifiedError(failureClass, message, details = {}) {
+  const error = new Error(message);
+  error.failureClass = failureClass;
+  Object.assign(error, details);
+  return error;
+}
+
+function errorFailureClass(error) {
+  return error && error.failureClass ? error.failureClass : FAILURE_CLASSES.TRANSPORT_FAILURE;
 }
 
 function validateBoundedInteger(value, name, minimum, maximum) {
@@ -137,6 +158,14 @@ function writeAudit(name, value) {
   fs.writeFileSync(path.join(LOCAL_DIR, name), output);
 }
 
+function readJsonFile(filePath, label) {
+  try {
+    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  } catch (error) {
+    throw new Error(`${label} is unavailable or invalid JSON: ${error.message}`);
+  }
+}
+
 function boundedText(value, limit) {
   const text = String(value || '');
   return text.length > limit ? `${text.slice(0, limit)}\n[truncated]` : text;
@@ -166,15 +195,33 @@ function boundedDiffText(value, limit) {
 
 function parseWorkerFinalResult(finalOutput) {
   const text = String(finalOutput || '').trim();
-  if (!text) return { value: null, error: 'worker returned no final result' };
+  if (!text) return { value: null, error: 'worker returned no final result', extracted: false };
   try {
     const value = JSON.parse(text);
     if (!value || typeof value !== 'object' || Array.isArray(value)) {
-      return { value: null, error: 'worker final result must be a JSON object' };
+      return { value: null, error: 'worker final result must be a JSON object', extracted: false };
     }
-    return { value, error: null };
-  } catch (error) {
-    return { value: null, error: `worker final result was not valid JSON: ${error.message}` };
+    return { value, error: null, extracted: false };
+  } catch {
+    const candidates = [];
+    const fenced = /```(?:json)?\s*([\s\S]*?)\s*```/gi;
+    let match;
+    while ((match = fenced.exec(text))) candidates.push(match[1]);
+    for (const candidate of candidates) {
+      try {
+        const value = JSON.parse(candidate);
+        if (value && typeof value === 'object' && !Array.isArray(value)) {
+          return { value, error: null, extracted: true };
+        }
+      } catch {
+        // Continue to the next fenced candidate.
+      }
+    }
+    return {
+      value: null,
+      error: 'worker final result was not valid JSON and no fenced JSON result was found',
+      extracted: false
+    };
   }
 }
 
@@ -404,11 +451,11 @@ function cliFailureMessage(role, model, result) {
 
 function parseStructuredJson(text, label) {
   const bounded = boundedText(text, MAX_CODEX_OUTPUT_CHARS).trim();
-  if (!bounded) throw new Error(`${label} returned no structured output`);
+  if (!bounded) throw classifiedError(FAILURE_CLASSES.STRUCTURED_OUTPUT_FAILURE, `${label} returned no structured output`);
   try {
     return JSON.parse(bounded);
   } catch (error) {
-    throw new Error(`${label} returned malformed structured output: ${error.message}`);
+    throw classifiedError(FAILURE_CLASSES.STRUCTURED_OUTPUT_FAILURE, `${label} returned malformed structured output: ${error.message}`, { cause: error });
   }
 }
 
@@ -449,8 +496,12 @@ function invokeCodexCli({ role, model, instructions, input, schemaName, schema, 
     cliInfo: info
   });
   writeAudit(`${id}.audit.json`, meta);
-  if (result.error || result.status !== 0) throw new Error(cliFailureMessage(role, model, result));
-  if (!finalOutput) throw new Error(`${role} Codex CLI invocation succeeded without an output-last-message file`);
+  if (result.error || result.status !== 0) {
+    throw classifiedError(FAILURE_CLASSES.TRANSPORT_FAILURE, cliFailureMessage(role, model, result), { result });
+  }
+  if (!finalOutput) {
+    throw classifiedError(FAILURE_CLASSES.STRUCTURED_OUTPUT_FAILURE, `${role} Codex CLI invocation succeeded without an output-last-message file`);
+  }
   return { output: parseStructuredJson(finalOutput, role), invocation: meta };
 }
 
@@ -470,7 +521,7 @@ function extractResponseText(data) {
 
 async function openAIJson({ role, model, instructions, input, schemaName, schema }) {
   const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey || !apiKey.trim()) throw new Error(`OPENAI_API_KEY is required only when ${role} provider is openai-api`);
+  if (!apiKey || !apiKey.trim()) throw classifiedError(FAILURE_CLASSES.TRANSPORT_FAILURE, `OPENAI_API_KEY is required only when ${role} provider is openai-api`);
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), API_TIMEOUT_MS);
@@ -501,33 +552,33 @@ async function openAIJson({ role, model, instructions, input, schemaName, schema
     });
   } catch (error) {
     clearTimeout(timeout);
-    if (error && error.name === 'AbortError') throw new Error(`Responses API request timed out after ${API_TIMEOUT_MS}ms`);
-    throw error;
+    if (error && error.name === 'AbortError') throw classifiedError(FAILURE_CLASSES.TRANSPORT_FAILURE, `Responses API request timed out after ${API_TIMEOUT_MS}ms`, { cause: error });
+    throw classifiedError(FAILURE_CLASSES.TRANSPORT_FAILURE, error.message || String(error), { cause: error });
   }
 
   let bodyText;
   try {
     bodyText = await response.text();
   } catch (error) {
-    if (error && error.name === 'AbortError') throw new Error(`Responses API request timed out after ${API_TIMEOUT_MS}ms`);
-    throw error;
+    if (error && error.name === 'AbortError') throw classifiedError(FAILURE_CLASSES.TRANSPORT_FAILURE, `Responses API request timed out after ${API_TIMEOUT_MS}ms`, { cause: error });
+    throw classifiedError(FAILURE_CLASSES.TRANSPORT_FAILURE, error.message || String(error), { cause: error });
   } finally {
     clearTimeout(timeout);
   }
   const metaResult = { status: response.status, signal: null, stdout: '', stderr: response.ok ? '' : bodyText };
   const meta = invocationMeta({ role, provider: 'openai-api', model, result: metaResult });
-  if (!response.ok) throw new Error(`Responses API ${response.status}: ${boundedText(bodyText, MAX_CODEX_OUTPUT_CHARS)}`);
+  if (!response.ok) throw classifiedError(FAILURE_CLASSES.TRANSPORT_FAILURE, `Responses API ${response.status}: ${boundedText(bodyText, MAX_CODEX_OUTPUT_CHARS)}`);
   let data;
   try {
     data = JSON.parse(bodyText);
   } catch (error) {
-    throw new Error(`Responses API returned invalid JSON: ${error.message}`);
+    throw classifiedError(FAILURE_CLASSES.STRUCTURED_OUTPUT_FAILURE, `Responses API returned invalid JSON: ${error.message}`, { cause: error });
   }
   let output;
   try {
     output = parseStructuredJson(extractResponseText(data), role);
   } catch (error) {
-    throw new Error(`${role} Responses API returned invalid structured output: ${error.message}`);
+    throw classifiedError(FAILURE_CLASSES.STRUCTURED_OUTPUT_FAILURE, `${role} Responses API returned invalid structured output: ${error.message}`, { cause: error });
   }
   return { output, responseId: data.id, usage: data.usage || null, invocation: meta };
 }
@@ -576,6 +627,22 @@ const reviewSchema = {
   },
   required: ['verdict', 'summary', 'reason', 'designRequired', 'repairInstructions', 'humanQuestion']
 };
+
+function requiresDesignDecision(packet) {
+  return Boolean(packet && packet.state && packet.state.track === 'feature-build-track' && packet.state.phase === 'Structure');
+}
+
+function reviewerSchemaFor(packet) {
+  return {
+    ...reviewSchema,
+    properties: {
+      ...reviewSchema.properties,
+      // The shared response shape remains stable, but the phase-specific JSON
+      // schema rejects a non-null designRequired before semantic validation.
+      designRequired: requiresDesignDecision(packet) ? { type: 'boolean' } : { type: 'null' }
+    }
+  };
+}
 
 function validateTaskContract(output, packet) {
   const requiredStrings = ['taskId', 'worker', 'mission', 'currentState', 'codexPrompt'];
@@ -783,6 +850,195 @@ function collectEvidence() {
     diff: boundedDiff.text,
     ...untrackedEvidence
   };
+}
+
+function currentRuntimeState() {
+  return readJsonFile(STATE_PATH, 'runtime state');
+}
+
+function currentWorkerForState(state) {
+  return state && Array.isArray(state.workerSequence) && Number.isInteger(state.currentWorkerIndex)
+    ? state.workerSequence[state.currentWorkerIndex] || null
+    : null;
+}
+
+function auditAttemptFiles() {
+  if (!fs.existsSync(LOCAL_DIR)) return [];
+  const attempts = new Set();
+  for (const name of fs.readdirSync(LOCAL_DIR)) {
+    const match = name.match(/^(?:codex|evidence|contract)-(\d+)\.json$/);
+    if (match) attempts.add(Number(match[1]));
+  }
+  return [...attempts].sort((a, b) => b - a);
+}
+
+function auditPath(name) {
+  return path.join(LOCAL_DIR, name);
+}
+
+function stripAuditMeta(value) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return value;
+  const copy = cloneJson(value);
+  delete copy._meta;
+  return copy;
+}
+
+function preservedEvidenceFailure(message) {
+  const error = new Error(`PRESERVED_EVIDENCE_INCOMPATIBLE: ${message}`);
+  error.code = 'PRESERVED_EVIDENCE_INCOMPATIBLE';
+  error.failureClass = FAILURE_CLASSES.REVIEWER_CONTRACT_FAILURE;
+  return error;
+}
+
+function evidenceHasNoWorkerChanges(evidence) {
+  return Boolean(
+    evidence &&
+    Array.isArray(evidence.changedFiles) && evidence.changedFiles.length === 0 &&
+    Array.isArray(evidence.untrackedFiles) && evidence.untrackedFiles.length === 0 &&
+    !evidence.untrackedTruncated &&
+    !evidence.diffTruncated &&
+    !String(evidence.implementationStatus || '').trim() &&
+    !String(evidence.diffStat || '').trim() &&
+    !String(evidence.diff || '').trim()
+  );
+}
+
+function validatePreservedCompatibility({ state, packet, contract, codexResult, evidence }) {
+  if (!state || !['active', 'blocked'].includes(state.status)) {
+    throw preservedEvidenceFailure(`runtime status ${state && state.status ? state.status : 'unknown'} cannot resume a worker`);
+  }
+  const worker = currentWorkerForState(state);
+  if (!worker) throw preservedEvidenceFailure('current worker is missing from runtime state');
+  const packetState = packet && packet.state;
+  if (!packetState) throw preservedEvidenceFailure('preserved packet has no runtime state');
+  for (const field of ['objective', 'target', 'track', 'phase']) {
+    if (packetState[field] !== state[field]) {
+      throw preservedEvidenceFailure(`packet ${field} does not match the current objective`);
+    }
+  }
+  if (JSON.stringify(packetState.currentWorker) !== JSON.stringify(worker)) {
+    throw preservedEvidenceFailure('packet current worker does not match the runtime state');
+  }
+  if (JSON.stringify(packetState.completedWorkers || []) !== JSON.stringify(state.completedWorkers || [])) {
+    throw preservedEvidenceFailure('packet completed worker history does not match the runtime state');
+  }
+  if (!contract || contract.worker !== worker.worker) {
+    throw preservedEvidenceFailure('preserved task contract targets a different worker');
+  }
+  const currentBranch = git('branch', '--show-current');
+  const currentHead = git('rev-parse', 'HEAD');
+  if (!currentBranch || currentBranch.startsWith('[git unavailable:')) {
+    throw preservedEvidenceFailure('current git branch could not be verified');
+  }
+  if (packet.repository && packet.repository.branch !== evidence.branch) {
+    throw preservedEvidenceFailure('packet and preserved evidence branches differ');
+  }
+  if (packet.repository && packet.repository.head !== evidence.head) {
+    throw preservedEvidenceFailure('packet and preserved evidence HEADs differ');
+  }
+  if (evidence.branch !== currentBranch) {
+    throw preservedEvidenceFailure(`preserved branch ${evidence.branch} does not match current branch ${currentBranch}`);
+  }
+  let headCompatibility = 'exact';
+  if (evidence.head !== currentHead) {
+    if (!evidenceHasNoWorkerChanges(evidence)) {
+      throw preservedEvidenceFailure(`preserved HEAD ${evidence.head} differs from current HEAD ${currentHead} and worker changes are present`);
+    }
+    headCompatibility = 'baseline-only-no-worker-changes';
+  }
+  if (!codexResult || codexResult.role !== 'worker') {
+    throw preservedEvidenceFailure('preserved execution result is not a worker result');
+  }
+  return { headCompatibility, currentBranch, currentHead };
+}
+
+function enrichPreservedWorkerResult(rawResult) {
+  const result = cloneJson(rawResult);
+  const parsed = parseWorkerFinalResult(result.finalOutput);
+  if (!result.parsedWorkerFinalResult || result.workerFinalResultParseError) {
+    result.parsedWorkerFinalResult = parsed.value;
+    result.workerFinalResultParseError = parsed.error;
+  }
+  return result;
+}
+
+function loadPreservedEvidence({ strict = true } = {}) {
+  if (!fs.existsSync(auditPath('packet.json'))) {
+    if (strict) throw preservedEvidenceFailure('packet audit is missing');
+    return null;
+  }
+
+  const manifestPath = auditPath('preserved-worker.json');
+  let references = null;
+  if (fs.existsSync(manifestPath)) {
+    const manifest = readJsonFile(manifestPath, 'preserved worker manifest');
+    references = {
+      attempt: Number(manifest.attempt),
+      contract: manifest.contractAudit,
+      worker: manifest.workerAudit,
+      evidence: manifest.evidenceAudit
+    };
+  }
+  const candidates = references && Number.isInteger(references.attempt)
+    ? [references]
+    : auditAttemptFiles().map((attempt) => ({
+      attempt,
+      contract: `contract-${attempt}.json`,
+      worker: `codex-${attempt}.json`,
+      evidence: `evidence-${attempt}.json`
+    }));
+
+  let lastError = null;
+  for (const candidate of candidates) {
+    if (!candidate.contract || !candidate.worker || !candidate.evidence) continue;
+    const files = [candidate.contract, candidate.worker, candidate.evidence];
+    if (!files.every((name) => fs.existsSync(auditPath(name)))) {
+      lastError = preservedEvidenceFailure(`audit files for attempt ${candidate.attempt} are incomplete`);
+      continue;
+    }
+    try {
+      const packet = readJsonFile(auditPath('packet.json'), 'packet audit');
+      const contract = stripAuditMeta(readJsonFile(auditPath(candidate.contract), 'contract audit'));
+      const rawWorker = readJsonFile(auditPath(candidate.worker), 'worker audit');
+      const codexResult = enrichPreservedWorkerResult(rawWorker);
+      const evidence = readJsonFile(auditPath(candidate.evidence), 'evidence audit');
+      const state = currentRuntimeState();
+      const compatibility = validatePreservedCompatibility({ state, packet, contract, codexResult, evidence });
+      return {
+        attempt: candidate.attempt,
+        packet,
+        contract,
+        codexResult,
+        evidence,
+        compatibility
+      };
+    } catch (error) {
+      lastError = error;
+      if (references) break;
+    }
+  }
+
+  if (strict) throw lastError || preservedEvidenceFailure('no preserved worker evidence was found');
+  return null;
+}
+
+function writePreservedWorkerManifest(attempt, packet, contract, evidence) {
+  writeAudit('preserved-worker.json', {
+    version: 1,
+    attempt,
+    packetAudit: 'packet.json',
+    contractAudit: `contract-${attempt}.json`,
+    workerAudit: `codex-${attempt}.json`,
+    evidenceAudit: `evidence-${attempt}.json`,
+    objective: packet.state.objective,
+    target: packet.state.target,
+    track: packet.state.track,
+    phase: packet.state.phase,
+    worker: packet.state.currentWorker,
+    branch: evidence.branch,
+    head: evidence.head,
+    changedFiles: evidence.changedFiles || []
+  });
 }
 
 function evidenceIsComplete(evidence) {
@@ -1033,7 +1289,7 @@ function compactReviewerInput(payload, budget = MAX_REVIEWER_INPUT_CHARS) {
   if (measured.input.length <= budget) return { ...measured, budget, initialSerializedChars: initialInput.length, compacted: true, compactionSteps };
 
   const final = result();
-  const error = new Error(`reviewer input exceeds configured budget after deterministic compaction: ${final.serializedChars} > ${budget} characters`);
+  const error = classifiedError(FAILURE_CLASSES.REVIEWER_INPUT_FAILURE, `reviewer input exceeds configured budget after deterministic compaction: ${final.serializedChars} > ${budget} characters`);
   error.code = 'REVIEWER_INPUT_OVER_BUDGET';
   error.reviewerInput = {
     budget,
@@ -1046,34 +1302,35 @@ function compactReviewerInput(payload, budget = MAX_REVIEWER_INPUT_CHARS) {
 
 function validateReview(review, packet) {
   const validVerdicts = new Set(['PASS', 'REPAIR', 'BLOCKED', 'HUMAN_DECISION']);
-  if (!review || typeof review !== 'object' || Array.isArray(review)) throw new Error('reviewer returned a non-object verdict');
+  const contractFailure = (message) => classifiedError(FAILURE_CLASSES.REVIEWER_CONTRACT_FAILURE, message);
+  if (!review || typeof review !== 'object' || Array.isArray(review)) throw contractFailure('reviewer returned a non-object verdict');
   if (Object.keys(review).length !== reviewSchema.required.length || Object.keys(review).some((key) => !reviewSchema.required.includes(key))) {
-    throw new Error('reviewer returned an unexpected verdict shape');
+    throw contractFailure('reviewer returned an unexpected verdict shape');
   }
   if (!validVerdicts.has(review.verdict) || typeof review.summary !== 'string' || !review.summary.trim() || typeof review.reason !== 'string' || !review.reason.trim()) {
-    throw new Error('reviewer returned an invalid verdict, summary, or reason');
+    throw contractFailure('reviewer returned an invalid verdict, summary, or reason');
   }
   if (!Array.isArray(review.repairInstructions) || review.repairInstructions.some((item) => typeof item !== 'string')) {
-    throw new Error('reviewer returned invalid repair instructions');
+    throw contractFailure('reviewer returned invalid repair instructions');
   }
-  if (review.designRequired !== null && typeof review.designRequired !== 'boolean') {
-    throw new Error('reviewer returned an invalid designRequired value');
+  if (requiresDesignDecision(packet) && typeof review.designRequired !== 'boolean') {
+    throw contractFailure('reviewer must return boolean designRequired during feature Structure');
+  }
+  if (!requiresDesignDecision(packet) && review.designRequired !== null) {
+    throw contractFailure('reviewer returned designRequired outside feature Structure');
   }
   if (review.humanQuestion !== null && typeof review.humanQuestion !== 'string') {
-    throw new Error('reviewer returned an invalid humanQuestion value');
+    throw contractFailure('reviewer returned an invalid humanQuestion value');
   }
   if (review.verdict === 'REPAIR' && !review.repairInstructions.length) {
-    throw new Error('reviewer returned REPAIR without repair instructions');
+    throw contractFailure('reviewer returned REPAIR without repair instructions');
   }
   if (review.verdict === 'HUMAN_DECISION' && (!review.humanQuestion || !review.humanQuestion.trim())) {
-    throw new Error('reviewer returned HUMAN_DECISION without a humanQuestion');
-  }
-  if (!(packet.state.track === 'feature-build-track' && packet.state.phase === 'Structure') && review.designRequired !== null) {
-    throw new Error('reviewer returned designRequired outside feature Structure');
+    throw contractFailure('reviewer returned HUMAN_DECISION without a humanQuestion');
   }
 }
 
-async function reviewWork(packet, contract, codexResult, evidence) {
+async function reviewWork(packet, contract, codexResult, evidence, retryContext = null) {
   const instructions = [
     'You are the Lemonteed orchestration reviewer.',
     'You are read-only. Judge the worker against the generated task contract and the compact runtime evidence, not against worker self-claims.',
@@ -1083,8 +1340,9 @@ async function reviewWork(packet, contract, codexResult, evidence) {
     'Do not approve deployment, merge, push, publishing, or public-architecture changes; classify those as HUMAN_DECISION or BLOCKED.',
     'Use PASS only when the evidence supports the acceptance criteria and scope boundaries.',
     'Use REPAIR for bounded correctable failures, BLOCKED for external/technical blockers, and HUMAN_DECISION for product, destructive, deployment, or ambiguous authority decisions.',
-    'For feature-build-track Structure phase, designRequired MUST be true when the feature includes meaningful visitor/operator UI or interaction-state design, otherwise false. For every other phase return null.'
-  ].join('\n');
+    'For feature-build-track Structure phase, designRequired MUST be a boolean because the response schema requires it. For every other phase, designRequired MUST be null because the response schema rejects non-null values.',
+    retryContext ? `Your prior reviewer output was rejected as ${retryContext.failureClass}: ${retryContext.reason}\n${retryContext.correction}` : ''
+  ].filter(Boolean).join('\n');
 
   const prepared = compactReviewerInput(buildReviewerPayload(packet, contract, codexResult, evidence));
   const reviewed = await invokeStructured({
@@ -1094,10 +1352,11 @@ async function reviewWork(packet, contract, codexResult, evidence) {
     instructions,
     input: prepared.input,
     schemaName: 'lemonteed_review_verdict',
-    schema: reviewSchema
+    schema: reviewerSchemaFor(packet)
   });
   validateReview(reviewed.output, packet);
   if (reviewed.invocation) reviewed.invocation.verdict = reviewed.output.verdict;
+  reviewed.failureClass = FAILURE_CLASSES.REVIEWER_VERDICT;
   reviewed.reviewerInput = {
     budget: prepared.budget,
     serializedChars: prepared.serializedChars,
@@ -1106,6 +1365,48 @@ async function reviewWork(packet, contract, codexResult, evidence) {
     compactionSteps: prepared.compactionSteps
   };
   return reviewed;
+}
+
+function isReviewerOutputFailure(error) {
+  return Boolean(error && [
+    FAILURE_CLASSES.STRUCTURED_OUTPUT_FAILURE,
+    FAILURE_CLASSES.REVIEWER_CONTRACT_FAILURE
+  ].includes(errorFailureClass(error)));
+}
+
+function reviewerRetryContext(error, packet) {
+  const reason = boundedText(error.message || 'reviewer output was invalid', 4000);
+  if (!requiresDesignDecision(packet) && /designRequired/i.test(reason)) {
+    return {
+      failureClass: FAILURE_CLASSES.REVIEWER_CONTRACT_FAILURE,
+      reason,
+      correction: 'Your prior reviewer output was invalid because designRequired is only legal during feature Structure. Re-evaluate the existing evidence and return a schema-valid phase verdict with designRequired set to null. Do not request new worker execution unless the evidence itself requires REPAIR.'
+    };
+  }
+  return {
+    failureClass: errorFailureClass(error),
+    reason,
+    correction: 'Your prior reviewer output was invalid. Re-evaluate the existing evidence and return exactly one schema-valid verdict. Do not request new worker execution unless the evidence itself requires REPAIR.'
+  };
+}
+
+async function reviewWithRetry(packet, contract, codexResult, evidence) {
+  let retryContext = null;
+  for (let reviewerAttempt = 0; reviewerAttempt <= REVIEWER_RETRY_LIMIT; reviewerAttempt += 1) {
+    try {
+      const reviewed = await reviewWork(packet, contract, codexResult, evidence, retryContext);
+      reviewed.reviewerAttempts = reviewerAttempt + 1;
+      return reviewed;
+    } catch (error) {
+      if (!isReviewerOutputFailure(error) || reviewerAttempt >= REVIEWER_RETRY_LIMIT) {
+        error.reviewerAttempts = reviewerAttempt + 1;
+        throw error;
+      }
+      retryContext = reviewerRetryContext(error, packet);
+      console.error(`[reviewer] ${retryContext.failureClass}; retrying reviewer only (${reviewerAttempt + 1}/${REVIEWER_RETRY_LIMIT})`);
+    }
+  }
+  throw classifiedError(FAILURE_CLASSES.STRUCTURED_OUTPUT_FAILURE, 'reviewer retry loop ended without a result');
 }
 
 function blockFromReview(review) {
@@ -1133,11 +1434,14 @@ function conciseReviewerFailure(error) {
   return boundedText(message.replace(/\s*at\s+.*$/s, '').trim(), 4000);
 }
 
-function blockReviewerTransportFailure(attempt, error, codexResult, evidence) {
-  const reason = `Reviewer transport failure: ${conciseReviewerFailure(error)}`;
+function blockReviewerFailure(attempt, error, codexResult, evidence) {
+  const failureClass = errorFailureClass(error);
+  const reason = `${failureClass}: ${conciseReviewerFailure(error)}`;
   writeAudit(`reviewer-failure-${attempt}.json`, {
     verdict: 'BLOCKED',
+    failureClass,
     reason,
+    reviewerAttempts: error && error.reviewerAttempts ? error.reviewerAttempts : null,
     workerAudit: `codex-${attempt}.json`,
     evidenceAudit: `evidence-${attempt}.json`,
     workerDiagnostics: codexSucceeded(codexResult) ? null : buildWorkerDiagnostics(codexResult),
@@ -1146,6 +1450,86 @@ function blockReviewerTransportFailure(attempt, error, codexResult, evidence) {
   console.error(`[reviewer] ${reason}`);
   runNode(['block', '--reason', boundedText(reason, MAX_REASON_CHARS), '--verdict', 'BLOCKED']);
   return { terminal: true, verdict: 'BLOCKED' };
+}
+
+function writeReviewAudit(attempt, reviewed) {
+  const review = reviewed.output;
+  writeAudit(`review-${attempt}.json`, {
+    ...review,
+    _meta: {
+      responseId: reviewed.responseId || null,
+      usage: reviewed.usage || null,
+      invocation: reviewed.invocation,
+      failureClass: reviewed.failureClass || FAILURE_CLASSES.REVIEWER_VERDICT,
+      reviewerAttempts: reviewed.reviewerAttempts || 1,
+      reviewerInput: reviewed.reviewerInput
+    }
+  });
+}
+
+async function processReview(packet, contract, codexResult, evidence, attempt) {
+  console.log(`[reviewer] reviewing evidence with ${ACTIVE_REVIEWER_MODEL} via ${REVIEWER_PROVIDER}`);
+  let reviewed;
+  try {
+    reviewed = await reviewWithRetry(packet, contract, codexResult, evidence);
+  } catch (error) {
+    return blockReviewerFailure(attempt, error, codexResult, evidence);
+  }
+
+  writeReviewAudit(attempt, reviewed);
+  const review = reviewed.output;
+  console.log(`[orchestrator] verdict: ${review.verdict} — ${review.summary}`);
+
+  if (review.verdict === 'PASS') {
+    if (!codexSucceeded(codexResult)) {
+      runNode([
+        'block',
+        '--reason',
+        boundedText(`Codex execution failed or returned an incomplete worker result before review: ${codexResult.error || codexResult.workerFinalResultParseError || codexResult.stderr || `exit code ${codexResult.exitCode}`}`, MAX_REASON_CHARS),
+        '--verdict',
+        'BLOCKED'
+      ]);
+      return { terminal: true, verdict: 'BLOCKED' };
+    }
+    if (!evidenceIsComplete(evidence)) {
+      runNode([
+        'block',
+        '--reason',
+        'Required git evidence was incomplete or unavailable; state was not advanced.',
+        '--verdict',
+        'BLOCKED'
+      ]);
+      return { terminal: true, verdict: 'BLOCKED' };
+    }
+    return { terminal: !completeFromReview(packet, review), verdict: 'PASS' };
+  }
+
+  if (review.verdict === 'BLOCKED' || review.verdict === 'HUMAN_DECISION') {
+    blockFromReview(review);
+    return { terminal: true, verdict: review.verdict };
+  }
+
+  if (attempt >= MAX_REPAIRS) {
+    runNode([
+      'block',
+      '--reason',
+      boundedText(`Repair limit reached after ${MAX_REPAIRS} repair attempts. Last review: ${review.summary}: ${review.reason}`, MAX_REASON_CHARS),
+      '--verdict',
+      'BLOCKED'
+    ]);
+    return { terminal: true, verdict: 'BLOCKED' };
+  }
+
+  return {
+    terminal: false,
+    verdict: 'REPAIR',
+    repairContext: {
+      previousContract: contract,
+      previousCodexResult: codexResult,
+      reviewer: review,
+      currentEvidence: evidence
+    }
+  };
 }
 
 function preflight(allowDirty) {
@@ -1266,12 +1650,11 @@ async function reviewerSmoke() {
   return reviewed.output;
 }
 
-async function runWorker() {
-  const packet = JSON.parse(runNode(['next']));
+async function runWorker(repairContext = null, packetOverride = null, startingAttempt = 0) {
+  const packet = packetOverride || JSON.parse(runNode(['next']));
   writeAudit('packet.json', packet);
 
-  let repairContext = null;
-  for (let attempt = 0; attempt <= MAX_REPAIRS; attempt += 1) {
+  for (let attempt = startingAttempt; attempt <= MAX_REPAIRS; attempt += 1) {
     console.log(`\n[orchestrator] planning ${packet.state.phase}${attempt ? ` repair ${attempt}` : ''} with ${ACTIVE_PLANNER_MODEL} via ${ORCHESTRATOR_PROVIDER}`);
     const planned = await createContract(packet, repairContext);
     const contract = planned.output;
@@ -1283,85 +1666,51 @@ async function runWorker() {
 
     const evidence = collectEvidence();
     writeAudit(`evidence-${attempt}.json`, evidence);
+    writePreservedWorkerManifest(attempt, packet, contract, evidence);
 
-    console.log(`[reviewer] reviewing evidence with ${ACTIVE_REVIEWER_MODEL} via ${REVIEWER_PROVIDER}`);
-    let reviewed;
-    try {
-      reviewed = await reviewWork(packet, contract, codexResult, evidence);
-    } catch (error) {
-      return blockReviewerTransportFailure(attempt, error, codexResult, evidence);
+    const outcome = await processReview(packet, contract, codexResult, evidence, attempt);
+    if (outcome.repairContext) {
+      repairContext = outcome.repairContext;
+      continue;
     }
-    const review = reviewed.output;
-    writeAudit(`review-${attempt}.json`, {
-      ...review,
-      _meta: {
-        responseId: reviewed.responseId || null,
-        usage: reviewed.usage || null,
-        invocation: reviewed.invocation,
-        reviewerInput: reviewed.reviewerInput
-      }
-    });
-    console.log(`[orchestrator] verdict: ${review.verdict} — ${review.summary}`);
-
-    if (review.verdict === 'PASS') {
-      if (!codexSucceeded(codexResult)) {
-        runNode([
-          'block',
-          '--reason',
-          boundedText(`Codex execution failed or timed out before review: ${codexResult.error || codexResult.stderr || `exit code ${codexResult.exitCode}`}`, MAX_REASON_CHARS),
-          '--verdict',
-          'BLOCKED'
-        ]);
-        return { terminal: true, verdict: 'BLOCKED' };
-      }
-      if (!evidenceIsComplete(evidence)) {
-        runNode([
-          'block',
-          '--reason',
-          'Required git evidence was incomplete or unavailable; state was not advanced.',
-          '--verdict',
-          'BLOCKED'
-        ]);
-        return { terminal: true, verdict: 'BLOCKED' };
-      }
-      return { terminal: !completeFromReview(packet, review), verdict: 'PASS' };
-    }
-
-    if (review.verdict === 'BLOCKED' || review.verdict === 'HUMAN_DECISION') {
-      blockFromReview(review);
-      return { terminal: true, verdict: review.verdict };
-    }
-
-    if (attempt >= MAX_REPAIRS) {
-      runNode([
-        'block',
-        '--reason',
-        boundedText(`Repair limit reached after ${MAX_REPAIRS} repair attempts. Last review: ${review.summary}: ${review.reason}`, MAX_REASON_CHARS),
-        '--verdict',
-        'BLOCKED'
-      ]);
-      return { terminal: true, verdict: 'BLOCKED' };
-    }
-
-    repairContext = {
-      previousContract: contract,
-      previousCodexResult: codexResult,
-      reviewer: review,
-      currentEvidence: evidence
-    };
+    return outcome;
   }
 
   return { terminal: true, verdict: 'BLOCKED' };
 }
 
+function reportPreservedEvidenceBlock(error) {
+  const reason = conciseReviewerFailure(error);
+  console.error(`[orchestrator] BLOCKED: ${reason}`);
+  return { terminal: true, verdict: 'BLOCKED', reason };
+}
+
+async function resumeCurrentWorker(preserved = null) {
+  const evidence = preserved || loadPreservedEvidence({ strict: true });
+  const state = currentRuntimeState();
+  if (state.status === 'blocked') runNode(['unblock']);
+
+  const outcome = await processReview(
+    evidence.packet,
+    evidence.contract,
+    evidence.codexResult,
+    evidence.evidence,
+    evidence.attempt
+  );
+  if (outcome.repairContext) {
+    return runWorker(outcome.repairContext, evidence.packet, evidence.attempt + 1);
+  }
+  return outcome;
+}
+
 async function main() {
   const args = argsFrom(process.argv.slice(2));
   const command = args._[0] || 'run';
-  if (!['run', 'smoke-planner', 'smoke-reviewer'].includes(command)) die(`unsupported command: ${command}`);
+  if (!['run', 'resume', 'review-current', 'smoke-planner', 'smoke-reviewer'].includes(command)) die(`unsupported command: ${command}`);
   if (args.escalate !== undefined && args.escalate !== true) die('--escalate is a flag and takes no value');
   if (args['allow-dirty'] !== undefined && args['allow-dirty'] !== true) die('--allow-dirty is a flag and takes no value');
   if (args.all !== undefined && args.all !== true) die('--all is a flag and takes no value');
-  if (command !== 'run' && (args.escalate === true || args.all === true)) die('smoke commands do not support --escalate or --all');
+  if (!['run', 'resume', 'review-current'].includes(command) && (args.escalate === true || args.all === true)) die('smoke commands do not support --escalate or --all');
   configureModel(args.escalate === true);
   preflight(args['allow-dirty'] === true);
   ensureLocalDir();
@@ -1375,11 +1724,42 @@ async function main() {
     return;
   }
 
+  if (command === 'resume' || command === 'review-current') {
+    try {
+      await resumeCurrentWorker();
+    } catch (error) {
+      reportPreservedEvidenceBlock(error);
+    }
+    console.log('\n[orchestrator] run complete');
+    console.log(runNode(['status']));
+    return;
+  }
+
   let count = 0;
+  let resumedCurrentWorker = false;
   while (true) {
     count += 1;
     if (count > 20) die('safety stop: exceeded 20 worker passes in one run');
-    const result = await runWorker();
+    let result;
+    if (!resumedCurrentWorker && args.all === true) {
+      const state = currentRuntimeState();
+      if (state.status === 'blocked') {
+        try {
+          result = await resumeCurrentWorker();
+        } catch (error) {
+          reportPreservedEvidenceBlock(error);
+          break;
+        }
+        resumedCurrentWorker = true;
+      } else {
+        const preserved = loadPreservedEvidence({ strict: false });
+        if (preserved) {
+          result = await resumeCurrentWorker(preserved);
+          resumedCurrentWorker = true;
+        }
+      }
+    }
+    if (!result) result = await runWorker();
     if (result.terminal || !args.all) break;
 
     const status = JSON.parse(runNode(['status']));
@@ -1401,6 +1781,9 @@ module.exports = {
   ROOT,
   taskSchema,
   reviewSchema,
+  reviewerSchemaFor,
+  requiresDesignDecision,
+  FAILURE_CLASSES,
   boundedText,
   boundedTailText,
   boundedDiffText,
@@ -1424,6 +1807,12 @@ module.exports = {
   buildReviewerPayload,
   compactReviewerInput,
   reviewWork,
+  reviewWithRetry,
+  loadPreservedEvidence,
+  validatePreservedCompatibility,
+  evidenceHasNoWorkerChanges,
+  processReview,
+  resumeCurrentWorker,
   resolveCodexExecutable,
   getCodexVersion,
   configureModel,

@@ -370,11 +370,11 @@ function unblock(state) {
   printStatus(state);
 }
 
-function runAdapter(args) {
+function runAdapter(args, command = 'run') {
   const adapterPath = path.join(ROOT, 'scripts', 'orchestrator-adapter.js');
   if (!fs.existsSync(adapterPath)) die('missing scripts/orchestrator-adapter.js');
-  const forwarded = ['run'];
-  if (args.all === true) forwarded.push('--all');
+  const forwarded = [command];
+  if (command === 'run' && args.all === true) forwarded.push('--all');
   if (args['allow-dirty'] === true) forwarded.push('--allow-dirty');
   if (args.escalate === true) forwarded.push('--escalate');
   if (args.escalate !== undefined && args.escalate !== true) die('--escalate is a flag and takes no value');
@@ -387,7 +387,7 @@ function runAdapter(args) {
 
 function usage() {
   console.log('  run [--escalate] selects the explicitly configured escalation model');
-  console.log(`Lemonteed orchestration runtime\n\nCommands:\n  status\n  start --goal "..." --target "..." --track <track> [--force]\n  next\n  run [--all] [--allow-dirty]\n  complete --summary "..." [--design-required true|false]\n  block --reason "..." [--verdict BLOCKED|HUMAN_DECISION]\n  unblock\n\nTracks:\n  ${Object.keys(TRACKS).join('\n  ')}\n`);
+  console.log(`Lemonteed orchestration runtime\n\nCommands:\n  status\n  start --goal "..." --target "..." --track <track> [--force]\n  next\n  run [--all] [--allow-dirty]\n  resume [--allow-dirty]\n  review-current [--allow-dirty] (alias for resume)\n  complete --summary "..." [--design-required true|false]\n  block --reason "..." [--verdict BLOCKED|HUMAN_DECISION]\n  unblock\n\nTracks:\n  ${Object.keys(TRACKS).join('\n  ')}\n`);
 }
 
 const parsed = argsFrom(process.argv.slice(2));
@@ -399,6 +399,8 @@ switch (command) {
   case 'start': start(state, parsed); break;
   case 'next': packet(state); break;
   case 'run': runAdapter(parsed); break;
+  case 'resume': runAdapter(parsed, 'resume'); break;
+  case 'review-current': runAdapter(parsed, 'review-current'); break;
   case 'complete': complete(state, parsed); break;
   case 'block': block(state, parsed); break;
   case 'unblock': unblock(state); break;

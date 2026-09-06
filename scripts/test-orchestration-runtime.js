@@ -14,6 +14,13 @@ const MOCK_CLI = path.join(LOCAL_DIR, 'mock-codex-cli.js');
 const REVIEW_INPUT_CAPTURE = path.join(LOCAL_DIR, 'mock-review-input.txt');
 const originalState = fs.readFileSync(STATE_PATH, 'utf8');
 const originalStateObject = JSON.parse(originalState);
+const originalLocalFiles = new Map(
+  fs.existsSync(LOCAL_DIR)
+    ? fs.readdirSync(LOCAL_DIR, { withFileTypes: true })
+      .filter((entry) => entry.isFile())
+      .map((entry) => [entry.name, fs.readFileSync(path.join(LOCAL_DIR, entry.name))])
+    : []
+);
 
 function expectThrow(fn, pattern) {
   assert.throws(fn, pattern);
@@ -30,8 +37,10 @@ function writeMockCli() {
     "const outputPath = outputIndex >= 0 ? args[outputIndex + 1] : null;",
     "const writeOutput = (value) => { if (outputPath) fs.writeFileSync(outputPath, JSON.stringify(value)); };",
     "const fail = (message, code = 1) => { process.stderr.write(message + '\\\\n'); process.exit(code); };",
+    "const bump = (file) => { if (file) { const current = fs.existsSync(file) ? Number(fs.readFileSync(file, 'utf8')) : 0; fs.writeFileSync(file, String(current + 1)); } };",
     "if (process.env.MOCK_SLEEP_MS) { const until = Date.now() + Number(process.env.MOCK_SLEEP_MS); while (Date.now() < until) {} }",
     "if (prompt.startsWith('You are the Lemonteed orchestration planner.')) {",
+    "  bump(process.env.MOCK_PLANNER_COUNT_FILE);",
     "  if (process.env.MOCK_PLANNER_EXIT) fail('planner mock failure', Number(process.env.MOCK_PLANNER_EXIT));",
     "  if (process.env.MOCK_MODEL_UNAVAILABLE) fail('model gpt-5.6-luna is not available');",
     "  const match = prompt.match(/\"currentWorker\"\\s*:\\s*\\{[\\s\\S]*?\"worker\"\\s*:\\s*\"([^\"]+)\"/);",
@@ -39,6 +48,7 @@ function writeMockCli() {
     "  process.exit(0);",
     "}",
     "if (prompt.startsWith('You are the Lemonteed orchestration reviewer.')) {",
+    "  bump(process.env.MOCK_REVIEW_COUNT_FILE);",
     "  if (process.env.MOCK_REVIEW_EXIT) fail('reviewer mock failure', Number(process.env.MOCK_REVIEW_EXIT));",
     "  if (process.env.MOCK_REVIEW_MALFORMED) { if (outputPath) fs.writeFileSync(outputPath, '{malformed'); process.exit(0); }",
     "  if (process.env.MOCK_CAPTURE_REVIEW_INPUT) fs.writeFileSync(process.env.MOCK_CAPTURE_REVIEW_INPUT, prompt);",
@@ -48,10 +58,13 @@ function writeMockCli() {
     "  if (reviewFile) fs.writeFileSync(reviewFile, String(index + 1));",
     "  const sequence = (process.env.MOCK_REVIEW_SEQUENCE || 'PASS').split(',');",
     "  const verdict = sequence[Math.min(index, sequence.length - 1)];",
-    "  writeOutput({ verdict, summary: 'Mock reviewer result', reason: 'Mock evidence result', designRequired: null, repairInstructions: verdict === 'REPAIR' ? ['Run the mock repair.'] : [], humanQuestion: verdict === 'HUMAN_DECISION' ? 'Confirm the mock decision.' : null });",
+    "  const isStructure = /\"phase\"\\s*:\\s*\"Structure\"/.test(prompt);",
+    "  const illegalDesign = process.env.MOCK_REVIEW_ILLEGAL_DESIGN && index < Number(process.env.MOCK_REVIEW_ILLEGAL_DESIGN);",
+    "  writeOutput({ verdict, summary: 'Mock reviewer result', reason: 'Mock evidence result', designRequired: illegalDesign ? true : (isStructure ? true : null), repairInstructions: verdict === 'REPAIR' ? ['Run the mock repair.'] : [], humanQuestion: verdict === 'HUMAN_DECISION' ? 'Confirm the mock decision.' : null });",
     "  process.exit(0);",
     "}",
     "if (process.env.MOCK_WORKER_SLEEP_MS) { const until = Date.now() + Number(process.env.MOCK_WORKER_SLEEP_MS); while (Date.now() < until) {} }",
+    "bump(process.env.MOCK_WORKER_COUNT_FILE);",
     "if (process.env.MOCK_WORKER_EXIT) fail('worker mock failure', Number(process.env.MOCK_WORKER_EXIT));",
     "if (process.env.MOCK_HUGE_OUTPUT) { process.stdout.write('s'.repeat(900000)); process.stderr.write('e'.repeat(900000)); }",
     "writeOutput({ status: 'completed', summary: 'worker complete', filesChanged: ['scripts/example.js'], commandsRun: ['node scripts/example.js'], verification: [{ check: 'mock', result: 'pass', evidence: 'mock verification' }], scopeDeviations: [], residualRisks: ['mock risk'], blockers: [], recommendedNextAction: '' });",
@@ -89,8 +102,10 @@ function runNode(script, args, env = process.env) {
 
 function resetState() {
   fs.writeFileSync(STATE_PATH, originalState);
-  const reviewFile = path.join(LOCAL_DIR, 'mock-review-count.txt');
-  if (fs.existsSync(reviewFile)) fs.unlinkSync(reviewFile);
+  for (const name of ['mock-review-count.txt', 'mock-review-count-env.txt', 'mock-planner-count.txt', 'mock-worker-count.txt']) {
+    const file = path.join(LOCAL_DIR, name);
+    if (fs.existsSync(file)) fs.unlinkSync(file);
+  }
   if (fs.existsSync(REVIEW_INPUT_CAPTURE)) fs.unlinkSync(REVIEW_INPUT_CAPTURE);
 }
 
@@ -103,6 +118,38 @@ function startQa() {
 
 function runAdapter(extra = {}) {
   return runNode(path.join(ROOT, 'scripts', 'orchestrator-adapter.js'), ['run', '--allow-dirty'], baseEnv(extra));
+}
+
+function runAdapterAll(extra = {}) {
+  return runNode(path.join(ROOT, 'scripts', 'orchestrator-adapter.js'), ['run', '--all', '--allow-dirty'], baseEnv(extra));
+}
+
+function runAdapterCommand(command, extra = {}) {
+  return runNode(path.join(ROOT, 'scripts', 'orchestrator-adapter.js'), [command, '--allow-dirty'], baseEnv(extra));
+}
+
+function counterPath(name) {
+  return path.join(LOCAL_DIR, name);
+}
+
+function counterValue(name) {
+  const file = counterPath(name);
+  return fs.existsSync(file) ? Number(fs.readFileSync(file, 'utf8')) : 0;
+}
+
+function startFeatureStructure() {
+  const result = runNode(path.join(ROOT, 'scripts', 'orchestrate.js'), [
+    'start', '--goal', 'Mock feature structure task', '--target', '/mock-feature/', '--track', 'feature-build-track', '--force'
+  ]);
+  assert.strictEqual(result.status, 0, result.stderr);
+}
+
+function restoreLocalArtifacts() {
+  fs.mkdirSync(LOCAL_DIR, { recursive: true });
+  for (const entry of fs.readdirSync(LOCAL_DIR, { withFileTypes: true })) {
+    if (entry.isFile() && !originalLocalFiles.has(entry.name)) fs.unlinkSync(path.join(LOCAL_DIR, entry.name));
+  }
+  for (const [name, content] of originalLocalFiles) fs.writeFileSync(path.join(LOCAL_DIR, name), content);
 }
 
 function assertStatus(expected) {
@@ -156,6 +203,7 @@ function reviewerFixture() {
 
 function successfulWorkerResult(overrides = {}) {
   return {
+    role: 'worker',
     exitCode: 0,
     signal: null,
     stdout: '',
@@ -192,6 +240,87 @@ function successfulWorkerResult(overrides = {}) {
     requestedModel: 'gpt-5.6-luna',
     ...overrides
   };
+}
+
+function reviewResult(overrides = {}) {
+  return {
+    verdict: 'PASS',
+    summary: 'Fixture review passed',
+    reason: 'Fixture evidence is sufficient',
+    designRequired: null,
+    repairInstructions: [],
+    humanQuestion: null,
+    ...overrides
+  };
+}
+
+function packetForPhase(track, phase, worker) {
+  const fixture = reviewerFixture();
+  return {
+    ...fixture.packet,
+    state: {
+      ...fixture.packet.state,
+      track,
+      phase,
+      currentWorker: { phase, worker }
+    }
+  };
+}
+
+function gitValue(...args) {
+  const result = spawnSync('git', args, { cwd: ROOT, encoding: 'utf8' });
+  assert.strictEqual(result.status, 0, result.stderr);
+  return result.stdout.trim();
+}
+
+function testPhaseAwareReviewerSchemas() {
+  const structure = packetForPhase('feature-build-track', 'Structure', 'STRUCTURE_WORKER.md');
+  assert.strictEqual(adapter.reviewerSchemaFor(structure).properties.designRequired.type, 'boolean');
+  assert.doesNotThrow(() => adapter.validateReview(reviewResult({ designRequired: false }), structure));
+  expectThrow(() => adapter.validateReview(reviewResult(), structure), /must return boolean designRequired/);
+
+  for (const [phase, worker] of [
+    ['Design', 'DESIGN_WORKER.md'],
+    ['Implementation', 'IMPLEMENTATION_WORKER.md'],
+    ['Experience Review', 'EXPERIENCE_DIRECTOR.md'],
+    ['QA', 'QA_WORKER.md']
+  ]) {
+    const packet = packetForPhase('feature-build-track', phase, worker);
+    assert.strictEqual(adapter.reviewerSchemaFor(packet).properties.designRequired.type, 'null');
+    assert.doesNotThrow(() => adapter.validateReview(reviewResult(), packet));
+    expectThrow(() => adapter.validateReview(reviewResult({ designRequired: true }), packet), /outside feature Structure/);
+  }
+}
+
+function testPreservedEvidenceCompatibility() {
+  const branch = gitValue('branch', '--show-current');
+  const head = gitValue('rev-parse', 'HEAD');
+  const state = {
+    status: 'active',
+    objective: 'Fixture objective',
+    target: '/fixture/',
+    track: 'qa-review-track',
+    phase: 'QA',
+    workerSequence: [{ phase: 'QA', worker: 'QA_WORKER.md' }],
+    currentWorkerIndex: 0,
+    completedWorkers: []
+  };
+  const base = reviewerFixture();
+  const packet = {
+    ...base.packet,
+    repository: { branch, head },
+    state: { ...base.packet.state, completedWorkers: [] }
+  };
+  const evidence = { ...base.evidence, branch, head, changedFiles: [], implementationStatus: '', diffStat: '', diff: '' };
+  assert.doesNotThrow(() => adapter.validatePreservedCompatibility({
+    state, packet, contract: base.contract, codexResult: successfulWorkerResult(), evidence
+  }));
+  assert.throws(() => adapter.validatePreservedCompatibility({
+    state: { ...state, objective: 'Different objective' }, packet, contract: base.contract, codexResult: successfulWorkerResult(), evidence
+  }), (error) => error.code === 'PRESERVED_EVIDENCE_INCOMPATIBLE' && /objective/.test(error.message));
+  assert.throws(() => adapter.validatePreservedCompatibility({
+    state: { ...state, phase: 'Design' }, packet, contract: base.contract, codexResult: successfulWorkerResult(), evidence
+  }), (error) => error.code === 'PRESERVED_EVIDENCE_INCOMPATIBLE' && /phase/.test(error.message));
 }
 
 function readCapturedReviewerInput() {
@@ -405,7 +534,8 @@ function testReviewerMalformed() {
   const result = runAdapter({ MOCK_REVIEW_MALFORMED: '1' });
   assert.strictEqual(result.status, 0, result.stderr + result.stdout);
   assertStatus('blocked');
-  assert.match(result.stderr, /Reviewer transport failure/);
+  assert.match(result.stderr, /STRUCTURED_OUTPUT_FAILURE/);
+  assert.match(result.stderr, /retrying reviewer only/);
 }
 
 function testUnavailableModel() {
@@ -437,7 +567,7 @@ function testReviewerTransportAndBudgetFailures() {
   const transport = runAdapter({ MOCK_REVIEW_EXIT: '9' });
   assert.strictEqual(transport.status, 0, transport.stderr + transport.stdout);
   assertStatus('blocked');
-  assert.match(transport.stderr, /Reviewer transport failure/);
+  assert.match(transport.stderr, /TRANSPORT_FAILURE/);
   assert.doesNotMatch(transport.stderr, /orchestrator-adapter\.js:\d+/);
   assert(fs.existsSync(path.join(LOCAL_DIR, 'codex-0.json')));
   assert(fs.existsSync(path.join(LOCAL_DIR, 'evidence-0.json')));
@@ -448,7 +578,114 @@ function testReviewerTransportAndBudgetFailures() {
   assert.strictEqual(overBudget.status, 0, overBudget.stderr + overBudget.stdout);
   const state = assertStatus('blocked');
   assert.match(state.blocker, /reviewer input exceeds configured budget/i);
-  assert.match(overBudget.stderr, /Reviewer transport failure/);
+  assert.match(overBudget.stderr, /REVIEWER_INPUT_FAILURE/);
+}
+
+function testReviewerOnlyRetryPassesWithoutWorkerRerun() {
+  resetState();
+  startQa();
+  const result = runAdapter({
+    MOCK_REVIEW_ILLEGAL_DESIGN: '1',
+    MOCK_REVIEW_FILE: counterPath('mock-review-count.txt'),
+    MOCK_PLANNER_COUNT_FILE: counterPath('mock-planner-count.txt'),
+    MOCK_WORKER_COUNT_FILE: counterPath('mock-worker-count.txt'),
+    MOCK_REVIEW_COUNT_FILE: counterPath('mock-review-count-env.txt')
+  });
+  assert.strictEqual(result.status, 0, result.stderr + result.stdout);
+  assertStatus('complete');
+  assert.strictEqual(counterValue('mock-planner-count.txt'), 1);
+  assert.strictEqual(counterValue('mock-worker-count.txt'), 1);
+  assert.strictEqual(counterValue('mock-review-count-env.txt'), 2);
+  const review = JSON.parse(fs.readFileSync(path.join(LOCAL_DIR, 'review-0.json'), 'utf8'));
+  assert.strictEqual(review._meta.reviewerAttempts, 2);
+  assert.strictEqual(review._meta.failureClass, adapter.FAILURE_CLASSES.REVIEWER_VERDICT);
+}
+
+function testReviewerOnlyRetryRepairRunsRepairWorkerOnce() {
+  resetState();
+  startQa();
+  const result = runAdapter({
+    MOCK_REVIEW_ILLEGAL_DESIGN: '1',
+    MOCK_REVIEW_SEQUENCE: 'REPAIR,REPAIR,PASS',
+    MOCK_REVIEW_FILE: counterPath('mock-review-count.txt'),
+    MOCK_PLANNER_COUNT_FILE: counterPath('mock-planner-count.txt'),
+    MOCK_WORKER_COUNT_FILE: counterPath('mock-worker-count.txt'),
+    MOCK_REVIEW_COUNT_FILE: counterPath('mock-review-count-env.txt')
+  });
+  assert.strictEqual(result.status, 0, result.stderr + result.stdout);
+  assertStatus('complete');
+  assert.strictEqual(counterValue('mock-planner-count.txt'), 2);
+  assert.strictEqual(counterValue('mock-worker-count.txt'), 2);
+  assert.strictEqual(counterValue('mock-review-count-env.txt'), 3);
+}
+
+function testSecondReviewerContractFailureBlocksCleanly() {
+  resetState();
+  startQa();
+  const result = runAdapter({
+    MOCK_REVIEW_ILLEGAL_DESIGN: '2',
+    MOCK_REVIEW_FILE: counterPath('mock-review-count.txt'),
+    MOCK_PLANNER_COUNT_FILE: counterPath('mock-planner-count.txt'),
+    MOCK_WORKER_COUNT_FILE: counterPath('mock-worker-count.txt'),
+    MOCK_REVIEW_COUNT_FILE: counterPath('mock-review-count-env.txt')
+  });
+  assert.strictEqual(result.status, 0, result.stderr + result.stdout);
+  const state = assertStatus('blocked');
+  assert.match(state.blocker, /REVIEWER_CONTRACT_FAILURE/);
+  assert.strictEqual(counterValue('mock-planner-count.txt'), 1);
+  assert.strictEqual(counterValue('mock-worker-count.txt'), 1);
+  assert.strictEqual(counterValue('mock-review-count-env.txt'), 2);
+  assert.doesNotMatch(state.blocker, /transport/i);
+}
+
+function testFeatureStructureRequiresDesignBoolean() {
+  resetState();
+  startFeatureStructure();
+  const result = runAdapter();
+  assert.strictEqual(result.status, 0, result.stderr + result.stdout);
+  const state = assertStatus('active');
+  assert.strictEqual(state.phase, 'Design');
+  assert.strictEqual(state.completedWorkers[0].phase, 'Structure');
+}
+
+function testResumeUsesPreservedWorkerEvidence() {
+  resetState();
+  startQa();
+  const counterEnv = {
+    MOCK_REVIEW_FILE: counterPath('mock-review-count.txt'),
+    MOCK_PLANNER_COUNT_FILE: counterPath('mock-planner-count.txt'),
+    MOCK_WORKER_COUNT_FILE: counterPath('mock-worker-count.txt'),
+    MOCK_REVIEW_COUNT_FILE: counterPath('mock-review-count-env.txt')
+  };
+  const failedReview = runAdapter({ ...counterEnv, MOCK_REVIEW_EXIT: '9' });
+  assert.strictEqual(failedReview.status, 0, failedReview.stderr + failedReview.stdout);
+  assertStatus('blocked');
+  const resumed = runAdapterCommand('resume', counterEnv);
+  assert.strictEqual(resumed.status, 0, resumed.stderr + resumed.stdout);
+  assertStatus('complete');
+  assert.strictEqual(counterValue('mock-planner-count.txt'), 1);
+  assert.strictEqual(counterValue('mock-worker-count.txt'), 1);
+  assert.strictEqual(counterValue('mock-review-count-env.txt'), 2);
+}
+
+function testRunAllResumesPreservedWorkerEvidence() {
+  resetState();
+  startQa();
+  const counterEnv = {
+    MOCK_REVIEW_FILE: counterPath('mock-review-count.txt'),
+    MOCK_PLANNER_COUNT_FILE: counterPath('mock-planner-count.txt'),
+    MOCK_WORKER_COUNT_FILE: counterPath('mock-worker-count.txt'),
+    MOCK_REVIEW_COUNT_FILE: counterPath('mock-review-count-env.txt')
+  };
+  const failedReview = runAdapter({ ...counterEnv, MOCK_REVIEW_EXIT: '9' });
+  assert.strictEqual(failedReview.status, 0, failedReview.stderr + failedReview.stdout);
+  assertStatus('blocked');
+  const resumed = runAdapterAll(counterEnv);
+  assert.strictEqual(resumed.status, 0, resumed.stderr + resumed.stdout);
+  assertStatus('complete');
+  assert.strictEqual(counterValue('mock-planner-count.txt'), 1);
+  assert.strictEqual(counterValue('mock-worker-count.txt'), 1);
+  assert.strictEqual(counterValue('mock-review-count-env.txt'), 2);
 }
 
 function testRepairHumanBlocked() {
@@ -474,6 +711,8 @@ function main() {
   try {
     testPureTransportBoundaries();
     testRepositorySearchFallbacks();
+    testPhaseAwareReviewerSchemas();
+    testPreservedEvidenceCompatibility();
     testReviewerPayloadBoundaries();
     writeMockCli();
     testPlannerAndReviewerSuccess();
@@ -483,6 +722,12 @@ function main() {
     testUnavailableModel();
     testWorkerFailureAndTimeout();
     testReviewerTransportAndBudgetFailures();
+    testReviewerOnlyRetryPassesWithoutWorkerRerun();
+    testReviewerOnlyRetryRepairRunsRepairWorkerOnce();
+    testSecondReviewerContractFailureBlocksCleanly();
+    testFeatureStructureRequiresDesignBoolean();
+    testResumeUsesPreservedWorkerEvidence();
+    testRunAllResumesPreservedWorkerEvidence();
     testRepairHumanBlocked();
     resetState();
     const finalState = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
@@ -491,6 +736,7 @@ function main() {
     console.log('orchestration runtime mocked tests: PASS');
   } finally {
     fs.writeFileSync(STATE_PATH, originalState);
+    restoreLocalArtifacts();
   }
 }
 

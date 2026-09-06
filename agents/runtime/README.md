@@ -12,7 +12,7 @@ The runtime does not replace `agents/PIPELINE.md`, `agents/SHARED_CONTEXT.md`, t
 4. The orchestrator model converts that packet into a focused Codex work order.
 5. Codex executes only that work order.
 6. The adapter captures worker output plus git evidence and compiles a bounded reviewer evidence package.
-7. The orchestrator reviews the compact package and returns `PASS`, `REPAIR`, `BLOCKED`, or `HUMAN_DECISION`.
+7. The orchestrator reviews the compact package and returns `PASS`, `REPAIR`, `BLOCKED`, or `HUMAN_DECISION`. Reviewer schemas are phase-aware: `feature-build-track` Structure requires boolean `designRequired`; every other phase requires `designRequired: null`.
 8. `PASS` advances state; `REPAIR` automatically generates a bounded repair contract; the other verdicts stop the pipeline.
 9. Continue until the current worker is accepted or, with `--all`, until the pipeline completes or hits a stop condition.
 
@@ -133,6 +133,14 @@ Run continuously through the remaining pipeline until complete, blocked, or awai
 node scripts/orchestrate.js run --all
 ```
 
+Review the latest preserved worker result without rerunning its planner or worker:
+
+```bash
+node scripts/orchestrate.js resume
+```
+
+`review-current` is an alias. The adapter verifies objective, target, track, phase, worker, branch, and preserved HEAD before reusing evidence. A HEAD change is accepted only when the preserved evidence proves that the worker made no implementation changes. `run --all` uses the same reviewer-only recovery path when compatible current-worker evidence is available.
+
 Run the dependency-free mocked transport/runtime checks:
 
 ```bash
@@ -161,9 +169,9 @@ Local adapter audit artifacts are written to:
 
 This folder is gitignored. It contains the last packet, generated task contracts, worker stdout/stderr, git evidence, and reviewer verdicts so an orchestration failure can be inspected without polluting the repository.
 
-The reviewer does not receive those raw worker streams or the full planner/session context. It receives one compact package containing the objective, target, track, phase, current worker, relevant constraints, the generated task contract, the parsed worker result, worker-reported evidence, git identity/status, diff checks, changed filenames, a bounded diff, and bounded untracked-file evidence. Failed workers additionally provide bounded stderr/stdout tails only.
+The reviewer does not receive those raw worker streams or the full planner/session context. It receives one compact package containing the objective, target, track, phase, current worker, relevant constraints, the generated task contract, the parsed worker result, worker-reported evidence, git identity/status, diff checks, changed filenames, a bounded diff, and bounded untracked-file evidence. Failed workers additionally provide bounded stderr/stdout tails only. Successful workers never send full stdout, stderr, session transcripts, echoed prompts, or startup noise.
 
-`ORCHESTRATOR_MAX_REVIEWER_INPUT_CHARS` defaults to `250000`. The adapter measures the serialized reviewer package before transport and deterministically compacts optional previews when necessary. Acceptance criteria, the generated contract, parsed worker result, verification, changed files, and git identity are preserved. If the required evidence still cannot fit, the adapter records a concise `BLOCKED` result without invoking the reviewer. A reviewer transport or structured-output failure likewise preserves the worker/evidence audits, blocks the current worker without advancing it, and exits cleanly.
+`ORCHESTRATOR_MAX_REVIEWER_INPUT_CHARS` defaults to `250000`. The adapter measures the serialized reviewer package before transport and deterministically compacts optional previews when necessary. Acceptance criteria, the generated contract, parsed worker result, verification, changed files, and git identity are preserved. If the required evidence still cannot fit, the adapter records a concise `BLOCKED` result without invoking the reviewer. Reviewer failures are classified as `TRANSPORT_FAILURE`, `STRUCTURED_OUTPUT_FAILURE`, `REVIEWER_CONTRACT_FAILURE`, or `REVIEWER_VERDICT`; malformed or contract-invalid output gets one reviewer-only retry with the violation called out. A transport failure or second invalid response preserves worker/evidence audits, blocks the current worker without advancing it, and exits cleanly.
 
 ## Repair Policy
 
