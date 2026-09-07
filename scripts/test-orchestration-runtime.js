@@ -523,14 +523,28 @@ function testPreservedDesignResumeWithMigration() {
   fs.writeFileSync(path.join(LOCAL_DIR, 'contract-2.json'), `${JSON.stringify({ ...contract, _meta: {} }, null, 2)}\n`);
   fs.writeFileSync(path.join(LOCAL_DIR, 'codex-2.json'), `${JSON.stringify(worker, null, 2)}\n`);
   fs.writeFileSync(path.join(LOCAL_DIR, 'evidence-2.json'), `${JSON.stringify(evidence, null, 2)}\n`);
+  fs.writeFileSync(path.join(LOCAL_DIR, 'contract-3.json'), `${JSON.stringify({ ...contract, _meta: {} }, null, 2)}\n`);
+  fs.writeFileSync(path.join(LOCAL_DIR, 'codex-3.json'), `${JSON.stringify(successfulWorkerResult({
+    exitCode: 1,
+    finalOutput: '',
+    parsedWorkerFinalResult: null,
+    workerFinalResultParseError: 'worker returned no final result',
+    stderr: 'invalid_json_schema'
+  }), null, 2)}\n`);
+  fs.writeFileSync(path.join(LOCAL_DIR, 'evidence-3.json'), `${JSON.stringify(evidence, null, 2)}\n`);
   fs.writeFileSync(path.join(LOCAL_DIR, 'preserved-worker.json'), `${JSON.stringify({
     version: 1,
-    attempt: 2,
+    attempt: 3,
     packetAudit: 'packet.json',
-    contractAudit: 'contract-2.json',
-    workerAudit: 'codex-2.json',
-    evidenceAudit: 'evidence-2.json'
+    contractAudit: 'contract-3.json',
+    workerAudit: 'codex-3.json',
+    evidenceAudit: 'evidence-3.json'
   }, null, 2)}\n`);
+
+  const preserved = adapter.loadPreservedEvidence({ strict: true });
+  assert.strictEqual(preserved.attempt, 2);
+  assert.strictEqual(preserved.codexResult.deliverableMigration.type, 'design-handoff');
+  assert.strictEqual(adapter.nextAuditAttempt(3), 4);
 
   const result = runAdapterCommand('resume', {
     MOCK_REVIEW_SEQUENCE: 'REPAIR,PASS',
@@ -549,7 +563,22 @@ function testPreservedDesignResumeWithMigration() {
   const resetAudit = JSON.parse(fs.readFileSync(path.join(LOCAL_DIR, 'repair-budget-migration-2.json'), 'utf8'));
   assert.strictEqual(resetAudit.preservedAuditAttempt, 2);
   assert.strictEqual(resetAudit.effectiveRepairAttempt, 0);
-  assert(fs.existsSync(path.join(LOCAL_DIR, 'codex-3.json')));
+  assert(fs.existsSync(path.join(LOCAL_DIR, 'codex-4.json')));
+  const manifest = JSON.parse(fs.readFileSync(path.join(LOCAL_DIR, 'preserved-worker.json'), 'utf8'));
+  assert.strictEqual(manifest.attempt, 4);
+}
+
+function testFailedWorkerDoesNotReplacePreservedEvidence() {
+  resetState();
+  startQa();
+  const preservedPath = path.join(LOCAL_DIR, 'preserved-worker.json');
+  fs.writeFileSync(preservedPath, `${JSON.stringify({ attempt: 77, marker: 'last-known-good' }, null, 2)}\n`);
+  const result = runAdapter({ MOCK_WORKER_EXIT: '7' });
+  assert.strictEqual(result.status, 0, result.stderr + result.stdout);
+  assertStatus('blocked');
+  const manifest = JSON.parse(fs.readFileSync(preservedPath, 'utf8'));
+  assert.strictEqual(manifest.attempt, 77);
+  assert.strictEqual(manifest.marker, 'last-known-good');
 }
 
 function testCurrentProtocolRepairCountDoesNotReset() {
@@ -1021,6 +1050,7 @@ function main() {
     testReviewerOnlyRetryRepairRunsRepairWorkerOnce();
     testSecondReviewerContractFailureBlocksCleanly();
     testWorkerProtocolFailureDoesNotConsumeRepairBudget();
+    testFailedWorkerDoesNotReplacePreservedEvidence();
     testFeatureStructureRequiresDesignBoolean();
     testPreservedDesignResumeWithMigration();
     testCurrentProtocolRepairCountDoesNotReset();

@@ -1051,6 +1051,11 @@ function auditAttemptFiles() {
   return [...attempts].sort((a, b) => b - a);
 }
 
+function nextAuditAttempt(minimum = 0) {
+  const attempts = auditAttemptFiles();
+  return Math.max(minimum, attempts.length ? Math.max(...attempts) + 1 : 0);
+}
+
 function auditPath(name) {
   return path.join(LOCAL_DIR, name);
 }
@@ -1212,14 +1217,17 @@ function loadPreservedEvidence({ strict = true } = {}) {
       evidence: manifest.evidenceAudit
     };
   }
-  const candidates = references && Number.isInteger(references.attempt)
-    ? [references]
-    : auditAttemptFiles().map((attempt) => ({
+  const candidates = [];
+  if (references && Number.isInteger(references.attempt)) candidates.push(references);
+  for (const attempt of auditAttemptFiles()) {
+    if (candidates.some((candidate) => candidate.attempt === attempt)) continue;
+    candidates.push({
       attempt,
       contract: `contract-${attempt}.json`,
       worker: `codex-${attempt}.json`,
       evidence: `evidence-${attempt}.json`
-    }));
+    });
+  }
 
   let lastError = null;
   for (const candidate of candidates) {
@@ -1237,6 +1245,10 @@ function loadPreservedEvidence({ strict = true } = {}) {
       const evidence = readJsonFile(auditPath(candidate.evidence), 'evidence audit');
       const state = currentRuntimeState();
       const compatibility = validatePreservedCompatibility({ state, packet, contract, codexResult, evidence });
+      if (!codexSucceeded(codexResult)) {
+        lastError = preservedEvidenceFailure(`attempt ${candidate.attempt} has no complete phase-compatible worker deliverable`);
+        continue;
+      }
       return {
         attempt: candidate.attempt,
         packet,
@@ -1928,7 +1940,7 @@ async function runWorker(repairContext = null, packetOverride = null, startingAt
 
     const evidence = collectEvidence();
     writeAudit(`evidence-${attempt}.json`, evidence);
-    writePreservedWorkerManifest(attempt, packet, contract, evidence);
+    if (codexSucceeded(codexResult)) writePreservedWorkerManifest(attempt, packet, contract, evidence);
 
     const outcome = await processReview(packet, contract, codexResult, evidence, attempt, repairAttempt);
     if (outcome.repairContext) {
@@ -1973,7 +1985,7 @@ async function resumeCurrentWorker(preserved = null) {
     repairAttempt
   );
   if (outcome.repairContext) {
-    return runWorker(outcome.repairContext, evidence.packet, evidence.attempt + 1, repairAttempt + 1);
+    return runWorker(outcome.repairContext, evidence.packet, nextAuditAttempt(evidence.attempt + 1), repairAttempt + 1);
   }
   return outcome;
 }
@@ -2087,6 +2099,7 @@ module.exports = {
   reviewWork,
   reviewWithRetry,
   loadPreservedEvidence,
+  nextAuditAttempt,
   validatePreservedCompatibility,
   evidenceHasNoWorkerChanges,
   legacyDeliverableContent,
