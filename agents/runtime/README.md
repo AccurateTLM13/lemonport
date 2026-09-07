@@ -187,6 +187,8 @@ The adapter validates the worker deliverable before reviewer transport. A succes
 
 `REPAIR` does not advance the worker. The adapter asks the orchestrator for a repair-only work order and sends it back to Codex. The default maximum is two repair attempts (`ORCHESTRATOR_MAX_REPAIRS=2`). If the limit is exceeded the runtime blocks instead of looping indefinitely.
 
+Repair counts are phase-local protocol counts. When preserved legacy worker output is successfully and compatibly migrated into the current `deliverable` protocol, repair attempts caused by that superseded protocol reset for the current phase. Normal current-protocol worker or reviewer repairs never reset. Audit attempt numbering remains monotonic so preserved evidence is not overwritten.
+
 `HUMAN_DECISION` is recorded as a blocked state with the decision question preserved in `lastResult`; work does not continue until the owner resolves it and explicitly unblocks/restarts the appropriate objective.
 
 ## Tracks

@@ -1,15 +1,19 @@
 {
   "schemaVersion": 1,
   "project": "Lemonteed",
-  "status": "active",
+  "status": "blocked",
   "track": "feature-build-track",
   "objective": "Improve the Specimen Vault filtering experience so visitors can find specimens faster and understand active filters clearly",
   "target": "/specimens/",
-  "phase": "Structure",
+  "phase": "Design",
   "workerSequence": [
     {
       "phase": "Structure",
       "worker": "STRUCTURE_WORKER.md"
+    },
+    {
+      "phase": "Design",
+      "worker": "DESIGN_WORKER.md"
     },
     {
       "phase": "Implementation",
@@ -24,10 +28,20 @@
       "worker": "QA_WORKER.md"
     }
   ],
-  "currentWorkerIndex": 0,
-  "completedWorkers": [],
-  "blocker": null,
-  "lastResult": null,
+  "currentWorkerIndex": 1,
+  "completedWorkers": [
+    {
+      "phase": "Structure",
+      "worker": "STRUCTURE_WORKER.md",
+      "summary": "The repaired Structure result is valid, complete, and within scope.",
+      "completedAt": "2026-09-06T21:10:36.365Z"
+    }
+  ],
+  "blocker": "Repair limit reached after 2 repair attempts. Last review: The worker returned a substantive and largely complete design handoff, but the evidence inventory does not satisfy the contract’s requirement for concise stable excerpts and exact line-number evidence across all required files.: The handoff covers the filtering model, interaction states, accessibility, responsive behavior, progressive enhancement, boundaries, exclusions, risks, decisions, and readiness. However, its file inventory mostly paraphrases findings and gives line ranges rather than quoting stable excerpts; content/specimens.json has no line-number evidence, and several required surfaces lack directly inspectable excerpts. This is a bounded documentation/evidence repair.",
+  "lastResult": {
+    "verdict": "BLOCKED",
+    "summary": "Repair limit reached after 2 repair attempts. Last review: The worker returned a substantive and largely complete design handoff, but the evidence inventory does not satisfy the contract’s requirement for concise stable excerpts and exact line-number evidence across all required files.: The handoff covers the filtering model, interaction states, accessibility, responsive behavior, progressive enhancement, boundaries, exclusions, risks, decisions, and readiness. However, its file inventory mostly paraphrases findings and gives line ranges rather than quoting stable excerpts; content/specimens.json has no line-number evidence, and several required surfaces lack directly inspectable excerpts. This is a bounded documentation/evidence repair."
+  },
   "validationCommands": [
     "node scripts/content-validation.js",
     "node scripts/check.js",
@@ -41,5 +55,5 @@
     "Use source-of-truth content files when content changes.",
     "Do not deploy without explicit owner approval."
   ],
-  "updatedAt": "2026-09-06T01:41:49.476Z"
+  "updatedAt": "2026-09-06T23:57:51.317Z"
 }

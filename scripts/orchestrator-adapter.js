@@ -84,6 +84,19 @@ const DELIVERABLE_GUIDANCE = Object.freeze({
   QA: 'Include QA findings, commands and manual checks, regressions, failures or passes, residual risk, and the readiness conclusion.'
 });
 
+const PHASE_EVIDENCE_POLICY = Object.freeze({
+  Structure: 'Strict repository proof: require concrete inspected paths, exact line evidence for material structural claims, command results where applicable, source-of-truth and generated-file boundaries, and residual risk.',
+  Content: 'Fit-for-purpose grounding: require identified source files and concrete support for material content claims; do not demand exhaustive excerpts or line evidence for every secondary reference.',
+  Design: 'Fit-for-purpose repository grounding: require exact inspected file paths, line ranges for primary UI and interaction surfaces, source-of-truth identification, and concrete evidence for claims that materially affect design behavior. Do not require stable quoted excerpts from every referenced file, exhaustive line evidence for secondary files, or line-by-line evidence for large JSON data files. For content/specimens.json, confirming it is the source of truth, that relevant fields exist, and representative field/value evidence when a design decision uses it is sufficient. Unsupported material design claims still require REPAIR.',
+  Implementation: 'Strict implementation proof: require concrete changed paths, exact line evidence for material implementation claims, command results, git evidence, and residual risk.',
+  'Experience Review': 'Fit-for-purpose grounding: require concrete inspected surfaces and evidence sufficient for usability findings and recommendations; do not impose Structure or QA repository-proof exhaustiveness on every observation.',
+  QA: 'Strict verification proof: require concrete paths, exact line evidence where relevant, command and manual-check results, regression coverage, failures, and residual risk.'
+});
+
+function phaseEvidencePolicy(phase) {
+  return PHASE_EVIDENCE_POLICY[phase] || 'Judge evidence according to the current phase responsibility and require concrete support for material claims.';
+}
+
 let ACTIVE_PLANNER_MODEL = null;
 let ACTIVE_REVIEWER_MODEL = null;
 let CLI_INFO = null;
@@ -1308,6 +1321,7 @@ function buildReviewerPayload(packet, contract, codexResult, evidence) {
     target: packet.state.target,
     track: packet.state.track,
     phase: packet.state.phase,
+    phaseEvidencePolicy: phaseEvidencePolicy(packet.state.phase),
     currentWorker: packet.state.currentWorker,
     repositoryConstraints: packet.state.constraints,
     taskContract: contract,
@@ -1547,6 +1561,8 @@ async function reviewWork(packet, contract, codexResult, evidence, retryContext 
     'If the worker invocation failed, use only the bounded diagnostic tails and classify the runtime conservatively.',
     'Do not approve deployment, merge, push, publishing, or public-architecture changes; classify those as HUMAN_DECISION or BLOCKED.',
     'Use PASS only when the evidence supports the acceptance criteria and scope boundaries.',
+    `Apply this phase-specific evidence standard: ${phaseEvidencePolicy(packet.state.phase)}`,
+    'Judge whether evidence is sufficient for the current phase actual responsibility. Structure, Implementation, and QA use stronger repository-proof standards; Content, Design, and Experience Review use fit-for-purpose grounding.',
     'Use REPAIR for bounded correctable failures, BLOCKED for external/technical blockers, and HUMAN_DECISION for product, destructive, deployment, or ambiguous authority decisions.',
     'For feature-build-track Structure phase, designRequired MUST be a boolean because the response schema requires it. For every other phase, designRequired MUST be null because the response schema rejects non-null values.',
     retryContext ? `Your prior reviewer output was rejected as ${retryContext.failureClass}: ${retryContext.reason}\n${retryContext.correction}` : ''
@@ -1675,16 +1691,16 @@ function writeReviewAudit(attempt, reviewed) {
   });
 }
 
-async function processReview(packet, contract, codexResult, evidence, attempt) {
+async function processReview(packet, contract, codexResult, evidence, auditAttempt, repairAttempt = auditAttempt) {
   const parsedWorker = parsedWorkerResultFrom(codexResult);
   if (codexResult && codexResult.exitCode === 0 && parsedWorker.error) {
     const protocolError = classifiedError(FAILURE_CLASSES.WORKER_PROTOCOL_FAILURE, parsedWorker.error);
-    writeAudit(`worker-protocol-failure-${attempt}.json`, {
+    writeAudit(`worker-protocol-failure-${auditAttempt}.json`, {
       verdict: 'BLOCKED',
       failureClass: protocolError.failureClass,
       reason: protocolError.message,
-      workerAudit: `codex-${attempt}.json`,
-      evidenceAudit: `evidence-${attempt}.json`
+      workerAudit: `codex-${auditAttempt}.json`,
+      evidenceAudit: `evidence-${auditAttempt}.json`
     });
     console.error(`[worker] ${protocolError.failureClass}: ${protocolError.message}`);
     runNode(['block', '--reason', boundedText(`${protocolError.failureClass}: ${protocolError.message}`, MAX_REASON_CHARS), '--verdict', 'BLOCKED']);
@@ -1695,10 +1711,10 @@ async function processReview(packet, contract, codexResult, evidence, attempt) {
   try {
     reviewed = await reviewWithRetry(packet, contract, codexResult, evidence);
   } catch (error) {
-    return blockReviewerFailure(attempt, error, codexResult, evidence);
+    return blockReviewerFailure(auditAttempt, error, codexResult, evidence);
   }
 
-  writeReviewAudit(attempt, reviewed);
+  writeReviewAudit(auditAttempt, reviewed);
   const review = reviewed.output;
   console.log(`[orchestrator] verdict: ${review.verdict} — ${review.summary}`);
 
@@ -1731,7 +1747,7 @@ async function processReview(packet, contract, codexResult, evidence, attempt) {
     return { terminal: true, verdict: review.verdict };
   }
 
-  if (attempt >= MAX_REPAIRS) {
+  if (repairAttempt >= MAX_REPAIRS) {
     runNode([
       'block',
       '--reason',
@@ -1884,12 +1900,12 @@ async function reviewerSmoke() {
   return reviewed.output;
 }
 
-async function runWorker(repairContext = null, packetOverride = null, startingAttempt = 0) {
+async function runWorker(repairContext = null, packetOverride = null, startingAttempt = 0, startingRepairAttempt = startingAttempt) {
   const packet = packetOverride || JSON.parse(runNode(['next']));
   writeAudit('packet.json', packet);
 
-  for (let attempt = startingAttempt; attempt <= MAX_REPAIRS; attempt += 1) {
-    console.log(`\n[orchestrator] planning ${packet.state.phase}${attempt ? ` repair ${attempt}` : ''} with ${ACTIVE_PLANNER_MODEL} via ${ORCHESTRATOR_PROVIDER}`);
+  for (let attempt = startingAttempt, repairAttempt = startingRepairAttempt; repairAttempt <= MAX_REPAIRS; attempt += 1, repairAttempt += 1) {
+    console.log(`\n[orchestrator] planning ${packet.state.phase}${repairAttempt ? ` repair ${repairAttempt}` : ''} with ${ACTIVE_PLANNER_MODEL} via ${ORCHESTRATOR_PROVIDER}`);
     const planned = await createContract(packet, repairContext);
     const contract = planned.output;
     writeAudit(`contract-${attempt}.json`, { ...contract, _meta: { responseId: planned.responseId || null, usage: planned.usage || null, invocation: planned.invocation } });
@@ -1902,7 +1918,7 @@ async function runWorker(repairContext = null, packetOverride = null, startingAt
     writeAudit(`evidence-${attempt}.json`, evidence);
     writePreservedWorkerManifest(attempt, packet, contract, evidence);
 
-    const outcome = await processReview(packet, contract, codexResult, evidence, attempt);
+    const outcome = await processReview(packet, contract, codexResult, evidence, attempt, repairAttempt);
     if (outcome.repairContext) {
       repairContext = outcome.repairContext;
       continue;
@@ -1925,15 +1941,27 @@ async function resumeCurrentWorker(preserved = null) {
   const state = currentRuntimeState();
   if (state.status === 'blocked') runNode(['unblock']);
 
+  const migratedLegacyProtocol = Boolean(evidence.codexResult.deliverableMigration);
+  const repairAttempt = migratedLegacyProtocol ? 0 : evidence.attempt;
+  if (migratedLegacyProtocol) {
+    writeAudit(`repair-budget-migration-${evidence.attempt}.json`, {
+      rule: 'legacy worker protocol plus successfully migrated compatible deliverable resets the current-phase repair counter',
+      preservedAuditAttempt: evidence.attempt,
+      effectiveRepairAttempt: repairAttempt,
+      phase: evidence.packet.state.phase,
+      worker: evidence.packet.state.currentWorker
+    });
+  }
   const outcome = await processReview(
     evidence.packet,
     evidence.contract,
     evidence.codexResult,
     evidence.evidence,
-    evidence.attempt
+    evidence.attempt,
+    repairAttempt
   );
   if (outcome.repairContext) {
-    return runWorker(outcome.repairContext, evidence.packet, evidence.attempt + 1);
+    return runWorker(outcome.repairContext, evidence.packet, evidence.attempt + 1, repairAttempt + 1);
   }
   return outcome;
 }
@@ -2050,6 +2078,7 @@ module.exports = {
   validatePreservedCompatibility,
   evidenceHasNoWorkerChanges,
   legacyDeliverableContent,
+  phaseEvidencePolicy,
   processReview,
   resumeCurrentWorker,
   resolveCodexExecutable,

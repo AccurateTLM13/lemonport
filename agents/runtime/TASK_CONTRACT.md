@@ -80,7 +80,9 @@ A worker `completed` claim is not a pipeline PASS. Only the orchestrator can iss
 
 - Prefer `rg` for repository inspection, but missing `rg` or `rg.exe` is not a blocker. Use `node scripts/repository-search.js --pattern <pattern> --path <path>`, which falls back to `git grep`, PowerShell `Select-String`, then Node filesystem traversal.
 - Keep search values as process arguments and never interpolate untrusted values into shell commands.
-- Structure and QA evidence must include concrete paths, line numbers, command results, and residual risk. Report BLOCKED only when all safe inspection methods fail or required evidence cannot be gathered.
+- Structure, Implementation, and QA use stronger repository-proof standards: concrete paths, exact line evidence for material claims, command results where applicable, and residual risk.
+- Content, Design, and Experience Review use fit-for-purpose grounding for the phase's actual responsibility. Design requires exact inspected paths, line ranges for primary UI/interaction surfaces, source-of-truth identification, and concrete support for material behavior claims; it does not require quoted excerpts from every secondary file or exhaustive line evidence for large JSON sources.
+- Report BLOCKED only when all safe inspection methods fail or required evidence cannot be gathered.
 
 ## Orchestrator Verdict
 

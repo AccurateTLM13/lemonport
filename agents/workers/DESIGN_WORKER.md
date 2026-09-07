@@ -23,6 +23,16 @@ Return `deliverable.type = "design-handoff"` and place the complete substantive 
 - Risks around clarity, clutter, or inconsistency.
 - Unresolved owner/product decisions.
 
+## Evidence Standard
+
+- Record the exact paths inspected.
+- Give line ranges for the primary UI and interaction surfaces.
+- Identify the source of truth and provide concrete evidence for claims that materially affect design behavior.
+- Provide enough repository grounding to show that the design is based on the real implementation.
+- Do not quote stable excerpts from every referenced file or exhaustively line-cite secondary files.
+- Do not provide line-by-line evidence for large JSON data files unless a design decision depends on a specific field or value.
+- For `content/specimens.json`, it is sufficient to identify it as the source of truth, confirm the relevant fields, and show representative field/value evidence when the design uses it. Exhaustive per-record evidence is not required.
+
 ## Lemonteed Checks
 
 - Use plain HTML, CSS, and JavaScript.

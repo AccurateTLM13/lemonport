@@ -296,6 +296,37 @@ function testPhaseAwareReviewerSchemas() {
   }
 }
 
+function testPhaseEvidencePolicies() {
+  const design = adapter.phaseEvidencePolicy('Design');
+  assert.match(design, /exact inspected file paths/i);
+  assert.match(design, /line ranges for primary UI and interaction surfaces/i);
+  assert.match(design, /source of truth/i);
+  assert.match(design, /representative field\/value evidence/i);
+  assert.match(design, /Do not require stable quoted excerpts from every referenced file/i);
+  assert.match(design, /do not require.*line-by-line evidence for large JSON/i);
+  assert.match(design, /Unsupported material design claims still require REPAIR/i);
+
+  for (const phase of ['Structure', 'Implementation', 'QA']) {
+    assert.match(adapter.phaseEvidencePolicy(phase), /Strict/i);
+    assert.match(adapter.phaseEvidencePolicy(phase), /exact line evidence/i);
+  }
+  for (const phase of ['Content', 'Experience Review']) {
+    assert.match(adapter.phaseEvidencePolicy(phase), /Fit-for-purpose/i);
+  }
+
+  const packet = packetForPhase('feature-build-track', 'Design', 'DESIGN_WORKER.md');
+  const payload = adapter.buildReviewerPayload(packet, reviewerFixture().contract, successfulWorkerResult({
+    parsedWorkerFinalResult: {
+      ...successfulWorkerResult().parsedWorkerFinalResult,
+      deliverable: {
+        type: 'design-handoff',
+        content: 'Inspected specimens/index.html lines 100-160 and specimens/vault.js lines 20-90. content/specimens.json is the source of truth; representative fields include tags, status, and favorite. Secondary files are inventoried by exact path without quoted excerpts.'
+      }
+    }
+  }), reviewerFixture().evidence);
+  assert.strictEqual(payload.phaseEvidencePolicy, design);
+}
+
 function testWorkerDeliverableProtocol() {
   const phases = [
     ['Structure', 'STRUCTURE_WORKER.md', 'structure-handoff'],
@@ -446,27 +477,50 @@ function testPreservedDesignResumeWithMigration() {
     untrackedTruncated: false
   };
   fs.writeFileSync(path.join(LOCAL_DIR, 'packet.json'), `${JSON.stringify(packet, null, 2)}\n`);
-  fs.writeFileSync(path.join(LOCAL_DIR, 'contract-0.json'), `${JSON.stringify({ ...contract, _meta: {} }, null, 2)}\n`);
-  fs.writeFileSync(path.join(LOCAL_DIR, 'codex-0.json'), `${JSON.stringify(worker, null, 2)}\n`);
-  fs.writeFileSync(path.join(LOCAL_DIR, 'evidence-0.json'), `${JSON.stringify(evidence, null, 2)}\n`);
+  fs.writeFileSync(path.join(LOCAL_DIR, 'contract-2.json'), `${JSON.stringify({ ...contract, _meta: {} }, null, 2)}\n`);
+  fs.writeFileSync(path.join(LOCAL_DIR, 'codex-2.json'), `${JSON.stringify(worker, null, 2)}\n`);
+  fs.writeFileSync(path.join(LOCAL_DIR, 'evidence-2.json'), `${JSON.stringify(evidence, null, 2)}\n`);
   fs.writeFileSync(path.join(LOCAL_DIR, 'preserved-worker.json'), `${JSON.stringify({
     version: 1,
-    attempt: 0,
+    attempt: 2,
     packetAudit: 'packet.json',
-    contractAudit: 'contract-0.json',
-    workerAudit: 'codex-0.json',
-    evidenceAudit: 'evidence-0.json'
+    contractAudit: 'contract-2.json',
+    workerAudit: 'codex-2.json',
+    evidenceAudit: 'evidence-2.json'
   }, null, 2)}\n`);
 
   const result = runAdapterCommand('resume', {
-    MOCK_REVIEW_COUNT_FILE: counterPath('mock-review-count-env.txt')
+    MOCK_REVIEW_SEQUENCE: 'REPAIR,PASS',
+    MOCK_REVIEW_FILE: counterPath('mock-review-count.txt'),
+    MOCK_REVIEW_COUNT_FILE: counterPath('mock-review-count-env.txt'),
+    MOCK_PLANNER_COUNT_FILE: counterPath('mock-planner-count.txt'),
+    MOCK_WORKER_COUNT_FILE: counterPath('mock-worker-count.txt')
   });
   assert.strictEqual(result.status, 0, result.stderr + result.stdout);
   const state = assertStatus('active');
   assert.strictEqual(state.phase, 'Implementation');
-  assert.strictEqual(counterValue('mock-review-count-env.txt'), 1);
-  assert.strictEqual(counterValue('mock-worker-count.txt'), 0);
-  assert(fs.existsSync(path.join(LOCAL_DIR, 'codex-0.deliverable-migration.json')));
+  assert.strictEqual(counterValue('mock-review-count-env.txt'), 2);
+  assert.strictEqual(counterValue('mock-planner-count.txt'), 1);
+  assert.strictEqual(counterValue('mock-worker-count.txt'), 1);
+  assert(fs.existsSync(path.join(LOCAL_DIR, 'codex-2.deliverable-migration.json')));
+  const resetAudit = JSON.parse(fs.readFileSync(path.join(LOCAL_DIR, 'repair-budget-migration-2.json'), 'utf8'));
+  assert.strictEqual(resetAudit.preservedAuditAttempt, 2);
+  assert.strictEqual(resetAudit.effectiveRepairAttempt, 0);
+  assert(fs.existsSync(path.join(LOCAL_DIR, 'codex-3.json')));
+}
+
+function testCurrentProtocolRepairCountDoesNotReset() {
+  resetState();
+  startQa();
+  const result = runAdapter({
+    MOCK_REVIEW_SEQUENCE: 'REPAIR,REPAIR,REPAIR,PASS',
+    MOCK_REVIEW_FILE: counterPath('mock-review-count.txt'),
+    MOCK_WORKER_COUNT_FILE: counterPath('mock-worker-count.txt')
+  });
+  assert.strictEqual(result.status, 0, result.stderr + result.stdout);
+  const state = assertStatus('blocked');
+  assert.match(state.blocker, /Repair limit reached after 2 repair attempts/);
+  assert.strictEqual(counterValue('mock-worker-count.txt'), 3);
 }
 
 function testPreservedEvidenceCompatibility() {
@@ -906,6 +960,7 @@ function main() {
     testPureTransportBoundaries();
     testRepositorySearchFallbacks();
     testPhaseAwareReviewerSchemas();
+    testPhaseEvidencePolicies();
     testWorkerDeliverableProtocol();
     testLegacyDesignDeliverableMigration();
     testPreservedEvidenceCompatibility();
@@ -924,6 +979,7 @@ function main() {
     testWorkerProtocolFailureDoesNotConsumeRepairBudget();
     testFeatureStructureRequiresDesignBoolean();
     testPreservedDesignResumeWithMigration();
+    testCurrentProtocolRepairCountDoesNotReset();
     testResumeUsesPreservedWorkerEvidence();
     testRunAllResumesPreservedWorkerEvidence();
     testRepairHumanBlocked();
