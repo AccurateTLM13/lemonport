@@ -327,6 +327,49 @@ function testPhaseEvidencePolicies() {
   assert.strictEqual(payload.phaseEvidencePolicy, design);
 }
 
+function assertStrictObjectSchemas(schema, location = 'schema') {
+  if (!schema || typeof schema !== 'object' || Array.isArray(schema)) return;
+  if (schema.type === 'object') {
+    assert.strictEqual(schema.additionalProperties, false, `${location} must set additionalProperties=false`);
+    assert(schema.properties && typeof schema.properties === 'object', `${location} must define properties`);
+    assert(Array.isArray(schema.required), `${location} must define required fields`);
+    assert.deepStrictEqual([...schema.required].sort(), Object.keys(schema.properties).sort(), `${location} must require every declared property`);
+  }
+  if (schema.properties) {
+    for (const [name, propertySchema] of Object.entries(schema.properties)) {
+      assertStrictObjectSchemas(propertySchema, `${location}.properties.${name}`);
+    }
+  }
+  if (schema.items) assertStrictObjectSchemas(schema.items, `${location}.items`);
+}
+
+function testStructuredOutputSchemasAreStrict() {
+  const schemas = [
+    ['planner task', adapter.taskSchema],
+    ['worker base', adapter.workerResultSchema],
+    ['reviewer base', adapter.reviewSchema]
+  ];
+  for (const [phase, worker] of [
+    ['Structure', 'STRUCTURE_WORKER.md'],
+    ['Content', 'CONTENT_WORKER.md'],
+    ['Design', 'DESIGN_WORKER.md'],
+    ['Implementation', 'IMPLEMENTATION_WORKER.md'],
+    ['Experience Review', 'EXPERIENCE_DIRECTOR.md'],
+    ['QA', 'QA_WORKER.md']
+  ]) {
+    const packet = packetForPhase('feature-build-track', phase, worker);
+    schemas.push([`${phase} worker`, adapter.workerResultSchemaFor(packet, { worker })]);
+    schemas.push([`${phase} reviewer`, adapter.reviewerSchemaFor(packet)]);
+  }
+  for (const [name, schema] of schemas) assertStrictObjectSchemas(schema, name);
+
+  const verification = adapter.workerResultSchema.properties.verification.items;
+  assert.strictEqual(verification.type, 'object');
+  assert.strictEqual(verification.additionalProperties, false);
+  assert.deepStrictEqual(verification.required, ['check', 'result', 'evidence']);
+  assert.deepStrictEqual(Object.keys(verification.properties), ['check', 'result', 'evidence']);
+}
+
 function testWorkerDeliverableProtocol() {
   const phases = [
     ['Structure', 'STRUCTURE_WORKER.md', 'structure-handoff'],
@@ -961,6 +1004,7 @@ function main() {
     testRepositorySearchFallbacks();
     testPhaseAwareReviewerSchemas();
     testPhaseEvidencePolicies();
+    testStructuredOutputSchemasAreStrict();
     testWorkerDeliverableProtocol();
     testLegacyDesignDeliverableMigration();
     testPreservedEvidenceCompatibility();

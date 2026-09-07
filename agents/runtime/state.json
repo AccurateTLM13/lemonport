@@ -37,10 +37,10 @@
       "completedAt": "2026-09-06T21:10:36.365Z"
     }
   ],
-  "blocker": "Repair limit reached after 2 repair attempts. Last review: The worker returned a substantive and largely complete design handoff, but the evidence inventory does not satisfy the contract’s requirement for concise stable excerpts and exact line-number evidence across all required files.: The handoff covers the filtering model, interaction states, accessibility, responsive behavior, progressive enhancement, boundaries, exclusions, risks, decisions, and readiness. However, its file inventory mostly paraphrases findings and gives line ranges rather than quoting stable excerpts; content/specimens.json has no line-number evidence, and several required surfaces lack directly inspectable excerpts. This is a bounded documentation/evidence repair.",
+  "blocker": "Worker invocation failed before producing a structured result or design handoff.: No deliverable, commands, verification, or evidence were returned. The runtime failed with an invalid response schema error requiring additionalProperties=false for verification item objects, so the required design evidence cannot be judged.",
   "lastResult": {
     "verdict": "BLOCKED",
-    "summary": "Repair limit reached after 2 repair attempts. Last review: The worker returned a substantive and largely complete design handoff, but the evidence inventory does not satisfy the contract’s requirement for concise stable excerpts and exact line-number evidence across all required files.: The handoff covers the filtering model, interaction states, accessibility, responsive behavior, progressive enhancement, boundaries, exclusions, risks, decisions, and readiness. However, its file inventory mostly paraphrases findings and gives line ranges rather than quoting stable excerpts; content/specimens.json has no line-number evidence, and several required surfaces lack directly inspectable excerpts. This is a bounded documentation/evidence repair."
+    "summary": "Worker invocation failed before producing a structured result or design handoff.: No deliverable, commands, verification, or evidence were returned. The runtime failed with an invalid response schema error requiring additionalProperties=false for verification item objects, so the required design evidence cannot be judged."
   },
   "validationCommands": [
     "node scripts/content-validation.js",
@@ -55,5 +55,5 @@
     "Use source-of-truth content files when content changes.",
     "Do not deploy without explicit owner approval."
   ],
-  "updatedAt": "2026-09-06T23:57:51.317Z"
+  "updatedAt": "2026-09-07T00:07:04.607Z"
 }

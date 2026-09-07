@@ -725,7 +725,19 @@ const workerResultSchema = {
     },
     filesChanged: { type: 'array', items: { type: 'string' } },
     commandsRun: { type: 'array', items: { type: 'string' } },
-    verification: { type: 'array', items: { type: 'object' } },
+    verification: {
+      type: 'array',
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        properties: {
+          check: { type: 'string' },
+          result: { type: 'string' },
+          evidence: { type: 'string' }
+        },
+        required: ['check', 'result', 'evidence']
+      }
+    },
     scopeDeviations: { type: 'array', items: { type: 'string' } },
     residualRisks: { type: 'array', items: { type: 'string' } },
     blockers: { type: 'array', items: { type: 'string' } },
