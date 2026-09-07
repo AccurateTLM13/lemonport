@@ -506,6 +506,7 @@ function buildCodexArgs({ role, model, sandbox, schemaPath = null, outputPath = 
     '--color', 'never'
   ];
   args.push('-c', sandbox === 'workspace-write' ? 'approval_policy="on-request"' : 'approval_policy="never"');
+  args.push('-c', `model_reasoning_effort="${REASONING}"`);
   if (schemaPath) args.push('--output-schema', schemaPath);
   if (outputPath) args.push('--output-last-message', outputPath);
   args.push('-');

@@ -727,6 +727,7 @@ function testPureTransportBoundaries() {
   assert(args.includes('--sandbox') && args.includes('read-only'));
   assert(args.includes('--ignore-user-config'));
   assert(args.includes('--output-schema') && args.includes('--output-last-message'));
+  assert(args.includes('model_reasoning_effort="high"'));
 }
 
 function unavailableResult() {
