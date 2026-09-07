@@ -183,6 +183,10 @@ The reviewer does not receive those raw worker streams or the full planner/sessi
 
 The adapter validates the worker deliverable before reviewer transport. A successful worker invocation with a missing, empty, or wrong-phase deliverable is a `WORKER_PROTOCOL_FAILURE`; it blocks without consuming a normal worker repair attempt. Preserved legacy worker output can be migrated when a complete substantive handoff is unambiguously present before the legacy JSON result. The original audit remains intact and a compact migration audit is emitted when resume uses that evidence.
 
+Planner, worker, and reviewer Codex CLI processes run with ephemeral sessions and ignore the operator's user-level Codex configuration. The adapter supplies the required repository and worker instructions directly. This keeps unrelated personal MCP/plugin startup failures from blocking orchestration transport while retaining authenticated Codex access.
+
+`preserved-worker.json` is a last-known-good pointer, not a latest-attempt pointer. Failed invocations remain in the numbered audit files but cannot replace resumable evidence. Resume scans compatible attempts until it finds a complete phase-compatible deliverable, and any fresh repair uses the next monotonic audit number without overwriting failed or historical evidence.
+
 ## Repair Policy
 
 `REPAIR` does not advance the worker. The adapter asks the orchestrator for a repair-only work order and sends it back to Codex. The default maximum is two repair attempts (`ORCHESTRATOR_MAX_REPAIRS=2`). If the limit is exceeded the runtime blocks instead of looping indefinitely.
