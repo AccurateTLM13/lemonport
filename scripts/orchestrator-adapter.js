@@ -501,6 +501,7 @@ function buildCodexArgs({ role, model, sandbox, schemaPath = null, outputPath = 
     '--model', model,
     '--sandbox', sandbox,
     '--ephemeral',
+    '--ignore-user-config',
     '--cd', ROOT,
     '--color', 'never'
   ];

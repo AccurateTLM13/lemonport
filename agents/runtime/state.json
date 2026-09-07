@@ -37,10 +37,10 @@
       "completedAt": "2026-09-06T21:10:36.365Z"
     }
   ],
-  "blocker": "Worker invocation failed before returning a structured design handoff.: No deliverable, commands, verification, or required evidence were returned. The runtime failed with an invalid response-schema error and transport-channel errors, so the design acceptance criteria cannot be judged.",
+  "blocker": "Resume validation was interrupted before the reviewer returned; the compatible migrated Design deliverable remains preserved and resumable.",
   "lastResult": {
     "verdict": "BLOCKED",
-    "summary": "Worker invocation failed before returning a structured design handoff.: No deliverable, commands, verification, or required evidence were returned. The runtime failed with an invalid response-schema error and transport-channel errors, so the design acceptance criteria cannot be judged."
+    "summary": "Resume validation was interrupted before the reviewer returned; the compatible migrated Design deliverable remains preserved and resumable."
   },
   "validationCommands": [
     "node scripts/content-validation.js",
@@ -55,5 +55,5 @@
     "Use source-of-truth content files when content changes.",
     "Do not deploy without explicit owner approval."
   ],
-  "updatedAt": "2026-09-07T00:12:19.799Z"
+  "updatedAt": "2026-09-07T00:42:09.920Z"
 }
