@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 Therapy — Human Debugging for Complicated Systems</title>
+  <meta name="description" content="A modern private therapy practice for analytical minds, developers, and knowledge workers. Evidence-based care for anxiety, burnout, relationships, and recurring loops.">
+  
+  <!-- Design Tokens & Styles -->
+  <link rel="stylesheet" href="./css/variables.css">
+  <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='42' fill='none' stroke='%23a78bfa' stroke-width='14' stroke-dasharray='190 70'/></svg>">
+</head>
+<body>
+
+  <!-- Floating Navigation (Resend/Raycast Style) -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="./index.html" class="brand-lockup" aria-label="404 Therapy Home">
+        <div class="brand-symbol"></div>
+        <span class="brand-text">404<span class="brand-slash">/</span>therapy</span>
+      </a>
+
+      <nav aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="./services.html" class="nav-link">Services</a></li>
+          <li><a href="./therapists.html" class="nav-link">Therapists</a></li>
+          <li><a href="./how-it-works.html" class="nav-link">How It Works</a></li>
+          <li><a href="./about.html" class="nav-link">About</a></li>
+          <li><a href="./faq.html" class="nav-link">Documentation</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="cmd-hint-btn" type="button" aria-label="Open Command Palette">
+          <span>Search</span>
+          <kbd>⌘K</kbd>
+        </button>
+        <a href="./book.html" class="btn btn-primary btn-sm">Book Consultation</a>
+        <button class="mobile-menu-btn trigger-command-palette" aria-label="Open Mobile Menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-status-tag">
+          <span class="status-dot"></span>
+          <span class="status-text">SYSTEM STATUS: human · online</span>
+          <span style="color: var(--border-medium);">|</span>
+          <span style="color: var(--accent-violet);">therapy.v2.4</span>
+        </div>
+
+        <h1 class="hero-title">
+          Something feels <span class="text-gradient">undefined</span>.
+        </h1>
+
+        <p class="hero-subtitle">
+          Evidence-based therapy for anxiety, burnout, relationships, and the recurring loops you keep promising yourself you’ll deal with later.
+        </p>
+
+        <div class="hero-actions">
+          <a href="./book.html" class="btn btn-primary btn-lg">
+            Start debugging
+            <kbd style="margin-left: 6px; background: rgba(0,0,0,0.15); color: #101218; border-color: rgba(0,0,0,0.2);">↵</kbd>
+          </a>
+          <a href="./how-it-works.html" class="btn btn-secondary btn-lg">See how it works</a>
+        </div>
+
+        <div class="hero-assurance">
+          <span>● Private & Confidential</span>
+          <span>● Licensed Clinicians</span>
+          <span>● Virtual & In-Person Sessions</span>
+        </div>
+
+        <!-- Interactive Diagnostic Console Component -->
+        <div class="diagnostic-widget" id="diagnostic-console">
+          <div class="diagnostic-header">
+            <div class="diagnostic-window-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <span>diagnostic_runtime_v2.4.sh</span>
+            <span>telemetry: active</span>
+          </div>
+
+          <div class="diagnostic-cmd-row">
+            <div class="diagnostic-input-label">
+              <span style="color: var(--accent-coral);">$</span>
+              <span>~/you/current-state</span>
+            </div>
+            <button class="rerun-diagnostic-btn" type="button" title="Rerun diagnostic simulation">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              <span>[↵ Run diagnostic]</span>
+            </button>
+          </div>
+
+          <div class="diagnostic-body">
+            <div class="telemetry-row">
+              <span class="telemetry-key">sleep</span>
+              <span class="telemetry-val unstable">unstable (4.5h avg)</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">motivation</span>
+              <span class="telemetry-val intermittent">intermittent</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">work-life-boundary</span>
+              <span class="telemetry-val not-found">not found (404)</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">"i'm fine"</span>
+              <span class="telemetry-val deprecated">deprecated</span>
+            </div>
+            <div class="telemetry-row">
+              <span class="telemetry-key">overthinking</span>
+              <span class="telemetry-val running">running (37 tabs open)</span>
+            </div>
+          </div>
+
+          <div class="diagnostic-footer">
+            <div class="diagnostic-summary">
+              <span class="status-dot warning"></span>
+              <span>3 recurring patterns detected — That might be worth talking about.</span>
+            </div>
+            <a href="#patterns" class="btn btn-secondary btn-sm" style="padding: 4px 10px; font-size: 0.75rem;">View patterns ↓</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Recognize the Pattern (Bento Grid) -->
+    <section class="section" id="patterns">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">PATTERN RECOGNITION</span>
+          <h2>Same issue. Different day.</h2>
+          <p class="lead" style="margin: var(--space-sm) auto 0;">
+            Most psychological strain does not announce itself with an error message. It usually shows up as an unhandled pattern.
+          </p>
+        </div>
+
+        <div class="patterns-grid">
+          <!-- Card 1 -->
+          <article class="pattern-card">
+            <div class="pattern-header">
+              <span class="pattern-tag">[⌘1] ANXIETY_LOOP</span>
+              <kbd>⌘1</kbd>
+            </div>
+            <h3 class="pattern-headline">Your brain opened 37 tabs again.</h3>
+            <p class="pattern-body">
+              Persistent worry, racing thoughts, difficulty switching off in the evening, or constantly preparing for catastrophic edge cases that never happen.
+            </p>
+            <div class="pattern-footer">
+              <span class="pattern-metric">CPU: 97%</span>
+              <a href="./services.html#anxiety" class="pattern-link">debug anxiety →</a>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="pattern-card">
+            <div class="pattern-header">
+              <span class="pattern-tag">[⌘2] BURNOUT_WARNING</span>
+              <kbd>⌘2</kbd>
+            </div>
+            <h3 class="pattern-headline">You are technically still running.</h3>
+            <p class="pattern-body">
+              Work gets completed. Messages get answered. But along the way, throughput dropped to survival mode and you stopped feeling like yourself.
+            </p>
+            <div class="pattern-footer">
+              <span class="pattern-metric">Status: Throttled</span>
+              <a href="./services.html#burnout" class="pattern-link">inspect burnout →</a>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="pattern-card">
+            <div class="pattern-header">
+              <span class="pattern-tag">[⌘3] RELATIONSHIP_CONFLICT</span>
+              <kbd>⌘3</kbd>
+            </div>
+            <h3 class="pattern-headline">Same argument. New timestamp.</h3>
+            <p class="pattern-body">
+              Communication breakdowns, repeating friction, attachment loops, and personal connections that keep hitting the exact same invisible boundary wall.
+            </p>
+            <div class="pattern-footer">
+              <span class="pattern-metric">Boundary: Unhandled</span>
+              <a href="./services.html#relationships" class="pattern-link">resolve conflict →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Error Log (Vertical Event Stream) -->
+    <section class="section" style="background: rgba(255, 255, 255, 0.01);">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">SYSTEM TELEMETRY</span>
+          <h2>Your error log might look familiar.</h2>
+          <p class="lead" style="margin: var(--space-sm) auto 0;">
+            Real moments from high-functioning human systems operating under unacknowledged strain.
+          </p>
+        </div>
+
+        <div class="error-log-box">
+          <div class="error-log-header">
+            <span class="mono" style="font-size: var(--text-xs); color: var(--text-muted);">EVENT_STREAM // live_capture.log</span>
+            <span class="badge" style="color: var(--accent-emerald);">● RECORDING</span>
+          </div>
+
+          <div class="error-log-stream">
+            <div class="error-entry">
+              <span class="error-timestamp">09:14:02</span>
+              <span class="error-text">Agreed to take on another project I did not want to do.</span>
+            </div>
+            <div class="error-entry">
+              <span class="error-timestamp">11:32:45</span>
+              <span class="error-text">Replayed an awkward conversation from three days ago for 42 minutes.</span>
+            </div>
+            <div class="error-entry">
+              <span class="error-timestamp">13:07:11</span>
+              <span class="error-text">Said <strong style="color: #fff;">"no worries."</strong> <span class="error-punchline">There were worries.</span></span>
+            </div>
+            <div class="error-entry">
+              <span class="error-timestamp">16:48:29</span>
+              <span class="error-text">Opened Slack after promising myself I would disconnect for the evening.</span>
+            </div>
+            <div class="error-entry">
+              <span class="error-timestamp">22:16:04</span>
+              <span class="error-text">Tried to relax aggressively by reading 6 productivity newsletters.</span>
+            </div>
+          </div>
+
+          <div class="error-log-conclusion">
+            <p>
+              Therapy is not about eliminating every error. It is about understanding why the same ones keep happening.
+            </p>
+            <a href="./book.html" class="btn btn-primary btn-sm">Talk through yours [↵]</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: The 4-Step Method (Octave Style Structured Care) -->
+    <section class="section" id="method">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">STRUCTURED CARE METHODOLOGY</span>
+          <h2>What actually happens in therapy?</h2>
+          <p class="lead" style="margin: var(--space-sm) auto 0;">
+            No ambiguous mystical jargon. We break personal change into clear, structured milestones.
+          </p>
+        </div>
+
+        <div class="pathways-grid">
+          <div class="pathway-step active">
+            <div class="pathway-num">
+              <span>MILESTONE 01</span>
+              <span class="badge" style="padding: 2px 6px; font-size: 0.65rem;">STAGE 1</span>
+            </div>
+            <h3 class="pathway-title">We talk.</h3>
+            <div class="pathway-subtitle">INITIAL HANDSHAKE</div>
+            <p class="pathway-desc">
+              Not “tell me about your childhood.” We start with what is happening in your life right now. We trace origin dependencies later once trust is established.
+            </p>
+          </div>
+
+          <div class="pathway-step">
+            <div class="pathway-num">
+              <span>MILESTONE 02</span>
+              <span class="badge" style="padding: 2px 6px; font-size: 0.65rem;">STAGE 2</span>
+            </div>
+            <h3 class="pathway-title">We find patterns.</h3>
+            <div class="pathway-subtitle">DEPENDENCY TRACING</div>
+            <p class="pathway-desc">
+              What triggers the reaction? What keeps reinforcing the response? We map: <code>input → reaction → consequence → repeat</code> to pinpoint the loop.
+            </p>
+          </div>
+
+          <div class="pathway-step">
+            <div class="pathway-num">
+              <span>MILESTONE 03</span>
+              <span class="badge" style="padding: 2px 6px; font-size: 0.65rem;">STAGE 3</span>
+            </div>
+            <h3 class="pathway-title">We test changes.</h3>
+            <div class="pathway-subtitle">BEHAVIORAL DIFFS</div>
+            <p class="pathway-desc">
+              Small, controlled adjustments to communication, boundary setting, and self-interpretation. No complete personality rewrite required.
+            </p>
+          </div>
+
+          <div class="pathway-step">
+            <div class="pathway-num">
+              <span>MILESTONE 04</span>
+              <span class="badge" style="padding: 2px 6px; font-size: 0.65rem;">STAGE 4</span>
+            </div>
+            <h3 class="pathway-title">You keep what works.</h3>
+            <div class="pathway-subtitle">STABLE EMOTIONAL RELEASE</div>
+            <p class="pathway-desc">
+              Integrate sustainable emotional defaults into everyday life. Breaking changes are strictly optional; durable stability is the true target.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Interactive Human System Architecture Graphic -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">SYSTEM TOPOLOGY</span>
+          <h2>One subsystem rarely strains alone.</h2>
+          <p class="lead" style="margin: var(--space-sm) auto 0;">
+            Click on any connected lifestyle node below to inspect how subsystem strain cascades across your entire emotional architecture.
+          </p>
+        </div>
+
+        <div class="system-graph-layout">
+          <!-- Interactive SVG Diagram -->
+          <div class="system-svg-wrap">
+            <svg class="system-svg" viewBox="0 0 540 380" aria-label="Interactive Human System Architecture diagram">
+              <!-- Background Links -->
+              <line class="graph-link" x1="270" y1="190" x2="110" y2="90" />
+              <line class="graph-link" x1="270" y1="190" x2="430" y2="90" />
+              <line class="graph-link" x1="270" y1="190" x2="80" y2="230" />
+              <line class="graph-link" x1="270" y1="190" x2="460" y2="230" />
+              <line class="graph-link" x1="270" y1="190" x2="160" y2="320" />
+              <line class="graph-link" x1="270" y1="190" x2="380" y2="320" />
+
+              <!-- Central Node: YOU -->
+              <g class="graph-node-center">
+                <circle cx="270" cy="190" r="42" fill="#151821" stroke="#a78bfa" stroke-width="2" />
+                <circle cx="270" cy="190" r="34" fill="#101218" />
+                <text x="270" y="195" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" fill="#ffffff" font-size="14">YOU</text>
+              </g>
+
+              <!-- Node: WORK -->
+              <g class="graph-node active" data-subsystem="work" tabindex="0" role="button" aria-label="Subsystem Work">
+                <circle cx="110" cy="90" r="28" fill="#151821" stroke="#ff625d" stroke-width="1.5" />
+                <text x="110" y="94" text-anchor="middle">WORK</text>
+              </g>
+
+              <!-- Node: SLEEP -->
+              <g class="graph-node" data-subsystem="sleep" tabindex="0" role="button" aria-label="Subsystem Sleep">
+                <circle cx="430" cy="90" r="28" fill="#151821" stroke="#6ea8ff" stroke-width="1.5" />
+                <text x="430" y="94" text-anchor="middle">SLEEP</text>
+              </g>
+
+              <!-- Node: RELATIONSHIPS -->
+              <g class="graph-node" data-subsystem="relationships" tabindex="0" role="button" aria-label="Subsystem Relationships">
+                <circle cx="80" cy="230" r="32" fill="#151821" stroke="#a78bfa" stroke-width="1.5" />
+                <text x="80" y="234" text-anchor="middle">RELATIONS</text>
+              </g>
+
+              <!-- Node: FAMILY -->
+              <g class="graph-node" data-subsystem="family" tabindex="0" role="button" aria-label="Subsystem Family">
+                <circle cx="460" cy="230" r="28" fill="#151821" stroke="#34d399" stroke-width="1.5" />
+                <text x="460" y="234" text-anchor="middle">FAMILY</text>
+              </g>
+
+              <!-- Node: SELF-TALK -->
+              <g class="graph-node" data-subsystem="self-talk" tabindex="0" role="button" aria-label="Subsystem Self Talk">
+                <circle cx="160" cy="320" r="30" fill="#151821" stroke="#fbbf24" stroke-width="1.5" />
+                <text x="160" y="324" text-anchor="middle">SELF-TALK</text>
+              </g>
+
+              <!-- Node: EXPECTATIONS -->
+              <g class="graph-node" data-subsystem="expectations" tabindex="0" role="button" aria-label="Subsystem Expectations">
+                <circle cx="380" cy="320" r="32" fill="#151821" stroke="#ff8871" stroke-width="1.5" />
+                <text x="380" y="324" text-anchor="middle">EXPECT</text>
+              </g>
+            </svg>
+          </div>
+
+          <!-- Dynamic Telemetry Readout Panel -->
+          <div class="system-telemetry-panel">
+            <span class="mono" style="font-size: var(--text-xs); color: var(--accent-violet);">NODE_TELEMETRY_INSPECTOR</span>
+            <h3 class="panel-subsystem-title" style="margin-top: 8px;">Subsystem: WORK</h3>
+            <div class="panel-status-metric">
+              <span class="status-dot warning"></span>
+              <span>CPU usage: 97% · Background tasks accumulating</span>
+            </div>
+            <p class="panel-description">
+              High workload does not stay quarantined inside work hours. It leaks into sleep duration, communication patience, evening decompression, and how you interpret neutral messages from loved ones.
+            </p>
+            <div style="border-top: 1px solid var(--border-subtle); padding-top: var(--space-md); display: flex; gap: var(--space-sm);">
+              <a href="./services.html" class="btn btn-secondary btn-sm">Explore related tracks</a>
+              <a href="./book.html" class="btn btn-primary btn-sm">Talk through this subsystem</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Clinicians (Octave Warmth + Telemetry Specs) -->
+    <section class="section" id="therapists" style="background: rgba(255, 255, 255, 0.01);">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">CLINICAL TEAM</span>
+          <h2>Meet the humans behind the debugger.</h2>
+          <p class="lead" style="margin: var(--space-sm) auto 0;">
+            Licensed clinical professionals with deep experience supporting high-functioning analytical minds.
+          </p>
+        </div>
+
+        <div class="clinicians-grid">
+          <!-- Maya Chen -->
+          <article class="clinician-card">
+            <div class="clinician-photo-wrapper">
+              <img src="./assets/therapist-maya.webp" alt="Dr. Maya Chen, Licensed Clinical Psychologist" class="clinician-photo" loading="lazy">
+            </div>
+            <div class="clinician-details">
+              <h3 class="clinician-name">Dr. Maya Chen</h3>
+              <div class="clinician-role">PhD · Stanford University · Licensed Clinical Psychologist</div>
+              <div class="clinician-tags">
+                <span class="clinician-tag">anxiety</span>
+                <span class="clinician-tag">boundary-architecture</span>
+                <span class="clinician-tag">cbt</span>
+              </div>
+              <div class="clinician-specs">
+                <span><span>Experience</span><span class="val">11 years</span></span>
+                <span><span>Modality</span><span class="val">Remote & In-Person</span></span>
+                <span><span>Status</span><span class="val" style="color: var(--accent-emerald);">● Accepting humans</span></span>
+              </div>
+              <a href="./book.html?therapist=dr-maya-chen" class="btn btn-secondary btn-sm" style="margin-top: 16px; width: 100%;">Schedule Handshake [↵]</a>
+            </div>
+          </article>
+
+          <!-- Marcus Vance -->
+          <article class="clinician-card">
+            <div class="clinician-photo-wrapper">
+              <img src="./assets/therapist-marcus.webp" alt="Marcus Vance, Licensed Marriage and Family Therapist" class="clinician-photo" loading="lazy">
+            </div>
+            <div class="clinician-details">
+              <h3 class="clinician-name">Marcus Vance</h3>
+              <div class="clinician-role">LMFT · Columbia University · Family & Relationship Systems</div>
+              <div class="clinician-tags">
+                <span class="clinician-tag">relationship-loops</span>
+                <span class="clinician-tag">conflict-resolution</span>
+                <span class="clinician-tag">attachment</span>
+              </div>
+              <div class="clinician-specs">
+                <span><span>Experience</span><span class="val">9 years</span></span>
+                <span><span>Modality</span><span class="val">Remote & In-Person</span></span>
+                <span><span>Status</span><span class="val" style="color: var(--accent-emerald);">● Accepting humans</span></span>
+              </div>
+              <a href="./book.html?therapist=marcus-vance" class="btn btn-secondary btn-sm" style="margin-top: 16px; width: 100%;">Schedule Handshake [↵]</a>
+            </div>
+          </article>
+
+          <!-- Elena Rostova -->
+          <article class="clinician-card">
+            <div class="clinician-photo-wrapper">
+              <img src="./assets/therapist-elena.webp" alt="Dr. Elena Rostova, Clinical Psychologist specializing in Burnout" class="clinician-photo" loading="lazy">
+            </div>
+            <div class="clinician-details">
+              <h3 class="clinician-name">Dr. Elena Rostova</h3>
+              <div class="clinician-role">PsyD · Northwestern University · Burnout & Cognitive Systems</div>
+              <div class="clinician-tags">
+                <span class="clinician-tag">burnout-recovery</span>
+                <span class="clinician-tag">executive-strain</span>
+                <span class="clinician-tag">act</span>
+              </div>
+              <div class="clinician-specs">
+                <span><span>Experience</span><span class="val">14 years</span></span>
+                <span><span>Modality</span><span class="val">Remote & In-Person</span></span>
+                <span><span>Status</span><span class="val" style="color: var(--accent-emerald);">● Accepting humans</span></span>
+              </div>
+              <a href="./book.html?therapist=dr-elena-rostova" class="btn btn-secondary btn-sm" style="margin-top: 16px; width: 100%;">Schedule Handshake [↵]</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Clinician Compatibility Matcher Widget -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">COMPATIBILITY MATCHER</span>
+          <h2>Finding a therapist without endless trial-and-error.</h2>
+          <p class="lead" style="margin: var(--space-sm) auto 0;">
+            Select what you are currently troubleshooting. Keyboard navigation enabled: press [1], [2], [3], [4] to toggle.
+          </p>
+        </div>
+
+        <div class="matcher-container">
+          <!-- Step Form -->
+          <div class="matcher-step-form">
+            <h3 class="matcher-step-title">What is your system currently dealing with?</h3>
+            <div class="matcher-options-list" style="margin: 18px 0;">
+              <div class="matcher-option-row" data-value="anxiety">
+                <div class="matcher-checkbox-label">
+                  <div class="custom-checkbox"></div>
+                  <span>Anxiety, rumination, & racing thoughts</span>
+                </div>
+                <kbd>1</kbd>
+              </div>
+              <div class="matcher-option-row" data-value="burnout">
+                <div class="matcher-checkbox-label">
+                  <div class="custom-checkbox"></div>
+                  <span>Chronic burnout, emotional depletion, & numbness</span>
+                </div>
+                <kbd>2</kbd>
+              </div>
+              <div class="matcher-option-row" data-value="relationships">
+                <div class="matcher-checkbox-label">
+                  <div class="custom-checkbox"></div>
+                  <span>Recurring relationship conflict & boundary leaks</span>
+                </div>
+                <kbd>3</kbd>
+              </div>
+              <div class="matcher-option-row" data-value="transitions">
+                <div class="matcher-checkbox-label">
+                  <div class="custom-checkbox"></div>
+                  <span>Life transition, identity shift, or career disorientation</span>
+                </div>
+                <kbd>4</kbd>
+              </div>
+            </div>
+
+            <button class="btn btn-primary matcher-submit-btn" type="button" style="width: 100%;" disabled>
+              Select at least one focus area
+            </button>
+          </div>
+
+          <!-- Results Card -->
+          <div class="matcher-results">
+            <div class="matched-clinician-preview"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Release Notes (Testimonials) -->
+    <section class="section" style="background: rgba(255, 255, 255, 0.01);">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">CHANGE LOG</span>
+          <h2>Release notes.</h2>
+          <p class="lead" style="margin: var(--space-sm) auto 0;">
+            Measurable behavioural upgrades from clients who spent time in the debugger.
+          </p>
+        </div>
+
+        <div class="release-notes-grid">
+          <!-- Card 1 -->
+          <article class="changelog-card">
+            <div class="changelog-version">
+              <span class="version-badge">v2.7</span>
+              <span class="changelog-date">Client · 8 months</span>
+            </div>
+            <ul class="changelog-list">
+              <li class="changelog-item">Started saying no without opening a 47-message group chat to check whether the boundary was rude.</li>
+              <li class="changelog-item">Stopped checking work Slack at midnight while pretending to look at a recipe.</li>
+              <li class="changelog-item">Discovered silence in a room is not automatically a relationship conflict.</li>
+            </ul>
+            <div class="changelog-author">Staff Software Engineer · San Francisco</div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="changelog-card">
+            <div class="changelog-version">
+              <span class="version-badge">v4.1</span>
+              <span class="changelog-date">Client · 1 year</span>
+            </div>
+            <ul class="changelog-list">
+              <li class="changelog-item">Recognizes anxiety loop before anxiety appoints itself project manager of the whole weekend.</li>
+              <li class="changelog-item">Communicates personal emotional requirements before the boiling point.</li>
+              <li class="changelog-item">Sleeps consistently through the night. Deprecated panic-browsing.</li>
+            </ul>
+            <div class="changelog-author">Head of Product Design · Remote</div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="changelog-card">
+            <div class="changelog-version">
+              <span class="version-badge">v1.9</span>
+              <span class="changelog-date">Client · 5 months</span>
+            </div>
+            <ul class="changelog-list">
+              <li class="changelog-item">Deprecated the reflex of apologizing when asking someone else to do their agreed job.</li>
+              <li class="changelog-item">Replaced continuous imposter-syndrome stack traces with objective performance facts.</li>
+              <li class="changelog-item">Allowed a weekend to pass without feeling guilty about non-billable existence.</li>
+            </ul>
+            <div class="changelog-author">Founding Engineer · New York</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Documentation / FAQ Accordions -->
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">DOCUMENTATION</span>
+          <h2>Frequently asked questions.</h2>
+          <p class="lead" style="margin: var(--space-sm) auto 0;">
+            Clear answers regarding intake, privacy, credentials, and payment protocols.
+          </p>
+        </div>
+
+        <div class="doc-accordion">
+          <!-- Item 1 -->
+          <div class="accordion-item">
+            <button class="accordion-header" type="button" aria-expanded="false">
+              <span>How do I know if therapy is right for my situation?</span>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span class="accordion-tag">GETTING_STARTED</span>
+                <span class="accordion-icon">+</span>
+              </div>
+            </button>
+            <div class="accordion-body">
+              <div class="accordion-body-inner">
+                You do not need a diagnostic emergency or a full clinical breakdown to start. Knowing that a recurring pattern feels draining, repetitive, or unresolved is more than enough input. Therapy is proactive maintenance for your emotional operating system.
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="accordion-item">
+            <button class="accordion-header" type="button" aria-expanded="false">
+              <span>Do I need to have a specific problem completely figured out?</span>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span class="accordion-tag">SESSIONS</span>
+                <span class="accordion-icon">+</span>
+              </div>
+            </button>
+            <div class="accordion-body">
+              <div class="accordion-body-inner">
+                No. In fact, most people arrive saying “I just feel constantly exhausted and I don't fully understand why.” Our clinicians are trained to help you trace root causes rather than expecting you to present a polished diagnostic summary on day one.
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="accordion-item">
+            <button class="accordion-header" type="button" aria-expanded="false">
+              <span>What happens during the initial 15-minute handshake call?</span>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span class="accordion-tag">SESSIONS</span>
+                <span class="accordion-icon">+</span>
+              </div>
+            </button>
+            <div class="accordion-body">
+              <div class="accordion-body-inner">
+                The handshake is a zero-pressure, complimentary conversation. You share high-level context on what you want to troubleshoot, the clinician shares their therapeutic approach, and both of you confirm whether the relational chemistry feels productive.
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="accordion-item">
+            <button class="accordion-header" type="button" aria-expanded="false">
+              <span>Is my session history and data confidential?</span>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span class="accordion-tag">PRIVACY</span>
+                <span class="accordion-icon">+</span>
+              </div>
+            </button>
+            <div class="accordion-body">
+              <div class="accordion-body-inner">
+                100% HIPAA-compliant and legally protected under clinical confidentiality. We do not sell data, we do not train AI models on clinical notes, and our video platform utilizes end-to-end encrypted tunnels.
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 5 -->
+          <div class="accordion-item">
+            <button class="accordion-header" type="button" aria-expanded="false">
+              <span>Do you accept insurance or provide out-of-network superのマ bills?</span>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span class="accordion-tag">PAYMENTS</span>
+                <span class="accordion-icon">+</span>
+              </div>
+            </button>
+            <div class="accordion-body">
+              <div class="accordion-body-inner">
+                We are an out-of-network practice, meaning we provide automated monthly superのマ invoices that you can submit directly to PPO insurance plans for 60–80% reimbursement depending on your out-of-network deductible.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="section" style="text-align: center; border-top: 1px solid var(--border-subtle);">
+      <div class="container container-narrow">
+        <div class="hero-status-tag" style="margin-bottom: var(--space-md);">
+          <span class="status-dot"></span>
+          <span>YOU ARE HERE</span>
+        </div>
+        <h2>You do not need the whole problem figured out.</h2>
+        <p class="lead" style="margin: var(--space-md) auto var(--space-xl);">
+          Knowing something feels off is enough information to start. No perfect explanation required.
+        </p>
+        <div class="hero-actions">
+          <a href="./book.html" class="btn btn-primary btn-lg">Book a consultation [↵]</a>
+          <a href="./contact.html" class="btn btn-secondary btn-lg">Ask a question</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer (Developer Documentation Layout) -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="./index.html" class="brand-lockup">
+            <div class="brand-symbol"></div>
+            <span class="brand-text">404<span class="brand-slash">/</span>therapy</span>
+          </a>
+          <p class="footer-desc">
+            Human debugging for complicated systems. Licensed clinical psychologists and family therapists for high-functioning analytical minds.
+          </p>
+          <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
+            Studio: 404 Franklin Ave, Ste 400 · San Francisco, CA
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Navigation</div>
+          <ul class="footer-links">
+            <li><a href="./about.html" class="footer-link">About Practice</a></li>
+            <li><a href="./services.html" class="footer-link">Specialty Tracks</a></li>
+            <li><a href="./therapists.html" class="footer-link">Clinician Roster</a></li>
+            <li><a href="./how-it-works.html" class="footer-link">4-Stage Method</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Resources</div>
+          <ul class="footer-links">
+            <li><a href="./faq.html" class="footer-link">Documentation (FAQ)</a></li>
+            <li><a href="./contact.html" class="footer-link">Intake & Contact</a></li>
+            <li><a href="./book.html" class="footer-link">Consultation Pass</a></li>
+            <li><a href="./404.html" class="footer-link">System 404</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Triage & Crisis</div>
+          <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;">
+            If experiencing immediate medical or psychiatric emergency, please dial <strong>988</strong> (Lifeline) or visit your nearest emergency facility.
+          </p>
+          <div class="badge" style="color: var(--accent-coral);">CRISIS_PRIORITY_988</div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 404 Therapy Clinical Practice. All rights reserved.</div>
+        <div class="footer-status-pill" style="display: flex; align-items: center; gap: 8px;">
+          <span class="status-dot"></span>
+          <span>Systems imperfect. Still operational.</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Command Palette Modal (⌘K / /help) -->
+  <div class="command-palette-backdrop" role="dialog" aria-modal="true" aria-label="Command Palette">
+    <div class="command-palette-box">
+      <div class="command-input-wrap">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-muted);"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" class="command-input" placeholder="Type a route or keyword (e.g. /about, anxiety, team)..." aria-label="Command search input">
+        <kbd>ESC</kbd>
+      </div>
+      <div class="command-results" role="listbox">
+        <!-- Injected via main.js -->
+      </div>
+      <div class="command-palette-footer">
+        <span>Use <kbd>↑</kbd> <kbd>↓</kbd> to navigate</span>
+        <span>Press <kbd>↵</kbd> to select</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main ES Module Script -->
+  <script type="module" src="./js/main.js"></script>
+  <!-- Lemonteed Wayfinder Dock -->
+  <script src="/assets/js/wayfinder-dock.js" defer></script>
+</body>
+</html>

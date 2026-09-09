@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Page Not Found (Or Is It?) — 404 Therapy</title>
+  <meta name="description" content="Not everything missing needs to be recovered. A thoughtful error page from 404 Therapy.">
+  
+  <link rel="stylesheet" href="./css/variables.css">
+  <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/components.css">
+</head>
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="./index.html" class="brand-lockup">
+        <div class="brand-symbol"></div>
+        <span class="brand-text">404<span class="brand-slash">/</span>therapy</span>
+      </a>
+      <div class="nav-actions">
+        <a href="./index.html" class="btn btn-secondary btn-sm">Return Home</a>
+      </div>
+    </div>
+  </header>
+
+  <main style="flex-grow: 1; display: flex; align-items: center; justify-content: center; text-align: center; padding: 120px var(--space-lg) 60px;">
+    <div class="container container-narrow">
+      <div class="hero-status-tag" style="margin-bottom: var(--space-lg);">
+        <span class="status-dot warning"></span>
+        <span>HTTP_STATUS: 404_RESOURCE_UNDEFINED</span>
+      </div>
+
+      <h1 style="font-size: clamp(3rem, 7vw, 5.5rem); letter-spacing: -0.05em; margin-bottom: var(--space-md);">
+        Page not found.
+      </h1>
+
+      <div style="background: var(--bg-surface); border: 1px solid var(--border-medium); border-radius: var(--radius-xl); padding: var(--space-2xl); max-width: 580px; margin: 0 auto var(--space-2xl); box-shadow: var(--shadow-card);">
+        <p style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--accent-violet); margin-bottom: 12px;">CLINICAL OBSERVATION // NULL_POINTER</p>
+        <p style="font-size: clamp(1.2rem, 2vw, 1.45rem); color: #ffffff; font-weight: 600; line-height: 1.4; margin-bottom: 8px;">
+          Good news:
+        </p>
+        <p style="font-size: clamp(1.1rem, 2vw, 1.35rem); color: var(--text-secondary); line-height: 1.4;">
+          Not everything missing needs to be recovered.
+        </p>
+      </div>
+
+      <div class="hero-actions" style="justify-content: center;">
+        <a href="./index.html" class="btn btn-primary btn-lg">Go home [↵]</a>
+        <a href="./book.html" class="btn btn-secondary btn-lg">Talk about that sentence</a>
+      </div>
+
+      <p class="mono" style="font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-xl);">
+        Sometimes deprecating a broken route is the healthiest architectural decision you can make.
+      </p>
+    </div>
+  </main>
+
+  <footer class="site-footer" style="margin-top: 0;">
+    <div class="container">
+      <div class="footer-bottom">
+        <div>© 2026 404 Therapy Clinical Practice. All rights reserved.</div>
+        <div class="footer-status-pill">
+          <span class="status-dot"></span>
+          <span>Resource missing. Human intact.</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="./js/main.js"></script>
+  <!-- Lemonteed Wayfinder Dock -->
+  <script src="/assets/js/wayfinder-dock.js" defer></script>
+</body>
+</html>

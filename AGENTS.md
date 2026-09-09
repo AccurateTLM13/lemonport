@@ -100,6 +100,17 @@ To support concurrent work streams and seamless handoffs between agent runs:
 
 ## Active Projects & Feature Progress
 
+### The Wrong Internet & 404 Therapy (Phase 1: VRG Vault Decommission & Sneak Peek)
+
+* **Status: Completed locally; ready for review**
+  * **Completed:** Initiated the retirement of VRG Card Vault and transition to **The Wrong Internet**—a new destination zone for functional concept/fake websites that shouldn't work but do.
+  * **404 Therapy Exhibit:** Extracted and deployed the multi-page concept website under `the-wrong-internet/404-therapy/`. Converted all raster assets (`clinic-ambient.jpg`, `therapist-*.jpg`) to high-fidelity WebP (`quality: 85`) adhering strictly to the Mandatory WebP Format Standard.
+  * **Wayfinder Dock:** Created a standalone persistent navigation component (`assets/js/wayfinder-dock.js` & `assets/css/wayfinder-dock.css`) that floats on the side of every page of 404 Therapy, allowing visitors to return to the exhibit directory or the Lemonteed World Map.
+  * **VRG Vault Condemned Notice & Caution Tape:** Transformed `/vrg-cards/` with diagonal animated hazard caution tape banners, power-cut desaturated styling, and an operator dispatch popup (*"Project is Closed. New Exhibit Coming Soon!"*) with an interactive sneak peek card linking directly to 404 Therapy.
+  * **World Map (Option A):** Updated the south-central pin on `index.html` with a diagonal `[ CLOSED // RENOVATION ]` caution tape badge, retitled to `WRONG INTERNET` with renovation subtext and drawer preview.
+  * **Sidebar Navigation & SEO:** Updated workbench sidebars across 14 zone pages to link to the Wrong Internet `PREVIEW`. Updated `content/seo.json` and synchronized tags via `scripts/build-seo.js`.
+  * **Codebase State:** Fully verified end-to-end via automated browser subagent. Zero missing referenced images; all content validation passes cleanly.
+
 ### Specimen Vault (Public HTML Filing System)
 
 * **Status: Completed locally; not deployed**

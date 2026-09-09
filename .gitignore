@@ -1,6 +1,7 @@
 .studio-uploads/
 .codex-screens/
 *.tmp
+*.zip
 .studio-backups/
 /lemon-dom-standalone/
 

@@ -32,9 +32,9 @@
     },
     {
       id: "vrg",
-      title: "VRG VAULT",
-      label: "CARDS / COLLECTIBLES",
-      description: "A collection of visual trading cards.",
+      title: "THE WRONG INTERNET",
+      label: "CLOSED // RENOVATION",
+      description: "Under renovation. Sneak peek exhibit active inside.",
       url: "/vrg-cards/"
     },
     {

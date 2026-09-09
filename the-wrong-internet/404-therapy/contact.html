@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact & Intake Triage — 404 Therapy</title>
+  <meta name="description" content="Reach our clinical intake team at 404 Therapy. Confidential inquiries, scheduling assistance, and practice details.">
+  
+  <link rel="stylesheet" href="./css/variables.css">
+  <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/components.css">
+</head>
+<body>
+
+  <!-- Floating Navigation -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="./index.html" class="brand-lockup">
+        <div class="brand-symbol"></div>
+        <span class="brand-text">404<span class="brand-slash">/</span>therapy</span>
+      </a>
+      <nav aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="./services.html" class="nav-link">Services</a></li>
+          <li><a href="./therapists.html" class="nav-link">Therapists</a></li>
+          <li><a href="./how-it-works.html" class="nav-link">How It Works</a></li>
+          <li><a href="./about.html" class="nav-link">About</a></li>
+          <li><a href="./faq.html" class="nav-link">Documentation</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <button class="cmd-hint-btn" type="button"><kbd>⌘K</kbd></button>
+        <a href="./book.html" class="btn btn-primary btn-sm">Book Consultation</a>
+      </div>
+    </div>
+  </header>
+
+  <main style="padding-top: calc(var(--space-4xl) + 40px);">
+    <div class="container container-narrow">
+      <div class="section-header text-left">
+        <span class="section-tag">INTAKE TRIAGE</span>
+        <h1>Get in touch with clinical intake.</h1>
+        <p class="lead">
+          Have an inquiry regarding specific modalities, out-of-network benefits, or practice details? Send our coordinators a secure transmission.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr; gap: var(--space-2xl); margin-top: var(--space-2xl);">
+        <form class="pattern-card" style="padding: var(--space-2xl);" onsubmit="event.preventDefault(); alert('Message encrypted and dispatched to clinical intake. We reply within 24 hours.');">
+          <div style="display: flex; flex-direction: column; gap: var(--space-lg);">
+            <div>
+              <label for="contact-name" style="display: block; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-secondary); margin-bottom: 6px;">YOUR NAME / IDENTIFIER</label>
+              <input id="contact-name" type="text" required placeholder="Alex Mercer" style="width: 100%; padding: 12px 16px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-medium); border-radius: var(--radius-md); color: #fff; font-family: var(--font-sans); font-size: var(--text-sm); outline: none;">
+            </div>
+
+            <div>
+              <label for="contact-email" style="display: block; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-secondary); margin-bottom: 6px;">ELECTRONIC MAIL ADDRESS</label>
+              <input id="contact-email" type="email" required placeholder="alex@domain.com" style="width: 100%; padding: 12px 16px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-medium); border-radius: var(--radius-md); color: #fff; font-family: var(--font-sans); font-size: var(--text-sm); outline: none;">
+            </div>
+
+            <div>
+              <label for="contact-topic" style="display: block; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-secondary); margin-bottom: 6px;">TOPIC CLASSIFICATION</label>
+              <select id="contact-topic" style="width: 100%; padding: 12px 16px; background: #151821; border: 1px solid var(--border-medium); border-radius: var(--radius-md); color: #fff; font-family: var(--font-sans); font-size: var(--text-sm); outline: none;">
+                <option value="general">General practice inquiry</option>
+                <option value="insurance">Out-of-network superbill verification</option>
+                <option value="intake">Clinical matching question</option>
+                <option value="speaking">Organizational burnout workshop inquiry</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="contact-msg" style="display: block; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-secondary); margin-bottom: 6px;">PAYLOAD / MESSAGE</label>
+              <textarea id="contact-msg" rows="4" required placeholder="Share whatever context feels relevant. No perfect explanation required..." style="width: 100%; padding: 12px 16px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-medium); border-radius: var(--radius-md); color: #fff; font-family: var(--font-sans); font-size: var(--text-sm); outline: none; line-height: 1.5; resize: vertical;"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="align-self: flex-start;">Send Encrypted Inquiry [↵]</button>
+          </div>
+        </form>
+
+        <!-- Studio Coordinates -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg);">
+          <div class="pattern-card" style="padding: var(--space-xl);">
+            <div class="mono" style="font-size: var(--text-xs); color: var(--accent-violet); margin-bottom: 8px;">SAN FRANCISCO STUDIO</div>
+            <p style="color: #fff; font-weight: 600; margin-bottom: 4px;">404 Franklin Street, Suite 400</p>
+            <p style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: 12px;">Hayes Valley, San Francisco, CA 94102</p>
+            <div class="mono" style="font-size: var(--text-xs); color: var(--text-muted);">Transit: Civic Center BART / Muni Lines</div>
+          </div>
+
+          <div class="pattern-card" style="padding: var(--space-xl);">
+            <div class="mono" style="font-size: var(--text-xs); color: var(--accent-coral); margin-bottom: 8px;">EMERGENCY NOTICE</div>
+            <p style="color: #fff; font-weight: 600; margin-bottom: 4px;">Crisis Triage Lifeline</p>
+            <p style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: 12px;">This form is for non-urgent clinical inquiries. If experiencing immediate danger, dial 988.</p>
+            <div class="badge" style="color: var(--accent-coral);">DIAL 988 (24/7 FREE)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <div>© 2026 404 Therapy Clinical Practice. All rights reserved.</div>
+        <div class="footer-status-pill">
+          <span class="status-dot"></span>
+          <span>Systems imperfect. Still operational.</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="./js/main.js"></script>
+  <!-- Lemonteed Wayfinder Dock -->
+  <script src="/assets/js/wayfinder-dock.js" defer></script>
+</body>
+</html>

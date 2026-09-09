@@ -234,6 +234,53 @@
   filter: grayscale(80%) opacity(0.65);
 }
 
+/* Caution / Renovation state for Option A on World Map */
+.zone-renovating {
+  position: relative;
+}
+
+.zone-renovating .zone-icon-wrap {
+  position: relative;
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.zone-renovating .zone-caution-badge {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-10deg);
+  background: repeating-linear-gradient(
+    -45deg,
+    #f5c518,
+    #f5c518 8px,
+    #111 8px,
+    #111 16px
+  );
+  color: #f5c518;
+  border: 1px solid #111;
+  border-radius: 3px;
+  padding: 2px 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: clamp(8px, 0.65vw, 11px);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.9), 0 0 8px rgba(245, 197, 24, 0.4);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.zone-renovating .zone-caution-badge-inner {
+  display: inline-block;
+  background: rgba(18, 18, 18, 0.92);
+  padding: 1px 5px;
+  border-radius: 2px;
+  border-top: 1px solid #f5c518;
+  border-bottom: 1px solid #f5c518;
+}
+
 .zone-coming-soon {
   font: inherit;
 }

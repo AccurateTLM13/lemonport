@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Consultation Handshake — 404 Therapy</title>
+  <meta name="description" content="Schedule your complimentary 15-minute clinical handshake call with a licensed therapist at 404 Therapy.">
+  
+  <link rel="stylesheet" href="./css/variables.css">
+  <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <style>
+    .wizard-progress {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: var(--space-2xl);
+    }
+    .wizard-progress-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--border-medium);
+      transition: all var(--transition-fast);
+    }
+    .wizard-progress-dot.active {
+      background: var(--accent-violet);
+      box-shadow: 0 0 10px var(--accent-violet);
+      transform: scale(1.3);
+    }
+    .wizard-progress-dot.completed {
+      background: var(--accent-emerald);
+    }
+    .wizard-step {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+    .wizard-step.active {
+      display: block;
+    }
+    .slot-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .slot-option {
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .slot-option:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--border-hover);
+      color: #fff;
+    }
+    .slot-option.selected {
+      background: rgba(167, 139, 250, 0.12);
+      border-color: var(--accent-violet);
+      color: #fff;
+      font-weight: 600;
+    }
+    .ticket-box {
+      background: linear-gradient(180deg, #151821 0%, #101218 100%);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-xl);
+      padding: var(--space-2xl);
+      text-align: center;
+      position: relative;
+    }
+    .ticket-code {
+      font-family: var(--font-mono);
+      font-size: 1.6rem;
+      letter-spacing: 0.1em;
+      color: var(--accent-emerald);
+      margin: 14px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Navigation -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="./index.html" class="brand-lockup">
+        <div class="brand-symbol"></div>
+        <span class="brand-text">404<span class="brand-slash">/</span>therapy</span>
+      </a>
+      <nav aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="./services.html" class="nav-link">Services</a></li>
+          <li><a href="./therapists.html" class="nav-link">Therapists</a></li>
+          <li><a href="./how-it-works.html" class="nav-link">How It Works</a></li>
+          <li><a href="./about.html" class="nav-link">About</a></li>
+          <li><a href="./faq.html" class="nav-link">Documentation</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <button class="cmd-hint-btn" type="button"><kbd>⌘K</kbd></button>
+      </div>
+    </div>
+  </header>
+
+  <main style="padding-top: calc(var(--space-4xl) + 40px);">
+    <div class="container container-narrow">
+      <div class="section-header">
+        <span class="section-tag">INITIAL HANDSHAKE</span>
+        <h1>Schedule your discovery call.</h1>
+        <p class="lead" style="margin: var(--space-xs) auto 0;">
+          15 minutes. Complimentary. Direct video connection with a licensed clinician.
+        </p>
+      </div>
+
+      <!-- Booking Wizard Container -->
+      <div class="booking-wizard pattern-card" style="padding: var(--space-2xl);">
+        <!-- Progress Indicators -->
+        <div class="wizard-progress">
+          <div class="wizard-progress-dot active" data-step="1"></div>
+          <div class="wizard-progress-dot" data-step="2"></div>
+          <div class="wizard-progress-dot" data-step="3"></div>
+          <div class="wizard-progress-dot" data-step="4"></div>
+          <div class="wizard-progress-dot" data-step="5"></div>
+        </div>
+
+        <!-- Step 1: Select Specialty Track -->
+        <div class="wizard-step active" data-step="1">
+          <h2 style="font-size: var(--text-xl); color: #fff; margin-bottom: 8px;">Step 1: Select Primary Clinical Track</h2>
+          <p style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: 20px;">What subsystem loop would you like to inspect first?</p>
+          
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px;">
+            <label class="matcher-option-row" style="cursor: pointer;">
+              <span class="matcher-checkbox-label">
+                <input type="radio" name="track" value="anxiety" checked style="accent-color: var(--accent-violet);">
+                <span>Anxiety, Preemptive Overthinking & Catastrophic Forecasts</span>
+              </span>
+              <kbd>⌘1</kbd>
+            </label>
+            <label class="matcher-option-row" style="cursor: pointer;">
+              <span class="matcher-checkbox-label">
+                <input type="radio" name="track" value="burnout" style="accent-color: var(--accent-violet);">
+                <span>Chronic Burnout, Executive Fatigue & Emotional Depletion</span>
+              </span>
+              <kbd>⌘2</kbd>
+            </label>
+            <label class="matcher-option-row" style="cursor: pointer;">
+              <span class="matcher-checkbox-label">
+                <input type="radio" name="track" value="relationships" style="accent-color: var(--accent-violet);">
+                <span>Relationship Loop Cycles, Boundary Leaks & Attachment Friction</span>
+              </span>
+              <kbd>⌘3</kbd>
+            </label>
+            <label class="matcher-option-row" style="cursor: pointer;">
+              <span class="matcher-checkbox-label">
+                <input type="radio" name="track" value="transitions" style="accent-color: var(--accent-violet);">
+                <span>Identity Shift, Career Transition & Outdated Assumptions</span>
+              </span>
+              <kbd>⌘4</kbd>
+            </label>
+          </div>
+
+          <button type="button" class="btn btn-primary wizard-next-btn" style="width: 100%;">Continue to Clinician Choice →</button>
+        </div>
+
+        <!-- Step 2: Choose Clinician -->
+        <div class="wizard-step" data-step="2">
+          <h2 style="font-size: var(--text-xl); color: #fff; margin-bottom: 8px;">Step 2: Choose Preferred Clinician</h2>
+          <p style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: 20px;">Select a specific therapist or choose first available for faster scheduling.</p>
+
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;">
+            <label class="matcher-option-row" style="cursor: pointer;">
+              <div style="display: flex; align-items: center; gap: 14px;">
+                <input type="radio" name="therapist" value="dr-maya-chen" checked style="accent-color: var(--accent-violet);">
+                <img src="./assets/therapist-maya.webp" alt="Dr. Maya Chen" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover;">
+                <div>
+                  <div style="color: #fff; font-weight: 600;">Dr. Maya Chen, PhD</div>
+                  <div style="font-size: 0.75rem; color: var(--text-muted);">CBT & Anxiety Specialist · 11 yrs exp</div>
+                </div>
+              </div>
+              <span class="badge" style="color: var(--accent-emerald);">● Online</span>
+            </label>
+
+            <label class="matcher-option-row" style="cursor: pointer;">
+              <div style="display: flex; align-items: center; gap: 14px;">
+                <input type="radio" name="therapist" value="marcus-vance" style="accent-color: var(--accent-violet);">
+                <img src="./assets/therapist-marcus.webp" alt="Marcus Vance" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover;">
+                <div>
+                  <div style="color: #fff; font-weight: 600;">Marcus Vance, LMFT</div>
+                  <div style="font-size: 0.75rem; color: var(--text-muted);">Family & Relational Systems · 9 yrs exp</div>
+                </div>
+              </div>
+              <span class="badge" style="color: var(--accent-emerald);">● Online</span>
+            </label>
+
+            <label class="matcher-option-row" style="cursor: pointer;">
+              <div style="display: flex; align-items: center; gap: 14px;">
+                <input type="radio" name="therapist" value="dr-elena-rostova" style="accent-color: var(--accent-violet);">
+                <img src="./assets/therapist-elena.webp" alt="Dr. Elena Rostova" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover;">
+                <div>
+                  <div style="color: #fff; font-weight: 600;">Dr. Elena Rostova, PsyD</div>
+                  <div style="font-size: 0.75rem; color: var(--text-muted);">Burnout Recovery & Transitions · 14 yrs exp</div>
+                </div>
+              </div>
+              <span class="badge" style="color: var(--accent-emerald);">● Online</span>
+            </label>
+          </div>
+
+          <div style="display: flex; gap: 10px;">
+            <button type="button" class="btn btn-secondary wizard-prev-btn">← Back</button>
+            <button type="button" class="btn btn-primary wizard-next-btn" style="flex-grow: 1;">Continue to Timeslot →</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Choose Date & Timeslot -->
+        <div class="wizard-step" data-step="3">
+          <h2 style="font-size: var(--text-xl); color: #fff; margin-bottom: 8px;">Step 3: Select Handshake Window</h2>
+          <p style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: 20px;">All slots converted to your local system clock.</p>
+
+          <div class="mono" style="font-size: var(--text-xs); color: var(--accent-violet); margin-bottom: 8px;">AVAILABLE_SLOTS // THIS WEEK</div>
+          <div class="slot-grid">
+            <div class="slot-option selected" data-slot="Tomorrow at 10:00 AM EST">Tomorrow<br><strong>10:00 AM</strong></div>
+            <div class="slot-option" data-slot="Tomorrow at 2:30 PM EST">Tomorrow<br><strong>2:30 PM</strong></div>
+            <div class="slot-option" data-slot="Tomorrow at 5:00 PM EST">Tomorrow<br><strong>5:00 PM</strong></div>
+            <div class="slot-option" data-slot="Thursday at 11:15 AM EST">Thursday<br><strong>11:15 AM</strong></div>
+            <div class="slot-option" data-slot="Thursday at 3:00 PM EST">Thursday<br><strong>3:00 PM</strong></div>
+            <div class="slot-option" data-slot="Friday at 1:00 PM EST">Friday<br><strong>1:00 PM</strong></div>
+          </div>
+
+          <div style="display: flex; gap: 10px; margin-top: 24px;">
+            <button type="button" class="btn btn-secondary wizard-prev-btn">← Back</button>
+            <button type="button" class="btn btn-primary wizard-next-btn" style="flex-grow: 1;">Continue to Intake Details →</button>
+          </div>
+        </div>
+
+        <!-- Step 4: Contact & Verification -->
+        <div class="wizard-step" data-step="4">
+          <h2 style="font-size: var(--text-xl); color: #fff; margin-bottom: 8px;">Step 4: Contact & Context</h2>
+          <p style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: 20px;">Where should we transmit the encrypted calendar invite?</p>
+
+          <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px;">
+            <div>
+              <label for="client-name" style="display: block; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-secondary); margin-bottom: 4px;">YOUR NAME</label>
+              <input id="client-name" type="text" required placeholder="Alex Mercer" style="width: 100%; padding: 12px 16px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-medium); border-radius: var(--radius-md); color: #fff; font-size: var(--text-sm); outline: none;">
+            </div>
+
+            <div>
+              <label for="client-email" style="display: block; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-secondary); margin-bottom: 4px;">EMAIL ADDRESS</label>
+              <input id="client-email" type="email" required placeholder="alex@domain.com" style="width: 100%; padding: 12px 16px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-medium); border-radius: var(--radius-md); color: #fff; font-size: var(--text-sm); outline: none;">
+            </div>
+
+            <div>
+              <label for="client-notes" style="display: block; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-secondary); margin-bottom: 4px;">OPTIONAL: WHAT BRINGS YOU IN? (1-2 SENTENCES)</label>
+              <input id="client-notes" type="text" placeholder="e.g. Can't stop working on weekends; chronic burnout..." style="width: 100%; padding: 12px 16px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-medium); border-radius: var(--radius-md); color: #fff; font-size: var(--text-sm); outline: none;">
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px;">
+            <button type="button" class="btn btn-secondary wizard-prev-btn">← Back</button>
+            <button type="button" class="btn btn-primary wizard-next-btn" style="flex-grow: 1;">Generate Handshake Pass [↵]</button>
+          </div>
+        </div>
+
+        <!-- Step 5: Confirmation Ticket Pass -->
+        <div class="wizard-step" data-step="5">
+          <div class="ticket-box">
+            <span class="badge" style="color: var(--accent-emerald); margin-bottom: 12px;">● SESSION PROTOCOL INITIALIZED</span>
+            <h2 style="font-size: var(--text-2xl); color: #fff; margin-bottom: 4px;">Handshake Ticket Confirmed</h2>
+            <p style="font-size: var(--text-sm); color: var(--text-secondary);">Your discovery call has been registered in our secure clinical pipeline.</p>
+            
+            <div class="ticket-code ticket-ref-code">DBG-8491-OK</div>
+
+            <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; max-width: 380px; margin: 0 auto 20px; font-family: var(--font-mono); font-size: var(--text-xs); text-align: left; line-height: 1.7;">
+              <div>Client: <strong class="ticket-summary-name" style="color: #fff;">Alex Mercer</strong></div>
+              <div>Window: <span class="ticket-summary-slot" style="color: var(--accent-violet);">Tomorrow at 10:00 AM EST</span></div>
+              <div>Platform: <span>End-to-End Encrypted Video</span></div>
+              <div>Fee: <span style="color: var(--accent-emerald);">$0.00 (Complimentary Handshake)</span></div>
+            </div>
+
+            <div style="display: flex; justify-content: center; gap: 12px;">
+              <button type="button" class="btn btn-primary btn-sm" onclick="alert('ICS Calendar invitation generated and queued.');">Download Calendar Pass (.ics)</button>
+              <a href="./index.html" class="btn btn-secondary btn-sm">Return to Overview</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <div>© 2026 404 Therapy Clinical Practice. All rights reserved.</div>
+        <div class="footer-status-pill">
+          <span class="status-dot"></span>
+          <span>Systems imperfect. Still operational.</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="./js/main.js"></script>
+  <!-- Lemonteed Wayfinder Dock -->
+  <script src="/assets/js/wayfinder-dock.js" defer></script>
+</body>
+</html>

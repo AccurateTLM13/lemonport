@@ -1,0 +1,345 @@
+/* ==========================================================================
+   Condemned Facility / Renovation Caution Experience
+   Lemonteed - The Wrong Internet Transition Overlay
+   ========================================================================== */
+
+:root {
+  --hazard-yellow: #f5c518;
+  --hazard-black: #121212;
+  --hazard-border: rgba(245, 197, 24, 0.4);
+}
+
+/* Dim & desaturate the retired background */
+body.is-condemned-facility .site-shell {
+  filter: grayscale(70%) brightness(35%) contrast(110%);
+  pointer-events: none;
+  user-select: none;
+  transition: filter 0.3s ease;
+}
+
+body.is-condemned-facility.inspect-mode .site-shell {
+  filter: grayscale(40%) brightness(65%);
+  pointer-events: auto;
+}
+
+/* Fullscreen caution stage */
+.condemned-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: radial-gradient(circle at center, rgba(10, 10, 14, 0.75) 0%, rgba(5, 5, 8, 0.92) 100%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  overflow-y: auto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  pointer-events: auto;
+}
+
+body.is-condemned-facility.inspect-mode .condemned-overlay {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  pointer-events: none;
+}
+
+body.is-condemned-facility.inspect-mode .condemned-modal {
+  display: none;
+}
+
+/* Diagonal Hazard Tape Ribbons */
+.caution-tape {
+  position: fixed;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  width: 140vw;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--hazard-yellow),
+    var(--hazard-yellow) 28px,
+    var(--hazard-black) 28px,
+    var(--hazard-black) 56px
+  );
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 2px 8px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  user-select: none;
+  overflow: hidden;
+}
+
+.caution-tape__text {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 2px 20px;
+  background: rgba(18, 18, 18, 0.94);
+  color: var(--hazard-yellow);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border-top: 2px solid var(--hazard-yellow);
+  border-bottom: 2px solid var(--hazard-yellow);
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.8);
+}
+
+.caution-tape--top {
+  top: 40px;
+  left: -20vw;
+  transform: rotate(-7deg);
+}
+
+.caution-tape--bottom {
+  bottom: 40px;
+  left: -20vw;
+  transform: rotate(6deg);
+}
+
+/* Centered Decommission Modal */
+.condemned-modal {
+  position: relative;
+  z-index: 100001;
+  max-width: 580px;
+  width: 100%;
+  background: #15151c;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-top: 4px solid var(--hazard-yellow);
+  border-radius: 12px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 30px rgba(245, 197, 24, 0.15);
+  color: #ededf2;
+  padding: 28px 32px;
+  text-align: left;
+  animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.condemned-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.condemned-modal__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: rgba(245, 197, 24, 0.12);
+  border: 1px solid var(--hazard-border);
+  border-radius: 4px;
+  color: var(--hazard-yellow);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.condemned-modal__code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  color: #888899;
+}
+
+.condemned-modal__title {
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin: 0 0 6px 0;
+}
+
+.condemned-modal__subtitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--hazard-yellow);
+  margin: 0 0 16px 0;
+  letter-spacing: 0.01em;
+}
+
+.condemned-modal__body {
+  font-size: 14px;
+  line-height: 1.55;
+  color: #b0b0be;
+  margin-bottom: 22px;
+}
+
+.condemned-modal__body p {
+  margin: 0 0 10px 0;
+}
+
+/* Sneak Peek Card */
+.sneak-peek-box {
+  background: rgba(26, 26, 36, 0.9);
+  border: 1px solid rgba(245, 197, 24, 0.35);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.sneak-peek-box__eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.sneak-peek-box__tag {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--hazard-yellow);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.sneak-peek-box__live {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+  color: #34d399;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.sneak-peek-box__live::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.8);
+}
+
+.sneak-peek-box__title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 6px 0;
+}
+
+.sneak-peek-box__desc {
+  font-size: 13px;
+  line-height: 1.45;
+  color: #c4c4d4;
+  margin: 0 0 14px 0;
+}
+
+.sneak-peek-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 18px;
+  background: var(--hazard-yellow);
+  border: 1px solid var(--hazard-yellow);
+  border-radius: 8px;
+  color: #111;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 18px rgba(245, 197, 24, 0.35);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sneak-peek-cta:hover {
+  background: #ffd633;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(245, 197, 24, 0.5);
+}
+
+/* Modal Actions */
+.condemned-modal__actions {
+  display: flex;
+  gap: 12px;
+}
+
+.condemned-sub-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: #d1d1dc;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.18s ease;
+}
+
+.condemned-sub-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+
+/* Floating Inspect Toggle in corner */
+.condemned-inspect-toggle {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  z-index: 100002;
+  padding: 6px 12px;
+  background: rgba(20, 20, 25, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  color: #aaaabb;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+
+.condemned-inspect-toggle:hover {
+  color: #fff;
+  border-color: var(--hazard-yellow);
+}
+
+@media (max-width: 600px) {
+  .condemned-modal {
+    padding: 20px;
+  }
+  .condemned-modal__title {
+    font-size: 22px;
+  }
+  .condemned-modal__actions {
+    flex-direction: column;
+  }
+  .caution-tape {
+    height: 36px;
+  }
+  .caution-tape__text {
+    font-size: 11px;
+    gap: 18px;
+  }
+}

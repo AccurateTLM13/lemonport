@@ -1,0 +1,231 @@
+/* ==========================================================================
+   Lemonteed Wayfinder Dock
+   Persistent edge navigation for concept sites in "The Wrong Internet"
+   ========================================================================== */
+
+:root {
+  --wayfinder-bg: rgba(18, 18, 22, 0.88);
+  --wayfinder-border: rgba(255, 255, 255, 0.14);
+  --wayfinder-border-hover: rgba(245, 197, 24, 0.5);
+  --wayfinder-yellow: #f5c518;
+  --wayfinder-text: #f0f0f4;
+  --wayfinder-muted: #9e9ea8;
+  --wayfinder-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --wayfinder-font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+.wayfinder-dock {
+  position: fixed;
+  right: 20px;
+  bottom: 28px;
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: var(--wayfinder-font-sans);
+  pointer-events: auto;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Trigger pill */
+.wayfinder-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--wayfinder-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--wayfinder-border);
+  border-radius: 999px;
+  color: var(--wayfinder-text);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wayfinder-pill:hover,
+.wayfinder-dock.is-open .wayfinder-pill {
+  background: rgba(24, 24, 30, 0.95);
+  border-color: var(--wayfinder-border-hover);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(245, 197, 24, 0.2);
+  transform: translateY(-1px);
+}
+
+.wayfinder-pill__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.wayfinder-pill__label {
+  font-family: var(--wayfinder-font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #fff;
+}
+
+.wayfinder-pill__badge {
+  display: inline-block;
+  padding: 2px 6px;
+  background: rgba(245, 197, 24, 0.15);
+  border: 1px solid rgba(245, 197, 24, 0.35);
+  border-radius: 4px;
+  color: var(--wayfinder-yellow);
+  font-family: var(--wayfinder-font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.wayfinder-pill__chevron {
+  display: flex;
+  align-items: center;
+  margin-left: 2px;
+  opacity: 0.6;
+  transition: transform 0.2s ease;
+}
+
+.wayfinder-dock.is-open .wayfinder-pill__chevron {
+  transform: rotate(180deg);
+}
+
+/* Expanded card flyout */
+.wayfinder-panel {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  right: 0;
+  width: 290px;
+  padding: 16px;
+  background: rgba(18, 18, 22, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 2px 10px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px) scale(0.97);
+  transform-origin: bottom right;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.wayfinder-dock.is-open .wayfinder-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.wayfinder-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.wayfinder-panel__zone {
+  font-family: var(--wayfinder-font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--wayfinder-yellow);
+  text-transform: uppercase;
+}
+
+.wayfinder-panel__status {
+  font-family: var(--wayfinder-font-mono);
+  font-size: 9px;
+  color: #6ee7b7;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.wayfinder-panel__status::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+}
+
+.wayfinder-panel__title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.01em;
+}
+
+.wayfinder-panel__desc {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--wayfinder-muted);
+  margin: 0 0 14px 0;
+}
+
+.wayfinder-panel__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.wayfinder-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.16s ease;
+}
+
+.wayfinder-btn--primary {
+  background: #f5c518;
+  color: #111;
+  border: 1px solid #f5c518;
+}
+
+.wayfinder-btn--primary:hover {
+  background: #ffd633;
+  box-shadow: 0 4px 14px rgba(245, 197, 24, 0.4);
+}
+
+.wayfinder-btn--secondary {
+  background: rgba(255, 255, 255, 0.06);
+  color: #d1d1d8;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.wayfinder-btn--secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 640px) {
+  .wayfinder-dock {
+    right: 14px;
+    bottom: 16px;
+  }
+  .wayfinder-panel {
+    width: calc(100vw - 32px);
+    max-width: 320px;
+    right: 0;
+  }
+}

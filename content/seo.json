@@ -35,20 +35,20 @@
   },
   {
     "key": "vrg-cards",
-    "label": "VRG Cards",
+    "label": "The Wrong Internet (Under Renovation)",
     "htmlPath": "vrg-cards/index.html",
-    "title": "VRG Cards | Lemonteed",
-    "description": "VRG Cards from the Lemonteed portfolio.",
-    "ogTitle": "VRG Cards | Lemonteed",
-    "ogDescription": "VRG Cards from the Lemonteed portfolio.",
+    "title": "The Wrong Internet (Under Renovation) | Lemonteed",
+    "description": "The VRG Card Vault is officially closed. A new exhibit is coming soon to The Wrong Internet on Lemonteed. Sneak peek inside.",
+    "ogTitle": "The Wrong Internet (Under Renovation) | Lemonteed",
+    "ogDescription": "The VRG Card Vault is officially closed. A new exhibit is coming soon to The Wrong Internet on Lemonteed. Sneak peek inside.",
     "ogImage": "/images/og/vrg-cards.webp",
     "ogImageWidth": 1200,
     "ogImageHeight": 630,
-    "twitterTitle": "VRG Cards | Lemonteed",
-    "twitterDescription": "VRG Cards from the Lemonteed portfolio.",
+    "twitterTitle": "The Wrong Internet (Under Renovation) | Lemonteed",
+    "twitterDescription": "The VRG Card Vault is officially closed. A new exhibit is coming soon to The Wrong Internet on Lemonteed.",
     "twitterImage": "/images/og/vrg-cards.webp",
     "canonicalUrl": "https://lemonteed.com/vrg-cards/",
-    "updatedAt": "2026-07-16T20:24:33.946Z"
+    "updatedAt": "2026-09-09T10:15:00.000Z"
   },
   {
     "key": "what-if",
