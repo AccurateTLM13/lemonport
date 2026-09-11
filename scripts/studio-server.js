@@ -26,6 +26,7 @@ const {
   validateSpecimens,
   sanitizeSpecimenHtml,
   applyAssetMap,
+  injectSourceFileOg,
   buildSpecimens,
   asText: specimenAsText,
   STATUSES: specimenStatuses
@@ -438,6 +439,10 @@ function normalizeSpecimen(body, existing = null, records = []) {
     score,
     favorite,
     image: String(body.image ?? existing?.image ?? "").trim(),
+    // Optional per-specimen OG metadata overrides.
+    ogTitle: String(body.ogTitle ?? existing?.ogTitle ?? "").trim(),
+    ogDescription: String(body.ogDescription ?? existing?.ogDescription ?? "").trim(),
+    ogImage: String(body.ogImage ?? existing?.ogImage ?? "").trim(),
     assets: Array.isArray(existing?.assets) ? existing.assets.filter((asset) => specimenAsText(asset).startsWith("/specimens/assets/")) : [],
     assetMap: Array.isArray(existing?.assetMap) ? existing.assetMap : []
   };
@@ -631,6 +636,12 @@ async function uploadSpecimenImage(request, response) {
   data.records[index].image = `/specimens/images/${id}.webp`;
   data.records[index].updatedAt = new Date().toISOString();
   const saved = saveSpecimens(data);
+  // Refresh the OG block in the source file so it picks up the new card image.
+  try {
+    injectSourceFileOg(saved.records[index]);
+  } catch (ogErr) {
+    console.error("OG inject after image upload failed:", ogErr.message);
+  }
   sendJson(response, 201, { url: saved.records[index].image });
 }
 

@@ -49,10 +49,12 @@ recordFiles.forEach((file) => {
   <meta property="og:image:type" content="image/webp">
   <meta property="og:image:width" content="1280">
   <meta property="og:image:height" content="800">
+  <meta property="og:site_name" content="Lemonteed">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${fullTitle}">
   <meta name="twitter:description" content="${description.replace(/"/g, '&quot;')}">
   <meta name="twitter:image" content="https://lemonteed.com/benchmark/images/desktop/${id}.webp">
+  <meta name="twitter:site" content="@lemonteed">
   <link rel="icon" href="/images/favicons/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16.png">

@@ -3515,6 +3515,9 @@
     vaultForm.elements.tags.value = Array.isArray(specimen.tags) ? specimen.tags.join(", ") : "";
     vaultForm.elements.prompt.value = specimen.prompt || "";
     vaultForm.elements.notes.value = specimen.notes || "";
+    vaultForm.elements.ogTitle.value = specimen.ogTitle || "";
+    vaultForm.elements.ogDescription.value = specimen.ogDescription || "";
+    vaultForm.elements.ogImage.value = specimen.ogImage || "";
     if (vaultHtmlPaste) vaultHtmlPaste.value = "";
     if (vaultAssetsNote) {
       const assetCount = Array.isArray(specimen.assets) ? specimen.assets.length : 0;
@@ -3584,7 +3587,10 @@
         score: vaultForm.elements.score.value === "" ? null : Number(vaultForm.elements.score.value),
         tags: vaultForm.elements.tags.value.split(",").map((tag) => tag.trim()).filter(Boolean),
         prompt: vaultForm.elements.prompt.value,
-        notes: vaultForm.elements.notes.value
+        notes: vaultForm.elements.notes.value,
+        ogTitle: vaultForm.elements.ogTitle.value.trim(),
+        ogDescription: vaultForm.elements.ogDescription.value.trim(),
+        ogImage: vaultForm.elements.ogImage.value.trim()
       });
 
       let currentId = id;

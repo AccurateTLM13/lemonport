@@ -543,6 +543,7 @@
             <input type="hidden" name="id">
             <h3 data-vault-form-title>File a specimen</h3>
             <label><span>Title</span><input name="title" type="text" required autocomplete="off" placeholder="Halloway Instruments HX-4"></label>
+
             <label><span>Model used</span><input name="model" type="text" required autocomplete="off" placeholder="claude-opus-4"></label>
             <label><span>Skill / system</span><input name="skill" type="text" required autocomplete="off" placeholder="field-manual"></label>
             <label><span>Captured date</span><input name="date" type="date"></label>
@@ -585,6 +586,13 @@
               </label>
               <p class="vault-hint">Stored under /specimens/assets/&lt;id&gt;/ as WebP. Any &lt;img&gt;/CSS references matching the original filename are rewritten automatically. Upload after the specimen has been saved once so it has an ID.</p>
               <p class="vault-hint" data-vault-assets-note hidden></p>
+            </fieldset>
+            <fieldset class="vault-fieldset vault-fieldset--og">
+              <legend>Social card overrides <em>(optional)</em></legend>
+              <label><span>OG title <em>(defaults to specimen title + "| Specimen Vault")</em></span><input name="ogTitle" type="text" autocomplete="off" placeholder="Leave blank to auto-generate"></label>
+              <label><span>OG description <em>(defaults to "Filed specimen: model · skill.")</em></span><textarea name="ogDescription" rows="2" placeholder="Leave blank to auto-generate"></textarea></label>
+              <label><span>OG image URL <em>(defaults to card image; falls back to vault OG)</em></span><input name="ogImage" type="text" autocomplete="off" placeholder="e.g. /specimens/images/b7031f4c.webp or leave blank"></label>
+              <p class="vault-hint">These fields control the social card shown when someone shares a direct link to the specimen's source file on Discord, X, or Slack. Leaving all three blank uses sensible auto-generated values.</p>
             </fieldset>
             <div class="junk-tool-actions">
               <button type="submit" data-vault-save>Save + Rebuild Vault</button>

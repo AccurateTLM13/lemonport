@@ -232,6 +232,76 @@ function sanitizeSpecimenHtml(rawHtml, assetMap = []) {
   return applyAssetMap(html, assetMap);
 }
 
+/* ─── Source-file OG injection ───────────────────────────── */
+
+const OG_BLOCK_MARKER = "<!-- Lemonteed Specimen Vault — social card metadata -->";
+const SITE_URL_BASE = "https://lemonteed.com";
+
+/**
+ * Inject (or replace) a Lemonteed social-card <head> block inside a specimen
+ * source file at specimens/source/<id>.html.
+ *
+ * Fields are derived from the record automatically; per-record overrides
+ * (record.ogTitle, record.ogDescription, record.ogImage) take precedence.
+ *
+ * Safe to call multiple times — the block is idempotent (replaced if already
+ * present). Called by buildSpecimens() for all published records and by the
+ * Studio server after save or card-image upload.
+ */
+function injectSourceFileOg(record) {
+  const sourceFile = path.join(specimensDir, "source", `${asText(record.id)}.html`);
+  if (!fs.existsSync(sourceFile)) return false;
+
+  const cardImageExists = record.image && fs.existsSync(path.join(root, String(record.image).replace(/^\//, "")));
+  const imageUrl = record.ogImage
+    ? (record.ogImage.startsWith("http") ? record.ogImage : `${SITE_URL_BASE}${record.ogImage}`)
+    : cardImageExists
+      ? `${SITE_URL_BASE}${record.image}`
+      : `${SITE_URL_BASE}/images/og/specimens.webp`;
+  const imageWidth = cardImageExists ? "1440" : "1200";
+  const imageHeight = cardImageExists ? "900" : "630";
+
+  const ogTitle = record.ogTitle
+    ? String(record.ogTitle).trim()
+    : `${asText(record.title)} | Specimen Vault`;
+  const ogDescription = record.ogDescription
+    ? String(record.ogDescription).trim()
+    : `Filed specimen: ${asText(record.model)} · ${asText(record.skill)}. Open the archived page and read the full prompt.`;
+  const canonicalUrl = `${SITE_URL_BASE}/specimens/source/${asText(record.id)}.html`;
+
+  const block = `${OG_BLOCK_MARKER}
+<title>${escapeHtml(ogTitle)} | Lemonteed</title>
+<meta property="og:title" content="${escapeHtml(ogTitle)}">
+<meta property="og:description" content="${escapeHtml(ogDescription)}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="${escapeHtml(canonicalUrl)}">
+<meta property="og:image" content="${escapeHtml(imageUrl)}">
+<meta property="og:image:secure_url" content="${escapeHtml(imageUrl)}">
+<meta property="og:image:type" content="image/webp">
+<meta property="og:image:width" content="${imageWidth}">
+<meta property="og:image:height" content="${imageHeight}">
+<meta property="og:site_name" content="Lemonteed">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${escapeHtml(ogTitle)}">
+<meta name="twitter:description" content="${escapeHtml(ogDescription)}">
+<meta name="twitter:image" content="${escapeHtml(imageUrl)}">
+<!-- /Lemonteed Specimen Vault — social card metadata -->`;
+
+  let html = fs.readFileSync(sourceFile, "utf8");
+
+  // Replace existing block if present (idempotent).
+  const existingBlockRe = /<!-- Lemonteed Specimen Vault — social card metadata -->[\s\S]*?<!-- \/Lemonteed Specimen Vault — social card metadata -->/;
+  if (existingBlockRe.test(html)) {
+    html = html.replace(existingBlockRe, block);
+  } else {
+    // Insert immediately after the first <head> tag (before the injected CSP).
+    html = html.replace(/(<head[^>]*>)/i, `$1\n${block}`);
+  }
+
+  fs.writeFileSync(sourceFile, html);
+  return true;
+}
+
 /* ─── Shared page chrome ─────────────────────────────────── */
 
 function favicons() {
@@ -264,6 +334,7 @@ function pageHead({ title, description, canonical, ogImage, jsonLd }) {
   <meta property="og:image:type" content="image/webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Lemonteed">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escapeHtml(title)}">
   <meta name="twitter:description" content="${escapeHtml(description)}">
@@ -573,7 +644,13 @@ function buildSpecimens() {
 
   fs.writeFileSync(path.join(specimensDir, "index.html"), renderIndexPage(data));
 
-  return { count: records.length, indexPage: path.join(specimensDir, "index.html"), warnings: result.warnings };
+  // Retroactively inject/refresh the OG block in every published source file.
+  let ogPatched = 0;
+  records.forEach((record) => {
+    if (injectSourceFileOg(record)) ogPatched += 1;
+  });
+
+  return { count: records.length, indexPage: path.join(specimensDir, "index.html"), warnings: result.warnings, ogPatched };
 }
 
 module.exports = {
@@ -587,6 +664,7 @@ module.exports = {
   applyAssetMap,
   publishable,
   renderFavoritesRail,
+  injectSourceFileOg,
   buildSpecimens,
   asText
 };
@@ -594,7 +672,7 @@ module.exports = {
 if (require.main === module) {
   try {
     const result = buildSpecimens();
-    console.log(`Specimen Vault built: ${result.count} published specimen(s), index refreshed.`);
+    console.log(`Specimen Vault built: ${result.count} published specimen(s), index refreshed, ${result.ogPatched} source file(s) OG-patched.`);
     result.warnings.forEach((warning) => console.warn(`WARN: ${warning}`));
   } catch (error) {
     console.error(error.message);

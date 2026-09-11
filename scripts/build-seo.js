@@ -236,9 +236,13 @@ function applyPatches(html, record) {
   }
   if (record.ogImageWidth) out = patchMeta(out, "property", "og:image:width", String(record.ogImageWidth));
   if (record.ogImageHeight) out = patchMeta(out, "property", "og:image:height", String(record.ogImageHeight));
+  // og:site_name is a fixed site-wide constant — always patch, never read from record.
+  out = patchMeta(out, "property", "og:site_name", "Lemonteed");
   if (record.twitterTitle) out = patchMeta(out, "name", "twitter:title", record.twitterTitle);
   if (record.twitterDescription) out = patchMeta(out, "name", "twitter:description", record.twitterDescription);
   if (absoluteTwitterImage) out = patchMeta(out, "name", "twitter:image", absoluteTwitterImage);
+  // twitter:card defaults to summary_large_image if not already present.
+  out = patchMeta(out, "name", "twitter:card", "summary_large_image");
 
   return out;
 }

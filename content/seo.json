@@ -7,14 +7,14 @@
     "description": "A pure static web universe of tools, games, songs, artifacts, and experimental internet objects. Pick a zone and discover Lemonteed.",
     "ogTitle": "Lemonteed | Discover Creations From My Brain",
     "ogDescription": "A pure static web universe of tools, games, songs, artifacts, and experimental internet objects. Pick a zone and discover Lemonteed.",
-    "ogImage": "/images/og/home.webp",
+    "ogImage": "/images/og/home-2.webp",
     "ogImageWidth": 1200,
     "ogImageHeight": 630,
     "twitterTitle": "Lemonteed | Discover Creations From My Brain",
     "twitterDescription": "A static web universe of tools, games, songs, artifacts, and experimental internet objects.",
-    "twitterImage": "/images/og/home.webp",
+    "twitterImage": "/images/og/home-2.webp",
     "canonicalUrl": "https://lemonteed.com/",
-    "updatedAt": "2026-07-19T23:57:18.202Z"
+    "updatedAt": "2026-09-11T19:04:31.089Z"
   },
   {
     "key": "archive",
@@ -35,7 +35,7 @@
   },
   {
     "key": "vrg-cards",
-    "label": "The Wrong Internet (Under Renovation)",
+    "label": "VRG Cards",
     "htmlPath": "vrg-cards/index.html",
     "title": "The Wrong Internet (Under Renovation) | Lemonteed",
     "description": "The VRG Card Vault is officially closed. A new exhibit is coming soon to The Wrong Internet on Lemonteed. Sneak peek inside.",
@@ -92,14 +92,14 @@
     "description": "Build a cursed ancient technology loadout and survive the Memetic Warfare dungeon run.",
     "ogTitle": "Memetic Warfare | Ancient Tech Loadout",
     "ogDescription": "Build a cursed ancient technology loadout and survive the dungeon run.",
-    "ogImage": "/images/og/memetic-warfare.webp",
+    "ogImage": "/images/og/memetic-warfare-3.webp",
     "ogImageWidth": 1200,
     "ogImageHeight": 630,
     "twitterTitle": "Memetic Warfare | Ancient Tech Loadout",
     "twitterDescription": "Build a cursed ancient technology loadout and survive the dungeon run.",
-    "twitterImage": "/images/og/memetic-warfare.webp",
+    "twitterImage": "/images/og/memetic-warfare-3.webp",
     "canonicalUrl": "https://lemonteed.com/memetic-warfare/",
-    "updatedAt": "2026-07-16T20:24:33.947Z"
+    "updatedAt": "2026-09-11T19:21:43.627Z"
   },
   {
     "key": "junk-drawer",
@@ -109,14 +109,14 @@
     "description": "Free browser tools, utilities, and oddities from Lemonteed — starting with Lighthouse Handoff, image tools, Character Supply, and Lemon DOM.",
     "ogTitle": "Junk Drawer | Lemonteed",
     "ogDescription": "Free browser tools, utilities, and oddities from Lemonteed — starting with Lighthouse Handoff.",
-    "ogImage": "/images/og/junk-drawer.webp",
+    "ogImage": "/images/og/junk-drawer-2.webp",
     "ogImageWidth": 1200,
     "ogImageHeight": 630,
     "twitterTitle": "Junk Drawer | Lemonteed",
     "twitterDescription": "Free browser tools, utilities, and oddities from Lemonteed — starting with Lighthouse Handoff, image tools, Character Supply, and Lemon DOM.",
-    "twitterImage": "/images/og/junk-drawer.webp",
+    "twitterImage": "/images/og/junk-drawer-2.webp",
     "canonicalUrl": "https://lemonteed.com/junk-drawer/",
-    "updatedAt": "2026-07-19T23:34:24.317Z"
+    "updatedAt": "2026-09-11T19:04:58.706Z"
   },
   {
     "key": "junk-drawer-image-converter",
@@ -126,14 +126,14 @@
     "description": "Batch convert HEIC, PNG, JPEG, AVIF, SVG, and WebP entirely locally in your browser. Free image converter tool by Lemonteed.",
     "ogTitle": "Image Converter | Lemonteed",
     "ogDescription": "Batch convert HEIC, PNG, JPEG, AVIF, SVG, and WebP locally. Your images never touch a server.",
-    "ogImage": "/images/og/junk-drawer-image-converter.webp",
+    "ogImage": "/images/og/junk-drawer-image-converter-2.webp",
     "ogImageWidth": 1200,
     "ogImageHeight": 630,
     "twitterTitle": "Image Converter | Lemonteed",
     "twitterDescription": "Batch convert HEIC, PNG, JPEG, AVIF, SVG, and WebP locally.",
-    "twitterImage": "/images/og/junk-drawer-image-converter.webp",
+    "twitterImage": "/images/og/junk-drawer-image-converter-2.webp",
     "canonicalUrl": "https://lemonteed.com/junk-drawer/image-converter/",
-    "updatedAt": "2026-08-04T02:32:40.799Z"
+    "updatedAt": "2026-09-11T19:15:48.969Z"
   },
   {
     "key": "junk-drawer-image-compressor",
@@ -143,14 +143,14 @@
     "description": "Compress PNG, JPEG, WebP, and AVIF images directly in your browser. No upload. No server. Just smaller files.",
     "ogTitle": "Image Compressor | Lemonteed",
     "ogDescription": "Squish image files down without shipping them off to some mystery server. Drop in PNG, JPEG, WebP, or AVIF files and compress them directly in your browser.",
-    "ogImage": "/images/og/junk-drawer-image-compressor.webp",
+    "ogImage": "/images/og/junk-drawer-image-compressor-2.webp",
     "ogImageWidth": 1200,
     "ogImageHeight": 630,
     "twitterTitle": "Image Compressor | Lemonteed",
     "twitterDescription": "Squish image files down without shipping them off to some mystery server.",
-    "twitterImage": "/images/og/junk-drawer-image-compressor.webp",
+    "twitterImage": "/images/og/junk-drawer-image-compressor-2.webp",
     "canonicalUrl": "https://lemonteed.com/junk-drawer/image-compressor/",
-    "updatedAt": "2026-08-04T02:32:51.110Z"
+    "updatedAt": "2026-09-11T19:15:26.944Z"
   },
   {
     "key": "junk-drawer-character-supply",
@@ -160,14 +160,14 @@
     "description": "Character Supply — a fast, ad-free HTML special character library by Lemonteed.",
     "ogTitle": "Character Supply — HTML Special Characters",
     "ogDescription": "A fast, ad-free HTML special character library by Lemonteed.",
-    "ogImage": "/images/og/junk-drawer-character-supply.webp",
+    "ogImage": "/images/og/junk-drawer-character-supply-2.webp",
     "ogImageWidth": 1200,
     "ogImageHeight": 630,
     "twitterTitle": "Character Supply — HTML Special Characters",
     "twitterDescription": "A fast, ad-free HTML special character library by Lemonteed.",
-    "twitterImage": "/images/og/junk-drawer-character-supply.webp",
+    "twitterImage": "/images/og/junk-drawer-character-supply-2.webp",
     "canonicalUrl": "https://lemonteed.com/junk-drawer/character-supply/",
-    "updatedAt": "2026-07-16T20:24:33.949Z"
+    "updatedAt": "2026-09-11T19:13:08.815Z"
   },
   {
     "key": "junk-drawer-list-mechanic",
@@ -177,14 +177,14 @@
     "description": "Paste a messy list, repair it locally in your browser, then copy or download the cleaned result.",
     "ogTitle": "List Mechanic | Lemonteed",
     "ogDescription": "A browser-only repair bench for cleaning, sorting, numbering, splitting, joining, and exporting messy lists.",
-    "ogImage": "/images/og/junk-drawer-list-mechanic.webp",
+    "ogImage": "/images/og/junk-drawer-list-mechanic-2.webp",
     "ogImageWidth": 1200,
     "ogImageHeight": 630,
     "twitterTitle": "List Mechanic | Lemonteed",
     "twitterDescription": "Paste a messy list, repair it locally, then copy or download the cleaned result.",
     "twitterImage": "/images/og/junk-drawer-list-mechanic.webp",
     "canonicalUrl": "https://lemonteed.com/junk-drawer/list-mechanic/",
-    "updatedAt": "2026-07-16T20:24:33.949Z"
+    "updatedAt": "2026-09-11T19:12:48.248Z"
   },
   {
     "key": "lighthouse-handoff",
@@ -194,14 +194,14 @@
     "description": "A Chrome extension that turns PageSpeed Insights reports into coding-agent-ready Markdown with priorities, tasks, guardrails, and acceptance criteria.",
     "ogTitle": "Lighthouse Handoff | Lemonteed",
     "ogDescription": "Turn PageSpeed Insights into coding-agent-ready Markdown. A handoff layer for developers and AI-assisted workflows.",
-    "ogImage": "/images/og/lighthouse-handoff.webp",
+    "ogImage": "/images/og/lighthouse-handoff-2.webp",
     "ogImageWidth": 1200,
     "ogImageHeight": 630,
     "twitterTitle": "Lighthouse Handoff | Lemonteed",
     "twitterDescription": "Turn PageSpeed Insights into coding-agent-ready Markdown.",
-    "twitterImage": "/images/og/lighthouse-handoff.webp",
+    "twitterImage": "/images/og/lighthouse-handoff-2.webp",
     "canonicalUrl": "https://lemonteed.com/lighthouse-handoff/",
-    "updatedAt": "2026-08-04T02:32:16.296Z"
+    "updatedAt": "2026-09-11T19:11:50.162Z"
   },
   {
     "key": "free-source",
@@ -211,14 +211,14 @@
     "description": "FreeSource is a radically simple license: use the work for whatever you want, for free. No permission. No payment. No strings.",
     "ogTitle": "FreeSource — Use it for whatever you want.",
     "ogDescription": "No permission. No payment. No strings. A radically simple license for creators who genuinely mean free.",
-    "ogImage": "/images/og/free-source.webp",
+    "ogImage": "/images/og/free-source-2.webp",
     "ogImageWidth": 1200,
     "ogImageHeight": 630,
     "twitterTitle": "FreeSource — Use it for whatever you want.",
     "twitterDescription": "No permission. No payment. No strings. A radically simple license for creators who genuinely mean free.",
-    "twitterImage": "/images/og/free-source.webp",
+    "twitterImage": "/images/og/free-source-2.webp",
     "canonicalUrl": "https://lemonteed.com/free-source/",
-    "updatedAt": "2026-08-04T02:34:17.718Z"
+    "updatedAt": "2026-09-11T19:10:20.047Z"
   },
   {
     "key": "lemon-dom",
@@ -228,14 +228,14 @@
     "description": "Lemon DOM is a lightweight vanilla HTML/CSS/JS effects library — glass, glow, squeeze, zest, and peel for everyday websites. No build step. No dependencies.",
     "ogTitle": "Lemon DOM",
     "ogDescription": "Juicy UI effects for plain old websites. A tiny vanilla tribute inspired by Liquid DOM.",
-    "ogImage": "/images/og/lemon-dom.webp",
+    "ogImage": "/images/og/lemon-dom-2.webp",
     "ogImageWidth": 1200,
     "ogImageHeight": 630,
     "twitterTitle": "Lemon DOM",
     "twitterDescription": "Juicy UI effects for plain old websites.",
-    "twitterImage": "/images/lemonteed-fm/disco-lemon.webp",
+    "twitterImage": "/images/og/lemon-dom-2.webp",
     "canonicalUrl": "https://lemonteed.com/lemon-dom/",
-    "updatedAt": "2026-07-16T20:24:33.950Z"
+    "updatedAt": "2026-09-11T19:11:00.548Z"
   },
   {
     "key": "studio-lab",
@@ -245,14 +245,14 @@
     "description": "Active builds, shipped tools, and experiments in progress across the Lemonteed universe.",
     "ogTitle": "Studio Lab | Lemonteed",
     "ogDescription": "Active builds, shipped tools, and experiments in progress across the Lemonteed universe.",
-    "ogImage": "/images/og/studio-lab.webp",
+    "ogImage": "/images/og/studio-lab-2.webp",
     "ogImageWidth": 1200,
     "ogImageHeight": 630,
     "twitterTitle": "Studio Lab | Lemonteed",
     "twitterDescription": "Active builds, shipped tools, and experiments in progress across the Lemonteed universe.",
-    "twitterImage": "/images/og/studio-lab.webp",
+    "twitterImage": "/images/og/studio-lab-2.webp",
     "canonicalUrl": "https://lemonteed.com/studio-lab/",
-    "updatedAt": "2026-07-16T20:24:33.950Z"
+    "updatedAt": "2026-09-11T19:22:06.261Z"
   },
   {
     "key": "lemonteed-fm",
@@ -262,14 +262,14 @@
     "description": "Lemonteed FM is a tiny static music discovery player for free-to-use tracks, clear licenses, and questionable taste.",
     "ogTitle": "Lemonteed FM",
     "ogDescription": "Free-to-use tracks, questionable taste, and one extremely shiny lemon.",
-    "ogImage": "/images/og/lemonteed-fm.webp",
+    "ogImage": "/images/og/lemonteed-fm-2.webp",
     "ogImageWidth": 1200,
     "ogImageHeight": 630,
     "twitterTitle": "Lemonteed FM",
     "twitterDescription": "Free-to-use tracks, questionable taste, and one extremely shiny lemon.",
-    "twitterImage": "/images/lemonteed-fm/lemonteed-fm.webp",
+    "twitterImage": "/images/og/lemonteed-fm-2.webp",
     "canonicalUrl": "https://lemonteed.com/lemonteed-fm/",
-    "updatedAt": "2026-07-16T20:24:33.951Z"
+    "updatedAt": "2026-09-11T19:22:21.120Z"
   },
   {
     "key": "benchmark",
