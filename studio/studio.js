@@ -3845,13 +3845,13 @@
   async function autoGenerateSeoOgImage() {
     if (!activeSeoKey) return;
     if (seoUploadStatus) {
-      seoUploadStatus.textContent = "Generating card…";
+      seoUploadStatus.textContent = "Capturing card…";
       seoUploadStatus.hidden = false;
     }
     if (seoGenOgBtn) seoGenOgBtn.disabled = true;
 
     try {
-      setStatus(`Generating psychological OG card for ${activeSeoKey}…`);
+      setStatus(`Capturing live screenshot OG card for ${activeSeoKey}…`);
       const result = await api("/api/seo/generate-og", {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -3877,9 +3877,9 @@
       updateOgPreview(previewUrl);
 
       if (seoUploadStatus) {
-        seoUploadStatus.textContent = `Generated: ${result.url}`;
+        seoUploadStatus.textContent = `Captured: ${result.url}`;
       }
-      setStatus(`Branded OG card generated: ${result.url}`);
+      setStatus(`Live screenshot OG card captured: ${result.url}`);
     } catch (error) {
       if (seoUploadStatus) seoUploadStatus.textContent = "Generation failed.";
       showError(error);

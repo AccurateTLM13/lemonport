@@ -744,12 +744,22 @@ function renderOgSvg(config) {
 
 /**
  * Generate a single OG image for a page key.
+ * Defaults to Style A live browser screenshot capture.
+ * Set options.legacyTemplate = true for synthetic SVG template.
  *
  * @param {string} pageKey - Key in content/seo.json
  * @param {Object} [options] - Override options
- * @returns {Object} Result { url, filename, width, height }
+ * @returns {Object} Result { url, filename, width, height, sizeBytes }
  */
 function generateOgImage(pageKey, options = {}) {
+  if (options.legacyTemplate) {
+    return generateLegacyOgImage(pageKey, options);
+  }
+  const { captureOgCard } = require("./capture-og-screenshots");
+  return captureOgCard(pageKey, options);
+}
+
+function generateLegacyOgImage(pageKey, options = {}) {
   // Load seo.json to get canonical titles and paths
   const seoData = JSON.parse(fs.readFileSync(seoFile, "utf8"));
   const seoEntry = seoData.find((p) => p.key === pageKey);
