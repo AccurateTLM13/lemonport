@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lemonteed Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="/studio/studio-v2.css?v=1">
+
+    <!--
+      Workspace scripts load after the core.
+      Each file calls Studio.register() — the core boots after DOMContentLoaded.
+      Order: core → workspaces (all registered before boot() runs via defer).
+    -->
+    <script src="/studio/studio-core.js?v=1" defer></script>
+    <script src="/studio/workspaces/dashboard.js?v=1" defer></script>
+    <script src="/studio/workspaces/library.js?v=1" defer></script>
+    <script src="/studio/workspaces/uploads.js?v=1" defer></script>
+    <script src="/studio/workspaces/bulk.js?v=1" defer></script>
+    <script src="/studio/workspaces/media-health.js?v=1" defer></script>
+    <script src="/studio/workspaces/specimens.js?v=1" defer></script>
+    <script src="/studio/workspaces/seo.js?v=1" defer></script>
+    <script src="/studio/workspaces/fm.js?v=1" defer></script>
+    <script src="/studio/workspaces/junk-drawer.js?v=1" defer></script>
+    <script src="/studio/workspaces/mutation.js?v=1" defer></script>
+    <script src="/studio/workspaces/relations.js?v=1" defer></script>
+    <script src="/studio/workspaces/game.js?v=1" defer></script>
+    <script src="/studio/workspaces/ai-config.js?v=1" defer></script>
+    <!-- Memetic game data required by game workspace -->
+    <script src="/assets/js/memetic-game-data.js" defer></script>
+  </head>
+  <body>
+    <div class="studio-app">
+
+      <!-- ── Header ────────────────────────────────────────────── -->
+      <header class="studio-header" role="banner">
+        <div class="studio-brand">
+          <span class="studio-brand__name">Lemonteed</span>
+          <span class="studio-brand__version">Studio v2</span>
+        </div>
+        <div class="studio-header__divider" aria-hidden="true"></div>
+        <span class="studio-header__workspace" id="studio-workspace-label" aria-live="polite">Loading…</span>
+        <div class="studio-header__spacer"></div>
+        <div class="studio-header__actions">
+          <!-- AI status badge — populated by studio-core.js -->
+          <div class="ai-status-badge" id="studio-ai-badge" aria-label="AI status">
+            <span class="ai-status-badge__dot" aria-hidden="true"></span>
+            <span id="studio-ai-badge-text">AI</span>
+          </div>
+          <a class="view-site-link" href="/" target="_blank" rel="noreferrer">View Site ↗</a>
+        </div>
+      </header>
+
+      <!-- ── Navigation Rail ───────────────────────────────────── -->
+      <nav class="studio-nav" id="studio-nav" aria-label="Studio workspaces">
+        <!-- Populated by studio-core.js from workspace registry -->
+        <div id="studio-nav-content"></div>
+
+        <!-- Dev-only links (separate server required) -->
+        <div class="nav-dev-section">
+          <span class="nav-dev-section__label">Dev</span>
+          <a class="nav-dev-link" href="/million-dollar-receipt/" target="_blank" rel="noreferrer">Million Dollar Receipt</a>
+          <a class="nav-dev-link" href="/operator-log/" target="_blank" rel="noreferrer">Operator Log</a>
+        </div>
+      </nav>
+
+      <!-- ── Workspace Mount ───────────────────────────────────── -->
+      <main id="studio-mount" role="main" aria-label="Studio workspace">
+        <!-- Active workspace renders here -->
+      </main>
+
+    </div>
+
+    <!-- ── Edit Drawer (shared across workspaces) ────────────── -->
+    <div class="edit-layer" id="studio-edit-layer" hidden aria-modal="true">
+      <div class="edit-scrim" id="studio-edit-scrim" aria-hidden="true"></div>
+      <aside class="edit-drawer" id="studio-edit-drawer" role="dialog" aria-labelledby="studio-drawer-title">
+        <!-- Populated dynamically by workspaces -->
+      </aside>
+    </div>
+
+    <!-- ── Toast Container ───────────────────────────────────── -->
+    <div id="studio-toasts" aria-live="polite" aria-atomic="false"></div>
+
+  </body>
+</html>
