@@ -824,7 +824,100 @@
       "source": "/specimens/source/da2583a6.html",
       "createdAt": "2026-09-12T19:52:43.430Z",
       "updatedAt": "2026-09-12T19:52:43.884Z"
+    },
+    {
+      "id": "a19ad65f",
+      "title": "Timberline",
+      "model": "Not recorded",
+      "skill": "small-batch-bold",
+      "prompt": "",
+      "notes": "Imported from C:\\Users\\JP\\Desktop\\timberline\\index.html through the Studio API. Skill label follows the outputs/small-batch-bold folder. The folder also contains a Gemini 3.8 Flash-named output, but the current index.html differs; its exact model provenance and original prompt are not recorded. Import date used as capture date.",
+      "date": "2026-09-26",
+      "tags": [
+        "landing-page",
+        "dog-food",
+        "outdoors"
+      ],
+      "status": "Published",
+      "score": null,
+      "favorite": false,
+      "image": "/specimens/images/a19ad65f.webp",
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "assets": [
+        "/specimens/assets/a19ad65f/timberline-logo.webp",
+        "/specimens/assets/a19ad65f/cabin-dog.webp",
+        "/specimens/assets/a19ad65f/usa.webp",
+        "/specimens/assets/a19ad65f/grain.webp",
+        "/specimens/assets/a19ad65f/stamp.webp",
+        "/specimens/assets/a19ad65f/mountain.webp",
+        "/specimens/assets/a19ad65f/everyday-raw.webp",
+        "/specimens/assets/a19ad65f/trail-box.webp",
+        "/specimens/assets/a19ad65f/first-box.webp",
+        "/specimens/assets/a19ad65f/hero-meadow.webp",
+        "/specimens/assets/a19ad65f/origin.webp",
+        "/specimens/assets/a19ad65f/no-filler.webp",
+        "/specimens/assets/a19ad65f/small-batch.webp"
+      ],
+      "assetMap": [
+        {
+          "from": "timberline-logo.webp",
+          "to": "../assets/a19ad65f/timberline-logo.webp"
+        },
+        {
+          "from": "cabin-dog.png",
+          "to": "../assets/a19ad65f/cabin-dog.webp"
+        },
+        {
+          "from": "usa.webp",
+          "to": "../assets/a19ad65f/usa.webp"
+        },
+        {
+          "from": "grain.webp",
+          "to": "../assets/a19ad65f/grain.webp"
+        },
+        {
+          "from": "stamp.webp",
+          "to": "../assets/a19ad65f/stamp.webp"
+        },
+        {
+          "from": "mountain.webp",
+          "to": "../assets/a19ad65f/mountain.webp"
+        },
+        {
+          "from": "everyday-raw.png",
+          "to": "../assets/a19ad65f/everyday-raw.webp"
+        },
+        {
+          "from": "trail-box.png",
+          "to": "../assets/a19ad65f/trail-box.webp"
+        },
+        {
+          "from": "first-box.png",
+          "to": "../assets/a19ad65f/first-box.webp"
+        },
+        {
+          "from": "hero-meadow.png",
+          "to": "../assets/a19ad65f/hero-meadow.webp"
+        },
+        {
+          "from": "origin.webp",
+          "to": "../assets/a19ad65f/origin.webp"
+        },
+        {
+          "from": "no-filler.webp",
+          "to": "../assets/a19ad65f/no-filler.webp"
+        },
+        {
+          "from": "small-batch.webp",
+          "to": "../assets/a19ad65f/small-batch.webp"
+        }
+      ],
+      "source": "/specimens/source/a19ad65f.html",
+      "createdAt": "2026-09-26T15:02:37.329Z",
+      "updatedAt": "2026-09-26T15:04:17.442Z"
     }
   ],
-  "updatedAt": "2026-09-12T19:52:43.890Z"
+  "updatedAt": "2026-09-26T15:04:17.450Z"
 }
