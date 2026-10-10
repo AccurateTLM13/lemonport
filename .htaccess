@@ -17,6 +17,9 @@ AddType image/avif .avif
 
 Redirect 301 /memetic-warfare/live-experiment/ /live-experiment/
 
+# Retired experiment — Clanker Cloud Run was removed from the site.
+Redirect 301 /lemon-lab /studio-lab/
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteRule ^(content|studio|scripts|\.studio-uploads|\.studio-backups)(/|$) - [F,L]

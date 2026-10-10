@@ -304,5 +304,39 @@
     "twitterImage": "/images/og/specimens-2.webp",
     "canonicalUrl": "https://lemonteed.com/specimens/",
     "updatedAt": "2026-08-29T19:07:06.551Z"
+  },
+  {
+    "key": "rankings",
+    "label": "Lemmy's Rankings",
+    "htmlPath": "rankings/index.html",
+    "title": "Lemmy's Rankings | Lemonteed",
+    "description": "Lemmy's Rankings: everyday objects ranked on the only two axes that matter. Episode 001 — the House Shoe Matrix.",
+    "ogTitle": "Lemmy's Rankings | Lemonteed",
+    "ogDescription": "Lemmy's Rankings: everyday objects ranked on the only two axes that matter. Episode 001 — the House Shoe Matrix.",
+    "ogImage": "/images/rankings/ep001/og-house-shoe-matrix.webp",
+    "ogImageWidth": 1200,
+    "ogImageHeight": 630,
+    "twitterTitle": "Lemmy's Rankings | Lemonteed",
+    "twitterDescription": "Everyday objects ranked on the only two axes that matter. Episode 001 — the House Shoe Matrix.",
+    "twitterImage": "/images/rankings/ep001/og-house-shoe-matrix.webp",
+    "canonicalUrl": "https://lemonteed.com/rankings/",
+    "updatedAt": "2026-10-09T21:18:15.296Z"
+  },
+  {
+    "key": "rankings-house-shoe-matrix",
+    "label": "Rankings: House Shoe Matrix",
+    "htmlPath": "rankings/house-shoe-matrix/index.html",
+    "title": "24 Warm House Shoes, Ranked From Frugal to Pricey (2026) | Lemmy's Rankings",
+    "description": "24 warm house shoes ranked from frugal to pricey and saucy to boring — UGG, L.L.Bean, Birkenstock, Haflinger, Sorel and more, with the warmest picks for cold feet.",
+    "ogTitle": "24 Warm House Shoes, Ranked From Frugal to Pricey (2026) | Lemmy's Rankings",
+    "ogDescription": "24 warm house shoes ranked from frugal to pricey and saucy to boring — UGG, L.L.Bean, Birkenstock, Haflinger, Sorel and more, with the warmest picks for cold feet.",
+    "ogImage": "/images/rankings/ep001/og-house-shoe-matrix.webp",
+    "ogImageWidth": 1200,
+    "ogImageHeight": 630,
+    "twitterTitle": "24 Warm House Shoes, Ranked From Frugal to Pricey (2026)",
+    "twitterDescription": "24 warm house shoes ranked from frugal to pricey and saucy to boring — with the warmest picks for cold feet.",
+    "twitterImage": "/images/rankings/ep001/og-house-shoe-matrix.webp",
+    "canonicalUrl": "https://lemonteed.com/rankings/house-shoe-matrix/",
+    "updatedAt": "2026-10-09T21:18:15.299Z"
   }
 ]

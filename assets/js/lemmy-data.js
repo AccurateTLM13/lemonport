@@ -209,6 +209,30 @@ window.LEMMY_DATA = {
         "strange",
         "surprise"
       ]
+    },
+    "rankings": {
+      "enabled": true,
+      "position": "bottom-right",
+      "states": [
+        "idle",
+        "point",
+        "celebrate"
+      ],
+      "messages": [
+        "Twenty-four slippers, two axes, one lemon. House Shoe Matrix is on the board.",
+        "Frugal to pricey, saucy to boring. The ranking is the point.",
+        "Every pick on this page has an opinion behind it."
+      ],
+      "reactions": {
+        "lemonteed:episode-opened": {
+          "state": "point",
+          "message": "Cold feet? Start at the warmest five."
+        }
+      },
+      "destinationIds": [
+        "useful",
+        "surprise"
+      ]
     }
   }
 };

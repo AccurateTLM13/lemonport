@@ -13,6 +13,7 @@ const ALLOWED_ZONES = new Set([
   "vrg-vault",
   "memetic-warfare",
   "what-if",
+  "rankings",
   "error",
   "studio"
 ]);
@@ -35,6 +36,7 @@ const ALLOWED_EVENTS = new Set([
   "lemonteed:artifact-opened",
   "lemonteed:track-started",
   "lemonteed:game-started",
+  "lemonteed:episode-opened",
   "lemonteed:zone-empty",
   "lemonteed:error"
 ]);

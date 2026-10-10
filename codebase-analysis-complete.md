@@ -143,7 +143,8 @@ Gemini Pro says the project avoids `package.json` / `node_modules`. That may be 
 
 11. Classify orphaned pages/directories:
 
-* `lemon-lab/clanker-cloud-run/`
+* ~~`lemon-lab/clanker-cloud-run/`~~ — removed from the site; `/lemon-lab` now
+301s to `/studio-lab/` in `.htaccess`
 * `hashbrownpro/wafflehousepro.html`
 
 12. Add minimal regression tests around:

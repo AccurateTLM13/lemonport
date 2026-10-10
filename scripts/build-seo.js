@@ -28,6 +28,8 @@ const REGISTERED_PAGES = [
   { key: "lemonteed-fm", label: "Lemonteed FM", htmlPath: "lemonteed-fm/index.html", canonicalUrl: "https://lemonteed.com/lemonteed-fm/" },
   { key: "benchmark", label: "Design Skill Benchmark Archive", htmlPath: "benchmark/index.html", canonicalUrl: "https://lemonteed.com/benchmark/" },
   { key: "specimens", label: "Specimen Vault", htmlPath: "specimens/index.html", canonicalUrl: "https://lemonteed.com/specimens/" },
+  { key: "rankings", label: "Lemmy's Rankings", htmlPath: "rankings/index.html", canonicalUrl: "https://lemonteed.com/rankings/" },
+  { key: "rankings-house-shoe-matrix", label: "Rankings: House Shoe Matrix", htmlPath: "rankings/house-shoe-matrix/index.html", canonicalUrl: "https://lemonteed.com/rankings/house-shoe-matrix/" },
 ];
 
 const CANONICAL_ORIGIN = "https://lemonteed.com";
@@ -35,11 +37,15 @@ const CANONICAL_ORIGIN = "https://lemonteed.com";
 /**
  * Extract a meta tag content value from raw HTML.
  * Handles both property= and name= attributes.
+ * Attribute values are always double-quoted in this repo, so only `"` closes
+ * a value. An apostrophe inside the content (e.g. "Lemmy's Rankings") must not
+ * terminate the match — treating `'` as a delimiter truncates the value and
+ * causes patchMeta to append a duplicate tag instead of replacing it.
  */
 function extractMeta(html, attr, value) {
   const pattern = new RegExp(
-    `<meta\\s[^>]*${attr}=["']${escapeRegex(value)}["'][^>]*content=["']([^"']*)["'][^>]*>|` +
-    `<meta\\s[^>]*content=["']([^"']*)["'][^>]*${attr}=["']${escapeRegex(value)}["'][^>]*>`,
+    `<meta\\s[^>]*${attr}=["']${escapeRegex(value)}["'][^>]*content="([^"]*)"[^>]*>|` +
+    `<meta\\s[^>]*content="([^"]*)"[^>]*${attr}=["']${escapeRegex(value)}["'][^>]*>`,
     "i"
   );
   const match = html.match(pattern);
@@ -53,7 +59,7 @@ function extractTitle(html) {
 }
 
 function extractCanonical(html) {
-  const match = html.match(/<link\s[^>]*rel=["']canonical["'][^>]*href=["']([^"']*)["'][^>]*>/i);
+  const match = html.match(/<link\s[^>]*rel=["']canonical["'][^>]*href="([^"]*)"[^>]*>/i);
   return match ? match[1].trim() : "";
 }
 
@@ -159,14 +165,16 @@ function loadSeo() {
 /**
  * Patch a single meta tag (name= or property= variant).
  * If the tag doesn't exist yet, insert it before </head>.
+ * Only `"` closes a content value (see extractMeta) so apostrophes inside
+ * titles/descriptions survive patching instead of producing duplicate tags.
  */
 function patchMeta(html, attrName, attrValue, newContent) {
   const escapedContent = escapeAttr(newContent);
 
   // Try to replace existing tag — handles both attribute orderings
   const pattern = new RegExp(
-    `(<meta\\s[^>]*${attrName}=["']${escapeRegex(attrValue)}["'][^>]*content=["'])([^"']*)("(?:[^>]*)>)` +
-    `|(<meta\\s[^>]*content=["'])([^"']*)("["'\\s][^>]*${attrName}=["']${escapeRegex(attrValue)}["'][^>]*>)`,
+    `(<meta\\s[^>]*${attrName}=["']${escapeRegex(attrValue)}["'][^>]*content=")([^"]*)("[^>]*>)` +
+    `|(<meta\\s[^>]*content=")([^"]*)("[^>]*${attrName}=["']${escapeRegex(attrValue)}["'][^>]*>)`,
     "i"
   );
 

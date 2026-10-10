@@ -101,6 +101,126 @@ To support concurrent work streams and seamless handoffs between agent runs:
 
 ## Active Projects & Feature Progress
 
+### Rankings Zone 06 Episode-Page Pop-In Workbench Sidebar
+
+* **Status: Completed locally; not deployed**
+  * **Completed:** `/rankings/house-shoe-matrix/` now carries the workbench
+    sidebar as static, crawlable `<nav>`/`<a>` markup that is parked off-canvas
+    behind a vertical `WORKBENCH` tab pinned to the left edge. The tab slides
+    the panel in over a dimming scrim; Escape, the scrim, or the panel's `✕`
+    dismisses it. Focus moves into the panel on open and returns to the tab on
+    close, with a Tab focus trap while open.
+  * **Scope:** episode pages only. The zone index `/rankings/` already had the
+    normal permanent sidebar and keeps it, exactly like every other zone page —
+    `rankings-sidebar.css` / `rankings-sidebar.js` are not loaded there, and
+    `mobile-header.js` stays on it. Future episode pages get the drawer by
+    copying the markup block and the two asset links from Episode 001.
+  * **New files:** `assets/css/rankings-sidebar.css` and
+    `assets/js/rankings-sidebar.js` (`rankings-sidebar.js?v=1`).
+  * **Self-sufficient panel:** `rankings-sidebar.css` styles the panel internals
+    itself (brand block, group labels, nav cards, badges, arrows, drawer card)
+    instead of inheriting them, because episode pages run on `operator.css` only
+    and do not load `style.css`. Without that the panel inherited
+    `operator.css`'s yellow links and mono body text and laid out as a row.
+    Stacking is tab 119 / scrim 120 / panel 130 — above the sticky `.op-header`
+    (z-index 100) and below modals/toasts (>=140).
+  * **Progressive enhancement:** without JavaScript the sidebar renders as a
+    normal static block above the article — every link still works and stays
+    crawlable. The panel header and its close button only appear once the script
+    marks `body.rankings-sidebar-ready`, so no dead control is shown.
+  * **Brand rules honored:** `.sidebar`, `.sidebar__nav-card`, and related chrome
+    are explicitly re-skinned (background, border, color, shadow) so no light
+    fill or operator-yellow text leaks in either direction. No accent card
+    borders. At `<=1023px` the shared stylesheet collapses `.sidebar` into a
+    56px top bar and `!important`-hides `.sidebar__group`; this stylesheet
+    restores the vertical drawer at those widths and adds `min-width: 0` so the
+    nowrap card labels cannot push the panel wider than the viewport. Reduced
+    motion is respected.
+  * **Bug caught in verification (do not reintroduce):** `.rankings-sidebar-scrim[hidden]`
+    lost to `body.rankings-sidebar-ready .rankings-sidebar-scrim { display: block }`
+    on specificity, so the closed scrim stayed laid over the whole page at
+    z-index 120 and swallowed every click — the tab looked inert. The closed
+    rule is now `body.rankings-sidebar-ready .rankings-sidebar-scrim[hidden]`.
+    Verified by scripting a real click and reading computed styles: hit-test on
+    the tab centre returns the tab (was the scrim), `transform` goes to
+    `matrix(1,0,0,1,0,0)` on open and back to `-318.8px` on close, Escape closes,
+    and focus moves to the `✕` on open and returns to the tab on close. Note that
+    computed `transform` reads as unchanged while a transition is mid-flight, so
+    headless checks should pass `--force-prefers-reduced-motion`.
+  * **Housekeeping:** removed a stale duplicate `og:title` tag on the episode
+    article left behind by the earlier `build-seo.js` apostrophe bug. The dead
+    `Summon Random Artifact` card was left off the episode drawer — it needs
+    `gallery.js`, which this zone does not load.
+  * **Validation:** `content-validation.js` passes, `build-seo --dry-run` reports
+    0 pages to patch, `check.js` reports 0 missing referenced images, the audit
+    still inventories 144 pages with only the pre-existing 78 medium / 1 low
+    findings, and 1440px + 390px headless-Chromium checks pass in closed, open,
+    and no-JS states.
+  * **Not deployed.** The homepage and the zone index are untouched by this work.
+
+### Lemmy's Rankings Zone 06 (Episode 001: The House Shoe Matrix)
+
+* **Status: Steps 1–4 complete locally; Step 5 (deploy) intentionally not started**
+  * **Package:** `rankings/README.md` is the source plan. `rankings/wiring/` holds the
+    original copy-paste snippets (sidebar card, homepage drawer button, SEO registry
+    entries, sitemap `<url>` blocks).
+  * **Pages:** `/rankings/` (zone index, `CollectionPage` JSON-LD) and
+    `/rankings/house-shoe-matrix/` (Episode 001 article, `BlogPosting` JSON-LD, styled
+    with `operator-log/operator.css`). Eyebrow `[ ZONE 06 / RANKINGS ROW ]`.
+  * **Assets (Mandatory WebP standard):** the package shipped five PNGs. All five were
+    converted to WebP q85 (`magick -quality 85 -define webp:method=6`) and every
+    reference was rewritten to `.webp`:
+    `images/rankings/ep001/house-shoe-matrix.webp` (2800×2800 matrix),
+    `og-house-shoe-matrix.webp` (1200×630 social card),
+    `pin-hero-matrix.webp`, `pin-warmest-5.webp`, `pin-frugal-cozy.webp`
+    (1000×1500 Pinterest variants — re-encode to PNG at upload time, Pinterest does not
+    accept WebP), plus the 128×128 `images/home/icons/rankings-row.webp` zone icon.
+  * **New files:** `assets/css/rankings.css` (zone layout; the package shipped no
+    stylesheet, and `.rankings-mascot` caps the article mascot at 220px because
+    `operator.css` forces `.op-figure img` to 100% width) and `assets/js/rankings.js`
+    (dispatches `lemonteed:episode-opened`).
+  * **Wiring (Step 2):** Rankings nav card inserted after the Lemonteed FM card in all
+    12 sidebars that have one (`live-experiment/index.html` was skipped — archived,
+    `noindex` + `robots.txt` disallowed). Homepage drawer gained a `RANKINGS ROW` zone
+    button at `--x: 45%; --y: 62%`, and the matching entry was added to the
+    `mapZones` array in `assets/js/world-map.js` so the mobile dock/drawer works
+    (cache bust `world-map.js?v=3`). Both pages registered in
+    `REGISTERED_PAGES` in `scripts/build-seo.js`; `content/seo.json` merged via
+    `loadSeo()` + `saveSeoFile()`.
+  * **Lemmy:** new `rankings` zone in `content/lemmy.json` (states idle/point/celebrate,
+    three messages, `lemonteed:episode-opened` reaction, destinations useful/surprise);
+    `rankings` and `lemonteed:episode-opened` added to the allowlists in
+    `scripts/build-lemmy.js`; `assets/js/lemmy-data.js` rebuilt.
+  * **Sitemaps (Step 3):** `node scripts/build-artifact-pages.js --sitemap-only` ran first
+    (it preserves unmanaged entries), then the two `<url>` blocks were appended to
+    `sitemap.xml` and the two `<image:image>` blocks to `image-sitemap.xml`.
+    sitemap.xml now has 138 URLs, image-sitemap.xml 154.
+  * **Validation (Step 4):** `node scripts/content-validation.js` passes;
+    `node scripts/check.js` reports 0 missing referenced images; the audit inventories
+    145 pages with the same pre-existing findings as before (78 medium empty-alt on
+    artifact pages, 1 low missing-JSON-LD on `free-source/index.html`). Both new pages
+    are now listed in `scripts/site-completion-audit.js` and add no findings. Served
+    pages and assets return 200 from `node scripts/studio-server.js`; desktop (1440)
+    and mobile (390) headless-Chromium checks look correct.
+  * **Tooling fix (side effect of Step 2c):** `extractMeta` / `patchMeta` /
+    `extractCanonical` in `scripts/build-seo.js` treated `'` as an attribute delimiter.
+    Any title or description containing an apostrophe ("Lemmy's Rankings") was scraped
+    as `"Lemmy"` and build-seo *appended* duplicate meta tags instead of patching — the
+    committed `benchmark/index.html` already carries ~135 duplicate
+    `<meta name="description">` tags from that bug. Attributes are always double-quoted
+    in this repo, so the character classes are now `\"`-only. Verified with
+    `node scripts/build-seo.js --dry-run` → 0 pages would patch. The duplicate tags in
+    `benchmark/index.html` were left untouched (pre-existing, out of scope) and are a
+    good candidate for a separate cleanup pass.
+  * **Codebase state:** the zone is complete and crawlable locally. Nothing is
+    committed or pushed.
+  * **Next steps:** Step 5 (commit + push to `main`, which triggers validation and the
+    Bluehost rsync) is **blocked pending explicit owner approval**. After deploy,
+    publish the three Pinterest pins spaced 2–4 days apart using the copy in
+    `~/workspace/lemmys-rankings/ep001/ep001-pin-copy.md`. Optional follow-ups: a
+    dedicated `/rankings/` entry in the Operator's Log, and a cleanup pass for the
+    duplicated meta tags in `benchmark/index.html`.
+
 ### The Wrong Internet & 404 Therapy (Phase 1: VRG Vault Decommission & Sneak Peek)
 
 * **Status: Completed locally; ready for review**

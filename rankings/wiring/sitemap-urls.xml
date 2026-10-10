@@ -1,0 +1,37 @@
+# Wiring snippet 4 — Sitemap entries
+
+## `sitemap.xml` — append these two <url> blocks before `</urlset>`
+(the sitemap generator only auto-discovers artifacts/, operator-log/,
+benchmark/, and specimens/, and it preserves entries it doesn't manage):
+
+  <url>
+    <loc>https://lemonteed.com/rankings/</loc>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/rankings/house-shoe-matrix/</loc>
+    <lastmod>2026-10-09</lastmod>
+  </url>
+
+## `image-sitemap.xml` — append this block before `</urlset>`
+(format matches the generator's own entries):
+
+  <url>
+    <loc>https://lemonteed.com/rankings/house-shoe-matrix/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/rankings/ep001/house-shoe-matrix.webp</image:loc>
+      <image:caption>The House Shoe Matrix — 24 warm slippers, ranked.</image:caption>
+      <image:title>24 Warm House Shoes, Ranked From Frugal to Pricey (2026)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/rankings/house-shoe-matrix/</loc>
+    <image:image>
+      <image:loc>https://lemonteed.com/images/rankings/ep001/og-house-shoe-matrix.webp</image:loc>
+      <image:caption>Lemmy's Rankings #001 social card</image:caption>
+      <image:title>24 Warm House Shoes, Ranked From Frugal to Pricey (2026)</image:title>
+    </image:image>
+  </url>
+
+Order of operations: run the sitemap generator first
+(`node scripts/build-artifact-pages.js --sitemap-only`), then add these blocks —
+the generator preserves unmanaged entries, so either order works.

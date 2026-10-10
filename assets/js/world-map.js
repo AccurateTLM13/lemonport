@@ -52,6 +52,13 @@
       url: "/studio-lab/"
     },
     {
+      id: "rankings",
+      title: "RANKINGS ROW",
+      label: "SERIES / RANKINGS",
+      description: "Everyday objects, ranked with opinions.",
+      url: "/rankings/"
+    },
+    {
       id: "coming-soon",
       title: "COMING SOON CRATER",
       label: "UNSTABLE / TEASERS",

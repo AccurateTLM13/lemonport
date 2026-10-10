@@ -40,9 +40,6 @@
     <loc>https://lemonteed.com/lighthouse-handoff/</loc>
   </url>
   <url>
-    <loc>https://lemonteed.com/lemon-lab/clanker-cloud-run/</loc>
-  </url>
-  <url>
     <loc>https://lemonteed.com/lemon-dom/</loc>
   </url>
   <url>
@@ -54,6 +51,13 @@
   <url>
     <loc>https://lemonteed.com/operator-log/</loc>
     <lastmod>2026-06-20</lastmod>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/rankings/</loc>
+  </url>
+  <url>
+    <loc>https://lemonteed.com/rankings/house-shoe-matrix/</loc>
+    <lastmod>2026-10-09</lastmod>
   </url>
   <url>
     <loc>https://lemonteed.com/operator-log/design-skill-benchmark/</loc>

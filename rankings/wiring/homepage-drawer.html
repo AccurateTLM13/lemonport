@@ -1,0 +1,29 @@
+# Wiring snippet 2 — Homepage "PICK A ZONE" drawer (`index.html`)
+
+## Anchor — find this (the STUDIO LAB zone button, followed by the coming-soon button):
+
+              <a class="zone zone-studio" data-zone="studio" href="/studio-lab/" style="--x: 75%; --y: 52%;">
+                <img src="/images/home/icons/studio-lab.webp" alt="" aria-hidden="true">
+                <strong>STUDIO LAB</strong>
+                <span>Active builds, experiments, and works in progress</span>
+              </a>
+
+              <button class="zone zone-coming-soon" data-zone="coming-soon" type="button" style="--x: 65%; --y: 78%;">
+
+## Insert between them (new zone button):
+
+              <a class="zone zone-rankings" data-zone="rankings" href="/rankings/" style="--x: 45%; --y: 62%;">
+                <img src="/images/home/icons/rankings-row.webp" alt="" aria-hidden="true">
+                <strong>RANKINGS ROW</strong>
+                <span>Everyday objects, ranked with opinions</span>
+              </a>
+
+Notes:
+- Position `--x: 45%; --y: 62%` was chosen against the existing buttons
+  (what-if 25/34, memetic 51/22, archive 70/31, junk-drawer 20/72,
+  vrg 36.5/86, fm 60/50, studio 75/52, coming-soon 65/78) — clear of all of them.
+- The icon file is in this package: copy
+  `images/home/icons/rankings-row.webp` → repo `images/home/icons/rankings-row.webp`
+  (128×128, matching the other zone icons).
+- If a `zone-rankings` CSS class is needed for the map styling, mirror the
+  pattern of the other `.zone-<slug>` rules in the homepage stylesheet.

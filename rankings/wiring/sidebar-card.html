@@ -1,0 +1,29 @@
+# Wiring snippet 1 — Sidebar nav card (all zones)
+
+Add a Rankings card to the sidebar of every zone that has one
+(`what-if/index.html`, `vrg-cards/index.html`, `misc-gens/index.html`,
+`memetic-warfare/index.html`, `lemonteed-fm/index.html`, `studio-lab/index.html`,
+`archive/index.html`, `junk-drawer/index.html`, `operator-log/index.html`,
+`benchmark/index.html`, `specimens/index.html`, `lighthouse-handoff/index.html`).
+`rankings/index.html` (in this package) already includes it, marked NEW/active.
+
+## Anchor — find this (the Lemoteed FM card, last in the "Districts & Filters" group):
+
+          <a class="sidebar__nav-card" href="/lemonteed-fm/">
+            <span class="sidebar__nav-card-label">Lemonteed FM</span>
+            <span class="sidebar__nav-card-arrow">&rarr;</span>
+          </a>
+
+## Insert directly after it:
+
+          <a class="sidebar__nav-card" href="/rankings/">
+            <span class="sidebar__nav-card-label">Lemmy's Rankings</span>
+            <span class="sidebar__nav-card-badge">NEW</span>
+          </a>
+
+Notes:
+- Indentation is 10 spaces, matching the existing cards exactly.
+- Keep the `NEW` badge for episode 001; drop it (or swap to `&rarr;`) once the
+  zone is established.
+- On `rankings/index.html` itself the card additionally carries
+  `is-active` + `aria-current="page"` (already done in this package).

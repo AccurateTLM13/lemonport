@@ -42,11 +42,12 @@ const PUBLIC_HTML_GLOBS = [
   "lighthouse-handoff/index.html",
   "lemon-dom/index.html",
   "lemon-dom-repo/index.html",
-  "lemon-lab/clanker-cloud-run/index.html",
   "million-dollar-receipt/index.html",
   "million-dollar-receipt/receipt/index.html",
   "operator-log/index.html",
   "free-source/index.html",
+  "rankings/index.html",
+  "rankings/house-shoe-matrix/index.html",
   "hashbrownpro/wafflehousepro.html"
 ];
 

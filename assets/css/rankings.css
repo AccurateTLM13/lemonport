@@ -1,0 +1,156 @@
+/* ── Lemmy's Rankings Zone (/rankings/) ─────────────────────────────────────
+   Zone 06. Episode index cards + series manifesto block.
+   Neutral hairlines and typography only — no accent card borders.           */
+
+.rankings-manifesto {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-6);
+  max-width: var(--container-md);
+  margin: 0 0 var(--space-8);
+  padding: var(--space-6);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card);
+  background: var(--panel);
+}
+
+.rankings-manifesto img {
+  width: 220px;
+  height: auto;
+}
+
+.rankings-manifesto h2 {
+  margin: 0 0 var(--space-2);
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.rankings-manifesto p {
+  max-width: 72ch;
+  margin: 0 0 var(--space-3);
+  color: #55534e;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.rankings-manifesto p:last-child {
+  margin-bottom: 0;
+}
+
+.rankings-episodes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: var(--space-6);
+  max-width: var(--container-lg);
+}
+
+.rankings-episode__link {
+  display: grid;
+  gap: var(--space-4);
+  height: 100%;
+  padding: var(--space-4);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card);
+  background: var(--panel);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.rankings-episode__link:hover {
+  border-color: #b2ad9e;
+  background: #f7f4ea;
+}
+
+.rankings-episode__link:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.rankings-episode__thumb {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  background: #e2e0d8;
+}
+
+.rankings-episode__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.rankings-episode__number {
+  align-self: flex-start;
+  padding: 3px 7px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  color: #6d6b63;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.rankings-episode__title {
+  margin: 0;
+  color: var(--ink);
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.rankings-episode__blurb {
+  margin: 0;
+  color: #55534e;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.rankings-episode__cta {
+  margin-top: var(--space-2);
+  color: var(--ink);
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 720px) {
+  .rankings-manifesto {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+    padding: var(--space-4);
+  }
+
+  .rankings-manifesto img {
+    width: 160px;
+  }
+
+  .rankings-episodes {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ── Episode article (operator.css shell) ───────────────────────────────────
+   operator.css forces .op-figure images to 100% width, which blows a 220px
+   mascot up to 760px. The mascot stays mascot-sized here. */
+.rankings-mascot {
+  max-width: 220px;
+  margin: 20px 0;
+}
+
+.rankings-mascot img {
+  display: block;
+  width: 220px;
+  height: auto;
+}
